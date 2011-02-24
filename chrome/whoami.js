@@ -5,8 +5,12 @@ if (window.top == window ||
       var info = "'Missing e' Startup on ";
       info += active.url + "\n";
       for (var i in active) {
-         if (i != 'url')
-            info += i + ": active\n";
+         if (i != 'url') {
+            if (active[i])  
+               info += i + ": active\n";
+            else
+               info += i + ": inactive\n";
+         }
       }
       console.log(info);
    });

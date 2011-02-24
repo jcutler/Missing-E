@@ -10,7 +10,17 @@ function getStorage(key,defaultValue) {
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
-   else {
+   else if (request.greeting == "settings") {
+      var settings = {};
+      switch(request.component) {
+         case "replyReplies":
+            settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
+            settings.addTags = getStorage("MissingE_replyReplies_addTags",1);
+            break;
+      }
+      sendResponse(JSON.stringify(settings));
+   }
+   else if (request.greeting == "start") {
       chrome.tabs.executeScript(sender.tab.id, {file: "jquery-1.5.min.js"});
       var activeScripts = {};
       if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url)) {
@@ -18,6 +28,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.dashLinksToTabs = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "dashLinksToTabs/dashLinksToTabs.js"});
          }
+         else
+            activeScripts.dashLinksToTabs = false;
       }
       if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
@@ -29,6 +41,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.safeDash = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});
          }
+         else
+            activeScripts.safeDash = false;
       }
       if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
@@ -39,22 +53,49 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.reblogQuoteFit = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "reblogQuoteFit/reblogQuoteFit.css"});
          }
+         else
+            activeScripts.reblogQuoteFit = false;
       }
       if (/http:\/\/www\.tumblr\.com\/.*new\//.test(sender.tab.url)) {
          if (getStorage("MissingE_photoRepliesAlways_enabled",1) == 1) {
             activeScripts.photoRepliesAlways = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "photoRepliesAlways/photoRepliesAlways.js"});
          }
+         else
+            activeScripts.photoRepliesAlways = false;
       }
       if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(request.url)) {
          if (getStorage("MissingE_gotoDashPost_enabled",1) == 1) {
             activeScripts.gotoDashPost = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "gotoDashPost/gotoDashPost.js", allFrames: true});
          }
+         else
+            activeScripts.gotoDashPost = false;
+
          if (getStorage("MissingE_reblogYourself_enabled",1) == 1) {
             activeScripts.reblogYourself = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "reblogYourself/reblogYourself.js", allFrames: true});
          }
+         else
+            activeScripts.reblogYourself = false;
+      }
+      if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url)) {
+         if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
+            activeScripts.replyReplies = true;
+            chrome.tabs.insertCSS(sender.tab.id, {code: "#posts .notification .notification_type_icon { cursor: pointer; } #posts .notification .notification_type_icon:hover { background-image:url('" + chrome.extension.getURL('replyReplies/notification_icons.png') + "') !important; }"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "replyReplies/replyReplies.js"});
+         }
+         else
+            activeScripts.replyReplies = false;
+      }
+      if (/http:\/\/www\.tumblr\.com\/new\/text/.test(sender.tab.url)) {
+         if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
+            activeScripts.replyReplies = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "replyReplies/replyReplies_fill.js"});
+         }
+         else
+            activeScripts.replyReplies = false;
       }
       activeScripts.url = request.url;
       sendResponse(JSON.stringify(activeScripts));

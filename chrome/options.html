@@ -386,6 +386,11 @@ function setStorage(key,value) {
    localStorage[key] = value;
 }
 
+function doSetting(obj) {
+   if (obj.type == "checkbox")
+      setStorage(obj.name, (obj.checked ? 1 : 0));
+}
+
 function loadSettings() {
    for (i in componentList) {
       var v = componentList[i];
@@ -417,6 +422,16 @@ function loadSettings() {
          else
             frm.MissingE_postCrushes_showPercent.checked = false;
          frm.MissingE_postCrushes_prefix.value = getStorage('MissingE_postCrushes_prefix',"Tumblr Crushes:");
+      }
+      else if (v == "replyReplies") {
+         if (getStorage('MissingE_replyReplies_showAvatars',1) == 1)
+            frm.MissingE_replyReplies_showAvatars.checked = true;
+         else
+            frm.MissingE_replyReplies_showAvatars.checked = false;
+         if (getStorage('MissingE_replyReplies_addTags',1) == 1)
+            frm.MissingE_replyReplies_addTags.checked = true;
+         else
+            frm.MissingE_replyReplies_addTags.checked = false;
       }
 
    }
@@ -687,7 +702,7 @@ function doshow(component) {
 <form id="replyReplies_options">
 <div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'replyReplies');"> Reply Replies</div>
 <table class="options_table">
-<tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked"></td></tr><tr><td class="even">Add username tags to reply posts</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked"></td></tr></table>
+<tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onclick="doSetting(this);" ></td></tr><tr><td class="even">Add username tags to reply posts</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onclick="doSetting(this);" ></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
