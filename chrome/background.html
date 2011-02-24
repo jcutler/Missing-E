@@ -1,0 +1,51 @@
+<html>
+<script>
+
+function getStorage(key,defaultValue) {
+   if (localStorage[key] == undefined)
+      return defaultValue;
+   else
+      return localStorage[key];
+}
+
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+   if (!sender.tab) sendResponse({});
+   else {
+      chrome.tabs.executeScript(sender.tab.id, {file: "jquery-1.5.min.js"});
+      var activeScripts = {};
+      if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url)) {
+         if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
+            activeScripts.dashLinksToTabs = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "dashLinksToTabs/dashLinksToTabs.js"});
+         }
+      }
+      if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url)) {
+         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
+            activeScripts.safeDash = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});
+         }
+      }
+      if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url)) {
+         if (getStorage("MissingE_reblogQuoteFit_enabled",1) == 1) {
+            activeScripts.reblogQuoteFit = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "reblogQuoteFit/reblogQuoteFit.css"});
+         }
+      }
+
+
+      sendResponse(JSON.stringify(activeScripts));
+   }
+});
+
+
+</script>
+</html>

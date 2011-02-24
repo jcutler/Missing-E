@@ -1,0 +1,21 @@
+d SafeDash
+s Reply Replies
+	- Avatars
+	- Tags
+s Post Crushes
+	- Large/Small avatars
+	- Tags
+	- Percentages
+	- Prefix
+s Unfollowr
+s Follow Checkr
+p Reblog Yourself
+	- In dash
+d Dash Links To Tabs
+p Goto Dash Post
+d Bookmarker
+d Timestamps
+	- Retries
+	- Date Format
+p Photo Replies
+d Blockquote Fit
