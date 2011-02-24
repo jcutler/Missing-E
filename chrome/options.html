@@ -362,6 +362,7 @@ font-size:80%;
 }
 </style>
 <script type="text/javascript">
+var defaultRetries = 10;
 var componentList = ["reblogQuoteFit",
                      "bookmarker",
                      "dashLinksToTabs",
@@ -386,13 +387,38 @@ function setStorage(key,value) {
    localStorage[key] = value;
 }
 
-function doSetting(obj) {
+function trim(str) {
+   return str.replace(/^\s+/,'').replace(/\s+$/,'');
+}
+
+function doKeyUp(obj, isNumber, defaultValue) {
+   var key = window.event.which;
+   if (key < 33 || key > 46)
+      doSetting(obj, isNumber, defaultValue);
+}
+
+function doSetting(obj, isNumber, defaultValue) {
    if (obj.type == "checkbox")
       setStorage(obj.name, (obj.checked ? 1 : 0));
    else if (obj.type == "radio")
       setStorage(obj.name, (obj.value));
-   else if (obj.type == "text")
-      setStorage(obj.name, (obj.value));
+   else if (obj.type == "text") {
+      if (isNumber) {
+         obj.value = trim(obj.value);
+         if (/[^0-9]/.test(obj.value)) {
+            obj.value = getStorage(obj.name, defaultValue);
+         }
+         else {
+            var num;
+            if (obj.value == '') num = 0;
+            else num = parseInt(obj.value);
+            setStorage(obj.name, num);
+         }
+      }
+      else {
+         setStorage(obj.name, (obj.value));
+      }
+   }
 }
 
 function loadSettings() {
@@ -454,7 +480,7 @@ function loadSettings() {
 function resetPrefix() {
    var prefix = document.getElementById("postCrushes_options").MissingE_postCrushes_prefix;
    prefix.value = "Tumblr Crushes:";
-   doSetting(prefix);
+   doSetting(prefix, false);
 }
 
 function toggle(obj,component) {
@@ -635,10 +661,10 @@ function doshow(component) {
 <form id="timestamps_options">
 <div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'timestamps');"> Timestamps</div>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure</td><td class="odd"><input type="text" name="MissingE_timestamps_retries" value="10"></td></tr>
+<tr><td class="odd">Number of retries on failure</td><td class="odd"><input type="text" name="MissingE_timestamps_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries);" onkeyup="doKeyUp(this,true,defaultRetries);"></td></tr>
 <tr><td class="even">Timestamp format<br>
 <table class="subnotes"><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
-</td><td class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" value="%Y-%m-%D %H:%i"></td></tr></table>
+</td><td class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);"></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -666,7 +692,7 @@ function doshow(component) {
 <form id="postingFixes_options">
 <div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'postingFixes');"> Posting Fixes</div>
 <table class="options_table">
-<tr><td class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onclick="doSetting(this);" ></td></tr><tr><td class="even">Allow switching back to uploading images on photo posts</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onclick="doSetting(this);" ></td></tr></table>
+<tr><td class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onclick="doSetting(this,false);" ></td></tr><tr><td class="even">Allow switching back to uploading images on photo posts</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onclick="doSetting(this,false);" ></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -706,8 +732,8 @@ function doshow(component) {
 <form id="postCrushes_options">
 <div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'postCrushes');"> Post Crushes</div>
 <table class="options_table">
-<tr><td class="odd">Avatar size</td><td class="odd"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" onclick="doSetting(this);"> Small avatars (70x70, same as on your 'following' page)<br><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" onclick="doSetting(this);" > Large avatars (128x128)</td></tr>
-<tr><td class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" onclick="doSetting(this);"></td></tr><tr><td class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" onclick="doSetting(this);"></td></tr><tr><td class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" maxlength="128" value="Tumblr Crushes:" onkeyup="doSetting(this);">&nbsp;<span id="resetter" onclick="resetPrefix()">Reset</span></td></tr></table></form>
+<tr><td class="odd">Avatar size</td><td class="odd"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" onclick="doSetting(this,false);"> Small avatars (70x70, same as on your 'following' page)<br><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" onclick="doSetting(this,false);" > Large avatars (128x128)</td></tr>
+<tr><td class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" onclick="doSetting(this,false);"></td></tr><tr><td class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" onclick="doSetting(this,false);"></td></tr><tr><td class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" maxlength="128" value="Tumblr Crushes:" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);">&nbsp;<span id="resetter" onclick="resetPrefix()">Reset</span></td></tr></table></form>
 </div>
 <div class="clear"></div>
 <div>
@@ -720,7 +746,7 @@ function doshow(component) {
 <form id="replyReplies_options">
 <div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'replyReplies');"> Reply Replies</div>
 <table class="options_table">
-<tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onclick="doSetting(this);" ></td></tr><tr><td class="even">Add username tags to reply posts</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onclick="doSetting(this);" ></td></tr></table>
+<tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onclick="doSetting(this,false);" ></td></tr><tr><td class="even">Add username tags to reply posts</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onclick="doSetting(this,false);" ></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>

@@ -1,5 +1,19 @@
 <html>
+<head>
+<script type="text/javascript" src="jquery-1.5.min.js"></script>
 <script>
+var months = ["Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"];
 
 function getStorage(key,defaultValue) {
    if (localStorage[key] == undefined)
@@ -8,8 +22,69 @@ function getStorage(key,defaultValue) {
       return localStorage[key];
 }
 
+function zeroPad(num, len) {
+   var ret = "";
+   ret += num;
+   while (ret.length < len) ret = "0" + ret;
+   return ret;
+}
+
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
+   else if (request.greeting == "timestamp") {
+      $.ajax({
+         type: "GET",
+         url: request.url + '/api/read/json',
+         data: "id="+request.pid,
+         dataType: "text",
+         tryCount: 0,
+         retryLimit: getStorage("MissingE_timestamp_retries",10),
+         targetId: request.pid,
+         error: function(xhr, textStatus) {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               $.ajax(this);
+               return;
+            }
+            else {
+               sendResponse({pid: this.targetId, success: false});
+
+            }
+         },
+         success: function(data, textStatus) {
+            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+            }
+            else {
+               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+               var stamp = JSON.parse(txt);
+               var ts = stamp["posts"][0]["unix-timestamp"];
+               var d = new Date(ts*1000);
+               var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
+               ins = ins.replace(/%Y/g,d.getFullYear())
+                  .replace(/%y/g,(d.getFullYear()%100))
+                  .replace(/%M/g,months[d.getMonth()])
+                  .replace(/%m/g,zeroPad(d.getMonth()+1,2))
+                  .replace(/%n/g,(d.getMonth()+1))
+                  .replace(/%D/g,zeroPad(d.getDate(),2))
+                  .replace(/%d/g,d.getDate())
+                  .replace(/%G/g,zeroPad((d.getHours()%12==0 ? "12" : d.getHours()%12),2))
+                  .replace(/%g/g,(d.getHours()%12==0 ? "12" : d.getHours()%12))
+                  .replace(/%H/g,zeroPad(d.getHours(),2))
+                  .replace(/%h/g,d.getHours())
+                  .replace(/%i/g,zeroPad(d.getMinutes(),2))
+                  .replace(/%s/g,zeroPad(d.getSeconds(),2))
+                  .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
+                  .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
+               sendResponse({pid: this.targetId, success: true, data: ins});
+            }
+         }
+      });
+   }
    else if (request.greeting == "settings") {
       var settings = {};
       switch(request.component) {
@@ -123,10 +198,22 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.postCrushes = false;
       }
+      if ((/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(messages|drafts|queue)/.test(sender.tab.url))) {
+         if (getStorage("MissingE_timestamps_enabled",1) == 1) {
+            activeScripts.timestamps = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "timestamps/timestamps.js"});
+         }
+         else
+            activeScripts.timestamps = false;
+      }
       activeScripts.url = request.url;
       sendResponse(JSON.stringify(activeScripts));
    }
 });
 
 </script>
+</head>
 </html>

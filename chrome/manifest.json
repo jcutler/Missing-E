@@ -8,7 +8,8 @@
    "permissions": [
       "contextMenus",
       "tabs",
-      "http://*/*"
+      "http://*/*",
+      "http://*/"
    ],
    "options_page": "options.html",
    "background_page": "background.html",
