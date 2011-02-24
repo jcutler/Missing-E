@@ -389,6 +389,10 @@ function setStorage(key,value) {
 function doSetting(obj) {
    if (obj.type == "checkbox")
       setStorage(obj.name, (obj.checked ? 1 : 0));
+   else if (obj.type == "radio")
+      setStorage(obj.name, (obj.value));
+   else if (obj.type == "text")
+      setStorage(obj.name, (obj.value));
 }
 
 function loadSettings() {
@@ -438,7 +442,9 @@ function loadSettings() {
 }
 
 function resetPrefix() {
-   document.getElementById("postCrushes_options").prefix.value = "Tumblr Crushes:";
+   var prefix = document.getElementById("postCrushes_options").MissingE_postCrushes_prefix;
+   prefix.value = "Tumblr Crushes:";
+   doSetting(prefix);
 }
 
 function toggle(obj,component) {
@@ -688,8 +694,8 @@ function doshow(component) {
 <form id="postCrushes_options">
 <div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'postCrushes');"> Post Crushes</div>
 <table class="options_table">
-<tr><td class="odd">Avatar size</td><td class="odd"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked"> Small avatars (70x70, same as on your 'following' page)<br><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0"> Large avatars (128x128)</td></tr>
-<tr><td class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked"></td></tr><tr><td class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked"></td></tr><tr><td class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" maxlength="128" value="Tumblr Crushes:"><span id="resetter" onclick="resetPrefix()">Reset</span></td></tr></table></form>
+<tr><td class="odd">Avatar size</td><td class="odd"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" onclick="doSetting(this);"> Small avatars (70x70, same as on your 'following' page)<br><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" onclick="doSetting(this);" > Large avatars (128x128)</td></tr>
+<tr><td class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" onclick="doSetting(this);"></td></tr><tr><td class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" onclick="doSetting(this);"></td></tr><tr><td class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" maxlength="128" value="Tumblr Crushes:" onkeyup="doSetting(this);">&nbsp;<span id="resetter" onclick="resetPrefix()">Reset</span></td></tr></table></form>
 </div>
 <div class="clear"></div>
 <div>

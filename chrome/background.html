@@ -17,6 +17,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
             settings.addTags = getStorage("MissingE_replyReplies_addTags",1);
             break;
+         case "postCrushes":
+            settings.prefix = getStorage("MissingE_postCrushes_prefix","Tumblr Crushes:");
+            settings.crushSize = getStorage("MissingE_postCrushes_crushSize",1);
+            settings.addTags = getStorage("MissingE_postCrushes_addTags",1);
+            settings.showPercent = getStorage("MissingE_postCrushes_showPercent",1);
+            break;
       }
       sendResponse(JSON.stringify(settings));
    }
@@ -96,6 +102,22 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.replyReplies = false;
+      }
+      if (/http:\/\/www\.tumblr\.com\/following/.test(sender.tab.url)) {
+         if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
+            activeScripts.postCrushes = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "postCrushes/postCrushes.js"});
+         }
+         else
+            activeScripts.postCrushes = false;
+      }
+      if (/http:\/\/www\.tumblr\.com\/new\/photo/.test(sender.tab.url)) {
+         if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
+            activeScripts.postCrushes = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "postCrushes/postCrushes_fill.js"});
+         }
+         else
+            activeScripts.postCrushes = false;
       }
       activeScripts.url = request.url;
       sendResponse(JSON.stringify(activeScripts));
