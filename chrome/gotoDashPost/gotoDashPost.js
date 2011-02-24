@@ -1,9 +1,4 @@
 if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href)) {
-/*
-   window.location.href.indexOf("%2Fpost%2F") != -1 ||
-    window.location.href.indexOf("/post/") != -1) {
-    */
-
    div = document.getElementsByTagName("div")[0];
    controls = div.getElementsByTagName("a");
    var following = false;

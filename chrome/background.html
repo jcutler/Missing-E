@@ -51,6 +51,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.gotoDashPost = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "gotoDashPost/gotoDashPost.js", allFrames: true});
          }
+         if (getStorage("MissingE_reblogYourself_enabled",1) == 1) {
+            activeScripts.reblogYourself = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "reblogYourself/reblogYourself.js", allFrames: true});
+         }
       }
       activeScripts.url = request.url;
       sendResponse(JSON.stringify(activeScripts));
