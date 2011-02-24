@@ -65,7 +65,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                var ts = stamp["posts"][0]["unix-timestamp"];
                var d = new Date(ts*1000);
                var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
-               ins.replace(/%Y/g,d.getFullYear())
+               ins = ins.replace(/%Y/g,d.getFullYear())
                   .replace(/%y/g,(d.getFullYear()%100))
                   .replace(/%M/g,months[d.getMonth()])
                   .replace(/%m/g,zeroPad(d.getMonth()+1,2))
