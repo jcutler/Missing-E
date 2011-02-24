@@ -9,7 +9,6 @@ function setStorage(key,val) {
    window.localStorage.setItem(key,val);
 }
 
-
 var lock = chrome.extension.getURL('safeDash/lock.png');
 var lockicon = chrome.extension.getURL('safeDash/lockicon.png');
 

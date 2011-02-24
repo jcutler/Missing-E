@@ -40,12 +40,22 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             chrome.tabs.insertCSS(sender.tab.id, {file: "reblogQuoteFit/reblogQuoteFit.css"});
          }
       }
-
-
+      if (/http:\/\/www\.tumblr\.com\/.*new\//.test(sender.tab.url)) {
+         if (getStorage("MissingE_photoRepliesAlways_enabled",1) == 1) {
+            activeScripts.photoRepliesAlways = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "photoRepliesAlways/photoRepliesAlways.js"});
+         }
+      }
+      if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(request.url)) {
+         if (getStorage("MissingE_gotoDashPost_enabled",1) == 1) {
+            activeScripts.gotoDashPost = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "gotoDashPost/gotoDashPost.js", allFrames: true});
+         }
+      }
+      activeScripts.url = request.url;
       sendResponse(JSON.stringify(activeScripts));
    }
 });
-
 
 </script>
 </html>

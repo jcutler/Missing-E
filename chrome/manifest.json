@@ -8,14 +8,15 @@
    "permissions": [
       "contextMenus",
       "tabs",
-      "http://www.tumblr.com/dashboard*"
+      "http://*/*"
    ],
    "options_page": "options.html",
    "background_page": "background.html",
    "content_scripts": [
       {
          "matches": ["http://www.tumblr.com/*"],
-         "js": ["whoami.js"]
+         "js": ["whoami.js"],
+         "all_frames": true
       }
    ]
 }
