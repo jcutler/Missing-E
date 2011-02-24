@@ -368,7 +368,7 @@ var componentList = ["reblogQuoteFit",
                      "safeDash",
                      "timestamps",
                      "gotoDashPost",
-                     "photoRepliesAlways",
+                     "postingFixes",
                      "reblogYourself",
                      "followChecker",
                      "postCrushes",
@@ -436,6 +436,16 @@ function loadSettings() {
             frm.MissingE_replyReplies_addTags.checked = true;
          else
             frm.MissingE_replyReplies_addTags.checked = false;
+      }
+      else if (v == "postingFixes") {
+         if (getStorage('MissingE_postingFixes_photoReplies',1) == 1)
+            frm.MissingE_postingFixes_photoReplies.checked = true;
+         else
+            frm.MissingE_postingFixes_photoReplies.checked = false;
+         if (getStorage('MissingE_postingFixes_uploaderToggle',1) == 1)
+            frm.MissingE_postingFixes_uploaderToggle.checked = true;
+         else
+            frm.MissingE_postingFixes_uploaderToggle.checked = false;
       }
 
    }
@@ -651,15 +661,17 @@ function doshow(component) {
 <span class="arrow"></span>
 </div>
 </li>
-<li id="photoRepliesAlways_section" class="post not_mine regular">
+<li id="postingFixes_section" class="post not_mine regular">
 <div class="post_content">
-<form id="photoRepliesAlways_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'photoRepliesAlways');"> Photo Replies Always</div>
+<form id="postingFixes_options">
+<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'postingFixes');"> Posting Fixes</div>
+<table class="options_table">
+<tr><td class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onclick="doSetting(this);" ></td></tr><tr><td class="even">Allow switching back to uploading images on photo posts</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onclick="doSetting(this);" ></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('icons/photoRepliesAlways_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/postingFixes_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
