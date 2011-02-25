@@ -2,7 +2,7 @@
  * 'Missing e' Extension
  *
  * Copyright 2011, Jeremy Cutler
- * Licensed under the GPL Version 2 licence.
+ * Released under the GPL version 3 licence.
  * SEE: GPL-LICENSE.txt
  *
  * This file is part of 'Missing e'.
