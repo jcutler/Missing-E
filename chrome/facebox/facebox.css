@@ -79,3 +79,10 @@
   background-color: #000;
   z-index: 99;
 }
+
+#facebox .logo {
+  position:absolute;
+  bottom:-24px;
+  right:-24px;
+}
+

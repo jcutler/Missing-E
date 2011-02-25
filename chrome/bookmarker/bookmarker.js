@@ -7,19 +7,6 @@ document.getElementsByTagName('head')[0].appendChild(st);
 
 var mimg = chrome.extension.getURL('bookmarker/post_bookmark.png');
 
-function getStorage(key,defVal) {
-   var retval = window.localStorage.getItem(key);
-   if (retval == undefined || retval == null || retval == "") {
-      return defVal;
-   }
-   else
-      return retval;
-}
-
-function setStorage(key,val) {
-   window.localStorage.setItem(key,val);
-}
-
 function serializeMarks(a) {
    var s = "";
    a.sort().reverse();

@@ -1,0 +1,29 @@
+#unfollowrtable {
+   width:80%;
+   margin:0 10%;
+   border-collapse:separate;
+}
+
+#unfollowrtable .tu-firstrow {
+   border-top:1px solid #444;
+}
+
+#unfollowrtable .tu-lastrow {
+   border-bottom:1px solid #444;
+}
+
+#unfollowrtable a {
+   text-decoration:none;
+}
+
+#unfollowrtable a:hover {
+   font-style:italic !important;
+}
+
+#unfollowrtable td {
+   width:100%;
+}
+
+#unfollowrtable .tu-greyrow {
+   background-color:#DDD;
+}

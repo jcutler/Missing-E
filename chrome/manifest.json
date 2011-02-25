@@ -16,7 +16,8 @@
    "content_scripts": [
       {
          "matches": ["http://www.tumblr.com/*"],
-         "js": ["whoami.js"],
+         "js": ["common/whoami.js",
+                "common/addmenu.js"],
          "all_frames": true
       }
    ]

@@ -106,7 +106,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       sendResponse(JSON.stringify(settings));
    }
    else if (request.greeting == "start") {
-      chrome.tabs.executeScript(sender.tab.id, {file: "jquery-1.5.min.js"});
+      chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-1.5.min.js"});
+      chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
+      chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
       var activeScripts = {};
       if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url)) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
@@ -135,6 +137,28 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.bookmarker = false;
+   
+         if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
+             getStorage("MissingE_followChecker_enabled",1) == 1) {
+            chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
+         }
+
+         if (getStorage("MissingE_unfollower_enabled",1) == 1) {
+            activeScripts.unfollower = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "unfollower/unfollower.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "unfollower/unfollower.js"});
+         }
+         else
+            activeScripts.unfollower = false;
+
+         if (getStorage("MissingE_followChecker_enabled",1) == 1) {
+            activeScripts.followChecker = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "followChecker/followChecker.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "followChecker/followChecker.js"});
+         }
+         else
+            activeScripts.followChecker = false;
       }
       if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||

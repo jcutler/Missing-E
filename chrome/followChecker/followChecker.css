@@ -1,0 +1,34 @@
+#facebox .followwhobox {
+   width:550px !important;
+}
+
+#followwhotable {
+   width:100%;
+   border-collapse:separate;
+}
+
+#followwhotable th {
+   background-color:#444444 !important;
+   color:#FFFFFF !important;
+   width:50%;
+}
+
+#followwhotable a {
+   text-decoration:none;
+}
+
+#followwhotable a:hover {
+   font-style:italic !important;
+}
+
+#followwhotable td {
+   font-size:80%; width:50%;
+}
+
+#followwhotable .fw-greyrow {
+   background-color:#DDDDDD;
+}
+
+#followwhotable td.fw-last {
+   border-bottom:1px solid #444444 !important;
+}

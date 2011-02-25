@@ -396,7 +396,7 @@ border-top:0;
 padding-top:0;
 }
 </style>
-<script type="text/javascript" src="jquery-1.5.min.js"></script>
+<script type="text/javascript" src="common/jquery-1.5.min.js"></script>
 <link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css"></style>
 <script type="text/javascript" src="facebox/facebox.js"></script>
 <link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css"/>
@@ -475,7 +475,7 @@ function loadSettings() {
       var v = componentList[i];
       var frm = document.getElementById(v + "_options");
       var active = frm.active;
-      if (getStorage('MissingE_' + v + '_enabled',1) == 1) {
+      if (getStorage('MissingE_' + v + '_enabled', 1) == 1) {
          active.checked = true;
       } 
       else {
@@ -533,9 +533,6 @@ function resetPrefix() {
 function toggle(obj) {
    var frm = $(obj).closest("form");
    var component = frm.attr("id").match(/^[a-zA-Z]+/)[0];
-   console.log(frm);
-   console.log(component);
-   console.log(obj);
    if (frm.get(0).active.checked)
       setStorage('MissingE_' + component + '_enabled', 1);
    else
@@ -833,7 +830,7 @@ function doshow(component) {
 <li id="unfollower_section" class="post not_mine regular">
 <div class="post_content">
 <form id="unfollower_options">
-<div class="post_title"><input onclick="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Unfollower</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Unfollower</div>
 <div class="post_thumb"><a href="unfollower/screen.png" rel="facebox"><img src="unfollower/thumb.png" /><br />Screenshot</a></div>
 <p>Find out who has unfollowed you on Tumblr (since the last time you checked) with </em>Unfollower</em>.</p>
 <p><strong>Limitations:</strong></p>
