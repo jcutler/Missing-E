@@ -138,6 +138,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          case "postingFixes":
             settings.photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
             settings.uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
+            settings.addUploader = getStorage("MissingE_postingFixes_addUploader",1);
             break;
          case "unfollower":
          case "followChecker":
@@ -214,7 +215,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.reblogQuoteFit = false;
       }
-      if (/http:\/\/www\.tumblr\.com\/.*new\//.test(sender.tab.url)) {
+      if (sender.tab.url == request.url && (/http:\/\/www\.tumblr\.com\/.*new\//.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/reblog\//.test(sender.tab.url))) {
          if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
             activeScripts.postingFixes = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/postingFixes.js"});
@@ -291,6 +293,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.reblogYourself = false;
       }
+
       activeScripts.url = request.url;
       sendResponse(JSON.stringify(activeScripts));
    }

@@ -17,4 +17,31 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"}, 
          url.appendChild(uil);
       }
    }
+
+   if (postingFixes_settings.addUploader == 1 &&
+       !(/\/new\/text/.test(location)) &&
+       window == window.top) {
+      var headings = $('h2');
+      var h2 = headings.last();
+      if (/Clicking/i.test(h2.html())) {
+         h2 = headings.eq(-2);
+      }
+      var textarea = h2.nextAll('textarea:first').attr('id');
+      h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
+         .css({"float":"left","margin-top":"0"})
+         .after('<div style="float:right;padding-top:3px;"><iframe src="/upload/image?from_assets" id="regular_form_inline_image_iframe" width="130" height="16" border="0" scrolling="no" allowtransparency="true" frameborder="0" style="background-color:transparent; overflow:hidden;"></iframe></div><div class="clear"></div>');
+      if (textarea && textarea != "") {
+         h2.before('<script type="text/javascript">\n' +
+                          'document.domain = "tumblr.com";\n' +
+                          'function catch_uploaded_photo(src) {\n' +
+                          '   if (tinyMCE && (ed = tinyMCE.get("' + textarea + '"))) {\n' +
+                          '      ed.execCommand("mceInsertContent", false, "<img src=\\"" + src + "\\" />");\n' +
+                          '   }\n' +
+                          '   else {\n' +
+                          '      insertTag("' + textarea + '", "<img src=\\"" + src + "\\" />");\n' +
+                          '   }\n' +
+                          '}\n' +
+                          '</script>');
+      }
+   }
 });
