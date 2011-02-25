@@ -359,7 +359,7 @@ border-top:1px solid #eee;
 border-bottom:1px solid #eee;
 }
 
-#resetter {
+span.resetter {
 text-decoration:underline;
 cursor:pointer;
 font-size:80%;
@@ -394,6 +394,10 @@ padding-top:10px;
 li#about_section p.first {
 border-top:0;
 padding-top:0;
+}
+
+input.numinput {
+text-align:right;
 }
 </style>
 <script type="text/javascript" src="common/jquery-1.5.min.js"></script>
@@ -461,6 +465,9 @@ function doSetting(obj, isNumber, defaultValue) {
             var num;
             if (obj.value == '') num = 0;
             else num = parseInt(obj.value);
+            if (num < 0) num = 0;
+            if (num > 99) num = 99;
+            obj.value = num;
             setStorage(obj.name, num);
          }
       }
@@ -471,6 +478,7 @@ function doSetting(obj, isNumber, defaultValue) {
 }
 
 function loadSettings() {
+   $('span.defRetries').text(defaultRetries);
    for (i in componentList) {
       var v = componentList[i];
       var frm = document.getElementById(v + "_options");
@@ -520,7 +528,23 @@ function loadSettings() {
          else
             frm.MissingE_postingFixes_uploaderToggle.checked = false;
       }
-
+      else if (v == "reblogYourself") {
+         if (getStorage('MissingE_reblogYourself_postPage',1) == 1)
+            frm.MissingE_reblogYourself_postPage.checked = true;
+         else
+            frm.MissingE_reblogYourself_postPage.checked = false;
+         if (getStorage('MissingE_reblogYourself_dashboard',1) == 1)
+            frm.MissingE_reblogYourself_dashboard.checked = true;
+         else
+            frm.MissingE_reblogYourself_dashboard.checked = false;
+         frm.MissingE_reblogYourself_retries.value = getStorage('MissingE_reblogYourself_retries',defaultRetries);
+      }
+      else if (v == "unfollower") {
+         frm.MissingE_unfollower_retries.value = getStorage('MissingE_unfollower_retries',defaultRetries);
+      }
+      else if (v == "followChecker") {
+         frm.MissingE_followChecker_retries.value = getStorage('MissingE_followChecker_retries',defaultRetries);
+      }
    }
 }
 
@@ -528,6 +552,12 @@ function resetPrefix() {
    var prefix = document.getElementById("postCrushes_options").MissingE_postCrushes_prefix;
    prefix.value = "Tumblr Crushes:";
    doSetting(prefix, false);
+}
+
+function resetRetries(obj) {
+   var input = $(obj).siblings('input:text');
+   input.val(defaultRetries);
+   doSetting(input.get(0), true, defaultRetries);
 }
 
 function toggle(obj) {
@@ -716,7 +746,7 @@ function doshow(component) {
 <div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Timestamps</div>
 <p><em>Timestamps</em> will add the date and time of a post on your dashboard.</p><p><strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.</p>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure (default 10)</td><td class="odd"><input type="text" name="MissingE_timestamps_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries);" onkeyup="doKeyUp(this,true,defaultRetries);"></td></tr>
+<tr><td class="odd">Number of retries on failure (default <span class="defRetries">10</span>)</td><td class="odd"><input class="numinput" size="1" type="text" name="MissingE_timestamps_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);">&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 <tr><td class="even">Timestamp format<br>
 <table class="subnotes"><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
 </td><td class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);"></td></tr></table>
@@ -768,7 +798,7 @@ function doshow(component) {
 <table class="options_table">
 <tr><td class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" onchange="doSetting(this,false)"></td></tr>
 <tr><td class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" onchange="doSetting(this,false)"></td></tr>
-<tr><td class="odd">Number of retries on failure to load reblog link on dashboard posts (default 10)</td><td class="odd"><input type="text" name="MissingE_reblogYourself_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries);" onkeyup="doKeyUp(this,true,defaultRetries);"></td></tr>
+<tr><td class="odd">Number of retries on failure to load reblog link on dashboard posts (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" class="numinput" size="1" name="MissingE_reblogYourself_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);">&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -790,7 +820,7 @@ function doshow(component) {
 <ul><li>When Tumblr is suffering from errors, <em>Follow Checker</em> may not be able to load all of your follower/followee pages and will return an error. Wait a little while and try again.</li>
 <li>Because of some limitations with the way Tumblr presents your follower/following lists, some people may appear to not be following/followed who actually are. You should always double-check!</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower/followee lists (default 10)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries);" onkeyup="doKeyUp(this,true,defaultRetries);"></td></tr>
+<tr><td class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="numinput" size="1" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);">&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -808,7 +838,7 @@ function doshow(component) {
 <p>Automatically create posts showing your Tumblr crushes, straight from your following page with <em>Post Crushes</em>.</p>
 <table class="options_table">
 <tr><td class="odd">Avatar size</td><td class="odd"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" onchange="doSetting(this,false);"> Small avatars (70x70, same as on your 'following' page)<br><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" onchange="doSetting(this,false);" > Large avatars (128x128)</td></tr>
-<tr><td class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" onchange="doSetting(this,false);"></td></tr><tr><td class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" onchange="doSetting(this,false);"></td></tr><tr><td class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);">&nbsp;<span id="resetter" onclick="resetPrefix()">Reset</span></td></tr></table></form>
+<tr><td class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" onchange="doSetting(this,false);"></td></tr><tr><td class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" onchange="doSetting(this,false);"></td></tr><tr><td class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);">&nbsp;<span class="resetter" onclick="resetPrefix()">Reset</span></td></tr></table></form>
 </div>
 <div class="clear"></div>
 <div>
@@ -845,7 +875,7 @@ function doshow(component) {
 <ul><li><em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.</li><li><em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.</li>
 <li>When Tumblr is suffering from errors, <em>Unfollower</em> may not be able to load all of your follower pages and will return an error. Wait a little while and try again.</li><li>Because of some limitations with the way Tumblr presents your followers list, some people may appear to have unfollowed who actually haven't. You should always double-check.</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower list (default 10)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries);" onkeyup="doKeyUp(this,true,defaultRetries);"></td></tr>
+<tr><td class="odd">Number of retries on failure to load follower list (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" class="numinput" size="1" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);">&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
