@@ -1,6 +1,7 @@
 var text;
 var done;
 var failed = false;
+var retries = 0;
 
 function tu_init() {
    $("body").append('<div id="113977_unfollowdisplay" style="display:none;"><div style="font:bold 24px Georgia,serif;color:#1f354c;">unfollowr.</div><div class="unfollowerlist" style="height:' + ((getPageHeight()/10)*7) + 'px;overflow-y:auto;text-align:center;margin-top:10px;"></div><img class="logo" src="' + chrome.extension.getURL('missinge64.png') + '" /></div>');
@@ -49,7 +50,7 @@ function doGet(num, show) {
          url: '/followers/page/'+(i+1),
          dataType: "html",
          tryCount: 0,
-         retryLimit: 10,
+         retryLimit: retries,
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
@@ -178,5 +179,9 @@ function doFinish(newlist,show) {
 }
 
 if (document.body.id != "dashboard_edit_post") {
-   tu_init();
+   chrome.extension.sendRequest({greeting: "settings", component: "unfollower"}, function(response) {
+      var settings = JSON.parse(response);
+      retries = settings.retries;
+      tu_init();
+   });
 }

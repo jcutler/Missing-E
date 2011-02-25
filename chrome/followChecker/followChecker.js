@@ -3,6 +3,7 @@ var followeetext;
 var followerdone;
 var followeedone;
 var failed = false;
+var retries = 0;
 
 function tfc_init() {
    $("body").append('<div id="113977_followwhodisplay" style="display:none;"><div style="font:bold 24px Georgia,serif;color:#1f354c;">followcheckr.</div><div class="followwholist" style="height:' + ((getPageHeight()/10)*7) + 'px;overflow-y:auto;text-align:center;margin-top:10px;"></div><img class="logo" src="' + chrome.extension.getURL('missinge64.png') + '" /></div>');
@@ -266,5 +267,9 @@ function doFWFinish(followers, followees, show) {
 
 if (document.body.id != "tinymce" &&
     document.body.id != "dashboard_edit_post") {
-   tfc_init();
+   chrome.extension.sendRequest({greeting: "settings", component: "followChecker"}, function(response) {
+      var settings = JSON.parse(response);
+      retries = settings.retries;
+      tfc_init();
+   });
 }

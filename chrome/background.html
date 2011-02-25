@@ -1,6 +1,7 @@
 <html>
 <head>
-<script type="text/javascript" src="jquery-1.5.min.js"></script>
+<script type="text/javascript" src="common/jquery-1.5.min.js"></script>
+<script type="text/javascript" src="common/defs.js"></script>
 <script>
 var months = ["Jan",
               "Feb",
@@ -31,6 +32,42 @@ function zeroPad(num, len) {
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
+   else if (request.greeting == "reblogYourself") {
+      $.ajax({
+         type: "GET",
+         url: request.url + '/api/read/json',
+         data: "id="+request.pid,
+         dataType: "text",
+         tryCount: 0,
+         retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
+         targetId: request.pid,
+         error: function(xhr, textStatus) {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               $.ajax(this);
+               return;
+            }
+            else {
+               sendResponse({pid: this.targetId, success: false});
+            }
+         },
+         success: function(data, textStatus) {
+            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+            }
+            else {
+               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+               var stamp = JSON.parse(txt);
+               var key = stamp["posts"][0]["reblog-key"];
+               sendResponse({pid: this.targetId, success: true, data: key});
+            }
+         }
+      });
+   }
    else if (request.greeting == "timestamp") {
       $.ajax({
          type: "GET",
@@ -38,7 +75,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          data: "id="+request.pid,
          dataType: "text",
          tryCount: 0,
-         retryLimit: getStorage("MissingE_timestamp_retries",10),
+         retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),
          targetId: request.pid,
          error: function(xhr, textStatus) {
             this.tryCount++;
@@ -102,11 +139,16 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
             settings.uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
             break;
+         case "unfollower":
+         case "followChecker":
+            settings.retries = getStorage("MissingE_" + request.component + "_retries",defaultRetries);
+            break;
       }
       sendResponse(JSON.stringify(settings));
    }
    else if (request.greeting == "start") {
       chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-1.5.min.js"});
+      chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
       var activeScripts = {};
@@ -188,9 +230,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.gotoDashPost = false;
 
-         if (getStorage("MissingE_reblogYourself_enabled",1) == 1) {
+         if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
+             getStorage("MissingE_reblogYourself_postPage",1) == 1) {
             activeScripts.reblogYourself = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "reblogYourself/reblogYourself.js", allFrames: true});
+            chrome.tabs.executeScript(sender.tab.id, {file: "reblogYourself/reblogYourself_post.js", allFrames: true});
          }
          else
             activeScripts.reblogYourself = false;
@@ -239,6 +282,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.timestamps = false;
+
+         if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
+             getStorage("MissingE_reblogYourself_dashboard",1) == 1) {
+            activeScripts.reblogYourself = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "reblogYourself/reblogYourself_dash.js"});
+         }
+         else
+            activeScripts.reblogYourself = false;
       }
       activeScripts.url = request.url;
       sendResponse(JSON.stringify(activeScripts));
