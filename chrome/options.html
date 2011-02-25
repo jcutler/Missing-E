@@ -366,7 +366,7 @@ font-size:80%;
 }
 
 div.post_thumb {
-float:left;
+float:right;
 margin:0 5px 2px 0;
 font-weight:bold;
 font-size:80%;
@@ -384,20 +384,20 @@ width:100%;
 div.post_thumb a:hover {
 font-style:italic;
 }
-
-ul, ol {
-list-style-position:inside;
-}
 </style>
 <script type="text/javascript" src="jquery-1.5.min.js"></script>
 <link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css"></style>
 <script type="text/javascript" src="facebox/facebox.js"></script>
+<link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css"/>
+<script type="text/javascript" src="checkbox/jquery.checkbox.min.js"></script>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
    $('a[rel*=facebox]').facebox({
       loadingImage : 'facebox/loading.gif',
       closeImage   : 'facebox/closelabel.png'
-   })
+   });
+   loadSettings();
+   $('input.toggler').checkbox();
 });
 
 var defaultRetries = 10;
@@ -465,12 +465,10 @@ function loadSettings() {
       var frm = document.getElementById(v + "_options");
       var active = frm.active;
       if (getStorage('MissingE_' + v + '_enabled',1) == 1) {
-         active.value = 1;
-         active.nextSibling.src = "images/toggle_on.png";
+         active.checked = true;
       } 
       else {
-         active.value = 0;
-         active.nextSibling.src = "images/toggle_off.png";
+         active.checked = false;
       }
       if (v == "timestamps") {
          frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',10);
@@ -521,18 +519,16 @@ function resetPrefix() {
    doSetting(prefix, false);
 }
 
-function toggle(obj,component) {
-   var frm = document.getElementById(component + "_options");
-   if (frm.active.value == "1") {
-      frm.active.value = "0";
-      obj.src = 'images/toggle_off.png';
-      setStorage('MissingE_' + component + '_enabled', 0);
-   }
-   else {
-      frm.active.value = "1";
-      obj.src = 'images/toggle_on.png';
+function toggle(obj) {
+   var frm = $(obj).closest("form");
+   var component = frm.attr("id").match(/^[a-zA-Z]+/)[0];
+   console.log(frm);
+   console.log(component);
+   console.log(obj);
+   if (frm.get(0).active.checked)
       setStorage('MissingE_' + component + '_enabled', 1);
-   }
+   else
+      setStorage('MissingE_' + component + '_enabled', 0);
 }
 
 function doshow(component) {
@@ -573,7 +569,7 @@ function doshow(component) {
 
 </script>
 </head>
-<body onload="loadSettings();">
+<body>
 <div id="container">
 <div id="header_container">
 <div id="header">
@@ -649,7 +645,7 @@ function doshow(component) {
 <li id="reblogQuoteFit_section" class="post not_mine regular">
 <div class="post_content">
 <form id="reblogQuoteFit_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'reblogQuoteFit');"> Reblog Quote Fit</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Reblog Quote Fit</div>
 <div class="post_thumb"><a href="reblogQuoteFit/screen.jpg" rel="facebox"><img src="reblogQuoteFit/thumb.jpg" /><br />Screenshot</a></div>
 <p>Displays reblogged posts with quote sections (text added by previous tumblrs) take up a lot of room. <em>Reblog Quote Fit</em> reduces the display space taken up by the quoted text in order to enhance readbility.</p>
 </form>
@@ -663,7 +659,7 @@ function doshow(component) {
 <li id="bookmarker_section" class="post not_mine regular">
 <div class="post_content">
 <form id="bookmarker_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'bookmarker');"> Bookmarker</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Bookmarker</div>
 <div class="post_thumb"><a href="bookmarker/screen.png" rel="facebox"><img src="bookmarker/thumb.png" /><br />Screenshot</a></div>
 <p>Add bookmarks to posts on your dashboard so you can go back to them later! <em>Bookmarker</em> adds a small bookmark button to posts, and a list of current bookmarks in your sidebar.</p>
 <ul><li>Hold down the shift key when clicking on a bookmark icon to create a new bookmark with a custom name.</li><li>Hold down the shift key when clicking on an existing bookmark to rename it.</li></ul>
@@ -678,7 +674,7 @@ function doshow(component) {
 <li id="dashLinksToTabs_section" class="post not_mine regular">
 <div class="post_content">
 <form id="dashLinksToTabs_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'dashLinksToTabs');"> Dash Links to Tabs</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Dash Links to Tabs</div>
 </form>
 <p><em>Dash Links to Tabs</em> forces all links in dashboard posts to open in a new tab. That way, you won't lose your place when you are scrolling in the dash. All links outside of posts, including the navigation sidebar, behave as normal.</p>
 </div>
@@ -691,7 +687,7 @@ function doshow(component) {
 <li id="safeDash_section" class="post not_mine regular">
 <div class="post_content">
 <form id="safeDash_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'safeDash');"> Safe Dash</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Safe Dash</div>
 <div class="post_thumb"><a href="safeDash/screen.png" rel="facebox"><img src="safeDash/thumb.png" /><br />Screenshot</a></div>
 <p>At work? Have kids about? <em>Safe Dash</em> will hide images in tumblr posts in case any of them are unsafe! Simply hover your mouse over the picture to reveal it. Turn <em>Safe Dash</em> on and off with a link in your dashboard sidebar!</p><p><strong>Note</strong>: Safe Dash is not effective for posts on a user's tumblr page, only on <strong>dashboard-like</strong> pages (ie. dashboard, tumblelog, likes, queue and drafts).</p><p><strong>These images are hidden:</strong></p>
 <ul><li>All image posts</li><li>All photoset thumbnails</li><li>Photosets that have been clicked (enlarged)</li><li>Inline images in other types of posts</li><li>Album art in audio posts</li><li>All video thumbnails</li><li>All full-size videos (except videos from external sites)</li></ul>
@@ -708,7 +704,7 @@ function doshow(component) {
 <li id="timestamps_section" class="post not_mine regular">
 <div class="post_content">
 <form id="timestamps_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'timestamps');"> Timestamps</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Timestamps</div>
 <p><em>Timestamps</em> will add the date and time of a post on your dashboard.</p><p><strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.</p>
 <table class="options_table">
 <tr><td class="odd">Number of retries on failure</td><td class="odd"><input type="text" name="MissingE_timestamps_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries);" onkeyup="doKeyUp(this,true,defaultRetries);"></td></tr>
@@ -728,7 +724,7 @@ function doshow(component) {
 <li id="gotoDashPost_section" class="post not_mine regular">
 <div class="post_content">
 <form id="gotoDashPost_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'gotoDashPost');"> Goto Dash Post</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Goto Dash Post</div>
 <div class="post_thumb"><a href="gotoDashPost/screen.jpg" rel="facebox"><img src="gotoDashPost/thumb.jpg" /><br />Screenshot</a></div>
 <p>If you are on a tumblr post page and you want to jump directly to it on your dashboard so you can reply to it (assuming that the tumblr user's setup allows you to), <em>Goto Dash Post</em> is your best bet. A "goto dash" control button is added to individual post pages for you to use.</p>
 </form>
@@ -742,7 +738,7 @@ function doshow(component) {
 <li id="postingFixes_section" class="post not_mine regular">
 <div class="post_content">
 <form id="postingFixes_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'postingFixes');"> Posting Fixes</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Posting Fixes</div>
 <p>A few convenient interface fixes for new Tumblr posts.</p>
 <table class="options_table">
 <tr><td class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onclick="doSetting(this,false);" ></td></tr><tr><td class="even">Allow switching back to uploading images on photo posts</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onclick="doSetting(this,false);" ></td></tr></table>
@@ -757,7 +753,7 @@ function doshow(component) {
 <li id="reblogYourself_section" class="post not_mine regular">
 <div class="post_content">
 <form id="reblogYourself_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'reblogYourself');"> Reblog Yourself</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Reblog Yourself</div>
 <p>Add reblogging functionality to your own tumblr posts, allowing you to <em>Reblog Yourself</em>.</p>
 <p><strong>Note</strong>: chat and ask posts are not normally rebloggable. <em>Reblog Yourself</em> will allow you to reblog them, but the formatting may look pretty bad.</p>
 </form>
@@ -773,7 +769,7 @@ function doshow(component) {
 <li id="followChecker_section" class="post not_mine regular">
 <div class="post_content">
 <form id="followChecker_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'followChecker');"> Follow Checker</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Follow Checker</div>
 <div class="post_thumb"><a href="followChecker/screen.png" rel="facebox"><img src="followChecker/thumb.png" /><br />Screenshot</a></div>
 <p>Find out who you follow on Tumblr that doesn't follow you back and who follows you that you don't follow back with <em>Follow Checker</em>.</p>
 <p><strong>Limitations:</strong></p>
@@ -790,7 +786,7 @@ function doshow(component) {
 <li id="postCrushes_section" class="post not_mine regular">
 <div class="post_content">
 <form id="postCrushes_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'postCrushes');"> Post Crushes</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Post Crushes</div>
 <div class="post_thumb"><a href="postCrushes/screen.png" rel="facebox"><img src="postCrushes/thumb.png" /><br />Screenshot</a></div>
 <p>Automatically create posts showing your Tumblr crushes, straight from your following page with <em>Post Crushes</em>.</p>
 <table class="options_table">
@@ -806,7 +802,7 @@ function doshow(component) {
 <li id="replyReplies_section" class="post not_mine regular">
 <div class="post_content">
 <form id="replyReplies_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'replyReplies');"> Reply Replies</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Reply Replies</div>
 <div class="post_thumb"><a href="replyReplies/screen.png" rel="facebox"><img src="replyReplies/thumb.png" /><br />Screenshot</a></div>
 <p>With <em>Reply Replies</em>, when you click on the icon of a notification in your dash, it'll open a new text post with that notification (and quoted reply, for post replies) in it, ready for you to comment on and post.</p>
 <p><strong>If you want to reply to muliple notifications in the same post, you can:</strong></p>
@@ -825,7 +821,7 @@ function doshow(component) {
 <li id="unfollower_section" class="post not_mine regular">
 <div class="post_content">
 <form id="unfollower_options">
-<div class="post_title"><input type="hidden" name="active" value="1"><img src="images/toggle_on.png" class="toggler" onclick="toggle(this,'unfollower');"> Unfollower</div>
+<div class="post_title"><input onclick="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Unfollower</div>
 <div class="post_thumb"><a href="unfollower/screen.png" rel="facebox"><img src="unfollower/thumb.png" /><br />Screenshot</a></div>
 <p>Find out who has unfollowed you on Tumblr (since the last time you checked) with </em>Unfollower</em>.</p>
 <p><strong>Limitations:</strong></p>
