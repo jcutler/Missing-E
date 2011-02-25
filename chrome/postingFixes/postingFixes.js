@@ -43,7 +43,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"}, 
 
    if (postingFixes_settings.addUploader == 1 &&
        !(/\/new\/text/.test(location)) &&
-       window == window.top) {
+       window == window.top &&
+       $('#regular_form_inline_image_iframe').length == 0) {
       var headings = $('h2');
       var h2 = headings.last();
       if (/Clicking/i.test(h2.html())) {
