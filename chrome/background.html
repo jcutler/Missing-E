@@ -128,6 +128,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.safeDash = false;
+         
+         if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
+            activeScripts.bookmarker = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "bookmarker/bookmarker.js"});
+         }
+         else
+            activeScripts.bookmarker = false;
       }
       if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
