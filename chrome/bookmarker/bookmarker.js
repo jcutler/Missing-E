@@ -22,13 +22,12 @@
  */
 
 var bmi = chrome.extension.getURL('bookmarker/sidebar_bookmark.png');
+var mimg = chrome.extension.getURL('bookmarker/post_bookmark.png');
 
 var st = document.createElement('style');
 st.setAttribute('type','text/css');
-st.innerHTML = '#right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_bookmark { background-image:url("' + bmi + '") !important; } #s113977_marklist a:active { color:#C4CDD6 !important; }';
+st.innerHTML = '#right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_bookmark { background-image:url("' + bmi + '") !important; } #s113977_marklist a:active { color:#C4CDD6 !important; } a.s113977_mark { background-image:url("' + mimg + '"); }';
 document.getElementsByTagName('head')[0].appendChild(st);
-
-var mimg = chrome.extension.getURL('bookmarker/post_bookmark.png');
 
 function serializeMarks(a) {
    var s = "";
@@ -52,21 +51,10 @@ function parseMarks(s) {
    return arr;
 }
 
-function markOver() {
-   var bp = $(this).css("background-position");
-   if (bp == "" || bp.charAt(0) == "0")
-      $(this).css("background-position","-6px 0px");
-}
-
-function markOut() {
-   var bp = $(this).css("background-position");
-   if (bp == "" || bp.charAt(1) == "6")
-      $(this).css("background-position","0px 0px");
-}
-
 function markClick(e) {
    if (e.which == 1) {
       if ($(this).hasClass("s113977_ismarked")) {
+         $(this).removeClass("s113977_ismarked");
          removeMark(this.id.match(/[0-9]*$/)[0]);
       }
       else {
@@ -118,8 +106,8 @@ function doMarks(item) {
          var heart = $(this).find('a.like_button').remove();
          var mom = $(this).parent();
          var post = mom.attr('id').match(/[0-9]*$/)[0];
-         var node = $('<a class="s113977_mark" id="bookmark_' + post + '" title="Bookmark" href="#" style="border-width:0;height:14px;width:6px;vertical-align:-3px;display:inline-block;background-image:url(' + mimg + ');background-repeat:no-repeat;background-attachment:scroll;background-position:0 0;" onclick="return false;"></a>');
-         node.appendTo(this).click(markClick).mouseover(markOver).mouseout(markOut);
+         var node = $('<a class="s113977_mark" id="bookmark_' + post + '" title="Bookmark" href="#" onclick="return false;"></a>');
+         node.appendTo(this).click(markClick);
          $(this).addClass('bookmarkAdded').append(heart); 
       });
    }
@@ -175,7 +163,7 @@ function generateList() {
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
    var marklist = $('#s113977_marklist');
    if (marks.length == 0) {
-      $('#posts a.s113977_ismarked').css("background-position","0px 0px").removeClass("s113977_ismarked");
+      $('#posts a.s113977_ismarked').removeClass("s113977_ismarked");
       marklist.empty().parent().hide();
       return true;
    }
@@ -188,12 +176,12 @@ function generateList() {
          
          if (idx >= marks.length ||
              cd > marks[idx][0]) {
-            $("#bookmark_" + this.id.match(/[0-9]*$/)[0]).css("background-position","0px 0px").removeClass("s113977_ismarked");
+            $("#bookmark_" + this.id.match(/[0-9]*$/)[0]).removeClass("s113977_ismarked");
             $(this).remove();
          }
          else if (cd < marks[idx][0]) {
             while (idx < marks.length && cd <= marks[idx][0]) {
-               $("#bookmark_" + marks[idx][1]).css("background-position","-12px 0px").addClass("s113977_ismarked");
+               $("#bookmark_" + marks[idx][1]).addClass("s113977_ismarked");
                if (cd != marks[idx][0]) {
                   $(this).before(getMarkText(marks[idx][0],marks[idx][1],marks[idx][2]));
                }
@@ -204,19 +192,19 @@ function generateList() {
             }
          }
          else {
-            $("#bookmark_" + marks[idx][1]).css("background-position","-12px 0px").addClass("s113977_ismarked");
+            $("#bookmark_" + marks[idx][1]).addClass("s113977_ismarked");
             $(this).find('span.mark_date').text(marks[idx][2]);
             idx++;
          }
       });
       for(; idx<marks.length; idx++) {
-         $("#bookmark_" + marks[idx][1]).css("background-position","-12px 0px").addClass("s113977_ismarked");
+         $("#bookmark_" + marks[idx][1]).addClass("s113977_ismarked");
          marklist.append(getMarkText(marks[idx][0],marks[idx][1],marks[idx][2]));
       }
    }
    else {
       for (i=0; i<marks.length; i++) {
-         $("#bookmark_" + marks[i][1]).css("background-position","-12px 0px").addClass("s113977_ismarked");
+         $("#bookmark_" + marks[i][1]).addClass("s113977_ismarked");
          marklist.append(getMarkText(marks[i][0],marks[i][1],marks[i][2]));
       }
    }
@@ -254,10 +242,10 @@ function refreshMarks() {
             break;
          }
       }
-      if (remove) $(this).css("background-position","0px 0px").removeClass("s113977_ismarked");
+      if (remove) $(this).removeClass("s113977_ismarked");
    });
    for (i=0; i<marks.length; i++) {
-      $("#bookmark_" + marks[i][1]).css("background-position","-12px 0px").addClass("s113977_ismarked");
+      $("#bookmark_" + marks[i][1]).addClass("s113977_ismarked");
    }
    generateList();
 }
