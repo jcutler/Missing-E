@@ -195,8 +195,10 @@ function doHide(item) {
                   extra = 'position:absolute;top:' + pos.top + 'px;left:' +
                      pos.left + 'px;';
                }
-               s = '<div class="nsfwdiv ' + klass + '" style="min-height:' + h +
-                     'px;' + 'min-width:' + w + 'px;' + extra + '" />';
+               if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/.test(me.attr('src')))) {
+                  extra += 'min-height:' + h + 'px;' + 'min-width:' + w + 'px;';
+               }
+               s = '<div class="nsfwdiv ' + klass + '" style="' + extra + '" />';
             }
             if (me.parent().hasClass('video_thumbnail'))
                me.next().addClass('nsfwed');
