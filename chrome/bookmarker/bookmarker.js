@@ -267,7 +267,11 @@ if (document.body.id != "tinymce" &&
    document.addEventListener('DOMNodeInserted', function(e) {
       doMarks(e.target);
    }, false);
-   window.addEventListener('storage', refreshMarks, false);
+   window.addEventListener('storage',function(e) {
+      if (e.key != 'MissingE_bookmarker_marks') return false;
+      else
+         refreshMarks();
+   }, false);
 }
 
 /***

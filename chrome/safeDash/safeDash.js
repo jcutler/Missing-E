@@ -251,6 +251,7 @@ document.addEventListener('DOMNodeInserted',function(e){
 }, false);
 
 window.addEventListener('storage',function(e) {
+   if (e.key != 'MissingE_safeDash_state') return false;
    var state = getStorage('MissingE_safeDash_state',0);
    if (state == 0) {
       undoNSFW();
