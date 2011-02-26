@@ -238,6 +238,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.reblogQuoteFit = false;
       }
       if (sender.tab.url == request.url &&
+          request.bodyId == 'dashboard_edit_post' &&
           (/http:\/\/www\.tumblr\.com\/new\//.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/tumblelog\/[0-9A-Za-z-_]+\/new\//.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/reblog\//.test(sender.tab.url) ||
