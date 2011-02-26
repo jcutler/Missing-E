@@ -21,7 +21,8 @@
  * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href)) {
+if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href) &&
+    /(%2[fF]|\/)post(%2[fF]|\/)/.test(window.location.href)) {
    div = document.getElementsByTagName("div")[0];
    controls = div.getElementsByTagName("a");
    var following = false;

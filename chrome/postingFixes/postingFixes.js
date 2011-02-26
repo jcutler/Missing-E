@@ -40,10 +40,12 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"}, 
          url.appendChild(uil);
       }
    }
-
+   
    if (postingFixes_settings.addUploader == 1 &&
-       !(/\/new\/text/.test(location)) &&
-       !(/\/new\/chat/.test(location)) &&
+       !(/\/new\/text/.test(location.href)) &&
+       !(/\/new\/chat/.test(location.href)) &&
+       !(/http:\/\/www\.tumblr\.com\/messages/.test(location.href)) &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(location.href)) &&
        $('#regular_form_inline_image_iframe').length == 0) {
       var headings = $('h2');
       var h2 = headings.last();
@@ -55,17 +57,64 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"}, 
          .css({"float":"left","margin-top":"0"})
          .after('<div style="float:right;padding-top:3px;"><iframe src="/upload/image?from_assets" id="regular_form_inline_image_iframe" width="130" height="16" border="0" scrolling="no" allowtransparency="true" frameborder="0" style="background-color:transparent; overflow:hidden;"></iframe></div><div class="clear"></div>');
       if (textarea && textarea != "") {
-         h2.before('<script type="text/javascript">\n' +
+         $('head').append('<script type="text/javascript">\n' +
                           'document.domain = "tumblr.com";\n' +
                           'function catch_uploaded_photo(src) {\n' +
                           '   if (tinyMCE && (ed = tinyMCE.get("' + textarea + '"))) {\n' +
                           '      ed.execCommand("mceInsertContent", false, "<img src=\\"" + src + "\\" />");\n' +
                           '   }\n' +
-                          '   else {\n' +
+                          '   else {\n'+
                           '      insertTag("' + textarea + '", "<img src=\\"" + src + "\\" />");\n' +
                           '   }\n' +
                           '}\n' +
                           '</script>');
       }
    }
+   else if (postingFixes_settings.addUploader == 1 &&
+       (/http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(location.href))) {
+      $('#posts li.post a:contains("answer")').live('click', function() {
+         var post = $(this).closest("li.post");
+         if (post.length > 0) {
+            addAskUploader(post.get(0));
+         }
+      });
+      //var asks = $('#posts li.post');
+      /*
+      asks.each(function(){
+         addAskUploader(this);
+      });
+      */
+      $('head').append('<script type="text/javascript">\n' +
+                       'document.domain = "tumblr.com";\n' +
+                       'var editorID = null;\n' +
+                       'function catch_uploaded_photo(src) {\n' +
+                          'var eId = catch_uploaded_photo.caller.arguments[0].currentTarget.frameElement.id.match(/[0-9]*$/)[0];\n' +
+                       '   var e = "ask_answer_field_" + eId;\n' + 
+                       '   if (tinyMCE && (ed = tinyMCE.get(e))) {\n' +
+                       '      ed.execCommand("mceInsertContent", false, "<img src=\\"" + src + "\\" />");\n' +
+                       '   }\n' +
+                       '   else {\n' +
+                       '      insertTag(e, "<img src=\\"" + src + "\\" />");\n' +
+                       '   }\n' +
+                       '}\n' +
+                       '</script>');
+      /*
+      document.addEventListener('DOMNodeInserted',function(e){
+         if (e.target.tagName == 'LI' && /\bpost\b/.test(e.target.className))
+            addAskUploader(e.target);
+      }, false);
+      */
+   }
 });
+
+function addAskUploader(obj) {
+   if (obj.tagName == 'LI' && $(obj).hasClass('post')) {
+      var aid = obj.id.match(/[0-9]+$/)[0];
+      console.log(aid);
+      var it = document.getElementById('ask_answer_form_container_' + aid);
+      $(it).css('padding-top','0').prepend('<div style="min-height:15px;"><div style="float:right;padding:3px 0;"><iframe src="/upload/image?from_assets" id="regular_form_inline_image_iframe_' + aid + '" width="130" height="16" border="0" scrolling="no" allowtransparency="true" frameborder="0" style="background-color:transparent; overflow:hidden;"></iframe></div><div class="clear"></div></div>');
+   }
+   else
+      return true;
+}

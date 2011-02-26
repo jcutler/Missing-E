@@ -264,20 +264,16 @@ function refreshMarks() {
 
 if (document.body.id != "tinymce" &&
     document.body.id != "dashboard_edit_post") {
-   document.addEventListener('DOMNodeInserted', function(e) {
-      doMarks(e.target);
-   }, false);
+   if (/drafts$/.test(location) == false &&
+       /queue$/.test(location) == false &&
+       /messages$/.test(location) == false) {
+      document.addEventListener('DOMNodeInserted', function(e) {
+         doMarks(e.target);
+      }, false);
+   }
    window.addEventListener('storage',function(e) {
       if (e.key != 'MissingE_bookmarker_marks') return false;
       else
          refreshMarks();
    }, false);
 }
-
-/***
-* Notes:
-*
-* Filter DOMNodeInserted for event.target
-* Remove jQuery
-* Add renaming of bookmarks
-***/
