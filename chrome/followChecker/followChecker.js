@@ -81,24 +81,26 @@ function doFWGet(followers, followees, show) {
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
-            if (this.tryCount <= this.retryLimit) {
+            if (!failed && this.tryCount <= this.retryLimit) {
                $.ajax(this);
                return;
             }
-            else {
-               if (!failed) {
-                  failed = true;
-                  $('#113977_followwhodisplay .followwholist').html('<p><em>Having trouble getting followers listing from Tumblr\'s servers, please try again later.</em></p>');
-                  if ($('#facebox').css('display') == 'block')
-                     $.facebox({ div: '#113977_followwhodisplay' }, 'followwhobox');
-               }
+            else if (!failed) {
+               failed = true;
+               $('#113977_followwhodisplay .followwholist').html('<p><em>Having trouble getting followers listing from Tumblr\'s servers, please try again later.</em></p><img style="margin:20px 0;" src="' + chrome.extension.getURL('images/oh_dear.png') + '" /><div><em>Artwork by <a href="http://theoatmeal.com/">The Oatmeal</a></em></div>');
+               if ($('#facebox').css('display') == 'block')
+                  $.facebox({ div: '#113977_followwhodisplay' }, 'followwhobox');
             }
          },
          success: function(data, textStatus) {
             if (/id="dashboard_followers"/.test(data) == false) {
-               if (!failed) {
+               if (!failed && this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+               else if (!failed) {
                   failed = true;
-                  $('#113977_followwhodisplay .followwholist').html('<p><em>Having trouble getting followers listing from Tumblr\'s servers, please try again later.</em></p>');
+                  $('#113977_followwhodisplay .followwholist').html('<p><em>Having trouble getting followers listing from Tumblr\'s servers, please try again later.</em></p><img style="margin:20px 0;" src="' + chrome.extension.getURL('images/oh_dear.png') + '" /><div><em>Artwork by <a href="http://theoatmeal.com/">The Oatmeal</a></em></div>');
                   if ($('#facebox').css('display') == 'block')
                      $.facebox({ div: '#113977_followwhodisplay' }, 'followwhobox');
                }
@@ -122,24 +124,26 @@ function doFWGet(followers, followees, show) {
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
-            if (this.tryCount <= this.retryLimit) {
+            if (!failed && this.tryCount <= this.retryLimit) {
                $.ajax(this);
                return;
             }
-            else {
-               if (!failed) {
-                  failed = true;
-                  $('#113977_followwhodisplay .followwholist').html('<p><em>Having trouble getting list of who you follow from Tumblr\'s servers, please try again later.</em></p>');
-                  if ($('#facebox').css('display') == 'block')
-                     $.facebox({ div: '#113977_followwhodisplay' }, 'followwhobox');
-               }
+            else if (!failed) {
+               failed = true;
+               $('#113977_followwhodisplay .followwholist').html('<p><em>Having trouble getting list of who you follow from Tumblr\'s servers, please try again later.</em></p><img style="margin:20px 0;" src="' + chrome.extension.getURL('images/oh_dear.png') + '" /><div><em>Artwork by <a href="http://theoatmeal.com/">The Oatmeal</a></em></div>');
+               if ($('#facebox').css('display') == 'block')
+                  $.facebox({ div: '#113977_followwhodisplay' }, 'followwhobox');
             }
          },
          success: function(data, textStatus) {
             if (/id="dashboard_following"/.test(data) == false) {
-               if (!failed) {
+               if (!failed && this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+               else if (!failed) {
                   failed = true;
-                  $('#113977_followwhodisplay .followwholist').html('<p><em>Having trouble getting list of who you follow from Tumblr\'s servers, please try again later.</em></p>');
+                  $('#113977_followwhodisplay .followwholist').html('<p><em>Having trouble getting list of who you follow from Tumblr\'s servers, please try again later.</em></p><img style="margin:20px 0;" src="' + chrome.extension.getURL('images/oh_dear.png') + '" /><div><em>Artwork by <a href="http://theoatmeal.com/">The Oatmeal</a></em></div>');
                   if ($('#facebox').css('display') == 'block')
                      $.facebox({ div: '#113977_followwhodisplay' }, 'followwhobox');
                }
