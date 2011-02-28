@@ -26,11 +26,19 @@ var done;
 var failed = false;
 var retries = 0;
 
+var curr = localStorage.getItem('tu_Names');
+if (localStorage.getItem('MissingE_unfollower_names') && curr)
+   localStorage.removeItem('tu_Names');
+else if (curr) {
+   localStorage.setItem('MissingE_unfollower_names',curr);
+   localStorage.removeItem('tu_Names');
+}
+
 function tu_init() {
    $("body").append('<div id="113977_unfollowdisplay" style="display:none;"><div style="font:bold 24px Georgia,serif;color:#1f354c;">unfollowr.</div><div class="unfollowerlist" style="height:' + ((getPageHeight()/10)*7) + 'px;overflow-y:auto;text-align:center;margin-top:10px;"></div><img class="logo" src="' + chrome.extension.getURL('missinge64.png') + '" /></div>');
 
    var fl = $('#right_column').find('a[href$="/followers"]');
-   var lastFollows = window.localStorage.getItem('tu_Names');
+   var lastFollows = localStorage.getItem('MissingE_unfollower_names');
    if (lastFollows == undefined || lastFollows == null || lastFollows == "") {
       followers = fl.html().match(/([0-9][0-9,\.]*)/);
       if (followers != undefined && followers != null && followers.length >= 2)
@@ -159,8 +167,8 @@ function serializeNames(arr) {
 
 function doFinish(newlist,show) {
    var unfollows = new Array();
-   currlist = parseNames(window.localStorage.getItem('tu_Names'));
-   window.localStorage.setItem('tu_Names',serializeNames(newlist));
+   currlist = parseNames(localStorage.getItem('MissingE_unfollower_names'));
+   localStorage.setItem('MissingE_unfollower_names',serializeNames(newlist));
    if (!show) return true;
    var n=0;
    var a = currlist;
