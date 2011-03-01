@@ -67,8 +67,7 @@ function handleRequest(request) {
    else if (request.name == "reblogYourself") {
       $.ajax({
          type: "GET",
-         url: request.message.url + '/api/read/json',
-         data: "id="+request.message.pid,
+         url: request.message.url + "/api/read/json?id=" + request.message.pid,
          dataType: "text",
          tryCount: 0,
          retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
@@ -103,8 +102,7 @@ function handleRequest(request) {
    else if (request.name == "timestamp") {
       $.ajax({
          type: "GET",
-         url: request.message.url + '/api/read/json',
-         data: "id="+request.message.pid,
+         url: request.message.url + "/api/read/json?id=" + request.message.pid,
          dataType: "text",
          tryCount: 0,
          retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),

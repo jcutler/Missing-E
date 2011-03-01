@@ -26,7 +26,7 @@ function addReblog(item) {
       if ($(item).find('div.post_controls a:contains("reblog")').length > 0)
          return true;
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
-      var addr = $(item).find("a.post_avatar:first").attr("href");
+      var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
 
       safari.self.tab.dispatchMessage("reblogYourself",{pid: tid, url: addr});
    }

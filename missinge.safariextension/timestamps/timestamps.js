@@ -26,12 +26,15 @@ function loadTimestamp(item) {
       var div = $(item).find("div.post_info");
       if (div.length == 0)
          $(item).find(".post_controls:first").after('<div class="post_info"><span class="MissingE_timestamp" style="font-weight:normal;">Loading timestamp...</span></div>');
-      else
-         div.append('<br><span class="MissingE_timestamp" style="font-weight:normal;">Loading timestamp...</span>');
-      $(item).data("tries",0);
+      else {
+         var spn = div.find('span.MissingE_timestamp');
+         if (spn.length == 0)
+            div.append('<br><span class="MissingE_timestamp" style="font-weight:normal;">Loading timestamp...</span>');
+         else
+            spn.text("Loading timestamp...");
+      }
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
-      var addr = $(item).find("a.post_avatar:first").attr("href");
-
+      var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
       
       safari.self.tab.dispatchMessage("timestamp", {pid: tid, url: addr});
    }
@@ -57,7 +60,7 @@ function MissingE_timestamps_doStartup() {
       $('#posts li.post div.post_info a.MissingE_timestamp_retry').live('click',function() {
          var post = $(this).closest('li.post');
          if (post.length == 1) {
-            loadTimestamp(this.parents('li.post').get(0));
+            loadTimestamp($(this).parents('li.post').get(0));
          }
       });
       $('#posts li.post').each(function(){loadTimestamp(this);});
