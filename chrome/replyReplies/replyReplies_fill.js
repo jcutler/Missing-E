@@ -45,47 +45,21 @@ function tags_clearValue() {
    window.localStorage.removeItem('trr_ReplyTags');
 }
 
-function fillPost(e,done) {
-   done = (done==undefined || done==null ? false : done);
-
-   if (e.relatedNode.tagName == 'TD') {
-      var doc;
-      if (doc = e.relatedNode.childNodes[0].contentWindow)
-         doc = doc.document;
-      else doc = e.relatedNode.childNodes[0].contentDocument;
-      if (!done && doc.readyState != 'complete') {
-         window.setTimeout(function(){fillPost(e,false);},100);
-         document.removeEventListener('DOMNodeInserted',fillPost,false);
-         return;
-      }
-      else if (!done) {
-         window.setTimeout(function(){fillPost(e,true);},100);
-         document.removeEventListener('DOMNodeInserted',fillPost,false);
-         return;
-      }
-      else {
-         var newpost = reply_getValue();
-         reply_clearValue();
-         doc.body.innerHTML = newpost;
-         document.removeEventListener('DOMNodeInserted',fillPost,false);
-      }
-   }
-}
-
 if (location == 'http://www.tumblr.com/new/text' &&
     document.body.id == 'dashboard_edit_post' &&
     reply_getValue().length > 0) {
-   if (document.getElementById('post_two_ifr')) {
-      document.addEventListener('DOMNodeInserted',fillPost, false);
-   }
-   else {
-      var newpost = reply_getValue();
-      reply_clearValue();
-      var ta = document.getElementById('post_two');
-      if (ta) {
-         ta.innerHTML = newpost;
-      }
-   }
+
+   $(document).ready(function() {
+         $('head').append('<script type="text/javascript">\n' +
+                          'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {\n' +
+                          '   ed.execCommand("mceInsertContent", false, localStorage.getItem("trr_ReplyText"));\n' +
+                          '}\n' +
+                          'else {\n' +
+                          '   insertTag("post_two", localStorage.getItem("trr_ReplyText"));\n' +
+                          '}\n' +
+                          'localStorage.removeItem("trr_ReplyText");\n' +
+                          '</script>';
+   });
    var tags = tags_getValue();
    if (tags.length > 0) {
       var txt = "";

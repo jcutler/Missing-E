@@ -79,12 +79,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"}, 
             addAskUploader(post.get(0));
          }
       });
-      //var asks = $('#posts li.post');
-      /*
-      asks.each(function(){
-         addAskUploader(this);
-      });
-      */
       $('head').append('<script type="text/javascript">\n' +
                        'document.domain = "tumblr.com";\n' +
                        'var editorID = null;\n' +
@@ -99,12 +93,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"}, 
                        '   }\n' +
                        '}\n' +
                        '</script>');
-      /*
-      document.addEventListener('DOMNodeInserted',function(e){
-         if (e.target.tagName == 'LI' && /\bpost\b/.test(e.target.className))
-            addAskUploader(e.target);
-      }, false);
-      */
    }
 });
 

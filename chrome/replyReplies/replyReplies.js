@@ -137,6 +137,9 @@ $('div.notification_type_icon').live('click', function(e) {
 
       reply_setValue(code);
       tags_setValue(tags);
-      window.open("http://www.tumblr.com/new/text");
+   
+      code = code.replace(/ +/g,' ');
+      code = code.replace(/ /g,'%20').replace(/=/g,'%3D').replace(/[\n\r]/g,'').replace(/&/g,'%26').replace(/</g,'%3C').replace(/>/g,'%3E').replace(/:/g,'%3A').replace(/"/g,'%22').replace(/;/g,'%3B').replace(/\//g,'%2F');
+      window.open("http://www.tumblr.com/new/text?post[one]=&post[two]=" + code + "&post[three]=");
    });
 });
