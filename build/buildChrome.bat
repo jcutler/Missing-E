@@ -1,6 +1,9 @@
 @echo off
 
 cp -R ../chrome .
+cd chrome
+del /S .*.swp
+cd ..
 rename chrome MissingE
 mkdir chrome-build
 rm chrome-build/missinge.zip
