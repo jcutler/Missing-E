@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
  - 'Missing e' Extension
  -
@@ -20,8 +21,10 @@
  - You should have received a copy of the GNU General Public License
  - along with 'Missing e'.  If not, see [http://www.gnu.org/licenses/].
 -->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Missing e - Settings</title>
 <style type="text/css">
 body{
 background:#2c4762 url('images/background.png') top repeat-x;
@@ -438,11 +441,12 @@ margin:0 20px;
 </style>
 <script type="text/javascript" src="common/jquery-1.5.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
-<link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css"></style>
+<link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css" />
 <script type="text/javascript" src="facebox/facebox.js"></script>
-<link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css"/>
+<link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css" />
 <script type="text/javascript" src="checkbox/jquery.checkbox.min.js"></script>
 <script type="text/javascript">
+<!--
 jQuery(document).ready(function($) {
    $('a[rel*=facebox]').facebox({
       loadingImage : 'facebox/loading.gif',
@@ -640,14 +644,14 @@ function doshow(component) {
       document.getElementById('social_posts').style.display = 'none';
    }
 }
-
+-->
 </script>
 </head>
 <body>
 <div id="container">
 <div id="header_container">
 <div id="header">
-<a href="#" onclick="doshow('about');return false;"><img src="missinge_logo.png" alt="Missing e" id="logo"></a>
+<a href="#" onclick="doshow('about');return false;"><img src="missinge_logo.png" alt="Missing e" id="logo" /></a>
 <div id="nav">
 <a href="#" class="nav_item active" id="about_nav" onclick="doshow('about');return false;">
 <div>About</div>
@@ -707,8 +711,8 @@ function doshow(component) {
 <li id="about_section" class="post not_mine regular">
 <div class="post_content">
 <div class="post_title">About 'Missing e'</div>
-<p class="first"><strong><big><em>Missing e</em></big></strong> is a set of tools, features and interface changes for <em>Tumblr</em>. What started out as a bunch of <a target="_blank" href="http://userscripts.org/users/113977">userscripts</a> and has now been incorporated into this Google Chrome extension!<br><br>If you enjoy this extension, please consider <a target="_blank" href='http://www.pledgie.com/campaigns/14406'>donating</a> to support future development<br><a target="_blank" href='http://www.pledgie.com/campaigns/14406'><img alt='Click here to lend your support to: Cutlerish's Donation Jar and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/14406.png?skin_name=chrome' border='0' /></a></p><p>Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br>Released under the <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL Version 3 License</a></p>
-<div id="inclusions">This extension uses some great libraries:<br><a href="http://www.jquery.com" title="jQuery 1.5" target="_blank"><img src="images/inclusions/jquery.png" alt="jQuery 1.5"></a><a href="http://chriswanstrath.com/facebox" title="Facebox 1.3" target="_blank"><img src="images/inclusions/facebox.png" alt="Facebox 1.3"></a><a href="http://widowmaker.kiev.ua/checkbox/" title="jQuery Checkbox 1.3.0" target="_blank"><img src="images/inclusions/checkbox.png" alt="jQuery Checkbox 1.3.0"></a>
+<p class="first"><strong><big><em>Missing e</em></big></strong> is a set of tools, features and interface changes for <em>Tumblr</em>. What started out as a bunch of <a target="_blank" href="http://userscripts.org/users/113977">userscripts</a> and has now been incorporated into this Google Chrome extension!<br /><br />If you enjoy this extension, please consider <a target="_blank" href='http://www.pledgie.com/campaigns/14406'>donating</a> to support future development<br /><a target="_blank" href='http://www.pledgie.com/campaigns/14406'><img alt="Click here to lend your support to: Cutlerish's Donation Jar and make a donation at www.pledgie.com !" src='http://www.pledgie.com/campaigns/14406.png?skin_name=chrome' /></a></p><p>Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br />Released under the <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL Version 3 License</a></p>
+<div id="inclusions">This extension uses some great libraries:<br /><a href="http://www.jquery.com" title="jQuery 1.5" target="_blank"><img src="images/inclusions/jquery.png" alt="jQuery 1.5" /></a><a href="http://chriswanstrath.com/facebox" title="Facebox 1.3" target="_blank"><img src="images/inclusions/facebox.png" alt="Facebox 1.3" /></a><a href="http://widowmaker.kiev.ua/checkbox/" title="jQuery Checkbox 1.3.0" target="_blank"><img src="images/inclusions/checkbox.png" alt="jQuery Checkbox 1.3.0" /></a></div>
 </div>
 <div class="clear"></div>
 <div>
@@ -721,7 +725,7 @@ function doshow(component) {
 <li id="reblogQuoteFit_section" class="post not_mine regular">
 <div class="post_content">
 <form id="reblogQuoteFit_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Reblog Quote Fit</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Reblog Quote Fit</div>
 <div class="post_thumb"><a href="reblogQuoteFit/screen.jpg" rel="facebox"><img src="reblogQuoteFit/thumb.jpg" /><br />Screenshot</a></div>
 <p>Displays reblogged posts with quote sections (text added by previous tumblrs) take up a lot of room. <em>Reblog Quote Fit</em> reduces the display space taken up by the quoted text in order to enhance readbility.</p>
 </form>
@@ -735,7 +739,7 @@ function doshow(component) {
 <li id="bookmarker_section" class="post not_mine regular">
 <div class="post_content">
 <form id="bookmarker_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Bookmarker</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Bookmarker</div>
 <div class="post_thumb"><a href="bookmarker/screen.jpg" rel="facebox"><img src="bookmarker/thumb.png" /><br />Screenshot</a></div>
 <p>Add bookmarks to posts on your dashboard so you can go back to them later! <em>Bookmarker</em> adds a small bookmark button to posts, and a list of current bookmarks in your sidebar.</p>
 <ul><li>Hold down the shift key when clicking on a bookmark icon to create a new bookmark with a custom name.</li><li>Hold down the shift key when clicking on an existing bookmark to rename it.</li></ul>
@@ -750,7 +754,7 @@ function doshow(component) {
 <li id="dashLinksToTabs_section" class="post not_mine regular">
 <div class="post_content">
 <form id="dashLinksToTabs_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Dash Links to Tabs</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dash Links to Tabs</div>
 </form>
 <p><em>Dash Links to Tabs</em> forces all links in dashboard posts to open in a new tab. That way, you won't lose your place when you are scrolling in the dash. All links outside of posts, including the navigation sidebar, behave as normal.</p>
 </div>
@@ -763,7 +767,7 @@ function doshow(component) {
 <li id="safeDash_section" class="post not_mine regular">
 <div class="post_content">
 <form id="safeDash_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Safe Dash</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Safe Dash</div>
 <div class="post_thumb"><a href="safeDash/screen.jpg" rel="facebox"><img src="safeDash/thumb.png" /><br />Screenshot</a></div>
 <p>At work? Have kids about? <em>Safe Dash</em> will hide images in tumblr posts in case any of them are unsafe! Simply hover your mouse over the picture to reveal it. Turn <em>Safe Dash</em> on and off with a link in your dashboard sidebar! Turning <em>Safe Dash</em> off on this settings page will disable it completely.</p><p><strong>Note</strong>: Safe Dash is not effective for posts on a user's tumblr page, only on <strong>dashboard-like</strong> pages (ie. dashboard, tumblelog, likes, queue and drafts).</p><p><strong>These images are hidden:</strong></p>
 <ul><li>All image posts</li><li>All photoset thumbnails</li><li>Photosets that have been clicked (enlarged)</li><li>Inline images in other types of posts</li><li>Album art in audio posts</li><li>All video thumbnails</li><li>All full-size videos (except videos from external sites)</li></ul>
@@ -780,13 +784,13 @@ function doshow(component) {
 <li id="timestamps_section" class="post not_mine regular">
 <div class="post_content">
 <form id="timestamps_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Timestamps</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Timestamps</div>
 <p><em>Timestamps</em> will add the date and time of a post on your dashboard.</p><p><strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.</p>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure (default <span class="defRetries">10</span>)</td><td class="odd"><input class="numinput" size="1" type="text" name="MissingE_timestamps_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);">&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
-<tr><td class="even">Timestamp format<br>
+<tr><td class="odd">Number of retries on failure (default <span class="defRetries">10</span>)</td><td class="odd"><input class="numinput" size="1" type="text" name="MissingE_timestamps_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="even">Timestamp format<br />
 <table class="subnotes"><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
-</td><td class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);"></td></tr></table>
+</td><td class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -800,7 +804,7 @@ function doshow(component) {
 <li id="gotoDashPost_section" class="post not_mine regular">
 <div class="post_content">
 <form id="gotoDashPost_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Goto Dash Post</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Goto Dash Post</div>
 <div class="post_thumb"><a href="gotoDashPost/screen.jpg" rel="facebox"><img src="gotoDashPost/thumb.jpg" /><br />Screenshot</a></div>
 <p>If you are on a tumblr post page and you want to jump directly to it on your dashboard so you can reply to it (assuming that the tumblr user's setup allows you to), <em>Goto Dash Post</em> is your best bet. A "goto dash" control button is added to individual post pages for you to use.</p>
 </form>
@@ -814,10 +818,10 @@ function doshow(component) {
 <li id="postingFixes_section" class="post not_mine regular">
 <div class="post_content">
 <form id="postingFixes_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Posting Fixes</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Posting Fixes</div>
 <p>A few convenient interface fixes for new Tumblr posts.</p>
 <table class="options_table">
-<tr><td class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onchange="doSetting(this,false);" ></td></tr><tr><td class="even">Allow switching back to uploading images on photo posts<br><ul><small><li>By default, Tumblr allows you to switch to a URL with a "<em>Use a URL instead</em>" option, this will allow you to switch back with a "<em>Upload images instead</em>" option.</li></small></ul></td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onchange="doSetting(this,false);" ></td></tr><tr><td class="odd">Allow inline image uploading for all post types (not just text posts)<br><ul><small><li>Adds an "<em><strong>+ Upload Photo</strong></em>" option to all posting pages</li><li>Much like the built-in "<strong><em>+ Upload Photo</em></strong>" options, these don't always load when Tumblr is suffering from errors.</li></small></ul></td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_addUploader" value="0" checked="checked" onchange="doSetting(this,false);" ></td></tr></table>
+<tr><td class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="even">Allow switching back to uploading images on photo posts<br /><ul><small><li>By default, Tumblr allows you to switch to a URL with a "<em>Use a URL instead</em>" option, this will allow you to switch back with a "<em>Upload images instead</em>" option.</li></small></ul></td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="odd">Allow inline image uploading for all post types (not just text posts)<br /><ul><li><small>Adds an "<em><strong>+ Upload Photo</strong></em>" option to all posting pages</small></li><li><small>Much like the built-in "<strong><em>+ Upload Photo</em></strong>" options, these don't always load when Tumblr is suffering from errors.</small></li></ul></td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_addUploader" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -829,13 +833,13 @@ function doshow(component) {
 <li id="reblogYourself_section" class="post not_mine regular">
 <div class="post_content">
 <form id="reblogYourself_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Reblog Yourself</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Reblog Yourself</div>
 <p>Add reblogging functionality to your own tumblr posts, allowing you to <em>Reblog Yourself</em>.</p>
 <p><strong>Note</strong>: chat and ask posts are not normally rebloggable. <em>Reblog Yourself</em> will allow you to reblog them, but the formatting may look pretty bad.</p>
 <table class="options_table">
-<tr><td class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" onchange="doSetting(this,false)"></td></tr>
-<tr><td class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" onchange="doSetting(this,false)"></td></tr>
-<tr><td class="odd">Number of retries on failure to load reblog link on dashboard posts (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" class="numinput" size="1" name="MissingE_reblogYourself_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);">&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
+<tr><td class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
+<tr><td class="odd">Number of retries on failure to load reblog link on dashboard posts (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" class="numinput" size="1" name="MissingE_reblogYourself_retries" value="10" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -850,14 +854,14 @@ function doshow(component) {
 <li id="followChecker_section" class="post not_mine regular">
 <div class="post_content">
 <form id="followChecker_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Follow Checker</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Follow Checker</div>
 <div class="post_thumb"><a href="followChecker/screen.png" rel="facebox"><img src="followChecker/thumb.png" /><br />Screenshot</a></div>
 <p>Find out who you follow on Tumblr that doesn't follow you back and who follows you that you don't follow back with <em>Follow Checker</em>.</p>
 <p><strong>Limitations:</strong></p>
 <ul><li>When Tumblr is suffering from errors, <em>Follow Checker</em> may not be able to load all of your follower/followee pages and will return an error. Wait a little while and try again.</li>
 <li>Because of some limitations with the way Tumblr presents your follower/following lists, some people may appear to not be following/followed who actually are. You should always double-check!</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="numinput" size="1" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);">&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="numinput" size="1" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -870,12 +874,12 @@ function doshow(component) {
 <li id="postCrushes_section" class="post not_mine regular">
 <div class="post_content">
 <form id="postCrushes_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Post Crushes</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Post Crushes</div>
 <div class="post_thumb"><a href="postCrushes/screen.jpg" rel="facebox"><img src="postCrushes/thumb.png" /><br />Screenshot</a></div>
 <p>Automatically create posts showing your Tumblr crushes, straight from your following page with <em>Post Crushes</em>.</p>
 <table class="options_table">
-<tr><td class="odd">Avatar size</td><td class="odd"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" onchange="doSetting(this,false);"> Small avatars (70x70, same as on your 'following' page)<br><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" onchange="doSetting(this,false);" > Large avatars (128x128)</td></tr>
-<tr><td class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" onchange="doSetting(this,false);"></td></tr><tr><td class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" onchange="doSetting(this,false);"></td></tr><tr><td class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);">&nbsp;<span class="resetter" onclick="resetPrefix()">Reset</span></td></tr></table></form>
+<tr><td class="odd">Avatar size</td><td class="odd"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" onchange="doSetting(this,false);" /> Small avatars (70x70, same as on your 'following' page)<br /><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" onchange="doSetting(this,false);" /> Large avatars (128x128)</td></tr>
+<tr><td class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" />&nbsp;<span class="resetter" onclick="resetPrefix()">Reset</span></td></tr></table></form>
 </div>
 <div class="clear"></div>
 <div>
@@ -886,14 +890,14 @@ function doshow(component) {
 <li id="replyReplies_section" class="post not_mine regular">
 <div class="post_content">
 <form id="replyReplies_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Reply Replies</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Reply Replies</div>
 <div class="post_thumb"><a href="replyReplies/screen.png" rel="facebox"><img src="replyReplies/thumb.png" /><br />Screenshot</a></div>
 <p>With <em>Reply Replies</em>, when you click on the icon of a notification in your dash, it'll open a new text post with that notification (and quoted reply, for post replies) in it, ready for you to comment on and post.</p>
 <p><strong>If you want to reply to multiple notifications in the same post, you can:</strong></p>
 <ol><li>Hold down the Shift key and click on the notification icons of each of the notifications you want to reply to.</li><li>Click (without Shift) on the notification icon of the last notification you want to include.</li><li>All the notifications will appear in a single post in chronological order!</li></ol>
 <p>If the setting is enabled, a tag is automatically added to your post for each user to whom you are replying!</p>
 <table class="options_table">
-<tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onchange="doSetting(this,false);" ></td></tr><tr><td class="even">Add username tags to reply posts</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onchange="doSetting(this,false);" ></td></tr></table>
+<tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="even">Add username tags to reply posts</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -905,14 +909,14 @@ function doshow(component) {
 <li id="unfollower_section" class="post not_mine regular">
 <div class="post_content">
 <form id="unfollower_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1"> Unfollower</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Unfollower</div>
 <div class="post_thumb"><a href="unfollower/screen.jpg" rel="facebox"><img src="unfollower/thumb.png" /><br />Screenshot</a></div>
 <p>Find out who has unfollowed you on Tumblr (since the last time you checked) with </em>Unfollower</em>.</p>
 <p><strong>Limitations:</strong></p>
 <ul><li><em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.</li><li><em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.</li>
 <li>When Tumblr is suffering from errors, <em>Unfollower</em> may not be able to load all of your follower pages and will return an error. Wait a little while and try again.</li><li>Because of some limitations with the way Tumblr presents your followers list, some people may appear to have unfollowed who actually haven't. You should always double-check.</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower list (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" class="numinput" size="1" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);">&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure to load follower list (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" class="numinput" size="1" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
