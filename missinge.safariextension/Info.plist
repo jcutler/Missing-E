@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.9</string>
+	<string>1.0.10</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -48,8 +48,10 @@
 				<string>common/defs.js</string>
 				<string>common/utils.js</string>
 				<string>common/storage.js</string>
+				<string>facebox/facebox.js</string>
 				<string>bookmarker/bookmarker.js</string>
 				<string>dashLinksToTabs/dashLinksToTabs.js</string>
+				<string>followChecker/followChecker.js</string>
 				<string>gotoDashPost/gotoDashPost.js</string>
 				<string>postCrushes/postCrushes.js</string>
 				<string>postCrushes/postCrushes_fill.js</string>
@@ -57,19 +59,17 @@
 				<string>reblogQuoteFit/reblogQuoteFit.js</string>
 				<string>reblogYourself/reblogYourself_post.js</string>
 				<string>reblogYourself/reblogYourself_dash.js</string>
+				<string>replyReplies/replyReplies.js</string>
+				<string>replyReplies/replyReplies_fill.js</string>
 				<string>safeDash/safeDash.js</string>
 				<string>timestamps/timestamps.js</string>
-				<string>replyReplies/replyReplies_fill.js</string>
-				<string>replyReplies/replyReplies.js</string>
-				<string>followChecker/followChecker.js</string>
-				<string>facebox/facebox.js</string>
 				<string>unfollower/unfollower.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>
 		<array>
-			<string>bookmarker/bookmarker.css</string>
 			<string>facebox/facebox.css</string>
+			<string>bookmarker/bookmarker.css</string>
 			<string>followChecker/followChecker.css</string>
 			<string>unfollower/unfollower.css</string>
 		</array>
@@ -90,5 +90,9 @@
 			<string>All</string>
 		</dict>
 	</dict>
+	<key>Update Manifest URL</key>
+	<string>http://tumblr.infraware.ca/safari/missinge-version.plist</string>
+	<key>Website</key>
+	<string>http://tumblr.infraware.ca</string>
 </dict>
 </plist>
