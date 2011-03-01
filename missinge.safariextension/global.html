@@ -1,0 +1,335 @@
+<!--
+ - 'Missing e' Extension
+ -
+ - Copyright 2011, Jeremy Cutler
+ - Released under the GPL version 3 licence.
+ - SEE: GPL-LICENSE.txt
+ -
+ - This file is part of 'Missing e'.
+ -
+ - 'Missing e' is free software: you can redistribute it and/or modify
+ - it under the terms of the GNU General Public License as published by
+ - the Free Software Foundation, either version 3 of the License, or
+ - (at your option) any later version.
+ -
+ - 'Missing e' is distributed in the hope that it will be useful,
+ - but WITHOUT ANY WARRANTY; without even the implied warranty of
+ - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ - GNU General Public License for more details.
+ -
+ - You should have received a copy of the GNU General Public License
+ - along with 'Missing e'.  If not, see [http://www.gnu.org/licenses/].
+-->
+<html>
+<head>
+<script type="text/javascript" src="common/jquery-1.5.min.js"></script>
+<script type="text/javascript" src="common/defs.js"></script>
+<script>
+var months = ["Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"];
+
+function getStorage(key,defaultValue) {
+   if (localStorage[key] == undefined)
+      return defaultValue;
+   else
+      return localStorage[key];
+}
+
+function zeroPad(num, len) {
+   var ret = "";
+   ret += num;
+   while (ret.length < len) ret = "0" + ret;
+   return ret;
+}
+
+safari.application.addEventListener("command", performCommand, false);
+function performCommand(cmd) {
+   if (cmd.command == "missinge-settings") {
+      cmd.target.browserWindow.openTab().url = safari.extension.baseURI + "options.html"
+   }
+}
+
+safari.application.addEventListener("message", handleRequest, false);
+function handleRequest(request) {
+   if (request.name == "open") {
+      request.target.browserWindow.openTab().url = request.message;
+   }
+   else if (request.name == "reblogYourself") {
+      $.ajax({
+         type: "GET",
+         url: request.message.url + '/api/read/json',
+         data: "id="+request.message.pid,
+         dataType: "text",
+         tryCount: 0,
+         retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
+         targetId: request.message.pid,
+         error: function(xhr, textStatus) {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               $.ajax(this);
+               return;
+            }
+            else {
+               request.target.page.dispatchMessage("reblogYourself",{pid: this.targetId, success: false});
+            }
+         },
+         success: function(data, textStatus) {
+            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+            }
+            else {
+               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+               var stamp = JSON.parse(txt);
+               var key = stamp["posts"][0]["reblog-key"];
+               request.target.page.dispatchMessage("reblogYourself",{pid: this.targetId, success: true, data: key});
+            }
+         }
+      });
+   }
+   else if (request.name == "timestamp") {
+      $.ajax({
+         type: "GET",
+         url: request.message.url + '/api/read/json',
+         data: "id="+request.message.pid,
+         dataType: "text",
+         tryCount: 0,
+         retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),
+         targetId: request.message.pid,
+         error: function(xhr, textStatus) {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               $.ajax(this);
+               return;
+            }
+            else {
+               request.target.page.dispatchMessage("timestamp",{pid: this.targetId, success: false});
+            }
+         },
+         success: function(data, textStatus) {
+            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+            }
+            else {
+               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+               var stamp = JSON.parse(txt);
+               var ts = stamp["posts"][0]["unix-timestamp"];
+               var d = new Date(ts*1000);
+               var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
+               ins = ins.replace(/%Y/g,d.getFullYear())
+                  .replace(/%y/g,(d.getFullYear()%100))
+                  .replace(/%M/g,months[d.getMonth()])
+                  .replace(/%m/g,zeroPad(d.getMonth()+1,2))
+                  .replace(/%n/g,(d.getMonth()+1))
+                  .replace(/%D/g,zeroPad(d.getDate(),2))
+                  .replace(/%d/g,d.getDate())
+                  .replace(/%G/g,zeroPad((d.getHours()%12==0 ? "12" : d.getHours()%12),2))
+                  .replace(/%g/g,(d.getHours()%12==0 ? "12" : d.getHours()%12))
+                  .replace(/%H/g,zeroPad(d.getHours(),2))
+                  .replace(/%h/g,d.getHours())
+                  .replace(/%i/g,zeroPad(d.getMinutes(),2))
+                  .replace(/%s/g,zeroPad(d.getSeconds(),2))
+                  .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
+                  .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
+               request.target.page.dispatchMessage("timestamp",{pid: this.targetId, success: true, data: ins});
+            }
+         }
+      });
+   }
+   else if (request.name == "settings") {
+      var settings = {};
+      settings.component = request.message.component;
+      switch(request.message.component) {
+         case "replyReplies":
+            settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
+            settings.addTags = getStorage("MissingE_replyReplies_addTags",1);
+            break;
+         case "postCrushes_fill":   
+         case "postCrushes":
+            settings.prefix = getStorage("MissingE_postCrushes_prefix","Tumblr Crushes:");
+            settings.crushSize = getStorage("MissingE_postCrushes_crushSize",1);
+            settings.addTags = getStorage("MissingE_postCrushes_addTags",1);
+            settings.showPercent = getStorage("MissingE_postCrushes_showPercent",1);
+            break;
+         case "postingFixes":
+            settings.photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
+            settings.uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
+            settings.addUploader = getStorage("MissingE_postingFixes_addUploader",1);
+            break;
+         case "unfollower":
+         case "followChecker":
+            settings.retries = getStorage("MissingE_" + request.component + "_retries",defaultRetries);
+            break;
+      }
+      request.target.page.dispatchMessage("settings",settings);
+   }
+   else if (request.name == "start") {
+      var activeScripts = {};
+      if (!request.message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url)) {
+         if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
+            activeScripts.dashLinksToTabs = true;
+         }
+         else
+            activeScripts.dashLinksToTabs = false;
+      }
+      if (!request.message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/drafts/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url))) {
+         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
+            activeScripts.safeDash = true;
+         }
+         else
+            activeScripts.safeDash = false;
+         
+         if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
+            activeScripts.bookmarker = true;
+         }
+         else
+            activeScripts.bookmarker = false;
+   
+         if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
+             getStorage("MissingE_followChecker_enabled",1) == 1) {
+         }
+
+         if (getStorage("MissingE_unfollower_enabled",1) == 1) {
+            activeScripts.unfollower = true;
+         }
+         else
+            activeScripts.unfollower = false;
+
+         if (getStorage("MissingE_followChecker_enabled",1) == 1) {
+            activeScripts.followChecker = true;
+         }
+         else
+            activeScripts.followChecker = false;
+      }
+      if (!request.message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/drafts/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url))) {
+         if (getStorage("MissingE_reblogQuoteFit_enabled",1) == 1) {
+            activeScripts.reblogQuoteFit = true;
+         }
+         else
+            activeScripts.reblogQuoteFit = false;
+      }
+      if (!request.message.isFrame &&
+          ((request.bodyId == 'dashboard_edit_post' &&
+            (/http:\/\/www\.tumblr\.com\/new\//.test(request.message.url) ||
+             /http:\/\/www\.tumblr\.com\/tumblelog\/[0-9A-Za-z\-\_]+\/new\//.test(request.message.url) ||
+             /http:\/\/www\.tumblr\.com\/reblog\//.test(request.message.url) ||
+             /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(request.message.url))) ||
+         (/http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(request.message.url)))) {
+         if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
+            activeScripts.postingFixes = true;
+         }
+         else
+            activeScripts.postingFixes = false;
+      }
+      if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(request.message.url) &&
+          !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(request.message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/new\//.test(request.message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/new\//.test(request.message.url))) {
+         if (getStorage("MissingE_gotoDashPost_enabled",1) == 1) {
+            activeScripts.gotoDashPost = true;
+         }
+         else
+            activeScripts.gotoDashPost = false;
+
+         if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
+             getStorage("MissingE_reblogYourself_postPage",1) == 1) {
+            activeScripts.reblogYourself = true;
+         }
+         else
+            activeScripts.reblogYourself = false;
+      }
+      if (!request.message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url))) {
+         if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
+            activeScripts.replyReplies = true;
+            activeScripts.replyReplies_fill = false;
+         }
+         else
+            activeScripts.replyReplies = false;
+      }
+      if (!request.message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/new\/text/.test(request.message.url)) {
+         if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
+            activeScripts.replyReplies = true;
+            activeScripts.replyReplies_fill = true;
+         }
+         else
+            activeScripts.replyReplies = false;
+      }
+      if (!request.message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/following/.test(request.message.url)) {
+         if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
+            activeScripts.postCrushes = true;
+            activeScripts.postCrushes_fill = false;
+         }
+         else
+            activeScripts.postCrushes = false;
+      }
+      if (!request.message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/new\/photo/.test(request.message.url)) {
+         if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
+            activeScripts.postCrushes = true;
+            activeScripts.postCrushes_fill = true;
+         }
+         else
+            activeScripts.postCrushes = false;
+      }
+      if (!request.message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(messages|drafts|queue)/.test(request.message.url))) {
+         if (getStorage("MissingE_timestamps_enabled",1) == 1) {
+            activeScripts.timestamps = true;
+         }
+         else
+            activeScripts.timestamps = false;
+
+         if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
+             getStorage("MissingE_reblogYourself_dashboard",1) == 1) {
+            activeScripts.reblogYourself = true;
+         }
+         else
+            activeScripts.reblogYourself = false;
+      }
+
+      activeScripts.url = request.message.url;
+      activeScripts.isFrame = request.message.isFrame;
+      request.target.page.dispatchMessage("startup",activeScripts);
+   }
+}
+
+</script>
+</head>
+</html>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>Jeremy Cutler</string>
+	<key>CFBundleDisplayName</key>
+	<string>Missing e</string>
+	<key>CFBundleIdentifier</key>
+	<string>ca.infraware.missinge</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.9</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>Chrome</key>
+	<dict>
+		<key>Database Quota</key>
+		<real>1048576</real>
+		<key>Global Page</key>
+		<string>global.html</string>
+		<key>Toolbar Items</key>
+		<array>
+			<dict>
+				<key>Identifier</key>
+				<string>missinge-settings</string>
+				<key>Image</key>
+				<string>Icon-16.png</string>
+				<key>Label</key>
+				<string>Missing e</string>
+				<key>Palette Label</key>
+				<string>Missing e</string>
+				<key>Tool Tip</key>
+				<string>Missing e - Settings</string>
+			</dict>
+		</array>
+	</dict>
+	<key>Content</key>
+	<dict>
+		<key>Scripts</key>
+		<dict>
+			<key>End</key>
+			<array>
+				<string>common/whoami.js</string>
+				<string>common/addmenu.js</string>
+				<string>common/jquery-1.5.min.js</string>
+				<string>common/defs.js</string>
+				<string>common/utils.js</string>
+				<string>common/storage.js</string>
+				<string>bookmarker/bookmarker.js</string>
+				<string>dashLinksToTabs/dashLinksToTabs.js</string>
+				<string>gotoDashPost/gotoDashPost.js</string>
+				<string>postCrushes/postCrushes.js</string>
+				<string>postCrushes/postCrushes_fill.js</string>
+				<string>postingFixes/postingFixes.js</string>
+				<string>reblogQuoteFit/reblogQuoteFit.js</string>
+				<string>reblogYourself/reblogYourself_post.js</string>
+				<string>reblogYourself/reblogYourself_dash.js</string>
+				<string>safeDash/safeDash.js</string>
+				<string>timestamps/timestamps.js</string>
+				<string>replyReplies/replyReplies_fill.js</string>
+				<string>replyReplies/replyReplies.js</string>
+				<string>followChecker/followChecker.js</string>
+				<string>facebox/facebox.js</string>
+				<string>unfollower/unfollower.js</string>
+			</array>
+		</dict>
+		<key>Stylesheets</key>
+		<array>
+			<string>bookmarker/bookmarker.css</string>
+			<string>facebox/facebox.css</string>
+			<string>followChecker/followChecker.css</string>
+			<string>unfollower/unfollower.css</string>
+		</array>
+		<key>Whitelist</key>
+		<array>
+			<string>http://www.tumblr.com/*</string>
+		</array>
+	</dict>
+	<key>Description</key>
+	<string>Useful features and customizations for Tumblr.</string>
+	<key>ExtensionInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>Permissions</key>
+	<dict>
+		<key>Website Access</key>
+		<dict>
+			<key>Level</key>
+			<string>All</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
