@@ -58,7 +58,7 @@ if (location == 'http://www.tumblr.com/new/text' &&
                           '   insertTag("post_two", localStorage.getItem("trr_ReplyText"));\n' +
                           '}\n' +
                           'localStorage.removeItem("trr_ReplyText");\n' +
-                          '</script>';
+                          '</script>');
    });
    var tags = tags_getValue();
    if (tags.length > 0) {
