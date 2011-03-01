@@ -1,0 +1,23 @@
+For safari gallery:
+http://tumblr.infraware.ca/safari/missinge.safariextz
+http://tumblr.infraware.ca/safari/missinge-version.
+
+Useful features and customizations for Tumblr.
+
+Any user of Tumblr would love having 'Missing e'!
+
+'Missing e' adds functionality and tools for navigating, posting and socializing on the the popular micro-blogging platform:
+
+* Bookmark posts on your Tumblr dashboard so you can go back to them later
+* Open links in dashboard posts in new tabs so you never lose your place
+* Check who you follow that doesn't follow back and who follows you that you don't follow back
+* Keep track of other users that unfollow you
+* Jump directly to a post on the dashboard from the individual post's page
+* Easily and quickly create a post of your Tumblr crushes
+* Fix interface shortcomings in viewing posts on the dashboard and creating new posts
+* Reblog your own posts quickly from the dashboard or an individual post's page
+* Automatically create new posts for replying to replies (and other notifications)
+* Hide potentially unsafe images while browsing the dashboard
+* Add post timestamps to the dashboard
+
+Settings can be changed with the toolbar button or clicking "Missing e" under Tumblr's "Account" drop-down menu!
