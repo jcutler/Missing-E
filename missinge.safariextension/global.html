@@ -237,8 +237,9 @@ function handleRequest(request) {
          else
             activeScripts.reblogQuoteFit = false;
       }
+      console.log(request);
       if (!request.message.isFrame &&
-          ((request.bodyId == 'dashboard_edit_post' &&
+          ((request.message.bodyId == 'dashboard_edit_post' &&
             (/http:\/\/www\.tumblr\.com\/new\//.test(request.message.url) ||
              /http:\/\/www\.tumblr\.com\/tumblelog\/[0-9A-Za-z\-\_]+\/new\//.test(request.message.url) ||
              /http:\/\/www\.tumblr\.com\/reblog\//.test(request.message.url) ||

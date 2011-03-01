@@ -79,7 +79,7 @@ function doStartup(response) {
 function settings_startup(response) {
    if (response.name != "settings") return;
    else if (response.message.component == "postingFixes")
-      MissingE_postingFiles_doStartup(response.message.photoReplies, response.message.uploaderToggle, response.message.addUploader);
+      MissingE_postingFixes_doStartup(response.message.photoReplies, response.message.uploaderToggle, response.message.addUploader);
    else if (response.message.component == "followChecker")
       MissingE_followChecker_doStartup(response.message.retries);
    else if (response.message.component == "unfollower")
