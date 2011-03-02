@@ -65,10 +65,10 @@ for ($i=0; $i<9; $i++) {
 }
 
 $offset = $large ? 17 : 12;
-$img = imagecreatetruecolor($avCrop*3+$offset,$avCrop*3+$offset);
+$img = imagecreatetruecolor($avCrop*3+$offset*2,$avCrop*3+$offset*2);
 $bl = imagecolorallocatealpha($img, 0, 0, 0, 60);
 $wh = imagecolorallocate($img, 255, 255, 255);
-imagefilledrectangle($img, 0, 0, $avCrop*3+$offset, $avCrop*3+$offset, $wh);
+imagefilledrectangle($img, 0, 0, $avCrop*3+$offset*2, $avCrop*3+$offset*2, $wh);
 
 if ($large) {
    $overlay['w'] = 44;
@@ -95,19 +95,19 @@ for ($i=0; $i<9; $i++) {
    }
 }
 
-$tmp=imagecreatetruecolor($avCrop*3,$avCrop*3);
+$tmp=imagecreatetruecolor($avCrop*3+$offset*2,$avCrop*3+$offset*2);
 $twh = imagecolorallocate($tmp,255,255,255);
 $ttr = imagecolorallocate($tmp,0,0,0);
 $radius = $large?13:10;
-imagefilledrectangle($tmp, 0, 0, $avCrop*3, $avCrop*3, $twh);
-imagefilledrectangle($tmp, $radius, 0, $avCrop*3-$radius-1, $avCrop*3-1, $ttr);
-imagefilledrectangle($tmp, 0, $radius, $avCrop*3-1, $avCrop*3-$radius-1, $ttr);
-imagefilledellipse($tmp,$radius,$radius,$radius*2,$radius*2, $ttr);
-imagefilledellipse($tmp,$avCrop*3-$radius-1,$radius,$radius*2,$radius*2, $ttr);
-imagefilledellipse($tmp,$avCrop*3-$radius-1,$avCrop*3-$radius-1,$radius*2,$radius*2, $ttr);
-imagefilledellipse($tmp,$radius,$avCrop*3-$radius-1,$radius*2,$radius*2, $ttr);
+imagefilledrectangle($tmp, 0, 0, $avCrop*3+$offset*2, $avCrop*3+$offset*2, $twh);
+imagefilledrectangle($tmp, $offset+$radius, $offset, $offset+$avCrop*3-$radius-1, $offset+$avCrop*3-1, $ttr);
+imagefilledrectangle($tmp, $offset, $offset+$radius, $offset+$avCrop*3-1, $offset+$avCrop*3-$radius-1, $ttr);
+imagefilledellipse($tmp,$offset+$radius,$offset+$radius,$radius*2,$radius*2, $ttr);
+imagefilledellipse($tmp,$offset+$avCrop*3-$radius-1,$offset+$radius,$radius*2,$radius*2, $ttr);
+imagefilledellipse($tmp,$offset+$avCrop*3-$radius-1,$offset+$avCrop*3-$radius-1,$radius*2,$radius*2, $ttr);
+imagefilledellipse($tmp,$offset+$radius,$offset+$avCrop*3-$radius-1,$radius*2,$radius*2, $ttr);
 imagecolortransparent($tmp,$ttr);
-imagecopymerge($img, $tmp, $offset, $offset, 0, 0, $avCrop*3, $avCrop*3, 100);
+imagecopymerge($img, $tmp, 0, 0, 0, 0, $avCrop*3+$offset*2, $avCrop*3+$offset*2, 100);
 imagecolordeallocate($tmp, $twh);
 imagecolordeallocate($tmp, $ttr);
 imagedestroy($tmp);
