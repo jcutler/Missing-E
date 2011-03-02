@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Title</key>
+		<string>Use 'e' toolbar button or</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>Dummy1</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>"Account" drop-down menu on Tumblr</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>Dummy2</string>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>to change settings.</string>
+		<key>Type</key>
+		<string>Group</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>Dummy3</string>
+	</dict>
+</array>
+</plist>
