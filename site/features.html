@@ -21,7 +21,9 @@ jQuery(document).ready(function($) {
       $('#facebox div.overlay, #facebox div.overlayname').remove();
       var thm = $('#facebox img.thumb');
       if (thm.length > 0) {
-         thm.wrap('<div class="thumb" style="width:'+(thm.innerWidth())+'px;height:'+(thm.innerHeight())+'px;"></div>');
+         var timg = new Image();
+         timg.src = thm.attr('src');
+         thm.wrap('<div class="thumb" style="width:'+(timg.width)+'px;height:'+(timg.height)+'px;"></div>');
       }
       var scr = $('#facebox img.screen');
       if (scr.length > 0) {
