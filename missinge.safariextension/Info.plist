@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.12</string>
+	<string>1.0.13</string>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>5</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -91,8 +91,8 @@
 		</dict>
 	</dict>
 	<key>Update Manifest URL</key>
-	<string>http://tumblr.infraware.ca/safari/missinge-version.plist</string>
+	<string>http://missinge.infraware.ca/safari/missinge-version.plist</string>
 	<key>Website</key>
-	<string>http://tumblr.infraware.ca</string>
+	<string>http://missinge.infraware.ca</string>
 </dict>
 </plist>
