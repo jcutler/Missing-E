@@ -108,8 +108,8 @@
         append('<div class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>')
 
       $('#facebox').css({
-        top:	getPageScroll()[1] + (getPageHeight() / 10),
-        left:	$(window).width() / 2 - 205
+        top:	getPageScroll()[1] + (getPageHeight() / 20),
+        left:	$(window).width() / 2 - 205,
       }).show()
 
       $(document).bind('keydown.facebox', function(e) {
@@ -152,7 +152,10 @@
       var klass = this.rel.match(/facebox\[?\.(\w+)\]?/)
       if (klass) klass = klass[1]
 
-      fillFaceboxFromHref(this.href, klass)
+      if (this.getAttribute("rev") == "facebox_content")
+         fillFaceboxFromHref(this, klass);
+      else
+         fillFaceboxFromHref(this.href, klass)
       return false
     }
 
@@ -236,7 +239,10 @@
   //    ajax: anything else
   function fillFaceboxFromHref(href, klass) {
     // div
-    if (href.match(/#/)) {
+    if (typeof href == 'object') {
+      $.facebox.reveal($(href).html(), klass)
+    }
+    else if (href.match(/#/)) {
       var url    = window.location.href.split('#')[0]
       var target = href.replace(url,'')
       if (target == '#') return
