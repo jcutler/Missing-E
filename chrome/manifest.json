@@ -7,6 +7,7 @@
                     "128": "missinge128.png" },   
    "permissions": [
       "contextMenus",
+      "management",
       "tabs",
       "http://*/*",
       "http://*/"
