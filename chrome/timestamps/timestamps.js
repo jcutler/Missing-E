@@ -36,6 +36,7 @@ function loadTimestamp(item) {
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
       var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
 
+      if (tid == undefined || tid == null || tid == "") return;
       chrome.extension.sendRequest({greeting: "timestamp", pid: tid, url: addr}, function(response) {
          if (response.success) {
             var info = $('#post_' + response.pid).find('span.MissingE_timestamp');

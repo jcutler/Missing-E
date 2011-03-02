@@ -35,7 +35,7 @@ function loadTimestamp(item) {
       }
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
       var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
-      
+      if (tid == undefined || tid == null || tid == "") return; 
       safari.self.tab.dispatchMessage("timestamp", {pid: tid, url: addr});
    }
 }
