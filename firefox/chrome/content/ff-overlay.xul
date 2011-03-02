@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://missinge/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://missinge/locale/overlay.dtd">
+<overlay id="missinge-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+  <script src="ff-overlay.js"/>
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="missinge-strings" src="chrome://missinge/locale/overlay.properties"/>
+  </stringbundleset>
+
+  <toolbarpalette id="BrowserToolbarPalette">
+  <toolbarbutton id="missinge-toolbar-button" class="toolbarbutton-1 chromeclass-toolbar-additional"
+    label="&missingeToolbarButton.label;" tooltiptext="&missingeToolbarButton.tooltip;"
+    oncommand="missinge.onToolbarButtonCommand()"/>
+  </toolbarpalette>
+
+
+
+</overlay>
