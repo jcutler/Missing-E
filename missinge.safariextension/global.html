@@ -308,7 +308,8 @@ function handleRequest(request) {
       if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url)) &&
+          /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(messages|drafts|queue)/.test(request.message.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;

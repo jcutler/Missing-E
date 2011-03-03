@@ -307,7 +307,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
       if ((/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url)) &&
+          /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(messages|drafts|queue)/.test(sender.tab.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
