@@ -19,8 +19,8 @@
 // @exclude        http://tumblr.com/tumblelog/*/drafts
 // @exclude        http://tumblr.com/tumblelog/*/messages
 // @exclude        http://tumblr.com/tumblelog/*/queue
-// @version        0.2.7
-// @date           2011-01-07
+// @version        0.2.8
+// @date           2011-03-03
 // @creator        Jeremy Cutler
 // ==/UserScript==
 
@@ -107,7 +107,7 @@ function load_113977(li) {
    }
    
    if (/post/.test(li.attr("class"))) {
-      var scr = li.find("a.post_avatar:first").attr("href");
+      var scr = li.find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
       scr += '/api/read/json?id=';
       var tid = li.attr("id").match(/[0-9]*$/)[0];
       scr += tid;

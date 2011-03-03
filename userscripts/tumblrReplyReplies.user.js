@@ -3,8 +3,8 @@
 // @description    Enable replies (of a sort) to one or more tumblr notifications
 // @namespace      http://userscripts.org/users/113977
 // @include        http://*.tumblr.com/*
-// @version        0.5.1
-// @date           2011-02-15
+// @version        0.5.2
+// @date           2011-03-03
 // @creator        Jeremy Cutler
 // ==/UserScript==
 
@@ -12,7 +12,7 @@
    var scriptUpdater = {
       name : "Tumblr Reply Replies",
       shortname : 'trr',
-      version : "0.5.1",
+      version : "0.5.2",
       usoID : 91350,
       lastCheck : function() { return (window.localStorage.getItem(this.shortname + '_lastCheck') ? window.localStorage.getItem(this.shortname + '_lastCheck') : 0); },
       now : (new Date()).valueOf(),
@@ -197,6 +197,7 @@
       doPage(window);
       return;
    }
+   jQuery('head').append('<style type="text/css">#posts div.notification_type_icon { cursor:pointer; }</style>');
    jQuery('div.notification_type_icon').live('contextmenu', function() {
       doSettings();
       return false;
@@ -286,48 +287,32 @@
       tags_setValue(tags);
       window.open("http://www.tumblr.com/new/text");
    });
-   
-   function fillPost(e,done) {
-      done = (done==undefined || done==null ? false : done);
-   
-      if (e.relatedNode.tagName == 'TD') {
-         var doc;
-         if (doc = e.relatedNode.childNodes[0].contentWindow)
-            doc = doc.document;
-         else doc = e.relatedNode.childNodes[0].contentDocument;
-         if (!done && doc.readyState != 'complete') {
-            window.setTimeout(function(){fillPost(e,false);},100);
-            document.removeEventListener('DOMNodeInserted',fillPost,false);
-            return;
-         }
-         else if (!done) {
-            window.setTimeout(function(){fillPost(e,true);},100);
-            document.removeEventListener('DOMNodeInserted',fillPost,false);
-            return;
-         }
-         else {
-            var newpost = reply_getValue();
-            reply_clearValue();
-            doc.body.innerHTML = newpost;
-            document.removeEventListener('DOMNodeInserted',fillPost,false);
-         }
-      }
+  
+   function doFill() {
+         document.getElementsByTagName('head');
+         var fscr = document.createElement('script');
+         fscr.setAttribute('type','text/javascript');
+         fscr.innerHTML = 'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {\n' +
+                          '   ed.execCommand("mceInsertContent", false, localStorage.getItem("trr_ReplyText"));\n' +
+                          '}\n' +
+                          'else {\n' +
+                          '   insertTag("post_two", localStorage.getItem("trr_ReplyText"));\n' +
+                          '}\n' +
+                          'localStorage.removeItem("trr_ReplyText");';
+         document.getElementsByTagName('head')[0].appendChild(fscr);
    }
-   
+         
    if (location == 'http://www.tumblr.com/new/text' &&
        document.body.id == 'dashboard_edit_post' &&
        reply_getValue().length > 0) {
-      if (document.getElementById('post_two_ifr')) {
-         document.addEventListener('DOMNodeInserted',fillPost, false);
-      }
+
+      if (document.readyState == 'complete') doFill();
       else {
-         var newpost = reply_getValue();
-         reply_clearValue();
-         var ta = document.getElementById('post_two');
-         if (ta) {
-            ta.innerHTML = newpost;
-         }
+         document.addEventListener('readystatechange',function(e) {
+            if (document.readyState == 'complete') doFill();
+         }, false);
       }
+
       var tags = tags_getValue();
       if (tags.length > 0) {
          var txt = "";

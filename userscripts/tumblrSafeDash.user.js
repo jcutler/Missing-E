@@ -8,8 +8,9 @@
 // @include        http://www.tumblr.com/likes*
 // @include        http://www.tumblr.com/messages*
 // @include        http://www.tumblr.com/queue*
-// @version        0.2.7
-// @date           2011-02-17
+// @include        http://www.tumblr.com/tagged*
+// @version        0.2.9
+// @date           2011-03-03
 // @creator        Jeremy Cutler
 // ==/UserScript==
 
@@ -17,7 +18,7 @@
    var scriptUpdater = {
       name : "Tumblr SafeDash",
       shortname : "tsd",
-      version : "0.2.7",
+      version : "0.2.9",
       usoID : 94450,
       lastCheck : function() { return (window.localStorage.getItem(this.shortname + '_lastCheck') ? window.localStorage.getItem(this.shortname + '_lastCheck') : 0); },
       now : (new Date()).valueOf(),
@@ -63,7 +64,7 @@
    else {
       opA = 0;
    }
-   st.innerHTML = '#posts .post img, .notification blockquote img, .video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } #posts .post img:hover, .notification blockquote img:hover, #posts #new_post img, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img { opacity:1 !important; } .nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat scroll center center !important; display:inline-block !important; max-width:100%; } .nsfwdiv:hover, .nsfwoff { background:#FFFFFF !important} #posts .post .video_thumbnail .nsfwdiv { position:static !important; } #right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_nsfw { background-image:url("' + lockicon + '") !important; background-position:0px 0px; } .nsfwembed:hover .nsfwed { visibility:visible !important; } .nsfwembed { clear:both; } .nsfwdiv img.album_art { margin-right:0px !important; }';
+   st.innerHTML = '#posts .post img, .notification blockquote img, .video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } #posts .post img:hover, .notification blockquote img:hover, #posts #new_post img, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img { opacity:1 !important; } .nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat scroll center center !important; display:inline-block !important; max-width:100%; } .nsfwdiv:hover, .nsfwoff { background:#FFFFFF !important} #posts .post .video_thumbnail .nsfwdiv { position:static !important; } #right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_nsfw { background-image:url("' + lockicon + '") !important; background-position:0px 0px; } .nsfwembed:hover .nsfwed { visibility:visible !important; } .nsfwembed { clear:both; } .nsfwdiv img.album_art, .nsfwdiv img.image_thumbnail { margin-right:0px !important; } .album_nsfwdiv { margin-right:20px; float:left; } .album_nsfwdiv_enlarged { margin-bottom:20px; margin-right:0 !important; float:none !important;}';
 
    document.getElementsByTagName('head')[0].appendChild(st);
 
@@ -394,12 +395,15 @@
                }
                var h = me.height();
                var w = me.width();
-               var album = me.hasClass('album_art');
+               var album = me.hasClass('album_art') || me.hasClass('image_thumbnail');
                var s;
                if (album) {
+                  me.click(function() {
+                     $(this).parent().toggleClass('album_nsfwdiv_enlarged');
+                  });
                   if (h == undefined || h == null || h == 0) h = 150;
                   if (w == undefined || w == null || w == 0) w = 150;
-                  s = '<div class="nsfwdiv ' + klass +'" style="' +
+                  s = '<div class="nsfwdiv album_nsfwdiv' + klass +'" style="' +
                         'margin-right:' + me.css('margin-right') +
                         ';float:left;" />';
                }
@@ -410,8 +414,10 @@
                      extra = 'position:absolute;top:' + pos.top + 'px;left:' +
                         pos.left + 'px;';
                   }
-                  s = '<div class="nsfwdiv ' + klass + '" style="min-height:' + h +
-                        'px;' + 'min-width:' + w + 'px;' + extra + '" />';
+                  if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/.test(me.attr('src')))) {
+                     extra += 'min-height:' + h + 'px;' + 'min-width:' + w + 'px;';
+                  }
+                  s = '<div class="nsfwdiv ' + klass + '" style="' + extra + '" />';
                }
                if (me.parent().hasClass('video_thumbnail'))
                   me.next().addClass('nsfwed');
@@ -469,6 +475,7 @@
    }, false);
 
    window.addEventListener('storage',function(e) {
+      if (e.key != 'tnsfw_State') return false;
       var state = LS_getValue('tnsfw_State',0);
       if (state == 0) {
          undoNSFW();

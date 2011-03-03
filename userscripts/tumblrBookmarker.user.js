@@ -3,13 +3,14 @@
 // @description    Bookmark posts on your dash to return to later
 // @namespace      http://userscripts.org/users/113977
 // @include        http://www.tumblr.com/tumblelog/*
-// @include        http://www.tumblr.com/drafts
-// @include        http://www.tumblr.com/queue
-// @include        http://www.tumblr.com/likes
-// @include        http://www.tumblr.com/messages
+// @include        http://www.tumblr.com/drafts*
+// @include        http://www.tumblr.com/queue*
+// @include        http://www.tumblr.com/likes*
+// @include        http://www.tumblr.com/messages*
 // @include        http://www.tumblr.com/dashboard*
-// @version        0.2.9
-// @date           2011-01-11
+// @include        http://www.tumblr.com/tagged*
+// @version        0.2.10
+// @date           2011-03-03
 // @creator        Jeremy Cutler
 // ==/UserScript==
 
@@ -404,3 +405,4 @@ if (document.body.id != "tinymce" &&
    document.addEventListener('DOMNodeInserted', tbr_113977, false);
    window.addEventListener('storage', tbr_113977, false);
 }
+
