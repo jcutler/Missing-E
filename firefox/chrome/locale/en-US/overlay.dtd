@@ -1,8 +1,0 @@
-<!ENTITY missinge.label "Your localized menuitem">
-<!ENTITY missingeContext.label "Your Menuitem">
-<!ENTITY missingeContext.accesskey "Y">
-<!ENTITY missingeToolbarButton.label "Your Toolbar Button">
-<!ENTITY missingeToolbarButton.tooltip "This is your toolbar button!">
-<!ENTITY missingeSidebar.label "Your Sidebar">
-<!ENTITY missingeToolbar.name  "example">
-<!ENTITY missingeToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &missingeToolbar.name;">
