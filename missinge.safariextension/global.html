@@ -194,7 +194,8 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url))) {
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
          if (getStorage("MissingE_safeDash_enabled",1) == 1) {
             activeScripts.safeDash = true;
          }

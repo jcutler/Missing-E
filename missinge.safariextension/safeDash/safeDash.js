@@ -125,7 +125,7 @@ function doHide(item) {
             }
             var h = me.height();
             var w = me.width();
-            var album = me.hasClass('album_art');
+            var album = me.hasClass('album_art') || me.hasClass('image_thumbnail');
             var s;
             if (album) {
                me.click(function() {
@@ -211,7 +211,7 @@ function MissingE_safeDash_doStartup() {
    else {
       opA = 0;
    }
-   st.innerHTML = '#posts .post img, .notification blockquote img, .video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } #posts .post img:hover, .notification blockquote img:hover, #posts #new_post img, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img { opacity:1 !important; } .nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat scroll center center !important; display:inline-block !important; max-width:100%; } .nsfwdiv:hover, .nsfwoff { background:#FFFFFF !important} #posts .post .video_thumbnail .nsfwdiv { position:static !important; } #right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_nsfw { background-image:url("' + lockicon + '") !important; background-position:0px 0px; } .nsfwembed:hover .nsfwed { visibility:visible !important; } .nsfwembed { clear:both; } .nsfwdiv img.album_art { margin-right:0px !important; } .album_nsfwdiv { margin-right:20px; float:left; } .album_nsfwdiv_enlarged { margin-bottom:20px; margin-right:0 !important; float:none !important;}';
+   st.innerHTML = '#posts .post img, .notification blockquote img, .video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } #posts .post img:hover, .notification blockquote img:hover, #posts #new_post img, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img { opacity:1 !important; } .nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat scroll center center !important; display:inline-block !important; max-width:100%; } .nsfwdiv:hover, .nsfwoff { background:#FFFFFF !important} #posts .post .video_thumbnail .nsfwdiv { position:static !important; } #right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_nsfw { background-image:url("' + lockicon + '") !important; background-position:0px 0px; } .nsfwembed:hover .nsfwed { visibility:visible !important; } .nsfwembed { clear:both; } .nsfwdiv img.album_art, .nsfwdiv img.image_thumbnail { margin-right:0px !important; } .album_nsfwdiv { margin-right:20px; float:left; } .album_nsfwdiv_enlarged { margin-bottom:20px; margin-right:0 !important; float:none !important;}';
    
    document.getElementsByTagName('head')[0].appendChild(st);
    
