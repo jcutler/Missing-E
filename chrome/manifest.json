@@ -1,12 +1,11 @@
 {
    "name":        "Missing e",
-   "version":     "1.0.15",
+   "version":     "1.0.17",
    "description": "Useful features and customizations for Tumblr.",
    "icons":       { "16": "missinge16.png",
                     "48": "missinge48.png",
                     "128": "missinge128.png" },   
    "permissions": [
-      "contextMenus",
       "management",
       "tabs",
       "http://*/*",
