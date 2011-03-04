@@ -56,14 +56,22 @@ margin-top:40px;
 
 #map a {
 display:inline-block;
-   font-weight:bold;
+font-weight:bold;
 text-decoration:none;
-font-size:32px;
+font-size:24px;
 margin:0 16px;
-   -webkit-border-radius:10px 10px 0 0;
-   -moz-border-radius:10px 10px 0 0;
-   border-radius:10px 10px 0 0;
+-webkit-border-radius:10px 10px 0 0;
+-moz-border-radius:10px 10px 0 0;
+border-radius:10px 10px 0 0;
 padding:2px 8px 0 8px;  
+}
+
+#about #map a, #features #map a {
+padding:6px 8px 4px 8px;
+}
+
+#about #map #github, #features #map #github {
+padding:2px 8px 4px 8px;
 }
 
 #map a.active {
