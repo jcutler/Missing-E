@@ -3,7 +3,7 @@
 // @description    Enable replies (of a sort) to one or more tumblr notifications
 // @namespace      http://userscripts.org/users/113977
 // @include        http://*.tumblr.com/*
-// @version        0.5.2
+// @version        0.5.3
 // @date           2011-03-03
 // @creator        Jeremy Cutler
 // ==/UserScript==
@@ -12,7 +12,7 @@
    var scriptUpdater = {
       name : "Tumblr Reply Replies",
       shortname : 'trr',
-      version : "0.5.2",
+      version : "0.5.3",
       usoID : 91350,
       lastCheck : function() { return (window.localStorage.getItem(this.shortname + '_lastCheck') ? window.localStorage.getItem(this.shortname + '_lastCheck') : 0); },
       now : (new Date()).valueOf(),
@@ -301,18 +301,24 @@
                           'localStorage.removeItem("trr_ReplyText");';
          document.getElementsByTagName('head')[0].appendChild(fscr);
    }
-         
+   
    if (location == 'http://www.tumblr.com/new/text' &&
        document.body.id == 'dashboard_edit_post' &&
        reply_getValue().length > 0) {
-
-      if (document.readyState == 'complete') doFill();
-      else {
-         document.addEventListener('readystatechange',function(e) {
-            if (document.readyState == 'complete') doFill();
-         }, false);
+      if (isFF) {
+         document.addEventListener("DOMContentLoaded", function(){
+            document.removeEventListener("DOMContentLoaded", arguments.callee, false );
+            doFill();
+         }, false );
       }
-
+      else {
+         if (document.readyState == 'complete') doFill();
+         else {
+            document.addEventListener('readystatechange',function(e) {
+               if (document.readyState == 'complete') doFill();
+            }, false);
+         }
+      }
       var tags = tags_getValue();
       if (tags.length > 0) {
          var txt = "";
@@ -333,3 +339,4 @@
       tags_clearValue();
    }
 }());
+
