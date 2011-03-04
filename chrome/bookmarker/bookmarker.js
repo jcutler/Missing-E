@@ -73,11 +73,11 @@ function addMark(post,custom) {
       var ok = true;
       while (ans == "") {
          if (ok)
-            ans = prompt("Enter a bookmark name:\n\nUse only alphanumeric characters and spaces.",ds);
+            ans = prompt("Enter a bookmark name:",ds);
          else
-            ans = prompt("Enter a bookmark name (cannot be empty):\n\nUse only alphanumeric characters and spaces.",ds);
+            ans = prompt("Enter a bookmark name (cannot be empty):",ds);
          if (ans == null || ans == undefined) return false;
-         ans = ans.replace(/[^a-zA-Z0-9\s]/g,'').replace(/^\s*/,'').replace(/\s*$/,'');
+         ans = ans.replace(/^\s*/,'').replace(/\s*$/,'').replace(/[;,]/g,'.');
          ok = false;
       }
       ds = ans;
@@ -146,6 +146,8 @@ function handleEdit(type, evt) {
       par.removeData('editmode').find('span.mark_date').show();
       par.siblings('.s113977_unmarker').removeClass('MissingE_bookmarker_forceHide');
       $(evt.target).remove();
+      par.siblings('#s113977_bookmark_confirmedit').remove();
+      //par.siblings('#s113977_bookmark_reset').remove();
    }
 }
 
@@ -159,28 +161,15 @@ $('#s113977_marklist a.MissingE_bookmarker_marklink').live('click',function(e) {
       inp.focusout(function(e) { handleEdit('focusout',e);})
             .keyup(function(e) { handleEdit('keyup',e); });
       title.after(inp);
+      $(this).after('<a id="s113977_bookmark_confirmedit" class="tracked_tag_control" onclick="return false;" style="display:inline;" href="#">&#10004;</a>');
+/*
+                    ('<a id="s113977_bookmark_reset" class="tracked_tag_control" onclick="return false;" href="#">&#8634;</a>');
+*/
       inp.get(0).focus();
       title.hide();
       $(this).siblings('.s113977_unmarker').addClass('MissingE_bookmarker_forceHide');
    return false;
    }
-     /* 
-      ds = ans;
-      var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
-      var i;
-      for (i=0; i<marks.length; i++) {
-         if (marks[i][1] == post)
-            break;
-      }
-      marks[i][2] = ds;
-      setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
-
-      $(this).parent().remove();
-      generateList();
-      return false;
-      title.after(inp);
-   }
-   */
 });
 
 function marklistClick(e) {
