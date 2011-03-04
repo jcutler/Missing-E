@@ -320,6 +320,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.timestamps = false;
 
+         if (getStorage("MissingE_magnifier_enabled",1) == 1) {
+            activeScripts.magnifier = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "magnifier/magnifier.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "magnifier/magnifier.css"});
+         }
+         else
+            activeScripts.magnifier = false;
+
          if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
              getStorage("MissingE_reblogYourself_dashboard",1) == 1) {
             activeScripts.reblogYourself = true;

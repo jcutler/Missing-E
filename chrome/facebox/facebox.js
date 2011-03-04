@@ -254,7 +254,7 @@
   function fillFaceboxFromImage(href, klass) {
     var image = new Image()
     image.onload = function() {
-      $.facebox.reveal('<div class="image"><img src="' + image.src + '" /></div>', klass)
+      $.facebox.reveal('<div id="facebox-image" class="image"><img style="width:' + image.width + 'px;" src="' + image.src + '" /></div>', klass)
     }
     image.src = href
   }
