@@ -155,6 +155,9 @@ function handleRequest(request) {
       var settings = {};
       settings.component = request.message.component;
       switch(request.message.component) {
+         case "dashLinksToTabs":
+            settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
+            break;
          case "replyReplies":
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
             settings.addTags = getStorage("MissingE_replyReplies_addTags",1);

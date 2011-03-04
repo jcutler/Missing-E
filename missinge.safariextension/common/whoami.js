@@ -46,7 +46,8 @@ function doStartup(response) {
    
    if (window.top == window) {
       if (response.message.bookmarker) MissingE_bookmarker_doStartup();
-      if (response.message.dashLinksToTabs) MissingE_dashLinksToTabs_doStartup();
+      if (response.message.dashLinksToTabs)
+         safari.self.tab.dispatchMessage("settings",{component: "dashLinksToTabs"});
       if (response.message.postCrushes) {
          if (response.message.postCrushes_fill)
             MissingE_postCrushes_fill_doStartup();
@@ -84,6 +85,8 @@ function settings_startup(response) {
       MissingE_followChecker_doStartup(response.message.retries);
    else if (response.message.component == "unfollower")
       MissingE_unfollower_doStartup(response.message.retries);
+   else if (response.message.component == "dashLinksToTabs")
+      MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs);
 }
 
 safari.self.addEventListener("message", doStartup, false);

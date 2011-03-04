@@ -145,6 +145,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "settings") {
       var settings = {};
       switch(request.component) {
+         case "dashLinksToTabs":
+            settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
+            break;
          case "replyReplies":
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
             settings.addTags = getStorage("MissingE_replyReplies_addTags",1);

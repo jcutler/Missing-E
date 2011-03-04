@@ -21,13 +21,16 @@
  * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function MissingE_dashLinksToTabs_doStartup() {
+function MissingE_dashLinksToTabs_doStartup(newPostTabs) {
    var lcol = document.getElementById('left_column')
    
    if (lcol) {
       lcol.addEventListener('click', function(e) {
          if (e.target == undefined || e.target == null) return false;
          var node = e.target;
+         if (newPostTabs != 1 &&
+             $(node).parents('#new_post').length > 0)
+            return false;
          if ($(node).closest('#dashboard_controls').length > 0) return false;
          if (node.tagName!='A') {
             for (; node != null && node.tagName != 'AREA' && node.tagName != 'A' && node.id != this; node=node.parentNode);

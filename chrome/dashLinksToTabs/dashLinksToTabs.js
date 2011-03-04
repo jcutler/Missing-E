@@ -24,16 +24,22 @@
 var lcol = document.getElementById('left_column');
 
 if (lcol) {
-   lcol.addEventListener('click', function(e) {
-      if (e.target == undefined || e.target == null) return false;
-      var node = e.target;
-      if ($(node).closest('#dashboard_controls').length > 0) return false;
-      if (node.tagName!='A') {
-         for (; node != null && node.tagName != 'AREA' && node.tagName != 'A' && node.id != this; node=node.parentNode);
-      }
-      if (node == null || node == this) return false;
-      if (!/^#/.test(node.href))
-         node.target='_blank'
-      return true;
-   }, false);
+   chrome.extension.sendRequest({greeting: "settings", component: "dashLinksToTabs"}, function(response) {
+      var dashLinksToTabs_settings = JSON.parse(response);
+      lcol.addEventListener('click', function(e) {
+         if (e.target == undefined || e.target == null) return false;
+         var node = e.target;
+         if (dashLinksToTabs_settings.newPostTabs != 1 &&
+             $(node).parents('#new_post').length > 0)
+            return false;
+         if ($(node).closest('#dashboard_controls').length > 0) return false;
+         if (node.tagName!='A') {
+            for (; node != null && node.tagName != 'AREA' && node.tagName != 'A' && node.id != this; node=node.parentNode);
+         }
+         if (node == null || node == this) return false;
+         if (!/^#/.test(node.href))
+            node.target='_blank'
+         return true;
+      }, false);
+   });
 }
