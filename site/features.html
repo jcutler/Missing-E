@@ -11,7 +11,15 @@
 <script type="text/javascript" src="facebox/facebox.js"></script>
 <script type="text/javascript">
 <!--
+var img1 = new Image();
+img1.src = 'images/github_white.png'; 
+var img2 = new Image();
+img2.src = 'images/github_blue.png';
+
 jQuery(document).ready(function($) {
+   $('a#github').hover(
+                       function() { $(this).find('img').attr("src",'images/github_white.png'); },
+                       function() { $(this).find('img').attr("src",'images/github_blue.png'); });
    $('a.brick').each(function(i){$(this).delay(100*i).animate({opacity:1},800)});
    $('a[rel*=facebox]').facebox();
    $(document).bind('close.facebox', function() {
@@ -76,7 +84,7 @@ jQuery(document).ready(function($) {
 </head>
 <body id="features">
 <div id="logo"><a href="/"><img src="images/missinge.png" alt="Missing e" /></a></div>
-<div id="map"><a href="about.html">ABOUT</a><a class="active" href="features.html">FEATURES</a><a href="/">GET</a></div><div id="content">
+<div id="map"><a href="about.html">ABOUT</a><a class="active" href="features.html">FEATURES</a><a href="/">GET</a><a id="github" href="https://github.com/jcutler/Missing-E"><img src="images/github_blue.png" alt="View 'Missing e' on github" /></a></div><div id="content">
 <a class="brick" href="#" rel="facebox[.exploded]" rev="facebox_content"><div class="brickname">Reblog Quote Fit</div><img class="icon" alt="Reblog Quote Fit" src="icons/reblogQuoteFit_avatar.png" /><p>Displays reblogged posts with quote sections (text added by previous tumblrs) take up a lot of room.</p><p><em>Reblog Quote Fit</em> reduces the display space taken up by the quoted text in order to enhance readbility.</p><div class="screenshot"><img class="screen" src="screens/reblogQuoteFit.jpg" alt="Screenshot of Reblog Quote Fit" /><img class="thumb" src="screens/reblogQuoteFit_thumb.jpg" alt="Screenshot of Reblog Quote Fit" /></div><div class="overlay"></div><div class="overlayname">Reblog Quote Fit</div></a>
 <a class="brick" href="#" rel="facebox[.exploded]" rev="facebox_content"><div class="brickname">Bookmarker</div><img class="icon" alt="Bookmarker" src="icons/bookmarker_avatar.png" /><p>Add bookmarks to posts on your dashboard so you can go back to them later!</p><p><em>Bookmarker</em> adds a small bookmark button to posts, and a list of current bookmarks in your sidebar.</p><ul><li>Hold down the <img class="inlineimg" src="images/shift.gif" alt="Shift" /> key when clicking on a bookmark icon to create a new bookmark with a custom name.</li><li>Hold down the <img class="inlineimg" src="images/shift.gif" alt="Shift" /> key when clicking on an existing bookmark to rename it.</li></ul><div class="screenshot"><img class="screen" src="screens/bookmarker.jpg" alt="Screenshot of Bookmarker" /><img class="thumb" src="screens/bookmarker_thumb.png" alt="Screenshot of Bookmarker" /></div><div class="overlay"></div><div class="overlayname">Bookmarker</div></a>
 <a class="brick" href="#" rel="facebox[.exploded]" rev="facebox_content"><div class="brickname">Dash Links to Tabs</div><img class="icon" alt="Dash Links to Tabs" src="icons/dashLinksToTabs_avatar.png" /><p><em>Dash Links to Tabs</em> forces all links in dashboard posts to open in a new tab. That way, you won't lose your place when you are scrolling in the dash.</p><p>All links outside of posts, including the navigation sidebar and dashboard page navigation, behave as normal.</p><div class="overlay"></div><div class="overlayname">Dash Links to Tabs</div></a>

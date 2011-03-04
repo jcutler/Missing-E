@@ -349,3 +349,7 @@ margin:0 10px;
    border-radius:10px;
    padding-bottom:2px;
 }
+
+#map a img {
+   vertical-align:bottom;
+}
