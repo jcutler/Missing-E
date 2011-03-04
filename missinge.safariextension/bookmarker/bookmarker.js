@@ -68,11 +68,11 @@ function addMark(post,custom) {
       var ok = true;
       while (ans == "") {
          if (ok)
-            ans = prompt("Enter a bookmark name:\n\nUse only alphanumeric characters and spaces.",ds);
+            ans = prompt("Enter a bookmark name:",ds);
          else
-            ans = prompt("Enter a bookmark name (cannot be empty):\n\nUse only alphanumeric characters and spaces.",ds);
+            ans = prompt("Enter a bookmark name (cannot be empty):",ds);
          if (ans == null || ans == undefined) return false;
-         ans = ans.replace(/[^a-zA-Z0-9\s]/g,'').replace(/^\s*/,'').replace(/\s*$/,'');
+         ans = ans.replace(/^\s*/,'').replace(/\s*$/,'').replace(/[;,]/g,'.');
          ok = false;
       }
       ds = ans;
@@ -113,37 +113,57 @@ function getMarkText(dt, post, name) {
    return '<li id="mark_' + post + '"><a class="MissingE_bookmarker_marklink" href="/dashboard/1000/' + pid + '?lite" post="' + post + '"><span class="icon dashboard_controls_bookmark"></span><span class="mark_date" timestamp="' + dt + '">' + name + '</span></a> <a id="unmark_' + post + '" class="s113977_unmarker tracked_tag_control" onclick="return false;" href="#">x</a></li>';
 }
 
+function handleEdit(type, evt) {
+   var end = false;
+   var par = $(evt.target).parent();
+   if (type == 'keyup' && evt.keyCode == 27) end = true;
+   else if ((type == 'keyup' && evt.keyCode == 13) ||
+            type == 'focusout') {
+      var post = par.attr("post").match(/([0-9]+)(\?lite|$)/)[1];
+      end = true;
+      var oldval = evt.target.getAttribute("value");
+      var newval = evt.target.value;
+      newval = newval.replace(/^\s*/,'').replace(/\s*$/,'').replace(/[;,]/g,'.');
+      if (newval != oldval && newval != "") {
+         evt.target.value = newval;
+         var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
+         var i;
+         for (i=0; i<marks.length; i++) {
+            if (marks[i][1] == post)
+               break;
+         }
+         marks[i][2] = newval;
+         setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
+         par.find('span.mark_date').html(newval);
+      }
+   }
+   if (end) {
+      par.removeData('editmode').find('span.mark_date').show();
+      par.siblings('.s113977_unmarker').removeClass('MissingE_bookmarker_forceHide');
+      $(evt.target).remove();
+      par.siblings('#s113977_bookmark_confirmedit').remove();
+      //par.siblings('#s113977_bookmark_reset').remove();
+   }
+}
+
 $('#s113977_marklist a.MissingE_bookmarker_marklink').live('click',function(e) {
+   if ($(this).data('editmode') == "EDIT") return false;
    if (e.shiftKey) {
-      var post = $(this).attr("post").match(/([0-9]+)(\?lite|$)/)[1];
+      $(this).data('editmode','EDIT');
       var title = $(this).find('span.mark_date');
       var ds = title.text();
-      var ans = "";
-      var ok = true;
-      while (ans == "") {
-         if (ok)
-            ans = prompt("Enter a bookmark name:\n\nUse only alphanumeric characters and spaces.",ds);
-         else
-            ans = prompt("Enter a bookmark name (cannot be empty):\n\nUse only alphanumeric characters and spaces.",ds);
-         if (ans == null || ans == undefined) {
-            return false;
-         }
-         ans = ans.replace(/[^a-zA-Z0-9\s]/g,'').replace(/^\s*/,'').replace(/\s*$/,'');
-         ok = false;
-      }
-      ds = ans;
-      var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
-      var i;
-      for (i=0; i<marks.length; i++) {
-         if (marks[i][1] == post)
-            break;
-      }
-      marks[i][2] = ds;
-      setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
-
-      $(this).parent().remove();
-      generateList();
-      return false;
+      var inp = $('<input name="MissingE_bookmarker_edit" type="text" size="10" value="' + ds + '" id="MissingE_bookmarker_edit">');
+      inp.focusout(function(e) { handleEdit('focusout',e);})
+            .keyup(function(e) { handleEdit('keyup',e); });
+      title.after(inp);
+      $(this).after('<a id="s113977_bookmark_confirmedit" class="tracked_tag_control" onclick="return false;" style="display:inline;" href="#">&#10004;</a>');
+/*
+                    ('<a id="s113977_bookmark_reset" class="tracked_tag_control" onclick="return false;" href="#">&#8634;</a>');
+*/
+      inp.get(0).focus();
+      title.hide();
+      $(this).siblings('.s113977_unmarker').addClass('MissingE_bookmarker_forceHide');
+   return false;
    }
 });
 

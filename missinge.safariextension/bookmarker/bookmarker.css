@@ -39,3 +39,18 @@ background-position:-6px 0;
 a.s113977_ismarked {
 background-position:-12px 0 !important;
 }
+
+#MissingE_bookmarker_edit {
+font: 11px 'Lucida Grande',Verdana,sans-serif !important;
+width:130px;
+border:0;
+padding:0 2px 0 6px;
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+border-radius:5px;
+margin:0 2px 0 0;
+}
+
+.MissingE_bookmarker_forceHide {
+display:none !important;
+}
