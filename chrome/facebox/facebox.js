@@ -273,7 +273,7 @@
                }
                for (j=0; j<images.length; j++) {
                   var p = (maxHeight - images[j].height)>>1;
-                  code += '<div style="padding:' + p + 'px 0;' + (j != 0 ? 'display:none;':'') + '" class="image"><img src="' + images[j].src + '" /></div>';
+                  code += '<div style="padding:' + p + 'px 0;' + (j != 0 ? 'display:none;':'') + '" class="image"><a href="' + images[j].src + '" target="_blank"><img src="' + images[j].src + '" /></a></div>';
                }
                var m = (maxHeight - 45)>>1;
                code = '<div class="slideshow" style="width:' + maxWidth + 'px;height:' + maxHeight + 'px">' + code + '<div style="margin:' + m + 'px 0;" class="turner_left"></div><div style="margin:' + m + 'px 0;" class="turner_right"></div></div>';
@@ -286,7 +286,7 @@
     else {
      var image = new Image()
     image.onload = function() {
-      $.facebox.reveal('<div class="image"><img style="width:' + image.width + 'px;" src="' + image.src + '" /></div>', klass)
+      $.facebox.reveal('<div class="image"><a href="' + image.src + '" target="_blank"><img style="width:' + image.width + 'px;" src="' + image.src + '" /></a></div>', klass)
     }
     image.src = href
     }
