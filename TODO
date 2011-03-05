@@ -1,5 +1,8 @@
 Magnifier:
-- move up if too large?
+- still have to add them for single images
+- still have to add top positioning when too large
+- add nsfvdiv classes (not for unfollower/follow checker)
+- make sure description refers to high res
 
 Port magnifier to Safari
 

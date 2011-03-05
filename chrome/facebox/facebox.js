@@ -264,15 +264,45 @@
           images[i].onload = function() {
             imagesCount++;
             if (imagesCount == images.length) {
+               var ph = getPageHeight() - 30;
+               var pw = $(window).width() - 30; 
                var maxWidth = 0;
                var maxHeight = 0;
+               var wide;
+               var high = new Array(imagesCount);
                code = '';
                for (j=0; j<images.length; j++) {
-                  if (images[j].width > maxWidth) maxWidth=images[j].width;
-                  if (images[j].height > maxHeight) maxHeight=images[j].height;
+                  if (images[j].width <= pw && images[j].height <= ph) {
+                     wide = images[j].width;
+                     high[j] = images[j].height;
+                  }
+                  else if (images[j].width <= pw && images[j].height > ph) {
+                     var ratio = ph/images[j].height;
+                     wide = images[j].width * ratio;
+                     high[j] = ph;
+                  }
+                  else if (images[j].width > pw && images[j].height <= ph) {
+                     var ratio = pw/images[j].width;
+                     wide = pw;
+                     high[j] = images[j].height * ratio;
+                  }
+                  else {
+                     var ratiow = pw/images[j].width;
+                     var ratioh = ph/images[j].height;
+                     if (ratiow <= ratioh) {
+                        wide = pw;
+                        high[j] = images[j].height * ratiow;
+                     }
+                     else {
+                        wide = images[j].width * ratioh;
+                        high[j] = ph;
+                     }
+                  }
+                  if (wide > maxWidth) maxWidth=wide;
+                  if (high[j] > maxHeight) maxHeight=high[j];
                }
                for (j=0; j<images.length; j++) {
-                  var p = (maxHeight - images[j].height)>>1;
+                  var p = (maxHeight - high[j])>>1;
                   code += '<div style="padding:' + p + 'px 0;' + (j != 0 ? 'display:none;':'') + '" class="image"><a href="' + images[j].src + '" target="_blank"><img src="' + images[j].src + '" /></a></div>';
                }
                var m = (maxHeight - 45)>>1;
@@ -286,7 +316,7 @@
     else {
      var image = new Image()
     image.onload = function() {
-      $.facebox.reveal('<div class="image"><a href="' + image.src + '" target="_blank"><img style="width:' + image.width + 'px;" src="' + image.src + '" /></a></div>', klass)
+      $.facebox.reveal('<div class="image"><a href="' + image.src + '" target="_blank"><img style="width:' + image.width + 'px;height:' + image.height + 'px;" src="' + image.src + '" /></a></div>', klass)
     }
     image.src = href
     }
