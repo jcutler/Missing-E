@@ -26,6 +26,9 @@
 <script type="text/javascript" src="common/defs.js"></script>
 <script>
 var cache = {};
+var cacheClear;
+var tenMinutes = 600000;
+
 var months = ["Jan",
               "Feb",
               "Mar",
@@ -38,6 +41,8 @@ var months = ["Jan",
               "Oct",
               "Nov",
               "Dec"];
+
+cacheClear = setInterval(function() { cache = {}; }, tenMinutes);
 
 function getStorage(key,defaultValue) {
    if (localStorage[key] == undefined)
