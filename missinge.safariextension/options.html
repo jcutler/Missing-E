@@ -537,7 +537,13 @@ function loadSettings() {
       else {
          active.checked = false;
       }
-      if (v == "timestamps") {
+      if (v == "dashLinksToTabs") {
+         if (getStorage('MissingE_dashLinksToTabs_newPostTabs',1) == 1)
+            frm.MissingE_dashLinksToTabs_newPostTabs.checked = true;
+         else
+            frm.MissingE_dashLinksToTabs_newPostTabs.checked = false;
+      }
+      else if (v == "timestamps") {
          frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
          frm.MissingE_timestamps_format.value = getStorage('MissingE_timestamps_format',"%Y-%m-%D %H:%i");
       }
