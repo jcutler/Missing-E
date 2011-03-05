@@ -21,70 +21,67 @@
  * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
-
-function loadTimestamp(item) {
-   if (item.tagName == "LI" && $(item).hasClass("post") && $(item).attr("id") != "new_post") {
-      var div = $(item).find("div.post_info");
-      if (div.length == 0)
-         $(item).find(".post_controls:first").after('<div class="post_info"><span class="MissingE_timestamp" style="font-weight:normal;">Loading timestamp...</span></div>');
-      else {
-         var spn = div.find('span.MissingE_timestamp');
-         if (spn.length == 0)
-            div.append('<br><span class="MissingE_timestamp" style="font-weight:normal;">Loading timestamp...</span>');
-         else
-            spn.text("Loading timestamp...");
-      }
-      var tid = $(item).attr("id").match(/[0-9]*$/)[0];
-      */
-      //var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
-/*
-      if (tid == undefined || tid == null || tid == "") return;
-      chrome.extension.sendRequest({greeting: "timestamp", pid: tid, url: addr}, function(response) {
-         if (response.success) {
-            var info = $('#post_' + response.pid).find('span.MissingE_timestamp');
-            info.html(response.data);
-         }
-         else {
-            var info = $('#post_' + response.pid).find('span.MissingE_timestamp');
-            info.html('Timestamp loading failed. <a class="MissingE_timestamp_retry" href="#">Retry</a>');
-         }
-      });
-   }
-}
-*/
-
 var magimg = chrome.extension.getURL('magnifier/magnifier.png');
-$('head').append('<style type="text/css">a.s113977_magnify { background-image:url("' + magimg + '"); }');
+var turnimg = chrome.extension.getURL('magnifier/turners.png');
+var turnload = new Image();
+turnload.src = turnimg;
+$('head').append('<style type="text/css">a.s113977_magnify { background-image:url("' + magimg + '"); } #facebox .slideshow .turner_left, #facebox .slideshow .turner_right{ background-image:url("' + turnimg + '");}');
 
 function magClick(e) {
    if (e.which == 1) {
-      var src = $(this).closest('li.post').find('div.post_content img.image').attr("src");
+      if ($(this).hasClass('s113977_magnify_err')) {
+         insertMagnifier($(this).closest('li.post').get(0),'a');
+         return false;
+      }
+      var src = $(this).attr('src');
+      if (src == undefined || src == null || src == "") return false;
       $.facebox({ image: src });
    }
 }
 
 function insertMagnifier(item) {
    if (item.tagName == "LI" && $(item).hasClass("post") && $(item).hasClass("photo")) {
-      var post = $(item).attr("id").match(/[0-9]*$/)[0];
-      if (post == undefined || post == null || post == "") return false;
+      $(item).find('a.s113977_magnify').remove();
+      var tid = $(item).attr("id").match(/[0-9]*$/)[0];
+      var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
       var ctrl = $(item).find('div.post_controls');
-      $('<a class="s113977_magnify" id="magnify_' + post + '" title="Magnify" href="#" onclick="return false;"></a>')
+      $('<a class="s113977_magnify s113977_magnify_hide" id="magnify_' + tid + '" title="Magnify" href="#" onclick="return false;"></a>')
          .appendTo(ctrl).click(magClick);
+      chrome.extension.sendRequest({greeting: "magnifier", pid: tid, url: addr}, function(response) {
+         if (response.success) {
+            //var urls = JSON.parse(response.data);
+            var urls = response.data.replace(/"/g,'\'');
+            $('#magnify_' + response.pid).attr('src',response.data).removeClass('s113977_magnify_hide');
+         }
+         else {
+            $('#magnify_' + response.pid).attr('src','').addClass('s113977_magnify_err').removeClass('s113977_magnify_hide');
+         }
+      });
    }
 }
 
 if (/drafts$/.test(location) == false &&
     /queue$/.test(location) == false &&
     /messages$/.test(location) == false) {
-   /*
-   $('#posts li.post div.post_info a.MissingE_timestamp_retry').live('click',function() {
-      var post = $(this).closest('li.post');
-      if (post.length == 1) {
-         loadTimestamp($(this).parents('li.post').get(0));
+   $('#facebox .turner_left,#facebox .turner_right').live('click', function(e) {
+      var curr = $(this).siblings('div.image:visible:last');
+      var next;
+      if ($(this).hasClass('turner_right')) {
+         next = curr.next('div.image');
+         if (next.length == 0) {
+            console.log("end");
+            next = curr.parent().find('div.image:first');
+         }
       }
+      else {
+         next = curr.prev('div.image');
+         if (next.length == 0)
+            next = curr.parent().find('div.image:last');
+      }
+      curr.parent().find('div.image:visible').not(curr).hide();
+      curr.fadeOut('fast');
+      next.fadeIn('slow');
    });
-   */
    $('#posts li.post[class~="photo"]').each(function(){insertMagnifier(this);});
    document.addEventListener('DOMNodeInserted',function(e) {
       insertMagnifier(this);

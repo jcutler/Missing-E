@@ -54,8 +54,42 @@
   text-align: center;
 }
 
+#facebox .slideshow {
+position:relative;
+}
+
+#facebox .slideshow .image {
+position:absolute;
+top:0;
+left:0;
+width:100%;
+}
+
+#facebox .slideshow .turner_left, #facebox .slideshow .turner_right {
+height:45px;
+width:33px;
+display:none;
+position:absolute;
+top:0;
+cursor:pointer;
+}
+
+#facebox .slideshow .turner_left {
+background-position:0 0;
+left:-5px;
+}
+
+#facebox .slideshow .turner_right {
+right:-5px;
+background-position:-33px 0;
+}
+
+#facebox .slideshow:hover .turner_left, #facebox .slideshow:hover .turner_right {
+display:block;
+}
+
 #facebox .image {
-  text-align: center;
+text-align: center;
 }
 
 #facebox img {

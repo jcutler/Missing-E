@@ -469,6 +469,7 @@ var componentList = ["reblogQuoteFit",
                      "dashLinksToTabs",
                      "safeDash",
                      "timestamps",
+                     "magnifier",
                      "gotoDashPost",
                      "postingFixes",
                      "reblogYourself",
@@ -542,6 +543,9 @@ function loadSettings() {
             frm.MissingE_dashLinksToTabs_newPostTabs.checked = true;
          else
             frm.MissingE_dashLinksToTabs_newPostTabs.checked = false;
+      }
+      else if (v == "magnifier") {
+         frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
       }
       else if (v == "timestamps") {
          frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
@@ -765,14 +769,30 @@ function doshow(component) {
 <span class="arrow"></span>
 </div>
 </li>
+<li id="magnifier_section" class="post not_mine regular">
+<div class="post_content">
+<form id="magnifier_options">
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Magnifier</div>
+<div class="post_thumb"><a href="magnifier/screen.jpg" rel="facebox"><img src="magnifier/thumb.jpg" /><br />Screenshot</a></div>
+<p>Add a small <img src="magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard.</p><p><em>Magnifier</em> also works on photoset posts!</p>
+<table class="options_table">
+<tr><td class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">10</span>)</td><td class="odd"><input class="numinput" size="1" type="text" name="MissingE_magnifier_retries" value="10" size="5" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr></table>
+</form>
+</div>
+<div class="clear"></div>
+<div>
+<div class="post_avatar" style="background-image:url('icons/magnifier_avatar.png');"></div>
+<span class="arrow"></span>
+</div>
+</li>
 <li id="dashLinksToTabs_section" class="post not_mine regular">
 <div class="post_content">
 <form id="dashLinksToTabs_options">
 <div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dash Links to Tabs</div>
-</form>
 <p><em>Dash Links to Tabs</em> forces all links in dashboard posts to open in a new tab. That way, you won't lose your place when you are scrolling in the dash.</p><p>All links outside of posts, including the navigation sidebar, behave as normal.</p>
 <table class="options_table">
 <tr><td class="odd">New post buttons (text, photo, quote, etc.) at the top of the dashboard open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_newPostTabs" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
+</form>
 </div>
 <div class="clear"></div>
 <div>

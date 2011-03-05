@@ -251,12 +251,45 @@
     }
   }
 
+  var images;
+  var imagesCount;
   function fillFaceboxFromImage(href, klass) {
-    var image = new Image()
+     console.log(/^\[/.test(href));
+    if (/^\[/.test(href)) {
+       var srcs = JSON.parse(href);
+       images = new Array(srcs.length);
+       imagesCount = 0;
+       for (i=0; i<srcs.length; i++) {
+          images[i] = new Image();
+          images[i].onload = function() {
+            imagesCount++;
+            if (imagesCount == images.length) {
+               var maxWidth = 0;
+               var maxHeight = 0;
+               code = '';
+               for (j=0; j<images.length; j++) {
+                  if (images[j].width > maxWidth) maxWidth=images[j].width;
+                  if (images[j].height > maxHeight) maxHeight=images[j].height;
+               }
+               for (j=0; j<images.length; j++) {
+                  var p = (maxHeight - images[j].height)>>1;
+                  code += '<div style="padding:' + p + 'px 0;' + (j != 0 ? 'display:none;':'') + '" class="image"><img src="' + images[j].src + '" /></div>';
+               }
+               var m = (maxHeight - 45)>>1;
+               code = '<div class="slideshow" style="width:' + maxWidth + 'px;height:' + maxHeight + 'px">' + code + '<div style="margin:' + m + 'px 0;" class="turner_left"></div><div style="margin:' + m + 'px 0;" class="turner_right"></div></div>';
+               $.facebox.reveal(code, klass);
+            }
+          };
+          images[i].src = srcs[i];
+       }
+    }
+    else {
+     var image = new Image()
     image.onload = function() {
-      $.facebox.reveal('<div id="facebox-image" class="image"><img style="width:' + image.width + 'px;" src="' + image.src + '" /></div>', klass)
+      $.facebox.reveal('<div class="image"><img style="width:' + image.width + 'px;" src="' + image.src + '" /></div>', klass)
     }
     image.src = href
+    }
   }
 
   function fillFaceboxFromAjax(href, klass) {

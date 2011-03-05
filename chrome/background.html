@@ -25,6 +25,7 @@
 <script type="text/javascript" src="common/jquery-1.5.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
 <script>
+var cache = {};
 var months = ["Jan",
               "Feb",
               "Mar",
@@ -52,9 +53,96 @@ function zeroPad(num, len) {
    return ret;
 }
 
+function doTimestamp(stamp, id, sendResponse) {
+   var ts = stamp["unix-timestamp"];
+   var d = new Date(ts*1000);
+   var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
+   ins = ins.replace(/%Y/g,d.getFullYear())
+      .replace(/%y/g,(d.getFullYear()%100))
+      .replace(/%M/g,months[d.getMonth()])
+      .replace(/%m/g,zeroPad(d.getMonth()+1,2))
+      .replace(/%n/g,(d.getMonth()+1))
+      .replace(/%D/g,zeroPad(d.getDate(),2))
+      .replace(/%d/g,d.getDate())
+      .replace(/%G/g,zeroPad((d.getHours()%12==0 ? "12" : d.getHours()%12),2))
+      .replace(/%g/g,(d.getHours()%12==0 ? "12" : d.getHours()%12))
+      .replace(/%H/g,zeroPad(d.getHours(),2))
+      .replace(/%h/g,d.getHours())
+      .replace(/%i/g,zeroPad(d.getMinutes(),2))
+      .replace(/%s/g,zeroPad(d.getSeconds(),2))
+      .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
+      .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
+   sendResponse({pid: id, success: true, data: ins});
+}
+
+function doReblogDash(stamp, id, sendResponse) {
+   var key = stamp["reblog-key"];
+   sendResponse({pid: id, success: true, data: key});
+}
+
+function doMagnifier(stamp, id, sendResponse) {
+   var url;
+   if (stamp.photos.length > 0) {
+      url = new Array();
+      for (i=0; i<stamp.photos.length; i++)
+         url.push(stamp.photos[i]["photo-url-1280"]);
+      url = JSON.stringify(url);
+   }
+   else {
+      url = stamp["photo-url-1280"];
+   }
+   console.log(url);
+   sendResponse({pid: id, success: true, data: url});
+}
+
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
+   else if (request.greeting == "magnifier") {
+      if (cache[request.pid]) {
+         doMagnifier(cache[request.pid], request.pid, sendResponse);
+      }
+      else {
+         $.ajax({
+            type: "GET",
+            url: request.url + "/api/read/json?id=" + request.pid,
+            dataType: "text",
+            tryCount: 0,
+            retryLimit: getStorage("MissingE_magnifier_retries",defaultRetries),
+            targetId: request.pid,
+            error: function(xhr, textStatus) {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  sendResponse({pid: this.targetId, success: false});
+               }
+            },
+            success: function(data, textStatus) {
+               if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+                  this.tryCount++;
+                  if (this.tryCount <= this.retryLimit) {
+                     $.ajax(this);
+                     return;
+                  }
+               }
+               else {
+                  var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+                  var stamp = JSON.parse(txt);
+                  var info = stamp["posts"][0];
+                  cache[this.targetId] = info;
+                  doMagnifier(info, this.targetId, sendResponse);
+               }
+            }
+         });
+      }
+   }
    else if (request.greeting == "reblogYourself") {
+      if (cache[request.pid]) {
+         doReblogDash(cache[request.pid], request.pid, sendResponse);
+      }
+      else {
       $.ajax({
          type: "GET",
          url: request.url + "/api/read/json?id=" + request.pid,
@@ -83,13 +171,19 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             else {
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
-               var key = stamp["posts"][0]["reblog-key"];
-               sendResponse({pid: this.targetId, success: true, data: key});
+               var info = stamp["posts"][0];
+               cache[this.targetId] = info;
+               doReblogDash(info, this.targetId, sendResponse);
             }
          }
       });
+      }
    }
    else if (request.greeting == "timestamp") {
+      if (cache[request.pid]) {
+         doTimestamp(cache[request.pid], request.pid, sendResponse);
+      }
+      else {
       $.ajax({
          type: "GET",
          url: request.url + "/api/read/json?id=" + request.pid,
@@ -105,7 +199,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             }
             else {
                sendResponse({pid: this.targetId, success: false});
-
             }
          },
          success: function(data, textStatus) {
@@ -119,28 +212,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             else {
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
-               var ts = stamp["posts"][0]["unix-timestamp"];
-               var d = new Date(ts*1000);
-               var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
-               ins = ins.replace(/%Y/g,d.getFullYear())
-                  .replace(/%y/g,(d.getFullYear()%100))
-                  .replace(/%M/g,months[d.getMonth()])
-                  .replace(/%m/g,zeroPad(d.getMonth()+1,2))
-                  .replace(/%n/g,(d.getMonth()+1))
-                  .replace(/%D/g,zeroPad(d.getDate(),2))
-                  .replace(/%d/g,d.getDate())
-                  .replace(/%G/g,zeroPad((d.getHours()%12==0 ? "12" : d.getHours()%12),2))
-                  .replace(/%g/g,(d.getHours()%12==0 ? "12" : d.getHours()%12))
-                  .replace(/%H/g,zeroPad(d.getHours(),2))
-                  .replace(/%h/g,d.getHours())
-                  .replace(/%i/g,zeroPad(d.getMinutes(),2))
-                  .replace(/%s/g,zeroPad(d.getSeconds(),2))
-                  .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
-                  .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
-               sendResponse({pid: this.targetId, success: true, data: ins});
+               var info = stamp["posts"][0];
+               cache[this.targetId] = info;
+               doTimestamp(info, this.targetId, sendResponse);
             }
          }
       });
+      }
    }
    else if (request.greeting == "settings") {
       var settings = {};

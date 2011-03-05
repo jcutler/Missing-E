@@ -37,6 +37,11 @@ a.s113977_magnify:hover {
 background-position:-14px 0;
 }
 
+a.s113977_magnify_hide {
+opacity:0.2;
+background-position:0 0 !important;
+}
+
 a.s113977_magnify_err {
 background-position:-28px 0 !important;
 }
