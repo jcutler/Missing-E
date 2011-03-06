@@ -89,14 +89,19 @@ function doMagnifier(stamp, id, sendResponse) {
    var url;
    if (stamp.photos.length > 0) {
       url = new Array();
-      for (i=0; i<stamp.photos.length; i++)
+      for (i=0; i<stamp.photos.length; i++) {
          url.push(stamp.photos[i]["photo-url-1280"]);
+         var cap = stamp.photos[i]["caption"];
+         if (cap == undefined || cap == null)
+            url.push("");
+         else 
+            url.push(cap);
+      }
       url = JSON.stringify(url);
    }
    else {
       url = stamp["photo-url-1280"];
    }
-   console.log(url);
    sendResponse({pid: id, success: true, data: url});
 }
 

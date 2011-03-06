@@ -25,7 +25,7 @@ var magimg = chrome.extension.getURL('magnifier/magnifier.png');
 var turnimg = chrome.extension.getURL('magnifier/turners.png');
 var turnload = new Image();
 turnload.src = turnimg;
-$('head').append('<style type="text/css">a.s113977_magnify { background-image:url("' + magimg + '"); } #facebox .slideshow .turner_left, #facebox .slideshow .turner_right{ background-image:url("' + turnimg + '");}');
+$('head').append('<style type="text/css">a.s113977_magnify { background-image:url("' + magimg + '"); } #facebox .slideshow .turner_left, #facebox .slideshow .turner_right{ background-image:url("' + turnimg + '"); }');
 
 function magClick(e) {
    if (e.which == 1) {
@@ -49,7 +49,6 @@ function insertMagnifier(item) {
          .appendTo(ctrl).click(magClick);
       chrome.extension.sendRequest({greeting: "magnifier", pid: tid, url: addr}, function(response) {
          if (response.success) {
-            //var urls = JSON.parse(response.data);
             var urls = response.data.replace(/"/g,'\'');
             $('#magnify_' + response.pid).attr('src',response.data).removeClass('s113977_magnify_hide');
          }
@@ -69,7 +68,6 @@ if (/drafts$/.test(location) == false &&
       if ($(this).hasClass('turner_right')) {
          next = curr.next('div.image');
          if (next.length == 0) {
-            console.log("end");
             next = curr.parent().find('div.image:first');
          }
       }
@@ -84,6 +82,6 @@ if (/drafts$/.test(location) == false &&
    });
    $('#posts li.post[class~="photo"]').each(function(){insertMagnifier(this);});
    document.addEventListener('DOMNodeInserted',function(e) {
-      insertMagnifier(this);
+      insertMagnifier(e.target);
    }, false);
 }

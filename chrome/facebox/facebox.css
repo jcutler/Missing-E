@@ -84,12 +84,35 @@ right:-16px;
 background-position:-33px 0;
 }
 
-#facebox .slideshow:hover .turner_left, #facebox .slideshow:hover .turner_right {
+#facebox:hover .slideshow .turner_left, #facebox:hover .slideshow .turner_right {
 display:block;
 }
 
 #facebox .image {
 text-align: center;
+}
+
+#facebox .slideshow .captioned {
+position:relative;
+margin:0 auto;
+}
+
+#facebox .slideshow .captioned .caption {
+position:absolute;
+display:none;
+width:100%;
+bottom:0;
+color:white;
+}
+
+#facebox .slideshow .captioned .captionbg {
+background-color:black;
+width:100%;
+opacity:0.5;
+}
+
+#facebox .slideshow .captioned:hover .caption {
+display:block;
 }
 
 #facebox img {
