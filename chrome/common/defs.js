@@ -23,3 +23,5 @@
 
 var defaultRetries = 10;
 var maxRetries = 99;
+
+var developerMode = true;
