@@ -28,9 +28,12 @@ jQuery(document).ready(function($) {
 <div id="map"><a href="about">ABOUT</a><a href="features">FEATURES</a><a href="http://blog.missinge.infraware.ca">BLOG</a><a href="faq" class="active">FAQ</a><a href="/">GET</a><a id="github" href="http://git.missinge.infraware.ca"><img src="images/github_white.png" alt="View 'Missing e' on github" /></a></div><div id="content">
 <div class="clear"></div>
 <h1>FREQUENTLY ASKED QUESTIONS</h1>
+<h2>Settings</h2>
+<ul>
+<li><a href="#settings">How can I see or change my settings for 'Missing e'?</a></li></ul>
 <h2>Bookmarker</h2>
 <ul>
-<li><a href="#gotoissue">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</a></li>
+<li><a href="#bookmark-issue">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</a></li>
 </ul>
 <h2>Magnifier</h2>
 <ul>
@@ -38,8 +41,40 @@ jQuery(document).ready(function($) {
 <li><a href="#magnifier-resized">Why is the enlarged photo still not full size?</a></li>
 <li><a href="#magnifier-full">How can I open the full-size photo in its own tab or window?</a></li>
 </ul>
+<h2>Safe Dash</h2>
+<ul>
+<li><a href="#safedash-disable">What is the difference between turning Safe Dash off on the dashboard and turning it off on the 'Missing e' settings screen?</a></li>
+<li><a href="#safedash-where">Which images are hidden with Safe Dash and which images are not?</a></li>
+</ul>
+<h2>Timestamps</h2>
+<ul>
+<li><a href="#timestamps-wrongtime">Why are some posts shown with the incorrect time?</a></li>
+<li><a href="#timestamps-load">Why do timestamps sometimes fail to load?</a></li>
+</ul>
+<h2>Goto Dash Post</h2>
+<ul>
+<li><a href="#goto-issue">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</a></li></ul>
+<h2>Posting Fixes</h2>
+<ul>
+<li><a href="#uploader-load">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</a></li>
+</ul>
+<h2>Reblog Yourself</h2>
+<ul>
+<li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>?</a></li>
+</ul>
 <h2 id="answers">Answers</h2>
-<a name="gotoissue" /><p class="question">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</p>
+<a name="settings" /><p class="question">How can I see or change my settings for 'Missing e'?</p>
+<div class="response">
+<p><strong>Google Chrome</strong></p>
+<ul><li>In the menu (the little wrench icon at the top of your browser), go to <em>"Tools" > "Extensions"</em> and click on <em>"Options"</em> in the 'Missing e' section.</li>
+<li>On any Tumblr dashboard page, click on the <em>"Account"</em> drop-down menu at the top of the page, and select 'Missing e'.</li></ul>
+<p><strong>Apple Safari</strong></p>
+<ul><li>In the menubar, click on the button labelled '<strong>e.</strong>'.</li>
+<li>On any Tumblr dashboard page, click on the <em>"Account"</em> drop-down menu at the top of the page, and select 'Missing e'.</li></ul>
+<p><strong>Mozilla Firefox</strong></p>
+<ul><li>In the menubar, click on the button labelled '<strong>e.</strong>' (this button can be added by going to the menu <em>"View" > "Toolbars" > "Customize..."</em></li>
+<li>On any Tumblr dashboard page, click on the <em>"Account"</em> drop-down menu at the top of the page, and select 'Missing e'.</li></ul><div class="totop"><a href="#">Top</a></div></div>
+<a name="bookmark-issue" /><p class="question">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</p>
 <div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p><div class="totop"><a href="#">Top</a></div></div>
 <a name="magnifier-load" /><p class="question">Why does the magnifier sometimes look like this <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon?</p>
 <div class="response"><p>In order to get the location of a photo post's highest resolution image, <em>Magnifier</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Magnifier</em> will retry a few times before giving up and showing the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> error icon.</p><p>You can click on the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon to tell <em>Magnifier</em> to try again.</p><div class="totop"><a href="#">Top</a></div></div>
@@ -47,6 +82,34 @@ jQuery(document).ready(function($) {
 <div class="response"><p>Photos enlarged by <em>Magnifier</em> are shown scaled down so that they fit into your browser window. You can click on the enlarged photo to open it in its own tab or window at full size.</p><div class="totop"><a href="#">Top</a></div></div>
 <a name="magnifier-full" /><p class="question">How can I open the full-size photo in its own tab or window?</p>
 <div class="response"><p>You can click on any photo enlarged by <em>Magnifier</em> to open it in its own tab or window at full size.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="safedash-disable" /><p class="question">What is the difference between turning Safe Dash off on the dashboard and turning it off on the 'Missing e' settings screen?</p>
+<div class="response"><p>Turning <em>Safe Dash</em> on and off with the link in the sidebar of your dashboard hides and unhides images immediately.</p><p>Deactivating <em>Safe Dash</em> on the 'Missing e' settings screen disables it completely. Any tumblr dashboard page loaded with <em>Safe Dash</em> disabled will not have the <em>Safe Dash</em> toggle button in the sidebar. All images will be shown, as normal.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="safedash-where" /><p class="question">Which images are hidden with Safe Dash and which images are not?</p>
+<div class="response">
+<p><strong>These images are hidden:</strong></p>
+<ul><li>All image posts</li><li>All photoset thumbnails</li><li>Photosets that have been clicked (enlarged)</li><li>Inline images in other types of posts</li><li>Album art in audio posts</li><li>All video thumbnails</li><li>All full-size videos (except videos from external sites)</li></ul>
+<p><strong>These images are NOT hidden:</strong></p>
+<ul><li>All tumblr-generated user avatars</li><li>Externally-loaded videos (YouTube, Vimeo, etc)</li><li>Images enlarged by the 'Missing e' <em>Magnifier</em> feature.</li></ul>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="timestamps-wrongtime" /><p class="question">Why are some posts shown with the incorrect time?</p>
+<div class="response">
+<p><em>Timestamps</em> uses the Tumblr API to get the time of a post. Unfortunately, Tumblr is known to sometimes report the time of a post incorrectly, often several hours after it was actually posted. For posts where Tumblr is incorrect, <em>Timestamps</em> will also be incorrect.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="timestamps-load" /><p class="question">Why do timestamps sometimes fail to load?</p>
+<div class="response">
+<p><em>Timestamps</em> uses the Tumblr API to get the time of a post. During periods when Tumblr is very busy or error-prone, the API may not work correctly. <em>Timestamps</em> will retry a few times before giving up and displaying: <em><strong>Timestamp loading failed. <span style="text-decoration:underline;">Retry</span></strong></em>.</p><p>You can click on '<strong>Retry</strong>' to tell <em>Timestamps</em> to try again.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="goto-issue" /><p class="question">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</p>
+<div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="uploader-load" /><p class="question">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</p>
+<div class="response">
+<p>Much like the '+ Upload Photo' button that Tumblr places on new text post pages by default, <em>Posting Fixes</em> must load an additional Tumblr page in the background before adding the button. During times when Tumblr is very busy or error-prone, this page may not load.</p><p>Try reloading the post page to try again.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="reblog-load" /><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>?</p>
+<div class="response">
+<p>In order to add a reblog link to your posts on the dashboard, <em>Reblog Yourself</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <strong><del>reblog</del></strong>.</p><p>You can click on the <strong><del>reblog</del></strong> text to tell <em>Reblog Yourself</em> to try again. If it shows up without the strikethrough (ie. '<strong>reblog</strong>'), then the link works!</p><p>You should note that the reblog button added to individual post pages (not on the dashboard) is more or less unaffected by Tumblr API problems.</p>
+<div class="totop"><a href="#">Top</a></div></div>
 <div id="inlinefooter"><div id="foot-left">An open-source project released under <a href="http://www.gnu.org/licenses/gpl.html">GPL v3</a></div><div class="clear"></div></div>
 </div>
 <div id="faq-link">Problems? Please consult the <a href="faq">FAQ</a>.</div>

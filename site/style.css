@@ -396,6 +396,11 @@ padding:0 20px 0 30px;
 
 #faq ul li {
    font-size:14px;
+padding-top:6px;
+}
+
+#faq ul li:first-child {
+   padding-top:0;
 }
 
 #faq ul li a {
