@@ -225,13 +225,21 @@ function MissingE_safeDash_doStartup() {
       onoff = "On";
       extra = 'style="background-position:-15px 0px;"';
    }
-   
-   $('.dashboard_nav_item .dashboard_subpages a[href^="/customize"]')
-         .parent().after('<li><a id="nsfwctrl" href="#" onclick="return false;">' +
+  
+   var sdlnk = '<li><a id="nsfwctrl" href="#" onclick="return false;">' +
                  '<span id="nsfwctrlicon" ' + extra +
                  ' class="icon dashboard_controls_nsfw">' +
                  '</span>SafeDash <span id="nsfwctrltxt">' + onoff +
-                 '</span></a></li>');
+                 '</span></a></li>';
+
+   var custom = $('.dashboard_nav_item .dashboard_subpages a[href^="/customize"]');
+   if (custom.length > 0) {
+      custom.parent().after(sdlnk);
+   }
+   else {
+      $('#right_column div.dashboard_nav_item:first').css('padding-top','');
+      $('#right_column').prepend('<div class="dashboard_nav_item" style="padding-top:0;padding-left:0;"><ul class="dashboard_subpages">' + sdlnk + '</ul></div>');
+   }
    
    $('.video_thumbnail div:empty').live('mouseover', function() {
       $(this).parent().find('.nsfwed').css('opacity','1');
