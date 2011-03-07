@@ -78,7 +78,7 @@ function doTimestamp(stamp, id, sendResponse) {
       .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
       .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
    if (developerMode)
-      ins = ins.replace(/%\?%\?/g,'<a href="' + stamp["url"].match(/http:\/\/[^\/]*/)[0] + '/api/read/json?id='+id + '">' + id + '</a>');
+      ins = ins.replace(/%X/g,'<a href="' + stamp["url"].match(/http:\/\/[^\/]*/)[0] + '/api/read/json?id='+id + '">' + id + '</a>');
 
    sendResponse({pid: id, success: true, data: ins});
 }
