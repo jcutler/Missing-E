@@ -238,6 +238,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       switch(request.component) {
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
+            settings.sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
             break;
          case "replyReplies":
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
@@ -267,14 +268,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
       var activeScripts = {};
-      if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url)) {
-         if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
-            activeScripts.dashLinksToTabs = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "dashLinksToTabs/dashLinksToTabs.js"});
-         }
-         else
-            activeScripts.dashLinksToTabs = false;
-      }
       if (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
@@ -282,6 +275,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) {
+         if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
+            activeScripts.dashLinksToTabs = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "dashLinksToTabs/dashLinksToTabs.js"});
+         }
+         else
+            activeScripts.dashLinksToTabs = false;
+
          if (getStorage("MissingE_safeDash_enabled",1) == 1) {
             activeScripts.safeDash = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});

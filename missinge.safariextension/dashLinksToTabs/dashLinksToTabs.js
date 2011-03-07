@@ -21,24 +21,34 @@
  * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function MissingE_dashLinksToTabs_doStartup(newPostTabs) {
-   var lcol = document.getElementById('left_column')
+function dashLinksToTabs_click(e, newPostTabs) {
+   if (e.target == undefined || e.target == null) return false;
+   var node = e.target;
+   if (newPostTabs != 1 &&
+       $(node).parents('#new_post').length > 0)
+      return false;
+   if ($(node).closest('#dashboard_controls').length > 0) return false;
+   if (node.tagName!='A') {
+      for (; node != null && node.tagName != 'AREA' && node.tagName != 'A' && node.id != this; node=node.parentNode);
+   }
+   if (node == null || node == this) return false;
+   if (!/^#/.test(node.href))
+      node.target='_blank'
+   return true;
+}
+
+function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar) {
+   var lcol = document.getElementById('left_column');
+   var rcol = document.getElementById('right_column');
    
    if (lcol) {
       lcol.addEventListener('click', function(e) {
-         if (e.target == undefined || e.target == null) return false;
-         var node = e.target;
-         if (newPostTabs != 1 &&
-             $(node).parents('#new_post').length > 0)
-            return false;
-         if ($(node).closest('#dashboard_controls').length > 0) return false;
-         if (node.tagName!='A') {
-            for (; node != null && node.tagName != 'AREA' && node.tagName != 'A' && node.id != this; node=node.parentNode);
-         }
-         if (node == null || node == this) return false;
-         if (!/^#/.test(node.href))
-            node.target='_blank'
-         return true;
+         dashLinksToTabs_click(e, newPostTabs);
+      }, false);
+   }
+   if (rcol && sidebar == 1) {
+      rcol.addEventListener('click', function(e) {
+         dashLinksToTabs_click(e, newPostTabs);
       }, false);
    }
 }

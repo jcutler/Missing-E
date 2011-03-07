@@ -87,7 +87,7 @@ function settings_startup(response) {
    else if (response.message.component == "unfollower")
       MissingE_unfollower_doStartup(response.message.retries);
    else if (response.message.component == "dashLinksToTabs")
-      MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs);
+      MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs, response.message.sidebar);
 }
 
 safari.self.addEventListener("message", doStartup, false);
