@@ -241,7 +241,8 @@ if (document.body.id != "tinymce" &&
     document.body.id != "dashboard_edit_post") {
    if (/drafts$/.test(location) == false &&
        /queue$/.test(location) == false &&
-       /messages$/.test(location) == false)
+       /messages$/.test(location) == false &&
+       /submissions[^\/]*$/.test(location) == false)
       $("#posts li.post").each(function(i) {
          doMarks(this);
       });
@@ -281,7 +282,8 @@ if (document.body.id != "tinymce" &&
     document.body.id != "dashboard_edit_post") {
    if (/drafts$/.test(location) == false &&
        /queue$/.test(location) == false &&
-       /messages$/.test(location) == false) {
+       /messages$/.test(location) == false &&
+       /submissions[^\/]*$/.test(location) == false) {
       document.addEventListener('DOMNodeInserted', function(e) {
          doMarks(e.target);
       }, false);

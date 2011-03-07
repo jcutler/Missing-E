@@ -56,7 +56,8 @@ function MissingE_timestamps_doStartup() {
    safari.self.addEventListener("message", receiveTimestamp, false);
    if (/drafts$/.test(location) == false &&
        /queue$/.test(location) == false &&
-       /messages$/.test(location) == false) {
+       /messages$/.test(location) == false &&
+       /submissions[^\/]*$/.test(location) == false) {
       $('#posts li.post div.post_info a.MissingE_timestamp_retry').live('click',function() {
          var post = $(this).closest('li.post');
          if (post.length == 1) {
