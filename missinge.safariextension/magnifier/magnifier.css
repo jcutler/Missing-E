@@ -1,0 +1,48 @@
+/*
+ * 'Missing e' Extension
+ *
+ * Copyright 2011, Jeremy Cutler
+ * Released under the GPL version 3 licence.
+ * SEE: GPL-LICENSE.txt
+ *
+ * This file is part of 'Missing e'.
+ *
+ * 'Missing e' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * 'Missing e' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+a.s113977_magnify {
+border-width:0;
+height:14px;
+width:14px;
+vertical-align:-3px;
+display:inline-block;
+background-repeat:no-repeat;
+background-attachment:scroll;
+background-position:0 0;
+margin-left:8px !important;
+}
+
+a.s113977_magnify:hover {
+background-position:-14px 0;
+}
+
+a.s113977_magnify_hide {
+opacity:0.2;
+background-position:0 0 !important;
+}
+
+a.s113977_magnify_err {
+background-position:-28px 0 !important;
+}
+

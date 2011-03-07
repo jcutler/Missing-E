@@ -25,6 +25,10 @@
 <script type="text/javascript" src="common/jquery-1.5.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
 <script>
+var cache = {};
+var cacheClear;
+var tenMinutes = 600000;
+
 var months = ["Jan",
               "Feb",
               "Mar",
@@ -37,6 +41,8 @@ var months = ["Jan",
               "Oct",
               "Nov",
               "Dec"];
+
+cacheClear = setInterval(function() { cache = {}; }, tenMinutes);
 
 function getStorage(key,defaultValue) {
    if (localStorage[key] == undefined)
@@ -52,6 +58,53 @@ function zeroPad(num, len) {
    return ret;
 }
 
+function doTimestamp(stamp, id, request) {
+   var ts = stamp["unix-timestamp"];
+   var d = new Date(ts*1000);
+   var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
+   ins = ins.replace(/%Y/g,d.getFullYear())
+      .replace(/%y/g,(d.getFullYear()%100))
+      .replace(/%M/g,months[d.getMonth()])
+      .replace(/%m/g,zeroPad(d.getMonth()+1,2))
+      .replace(/%n/g,(d.getMonth()+1))
+      .replace(/%D/g,zeroPad(d.getDate(),2))
+      .replace(/%d/g,d.getDate())
+      .replace(/%G/g,zeroPad((d.getHours()%12==0 ? "12" : d.getHours()%12),2))
+      .replace(/%g/g,(d.getHours()%12==0 ? "12" : d.getHours()%12))
+      .replace(/%H/g,zeroPad(d.getHours(),2))
+      .replace(/%h/g,d.getHours())
+      .replace(/%i/g,zeroPad(d.getMinutes(),2))
+      .replace(/%s/g,zeroPad(d.getSeconds(),2))
+      .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
+      .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
+   request.target.page.dispatchMessage("timestamp",{pid: id, success: true, data: ins});
+}
+
+function doReblogDash(stamp, id, request) {
+   var key = stamp["reblog-key"];
+   request.target.page.dispatchMessage("reblogYourself",{pid: id, success: true, data: key});
+}
+
+function doMagnifier(stamp, id, request) {
+   var url;
+   if (stamp.photos.length > 0) {
+      url = new Array();
+      for (i=0; i<stamp.photos.length; i++) {
+         url.push(stamp.photos[i]["photo-url-1280"]);
+         var cap = stamp.photos[i]["caption"];
+         if (cap == undefined || cap == null)
+            url.push("");
+         else 
+            url.push(cap);
+      }
+      url = JSON.stringify(url);
+   }
+   else {
+      url = stamp["photo-url-1280"];
+   }
+   request.target.page.dispatchMessage("magnifier", {pid: id, success: true, data: url});
+}
+
 safari.application.addEventListener("command", performCommand, false);
 function performCommand(cmd) {
    if (cmd.command == "missinge-settings") {
@@ -64,7 +117,52 @@ function handleRequest(request) {
    if (request.name == "open") {
       request.target.browserWindow.openTab().url = request.message;
    }
+   else if (request.name == "magnifier") {
+      if (cache[request.message.pid]) {
+         doMagnifier(cache[request.message.pid], request.message.pid, request);
+      }
+      else {
+         $.ajax({
+            type: "GET",
+            url: request.message.url + "/api/read/json?id=" + request.message.pid,
+            dataType: "text",
+            tryCount: 0,
+            retryLimit: getStorage("MissingE_magnifier_retries",defaultRetries),
+            targetId: request.message.pid,
+            error: function(xhr, textStatus) {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  request.target.page.dispatchMessage("magnifier", {pid: this.targetId, success: false});
+               }
+            },
+            success: function(data, textStatus) {
+               if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+                  this.tryCount++;
+                  if (this.tryCount <= this.retryLimit) {
+                     $.ajax(this);
+                     return;
+                  }
+               }
+               else {
+                  var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+                  var stamp = JSON.parse(txt);
+                  var info = stamp["posts"][0];
+                  cache[this.targetId] = info;
+                  doMagnifier(info, this.targetId, request);
+               }
+            }
+         });
+      }
+   }
    else if (request.name == "reblogYourself") {
+      if (cache[request.message.pid]) {
+         doReblogDash(cache[request.message.pid], request.message.pid, request);
+      }
+      else {
       $.ajax({
          type: "GET",
          url: request.message.url + "/api/read/json?id=" + request.message.pid,
@@ -93,13 +191,19 @@ function handleRequest(request) {
             else {
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
-               var key = stamp["posts"][0]["reblog-key"];
-               request.target.page.dispatchMessage("reblogYourself",{pid: this.targetId, success: true, data: key});
+               var info = stamp["posts"][0];
+               cache[this.targetId] = info;
+               doReblogDash(info, this.targetId, request);
             }
          }
       });
+      }
    }
    else if (request.name == "timestamp") {
+      if (cache[request.message.pid]) {
+         doTimestamp(cache[request.message.pid], request.message.pid, request);
+      }
+      else {
       $.ajax({
          type: "GET",
          url: request.message.url + "/api/read/json?id=" + request.message.pid,
@@ -128,28 +232,13 @@ function handleRequest(request) {
             else {
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
-               var ts = stamp["posts"][0]["unix-timestamp"];
-               var d = new Date(ts*1000);
-               var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
-               ins = ins.replace(/%Y/g,d.getFullYear())
-                  .replace(/%y/g,(d.getFullYear()%100))
-                  .replace(/%M/g,months[d.getMonth()])
-                  .replace(/%m/g,zeroPad(d.getMonth()+1,2))
-                  .replace(/%n/g,(d.getMonth()+1))
-                  .replace(/%D/g,zeroPad(d.getDate(),2))
-                  .replace(/%d/g,d.getDate())
-                  .replace(/%G/g,zeroPad((d.getHours()%12==0 ? "12" : d.getHours()%12),2))
-                  .replace(/%g/g,(d.getHours()%12==0 ? "12" : d.getHours()%12))
-                  .replace(/%H/g,zeroPad(d.getHours(),2))
-                  .replace(/%h/g,d.getHours())
-                  .replace(/%i/g,zeroPad(d.getMinutes(),2))
-                  .replace(/%s/g,zeroPad(d.getSeconds(),2))
-                  .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
-                  .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
-               request.target.page.dispatchMessage("timestamp",{pid: this.targetId, success: true, data: ins});
+               var info = stamp["posts"][0];
+               cache[this.targetId] = info;
+               doTimestamp(info, this.targetId, request);
             }
          }
       });
+      }
    }
    else if (request.name == "settings") {
       var settings = {};
@@ -239,7 +328,6 @@ function handleRequest(request) {
          else
             activeScripts.reblogQuoteFit = false;
       }
-      console.log(request);
       if (!request.message.isFrame &&
           ((request.message.bodyId == 'dashboard_edit_post' &&
             (/http:\/\/www\.tumblr\.com\/new\//.test(request.message.url) ||
@@ -319,6 +407,12 @@ function handleRequest(request) {
          }
          else
             activeScripts.timestamps = false;
+
+         if (getStorage("MissingE_magnifier_enabled",1) == 1) {
+            activeScripts.magnifier = true;
+         }
+         else
+            activeScripts.magnifier = false;
 
          if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
              getStorage("MissingE_reblogYourself_dashboard",1) == 1) {

@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.19</string>
+	<string>1.0.20</string>
 	<key>CFBundleVersion</key>
-	<string>11</string>
+	<string>12</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -53,6 +53,7 @@
 				<string>dashLinksToTabs/dashLinksToTabs.js</string>
 				<string>followChecker/followChecker.js</string>
 				<string>gotoDashPost/gotoDashPost.js</string>
+				<string>magnifier/magnifier.js</string>
 				<string>postCrushes/postCrushes.js</string>
 				<string>postCrushes/postCrushes_fill.js</string>
 				<string>postingFixes/postingFixes.js</string>
@@ -70,6 +71,7 @@
 		<array>
 			<string>facebox/facebox.css</string>
 			<string>bookmarker/bookmarker.css</string>
+			<string>magnifier/magnifier.css</string>
 			<string>followChecker/followChecker.css</string>
 			<string>unfollower/unfollower.css</string>
 		</array>

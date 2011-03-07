@@ -70,6 +70,7 @@ function doStartup(response) {
       if (response.message.reblogYourself) MissingE_reblogYourself_dash_doStartup();
       if (response.message.safeDash) MissingE_safeDash_doStartup();
       if (response.message.timestamps) MissingE_timestamps_doStartup();
+      if (response.message.magnifier) MissingE_magnifier_doStartup();
    }
    else {
       if (response.message.gotoDashPost) MissingE_gotoDashPost_doStartup();

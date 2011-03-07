@@ -126,6 +126,11 @@
       $('#facebox .loading').remove()
       $('#facebox .body').children().fadeIn('normal')
       $('#facebox').css('left', $(window).width() / 2 - ($('#facebox .popup').width() / 2))
+      var h = $('#facebox .popup').height();
+      var ph = getPageHeight();
+      if (h > ((8 * ph) / 10)) {
+         $('#facebox').css('top', getPageScroll()[1] + ((getPageHeight()-h)>>1));
+      }
       $(document).trigger('reveal.facebox').trigger('afterReveal.facebox')
     },
 
@@ -251,12 +256,107 @@
     }
   }
 
+  var images;
+  var imagesCount;
   function fillFaceboxFromImage(href, klass) {
-    var image = new Image()
+    if (/^\[/.test(href)) {
+       var srcs = JSON.parse(href);
+       images = new Array(srcs.length>>1);
+       imagesCount = 0;
+       for (x=0; x<srcs.length; x+=2) {
+          var i = x>>1;
+          images[i] = new Image();
+          images[i].onload = function() {
+            imagesCount++;
+            if (imagesCount == images.length) {
+               var ph = getPageHeight() - 30;
+               var pw = $(window).width() - 30; 
+               var maxWidth = 0;
+               var maxHeight = 0;
+               var wide = new Array(imagesCount);
+               var high = new Array(imagesCount);
+               code = '';
+               for (j=0; j<images.length; j++) {
+                  if (images[j].width <= pw && images[j].height <= ph) {
+                     wide[j] = images[j].width;
+                     high[j] = images[j].height;
+                  }
+                  else if (images[j].width <= pw && images[j].height > ph) {
+                     var ratio = ph/images[j].height;
+                     wide[j] = images[j].width * ratio;
+                     high[j] = ph;
+                  }
+                  else if (images[j].width > pw && images[j].height <= ph) {
+                     var ratio = pw/images[j].width;
+                     wide[j] = pw;
+                     high[j] = images[j].height * ratio;
+                  }
+                  else {
+                     var ratiow = pw/images[j].width;
+                     var ratioh = ph/images[j].height;
+                     if (ratiow <= ratioh) {
+                        wide[j] = pw;
+                        high[j] = images[j].height * ratiow;
+                     }
+                     else {
+                        wide[j] = images[j].width * ratioh;
+                        high[j] = ph;
+                     }
+                  }
+                  if (wide[j] > maxWidth) maxWidth=wide[j];
+                  if (high[j] > maxHeight) maxHeight=high[j];
+               }
+               for (j=0; j<images.length; j++) {
+                  var p = (maxHeight - high[j])>>1;
+                  code += '<div style="padding:' + p + 'px 0;' + (j != 0 ? 'display:none;':'') + '" class="image"><div style="width:' + wide[j] + 'px" class="captioned"><a href="' + images[j].src + '" target="_blank"><img src="' + images[j].src + '" /></a>';
+                  if (srcs[j*2+1] != "")
+                     code += '<div class="caption captionbg">&nbsp;</div><div class="caption">' + srcs[j*2+1] + '</div>';
+                  code += '</div></div>';
+               }
+               var m = (maxHeight - 45)>>1;
+               code = '<div class="slideshow" style="width:' + maxWidth + 'px;height:' + maxHeight + 'px">' + code + '<div style="margin:' + m + 'px 0;" class="turner_left"></div><div style="margin:' + m + 'px 0;" class="turner_right"></div></div>';
+               $.facebox.reveal(code, klass);
+            }
+          };
+          images[i].src = srcs[x];
+       }
+    }
+    else {
+     var image = new Image();
     image.onload = function() {
-      $.facebox.reveal('<div class="image"><img src="' + image.src + '" /></div>', klass)
+       var ph = getPageHeight() - 30;
+       var pw = $(window).width() - 30;
+       var wide, high; 
+       if (image.width <= pw && image.height <= ph) {
+          wide = image.width;
+          high = image.height;
+       }
+       else if (image.width <= pw && image.height > ph) {
+          var ratio = ph/image.height;
+          wide = image.width * ratio;
+          high = ph;
+       }
+       else if (image.width > pw && image.height <= ph) {
+          var ratio = pw/image.width;
+          wide = pw;
+          high = image.height * ratio;
+       }
+       else {
+          var ratiow = pw/image.width;
+          var ratioh = ph/image.height;
+          if (ratiow <= ratioh) {
+             wide = pw;
+             high = image.height * ratiow;
+          }
+          else {
+             wide = image.width * ratioh;
+             high = ph;
+          }
+       }
+      $.facebox.reveal('<div class="image"><a href="' + image.src + '" target="_blank"><img style="width:' + wide + 'px;height:' + high + 'px;" src="' + image.src + '" /></a></div>', klass)
     }
     image.src = href
+    }
   }
 
   function fillFaceboxFromAjax(href, klass) {
