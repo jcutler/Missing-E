@@ -66,11 +66,11 @@ border-radius:10px 10px 0 0;
 padding:2px 8px 0 8px;  
 }
 
-#about #map a, #features #map a {
+#about #map a, #features #map a, #faq #map a {
 padding:6px 8px 4px 8px;
 }
 
-#about #map #github, #features #map #github {
+#about #map #github, #features #map #github, #faq #map #github {
 padding:2px 8px 4px 8px;
 }
 
@@ -163,11 +163,11 @@ font-size:80%;
 #content {
 padding:10px;
 width:786px;
-margin:0 auto 20px;
-       background-color:#F8F8F8;
-       -webkit-border-radius:10px;
-       -moz-border-radius:10px;
-       border-radius:10px;
+margin:0 auto 10px;
+background-color:#F8F8F8;
+-webkit-border-radius:10px;
+-moz-border-radius:10px;
+border-radius:10px;
 }
 
 a.brick {
@@ -315,25 +315,25 @@ display:block;
 clear:both;
 }
 
-#about {
+#about, #faq {
    background-color:#44546B;
 }
 
-#about #map a {
+#about #map a, #faq #map a {
 color:white;
 }
 
-#about #map a.active {
+#about #map a.active, #faq #map a.active {
 background-color:white !important;
 color:#44546B !important;
 }
 
-#about #map a:hover {
+#about #map a:hover, #faq #map a:hover {
    background-color:#CCC;
 color:#44546B;
 }
 
-#about #content {
+#about #content, #faq #content {
    background-color:white;
 }
 
@@ -347,7 +347,7 @@ color:#44546B;
 margin:0 10px;
 }
 
-#about #content p {
+#about #content p, #faq #content p {
    text-indent:16px;
 }
 
@@ -360,4 +360,85 @@ margin:0 10px;
 
 #map a img {
    vertical-align:bottom;
+}
+
+#faq-link {
+text-align:center;
+margin-bottom:10px;
+}
+
+#about #faq-link, #about #faq-link a {
+color:white;
+}
+
+#faq h1 {
+   font-weight:bold;
+   font-size:24px;
+   text-align:center;
+}
+
+#faq h2 {
+   font-size:18px;
+   background-color:#f8f8f8;
+padding:4px 12px;
+}
+
+#faq #answers {
+   background-color:#44546B;
+color:white;
+      margin-top:20px;
+}
+
+#faq ul {
+   list-style-type:circle;
+padding:0 20px 0 30px;
+}
+
+#faq ul li {
+   font-size:14px;
+}
+
+#faq ul li a {
+   text-decoration:none;
+}
+
+#faq ul li a:hover {
+   text-decoration:underline;
+}
+
+#faq ul li a:hover img {
+border-bottom:1px solid #44546b;
+}
+
+#faq p.question {
+   background-color:#f8f8f8;
+padding:12px;
+   font-size:12px;
+   text-align:center;
+   font-style:italic;
+}
+
+#faq div.response {
+   font-size:14px;
+        border-bottom:1px solid #ccc;
+        margin-bottom:20px;
+}
+
+#faq div.response p {
+padding:0 12px;
+}
+
+#faq div.response .totop {
+   margin:10px 0 4px;
+padding-right:4px;
+   text-align:right;
+   font-size:10px;
+}
+
+#faq div.response .totop a:hover {
+   font-style:italic;
+}
+
+#faq #content img {
+   vertical-align:top;
 }

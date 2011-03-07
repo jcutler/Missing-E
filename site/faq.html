@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>FAQ - Missing e - The browser extension for Tumblr!</title>
+<link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+<link rel="icon" href="/favicon.png" type="image/x-icon" />
+<script type="text/javascript" src="jquery-1.5.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript">
+<!--
+var img1 = new Image();
+img1.src = 'images/github_white.png'; 
+var img2 = new Image();
+img2.src = 'images/github_blue.png';
+
+jQuery(document).ready(function($) {
+   $('a#github').hover(
+                       function() { $(this).find('img').attr("src",'images/github_blue.png'); },
+                       function() { $(this).find('img').attr("src",'images/github_white.png'); });
+});
+-->
+</script>
+</head>
+<body id="faq">
+<a name="top" />
+<div id="logo"><a href="/"><img src="images/missinge.png" alt="Missing e" /></a></div>
+<div id="map"><a href="about">ABOUT</a><a href="features">FEATURES</a><a href="http://blog.missinge.infraware.ca">BLOG</a><a href="faq" class="active">FAQ</a><a href="/">GET</a><a id="github" href="http://git.missinge.infraware.ca"><img src="images/github_white.png" alt="View 'Missing e' on github" /></a></div><div id="content">
+<div class="clear"></div>
+<h1>FREQUENTLY ASKED QUESTIONS</h1>
+<h2>Bookmarker</h2>
+<ul>
+<li><a href="#gotoissue">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</a></li>
+</ul>
+<h2>Magnifier</h2>
+<ul>
+<li><a href="#magnifier-load">Why does the magnifier sometimes look like this <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon?</a></li>
+<li><a href="#magnifier-resized">Why is the enlarged photo still not full size?</a></li>
+<li><a href="#magnifier-full">How can I open the full-size photo in its own tab or window?</a></li>
+</ul>
+<h2 id="answers">Answers</h2>
+<a name="gotoissue" /><p class="question">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</p>
+<div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="magnifier-load" /><p class="question">Why does the magnifier sometimes look like this <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon?</p>
+<div class="response"><p>In order to get the location of a photo post's highest resolution image, <em>Magnifier</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Magnifier</em> will retry a few times before giving up and showing the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> error icon.</p><p>You can click on the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon to tell <em>Magnifier</em> to try again.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="magnifier-resized" /><p class="question">Why is the enlarged photo still not full size?</p>
+<div class="response"><p>Photos enlarged by <em>Magnifier</em> are shown scaled down so that they fit into your browser window. You can click on the enlarged photo to open it in its own tab or window at full size.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="magnifier-full" /><p class="question">How can I open the full-size photo in its own tab or window?</p>
+<div class="response"><p>You can click on any photo enlarged by <em>Magnifier</em> to open it in its own tab or window at full size.</p><div class="totop"><a href="#">Top</a></div></div>
+<div id="inlinefooter"><div id="foot-left">An open-source project released under <a href="http://www.gnu.org/licenses/gpl.html">GPL v3</a></div><div class="clear"></div></div>
+</div>
+<div id="faq-link">Problems? Please consult the <a href="faq">FAQ</a>.</div>
+</body>
+</html>
