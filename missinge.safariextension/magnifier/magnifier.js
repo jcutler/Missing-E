@@ -58,10 +58,9 @@ function receiveMagnifier(response) {
    if (response.message.success) {
       var urls = response.message.data.replace(/"/g,'\'');
       $('#magnify_' + response.message.pid).attr('src',response.message.data).removeClass('s113977_magnify_hide').attr('title','Magnify');
-   console.log(response);
    }
    else {
-      $('#magnify_' + response.message.pid).attr('src','').addClass('s113977_magnify_err').removeClass('s113977_magnify_hide').attr('title', "An error occurred. Click to reload 'magnifier'.");
+      $('#magnify_' + response.message.pid).attr('src','').addClass('s113977_magnify_err').removeClass('s113977_magnify_hide').attr('title', "An error occurred. Click to reload 'Magnifier'.");
    }
 }
 

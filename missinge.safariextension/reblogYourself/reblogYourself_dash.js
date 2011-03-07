@@ -23,6 +23,7 @@
 
 function addReblog(item) {
    if (item.tagName == "LI" && $(item).hasClass('post') && !$(item).hasClass('new_post') && !$(item).hasClass('note')) {
+      $(item).find('div.post_controls a.MissingE_reblogYourself_retry').remove();
       if ($(item).find('div.post_controls a:contains("reblog")').length > 0 ||
           $(item).find('div.post_controls a:contains("edit")').length == 0)
          return true;
@@ -40,6 +41,9 @@ function receiveReblog(response) {
       redir = redir.replace(/http:\/\/www.tumblr.com/,'').replace(/\//g,'%2F').replace(/\?/g,'%3F').replace(/&/g,'%26');
       $('#post_'+response.message.pid).find('div.post_controls a:contains("edit")').after(' <a href="/reblog/' + response.message.pid + '/' + response.message.data + '?redirect_to=' + redir + '">reblog</a>');
    }
+   else {
+      $(item).find('div.post_controls a:contains("edit")').after(' <a href="#" class="MissingE_reblogYourself_retry" onclick="return false;"><del>reblog</del></a>');
+   }
 }
 
 function MissingE_reblogYourself_dash_doStartup() {
@@ -47,6 +51,12 @@ function MissingE_reblogYourself_dash_doStartup() {
    if (/drafts$/.test(location) == false &&
        /queue$/.test(location) == false &&
        /messages$/.test(location) == false) {
+      $('#posts li.post div.post_controls a.MissingE_reblogYourself_retry').live('click', function() {
+         var post = $(this).closest('li.post');
+         if (post.length == 1) {
+            addReblog($(this).parents('li.post').get(0));
+         }
+      });
       $('#posts li.post').each(function(){addReblog(this);});
       document.addEventListener('DOMNodeInserted',function(e) {
          addReblog(e.target);

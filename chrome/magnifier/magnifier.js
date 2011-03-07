@@ -58,7 +58,7 @@ function insertMagnifier(item) {
             $('#magnify_' + response.pid).attr('src',response.data).removeClass('s113977_magnify_hide').attr('title','Magnify');
          }
          else {
-            $('#magnify_' + response.pid).attr('src','').addClass('s113977_magnify_err').removeClass('s113977_magnify_hide').attr('title', "An error occurred. Click to reload 'magnifier'.");
+            $('#magnify_' + response.pid).attr('src','').addClass('s113977_magnify_err').removeClass('s113977_magnify_hide').attr('title', "An error occurred. Click to reload 'Magnifier'.");
          }
       });
    }
