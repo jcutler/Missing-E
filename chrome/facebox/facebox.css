@@ -111,7 +111,7 @@ width:100%;
 opacity:0.5;
 }
 
-#facebox .slideshow .captioned:hover .caption {
+#facebox:hover .slideshow .captioned .caption {
 display:block;
 }
 

@@ -25,7 +25,7 @@ var magimg = chrome.extension.getURL('magnifier/magnifier.png');
 var turnimg = chrome.extension.getURL('magnifier/turners.png');
 var turnload = new Image();
 turnload.src = turnimg;
-$('head').append('<style type="text/css">a.s113977_magnify { background-image:url("' + magimg + '"); } #facebox .slideshow .turner_left, #facebox .slideshow .turner_right{ background-image:url("' + turnimg + '"); }');
+$('head').append('<style type="text/css">a.s113977_magnify { background-image:url("' + magimg + '"); } #facebox .slideshow .turner_left, #facebox .slideshow .turner_right{ background-image:url("' + turnimg + '"); }</style>');
 
 function magClick(e) {
    if (e.which == 1) {
