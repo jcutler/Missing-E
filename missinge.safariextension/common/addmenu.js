@@ -28,6 +28,6 @@ if (accmenu) {
    var setlnk = document.createElement('a');
    setlnk.href = safari.extension.baseURI + 'options.html';
    setlnk.setAttribute("target","_blank");
-   setlnk.innerHTML = "Missing e";
+   setlnk.innerHTML = 'Missing <img src="' + safari.extension.baseURI + 'Icon-16.png' + '" style="vertical-align:bottom;" />';
    accmenu.insertBefore(setlnk, links[links.length-1]);
 }

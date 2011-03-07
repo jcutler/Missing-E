@@ -28,6 +28,6 @@ if (accmenu) {
    var setlnk = document.createElement('a');
    setlnk.href = chrome.extension.getURL('options.html');
    setlnk.setAttribute("target","_blank");
-   setlnk.innerHTML = "Missing e";
+   setlnk.innerHTML = 'Missing <img src="' + chrome.extension.getURL('missinge16.png') + '" style="vertical-align:bottom;" />';
    accmenu.insertBefore(setlnk, links[links.length-1]);
 }
