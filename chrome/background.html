@@ -338,7 +338,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
              /http:\/\/www\.tumblr\.com\/reblog\//.test(sender.tab.url) ||
              /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(sender.tab.url))) ||
          (/http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(sender.tab.url)))) {
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(sender.tab.url)) ||
+         (/http:\/\/www\.tumblr\.com\/share/.test(sender.tab.url)))) {
          if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
             activeScripts.postingFixes = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/postingFixes.js"});

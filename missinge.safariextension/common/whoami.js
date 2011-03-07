@@ -21,7 +21,6 @@
  * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
  */
 var MissingE_startup;
-
 if (window.top == window ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href)) {
    var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href);

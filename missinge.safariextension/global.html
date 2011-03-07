@@ -334,7 +334,8 @@ function handleRequest(request) {
              /http:\/\/www\.tumblr\.com\/reblog\//.test(request.message.url) ||
              /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(request.message.url))) ||
          (/http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(request.message.url)))) {
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(request.message.url)) ||
+         (/http:\/\/www\.tumblr\.com\/share/.test(request.message.url)))) {
          if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
             activeScripts.postingFixes = true;
          }
