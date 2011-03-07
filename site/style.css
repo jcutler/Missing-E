@@ -425,6 +425,7 @@ font-size:12px;
 text-align:center;
 font-style:italic;
 margin:1em 0;
+font-weight:bold;
 }
 
 #faq p.question + p.question {
