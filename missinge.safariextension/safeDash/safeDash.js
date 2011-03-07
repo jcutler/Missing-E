@@ -236,7 +236,7 @@ function MissingE_safeDash_doStartup() {
    if (custom.length > 0) {
       custom.parent().after(sdlnk);
    }
-   else if (!(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(location.href)) {
+   else if (!(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(location.href))) {
       $('#right_column div.dashboard_nav_item:first').css('padding-top','');
       $('#right_column').prepend('<div class="dashboard_nav_item" style="padding-top:0;padding-left:0;"><ul class="dashboard_subpages">' + sdlnk + '</ul></div>');
    }
