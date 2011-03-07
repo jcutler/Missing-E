@@ -42,7 +42,7 @@ function insertMagnifier(item) {
          var tid = $(item).attr("id").match(/[0-9]*$/)[0];
          var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
          var ctrl = $(item).find('div.post_controls');
-         $('<a class="s113977_magnify s113977_magnify_hide" id="magnify_' + tid + '" title="Magnify" href="#" onclick="return false;"></a>')
+         $('<a title="Magnifier loading..." class="s113977_magnify s113977_magnify_hide" id="magnify_' + tid + '" href="#" onclick="return false;"></a>')
             .appendTo(ctrl).click(magClick);
          safari.self.tab.dispatchMessage("magnifier", {pid: tid, url: addr});
       }
@@ -52,11 +52,11 @@ function receiveMagnifier(response) {
    if (response.name != "magnifier") return;
    if (response.message.success) {
       var urls = response.message.data.replace(/"/g,'\'');
-      $('#magnify_' + response.message.pid).attr('src',response.message.data).removeClass('s113977_magnify_hide');
+      $('#magnify_' + response.message.pid).attr('src',response.message.data).removeClass('s113977_magnify_hide').attr('title','Magnify');
    console.log(response);
    }
    else {
-      $('#magnify_' + response.message.pid).attr('src','').addClass('s113977_magnify_err').removeClass('s113977_magnify_hide');
+      $('#magnify_' + response.message.pid).attr('src','').addClass('s113977_magnify_err').removeClass('s113977_magnify_hide').attr('title', "An error occurred. Click to reload 'magnifier'.");
    }
 }
 
