@@ -21,12 +21,12 @@ color:#44546B;
 font-weight:bold;
 font-size:24px;
 margin:5px auto 10px;
-       text-align:center;
+text-align:center;
 }
 
 #home #logo {
-   margin-top:20px;
-   margin-bottom:40px;
+margin-top:20px;
+margin-bottom:40px;
 }
 
 #logo #title {
@@ -51,7 +51,7 @@ margin-top:40px;
 }
 
 #map {
-   text-align:center;
+text-align:center;
 }
 
 #map a {
@@ -75,12 +75,12 @@ padding:2px 8px 4px 8px;
 }
 
 #map a.active {
-   font-style:italic;
-   background-color:#F8F8F8 !important;
+font-style:italic;
+background-color:#F8F8F8 !important;
 color:#44546B !important;
-   -webkit-border-radius:10px 10px 0 0;
-   -moz-border-radius:10px 10px 0 0;
-   border-radius:10px 10px 0 0;
+-webkit-border-radius:10px 10px 0 0;
+-moz-border-radius:10px 10px 0 0;
+border-radius:10px 10px 0 0;
 padding:2px 10px 0 7px;
 }
 
@@ -99,7 +99,7 @@ margin-top:4px;
 }
 
 #downloads, #donate {
-   text-align:center;
+text-align:center;
 }
 
 #downloads img {
@@ -184,7 +184,7 @@ padding:0;
 width:125px;
 position:relative;
 float:left;
-      text-decoration:none;
+text-decoration:none;
 }
 
 #facebox .exploded {
@@ -193,50 +193,50 @@ width:500px;
 }
 
 #facebox {
-   padding-bottom:20px;
+padding-bottom:20px;
 }
 
 .exploded .brickname {
 height:64px;
 position:relative;
-       text-align:center;
-       font-size:32px;
-       line-height:64px;
-       font-weight:bold;
-       z-index:2;
+text-align:center;
+font-size:32px;
+line-height:64px;
+font-weight:bold;
+z-index:2;
 }
 
 .exploded .brickicon {
-   opacity:0.5;
-       background-repeat:no-repeat;
-       background-position:center center;
+opacity:0.5;
+background-repeat:no-repeat;
+background-position:center center;
 height:64px;
 width:100%;
 left:0;
 position:absolute;
-         z-index:1;
+z-index:1;
 }
 
 .exploded + a.close {
-   z-index:100;
+z-index:100;
 }
 
 .exploded li {
-   margin-bottom:0.5em;
+margin-bottom:0.5em;
 }
 
 .exploded img.inlineimg {
-   vertical-align:top;
+vertical-align:top;
 }
 
 .exploded p {
-   text-align:left;
-   text-indent:16px;
+text-align:left;
+text-indent:16px;
 margin:1em 0;
 }
 
 .exploded ul {
-   margin-top:0.5em;
+margin-top:0.5em;
 }
 
 .exploded .screenshot img.screen, a.brick img.screen, a.brick img.thumb {
@@ -244,7 +244,7 @@ display:none;
 }
 
 .exploded .screenshot {
-   text-align:center;
+text-align:center;
 }
 
 .exploded .screenshot img.screen, .exploded .screenshot div.thumb {
@@ -259,21 +259,21 @@ margin:0 auto;
 }
 
 .exploded > p:last-child {
-   margin-bottom:1em !important;
+margin-bottom:1em !important;
 }
 
 
 a.brick p, a.brick ul {
-   text-align:left;
-   font-size:10px;
+text-align:left;
+font-size:10px;
 margin:0 4px 4px 4px;
-       line-height:10px;
-       text-indent:4px;
+line-height:10px;
+text-indent:4px;
 }
 
 a.brick .brickname {
-   padding:0.4em 0;
-   font-weight:bold;
+padding:0.4em 0;
+font-weight:bold;
 font-size:12px;
 text-align:center;
 }
@@ -316,7 +316,7 @@ clear:both;
 }
 
 #about, #faq {
-   background-color:#44546B;
+background-color:#44546B;
 }
 
 #about #map a, #faq #map a {
@@ -329,37 +329,37 @@ color:#44546B !important;
 }
 
 #about #map a:hover, #faq #map a:hover {
-   background-color:#CCC;
+background-color:#CCC;
 color:#44546B;
 }
 
 #about #content, #faq #content {
-   background-color:white;
+background-color:white;
 }
 
 #inclusions {
-   text-align:center;
-   margin-top:40px;
+text-align:center;
+margin-top:40px;
 }
 
 #inclusions img {
-   vertical-align:middle;
+vertical-align:middle;
 margin:0 10px;
 }
 
 #about #content p, #faq #content p {
-   text-indent:16px;
+text-indent:16px;
 }
 
 #home #map a {
-   -webkit-border-radius:10px;
-   -moz-border-radius:10px;
-   border-radius:10px;
-   padding-bottom:2px;
+-webkit-border-radius:10px;
+-moz-border-radius:10px;
+border-radius:10px;
+padding-bottom:2px;
 }
 
 #map a img {
-   vertical-align:bottom;
+vertical-align:bottom;
 }
 
 #faq-link {
@@ -372,61 +372,69 @@ color:white;
 }
 
 #faq h1 {
-   font-weight:bold;
-   font-size:24px;
-   text-align:center;
+font-weight:bold;
+font-size:24px;
+text-align:center;
 }
 
 #faq h2 {
-   font-size:18px;
-   background-color:#f8f8f8;
+font-size:18px;
+background-color:#f8f8f8;
 padding:4px 12px;
 }
 
 #faq #answers {
-   background-color:#44546B;
+background-color:#44546B;
 color:white;
-      margin-top:20px;
+margin-top:40px;
 }
 
 #faq ul {
-   list-style-type:circle;
+list-style-type:circle;
+}
+
+#faq ul, #faq ol {
 padding:0 20px 0 30px;
 }
 
-#faq ul li {
-   font-size:14px;
+#faq ul li, #faq ol li {
+font-size:14px;
 padding-top:6px;
 }
 
-#faq ul li:first-child {
-   padding-top:0;
+#faq ul li:first-child, #faq ol li:first-child {
+padding-top:0;
 }
 
-#faq ul li a {
-   text-decoration:none;
+#faq ul li a, #faq ol li a {
+text-decoration:none;
 }
 
-#faq ul li a:hover {
-   text-decoration:underline;
+#faq ul li a:hover, #faq ol li a:hover {
+text-decoration:underline;
 }
 
-#faq ul li a:hover img {
+#faq ul li a:hover img, #faq ol li a:hover img {
 border-bottom:1px solid #44546b;
 }
 
 #faq p.question {
-   background-color:#f8f8f8;
+background-color:#f8f8f8;
 padding:12px;
-   font-size:12px;
-   text-align:center;
-   font-style:italic;
+font-size:12px;
+text-align:center;
+font-style:italic;
+margin:1em 0;
+}
+
+#faq p.question + p.question {
+margin-top:-1em;
 }
 
 #faq div.response {
-   font-size:14px;
-        border-bottom:1px solid #ccc;
-        margin-bottom:20px;
+font-size:14px;
+border-bottom:1px solid #ccc;
+margin-bottom:20px;
 }
 
 #faq div.response p {
@@ -434,16 +442,16 @@ padding:0 12px;
 }
 
 #faq div.response .totop {
-   margin:10px 0 4px;
+margin:10px 0 4px;
 padding-right:4px;
-   text-align:right;
-   font-size:10px;
+text-align:right;
+font-size:10px;
 }
 
 #faq div.response .totop a:hover {
-   font-style:italic;
+font-style:italic;
 }
 
 #faq #content img {
-   vertical-align:top;
+vertical-align:top;
 }

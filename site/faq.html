@@ -62,6 +62,28 @@ jQuery(document).ready(function($) {
 <ul>
 <li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>?</a></li>
 </ul>
+<h2>Follow Checker</h2>
+<ul>
+<li><a href="#followchecker-how">How do I use Follow Checker? Where is it?</a></li>
+<li><a href="#followchecker-fail">Why does Follow Checker fail to load?</a></li>
+<li><a href="#followchecker-issues">Why is Follow Checker reporting that I am not following someone that I actually am?</a></li>
+<li><a href="#followchecker-issues">Why is Follow Checker reporting that someone is not following me even though I know they are?</a></li>
+<li><a href="#followchecker-rho">Why is Follow Checker represented by a '&rho;' (rho)?</a></li>
+</ul>
+<h2>Reply Replies</h2>
+<ul>
+<li><a href="#replies-how">How do I reply to a reply (or other notification)?</a></li>
+<li><a href="#replies-inner">Why can't I reply to replies (or other notifications) inside a post's notes list?</a></li>
+<li><a href="#replies-multi">How do I reply to more than one notification at once?</a></li>
+</ul>
+<h2>Unfollower</h2>
+<ul>
+<li><a href="#unfollower-how">How do I use Unfollower? Where is it?</a></li>
+<li><a href="#unfollower-fail">Why does Unfollower fail to load?</a></li>
+<li><a href="#unfollower-issues">Why does Unfollower report that someone has unfollowed that I know has not?</a></li>
+<li><a href="#unfollower-secondary">Can Unfollower track your unfollows on multiple tumblr accounts?</a></li>
+<li><a href="#unfollower-delta">Why is Unfollower represented by a '&Delta;' (delta)?</a></li>
+</ul>
 <h2 id="answers">Answers</h2>
 <a name="settings" /><p class="question">How can I see or change my settings for 'Missing e'?</p>
 <div class="response">
@@ -71,9 +93,10 @@ jQuery(document).ready(function($) {
 <p><strong>Apple Safari</strong></p>
 <ul><li>In the menubar, click on the button labelled '<strong>e.</strong>'.</li>
 <li>On any Tumblr dashboard page, click on the <em>"Account"</em> drop-down menu at the top of the page, and select 'Missing e'.</li></ul>
-<p><strong>Mozilla Firefox</strong></p>
+<!--FIREFOX<p><strong>Mozilla Firefox</strong></p>
 <ul><li>In the menubar, click on the button labelled '<strong>e.</strong>' (this button can be added by going to the menu <em>"View" > "Toolbars" > "Customize..."</em></li>
-<li>On any Tumblr dashboard page, click on the <em>"Account"</em> drop-down menu at the top of the page, and select 'Missing e'.</li></ul><div class="totop"><a href="#">Top</a></div></div>
+<li>On any Tumblr dashboard page, click on the <em>"Account"</em> drop-down menu at the top of the page, and select 'Missing e'.</li></ul>-->
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="bookmark-issue" /><p class="question">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</p>
 <div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p><div class="totop"><a href="#">Top</a></div></div>
 <a name="magnifier-load" /><p class="question">Why does the magnifier sometimes look like this <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon?</p>
@@ -109,6 +132,54 @@ jQuery(document).ready(function($) {
 <a name="reblog-load" /><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>?</p>
 <div class="response">
 <p>In order to add a reblog link to your posts on the dashboard, <em>Reblog Yourself</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <strong><del>reblog</del></strong>.</p><p>You can click on the <strong><del>reblog</del></strong> text to tell <em>Reblog Yourself</em> to try again. If it shows up without the strikethrough (ie. '<strong>reblog</strong>'), then the link works!</p><p>You should note that the reblog button added to individual post pages (not on the dashboard) is more or less unaffected by Tumblr API problems.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="followchecker-how" /><p class="question">How do I use Follow Checker? Where is it?</p>
+<div class="response">
+<p>You can use <em>Follow Checker</em> by clicking on the <strong>&rho;</strong> (Greek letter rho) symbol beside your follower count on any dashboard page. The <strong>&rho;</strong> is hidden until you place your mouse on or next to your follower count.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="followchecker-fail" /><p class="question">Why does Follow Checker fail to load?</p>
+<div class="response">
+<p><em>Follow Checker</em> must load every single one of your follower AND following pages behind the scenes. This can take a while, especially if you follow or are followed by a lot of tumblr accounts. During times when Tumblr is very busy or error-prone, one or more of these pages may fail to load. <em>Follow Checker</em> will retry a few times before giving up and returning an error screen.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="followchecker-issues" /><p class="question">Why is Follow Checker reporting that I am not following someone that I actually am?</p><p class="question">Why is Follow Checker reporting that someone is not following me even though I know they are?</p>
+<div class="response">
+<p>Unfortunately, Tumblr sometimes does not show all of your followers or accounts you follow on the follower/following pages. Some may be missing from one or both of these lists.</p><p><em>Follow Checker</em> presents information purely for entertainment purposes. Before you take any rash actions based on information you get from it, you would be wise to double-check whether or not you follow someone or they follow you.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="followchecker-rho" /><p class="question">Why is Follow Checker represented by a '&rho;' (rho)?</p>
+<div class="response">
+<p>The <a href="http://www.wikipedia.org/wiki/Rho">Greek letter <strong>&rho;</strong> (rho)</a> is used in statistics to represent the coefficient of correlation between two or more random variables. It is used in <em>Follow Checker</em> to refer to the relationship of tumblrs you follow to tumblrs that follow you.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="replies-how" /><p class="question">How do I reply to a reply (or other notification)?</p>
+<div class="response">
+<p>You can reply to notifications that show up directly on your dashboard. To see these, you must have the 'Show notifications' option turned on in your Tumblr <a href="http://www.tumblr.com/preferences" target="_blank">preferences</a>.</p><p>Simply click on the notifcation icon on the right side of one of these notifications (heart, reply arrow, etc) to open a new post with the notification already added, ready for you to comment on.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="replies-inner" /><p class="question">Why can't I reply to replies (or other notifications) inside a post's notes list?</p>
+<div class="response">
+<p>Currently, this is not implemented in 'Missing e'. You can only reply to notifications on your dashboard. See <a href=#replies-how">here</a>.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="replies-multi" /><p class="question">How do I reply to more than one notification at once?</p>
+<div class="response">
+<ol><li>Hold down the <img class="inlineimg" src="images/shift.gif" alt="Shift"> key and click on the icons of each of the notifications you want to reply to.</li><li>Click (without <img class="inlineimg" src="images/shift.gif" alt="Shift">) on the icon of the last notification you want to include.</li><li>All the notifications will appear in a single post in chronological order!</li></ol>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="unfollower-how" /><p class="question">How do I use Unfollower? Where is it?</p>
+<div class="response">
+<p>You can use <em>Unfollower</em> by clicking on the <strong>&Delta;</strong> (Greek letter delta) symbol beside your follower count on any dashboard page. The <strong>&Delta;</strong> is hidden until you place your mouse on or next to your follower count.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="unfollower-fail" /><p class="question">Why does Unfollower fail to load?</p>
+<div class="response">
+<p><em>Unfollower</em> must load every single one of your follower pages behind the scenes. This can take a while, especially if you are followed by a lot of tumblr accounts. During times when Tumblr is very busy or error-prone, one or more of these pages may fail to load. <em>Unfollower</em> will retry a few times before giving up and returning an error screen.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="unfollower-issues" /><p class="question">Why does Unfollower report that someone has unfollowed that I know has not?</p>
+<div class="response">
+<p>First of all, <em>Unfollower</em> displays all tumblr accounts that have either unfollowed you, been deactivated or have changed usernames. It cannot determine the difference in these situations.</p><p>Also, Tumblr, unfortunately, sometimes does not show all of your followers on the follower pages. Some may be missing from the list <em>Unfollower</em> receives from Tumblr.</p><p><em>Unfollower</em> presents information purely for entertainment purposes. Before you take any rash actions based on information you get from it, you would be wise to double-check whether or not someone still follows you.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="unfollower-secondary" /><p class="question">Can Unfollower track your unfollows on multiple tumblr accounts?</p>
+<div class="response">
+<p>No, <em>Unfollower</em> cannot track unfollows on more than one tumblr account at a time. If you use <em>Unfollower</em> on one account and then try again on another, the results may not make sense.</p><p>Also note that the first time you load a Tumblr dashboard page after installing 'Missing e', <em>Unfollower</em> automatically loads your follower list. The first time your run <em>Unfollower</em> manually, it will use this list. If the first dashboard page you loaded was for a secondary tumblr account, the first report may not make sense.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="unfollower-delta" /><p class="question">Why is Unfollower represented by a '&Delta;' (delta)?</p>
+<div class="response">
+<p>The <a href="http://www.wikipedia.org/wiki/Delta_(letter)" target="_blank">Greek letter &Delta; (delta)</a> is used in many fields of science and engineering to represent change.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <div id="inlinefooter"><div id="foot-left">An open-source project released under <a href="http://www.gnu.org/licenses/gpl.html">GPL v3</a></div><div class="clear"></div></div>
 </div>
