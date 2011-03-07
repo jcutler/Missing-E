@@ -881,7 +881,7 @@ function doshow(component) {
 <table class="options_table">
 <tr><td class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
 <tr><td class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
-<tr><td class="odd">Number of retries on failure to load reblog link on dashboard posts (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" class="numinput" size="1" name="MissingE_reblogYourself_retries" value="10" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" class="numinput" size="1" name="MissingE_reblogYourself_retries" value="10" onchange="doSetting(this,true,defaultRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
