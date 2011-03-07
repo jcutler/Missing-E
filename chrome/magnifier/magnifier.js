@@ -45,8 +45,13 @@ function insertMagnifier(item) {
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
       var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
       var ctrl = $(item).find('div.post_controls');
-      $('<a title="Magnifier loading..." class="s113977_magnify s113977_magnify_hide" id="magnify_' + tid + '" href="#" onclick="return false;"></a>')
-         .appendTo(ctrl).click(magClick);
+      var mi = $('<a title="Magnifier loading..." class="s113977_magnify s113977_magnify_hide" id="magnify_' + tid + '" href="#" onclick="return false;"></a>')
+         .click(magClick);
+      var heart = ctrl.find('a.like_button');
+      if (heart.length > 0)
+         heart.before(mi);
+      else
+         ctrl.append(mi);
       chrome.extension.sendRequest({greeting: "magnifier", pid: tid, url: addr}, function(response) {
          if (response.success) {
             var urls = response.data.replace(/"/g,'\'');

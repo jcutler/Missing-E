@@ -46,3 +46,6 @@ a.s113977_magnify_err {
 background-position:-28px 0 !important;
 }
 
+a.s113977_magnify + a.like_button {
+margin-left:8px !important;
+}
