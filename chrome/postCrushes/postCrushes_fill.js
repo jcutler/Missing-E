@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 if (document.body.id == 'dashboard_edit_post') {
@@ -57,5 +57,5 @@ if (document.body.id == 'dashboard_edit_post') {
          document.getElementById('photo_upload').style.display = "none";
          document.getElementById('photo_url').style.display = "block";
       }
-   });   
+   });
 }

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 function reply_getValue() {
@@ -93,7 +93,7 @@ $('div.notification_type_icon').live('click', function(e) {
                   .replace(/^\s*/,"")
                   .replace(/\s*$/,"")
                   .replace(/\n/g, " ");
-         
+
          if (addTags == 1) {
             en = newcode.indexOf("</a>");
             nm = newcode.substr(0,en).match(/[a-zA-Z0-9\-\_]*$/g)[0];
@@ -111,7 +111,7 @@ $('div.notification_type_icon').live('click', function(e) {
          if (showAvatars == 1) {
             newcode = img + "&nbsp;" + newcode;
          }
-            
+
          st = newcode.indexOf("<div class=\"notification_type_icon");
          if (st >= 0) {
             en = newcode.indexOf("</div>",st)+6;
@@ -137,7 +137,7 @@ $('div.notification_type_icon').live('click', function(e) {
 
       reply_setValue(code);
       tags_setValue(tags);
-   
+
       window.open("http://www.tumblr.com/new/text");
    });
 });

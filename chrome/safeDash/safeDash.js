@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 var lock = chrome.extension.getURL('safeDash/lock.png');
@@ -54,7 +54,7 @@ var sdlnk = '<li><a id="nsfwctrl" href="#" onclick="return false;">' +
               '<span id="nsfwctrlicon" ' + extra +
               ' class="icon dashboard_controls_nsfw">' +
               '</span>SafeDash <span id="nsfwctrltxt">' + onoff +
-              '</span></a></li>'; 
+              '</span></a></li>';
 var custom = $('.dashboard_nav_item .dashboard_subpages a[href^="/customize"]');
 
 if (custom.length > 0) {
@@ -70,7 +70,7 @@ $('.video_thumbnail div:empty').live('mouseover', function() {
 }).live('mouseout', function() {
    if (getStorage('MissingE_safeDash_state',0)==1)
       $(this).parent().find('.nsfwed').css('opacity','0');
-}); 
+});
 
 $('#nsfwctrl').click(function() {
    var state = 1-getStorage('MissingE_safeDash_state',0);
@@ -212,7 +212,7 @@ function doHide(item) {
                me.next().addClass('nsfwed');
 
             me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
- 
+
          });
       }
    }

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 if (window.top == window ||
@@ -30,7 +30,7 @@ if (window.top == window ||
       info += active.url + "\n";
       for (var i in active) {
          if (i != 'url') {
-            if (active[i])  
+            if (active[i])
                info += i + ": active\n";
             else
                info += i + ": inactive\n";

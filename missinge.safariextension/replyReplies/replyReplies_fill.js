@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 function reply_getValue() {
@@ -49,7 +49,7 @@ function MissingE_replyReplies_fill_doStartup() {
    if (location == 'http://www.tumblr.com/new/text' &&
        document.body.id == 'dashboard_edit_post' &&
        reply_getValue().length > 0) {
-   
+
       $(document).ready(function() {
             $('head').append('<script type="text/javascript">\n' +
                              'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {\n' +
@@ -77,7 +77,7 @@ function MissingE_replyReplies_fill_doStartup() {
             var label = document.getElementById('post_tags_label');
             label.parentNode.removeChild(label);
          }
-      }   
+      }
       tags_clearValue();
    }
 }

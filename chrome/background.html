@@ -97,7 +97,7 @@ function doMagnifier(stamp, id, sendResponse) {
          var cap = stamp.photos[i]["caption"];
          if (cap == undefined || cap == null)
             url.push("");
-         else 
+         else
             url.push(cap);
       }
       url = JSON.stringify(url);
@@ -137,7 +137,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                   else {
                      sendResponse({pid: this.targetId, success: false});
                   }
-               }  
+               }
             },
             success: function(data, textStatus) {
                if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
@@ -327,7 +327,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.safeDash = false;
-         
+
          if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "bookmarker/bookmarker.css"});
@@ -335,7 +335,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.bookmarker = false;
-   
+
          if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
              getStorage("MissingE_followChecker_enabled",1) == 1) {
             chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
@@ -505,7 +505,7 @@ if (now >= parseInt(getStorage("MissingE_compatCheck",0)) + fivedays) {
             }
          }
       }
-   
+
       if (repl.length > 0) {
          var answer = confirm("These installed scripts have been replaced by the 'Missing e' extension:\n" +
                               " - " + repl.join("\n - ") + "\n\nDo you want to disable them?\nYou can re-enable or uninstall them later in your Extensions menu.");

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 var missingeServer = 'http://missinge.host22.com';
@@ -68,7 +68,7 @@ innerdiv.addEventListener('click', function() {
       get += "img" + i + "=" + crushimg[i] + "&url" + i + "=" + crushurl[i] +
             "&per" + i + "=" + crushper[i];
    }
-   
+
    chrome.extension.sendRequest({greeting: "settings", component: "postCrushes"}, function(response) {
       var postCrushes_settings = JSON.parse(response);
       var prefix = postCrushes_settings.prefix;
@@ -80,13 +80,13 @@ innerdiv.addEventListener('click', function() {
          txt += '<li><a href="' + crushurl[i] + '">' + crushname[i] + '</a></li>';
       }
       txt += '</ul><p></p>';
-   
+
       for (j=0; j<from.length; j++) txt = txt.replace(from[j],to[j]);
-   
+
       window.localStorage.setItem('tcp_crushTags',crushname.join(','));
       window.localStorage.setItem('tcp_crushURL', missingeServer + '/postcrushes/?' + get);
       window.open('http://www.tumblr.com/new/photo?post%5Bone%5D=&post%5Btwo%5D=' + txt + '&post%5Bthree%5D=');
-   }); 
+   });
 }, true);
 newdiv.appendChild(innerdiv);
 infodiv.appendChild(newdiv);

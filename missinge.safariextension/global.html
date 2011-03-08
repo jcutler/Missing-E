@@ -94,7 +94,7 @@ function doMagnifier(stamp, id, request) {
          var cap = stamp.photos[i]["caption"];
          if (cap == undefined || cap == null)
             url.push("");
-         else 
+         else
             url.push(cap);
       }
       url = JSON.stringify(url);
@@ -295,7 +295,7 @@ function handleRequest(request) {
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
             settings.addTags = getStorage("MissingE_replyReplies_addTags",1);
             break;
-         case "postCrushes_fill":   
+         case "postCrushes_fill":
          case "postCrushes":
             settings.prefix = getStorage("MissingE_postCrushes_prefix","Tumblr Crushes:");
             settings.crushSize = getStorage("MissingE_postCrushes_crushSize",1);
@@ -336,13 +336,13 @@ function handleRequest(request) {
          }
          else
             activeScripts.safeDash = false;
-         
+
          if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;
          }
          else
             activeScripts.bookmarker = false;
-   
+
          if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
              getStorage("MissingE_followChecker_enabled",1) == 1) {
          }

@@ -18,14 +18,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 function MissingE_reblogYourself_post_doStartup() {
    div = document.getElementsByTagName("div")[0];
    controls = div.getElementsByTagName("a");
    noReblog = true;
-   
+
    if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href)))
       noReblog = false;
    else {
@@ -36,7 +36,7 @@ function MissingE_reblogYourself_post_doStartup() {
          }
       }
    }
-   
+
    if (noReblog) {
       var url;
       var loc = window.location.href;
@@ -44,11 +44,11 @@ function MissingE_reblogYourself_post_doStartup() {
       url = "http://www.tumblr.com/reblog/";
       url += loc.match(/&pid=([0-9]*)/)[1] + "/";
       url += loc.match(/&rk=([a-zA-Z0-9]*)/)[1];
-   
+
       var link = document.createElement('a');
       link.setAttribute('href', url);
       link.setAttribute('target', '_top');
-   
+
       var icon = document.createElement('img');
       icon.style.height='20px';
       icon.style.width='64px';
@@ -58,7 +58,7 @@ function MissingE_reblogYourself_post_doStartup() {
       icon.style.cursor='pointer';
       icon.alt='Reblog';
       icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha.png?6';
-   
+
       link.appendChild(icon);
       div.insertBefore(link,controls[controls.length-1]);
    }

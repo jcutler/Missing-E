@@ -18,35 +18,35 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #unfollowrtable {
-   width:80%;
-   margin:0 10%;
-   border-collapse:separate !important;
+width:80%;
+margin:0 10%;
+border-collapse:separate !important;
 }
 
 #unfollowrtable .tu-firstrow {
-   border-top:1px solid #444 !important;
+border-top:1px solid #444 !important;
 }
 
 #unfollowrtable .tu-lastrow {
-   border-bottom:1px solid #444 !important;
+border-bottom:1px solid #444 !important;
 }
 
 #unfollowrtable a {
-   text-decoration:none;
+text-decoration:none;
 }
 
 #unfollowrtable a:hover {
-   font-style:italic !important;
+font-style:italic !important;
 }
 
 #unfollowrtable td {
-   width:100%;
+width:100%;
 }
 
 #unfollowrtable .tu-greyrow {
-   background-color:#DDD;
+background-color:#DDD;
 }

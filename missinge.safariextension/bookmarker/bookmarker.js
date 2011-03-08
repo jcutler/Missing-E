@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 var bmi = safari.extension.baseURI + 'bookmarker/sidebar_bookmark.png';
@@ -62,7 +62,7 @@ function markClick(e) {
 function addMark(post,custom) {
    var d = new Date();
    var ds = d.getFullYear()+"-"+(d.getMonth()+1<10?"0":"")+(d.getMonth()+1)+"-"+(d.getDate()<10?"0":"")+d.getDate()+" "+(d.getHours()<10?"0":"")+d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes()+":"+(d.getSeconds()<10?"0":"")+d.getSeconds();
-   
+
    if (custom) {
       var ans = "";
       var ok = true;
@@ -195,7 +195,7 @@ function generateList() {
       var idx = 0;
       markitems.each(function(i) {
          var cd = $(this).find('span.mark_date').attr("timestamp");
-         
+
          if (idx >= marks.length ||
              cd > marks[idx][0]) {
             $("#bookmark_" + this.id.match(/[0-9]*$/)[0]).removeClass("s113977_ismarked");
@@ -255,7 +255,7 @@ function MissingE_bookmarker_doStartup() {
    st.setAttribute('type','text/css');
    st.innerHTML = '#right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_bookmark { background-image:url("' + bmi + '") !important; } #s113977_marklist a:active { color:#C4CDD6 !important; } a.s113977_mark { background-image:url("' + mimg + '"); }';
    document.getElementsByTagName('head')[0].appendChild(st);
-   
+
    if (document.body.id != "tinymce" &&
        document.body.id != "dashboard_edit_post") {
       if (/drafts$/.test(location) == false &&
@@ -265,9 +265,9 @@ function MissingE_bookmarker_doStartup() {
          $("#posts li.post").each(function(i) {
             doMarks(this);
          });
-   
+
       var list = $('<div class="dashboard_nav_item" style="padding-left:0;position:relative;"><div class="dashboard_nav_title">Bookmarks</div><ul id="s113977_marklist" class="dashboard_subpages"></ul></div>');
-   
+
       var pos = $("#dashboard_controls_radar_buttons");
       if (pos.length > 0) {
          pos.parent().before(list);
@@ -278,7 +278,7 @@ function MissingE_bookmarker_doStartup() {
       list.click(marklistClick);
       generateList();
    }
-   
+
    if (document.body.id != "tinymce" &&
        document.body.id != "dashboard_edit_post") {
       if (/drafts$/.test(location) == false &&

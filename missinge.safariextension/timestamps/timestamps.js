@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 function loadTimestamp(item) {
@@ -35,7 +35,7 @@ function loadTimestamp(item) {
       }
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
       var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
-      if (tid == undefined || tid == null || tid == "") return; 
+      if (tid == undefined || tid == null || tid == "") return;
       safari.self.tab.dispatchMessage("timestamp", {pid: tid, url: addr});
    }
 }
@@ -51,7 +51,7 @@ function receiveTimestamp(response) {
       info.html('Timestamp loading failed. <a class="MissingE_timestamp_retry" href="#">Retry</a>');
    }
 }
-  
+
 function MissingE_timestamps_doStartup() {
    safari.self.addEventListener("message", receiveTimestamp, false);
    if (/drafts$/.test(location) == false &&

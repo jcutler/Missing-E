@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 function reply_getValue() {
@@ -100,7 +100,7 @@ function replyRepliesSettings(response) {
                .replace(/^\s*/,"")
                .replace(/\s*$/,"")
                .replace(/\n/g, " ");
-      
+
       if (addTags == 1) {
          en = newcode.indexOf("</a>");
          nm = newcode.substr(0,en).match(/[a-zA-Z0-9\-\_]*$/g)[0];
@@ -118,7 +118,7 @@ function replyRepliesSettings(response) {
       if (showAvatars == 1) {
          newcode = img + "&nbsp;" + newcode;
       }
-         
+
       st = newcode.indexOf("<div class=\"notification_type_icon");
       if (st >= 0) {
          en = newcode.indexOf("</div>",st)+6;

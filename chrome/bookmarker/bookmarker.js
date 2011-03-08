@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 var bmi = chrome.extension.getURL('bookmarker/sidebar_bookmark.png');
@@ -67,7 +67,7 @@ function markClick(e) {
 function addMark(post,custom) {
    var d = new Date();
    var ds = d.getFullYear()+"-"+(d.getMonth()+1<10?"0":"")+(d.getMonth()+1)+"-"+(d.getDate()<10?"0":"")+d.getDate()+" "+(d.getHours()<10?"0":"")+d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes()+":"+(d.getSeconds()<10?"0":"")+d.getSeconds();
-   
+
    if (custom) {
       var ans = "";
       var ok = true;
@@ -200,7 +200,7 @@ function generateList() {
       var idx = 0;
       markitems.each(function(i) {
          var cd = $(this).find('span.mark_date').attr("timestamp");
-         
+
          if (idx >= marks.length ||
              cd > marks[idx][0]) {
             $("#bookmark_" + this.id.match(/[0-9]*$/)[0]).removeClass("s113977_ismarked");

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 var followertext;
@@ -224,7 +224,7 @@ function doFWFinish(followers, followees, show) {
    var youfollow = new Array();
    var followyou = new Array();
    if (!show) return true;
-   
+
    var e=0;
    var f=0;
 
@@ -250,7 +250,7 @@ function doFWFinish(followers, followees, show) {
 
    followers = [];
    followees = [];
-  
+
    var txt = '<table id="followwhotable" border="0"><thead><tr><th><em>You Don\'t Follow (' + followyou.length + ')</em></th><th><em>Don\'t Follow You (' + youfollow.length + ')</em></th></tr></thead><tbody>';
    for (i=0;i<youfollow.length && i<followyou.length;i++) {
       var yentry = youfollow[i].split(';');

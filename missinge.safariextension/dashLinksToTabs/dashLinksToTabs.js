@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 function dashLinksToTabs_click(e, newPostTabs) {
@@ -40,7 +40,7 @@ function dashLinksToTabs_click(e, newPostTabs) {
 function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar) {
    var lcol = document.getElementById('left_column');
    var rcol = document.getElementById('right_column');
-   
+
    if (lcol) {
       lcol.addEventListener('click', function(e) {
          dashLinksToTabs_click(e, newPostTabs);

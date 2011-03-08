@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle, addUploader) {
@@ -26,11 +26,11 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle, addUpload
       var apr = document.getElementById("allow_photo_replies");
       if (apr != null && apr != undefined) apr.checked = true;
    }
-   
+
    if (uploaderToggle == 1) {
       var url = document.getElementById("photo_url");
       var lnk = document.getElementById("use_url_link");
-      
+
       if (url != null && url != undefined && lnk != null && lnk != undefined) {
          var uil = lnk.cloneNode();
          uil.id = "use_img_link";
@@ -39,7 +39,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle, addUpload
          url.appendChild(uil);
       }
    }
-   
+
    if (addUploader == 1 &&
        !(/\/new\/text/.test(location.href)) &&
        !(/\/new\/chat/.test(location.href)) &&
@@ -120,7 +120,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle, addUpload
       $('head').append('<script type="text/javascript">\n' +
                        'function catch_uploaded_photo(src) {\n' +
                        '   var eId = catch_uploaded_photo.caller.arguments[0].currentTarget.frameElement.id.match(/[0-9]*$/)[0];\n' +
-                       '   var e = "ask_answer_field_" + eId;\n' + 
+                       '   var e = "ask_answer_field_" + eId;\n' +
                        '   if (tinyMCE && (ed = tinyMCE.get(e))) {\n' +
                        '      ed.execCommand("mceInsertContent", false, "<img src=\\"" + src + "\\" />");\n' +
                        '   }\n' +

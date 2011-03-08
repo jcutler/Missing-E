@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 var missingeServer = 'http://missinge.host22.com';
@@ -53,7 +53,7 @@ function postCrushesSettings(response) {
       get += "img" + i + "=" + crushimg[i] + "&url" + i + "=" + crushurl[i] +
             "&per" + i + "=" + crushper[i];
    }
-   
+
    var txt = '';
    if (prefix.length > 0)
       txt += '<p><strong>' + prefix + '</strong></p>'
@@ -77,7 +77,7 @@ function MissingE_postCrushes_doStartup() {
    while (infodiv != undefined && infodiv != null && infodiv.tagName != 'DIV') {
       infodiv = infodiv.nextSibling;
    }
-   
+
    var newdiv = document.createElement('div');
    newdiv.style.position="relative";
    newdiv.style.verticalAlign="middle";
@@ -87,11 +87,11 @@ function MissingE_postCrushes_doStartup() {
    innerdiv.style.cursor="pointer";
    innerdiv.style.verticalAlign="middle";
    innerdiv.innerHTML = '<img src="' + safari.extension.baseURI + 'postCrushes/heart.png' + '" style="opacity:0.6;height:28px;width:29px;" /><div style="position:absolute;top:15%;width:100%;color:#2D4159;font:italic bold 12px/1.4 Arial,Helvetica,sans-serif;">Post your crushes to Tumblr</div>';
-   
+
    innerdiv.addEventListener('click', function() {
       safari.self.tab.dispatchMessage("settings", {component: "postCrushes"});
    }, true);
-   
+
    safari.self.addEventListener("message", postCrushesSettings, false);
 
    newdiv.appendChild(innerdiv);

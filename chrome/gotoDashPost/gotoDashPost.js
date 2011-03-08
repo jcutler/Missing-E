@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href) &&
@@ -39,7 +39,7 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href) &&
       var en = pid.indexOf("&",st);
       pid = pid.substring(st, en);
       pid = Number(pid)+1;
-   
+
       var dashlnk = document.createElement('a');
       dashlnk.setAttribute('href', 'http://www.tumblr.com/dashboard/1000/' + pid + "?lite");
       dashlnk.setAttribute('target', '_top');

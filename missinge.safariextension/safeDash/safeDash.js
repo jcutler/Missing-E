@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
 var lock = safari.extension.baseURI + 'safeDash/lock.png';
@@ -153,7 +153,7 @@ function doHide(item) {
                me.next().addClass('nsfwed');
 
             me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
- 
+
          });
       }
    }
@@ -212,9 +212,9 @@ function MissingE_safeDash_doStartup() {
       opA = 0;
    }
    st.innerHTML = '#posts .post img, .notification blockquote img, .video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } #posts .post img:hover, .notification blockquote img:hover, #posts #new_post img, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img { opacity:1 !important; } .nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat scroll center center !important; display:inline-block !important; max-width:100%; } .nsfwdiv:hover, .nsfwoff { background:#FFFFFF !important} #posts .post .video_thumbnail .nsfwdiv { position:static !important; } #right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_nsfw { background-image:url("' + lockicon + '") !important; background-position:0px 0px; } .nsfwembed:hover .nsfwed { visibility:visible !important; } .nsfwembed { clear:both; } .nsfwdiv img.album_art, .nsfwdiv img.image_thumbnail { margin-right:0px !important; } .album_nsfwdiv { margin-right:20px; float:left; } .album_nsfwdiv_enlarged { margin-bottom:20px; margin-right:0 !important; float:none !important;}';
-   
+
    document.getElementsByTagName('head')[0].appendChild(st);
-   
+
    var onoff;
    var extra;
    if (getStorage('MissingE_safeDash_state',0) == 0) {
@@ -225,7 +225,7 @@ function MissingE_safeDash_doStartup() {
       onoff = "On";
       extra = 'style="background-position:-15px 0px;"';
    }
-  
+
    var sdlnk = '<li><a id="nsfwctrl" href="#" onclick="return false;">' +
                  '<span id="nsfwctrlicon" ' + extra +
                  ' class="icon dashboard_controls_nsfw">' +
@@ -240,14 +240,14 @@ function MissingE_safeDash_doStartup() {
       $('#right_column div.dashboard_nav_item:first').css('padding-top','');
       $('#right_column').prepend('<div class="dashboard_nav_item" style="padding-top:0;padding-left:0;"><ul class="dashboard_subpages">' + sdlnk + '</ul></div>');
    }
-   
+
    $('.video_thumbnail div:empty').live('mouseover', function() {
       $(this).parent().find('.nsfwed').css('opacity','1');
    }).live('mouseout', function() {
       if (getStorage('MissingE_safeDash_state',0)==1)
          $(this).parent().find('.nsfwed').css('opacity','0');
-   }); 
-   
+   });
+
    $('#nsfwctrl').click(function() {
       var state = 1-getStorage('MissingE_safeDash_state',0);
       setStorage('MissingE_safeDash_state',state);
@@ -258,11 +258,11 @@ function MissingE_safeDash_doStartup() {
          doNSFW();
       }
    });
-   
+
    document.addEventListener('DOMNodeInserted',function(e){
       doHide(e.target);
    }, false);
-   
+
    window.addEventListener('storage',function(e) {
       if (e.key != 'MissingE_safeDash_state') return false;
       var state = getStorage('MissingE_safeDash_state',0);
@@ -273,6 +273,6 @@ function MissingE_safeDash_doStartup() {
          doNSFW();
       }
    }, false);
-   
+
    $('#posts li.post, #posts li.notification, ol.notes').each(function(){doHide(this)});
 }

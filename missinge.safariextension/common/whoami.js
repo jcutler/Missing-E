@@ -18,8 +18,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with 'Missing e'.  If not, see <http://www.gnu.org/licenses/>.
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
+
 var MissingE_startup;
 if (window.top == window ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href)) {
@@ -36,14 +37,14 @@ function doStartup(response) {
    info += response.message.url + "\n";
    for (var i in response.message) {
       if (i != 'url' && i != 'isFrame' && !(/_fill$/.test(i))) {
-         if (response.message[i])  
+         if (response.message[i])
             info += i + ": active\n";
          else
             info += i + ": inactive\n";
       }
    }
    console.log(info);
-   
+
    if (window.top == window) {
       if (response.message.bookmarker) MissingE_bookmarker_doStartup();
       if (response.message.dashLinksToTabs)
