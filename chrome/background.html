@@ -111,8 +111,9 @@ function doMagnifier(stamp, id, sendResponse) {
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
    else if (request.greeting == "magnifier") {
-      if (cache[request.pid]) {
-         doMagnifier(cache[request.pid], request.pid, sendResponse);
+      var entry;
+      if ((entry = cache[request.pid])) {
+         doMagnifier(entry, request.pid, sendResponse);
       }
       else {
          $.ajax({
@@ -123,21 +124,33 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             retryLimit: getStorage("MissingE_magnifier_retries",defaultRetries),
             targetId: request.pid,
             error: function(xhr, textStatus) {
-               this.tryCount++;
-               if (this.tryCount <= this.retryLimit) {
-                  $.ajax(this);
-                  return;
+               var entry;
+               if ((entry = cache[this.targetId])) {
+                  doMagnifier(entry, this.targetId, sendResponse);
                }
                else {
-                  sendResponse({pid: this.targetId, success: false});
-               }
-            },
-            success: function(data, textStatus) {
-               if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
                   this.tryCount++;
                   if (this.tryCount <= this.retryLimit) {
                      $.ajax(this);
                      return;
+                  }
+                  else {
+                     sendResponse({pid: this.targetId, success: false});
+                  }
+               }  
+            },
+            success: function(data, textStatus) {
+               if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+                  var entry;
+                  if ((entry = cache[this.targetId])) {
+                     doMagnifier(entry, this.targetId, sendResponse);
+                  }
+                  else {
+                     this.tryCount++;
+                     if (this.tryCount <= this.retryLimit) {
+                        $.ajax(this);
+                        return;
+                     }
                   }
                }
                else {
@@ -152,85 +165,110 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
    }
    else if (request.greeting == "reblogYourself") {
-      if (cache[request.pid]) {
-         doReblogDash(cache[request.pid], request.pid, sendResponse);
+      var entry;
+      if ((entry = cache[request.pid])) {
+         doReblogDash(entry, request.pid, sendResponse);
       }
       else {
-      $.ajax({
-         type: "GET",
-         url: request.url + "/api/read/json?id=" + request.pid,
-         dataType: "text",
-         tryCount: 0,
-         retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
-         targetId: request.pid,
-         error: function(xhr, textStatus) {
-            this.tryCount++;
-            if (this.tryCount <= this.retryLimit) {
-               $.ajax(this);
-               return;
-            }
-            else {
-               sendResponse({pid: this.targetId, success: false});
-            }
-         },
-         success: function(data, textStatus) {
-            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
-               this.tryCount++;
-               if (this.tryCount <= this.retryLimit) {
-                  $.ajax(this);
-                  return;
+         $.ajax({
+            type: "GET",
+            url: request.url + "/api/read/json?id=" + request.pid,
+            dataType: "text",
+            tryCount: 0,
+            retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
+            targetId: request.pid,
+            error: function(xhr, textStatus) {
+               var entry;
+               if ((entry = cache[this.targetId])) {
+                  doReblogDash(entry, this.targetId, sendResponse);
+               }
+               else {
+                  this.tryCount++;
+                  if (this.tryCount <= this.retryLimit) {
+                     $.ajax(this);
+                     return;
+                  }
+                  else {
+                     sendResponse({pid: this.targetId, success: false});
+                  }
+               }
+            },
+            success: function(data, textStatus) {
+               if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+                  var entry;
+                  if ((entry = cache[this.targetId])) {
+                     doReblogDash(entry, this.targetId, sendResponse);
+                  }
+                  else {
+                     this.tryCount++;
+                     if (this.tryCount <= this.retryLimit) {
+                        $.ajax(this);
+                        return;
+                     }
+                  }
+               }
+               else {
+                  var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+                  var stamp = JSON.parse(txt);
+                  var info = stamp["posts"][0];
+                  cache[this.targetId] = info;
+                  doReblogDash(info, this.targetId, sendResponse);
                }
             }
-            else {
-               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-               var stamp = JSON.parse(txt);
-               var info = stamp["posts"][0];
-               cache[this.targetId] = info;
-               doReblogDash(info, this.targetId, sendResponse);
-            }
-         }
-      });
+         });
       }
    }
    else if (request.greeting == "timestamp") {
-      if (cache[request.pid]) {
-         doTimestamp(cache[request.pid], request.pid, sendResponse);
+      var entry;
+      if ((entry = cache[request.pid])) {
+         doTimestamp(entry, request.pid, sendResponse);
       }
       else {
-      $.ajax({
-         type: "GET",
-         url: request.url + "/api/read/json?id=" + request.pid,
-         dataType: "text",
-         tryCount: 0,
-         retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),
-         targetId: request.pid,
-         error: function(xhr, textStatus) {
-            this.tryCount++;
-            if (this.tryCount <= this.retryLimit) {
-               $.ajax(this);
-               return;
-            }
-            else {
-               sendResponse({pid: this.targetId, success: false});
-            }
-         },
-         success: function(data, textStatus) {
-            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
-               this.tryCount++;
-               if (this.tryCount <= this.retryLimit) {
-                  $.ajax(this);
-                  return;
+         $.ajax({
+            type: "GET",
+            url: request.url + "/api/read/json?id=" + request.pid,
+            dataType: "text",
+            tryCount: 0,
+            retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),
+            targetId: request.pid,
+            error: function(xhr, textStatus) {
+               var entry;
+               if ((entry = cache[this.targetId])) {
+                  doTimestamp(entry, this.targetId, sendResponse);
+               }
+               else {
+                  this.tryCount++;
+                  if (this.tryCount <= this.retryLimit) {
+                     $.ajax(this);
+                     return;
+                  }
+                  else {
+                     sendResponse({pid: this.targetId, success: false});
+                  }
+               }
+            },
+            success: function(data, textStatus) {
+               if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+                  if ((entry = cache[this.targetId])) {
+                     doTimestamp(entry, this.targetId, sendResponse);
+                  }
+                  else {
+                     this.tryCount++;
+                     if (this.tryCount <= this.retryLimit) {
+                        $.ajax(this);
+                        return;
+                     }
+                  }
+               }
+               else {
+                  var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+                  var stamp = JSON.parse(txt);
+                  var info = stamp["posts"][0];
+                  cache[this.targetId] = info;
+                  doTimestamp(info, this.targetId, sendResponse);
                }
             }
-            else {
-               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-               var stamp = JSON.parse(txt);
-               var info = stamp["posts"][0];
-               cache[this.targetId] = info;
-               doTimestamp(info, this.targetId, sendResponse);
-            }
-         }
-      });
+         });
       }
    }
    else if (request.greeting == "settings") {
