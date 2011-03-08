@@ -21,71 +21,91 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global safari, $ */
+
 var magimg = safari.extension.baseURI + 'magnifier/magnifier.png';
 var turnimg = safari.extension.baseURI + 'magnifier/turners.png';
 
 function magClick(e) {
-   if (e.which == 1) {
+   if (e.which === 1) {
       if ($(this).hasClass('s113977_magnify_err')) {
          insertMagnifier($(this).closest('li.post').get(0),'a');
          return false;
       }
       var src = $(this).attr('src');
-      if (src == undefined || src == null || src == "") return false;
+      if (src === undefined || src === null || src === "") { return false; }
       $.facebox({ image: src });
    }
 }
 
 function insertMagnifier(item) {
-   if (item.tagName == "LI" && $(item).hasClass("post") && $(item).hasClass("photo")) {
+   if (item.tagName === "LI" && $(item).hasClass("post") &&
+       $(item).hasClass("photo")) {
       $(item).find('a.s113977_magnify').remove();
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
-      var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
+      var addr = $(item).find("a.permalink:first").attr("href")
+                     .match(/http:\/\/[^\/]*/)[0];
       var ctrl = $(item).find('div.post_controls');
-      var mi = $('<a title="Magnifier loading..." class="s113977_magnify s113977_magnify_hide" id="magnify_' + tid + '" href="#" onclick="return false;"></a>')
+      var mi = $('<a title="Magnifier loading..." ' +
+                 'class="s113977_magnify s113977_magnify_hide" id="magnify_' +
+                 tid + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
       var heart = ctrl.find('a.like_button');
-      if (heart.length > 0)
+      if (heart.length > 0) {
          heart.before(mi);
-      else
+      }
+      else {
          ctrl.append(mi);
+      }
       safari.self.tab.dispatchMessage("magnifier", {pid: tid, url: addr});
    }
 }
 
 function receiveMagnifier(response) {
-   if (response.name != "magnifier") return;
+   if (response.name !== "magnifier") { return; }
    if (response.message.success) {
-      var urls = response.message.data.replace(/"/g,'\'');
-      $('#magnify_' + response.message.pid).attr('src',response.message.data).removeClass('s113977_magnify_hide').attr('title','Magnify');
+      $('#magnify_' + response.message.pid).attr('src',response.message.data)
+         .removeClass('s113977_magnify_hide').attr('title','Magnify');
    }
    else {
-      $('#magnify_' + response.message.pid).attr('src','').addClass('s113977_magnify_err').removeClass('s113977_magnify_hide').attr('title', "An error occurred. Click to reload 'Magnifier'.");
+      $('#magnify_' + response.message.pid).attr('src','')
+         .addClass('s113977_magnify_err')
+         .removeClass('s113977_magnify_hide')
+         .attr('title', "An error occurred. Click to reload 'Magnifier'.");
    }
 }
 
 function MissingE_magnifier_doStartup() {
    var turnload = new Image();
    turnload.src = turnimg;
-   $('head').append('<style id="MissingE_magnifier_style" type="text/css">a.s113977_magnify { background-image:url("' + magimg + '"); } #facebox .slideshow .turner_left, #facebox .slideshow .turner_right { background-image:url("' + turnimg + '"); }</style>');
+   $('head').append('<style id="MissingE_magnifier_style" type="text/css">' +
+                    'a.s113977_magnify { ' +
+                    'background-image:url("' + magimg + '"); } ' +
+                    '#facebox .slideshow .turner_left, ' +
+                    '#facebox .slideshow .turner_right { ' +
+                    'background-image:url("' + turnimg + '"); }</style>');
 
-   if (/drafts$/.test(location) == false &&
-       /queue$/.test(location) == false &&
-       /messages$/.test(location) == false) {
+   if (!(/drafts$/.test(location.href)) &&
+       !(/queue$/.test(location.href)) &&
+      !(/messages$/.test(location.href)) &&
+      !(/submissions[^\/]*$/.test(location.href))) {
       safari.self.addEventListener("message", receiveMagnifier, false);
-      $('#facebox .turner_left,#facebox .turner_right').live('click', function(e) {
+      $('#facebox .turner_left,#facebox .turner_right')
+         .live('click', function(e) {
+         
          var curr = $(this).siblings('div.image:visible:last');
          var next;
          if ($(this).hasClass('turner_right')) {
             next = curr.next('div.image');
-            if (next.length == 0) {
+            if (next.length === 0) {
                next = curr.parent().find('div.image:first');
             }
          }
          else {
             next = curr.prev('div.image');
-            if (next.length == 0)
+            if (next.length === 0) {
                next = curr.parent().find('div.image:last');
+            }
          }
          curr.parent().find('div.image:visible').not(curr).hide();
          curr.fadeOut('fast');
