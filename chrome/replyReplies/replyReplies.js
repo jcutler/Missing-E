@@ -21,41 +21,49 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global chrome, $, localStorage, window */
+
 function reply_getValue() {
-   var retval = window.localStorage.getItem("trr_ReplyText");
-   if (retval == undefined || retval == null || retval == "")
+   var retval = localStorage.getItem("trr_ReplyText");
+   if (retval === undefined || retval === null || retval === "") {
       return "";
-   else
+   }
+   else {
       return retval;
+   }
 }
 
 function reply_setValue(st) {
-   window.localStorage.setItem('trr_ReplyText',st);
+   localStorage.setItem('trr_ReplyText',st);
 }
 
 function reply_clearValue() {
-   window.localStorage.removeItem('trr_ReplyText','');
+   localStorage.removeItem('trr_ReplyText','');
 }
 
 function tags_getValue() {
-   var retval = window.localStorage.getItem("trr_ReplyTags");
-   if (retval == undefined || retval == null || retval == "")
-      return new Array();
-   else
+   var retval = localStorage.getItem("trr_ReplyTags");
+   if (retval === undefined || retval === null || retval === "") {
+      return [];
+   }
+   else {
       return retval.split(",");
+   }
 }
 
 function tags_setValue(ar) {
-   window.localStorage.setItem('trr_ReplyTags',ar.join(","));
+   localStorage.setItem('trr_ReplyTags',ar.join(","));
 }
 
 function tags_clearValue() {
-   window.localStorage.removeItem('trr_ReplyTags');
+   localStorage.removeItem('trr_ReplyTags');
 }
 
-$('div.notification_type_icon').live('click', function(e) {
+$('div.notification_type_icon').live('mousedown', function(e) {
+   if (e.shiftKey) { e.preventDefault(); }
+}).live('click', function(e) {
    var arr;
-   if (e.which != 1) return;
+   if (e.which !== 1) { return; }
    if (e.shiftKey) {
       $(this).toggleClass("s113977_rt");
       if ($(this).hasClass("s113977_rt")) {
@@ -68,10 +76,13 @@ $('div.notification_type_icon').live('click', function(e) {
    }
    $(this).toggleClass("s113977_rt",true);
    $(this).parent().css("border","1px solid white");
-   chrome.extension.sendRequest({greeting: "settings", component: "replyReplies"}, function(response) {
+   chrome.extension.sendRequest({greeting: "settings",
+                                 component: "replyReplies"},
+                                 function(response) {
+      var i, n;
       var replyReplies_settings = JSON.parse(response);
-      var thecode = new Array();
-      var tags = new Array();
+      var thecode = [];
+      var tags = [];
       arr = $('.s113977_rt');
       var showAvatars = replyReplies_settings.showAvatars;
       var addTags = replyReplies_settings.addTags;
@@ -83,9 +94,11 @@ $('div.notification_type_icon').live('click', function(e) {
          var link = $(arr[i]).parent().find('img.avatar');
          var newcode = "";
          var img = "<a href=\"" + link.parent().attr("href") + "\">" +
-                     "<img style=\"width:16px;height:16px;border-width:0\" src=\"" +
+                     "<img style=\"width:16px;height:16px;border-width:0\" " +
+                     "src=\"" +
                      link.attr("src")
-                     .replace(/\/\/[^\.]*\.media\.tumblr\.com/,"//media.tumblr.com") +
+                        .replace(/\/\/[^\.]*\.media\.tumblr\.com/,
+                                 "//media.tumblr.com") +
                      "\" /></a>";
 
          newcode = oldcode.substr(oldcode.indexOf("</a>")+4);
@@ -94,21 +107,22 @@ $('div.notification_type_icon').live('click', function(e) {
                   .replace(/\s*$/,"")
                   .replace(/\n/g, " ");
 
-         if (addTags == 1) {
+         if (addTags === 1) {
             en = newcode.indexOf("</a>");
             nm = newcode.substr(0,en).match(/[a-zA-Z0-9\-\_]*$/g)[0];
             add = true;
             for (n = 0; n < tags.length; n++) {
-               if (tags[n] == nm) {
+               if (tags[n] === nm) {
                   add = false;
                   break;
                }
             }
-            if (add)
+            if (add) {
                tags.push(nm);
+            }
          }
 
-         if (showAvatars == 1) {
+         if (showAvatars === 1) {
             newcode = img + "&nbsp;" + newcode;
          }
 
@@ -132,7 +146,9 @@ $('div.notification_type_icon').live('click', function(e) {
 
       var code = thecode.join("") + "\n<p><br /></p>";
       if (/nsfwdone/.test(code) || /nsfwed/.test(code)) {
-         code = code.replace(/opacity:\s*[01]\s*;/,'').replace(/class="nsfwdone"/,'').replace(/class="nsfwed"/,'');
+         code = code.replace(/opacity:\s*[01]\s*;/,'')
+                     .replace(/class="nsfwdone"/,'')
+                     .replace(/class="nsfwed"/,'');
       }
 
       reply_setValue(code);

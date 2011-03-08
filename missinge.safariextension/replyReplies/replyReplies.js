@@ -21,12 +21,16 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global safari, $, localStorage, window */
+
 function reply_getValue() {
    var retval = localStorage.getItem("trr_ReplyText");
-   if (retval == undefined || retval == null || retval == "")
+   if (retval === undefined || retval === null || retval === "") {
       return "";
-   else
+   }
+   else {
       return retval;
+   }
 }
 
 function reply_setValue(st) {
@@ -39,10 +43,12 @@ function reply_clearValue() {
 
 function tags_getValue() {
    var retval = localStorage.getItem("trr_ReplyTags");
-   if (retval == undefined || retval == null || retval == "")
-      return new Array();
-   else
+   if (retval === undefined || retval === null || retval === "") {
+      return [];
+   }
+   else {
       return retval.split(",");
+   }
 }
 
 function tags_setValue(ar) {
@@ -53,34 +59,17 @@ function tags_clearValue() {
    localStorage.removeItem('trr_ReplyTags');
 }
 
-function MissingE_replyReplies_doStartup() {
-   safari.self.addEventListener("message", replyRepliesSettings, false);
-   $('head').append('<style type="text/css">#posts .notification .notification_type_icon { cursor: pointer; } #posts .notification .notification_type_icon:hover { background-image:url("' + safari.extension.baseURI + 'replyReplies/notification_icons.png' + '") !important; }</style>');
-   $('div.notification_type_icon').live('click', function(e) {
-      if (e.which != 1) return;
-      if (e.shiftKey) {
-         $(this).toggleClass("s113977_rt");
-         if ($(this).hasClass("s113977_rt")) {
-            $(this).parent().css("border","1px solid white");
-         }
-         else {
-            $(this).parent().css("border","");
-         }
-         return;
-      }
-      $(this).toggleClass("s113977_rt",true);
-      $(this).parent().css("border","1px solid white");
-      safari.self.tab.dispatchMessage("settings", {component: "replyReplies"});
-   });
-}
-
 function replyRepliesSettings(response) {
    var arr;
-   if (response.name != "settings" || response.message.component != "replyReplies") return;
+   if (response.name !== "settings" ||
+       response.message.component !== "replyReplies") {
+      return;
+   }
+   var i, n;
    var showAvatars = response.message.showAvatars;
    var addTags = response.message.addTags;
-   var thecode = new Array();
-   var tags = new Array();
+   var thecode = [];
+   var tags = [];
    arr = $('.s113977_rt');
    for (i=arr.length-1; i>=0; i--) {
       var st, en, nm, add;
@@ -90,9 +79,11 @@ function replyRepliesSettings(response) {
       var link = $(arr[i]).parent().find('img.avatar');
       var newcode = "";
       var img = "<a href=\"" + link.parent().attr("href") + "\">" +
-                  "<img style=\"width:16px;height:16px;border-width:0\" src=\"" +
+                  "<img style=\"width:16px;height:16px;border-width:0\" " +
+                  "src=\"" +
                   link.attr("src")
-                  .replace(/\/\/[^\.]*\.media\.tumblr\.com/,"//media.tumblr.com") +
+                     .replace(/\/\/[^\.]*\.media\.tumblr\.com/,
+                              "//media.tumblr.com") +
                   "\" /></a>";
 
       newcode = oldcode.substr(oldcode.indexOf("</a>")+4);
@@ -101,21 +92,22 @@ function replyRepliesSettings(response) {
                .replace(/\s*$/,"")
                .replace(/\n/g, " ");
 
-      if (addTags == 1) {
+      if (addTags === 1) {
          en = newcode.indexOf("</a>");
          nm = newcode.substr(0,en).match(/[a-zA-Z0-9\-\_]*$/g)[0];
          add = true;
          for (n = 0; n < tags.length; n++) {
-            if (tags[n] == nm) {
+            if (tags[n] === nm) {
                add = false;
                break;
             }
          }
-         if (add)
+         if (add) {
             tags.push(nm);
+         }
       }
 
-      if (showAvatars == 1) {
+      if (showAvatars === 1) {
          newcode = img + "&nbsp;" + newcode;
       }
 
@@ -139,10 +131,40 @@ function replyRepliesSettings(response) {
 
    var code = thecode.join("") + "\n<p><br /></p>";
    if (/nsfwdone/.test(code) || /nsfwed/.test(code)) {
-      code = code.replace(/opacity:\s*[01]\s*;/,'').replace(/class="nsfwdone"/,'').replace(/class="nsfwed"/,'');
+      code = code.replace(/opacity:\s*[01]\s*;/,'')
+                  .replace(/class="nsfwdone"/,'').replace(/class="nsfwed"/,'');
    }
 
    reply_setValue(code);
    tags_setValue(tags);
    safari.self.tab.dispatchMessage("open","http://www.tumblr.com/new/text");
 }
+
+function MissingE_replyReplies_doStartup() {
+   safari.self.addEventListener("message", replyRepliesSettings, false);
+   $('head').append('<style type="text/css">#posts .notification ' +
+                    '.notification_type_icon { cursor: pointer; } ' +
+                    '#posts .notification .notification_type_icon:hover { ' +
+                    'background-image:url("' + safari.extension.baseURI +
+                    'replyReplies/notification_icons.png' +
+                    '") !important; }</style>');
+   $('div.notification_type_icon').live('mousedown', function(e) {
+      if (e.shiftKey) { e.preventDefault(); }
+   }).live('click', function(e) {
+      if (e.which !== 1) { return; }
+      if (e.shiftKey) {
+         $(this).toggleClass("s113977_rt");
+         if ($(this).hasClass("s113977_rt")) {
+            $(this).parent().css("border","1px solid white");
+         }
+         else {
+            $(this).parent().css("border","");
+         }
+         return;
+      }
+      $(this).toggleClass("s113977_rt",true);
+      $(this).parent().css("border","1px solid white");
+      safari.self.tab.dispatchMessage("settings", {component: "replyReplies"});
+   });
+}
+
