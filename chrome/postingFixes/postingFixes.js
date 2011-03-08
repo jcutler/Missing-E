@@ -21,35 +21,63 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"}, function(response) {
+/*global chrome, $ */
+
+function addAskUploader(obj) {
+   if (obj.tagName === 'LI' && $(obj).hasClass('post')) {
+      var aid = obj.id.match(/[0-9]+$/)[0];
+      var it = document.getElementById('ask_answer_form_container_' + aid);
+      $(it).css('padding-top','0')
+         .prepend('<div style="min-height:15px;">' +
+                  '<div style="float:right;padding:3px 0;">' +
+                  '<iframe src="/upload/image?from_assets" ' +
+                  'id="regular_form_inline_image_iframe_' + aid +
+                  '" width="130" height="16" border="0" scrolling="no" ' +
+                  'allowtransparency="true" frameborder="0" ' +
+                  'style="background-color:transparent; overflow:hidden;">' +
+                  '</iframe></div><div class="clear"></div></div>');
+   }
+   else {
+      return true;
+   }
+}
+
+chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
+                             function(response) {
    var postingFixes_settings = JSON.parse(response);
-   if (postingFixes_settings.photoReplies == 1) {
+   if (postingFixes_settings.photoReplies === 1) {
       var apr = document.getElementById("allow_photo_replies");
-      if (apr != null && apr != undefined) apr.checked = true;
+      if (apr !== null && apr !== undefined) { apr.checked = true; }
    }
 
-   if (postingFixes_settings.uploaderToggle == 1) {
+   if (postingFixes_settings.uploaderToggle === 1) {
       var url = document.getElementById("photo_url");
       var lnk = document.getElementById("use_url_link");
 
-      if (url != null && url != undefined && lnk != null && lnk != undefined) {
+      if (url !== null && url !== undefined &&
+          lnk !== null && lnk !== undefined) {
          var uil = lnk.cloneNode();
          uil.id = "use_img_link";
-         uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); $(\'photo_src\').value = \'\'; Element.show(\'photo_upload\'); return false;">Upload images instead</a>';
+         uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
+                           '$(\'photo_src\').value = \'\'; ' +
+                           'Element.show(\'photo_upload\'); return false;">' +
+                           'Upload images instead</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
       }
    }
 
-   if (postingFixes_settings.addUploader == 1 &&
+   if (postingFixes_settings.addUploader === 1 &&
        !(/\/new\/text/.test(location.href)) &&
        !(/\/new\/chat/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/messages/.test(location.href)) &&
-       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(location.href)) &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/
+            .test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/share/.test(location.href)) &&
-       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(location.href)) &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/
+            .test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) &&
-       $('#regular_form_inline_image_iframe').length == 0) {
+       $('#regular_form_inline_image_iframe').length === 0) {
       var headings = $('h2');
       var h2 = headings.last();
       if (/Clicking/i.test(h2.html())) {
@@ -58,59 +86,87 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"}, 
       var textarea = h2.nextAll('textarea:first').attr('id');
       h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
          .css({"float":"left","margin-top":"0"})
-         .after('<div style="float:right;padding-top:3px;"><iframe src="/upload/image?from_assets" id="regular_form_inline_image_iframe" width="130" height="16" border="0" scrolling="no" allowtransparency="true" frameborder="0" style="background-color:transparent; overflow:hidden;"></iframe></div><div class="clear"></div>');
-      if (textarea && textarea != "") {
-         $('head').append('<script type="text/javascript">\n' +
-                          'document.domain = "tumblr.com";\n' +
-                          'function catch_uploaded_photo(src) {\n' +
-                          '   if (tinyMCE && (ed = tinyMCE.get("' + textarea + '"))) {\n' +
-                          '      ed.execCommand("mceInsertContent", false, "<img src=\\"" + src + "\\" />");\n' +
-                          '   }\n' +
-                          '   else {\n'+
-                          '      insertTag("' + textarea + '", "<img src=\\"" + src + "\\" />");\n' +
-                          '   }\n' +
-                          '}\n' +
+         .after('<div style="float:right;padding-top:3px;">' +
+                '<iframe src="/upload/image?from_assets" ' +
+                'id="regular_form_inline_image_iframe" width="130" ' +
+                'height="16" border="0" scrolling="no" ' +
+                'allowtransparency="true" frameborder="0" ' +
+                'style="background-color:transparent; overflow:hidden;">' +
+                '</iframe></div><div class="clear"></div>');
+      if (textarea && textarea !== "") {
+         $('head').append('<script type="text/javascript">' +
+                          'document.domain = "tumblr.com";' +
+                          'function catch_uploaded_photo(src) {' +
+                              'if (tinyMCE && (ed = tinyMCE.get("' +
+                                       textarea + '"))) {' +
+                                 'ed.execCommand("mceInsertContent", false, ' +
+                                                 '"<img src=\\"" + src + "\\"' +
+                                                 ' />");' +
+                              '}' +
+                              'else {' +
+                                 'insertTag("' + textarea + '", ' +
+                                            '"<img src=\\"" + src + "\\" ' +
+                                            '/>");' +
+                              '}' +
+                          '}' +
                           '</script>');
       }
    }
-   else if (postingFixes_settings.addUploader == 1 &&
+   else if (postingFixes_settings.addUploader === 1 &&
             /http:\/\/www\.tumblr\.com\/share/.test(location.href)) {
       $('textarea').each(function() {
-         if ((this.name != "post[two]" &&
-             this.name != "post[three]") ||
-             /chat_/.test(this.id))
+         if ((this.name !== "post[two]" &&
+             this.name !== "post[three]") ||
+             /chat_/.test(this.id)) {
             return true;
+         }
 
          var ta = $(this);
          var textarea = ta.attr('id');
          var h2 = ta.prev('h2');
-         var uploader = '<div style="float:right;' + (/regular_/.test(this.id) ? 'margin-bottom:5px;' : 'padding-top:3px;') + '"><iframe id="regular_form_inline_image_iframe_' + textarea + '" src="/upload/image?from_assets" width="130" height="16" border="0" scrolling="no" allowtransparency="true" frameborder="0" style="background-color:transparent; overflow:hidden;"></iframe></div><div class="clear"></div>'
+         var uploader = '<div style="float:right;' +
+                        (/regular_/.test(this.id) ? 'margin-bottom:5px;' :
+                         'padding-top:3px;') + '">' +
+                        '<iframe id="regular_form_inline_image_iframe_' +
+                        textarea + '" src="/upload/image?from_assets" ' +
+                        'width="130" height="16" border="0" scrolling="no" ' +
+                        'allowtransparency="true" frameborder="0" ' +
+                        'style="background-color:transparent; ' +
+                        'overflow:hidden;"></iframe></div>' +
+                        '<div class="clear"></div>';
          if (h2.length > 0) {
-            h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
-               .css({"float":"left","margin-top":"0"})
-               .after(uploader);
+            h2.before('<div style="height:' + h2.css("margin-top") +
+                      ';"></div>').css({"float":"left","margin-top":"0"})
+                        .after(uploader);
          }
          else {
             ta.before(uploader);
          }
       });
-      $('head').append('<script type="text/javascript">\n' +
-                       'document.domain = "tumblr.com";\n' +
-                       'function catch_uploaded_photo(src) {\n' +
-                       '   var e = catch_uploaded_photo.caller.arguments[0].currentTarget.frameElement.id.match(/[a-zA-Z]*\_post\_[a-zA-Z]*$/)[0];\n' +
-                       '   if (tinyMCE && (ed = tinyMCE.get(e))) {\n' +
-                       '      ed.execCommand("mceInsertContent", false, "<img src=\\"" + src + "\\" />");\n' +
-                       '   }\n' +
-                       '   else {\n'+
-                       '      insertTag("' + textarea + '", "<img src=\\"" + src + "\\" />");\n' +
-                       '   }\n' +
-                       '}\n' +
+      $('head').append('<script type="text/javascript">' +
+                       'document.domain = "tumblr.com";' +
+                       'function catch_uploaded_photo(src) {' +
+                           'var e = catch_uploaded_photo.caller.arguments[0]' +
+                                 '.currentTarget.frameElement.id' +
+                                 '.match(/[a-zA-Z]*_post_[a-zA-Z]*$/)[0];' +
+                           'if (tinyMCE && (ed = tinyMCE.get(e))) {' +
+                              'ed.execCommand("mceInsertContent", false, ' +
+                                              '"<img src=\\"" + src + "\\" ' +
+                                              '/>");' +
+                           '}' +
+                           'else {'+
+                              'insertTag(e, ' +
+                                         '"<img src=\\"" + src + "\\" />");' +
+                           '}' +
+                       '}' +
                        '</script>');
    }
-   else if (postingFixes_settings.addUploader == 1 &&
+   else if (postingFixes_settings.addUploader === 1 &&
        (/http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(location.href) ||
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/
+            .test(location.href) ||
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/
+            .test(location.href) ||
         /http:\/\/www\.tumblr\.com\/submissions/.test(location.href))) {
       $('#posts li.post a:contains("answer")').live('click', function() {
          var post = $(this).closest("li.post");
@@ -119,27 +175,23 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"}, 
          }
       });
 
-      $('head').append('<script type="text/javascript">\n' +
-                       'function catch_uploaded_photo(src) {\n' +
-                       '   var eId = catch_uploaded_photo.caller.arguments[0].currentTarget.frameElement.id.match(/[0-9]*$/)[0];\n' +
-                       '   var e = "ask_answer_field_" + eId;\n' +
-                       '   if (tinyMCE && (ed = tinyMCE.get(e))) {\n' +
-                       '      ed.execCommand("mceInsertContent", false, "<img src=\\"" + src + "\\" />");\n' +
-                       '   }\n' +
-                       '   else {\n' +
-                       '      insertTag(e, "<img src=\\"" + src + "\\" />");\n' +
-                       '   }\n' +
-                       '}\n' +
+      $('head').append('<script type="text/javascript">' +
+                       'function catch_uploaded_photo(src) {' +
+                           'var eId = catch_uploaded_photo.caller' +
+                                       '.arguments[0].currentTarget' +
+                                       '.frameElement.id' +
+                                       '.match(/[0-9]*$/)[0];' +
+                           'var e = "ask_answer_field_" + eId;' +
+                           'if (tinyMCE && (ed = tinyMCE.get(e))) {' +
+                              'ed.execCommand("mceInsertContent", false, ' +
+                                              '"<img src=\\"" + src + "\\" ' +
+                                              '/>");' +
+                           '}' +
+                           'else {' +
+                              'insertTag(e, "<img src=\\"" + src + "\\" />");' +
+                           '}' +
+                       '}' +
                        '</script>');
    }
 });
 
-function addAskUploader(obj) {
-   if (obj.tagName == 'LI' && $(obj).hasClass('post')) {
-      var aid = obj.id.match(/[0-9]+$/)[0];
-      var it = document.getElementById('ask_answer_form_container_' + aid);
-      $(it).css('padding-top','0').prepend('<div style="min-height:15px;"><div style="float:right;padding:3px 0;"><iframe src="/upload/image?from_assets" id="regular_form_inline_image_iframe_' + aid + '" width="130" height="16" border="0" scrolling="no" allowtransparency="true" frameborder="0" style="background-color:transparent; overflow:hidden;"></iframe></div><div class="clear"></div></div>');
-   }
-   else
-      return true;
-}
