@@ -30,6 +30,7 @@ if (window.top == window ||
 function doStartup(response) {
    if (MissingE_startup) return;
    MissingE_startup = true;
+   document.domain = "tumblr.com";
    if (response.name != "startup") return;
    var info = "'Missing e' Startup on ";
    info += response.message.url + "\n";
