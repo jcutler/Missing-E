@@ -11,3 +11,4 @@ fi
 "c:/Program Files/7-Zip/7z.exe" a chrome-build/missinge.zip MissingE
 rm -rf MissingE
 
+"c:/Documents and Settings/Administrator/Local Settings/Application Data/Google/Chrome/Application/chrome.exe" "https://chrome.google.com/webstore/developer/edit/bcjbagclppcgdbpobcpoojdjdmcjhpid?hl=en-US"
