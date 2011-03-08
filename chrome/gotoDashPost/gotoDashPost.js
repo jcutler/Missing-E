@@ -21,27 +21,33 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href) &&
-    /(%2[fF]|\/)post(%2[fF]|\/)/.test(window.location.href)) {
-   div = document.getElementsByTagName("div")[0];
-   controls = div.getElementsByTagName("a");
+/*global chrome */
+
+if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) &&
+    /(%2[fF]|\/)post(%2[fF]|\/)/.test(location.href)) {
+   var div = document.getElementsByTagName("div")[0];
+   var controls = div.getElementsByTagName("a");
+   var i;
    var following = false;
    var you = true;
    for (i=0; i<document.forms.length; i++) {
-      if (/unfollow$/.test(document.forms[i].action))
+      if (/unfollow$/.test(document.forms[i].action)) {
          following = true;
-      if (/follow$/.test(document.forms[i].action))
+      }
+      if (/follow$/.test(document.forms[i].action)) {
          you = false;
+      }
    }
    if (following || you) {
-      var pid = window.location.href;
+      var pid = location.href;
       var st = pid.indexOf("pid")+4;
       var en = pid.indexOf("&",st);
       pid = pid.substring(st, en);
       pid = Number(pid)+1;
 
       var dashlnk = document.createElement('a');
-      dashlnk.setAttribute('href', 'http://www.tumblr.com/dashboard/1000/' + pid + "?lite");
+      dashlnk.setAttribute('href', 'http://www.tumblr.com/dashboard/1000/' +
+                                    pid + "?lite");
       dashlnk.setAttribute('target', '_top');
       var icn = document.createElement('img');
       icn.style.width = '50px';
