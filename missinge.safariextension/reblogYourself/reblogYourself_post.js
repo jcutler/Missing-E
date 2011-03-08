@@ -22,12 +22,14 @@
  */
 
 function MissingE_reblogYourself_post_doStartup() {
-   div = document.getElementsByTagName("div")[0];
-   controls = div.getElementsByTagName("a");
-   noReblog = true;
+   var div = document.getElementsByTagName("div")[0];
+   var controls = div.getElementsByTagName("a");
+   var noReblog = true;
+   var i;
 
-   if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href)))
+   if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href))) {
       noReblog = false;
+   }
    else {
       for (i=0; i<controls.length; i++) {
          if (/reblog/.test(controls[i].href)) {
@@ -39,8 +41,9 @@ function MissingE_reblogYourself_post_doStartup() {
 
    if (noReblog) {
       var url;
-      var loc = window.location.href;
-      loc = loc.substring(loc.indexOf("src=")+4).replace(/%3A/gi,":").replace(/%2F/gi,"/");
+      var loc = location.href;
+      loc = loc.substring(loc.indexOf("src=")+4).replace(/%3A/gi,":")
+               .replace(/%2F/gi,"/");
       url = "http://www.tumblr.com/reblog/";
       url += loc.match(/&pid=([0-9]*)/)[1] + "/";
       url += loc.match(/&rk=([a-zA-Z0-9]*)/)[1];

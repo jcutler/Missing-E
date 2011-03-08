@@ -21,39 +21,55 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global safari, $ */
+
 function addReblog(item) {
-   if (item.tagName == "LI" && $(item).hasClass('post') && !$(item).hasClass('new_post') && !$(item).hasClass('note')) {
-      $(item).find('div.post_controls a.MissingE_reblogYourself_retry').remove();
+   if (item.tagName === "LI" && $(item).hasClass('post') &&
+       !$(item).hasClass('new_post') && !$(item).hasClass('note')) {
+      $(item).find('div.post_controls a.MissingE_reblogYourself_retry')
+               .remove();
       if ($(item).find('div.post_controls a:contains("reblog")').length > 0 ||
-          $(item).find('div.post_controls a:contains("edit")').length == 0)
+          $(item).find('div.post_controls a:contains("edit")').length === 0) {
          return true;
+      }
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
-      var addr = $(item).find("a.permalink:first").attr("href").match(/http:\/\/[^\/]*/)[0];
+      var addr = $(item).find("a.permalink:first").attr("href")
+                           .match(/http:\/\/[^\/]*/)[0];
 
       safari.self.tab.dispatchMessage("reblogYourself",{pid: tid, url: addr});
    }
 }
 
 function receiveReblog(response) {
-   if (response.name != "reblogYourself") return;
+   if (response.name !== "reblogYourself") { return; }
    if (response.message.success) {
-      var redir = window.location.href;
-      redir = redir.replace(/http:\/\/www.tumblr.com/,'').replace(/\//g,'%2F').replace(/\?/g,'%3F').replace(/&/g,'%26');
-      $('#post_'+response.message.pid).find('div.post_controls a:contains("edit")').after(' <a href="/reblog/' + response.message.pid + '/' + response.message.data + '?redirect_to=' + redir + '">reblog</a>');
+      var redir = location.href;
+      redir = redir.replace(/http:\/\/www.tumblr.com/,'')
+                     .replace(/\//g,'%2F').replace(/\?/g,'%3F')
+                     .replace(/&/g,'%26');
+      $('#post_'+response.message.pid)
+         .find('div.post_controls a:contains("edit")')
+         .after(' <a href="/reblog/' + response.message.pid + '/' +
+                response.message.data + '?redirect_to=' + redir +
+                '">reblog</a>');
    }
    else {
-      $(item).find('div.post_controls a:contains("edit")').after(' <a href="#" class="MissingE_reblogYourself_retry" onclick="return false;"><del>reblog</del></a>');
+      $('#post_'+response.message.pid)
+         .find('div.post_controls a:contains("edit")')
+               .after(' <a href="#" class="MissingE_reblogYourself_retry" ' +
+                      'onclick="return false;"><del>reblog</del></a>');
    }
 }
 
 function MissingE_reblogYourself_dash_doStartup() {
    safari.self.addEventListener("message", receiveReblog, false);
-   if (/drafts$/.test(location) == false &&
-       /queue$/.test(location) == false &&
-       /messages$/.test(location) == false) {
-      $('#posts li.post div.post_controls a.MissingE_reblogYourself_retry').live('click', function() {
+   if (!(/drafts$/.test(location.href)) &&
+       !(/queue$/.test(location.href)) &&
+       !(/messages$/.test(location.href))) {
+      $('#posts li.post div.post_controls a.MissingE_reblogYourself_retry')
+         .live('click', function() {
          var post = $(this).closest('li.post');
-         if (post.length == 1) {
+         if (post.length === 1) {
             addReblog($(this).parents('li.post').get(0));
          }
       });
