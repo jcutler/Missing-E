@@ -105,7 +105,7 @@
 
       $('#facebox .content').empty()
       $('#facebox .body').children().hide().end().
-        append('<div class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>')
+        append('<div style="padding:50px 0;" class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>')
 
       $('#facebox').css({
         top:	getPageScroll()[1] + (getPageHeight() / 10),

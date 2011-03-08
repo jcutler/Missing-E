@@ -69,7 +69,7 @@
 (function($) {
   $.facebox = function(data, klass) {
     $.facebox.loading()
-
+    
     if (data.ajax) fillFaceboxFromAjax(data.ajax, klass)
     else if (data.image) fillFaceboxFromImage(data.image, klass)
     else if (data.div) fillFaceboxFromHref(data.div, klass)
@@ -104,8 +104,7 @@
       showOverlay()
 
       $('#facebox .content').empty()
-      $('#facebox .body').children().hide().end().
-        append('<div class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>')
+      $('#facebox .content').children().hide().end().append('<div style="padding:50px 0;" class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>')
 
       $('#facebox').css({
         top:	getPageScroll()[1] + (getPageHeight() / 10),

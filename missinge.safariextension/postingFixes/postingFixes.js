@@ -46,6 +46,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle, addUpload
        !(/http:\/\/www\.tumblr\.com\/messages/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/share/.test(location.href)) &&
+       !(/http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(location.href)) &&
        $('#regular_form_inline_image_iframe').length == 0) {
       var headings = $('h2');
       var h2 = headings.last();
@@ -106,7 +108,9 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle, addUpload
    }
    else if (addUploader == 1 &&
        (/http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(location.href))) {
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(location.href) ||
+        /http:\/\/www\.tumblr\.com\/submissions/.test(location.href) ||
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(location.href))) {
       $('#posts li.post a:contains("answer")').live('click', function() {
          var post = $(this).closest("li.post");
          if (post.length > 0) {
@@ -114,7 +118,6 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle, addUpload
          }
       });
       $('head').append('<script type="text/javascript">\n' +
-                       'document.domain = "tumblr.com";\n' +
                        'function catch_uploaded_photo(src) {\n' +
                        '   var eId = catch_uploaded_photo.caller.arguments[0].currentTarget.frameElement.id.match(/[0-9]*$/)[0];\n' +
                        '   var e = "ask_answer_field_" + eId;\n' + 
