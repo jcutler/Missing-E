@@ -1,0 +1,67 @@
+/*
+ * 'Missing e' Extension
+ *
+ * Copyright 2011, Jeremy Cutler
+ * Released under the GPL version 3 licence.
+ * SEE: GPL-LICENSE.txt
+ *
+ * This file is part of 'Missing e'.
+ *
+ * 'Missing e' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * 'Missing e' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#posts .post img:hover, .notification blockquote img:hover, #posts #new_post img, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img {
+opacity:1 !important;
+}
+
+.nsfwdiv {
+display:inline-block !important;
+max-width:100%;
+}
+
+.nsfwdiv:hover, .nsfwoff {
+background:#FFFFFF !important
+}
+
+#posts .post .video_thumbnail .nsfwdiv {
+position:static !important;
+}
+
+#right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_nsfw {
+background-position:0px 0px;
+}
+
+.nsfwembed:hover .nsfwed {
+visibility:visible !important;
+}
+
+.nsfwembed {
+clear:both;
+}
+
+.nsfwdiv img.album_art, .nsfwdiv img.image_thumbnail {
+margin-right:0px !important;
+}
+
+.album_nsfwdiv {
+margin-right:20px;
+float:left;
+}
+
+.album_nsfwdiv_enlarged {
+margin-bottom:20px;
+margin-right:0 !important;
+float:none !important;
+}
+

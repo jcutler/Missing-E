@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global chrome, $, getStorage, setStorage, window */
+
 var lock = chrome.extension.getURL('safeDash/lock.png');
 var lockicon = chrome.extension.getURL('safeDash/lockicon.png');
 
@@ -28,60 +30,21 @@ var st = document.createElement('style');
 st.setAttribute('type','text/css');
 st.id = 'MissingE_safeDash_style';
 var opA;
-if (getStorage('MissingE_safeDash_state',0) == 0) {
+if (getStorage('MissingE_safeDash_state',0) === 0) {
    opA = 1;
 }
 else {
    opA = 0;
 }
-st.innerHTML = '#posts .post img, .notification blockquote img, .video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } #posts .post img:hover, .notification blockquote img:hover, #posts #new_post img, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img { opacity:1 !important; } .nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat scroll center center !important; display:inline-block !important; max-width:100%; } .nsfwdiv:hover, .nsfwoff { background:#FFFFFF !important} #posts .post .video_thumbnail .nsfwdiv { position:static !important; } #right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_nsfw { background-image:url("' + lockicon + '") !important; background-position:0px 0px; } .nsfwembed:hover .nsfwed { visibility:visible !important; } .nsfwembed { clear:both; } .nsfwdiv img.album_art, .nsfwdiv img.image_thumbnail { margin-right:0px !important; } .album_nsfwdiv { margin-right:20px; float:left; } .album_nsfwdiv_enlarged { margin-bottom:20px; margin-right:0 !important; float:none !important;}';
-
+st.innerHTML = '#posts .post img, .notification blockquote img, ' +
+               '.video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } ' +
+               '.nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat ' +
+               'scroll center center !important; } #right_column ' +
+               '.dashboard_nav_item ul.dashboard_subpages li a ' +
+               '.icon.dashboard_controls_nsfw { ' +
+               'background-image:url("' + lockicon + '") !important; }';
+               
 document.getElementsByTagName('head')[0].appendChild(st);
-
-var onoff;
-var extra;
-if (getStorage('MissingE_safeDash_state',0) == 0) {
-   onoff = "Off";
-   extra = '';
-}
-else {
-
-   onoff = "On";
-   extra = 'style="background-position:-15px 0px;"';
-}
-
-var sdlnk = '<li><a id="nsfwctrl" href="#" onclick="return false;">' +
-              '<span id="nsfwctrlicon" ' + extra +
-              ' class="icon dashboard_controls_nsfw">' +
-              '</span>SafeDash <span id="nsfwctrltxt">' + onoff +
-              '</span></a></li>';
-var custom = $('.dashboard_nav_item .dashboard_subpages a[href^="/customize"]');
-
-if (custom.length > 0) {
-   custom.parent().after(sdlnk);
-}
-else if (!(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(location.href))) {
-   $('#right_column div.dashboard_nav_item:first').css('padding-top','');
-   $('#right_column').prepend('<div class="dashboard_nav_item" style="padding-top:0;padding-left:0;"><ul class="dashboard_subpages">' + sdlnk + '</ul></div>');
-}
-
-$('.video_thumbnail div:empty').live('mouseover', function() {
-   $(this).parent().find('.nsfwed').css('opacity','1');
-}).live('mouseout', function() {
-   if (getStorage('MissingE_safeDash_state',0)==1)
-      $(this).parent().find('.nsfwed').css('opacity','0');
-});
-
-$('#nsfwctrl').click(function() {
-   var state = 1-getStorage('MissingE_safeDash_state',0);
-   setStorage('MissingE_safeDash_state',state);
-   if (state == 0) {
-      undoNSFW();
-   }
-   else {
-      doNSFW();
-   }
-});
 
 function undoNSFW() {
    $('#posts .nsfwed').css('opacity','1');
@@ -101,18 +64,67 @@ function doNSFW() {
    $('#posts li div.nsfwdiv').removeClass('nsfwoff');
 }
 
+var onoff;
+var extra;
+if (getStorage('MissingE_safeDash_state',0) === 0) {
+   onoff = "Off";
+   extra = '';
+}
+else {
+   onoff = "On";
+   extra = 'style="background-position:-15px 0px;"';
+}
+
+var sdlnk = '<li><a id="nsfwctrl" href="#" onclick="return false;">' +
+              '<span id="nsfwctrlicon" ' + extra +
+              ' class="icon dashboard_controls_nsfw">' +
+              '</span>SafeDash <span id="nsfwctrltxt">' + onoff +
+              '</span></a></li>';
+var custom = $('.dashboard_nav_item .dashboard_subpages a[href^="/customize"]');
+
+if (custom.length > 0) {
+   custom.parent().after(sdlnk);
+}
+else if (!(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+           .test(location.href))) {
+   $('#right_column div.dashboard_nav_item:first').css('padding-top','');
+   $('#right_column').prepend('<div class="dashboard_nav_item" ' +
+                              'style="padding-top:0;padding-left:0;">' +
+                              '<ul class="dashboard_subpages">' + sdlnk +
+                              '</ul></div>');
+}
+
+$('.video_thumbnail div:empty').live('mouseover', function() {
+   $(this).parent().find('.nsfwed').css('opacity','1');
+}).live('mouseout', function() {
+   if (getStorage('MissingE_safeDash_state',0)===1) {
+      $(this).parent().find('.nsfwed').css('opacity','0');
+   }
+});
+
+$('#nsfwctrl').click(function() {
+   var state = 1-getStorage('MissingE_safeDash_state',0);
+   setStorage('MissingE_safeDash_state',state);
+   if (state === 0) {
+      undoNSFW();
+   }
+   else {
+      doNSFW();
+   }
+});
+
 function doHide(item) {
    var safe;
-   if (getStorage('MissingE_safeDash_state',0)==0) safe = false;
-   else safe = true;
+   if (getStorage('MissingE_safeDash_state',0)===0) { safe = false; }
+   else { safe = true; }
    var node = $(item);
-   if (item.tagName == 'LI') {
+   if (item.tagName === 'LI') {
       if (node.hasClass('notification')) {
          $('blockquote img:not(.nsfwdone)',node).each(function(){
             var klass = "";
             var me=$(this);
             me.unbind('readystatechange.s113977_sd');
-            if (!me.get(0).readyState == 'uninitialized') {
+            if (me.get(0).readyState === 'uninitialized') {
                me.bind('readystatechange.s113977_sd', function() {
                   doHide(item);
                });
@@ -128,15 +140,16 @@ function doHide(item) {
             var h = me.height();
             var w = me.width();
             var extra = '';
-            var s = '<div class="nsfwdiv ' + klass + '" style="min-height:' + h +
-                  'px;' + 'min-width:' + w + 'px;' + extra + '" />';
+            var s = '<div class="nsfwdiv ' + klass + '" style="min-height:' +
+                     h + 'px;' + 'min-width:' + w + 'px;' + extra + '" />';
 
             me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
 
          });
       }
       else if (node.hasClass('post')) {
-         $('img:not(.nsfwdone),embed.video_player:not(.nsfwdone),embed.photoset:not(.nsfwdone)',node).each(function(){
+         $('img:not(.nsfwdone),embed.video_player:not(.nsfwdone),' +
+           'embed.photoset:not(.nsfwdone)',node).each(function(){
             var klass = "";
             var me = $(this);
             if (me.parents('#new_post').size()>0 ||
@@ -151,21 +164,26 @@ function doHide(item) {
             }
             if (/photoset_preview_overlay.png/.test(me.attr('src'))) {
                me.parent().addClass('nsfwphotoset');
-               me.addClass('nsfw_overlay').addClass('nsfwdone').css('opacity','1');
-               if (safe)
+               me.addClass('nsfw_overlay').addClass('nsfwdone')
+                  .css('opacity','1');
+               if (safe) {
                   me.css('opacity','0');
+               }
                return;
             }
             if (!me.hasClass('video_player') &&
-                me.get(0).readyState == 'uninitialized') {
+                me.get(0).readyState === 'uninitialized') {
                me.bind('readystatechange.s113977_sd', function() {
                   doHide(item);
                });
                return;
             }
             else if (me.hasClass('video_player') || me.hasClass('photoset')) {
-               me.addClass('nsfwvid').addClass('nsfwdone').parent().addClass('nsfwed').parent()
-                  .addClass('nsfwembed').css('background','url("' + lock + '") no-repeat scroll center center #BFBFBF');
+               me.addClass('nsfwvid').addClass('nsfwdone').parent()
+                  .addClass('nsfwed').parent().addClass('nsfwembed')
+                  .css('background',
+                       'url("' + lock + '") no-repeat scroll center center ' +
+                       '#BFBFBF');
 
                if (!safe) {
                   me.parent().css('visibility','visible');
@@ -184,14 +202,15 @@ function doHide(item) {
             }
             var h = me.height();
             var w = me.width();
-            var album = me.hasClass('album_art') || me.hasClass('image_thumbnail');
+            var album = me.hasClass('album_art') ||
+                           me.hasClass('image_thumbnail');
             var s;
             if (album) {
                me.click(function() {
                   $(this).parent().toggleClass('album_nsfwdiv_enlarged');
                });
-               if (h == undefined || h == null || h == 0) h = 150;
-               if (w == undefined || w == null || w == 0) w = 150;
+               if (h === undefined || h === null || h === 0) { h = 150; }
+               if (w === undefined || w === null || w === 0) { w = 150; }
                s = '<div class="nsfwdiv album_nsfwdiv ' + klass +'" style="' +
                      'margin-right:' + me.css('margin-right') +
                      ';float:left;" />';
@@ -203,22 +222,29 @@ function doHide(item) {
                   extra = 'position:absolute;top:' + pos.top + 'px;left:' +
                      pos.left + 'px;';
                }
-               if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/.test(me.attr('src')))) {
+               if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/
+                        .test(me.attr('src')))) {
                   extra += 'min-height:' + h + 'px;' + 'min-width:' + w + 'px;';
                }
-               s = '<div class="nsfwdiv ' + klass + '" style="' + extra + '" />';
+               s = '<div class="nsfwdiv ' + klass + '" style="' + extra +
+                     '" />';
             }
-            if (me.parent().hasClass('video_thumbnail'))
+            if (me.parent().hasClass('video_thumbnail')) {
                me.next().addClass('nsfwed');
+            }
 
             me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
 
          });
       }
    }
-   else if (item.tagName == 'EMBED' && (node.hasClass('video_player') || node.hasClass('photoset')) && !node.hasClass('nsfwdone')) {
-      node.addClass('nsfwvid').addClass('nsfwdone').parent().addClass('nsfwed').parent()
-                  .addClass('nsfwembed').css('background','url("' + lock + '") no-repeat scroll center center #BFBFBF');
+   else if (item.tagName === 'EMBED' &&
+            (node.hasClass('video_player') ||
+             node.hasClass('photoset')) && !node.hasClass('nsfwdone')) {
+      node.addClass('nsfwvid').addClass('nsfwdone').parent()
+            .addClass('nsfwed').parent().addClass('nsfwembed')
+            .css('background','url("' + lock + '") no-repeat scroll center ' +
+                 'center #BFBFBF');
 
       if (!safe) {
          node.parent().css('visibility','visible');
@@ -227,7 +253,7 @@ function doHide(item) {
          node.parent().css('visibility','hidden');
       }
    }
-   else if (item.tagName == 'OL' && node.hasClass('notes')) {
+   else if (item.tagName === 'OL' && node.hasClass('notes')) {
       $('img:not(.nsfwdone)',node).each(function(){
          var klass = "";
          var me = $(this);
@@ -235,7 +261,7 @@ function doHide(item) {
             me.addClass('nsfwdone');
             return;
          }
-         if (!me.get(0).readyState == 'uninitialized') {
+         if (me.get(0).readyState === 'uninitialized') {
             me.get(0).bind('readystatechange.s113977_sd', function() {
                doHide(item);
             });
@@ -263,10 +289,10 @@ document.addEventListener('DOMNodeInserted',function(e){
    doHide(e.target);
 }, false);
 
-window.addEventListener('storage',function(e) {
-   if (e.key != 'MissingE_safeDash_state') return false;
+window.addEventListener('storage', function(e) {
+   if (e.key !== 'MissingE_safeDash_state') { return false; }
    var state = getStorage('MissingE_safeDash_state',0);
-   if (state == 0) {
+   if (state === 0) {
       undoNSFW();
    }
    else {
@@ -274,4 +300,6 @@ window.addEventListener('storage',function(e) {
    }
 }, false);
 
-$('#posts li.post, #posts li.notification, ol.notes').each(function(){doHide(this)});
+$('#posts li.post, #posts li.notification, ol.notes').each(function(){
+   doHide(this);
+});

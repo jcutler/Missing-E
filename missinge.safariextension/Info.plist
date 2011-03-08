@@ -73,6 +73,7 @@
 			<string>bookmarker/bookmarker.css</string>
 			<string>magnifier/magnifier.css</string>
 			<string>followChecker/followChecker.css</string>
+			<string>safeDash/safeDash.css</string>
 			<string>unfollower/unfollower.css</string>
 		</array>
 		<key>Whitelist</key>
