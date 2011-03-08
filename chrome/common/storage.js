@@ -29,7 +29,12 @@ function getStorage(key, defVal) {
       return defVal;
    }
    else {
-      return retval;
+      if (/[^0-9]/.test(retval)) {
+         return retval;
+      }
+      else {
+         return parseInt(retval, 10);
+      }
    }
 }
 
