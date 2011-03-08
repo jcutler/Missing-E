@@ -29,19 +29,6 @@ var cache = {};
 var cacheClear;
 var tenMinutes = 600000;
 
-var months = ["Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec"];
-
 cacheClear = setInterval(function() { cache = {}; }, tenMinutes);
 
 function getStorage(key,defaultValue) {
@@ -51,32 +38,11 @@ function getStorage(key,defaultValue) {
       return localStorage[key];
 }
 
-function zeroPad(num, len) {
-   var ret = "";
-   ret += num;
-   while (ret.length < len) ret = "0" + ret;
-   return ret;
-}
-
 function doTimestamp(stamp, id, request) {
    var ts = stamp["unix-timestamp"];
    var d = new Date(ts*1000);
    var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
-   ins = ins.replace(/%Y/g,d.getFullYear())
-      .replace(/%y/g,(d.getFullYear()%100))
-      .replace(/%M/g,months[d.getMonth()])
-      .replace(/%m/g,zeroPad(d.getMonth()+1,2))
-      .replace(/%n/g,(d.getMonth()+1))
-      .replace(/%D/g,zeroPad(d.getDate(),2))
-      .replace(/%d/g,d.getDate())
-      .replace(/%G/g,zeroPad((d.getHours()%12==0 ? "12" : d.getHours()%12),2))
-      .replace(/%g/g,(d.getHours()%12==0 ? "12" : d.getHours()%12))
-      .replace(/%H/g,zeroPad(d.getHours(),2))
-      .replace(/%h/g,d.getHours())
-      .replace(/%i/g,zeroPad(d.getMinutes(),2))
-      .replace(/%s/g,zeroPad(d.getSeconds(),2))
-      .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
-      .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
+   ins = getFormattedDate(d, ins);
    request.target.page.dispatchMessage("timestamp",{pid: id, success: true, data: ins});
 }
 

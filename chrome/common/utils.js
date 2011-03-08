@@ -21,6 +21,47 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+var months = ["Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"];
+
+function zeroPad(num, len) {
+   var ret = "";
+   ret += num;
+   while (ret.length < len) ret = "0" + ret;
+   return ret;
+}
+
+function getFormattedDate(d, format) {
+   var ret = format;
+   ret = ret.replace(/%Y/g,d.getFullYear())
+            .replace(/%y/g,(d.getFullYear()%100))
+            .replace(/%M/g,months[d.getMonth()])
+            .replace(/%m/g,zeroPad(d.getMonth()+1,2))
+            .replace(/%n/g,(d.getMonth()+1))
+            .replace(/%D/g,zeroPad(d.getDate(),2))
+            .replace(/%d/g,d.getDate())
+            .replace(/%G/g,zeroPad((d.getHours()%12==0 ?
+                                    "12" : d.getHours()%12),2))
+            .replace(/%g/g,(d.getHours()%12==0 ? "12" : d.getHours()%12))
+            .replace(/%H/g,zeroPad(d.getHours(),2))
+            .replace(/%h/g,d.getHours())
+            .replace(/%i/g,zeroPad(d.getMinutes(),2))
+            .replace(/%s/g,zeroPad(d.getSeconds(),2))
+            .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
+            .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
+   return ret;
+}
+
 function getPageHeight() {
    var windowHeight;
    if (self.innerHeight) {
