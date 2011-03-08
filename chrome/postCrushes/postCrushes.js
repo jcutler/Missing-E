@@ -21,11 +21,14 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global window, chrome, localStorage */
+
 var missingeServer = 'http://missinge.host22.com';
 
 var crushdiv = document.getElementById("crushes");
 var infodiv = crushdiv.nextSibling;
-while (infodiv != undefined && infodiv != null && infodiv.tagName != 'DIV') {
+while (infodiv !== undefined && infodiv !== null &&
+       infodiv.tagName !== 'DIV') {
    infodiv = infodiv.nextSibling;
 }
 
@@ -37,10 +40,15 @@ newdiv.id = "tcp_outerdiv";
 var innerdiv = document.createElement('div');
 innerdiv.style.cursor="pointer";
 innerdiv.style.verticalAlign="middle";
-innerdiv.innerHTML = '<img src="' + chrome.extension.getURL('postCrushes/heart.png') + '" style="opacity:0.6;height:28px;width:29px;" /><div style="position:absolute;top:15%;width:100%;color:#2D4159;font:italic bold 12px/1.4 Arial,Helvetica,sans-serif;">Post your crushes to Tumblr</div>';
+innerdiv.innerHTML = '<img src="' +
+                     chrome.extension.getURL('postCrushes/heart.png') +
+                     '" style="opacity:0.6;height:28px;width:29px;" />' +
+                     '<div style="position:absolute;top:15%;width:100%;' +
+                     'color:#2D4159;font:italic bold 12px/1.4 Arial,' +
+                     'Helvetica,sans-serif;">Post your crushes to Tumblr</div>';
 
 innerdiv.addEventListener('click', function() {
-
+   var i,j;
    var from = [/:/g, /\//g, /\?/g, /\=/g, / /g, /</g, />/g, /\=/g, /"/g];
    var to = ["%3A", "%2F", "%3F", "%3D", "%20", '%3C', '%3E', '%3D', '%22'];
    var crushes = document.getElementById("crushes").getElementsByTagName("a");
@@ -49,10 +57,14 @@ innerdiv.addEventListener('click', function() {
    var crushper = new Array(9);
    var crushname = new Array(9);
    for (i=0; i<crushes.length; i++) {
-      crushimg[i] = crushes[i].style.backgroundImage.replace(/^url\(["']*/,"").replace(/['"]*\)$/,"").replace(from,to);
+      crushimg[i] = crushes[i].style.backgroundImage
+                     .replace(/^url\(["']*/,"").replace(/['"]*\)$/,"")
+                     .replace(from,to);
       crushurl[i] = crushes[i].href.replace(from,to);
-      crushname[i] = crushes[i].getAttribute('title').match(/^[0-9a-zA-Z\-\_]*/)[0];
-      crushper[i] = crushes[i].getElementsByTagName("span")[0].innerHTML.replace(/%/,"").replace(from,to);
+      crushname[i] = crushes[i].getAttribute('title')
+                        .match(/^[0-9a-zA-Z\-\_]*/)[0];
+      crushper[i] = crushes[i].getElementsByTagName("span")[0].innerHTML
+                     .replace(/%/,"").replace(from,to);
    }
 
    for (i=0; i<crushes.length; i++) {
@@ -64,28 +76,35 @@ innerdiv.addEventListener('click', function() {
 
    var get = "";
    for (i=0; i<crushes.length; i++) {
-      if (i>0) get += "&";
+      if (i>0) { get += "&"; }
       get += "img" + i + "=" + crushimg[i] + "&url" + i + "=" + crushurl[i] +
             "&per" + i + "=" + crushper[i];
    }
 
-   chrome.extension.sendRequest({greeting: "settings", component: "postCrushes"}, function(response) {
+   chrome.extension.sendRequest({greeting: "settings",
+                                 component: "postCrushes"}, function(response) {
       var postCrushes_settings = JSON.parse(response);
       var prefix = postCrushes_settings.prefix;
       var txt = '';
-      if (prefix.length > 0)
-         txt += '<p><strong>' + prefix + '</strong></p>'
+      if (prefix.length > 0) {
+         txt += '<p><strong>' + prefix + '</strong></p>';
+      }
       txt += '<ul>';
       for (i=0; i<crushes.length; i++) {
-         txt += '<li><a href="' + crushurl[i] + '">' + crushname[i] + '</a></li>';
+         txt += '<li><a href="' + crushurl[i] + '">' + crushname[i] +
+                  '</a></li>';
       }
       txt += '</ul><p></p>';
 
-      for (j=0; j<from.length; j++) txt = txt.replace(from[j],to[j]);
+      for (j=0; j<from.length; j++) {
+         txt = txt.replace(from[j],to[j]);
+      }
 
-      window.localStorage.setItem('tcp_crushTags',crushname.join(','));
-      window.localStorage.setItem('tcp_crushURL', missingeServer + '/postcrushes/?' + get);
-      window.open('http://www.tumblr.com/new/photo?post%5Bone%5D=&post%5Btwo%5D=' + txt + '&post%5Bthree%5D=');
+      localStorage.setItem('tcp_crushTags',crushname.join(','));
+      localStorage.setItem('tcp_crushURL', missingeServer +
+                                    '/postcrushes/?' + get);
+      window.open('http://www.tumblr.com/new/photo?' +
+                  'post%5Bone%5D=&post%5Btwo%5D=' + txt + '&post%5Bthree%5D=');
    });
 }, true);
 newdiv.appendChild(innerdiv);
