@@ -65,7 +65,8 @@ function doStartup(response) {
          safari.self.tab.dispatchMessage("settings",{component: "unfollower"});
       if (response.message.postingFixes)
          safari.self.tab.dispatchMessage("settings",{component: "postingFixes"});
-      if (response.message.reblogQuoteFit) MissingE_reblogQuoteFit_doStartup();
+      if (response.message.dashboardFixes)
+         safari.self.tab.dispatchMessage("settings",{component: "dashboardFixes"});
       if (response.message.reblogYourself) MissingE_reblogYourself_dash_doStartup();
       if (response.message.safeDash) MissingE_safeDash_doStartup();
       if (response.message.timestamps) MissingE_timestamps_doStartup();
@@ -87,6 +88,8 @@ function settings_startup(response) {
       MissingE_unfollower_doStartup(response.message.retries);
    else if (response.message.component == "dashLinksToTabs")
       MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs, response.message.sidebar);
+   else if (response.message.component == "dashboardFixes")
+      MissingE_dashboardFixes_doStartup(response.message.reblogQuoteFit, response.message.wrapTags);
 }
 
 safari.self.addEventListener("message", doStartup, false);

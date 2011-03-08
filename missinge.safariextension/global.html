@@ -244,6 +244,10 @@ function handleRequest(request) {
       var settings = {};
       settings.component = request.message.component;
       switch(request.message.component) {
+         case "dashboardFixes":
+            settings.reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
+            settings.wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
+            break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
             settings.sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
@@ -321,11 +325,11 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url))) {
-         if (getStorage("MissingE_reblogQuoteFit_enabled",1) == 1) {
-            activeScripts.reblogQuoteFit = true;
+         if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
+            activeScripts.dashboardFixes = true;
          }
          else
-            activeScripts.reblogQuoteFit = false;
+            activeScripts.dashboardFixes = false;
       }
       if (!request.message.isFrame &&
           ((request.message.bodyId == 'dashboard_edit_post' &&

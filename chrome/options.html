@@ -464,7 +464,7 @@ jQuery(document).ready(function($) {
    $('input.toggler').checkbox();
 });
 
-var componentList = ["reblogQuoteFit",
+var componentList = ["dashboardFixes",
                      "bookmarker",
                      "dashLinksToTabs",
                      "safeDash",
@@ -579,6 +579,16 @@ function loadSettings() {
             frm.MissingE_replyReplies_addTags.checked = true;
          else
             frm.MissingE_replyReplies_addTags.checked = false;
+      }
+      else if (v == "dashboardFixes") {
+         if (getStorage('MissingE_dashboardFixes_reblogQuoteFit',1) == 1)
+            frm.MissingE_dashboardFixes_reblogQuoteFit.checked = true;
+         else
+            frm.MissingE_dashboardFixes_reblogQuoteFit.checked = false;
+         if (getStorage('MissingE_dashboardFixes_wrapTags',1) == 1)
+            frm.MissingE_dashboardFixes_wrapTags.checked = true;
+         else
+            frm.MissingE_dashboardFixes_wrapTags.checked = false;
       }
       else if (v == "postingFixes") {
          if (getStorage('MissingE_postingFixes_photoReplies',1) == 1)
@@ -745,17 +755,19 @@ function doshow(component) {
 </li>
 </div>
 <div id="dashboard_posts">
-<li id="reblogQuoteFit_section" class="post not_mine regular">
+<li id="dashboardFixes_section" class="post not_mine regular">
 <div class="post_content">
-<form id="reblogQuoteFit_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Reblog Quote Fit</div>
-<div class="post_thumb"><a href="reblogQuoteFit/screen.jpg" rel="facebox"><img src="reblogQuoteFit/thumb.jpg" /><br />Screenshot</a></div>
-<p>Displays reblogged posts with quote sections (text added by previous tumblrs) take up a lot of room.</p><p><em>Reblog Quote Fit</em> reduces the display space taken up by the quoted text in order to enhance readbility.</p>
+<form id="dashboardFixes_options">
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dashboard Fixes</div>
+<div class="post_thumb"><a href="dashboardFixes/screen.jpg" rel="facebox"><img src="dashboardFixes/thumb.jpg" /><br />Screenshot</a></div>
+<p>A few convenient interface fixes for Tumblr dashboard pages.</p>
+<table class="options_table">
+<tr><td class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="even">Wrap tags on posts in the dashboard</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('icons/reblogQuoteFit_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/dashboardFixes_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>

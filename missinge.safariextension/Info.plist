@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.22</string>
+	<string>1.0.23</string>
 	<key>CFBundleVersion</key>
-	<string>14</string>
+	<string>15</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -57,7 +57,7 @@
 				<string>postCrushes/postCrushes.js</string>
 				<string>postCrushes/postCrushes_fill.js</string>
 				<string>postingFixes/postingFixes.js</string>
-				<string>reblogQuoteFit/reblogQuoteFit.js</string>
+				<string>dashboardFixes/dashboardFixes.js</string>
 				<string>reblogYourself/reblogYourself_post.js</string>
 				<string>reblogYourself/reblogYourself_dash.js</string>
 				<string>replyReplies/replyReplies.js</string>

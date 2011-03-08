@@ -324,12 +324,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url)) {
-         if (getStorage("MissingE_reblogQuoteFit_enabled",1) == 1) {
-            activeScripts.reblogQuoteFit = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "reblogQuoteFit/reblogQuoteFit.css"});
+         if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
+            activeScripts.dashboardFixes = true;
+            if (getStorage("MissingE_dashboardFixes_reblogQuoteFit",1) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/reblogQuoteFit.css"});
+            if (getStorage("MissingE_dashboardFixes_wrapTags",1) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/wrapTags.css"});
          }
          else
-            activeScripts.reblogQuoteFit = false;
+            activeScripts.dashboardFixes = false;
       }
       if (sender.tab.url == request.url &&
           ((request.bodyId == 'dashboard_edit_post' &&
