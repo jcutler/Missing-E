@@ -21,77 +21,126 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global window, safari, MissingE_bookmarker_doStartup,
+  MissingE_dashboardFixes_doStartup, MissingE_dashLinksToTabs_doStartup,
+  MissingE_followChecker_doStartup, MissingE_gotoDashPost_doStartup,
+  MissingE_magnifier_doStartup, MissingE_postCrushes_doStartup,
+  MissingE_postCrushes_fill_doStartup, MissingE_postingFixes_doStartup,
+  MissingE_reblogYourself_dash_doStartup,
+  MissingE_reblogYourself_post_doStartup, MissingE_replyReplies_doStartup,
+  MissingE_replyReplies_fill_doStartup, MissingE_safeDash_doStartup,
+  MissingE_timestamps_doStartup, MissingE_unfollower_doStartup */
+
 var MissingE_startup;
-if (window.top == window ||
-    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href)) {
-   var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href);
-   safari.self.tab.dispatchMessage("start",{isFrame: fr, url: window.location.href, bodyId: document.body.id});
+if (window.top === window ||
+    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
+   var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href);
+   safari.self.tab.dispatchMessage("start", {isFrame: fr, url: location.href,
+                                             bodyId: document.body.id});
 }
 
 function doStartup(response) {
-   if (MissingE_startup) return;
+   var i;
+   if (MissingE_startup) { return; }
    MissingE_startup = true;
    document.domain = "tumblr.com";
-   if (response.name != "startup") return;
+   if (response.name !== "startup") { return; }
    var info = "'Missing e' Startup on ";
    info += response.message.url + "\n";
-   for (var i in response.message) {
-      if (i != 'url' && i != 'isFrame' && !(/_fill$/.test(i))) {
-         if (response.message[i])
-            info += i + ": active\n";
-         else
-            info += i + ": inactive\n";
+   for (i in response.message) {
+      if (response.message.hasOwnProperty(i)) {
+         if (i !== 'url' && i !== 'isFrame' && !(/_fill$/.test(i))) {
+            info += i + ": " + (response.message[i] ? "active" : "inactive") +
+                     "\n";
+         }
       }
    }
    console.log(info);
 
-   if (window.top == window) {
-      if (response.message.bookmarker) MissingE_bookmarker_doStartup();
-      if (response.message.dashLinksToTabs)
-         safari.self.tab.dispatchMessage("settings",{component: "dashLinksToTabs"});
+   if (window.top === window) {
+      if (response.message.bookmarker) {
+         MissingE_bookmarker_doStartup();
+      }
+      if (response.message.dashLinksToTabs) {
+         safari.self.tab.dispatchMessage("settings", 
+                                         {component: "dashLinksToTabs"});
+      }
       if (response.message.postCrushes) {
-         if (response.message.postCrushes_fill)
+         if (response.message.postCrushes_fill) {
             MissingE_postCrushes_fill_doStartup();
-         else
+         }
+         else {
             MissingE_postCrushes_doStartup();
+         }
       }
       if (response.message.replyReplies) {
-         if (response.message.replyReplies_fill)
+         if (response.message.replyReplies_fill) {
             MissingE_replyReplies_fill_doStartup();
-         else
+         }
+         else {
             MissingE_replyReplies_doStartup();
+         }
       }
-      if (response.message.followChecker)
-         safari.self.tab.dispatchMessage("settings",{component: "followChecker"});
-      if (response.message.unfollower)
-         safari.self.tab.dispatchMessage("settings",{component: "unfollower"});
-      if (response.message.postingFixes)
-         safari.self.tab.dispatchMessage("settings",{component: "postingFixes"});
-      if (response.message.dashboardFixes)
-         safari.self.tab.dispatchMessage("settings",{component: "dashboardFixes"});
-      if (response.message.reblogYourself) MissingE_reblogYourself_dash_doStartup();
-      if (response.message.safeDash) MissingE_safeDash_doStartup();
-      if (response.message.timestamps) MissingE_timestamps_doStartup();
-      if (response.message.magnifier) MissingE_magnifier_doStartup();
+      if (response.message.followChecker) {
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "followChecker"});
+      }
+      if (response.message.unfollower) {
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "unfollower"});
+      }
+      if (response.message.postingFixes) {
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "postingFixes"});
+      }
+      if (response.message.dashboardFixes) {
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "dashboardFixes"});
+      }
+      if (response.message.reblogYourself) {
+         MissingE_reblogYourself_dash_doStartup();
+      }
+      if (response.message.safeDash) {
+         MissingE_safeDash_doStartup();
+      }
+      if (response.message.timestamps) {
+         MissingE_timestamps_doStartup();
+      }
+      if (response.message.magnifier) {
+         MissingE_magnifier_doStartup();
+      }
    }
    else {
-      if (response.message.gotoDashPost) MissingE_gotoDashPost_doStartup();
-      if (response.message.reblogYourself) MissingE_reblogYourself_post_doStartup();
+      if (response.message.gotoDashPost) {
+         MissingE_gotoDashPost_doStartup();
+      }
+      if (response.message.reblogYourself) {
+         MissingE_reblogYourself_post_doStartup();
+      }
    }
 }
 
 function settings_startup(response) {
-   if (response.name != "settings") return;
-   else if (response.message.component == "postingFixes")
-      MissingE_postingFixes_doStartup(response.message.photoReplies, response.message.uploaderToggle, response.message.addUploader);
-   else if (response.message.component == "followChecker")
+   if (response.name !== "settings") { return; }
+   else if (response.message.component === "postingFixes") {
+      MissingE_postingFixes_doStartup(response.message.photoReplies,
+                                      response.message.uploaderToggle,
+                                      response.message.addUploader);
+   }
+   else if (response.message.component === "followChecker") {
       MissingE_followChecker_doStartup(response.message.retries);
-   else if (response.message.component == "unfollower")
+   }
+   else if (response.message.component === "unfollower") {
       MissingE_unfollower_doStartup(response.message.retries);
-   else if (response.message.component == "dashLinksToTabs")
-      MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs, response.message.sidebar);
-   else if (response.message.component == "dashboardFixes")
-      MissingE_dashboardFixes_doStartup(response.message.reblogQuoteFit, response.message.wrapTags);
+   }
+   else if (response.message.component === "dashLinksToTabs") {
+      MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs,
+                                         response.message.sidebar);
+   }
+   else if (response.message.component === "dashboardFixes") {
+      MissingE_dashboardFixes_doStartup(response.message.reblogQuoteFit,
+                                        response.message.wrapTags);
+   }
 }
 
 safari.self.addEventListener("message", doStartup, false);

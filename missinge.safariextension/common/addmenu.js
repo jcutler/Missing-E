@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global safari */
+
 var accmenu = document.getElementById("account_menu");
 
 if (accmenu) {
@@ -28,6 +30,7 @@ if (accmenu) {
    var setlnk = document.createElement('a');
    setlnk.href = safari.extension.baseURI + 'options.html';
    setlnk.setAttribute("target","_blank");
-   setlnk.innerHTML = 'Missing <img src="' + safari.extension.baseURI + 'Icon-16.png' + '" style="vertical-align:bottom;" />';
+   setlnk.innerHTML = 'Missing <img src="' + safari.extension.baseURI +
+                        'Icon-16.png' + '" style="vertical-align:bottom;" />';
    accmenu.insertBefore(setlnk, links[links.length-1]);
 }

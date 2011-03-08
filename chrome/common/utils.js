@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global self */
+
 var months = ["Jan",
               "Feb",
               "Mar",
@@ -37,7 +39,7 @@ var months = ["Jan",
 function zeroPad(num, len) {
    var ret = "";
    ret += num;
-   while (ret.length < len) ret = "0" + ret;
+   while (ret.length < len) { ret = "0" + ret; }
    return ret;
 }
 
@@ -50,9 +52,9 @@ function getFormattedDate(d, format) {
             .replace(/%n/g,(d.getMonth()+1))
             .replace(/%D/g,zeroPad(d.getDate(),2))
             .replace(/%d/g,d.getDate())
-            .replace(/%G/g,zeroPad((d.getHours()%12==0 ?
+            .replace(/%G/g,zeroPad((d.getHours()%12===0 ?
                                     "12" : d.getHours()%12),2))
-            .replace(/%g/g,(d.getHours()%12==0 ? "12" : d.getHours()%12))
+            .replace(/%g/g,(d.getHours()%12===0 ? "12" : d.getHours()%12))
             .replace(/%H/g,zeroPad(d.getHours(),2))
             .replace(/%h/g,d.getHours())
             .replace(/%i/g,zeroPad(d.getMinutes(),2))
@@ -67,14 +69,6 @@ function getPageHeight() {
    if (self.innerHeight) {
       // all except Explorer
       windowHeight = self.innerHeight;
-   }
-   else if (document.documentElement && document.documentElement.clientHeight) {
-      // Explorer 6 Strict Mode
-      windowHeight = document.documentElement.clientHeight;
-   }
-   else if (document.body) {
-      // other Explorers
-      windowHeight = document.body.clientHeight;
    }
    return windowHeight;
 }

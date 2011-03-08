@@ -21,19 +21,22 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (window.top == window ||
-    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(window.location.href)) {
-   chrome.extension.sendRequest({greeting: "start", url: window.location.href, bodyId: document.body.id}, function(response){
+/*global chrome, window */
+
+if (window.top === window ||
+    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
+   chrome.extension.sendRequest({greeting: "start", url: location.href,
+                                 bodyId: document.body.id}, function(response){
+      var i;
       document.domain = "tumblr.com";
       var active = JSON.parse(response);
       var info = "'Missing e' Startup on ";
       info += active.url + "\n";
-      for (var i in active) {
-         if (i != 'url') {
-            if (active[i])
-               info += i + ": active\n";
-            else
-               info += i + ": inactive\n";
+      for (i in active) {
+         if (active.hasOwnProperty(i)) {
+            if (i !== 'url') {
+               info += i + ": " + (active[i] ? "active" : "inactive") + "\n";
+            }
          }
       }
       console.log(info);
