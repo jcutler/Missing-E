@@ -25,19 +25,13 @@
 <script type="text/javascript" src="common/jquery-1.5.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
 <script type="text/javascript" src="common/utils.js"></script>
+<script type="text/javascript" src="common/storage.js"></script>
 <script>
 var cache = {};
 var cacheClear;
 var tenMinutes = 600000;
 
 cacheClear = setInterval(function() { cache = {}; }, tenMinutes);
-
-function getStorage(key,defaultValue) {
-   if (localStorage[key] == undefined)
-      return defaultValue;
-   else
-      return localStorage[key];
-}
 
 function doTimestamp(stamp, id, request) {
    var ts = stamp["unix-timestamp"];
@@ -253,6 +247,7 @@ function handleRequest(request) {
          case "dashboardFixes":
             settings.reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
             settings.wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
+            console.log(settings);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
