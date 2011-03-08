@@ -25,10 +25,14 @@ function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags) {
    var css = document.createElement("style");
    css.setAttribute("type","text/css");
    var data = '';
-   if (reblogQuoteFit == 1)
-      data += "div.post_content blockquote { margin-left:0 !important; padding-left:10px !important; } ";
-   if (wrapTags == 1)
-      data += "span.tags { display:inline !important; white-space:normal !important; }";
+   if (reblogQuoteFit === 1) {
+      data += "div.post_content blockquote " +
+               "{ margin-left:0 !important; padding-left:10px !important; } ";
+   }
+   if (wrapTags === 1) {
+      data += "span.tags { display:inline !important; " +
+               "white-space:normal !important; }";
+   }
    css.innerHTML = data;
    document.getElementsByTagName("head")[0].appendChild(css);
 }
