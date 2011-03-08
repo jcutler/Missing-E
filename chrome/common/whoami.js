@@ -28,7 +28,6 @@ if (window.top === window ||
    chrome.extension.sendRequest({greeting: "start", url: location.href,
                                  bodyId: document.body.id}, function(response){
       var i;
-      document.domain = "tumblr.com";
       var active = JSON.parse(response);
       var info = "'Missing e' Startup on ";
       info += active.url + "\n";
