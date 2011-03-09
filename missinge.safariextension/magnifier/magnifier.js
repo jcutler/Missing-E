@@ -43,8 +43,18 @@ function insertMagnifier(item) {
        $(item).hasClass("photo")) {
       $(item).find('a.s113977_magnify').remove();
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
-      var addr = $(item).find("a.permalink:first").attr("href")
-                     .match(/http:\/\/[^\/]*/)[0];
+      var addr;
+      var perm = $(item).find("a.permalink:first");
+      if (perm.length > 0) {
+         addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
+      }
+      else {
+         if ($(item).find('span.private_label').length > 0) {
+            addr = location.href
+               .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/)[1];
+            addr = 'http://' + addr + '.tumblr.com';
+         }
+      }
       var ctrl = $(item).find('div.post_controls');
       var mi = $('<a title="Magnifier loading..." ' +
                  'class="s113977_magnify s113977_magnify_hide" id="magnify_' +

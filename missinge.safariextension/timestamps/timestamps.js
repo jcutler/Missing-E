@@ -46,8 +46,21 @@ function loadTimestamp(item) {
          }
       }
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
-      var addr = $(item).find("a.permalink:first").attr("href")
-                     .match(/http:\/\/[^\/]*/)[0];
+      var perm = $(item).find("a.permalink:first");
+      var addr;
+      if (perm.length > 0) {
+         addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
+      }
+      else {
+         if ($(item).find('span.private_label').length > 0) {
+            addr = location.href
+                  .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/)[1];
+            addr = 'http://' + addr + '.tumblr.com';
+         }
+         else {
+            $(item).find('span.MissingE_timestamp').remove();
+         }
+      }
       if (tid === undefined || tid === null || tid === "") { return; }
       safari.self.tab.dispatchMessage("timestamp", {pid: tid, url: addr});
    }

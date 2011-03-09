@@ -33,8 +33,11 @@ function addReblog(item) {
          return true;
       }
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
-      var addr = $(item).find("a.permalink:first").attr("href")
-                           .match(/http:\/\/[^\/]*/)[0];
+      var perm = $(item).find("a.permalink:first");
+      if (perm.length === 0) {
+         return;
+      }
+      var addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
 
       safari.self.tab.dispatchMessage("reblogYourself",{pid: tid, url: addr});
    }
