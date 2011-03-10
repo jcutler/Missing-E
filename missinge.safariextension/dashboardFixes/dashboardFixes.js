@@ -31,7 +31,11 @@ function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags) {
    }
    if (wrapTags === 1) {
       data += "span.tags { display:inline !important; " +
-               "white-space:normal !important; }";
+               "white-space:normal !important; } " +
+               "span.with_blingy_tag a.blingy { " +
+               "display:inline-block !important; } " +
+               "#posts .post .footer_links.with_tags " +
+               "{ overflow:visible !important;}";
    }
    css.innerHTML = data;
    document.getElementsByTagName("head")[0].appendChild(css);

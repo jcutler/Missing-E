@@ -25,3 +25,11 @@ span.tags {
 display:inline !important;
 white-space:normal !important;
 }
+
+span.with_blingy_tag a.blingy {
+display:inline-block !important;
+}
+
+#posts .post .footer_links.with_tags {
+overflow:visible !important;
+}
