@@ -370,10 +370,17 @@
                   high = ph;
                }
             }
-            $.facebox.reveal('<div class="image"><a href="' + image.src +
-                              '" target="_blank"><img style="width:' + wide +
-                              'px;height:' + high + 'px;" src="' + image.src +
-                              '" /></a></div>', klass);
+            if (/^http/.test(location.protocol)) {
+               $.facebox.reveal('<div class="image"><a href="' + image.src +
+                                '" target="_blank"><img style="width:' + wide +
+                                 'px;height:' + high + 'px;" src="' + image.src +
+                                '" /></a></div>', klass);
+            }
+            else {
+               $.facebox.reveal('<div class="image"><img style="width:' + wide +
+                                 'px;height:' + high + 'px;" src="' + image.src +
+                                '" /></div>', klass);
+            }
          };
       image.src = href
       }
