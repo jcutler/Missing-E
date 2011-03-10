@@ -282,6 +282,7 @@ function handleRequest(request) {
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
@@ -325,6 +326,7 @@ function handleRequest(request) {
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url))) {
          if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
@@ -408,6 +410,7 @@ function handleRequest(request) {
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(request.message.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
