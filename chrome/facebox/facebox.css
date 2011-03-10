@@ -114,6 +114,10 @@ opacity:0.5;
 display:block;
 }
 
+#facebox .slideshow .image img {
+width:100%;
+}
+
 #facebox img {
 border:0;
 margin:0;
