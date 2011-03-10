@@ -182,11 +182,20 @@ function markClick(e) {
 function doMarks(item) {
    if (item.tagName === 'LI' && $(item).hasClass('post')) {
       $(item).find('div.post_controls:not(.bookmarkAdded)').each(function(i){
+         var j;
+         var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
          var heart = $(this).find('a.like_button');
          var mag = $(this).find('a.s113977_magnify');
          var mom = $(this).parent();
          var post = mom.attr('id').match(/[0-9]*$/)[0];
-         var node = $('<a class="s113977_mark" id="bookmark_' + post +
+         var klass = 's113977_mark';
+         for (j=0; j < marks.length; j++) {
+            if (post === marks[j][1]) {
+               klass += ' s113977_ismarked';
+               break;
+            }
+         }
+         var node = $('<a class="' + klass + '" id="bookmark_' + post +
                       '" title="Bookmark" href="#" onclick="return false;">' +
                       '</a>');
          node.click(markClick);
