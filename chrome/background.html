@@ -297,7 +297,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.bookmarker = false;
 
          if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
-             getStorage("MissingE_followChecker_enabled",1) == 1) {
+             getStorage("MissingE_followChecker_enabled",1) == 1 ||
+             getStorage("MissingE_magnifier_enabled",1)) {
             chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
          }

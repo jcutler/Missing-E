@@ -337,7 +337,7 @@ function tfc_init() {
    $("body").append('<div id="113977_followwhodisplay" style="display:none;">' +
                     '<div style="' +
                     'font:bold 24px Georgia,serif;color:#1f354c;">' +
-                    'followcheckr.</div><div class="followwholist" ' +
+                    'follow checker</div><div class="followwholist" ' +
                     'style="height:' + ((getPageHeight()/10)*7) +
                     'px;overflow-y:auto;text-align:center;margin-top:10px;">' +
                     '</div><img class="logo" src="' +

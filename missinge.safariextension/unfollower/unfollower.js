@@ -215,7 +215,7 @@ function tu_init() {
    var followers;
    $("body").append('<div id="113977_unfollowdisplay" style="display:none;">' +
                     '<div style="font:bold 24px Georgia,serif;' +
-                    'color:#1f354c;">unfollowr.</div>' +
+                    'color:#1f354c;">unfollower</div>' +
                     '<div class="unfollowerlist" style="height:' +
                     ((getPageHeight()/10)*7) + 'px;overflow-y:auto;' +
                     'text-align:center;margin-top:10px;"></div>' +
