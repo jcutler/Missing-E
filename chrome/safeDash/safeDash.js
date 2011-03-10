@@ -26,9 +26,6 @@
 var lock = chrome.extension.getURL('safeDash/lock.png');
 var lockicon = chrome.extension.getURL('safeDash/lockicon.png');
 
-var st = document.createElement('style');
-st.setAttribute('type','text/css');
-st.id = 'MissingE_safeDash_style';
 var opA;
 if (getStorage('MissingE_safeDash_state',0) === 0) {
    opA = 1;
@@ -36,16 +33,16 @@ if (getStorage('MissingE_safeDash_state',0) === 0) {
 else {
    opA = 0;
 }
-st.innerHTML = '#posts .post img, .notification blockquote img, ' +
+$('head').prepend('<style type="text/css">' +
+               '#posts .post img, .notification blockquote img, ' +
                '.video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } ' +
                '.nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat ' +
                'scroll center center !important; } #right_column ' +
                '.dashboard_nav_item ul.dashboard_subpages li a ' +
                '.icon.dashboard_controls_nsfw { ' +
-               'background-image:url("' + lockicon + '") !important; }';
+               'background-image:url("' + lockicon + '") !important; } ' +
+               '.nsfwoff { background:#FFFFFF !important; }</style>');
                
-document.getElementsByTagName('head')[0].appendChild(st);
-
 function undoNSFW() {
    $('#posts .nsfwed').css('opacity','1');
    $('#posts div.nsfwembed span.nsfwed').css('visibility','visible');
