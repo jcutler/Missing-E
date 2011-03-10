@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.29</string>
+	<string>1.0.30</string>
 	<key>CFBundleVersion</key>
-	<string>21</string>
+	<string>22</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -26,7 +26,7 @@
 				<key>Identifier</key>
 				<string>missinge-settings</string>
 				<key>Image</key>
-				<string>Icon-16.png</string>
+				<string>missinge-button.png</string>
 				<key>Label</key>
 				<string>Missing e</string>
 				<key>Palette Label</key>
