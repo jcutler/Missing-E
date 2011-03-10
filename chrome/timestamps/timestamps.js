@@ -75,7 +75,8 @@ function loadTimestamp(item) {
             info = $('#post_' + response.pid)
                            .find('span.MissingE_timestamp');
             info.html('Timestamp loading failed. ' +
-                      '<a class="MissingE_timestamp_retry" href="#">Retry</a>');
+                      '<a class="MissingE_timestamp_retry" href="#" ' +
+                      'onclick="return false;">Retry</a>');
          }
       });
    }
@@ -85,6 +86,13 @@ if (!(/drafts$/.test(location.href)) &&
     !(/queue$/.test(location.href)) &&
     !(/messages$/.test(location.href)) &&
     !(/submissions[^\/]*$/.test(location.href))) {
+
+   $('head').append('<style type="text/css">' +
+                    'span.MissingE_timestamp a {' +
+                    'text-decoration:none !important } ' +
+                    'span.MissingE_timestamp a:hover { ' +
+                    'text-decoration:underline !important; }' +
+                    '</style>');
    $('#posts li.post div.post_info a.MissingE_timestamp_retry')
       .live('click',function() {
       var post = $(this).closest('li.post');
