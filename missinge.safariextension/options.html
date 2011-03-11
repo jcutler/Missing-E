@@ -452,6 +452,12 @@ color:white;
 <link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css" />
 <script type="text/javascript" src="facebox/facebox.js"></script>
 <link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css" />
+<link rel="stylesheet" type="text/css" href="dashboardFixes/replaceIcons.css" />
+<style type="text/css">
+#posts .post .MissingE_post_control {
+background-image:url("dashboardFixes/icon_replacements.png");
+}
+</style>
 <script type="text/javascript" src="checkbox/jquery.checkbox.min.js"></script>
 <script type="text/javascript">
 <!--
@@ -589,6 +595,10 @@ function loadSettings() {
             frm.MissingE_dashboardFixes_wrapTags.checked = true;
          else
             frm.MissingE_dashboardFixes_wrapTags.checked = false;
+         if (getStorage('MissingE_dashboardFixes_replaceIcons', 1) == 1)
+            frm.MissingE_dashboardFixes_replaceIcons.checked = true;
+         else
+            frm.MissingE_dashboardFixes_replaceIcons.checked = false;
       }
       else if (v == "postingFixes") {
          if (getStorage('MissingE_postingFixes_photoReplies',1) == 1)
@@ -679,7 +689,7 @@ function doshow(component) {
 -->
 </script>
 </head>
-<body>
+<body id="MissingE_settings">
 <div id="container">
 <div id="header_container">
 <div id="header">
@@ -762,7 +772,7 @@ function doshow(component) {
 <div class="post_thumb"><a href="dashboardFixes/screen.jpg" rel="facebox"><img src="dashboardFixes/thumb.jpg" /><br />Screenshot</a></div>
 <p>A few convenient interface fixes for Tumblr dashboard pages.</p>
 <table class="options_table">
-<tr><td class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="even">Wrap tags on posts in the dashboard</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
+<tr><td class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="even">Wrap tags on posts in the dashboard</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog) with icons: <span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>

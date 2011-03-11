@@ -21,13 +21,13 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, $ */
+/*global chrome, $ */
 
 function doIcons(item) {
    if (item.tagName !== 'LI' || !($(item).hasClass('post'))) {
       return false;
    }
-
+   
    $(item).find('div.post_controls a').each(function() {
       var a = $(this);
       var txt = a.text();
@@ -59,53 +59,28 @@ function doIcons(item) {
    });
 }
 
-function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags,
-                                           replaceIcons) {
-   var css = document.createElement("style");
-   css.setAttribute("type","text/css");
-   var data = '';
-   var head;
-   if (reblogQuoteFit === 1) {
-      data += "div.post_content blockquote " +
-               "{ margin-left:0 !important; padding-left:10px !important; } ";
-   }
-   if (wrapTags === 1) {
-      data += "span.tags { display:inline !important; " +
-               "white-space:normal !important; } " +
-               "span.with_blingy_tag a.blingy { " +
-               "display:inline-block !important; } " +
-               "#posts .post .footer_links.with_tags " +
-               "{ overflow:visible !important;}";
-   }
-   css.innerHTML = data;
-   head = document.getElementsByTagName("head")[0];
-   if (data !== '') {
-      head.appendChild(css);
-   }
-   if (replaceIcons === 1) {
-      var style = document.createElement("link");
-      style.setAttribute('rel','stylesheet');
-      style.setAttribute('type','text/css');
-      style.href = safari.extension.baseURI + "dashboardFixes/replaceIcons.css";
-      head.appendChild(style);
+chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
+                             function(response) {
+   var dashboardFixes_settings = JSON.parse(response);
+   if (dashboardFixes_settings.replaceIcons === 1 &&
+       document.body.id !== "tinymce" &&
+       document.body.id !== "dashboard_edit_post") {
 
-      if (document.body.id !== "tinymce" &&
-          document.body.id !== "dashboard_edit_post") {
-         var icons = safari.extension.baseURI +
-                     'dashboardFixes/icon_replacements.png';
-         $('head').append('<style type="text/css">' +
+      var icons = chrome.extension
+                     .getURL('dashboardFixes/icon_replacements.png');
+      $('head').append('<style type="text/css">' +
                        '#posts .post .post_controls .MissingE_post_control {' +
                        'background-image:url("' + icons + '"); }' +
                        '</style>');
                         
 
-         document.addEventListener('DOMNodeInserted', function(e) {
-            doIcons(e.target);
-         }, false);
+      document.addEventListener('DOMNodeInserted', function(e) {
+         doIcons(e.target);
+      }, false);
 
-         $("#posts li.post").each(function(i) {
-            doIcons(this);
-         });
-      }
+      $("#posts li.post").each(function(i) {
+         doIcons(this);
+      });
    }
-}
+});
+

@@ -43,7 +43,9 @@ function doTimestamp(stamp, id, request) {
 
 function doReblogDash(stamp, id, request) {
    var key = stamp["reblog-key"];
-   request.target.page.dispatchMessage("reblogYourself",{pid: id, success: true, data: key});
+   var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
+                      getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
+   request.target.page.dispatchMessage("reblogYourself",{pid: id, success: true, data: key, icons: replaceIcons});
 }
 
 function doMagnifier(stamp, id, request) {
@@ -247,6 +249,7 @@ function handleRequest(request) {
          case "dashboardFixes":
             settings.reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
             settings.wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
+            settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
             console.log(settings);
             break;
          case "dashLinksToTabs":
@@ -328,7 +331,8 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url))) {
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
          if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
             activeScripts.dashboardFixes = true;
          }

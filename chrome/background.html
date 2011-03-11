@@ -44,7 +44,9 @@ function doTimestamp(stamp, id, sendResponse) {
 
 function doReblogDash(stamp, id, sendResponse) {
    var key = stamp["reblog-key"];
-   sendResponse({pid: id, success: true, data: key});
+   var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
+                      getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
+   sendResponse({pid: id, success: true, data: key, icons: replaceIcons});
 }
 
 function doMagnifier(stamp, id, sendResponse) {
@@ -233,6 +235,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "settings") {
       var settings = {};
       switch(request.component) {
+         case "dashboardFixes":
+            settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
+            break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
             settings.sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
@@ -325,9 +330,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url)) {
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) {
          if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
             activeScripts.dashboardFixes = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/replaceIcons.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "dashboardFixes/dashboardFixes.js"});
             if (getStorage("MissingE_dashboardFixes_reblogQuoteFit",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/reblogQuoteFit.css"});
             if (getStorage("MissingE_dashboardFixes_wrapTags",1) == 1)

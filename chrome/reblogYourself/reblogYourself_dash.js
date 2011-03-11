@@ -29,7 +29,11 @@ function addReblog(item) {
       $(item).find('div.post_controls a.MissingE_reblogYourself_retry')
                .remove();
       if ($(item).find('div.post_controls a:contains("reblog")').length > 0 ||
-          $(item).find('div.post_controls a:contains("edit")').length === 0) {
+          $(item).find('div.post_controls a.MissingE_reblog_control')
+                  .length > 0 ||
+          ($(item).find('div.post_controls a:contains("edit")').length === 0 &&
+           $(item).find('div.post_controls a.MissingE_edit_control')
+                  .length === 0)) {
          return true;
       }
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
@@ -41,20 +45,37 @@ function addReblog(item) {
 
       chrome.extension.sendRequest({greeting: "reblogYourself", pid: tid,
                                     url: addr}, function(response) {
+         var edit, txt, klass;
          if (response.success) {
+            klass = (response.icons ? 'MissingE_post_control ' +
+                         'MissingE_reblog_control' : '');
+            txt = (response.icons ? '' : 'reblog');
             var redir = location.href;
+            edit = $(item).find('div.post_controls a:contains("edit")');
+            if (edit.length === 0) {
+               edit = $(item).find('div.post_controls a.MissingE_edit_control');
+            }
             redir = redir.replace(/http:\/\/www.tumblr.com/,'')
                         .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                         .replace(/&/g,'%26');
-            $(item).find('div.post_controls a:contains("edit")')
-               .after(' <a href="/reblog/' + tid + '/' + response.data +
-                      '?redirect_to=' + redir + '">reblog</a>');
+
+            edit.after(' <a title="reblog" href="/reblog/' + tid + '/' +
+                       response.data + '?redirect_to=' + redir +
+                       '" class="' + klass + '">' + txt + '</a>');
          }
          else {
-            $(item).find('div.post_controls a:contains("edit")')
-                     .after(' <a href="#" ' +
-                            'class="MissingE_reblogYourself_retry" ' +
-                            'onclick="return false;"><del>reblog</del></a>');
+            edit = $(item).find('div.post_controls a:contains("edit")');
+            if (edit.length === 0) {
+               edit = $(item).find('div.post_controls a.MissingE_edit_control');
+            }
+            klass = (response.icons ? 'MissingE_post_control ' +
+                         'MissingE_reblog_control ' +
+                        'MissingE_reblog_control_retry' : '');
+            txt = (response.icons ? '' : '<del>reblog</del>');
+            edit.after(' <a title="reblog" href="#" ' +
+                            'class="MissingE_reblogYourself_retry ' +
+                            klass + '" onclick="return false;">' +
+                            txt + '</a>');
          }
       });
    }

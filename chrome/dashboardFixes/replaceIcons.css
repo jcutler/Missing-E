@@ -1,0 +1,76 @@
+/*
+* 'Missing e' Extension
+*
+* Copyright 2011, Jeremy Cutler
+* Released under the GPL version 3 licence.
+* SEE: GPL-LICENSE.txt
+*
+* This file is part of 'Missing e'.
+*
+* 'Missing e' is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* 'Missing e' is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#posts .post .MissingE_post_control {
+height:14px;
+vertical-align:-3px;
+display:inline-block;
+background-repeat:no-repeat;
+opacity:0.65;
+margin-left:10px;
+}
+
+#posts .post .MissingE_post_control:hover {
+opacity:1;
+}
+
+#posts .post .MissingE_notes_control {
+width:12px;
+background-position:-51px 0;
+vertical-align:-1px;
+margin-left:0;
+}
+
+#posts .post a:hover .MissingE_notes_control {
+opacity:1;
+}
+
+#posts .post .MissingE_delete_control {
+width:13px;
+background-position:-38px 0;
+}
+
+#posts .post .MissingE_edit_control {
+width:14px;
+background-position:-24px 0;
+}
+
+#posts .post .MissingE_reply_control {
+width:12px;
+background-position:-24px 0;
+}
+
+#posts .post .MissingE_reblog_control {
+width:12px;
+background-position:0 0;
+}
+
+#posts .post .MissingE_reblog_control_retry {
+opacity:1;
+background-position:-63px 0;
+}
+
+#posts .post .MissingE_reply_control {
+width:12px;
+background-position:-12px 0;
+}
