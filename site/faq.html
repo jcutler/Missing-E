@@ -37,6 +37,7 @@ jQuery(document).ready(function($) {
 </ul>
 <h2>Magnifier</h2>
 <ul>
+<li><a href="#magnifier-use">How do I use Magnifier? Where is it?</a></li>
 <li><a href="#magnifier-load">Why does the magnifier sometimes look like this <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon?</a></li>
 <li><a href="#magnifier-resized">Why is the enlarged photo still not full size?</a></li>
 <li><a href="#magnifier-full">How can I open the full-size photo in its own tab or window?</a></li>
@@ -60,7 +61,7 @@ jQuery(document).ready(function($) {
 </ul>
 <h2>Reblog Yourself</h2>
 <ul>
-<li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>?</a></li>
+<li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del> (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</a></li>
 </ul>
 <h2>Follow Checker</h2>
 <ul>
@@ -99,6 +100,9 @@ jQuery(document).ready(function($) {
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="bookmark-issue" /><p class="question">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</p>
 <div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="magnifier-use" /><p class="question">How do I use Magnifier? Where is it?</p>
+<div class="response"><p><em>Magnifier</em> adds a small <img src="images/magnifier-icon.png" alt="Magnifier icon" /> icon to all photo posts on the dashboard. Simply click on it to view the full-size image without ever leaving the dashboard. <em>Magnifier</em> will resize the image to fit on your screen, but you can click on the enlarged image to open it in a new tab or window.</p><p>The <em>Magnifier</em> icon is also added to <strong>photoset</strong> posts. When you click on it, the enlarged images will appear as a slideshow you can navigate with arrow buttons on either side.</p>
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="magnifier-load" /><p class="question">Why does the magnifier sometimes look like this <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon?</p>
 <div class="response"><p>In order to get the location of a photo post's highest resolution image, <em>Magnifier</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Magnifier</em> will retry a few times before giving up and showing the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> error icon.</p><p>You can click on the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon to tell <em>Magnifier</em> to try again.</p><div class="totop"><a href="#">Top</a></div></div>
 <a name="magnifier-resized" /><p class="question">Why is the enlarged photo still not full size?</p>
@@ -129,7 +133,7 @@ jQuery(document).ready(function($) {
 <div class="response">
 <p>Much like the '+ Upload Photo' button that Tumblr places on new text post pages by default, <em>Posting Fixes</em> must load an additional Tumblr page in the background before adding the button. During times when Tumblr is very busy or error-prone, this page may not load.</p><p>Try reloading the post page to try again.</p>
 <div class="totop"><a href="#">Top</a></div></div>
-<a name="reblog-load" /><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>?</p>
+<a name="reblog-load" /><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>  (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</p>
 <div class="response">
 <p>In order to add a reblog link to your posts on the dashboard, <em>Reblog Yourself</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <strong><del>reblog</del></strong>.</p><p>You can click on the <strong><del>reblog</del></strong> text to tell <em>Reblog Yourself</em> to try again. If it shows up without the strikethrough (ie. '<strong>reblog</strong>'), then the link works!</p><p>You should note that the reblog button added to individual post pages (not on the dashboard) is more or less unaffected by Tumblr API problems.</p>
 <div class="totop"><a href="#">Top</a></div></div>

@@ -414,7 +414,7 @@ text-decoration:none;
 text-decoration:underline;
 }
 
-#faq ul li a:hover img, #faq ol li a:hover img {
+#faq ul li a:hover img, #faq ol li a:hover img, #faq ul li a:hover .MissingE_post_control, #faq ol li a:hover .MissingE_post_control {
 border-bottom:1px solid #44546b;
 }
 
@@ -430,6 +430,10 @@ font-weight:bold;
 
 #faq p.question + p.question {
 margin-top:-1em;
+}
+
+#faq p.question del {
+font-style:normal;
 }
 
 #faq div.response {
@@ -465,6 +469,10 @@ display:inline-block;
 background-repeat:no-repeat;
 opacity:0.65;
 margin-left:10px;
+}
+
+#faq .MissingE_post_control {
+vertical-align:top;
 }
 
 .MissingE_post_control:hover {
