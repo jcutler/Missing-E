@@ -34,6 +34,10 @@ margin-left:10px;
 opacity:1;
 }
 
+#posts .post .MissingE_notes_control_container {
+vertical-align:-1px;
+}
+
 #posts .post .MissingE_notes_control {
 width:12px;
 background-position:-51px 0;
