@@ -16,6 +16,12 @@ img1.src = 'images/github_white.png';
 var img2 = new Image();
 img2.src = 'images/github_blue.png';
 jQuery(document).ready(function($) {
+   var allthm = $('#content .brick img.thumb');
+   var thumbs = new Array(allthm.length);
+   allthm.each(function(i) {
+      thumbs[i] = new Image();
+      thumbs[i].src = this.src;
+   });
    $('a#github').hover(
                        function() { $(this).find('img').attr("src",'images/github_white.png'); },
                        function() { $(this).find('img').attr("src",'images/github_blue.png'); });
@@ -37,7 +43,7 @@ jQuery(document).ready(function($) {
       if (thm.length > 0) {
          var timg = new Image();
          timg.src = thm.attr('src');
-         thm.wrap('<div class="thumb" style="width:'+(timg.width)+'px;height:'+(timg.height)+'px;"></div>');
+         thm.wrap('<div class="thumb" style="width:'+(timg.width)+'px;height:48px;"></div>');
       }
       var scr = $('#facebox img.screen');
       if (scr.length > 0) {
