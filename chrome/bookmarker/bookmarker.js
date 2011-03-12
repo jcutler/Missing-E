@@ -201,7 +201,7 @@ function doMarks(item) {
          node.click(markClick);
          $(this).addClass('bookmarkAdded');
          if (mag.length > 0) {
-            mag.before(node);
+            mag.after(node);
          }
          else if (heart.length > 0) {
             heart.before(node);
@@ -282,7 +282,9 @@ if (document.body.id !== "tinymce" &&
    if (!(/drafts$/.test(location.href)) &&
        !(/queue$/.test(location.href)) &&
        !(/messages$/.test(location.href)) &&
-       !(/submissions[^\/]*$/.test(location.href))) {
+       !(/submissions[^\/]*$/.test(location.href)) &&
+       !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
+       !(/queue\/after\/[^\/]*$/.test(location.href))) {
       $("#posts li.post").each(function(i) {
          doMarks(this);
       });
@@ -330,7 +332,9 @@ if (document.body.id !== "tinymce" &&
    if (!(/drafts$/.test(location.href)) &&
        !(/queue$/.test(location.href)) &&
        !(/messages$/.test(location.href)) &&
-       !(/submissions[^\/]*$/.test(location.href))) {
+       !(/submissions[^\/]*$/.test(location.href)) &&
+       !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
+       !(/queue\/after\/[^\/]*$/.test(location.href))) {
       document.addEventListener('DOMNodeInserted', function(e) {
          doMarks(e.target);
       }, false);
