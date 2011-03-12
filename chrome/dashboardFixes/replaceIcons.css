@@ -39,6 +39,12 @@ opacity:1;
 }
 
 #posts .post .MissingE_notes_control_container {
+display:inline-block;
+height:16px;
+line-height:14px;
+}
+
+#posts .post .MissingE_notes_control_container .notes_txt {
 vertical-align:-1px;
 }
 
