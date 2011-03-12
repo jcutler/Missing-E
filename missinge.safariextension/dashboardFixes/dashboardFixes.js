@@ -51,7 +51,7 @@ function doIcons(item) {
       else if (a.hasClass('reblog_count')) {
          a.attr('title','notes').addClass('MissingE_notes_control_container')
             .find('span').each(function() {
-            $(this).html($(this).html().replace(/([0-9]+) notes?/,
+            $(this).html($(this).html().replace(/([0-9,]+) notes?/,
                                                 '<span class="notes_txt">' +
                                                 "$1" + '</span> ' +
                                                 '<span class="' + klass +
