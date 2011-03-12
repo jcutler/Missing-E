@@ -48,6 +48,10 @@ function doIcons(item) {
          a.attr('title','reply')
             .addClass(klass + "MissingE_reply_control").text('');
       }
+      else if (/^\s*notes\s*$/.test(txt)) {
+         a.attr('title','notes')
+            .addClass(klass + "MissingE_notes_control").text('');
+      }
       else if (a.hasClass('reblog_count')) {
          a.attr('title','notes').addClass('MissingE_notes_control_container')
             .find('span').each(function() {

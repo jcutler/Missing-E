@@ -48,10 +48,13 @@ line-height:14px;
 vertical-align:-1px;
 }
 
+#posts .post .MissingE_notes_control_container .MissingE_notes_control {
+vertical-align:-1px;
+}
+
 #posts .post .MissingE_notes_control {
 width:12px;
 background-position:-51px 0;
-vertical-align:-1px;
 margin-left:0;
 }
 
