@@ -48,10 +48,13 @@ function magClick(e) {
 function insertMagnifier(item) {
    if (item.tagName === "LI" && $(item).hasClass("post") &&
        $(item).hasClass("photo")) {
-      $(item).find('a.s113977_magnify').remove();
+      var ctrl = $(item).find('div.post_controls');
+      var bm = ctrl.find('a.s113977_mark');
+      var heart = ctrl.find('a.like_button');
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
       var addr;
       var perm = $(item).find("a.permalink:first");
+      ctrl.find('a.s113977_magnify').remove();
       if (perm.length > 0) {
          addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
       }
@@ -62,13 +65,14 @@ function insertMagnifier(item) {
             addr = 'http://' + addr + '.tumblr.com';
          }
       }
-      var ctrl = $(item).find('div.post_controls');
       var mi = $('<a title="Magnifier loading..." ' +
                  'class="s113977_magnify s113977_magnify_hide" id="magnify_' +
                  tid + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
-      var heart = ctrl.find('a.like_button');
-      if (heart.length > 0) {
+      if (bm.length > 0) {
+         bm.before(mi);
+      }
+      else if (heart.length > 0) {
          heart.before(mi);
       }
       else {
