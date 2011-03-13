@@ -15,6 +15,9 @@ var widget = widgets.Widget({
 });
 */
 
+var defaultRetries = 10;
+var maxRetries = 99;
+
 var myWorker;
 
 function getStorage(key, defVal) {
@@ -36,6 +39,9 @@ function handleMessage(message) {
    if (message.greeting === "addMenu") {
       myWorker.postMessage({greeting: "addMenu", url: data.url("")});
    }
+   else if (message.greeting == "open") {
+      tabs.open(message.url);
+   }
    else if (message.greeting == "settings") {
       var settings = {};
       settings.greeting = "settings";
@@ -53,6 +59,7 @@ function handleMessage(message) {
             break;
          case "replyReplies":
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
+            settings.smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
             settings.addTags = getStorage("MissingE_replyReplies_addTags",1);
             break;
          case "postCrushes_fill":
@@ -249,16 +256,16 @@ pageMod.PageMod({
                        data.url("common/defs.js"),
                        data.url("common/utils.js"),
                        data.url("common/storage.js"),
-                       data.url("facebox/facebox.js"),
                        data.url("bookmarker/bookmarker.js"),
                        data.url("dashboardFixes/dashboardFixes.js"),
                        data.url("dashLinksToTabs/dashLinksToTabs.js"),
-                       /*
-                       data.url("followChecker/followChecker.js"),
                        data.url("gotoDashPost/gotoDashPost.js"),
-                       data.url("magnifier/magnifier.js"),
                        data.url("postCrushes/postCrushes.js"),
                        data.url("postCrushes/postCrushes_fill.js"),
+                       /*
+                       data.url("facebox/facebox.js"),
+                       data.url("followChecker/followChecker.js"),
+                       data.url("magnifier/magnifier.js"),
                        data.url("postingFixes/postingFixes.js"),
                        data.url("reblogYourself/reblogYourself_post.js"),
                        data.url("reblogYourself/reblogYourself_dash.js"),

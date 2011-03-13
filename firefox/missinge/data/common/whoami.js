@@ -61,12 +61,16 @@ function doStartup(message) {
    }
    console.log(info);
    jQuery.noConflict();
-  /* 
+
+   /*
    jQuery.facebox.settings.closeImage = message.extensionURL +
       'facebox/closelabel.png';
    jQuery.facebox.settings.loadingImage = message.extensionURL +
       'facebox/loading.gif';
-      */
+
+   jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
+                         'href="' + message.extensionURL + 'facebox/facebox.css" />');
+   */
 
    if (window.top === window) {
       if (message.bookmarker) {
@@ -76,14 +80,12 @@ function doStartup(message) {
          postMessage({greeting: "settings", component: "dashLinksToTabs"});
       }
       if (message.postCrushes) {
-         /*
          if (message.postCrushes_fill) {
-            MissingE_postCrushes_fill_doStartup();
+            MissingE_postCrushes_fill_doStartup(message.extensionURL);
          }
          else {
-            MissingE_postCrushes_doStartup();
+            MissingE_postCrushes_doStartup(message.extensionURL);
          }
-         */
       }
       if (message.replyReplies) {
          /*
@@ -97,9 +99,8 @@ function doStartup(message) {
       }
       if (message.followChecker) {
          /*
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "followChecker"});
-                                         */
+         postMessage({greeting: "settings", component: "followChecker"});
+         */
       }
       if (message.unfollower) {
          /*
@@ -139,9 +140,7 @@ function doStartup(message) {
    }
    else {
       if (message.gotoDashPost) {
-         /*
-         MissingE_gotoDashPost_doStartup();
-         */
+         MissingE_gotoDashPost_doStartup(message.extensionURL);
       }
       if (message.reblogYourself) {
          /*
@@ -158,7 +157,7 @@ function settings_startup(message) {
                                       message.addUploader);
    }
    else if (message.component === "followChecker") {
-      MissingE_followChecker_doStartup(message.retries);
+      MissingE_followChecker_doStartup(message.extensionURL, message.retries);
    }
    else if (message.component === "unfollower") {
       MissingE_unfollower_doStartup(message.retries);
