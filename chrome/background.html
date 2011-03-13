@@ -332,7 +332,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) {
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url)) {
          if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
             activeScripts.dashboardFixes = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/replaceIcons.css"});

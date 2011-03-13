@@ -96,7 +96,7 @@ function handleRequest(request) {
             error: function(xhr, textStatus) {
                var entry;
                if ((entry = cache[this.targetId])) {
-                  doMagnifier(entry, this.targetId, sendResponse);
+                  doMagnifier(entry, this.targetId, request);
                }
                else {
                   this.tryCount++;
@@ -113,7 +113,7 @@ function handleRequest(request) {
                if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
                   var entry;
                   if ((entry = cache[this.targetId])) {
-                     doMagnifier(entry, this.targetId, sendResponse);
+                     doMagnifier(entry, this.targetId, request);
                   }
                   else {
                      this.tryCount++;
@@ -150,7 +150,7 @@ function handleRequest(request) {
             error: function(xhr, textStatus) {
                var entry;
                if ((entry = cache[this.targetId])) {
-                  doReblogDash(entry, this.targetId, sendResponse);
+                  doReblogDash(entry, this.targetId, request);
                }
                else {
                   this.tryCount++;
@@ -167,7 +167,7 @@ function handleRequest(request) {
                if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
                   var entry;
                   if ((entry = cache[this.targetId])) {
-                     doReblogDash(entry, this.targetId, sendResponse);
+                     doReblogDash(entry, this.targetId, request);
                   }
                   else {
                      this.tryCount++;
@@ -204,7 +204,7 @@ function handleRequest(request) {
             error: function(xhr, textStatus) {
                var entry;
                if ((entry = cache[this.targetId])) {
-                  doTimestamp(entry, this.targetId, sendResponse);
+                  doTimestamp(entry, this.targetId, request);
                }
                else {
                   this.tryCount++;
@@ -221,7 +221,7 @@ function handleRequest(request) {
                if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
                   var entry;
                   if ((entry = cache[this.targetId])) {
-                     doTimestamp(entry, this.targetId, sendResponse);
+                     doTimestamp(entry, this.targetId, request);
                   }
                   else {
                      this.tryCount++;
@@ -332,7 +332,9 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/submissions/.test(request.message.url))) {
          if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
             activeScripts.dashboardFixes = true;
          }
