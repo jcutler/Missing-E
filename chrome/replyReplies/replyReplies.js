@@ -86,6 +86,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       arr = $('.s113977_rt');
       var showAvatars = replyReplies_settings.showAvatars;
       var addTags = replyReplies_settings.addTags;
+      var size = replyReplies_settings.smallAvatars === 1 ? 16 : 64;
       for (i=arr.length-1; i>=0; i--) {
          var st, en, nm, add;
          $(arr.get(i)).toggleClass("s113977_rt",false);
@@ -94,11 +95,13 @@ $('div.notification_type_icon').live('mousedown', function(e) {
          var link = $(arr[i]).parent().find('img.avatar');
          var newcode = "";
          var img = "<a href=\"" + link.parent().attr("href") + "\">" +
-                     "<img style=\"width:16px;height:16px;border-width:0\" " +
-                     "src=\"" +
+                     "<img style=\"width:" + size + "px;height:" + size +
+                     "px;border-width:0\" src=\"" +
                      link.attr("src")
                         .replace(/\/\/[^\.]*\.media\.tumblr\.com/,
-                                 "//media.tumblr.com") +
+                                 "//media.tumblr.com")
+                        .replace(/16(\.[a-zA-Z]*)$/,
+                                 size + "$1") +
                      "\" /></a>";
 
          newcode = oldcode.substr(oldcode.indexOf("</a>")+4);

@@ -68,6 +68,7 @@ function replyRepliesSettings(response) {
    var i, n;
    var showAvatars = response.message.showAvatars;
    var addTags = response.message.addTags;
+   var size = response.message.smallAvatars === 1 ? 16 : 64;
    var thecode = [];
    var tags = [];
    arr = $('.s113977_rt');
@@ -79,11 +80,13 @@ function replyRepliesSettings(response) {
       var link = $(arr[i]).parent().find('img.avatar');
       var newcode = "";
       var img = "<a href=\"" + link.parent().attr("href") + "\">" +
-                  "<img style=\"width:16px;height:16px;border-width:0\" " +
-                  "src=\"" +
+                  "<img style=\"width:" + size + "px;height:" + size +
+                  "px;border-width:0\" src=\"" +
                   link.attr("src")
                      .replace(/\/\/[^\.]*\.media\.tumblr\.com/,
-                              "//media.tumblr.com") +
+                              "//media.tumblr.com")
+                     .replace(/16(\.[a-zA-Z]*)$/,
+                              size + "$1") +
                   "\" /></a>";
 
       newcode = oldcode.substr(oldcode.indexOf("</a>")+4);

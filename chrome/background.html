@@ -244,6 +244,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             break;
          case "replyReplies":
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
+            settings.smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
             settings.addTags = getStorage("MissingE_replyReplies_addTags",1);
             break;
          case "postCrushes":

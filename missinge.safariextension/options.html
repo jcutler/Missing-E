@@ -577,6 +577,10 @@ function loadSettings() {
          frm.MissingE_postCrushes_prefix.value = getStorage('MissingE_postCrushes_prefix',"Tumblr Crushes:");
       }
       else if (v == "replyReplies") {
+         if (getStorage('MissingE_replyReplies_smallAvatars',1) == 1)
+            document.getElementById("MissingE_replyReplies_smallAvatars_small").checked = true;
+         else
+            document.getElementById("MissingE_replyReplies_smallAvatars_large").checked = true;
          if (getStorage('MissingE_replyReplies_showAvatars',1) == 1)
             frm.MissingE_replyReplies_showAvatars.checked = true;
          else
@@ -962,7 +966,9 @@ function doshow(component) {
 <ol><li>Hold down the Shift key and click on the notification icons of each of the notifications you want to reply to.</li><li>Click (without Shift) on the notification icon of the last notification you want to include.</li><li>All the notifications will appear in a single post in chronological order!</li></ol>
 <p>If the setting is enabled, a tag is automatically added to your post for each user to whom you are replying!</p>
 <table class="options_table">
-<tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="even">Add username(s) as tags to reply posts</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
+<tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td class="even">Avatar size</td><td class="even"><input id="MissingE_replyReplies_smallAvatars_small" type="radio" name="MissingE_replyReplies_smallAvatars" value="1" checked="checked" onchange="doSetting(this,false);" /> Small avatars (16x16)<br /><input id="MissingE_replyReplies_smallAvatars_large" type="radio" name="MissingE_replyReplies_smallAvatars" value="0" onchange="doSetting(this,false);" /> Large avatars (64x64)</td></tr>
+<tr><td class="even">Add username(s) as tags to reply posts</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
