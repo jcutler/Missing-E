@@ -119,9 +119,7 @@ function doStartup(message) {
          MissingE_safeDash_doStartup(message.extensionURL);
       }
       if (message.timestamps) {
-         /*
          MissingE_timestamps_doStartup();
-         */
       }
       if (message.magnifier) {
          /*

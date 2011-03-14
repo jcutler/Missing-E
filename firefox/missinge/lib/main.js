@@ -48,6 +48,47 @@ var tenMinutes = 600000;
 
 cacheClear = timer.setInterval(function() { cache = {}; }, tenMinutes);
 
+var months = ["Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"];
+
+function zeroPad(num, len) {
+   var ret = "";
+   ret += num;
+   while (ret.length < len) { ret = "0" + ret; }
+   return ret;
+}
+
+function getFormattedDate(d, format) {
+   var ret = format;
+   ret = ret.replace(/%Y/g,d.getFullYear())
+            .replace(/%y/g,(d.getFullYear()%100))
+            .replace(/%M/g,months[d.getMonth()])
+            .replace(/%m/g,zeroPad(d.getMonth()+1,2))
+            .replace(/%n/g,(d.getMonth()+1))
+            .replace(/%D/g,zeroPad(d.getDate(),2))
+            .replace(/%d/g,d.getDate())
+            .replace(/%G/g,zeroPad((d.getHours()%12===0 ?
+                                    "12" : d.getHours()%12),2))
+            .replace(/%g/g,(d.getHours()%12===0 ? "12" : d.getHours()%12))
+            .replace(/%H/g,zeroPad(d.getHours(),2))
+            .replace(/%h/g,d.getHours())
+            .replace(/%i/g,zeroPad(d.getMinutes(),2))
+            .replace(/%s/g,zeroPad(d.getSeconds(),2))
+            .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
+            .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
+   return ret;
+}
+
 function getStorage(key, defVal) {
    var retval = ss.storage[key];
    if (retval === undefined || retval === null || retval === "") {
@@ -63,11 +104,53 @@ function getStorage(key, defVal) {
    }
 }
 
+function doTimestamp(stamp, id, theWorker) {
+   var ts = stamp["unix-timestamp"];
+   var d = new Date(ts*1000);
+   var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
+   ins = getFormattedDate(d, ins);
+   theWorker.postMessage({greeting: "timestamp", pid: id, success: true, data: ins});
+}
+
 function doReblogDash(stamp, id, theWorker) {
    var key = stamp["reblog-key"];
    var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
                       getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
    theWorker.postMessage({greeting: "reblogYourself", pid: id, success: true, data: key, icons: replaceIcons});
+}
+
+function requestTimestamp(url, pid, count, myWorker) {
+   console.log("timestamp: " + pid + " (" + count + ")");
+   Request({
+      url: url + "/api/read/json?id=" + pid,
+      headers: {tryCount: count,
+                retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),
+                targetId: pid},
+      onComplete: function(response) {
+         if (response.status != 200 ||
+             !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
+            var entry;
+            if ((entry = cache[this.headers.targetId])) {
+               doTimestamp(entry, this.headers.targetId, myWorker);
+            }
+            else {
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  requestTimestamp(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1), myWorker);
+               }
+               else {
+                  myWorker.postMessage({greeting: "timestamp", pid: this.headers.targetId, success:false});
+               }
+            }
+         }
+         else {
+            var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+            var stamp = JSON.parse(txt);
+            var info = stamp["posts"][0];
+            cache[this.headers.targetId] = info;
+            doTimestamp(info, this.headers.targetId, myWorker);
+         }
+      }
+   }).get();
 }
 
 function requestReblogDash(url, pid, count, myWorker) {
@@ -84,9 +167,11 @@ function requestReblogDash(url, pid, count, myWorker) {
                doReblogDash(entry, this.headers.targetId, myWorker);
             }
             else {
-               this.headers.tryCount = this.headers.tryCount++;
                if (this.headers.tryCount <= this.headers.retryLimit) {
                   requestReblogDash(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1), myWorker);
+               }
+               else {
+                  myWorker.postMessage({greeting: "timestamp", pid: this.headers.targetId, success:false});
                }
             }
          }
@@ -115,6 +200,15 @@ function handleMessage(message, myWorker) {
       }
       else {
          requestReblogDash(message.url, message.pid, 0, myWorker);
+      }
+   }
+   else if (message.greeting == "timestamp") {
+      var entry;
+      if ((entry = cache[message.pid])) {
+         doTimestamp(entry, message.pid, myWorker);
+      }
+      else {
+         requestTimestamp(message.url, message.pid, 0, myWorker);
       }
    }
    else if (message.greeting == "settings") {
@@ -345,11 +439,11 @@ pageMod.PageMod({
                        data.url("replyReplies/replyReplies.js"),
                        data.url("replyReplies/replyReplies_fill.js"),
                        data.url("safeDash/safeDash.js"),
+                       data.url("timestamps/timestamps.js"),
                        /*
                        data.url("facebox/facebox.js"),
                        data.url("followChecker/followChecker.js"),
                        data.url("magnifier/magnifier.js"),
-                       data.url("timestamps/timestamps.js"),
                        data.url("unfollower/unfollower.js"),
                        */
                        data.url("common/whoami.js")],
