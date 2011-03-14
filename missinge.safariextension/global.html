@@ -80,6 +80,18 @@ function handleRequest(request) {
    if (request.name == "open") {
       request.target.browserWindow.openTab().url = request.message;
    }
+   else if (request.name == "close-options") {
+      var i,j;
+      var windows = safari.application.browserWindows;
+      for (i=0; i<windows.length; i++) {
+         for (j=0; j<windows[i].tabs.length; j++) {
+            if (windows[i].tabs[j].url === request.target.url &&
+                windows[i].tabs[j] !== request.target) {
+               windows[i].tabs[j].close();
+            }
+         }
+      }
+   }
    else if (request.name == "magnifier") {
       var entry;
       if ((entry = cache[request.message.pid])) {

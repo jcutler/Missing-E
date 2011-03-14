@@ -1,8 +1,10 @@
 {
-  "name": "missinge",
-  "fullName": "missinge",
-  "description": "a basic add-on",
-  "author": "",
-  "license": "MPL 1.1/GPL 2.0/LGPL 2.1",
-  "version": "0.1"
+    "name": "missinge",
+    "license": "GPL 3.0",
+    "author": "Jeremy Cutler",
+    "url": "http://missinge.infraware.ca",
+    "version": "1.0.42",
+    "fullName": "Missing e",
+    "id": "jid0-0PGffAcVvhUBieFYkRVVc5w6lIU",
+    "description": "Useful features and customizations for Tumblr."
 }
