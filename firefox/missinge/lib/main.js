@@ -30,6 +30,7 @@ var url = require("url");
 var data = require("self").data;
 var Request = require("request").Request;
 var timer = require("timer");
+var panel = require("panel");
 /*
 var widget = widgets.Widget({
   label: "Mozilla website",
@@ -48,6 +49,20 @@ var tenMinutes = 600000;
 
 cacheClear = timer.setInterval(function() { cache = {}; }, tenMinutes);
 
+var componentList = ["dashboardFixes",
+                     "bookmarker",
+                     "dashLinksToTabs",
+                     "safeDash",
+                     "timestamps",
+                     "magnifier",
+                     "gotoDashPost",
+                     "postingFixes",
+                     "reblogYourself",
+                     "followChecker",
+                     "postCrushes",
+                     "replyReplies",
+                     "unfollower"];
+
 var months = ["Jan",
               "Feb",
               "Mar",
@@ -60,6 +75,13 @@ var months = ["Jan",
               "Oct",
               "Nov",
               "Dec"];
+
+var options = panel.Panel({
+   contentURL: data.url("options.html"),
+   onMessage: function(data) {
+      console.log(data.greeting);
+   }
+});
 
 function zeroPad(num, len) {
    var ret = "";
@@ -102,6 +124,10 @@ function getStorage(key, defVal) {
          return parseInt(retval, 10);
       }
    }
+}
+
+function setStorage(key, val) {
+   ss.storage[key] = val;
 }
 
 function doTimestamp(stamp, id, theWorker) {
@@ -239,11 +265,19 @@ function requestReblogDash(url, pid, count, myWorker) {
 }
 
 function handleMessage(message, myWorker) {
+   var i;
    if (message.greeting === "addMenu") {
-      myWorker.postMessage({greeting: "addMenu", url: data.url("")});
+      myWorker.postMessage({greeting: "addMenu", extensionURL: data.url("")});
    }
    else if (message.greeting == "open") {
-      tabs.open(message.url);
+      if (message.url == "OPTIONS") {
+         options.width = message.width * 0.9;
+         options.height = message.height * 0.9;
+         options.show();
+      }
+      else {
+         tabs.open(message.url);
+      }
    }
    else if (message.greeting == "reblogYourself") {
       var entry;
@@ -271,6 +305,35 @@ function handleMessage(message, myWorker) {
       else {
          requestTimestamp(message.url, message.pid, 0, myWorker);
       }
+   }
+   else if (message.greeting == "change-setting") {
+      setStorage(message.name, message.val);
+   }
+   else if (message.greeting == "all-settings") {
+      var settings = {};
+      settings.greeting = "all-settings";
+      for (i=0; i<componentList.length; i++) {
+         settings["MissingE_" + componentList[i] + "_enabled"] = getStorage("MissingE_" + componentList[i] +
+                                                                            "_enabled", 1);
+      }
+      settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
+      settings.MissingE_dashboardFixes_wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
+      settings.MissingE_dashboardFixes_replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
+      settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
+      settings.MissingE_dashLinksToTabs_sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
+      settings.MissingE_replyReplies_showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
+      settings.MissingE_replyReplies_smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
+      settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
+      settings.MissingE_postCrushes_prefix = getStorage("MissingE_postCrushes_prefix","Tumblr Crushes:");
+      settings.MissingE_postCrushes_crushSize = getStorage("MissingE_postCrushes_crushSize",1);
+      settings.MissingE_postCrushes_addTags = getStorage("MissingE_postCrushes_addTags",1);
+      settings.MissingE_postCrushes_showPercent = getStorage("MissingE_postCrushes_showPercent",1);
+      settings.MissingE_postingFixes_photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
+      settings.MissingE_postingFixes_uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
+      settings.MissingE_postingFixes_addUploader = getStorage("MissingE_postingFixes_addUploader",1);
+      settings.MissingE_followChecker_retries = getStorage("MissingE_followChecker_retries",defaultRetries);
+      settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
+      options.postMessage(settings);
    }
    else if (message.greeting == "settings") {
       var settings = {};
@@ -512,7 +575,5 @@ pageMod.PageMod({
       });
    }
 });
-
-
 
 console.log("Missing e is running.");

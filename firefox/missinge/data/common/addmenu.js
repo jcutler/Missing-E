@@ -22,18 +22,57 @@
  */
 
 /*global safari */
+
+// Adapted from getPageSize() by quirksmode.com
+function getPageHeight() {
+   var windowHeight;
+   if (self.innerHeight) {
+      // all except Explorer
+      windowHeight = self.innerHeight;
+   }
+   else if (document.documentElement &&
+            document.documentElement.clientHeight) {
+      // Explorer 6 Strict Mode
+      windowHeight = document.documentElement.clientHeight;
+   }
+   else if (document.body) { // other Explorers
+      windowHeight = document.body.clientHeight;
+   }
+   return windowHeight;
+}
+
+// Adapted from getPageSize() by quirksmode.com
+function getPageWidth() {
+   var windowWidth;
+   if (self.innerWidth) {
+      // all except Explorer
+      windowWidth = self.innerWidth;
+   }
+   else if (document.documentElement &&
+            document.documentElement.clientWidth) {
+      // Explorer 6 Strict Mode
+      windowWidth = document.documentElement.clientWidth;
+   }
+   else if (document.body) { // other Explorers
+      windowWidth = document.body.clientWidth;
+   }
+   return windowWidth;
+}
+
 postMessage({greeting:"addMenu"});
+
 on("message", function (message) {
    if (message.greeting !== "addMenu") { return false; }
-   var accmenu = document.getElementById("account_menu");
+   accmenu = jQuery("#account_menu");
    
-   if (accmenu) {
-      var links = accmenu.getElementsByTagName('a');
-      var setlnk = document.createElement('a');
-      setlnk.href = message.url + 'options.html';
-      setlnk.setAttribute("target","_blank");
-      setlnk.innerHTML = 'Missing <img src="' + message.url +
-                        'missinge16.png' + '" style="vertical-align:bottom;" />';
-      accmenu.insertBefore(setlnk, links[links.length-1]);
+   if (accmenu.length > 0) {
+      setlnk = jQuery('<a href="#" onclick="return false;">Missing ' +
+                      '<img src="' + message.extensionURL +
+                      'missinge16.png" style="' +
+                      'vertical-align:bottom;" /></a>');
+      setlnk.click(function() {
+         postMessage({greeting: "open", url: "OPTIONS",
+                      width: getPageWidth(), height: getPageHeight()});
+      }).insertBefore(accmenu.find('a:last'));
    }
 });
