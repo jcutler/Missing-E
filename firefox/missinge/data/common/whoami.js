@@ -88,14 +88,12 @@ function doStartup(message) {
          }
       }
       if (message.replyReplies) {
-         /*
          if (message.replyReplies_fill) {
             MissingE_replyReplies_fill_doStartup();
          }
          else {
-            MissingE_replyReplies_doStartup();
+            MissingE_replyReplies_doStartup(message.extensionURL);
          }
-         */
       }
       if (message.followChecker) {
          /*
@@ -118,9 +116,7 @@ function doStartup(message) {
          MissingE_reblogYourself_dash_doStartup();
       }
       if (message.safeDash) {
-         /*
-         MissingE_safeDash_doStartup();
-         */
+         MissingE_safeDash_doStartup(message.extensionURL);
       }
       if (message.timestamps) {
          /*

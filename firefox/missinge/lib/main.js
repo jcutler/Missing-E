@@ -42,7 +42,6 @@ var widget = widgets.Widget({
 
 var defaultRetries = 10;
 var maxRetries = 99;
-var myWorker;
 var cache = {};
 var cacheClear;
 var tenMinutes = 600000;
@@ -71,7 +70,7 @@ function doReblogDash(stamp, id, theWorker) {
    theWorker.postMessage({greeting: "reblogYourself", pid: id, success: true, data: key, icons: replaceIcons});
 }
 
-function requestReblogDash(url, pid, count) {
+function requestReblogDash(url, pid, count, myWorker) {
    Request({
       url: url + "/api/read/json?id=" + pid,
       headers: {tryCount: count,
@@ -87,7 +86,7 @@ function requestReblogDash(url, pid, count) {
             else {
                this.headers.tryCount = this.headers.tryCount++;
                if (this.headers.tryCount <= this.headers.retryLimit) {
-                  requestReblogDash(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1));
+                  requestReblogDash(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1), myWorker);
                }
             }
          }
@@ -102,7 +101,7 @@ function requestReblogDash(url, pid, count) {
    }).get();
 }
 
-function handleMessage(message) {
+function handleMessage(message, myWorker) {
    if (message.greeting === "addMenu") {
       myWorker.postMessage({greeting: "addMenu", url: data.url("")});
    }
@@ -112,10 +111,10 @@ function handleMessage(message) {
    else if (message.greeting == "reblogYourself") {
       var entry;
       if ((entry = cache[message.pid])) {
-         doReblogDash(entry, message.pid, request);
+         doReblogDash(entry, message.pid, myWorker);
       }
       else {
-         requestReblogDash(message.url, message.pid, 0);
+         requestReblogDash(message.url, message.pid, 0, myWorker);
       }
    }
    else if (message.greeting == "settings") {
@@ -343,22 +342,21 @@ pageMod.PageMod({
                        data.url("postingFixes/postingFixes.js"),
                        data.url("reblogYourself/reblogYourself_post.js"),
                        data.url("reblogYourself/reblogYourself_dash.js"),
+                       data.url("replyReplies/replyReplies.js"),
+                       data.url("replyReplies/replyReplies_fill.js"),
+                       data.url("safeDash/safeDash.js"),
                        /*
                        data.url("facebox/facebox.js"),
                        data.url("followChecker/followChecker.js"),
                        data.url("magnifier/magnifier.js"),
-                       data.url("replyReplies/replyReplies.js"),
-                       data.url("replyReplies/replyReplies_fill.js"),
-                       data.url("safeDash/safeDash.js"),
                        data.url("timestamps/timestamps.js"),
                        data.url("unfollower/unfollower.js"),
                        */
                        data.url("common/whoami.js")],
-   contentScript: ["postMessage('Content script is attached to '+ " +
-                   "document.URL);"],
    onAttach: function onAttach(worker) {
-      worker.on('message', handleMessage);
-      myWorker = worker;
+      worker.on('message', function(data) {
+         handleMessage(data, this);
+      });
    }
 });
 
