@@ -28,7 +28,6 @@ var followeetext;
 var followerdone;
 var followeedone;
 var failed = false;
-var retries = 0;
 
 // Adapted from getPageSize() by quirksmode.com
 function getPageHeight() {
@@ -202,7 +201,7 @@ function doFWDisplay(followerstart,followeestart,show) {
    }
 }
 
-function doFWGet(followers, followees, show, extensionURL) {
+function doFWGet(followers, followees, show, extensionURL, retries) {
    var i;
    failed = false;
    if (show) {
@@ -231,11 +230,12 @@ function doFWGet(followers, followees, show, extensionURL) {
          url: '/followers/page/'+(i+1),
          dataType: "html",
          tryCount: 0,
-         retryLimit: 10,
+         retryLimit: retries,
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
-            if (!failed && this.tryCount <= this.retryLimit) {
+            if (!failed && this.tryCount <= this.retryLimit &&
+                $('#facebox').css('display') === 'block') {
                jQuery.ajax(this);
                return;
             }
@@ -257,7 +257,9 @@ function doFWGet(followers, followees, show, extensionURL) {
          },
          success: function(data, textStatus) {
             if (!(/id="dashboard_followers"/.test(data))) {
-               if (!failed && this.tryCount <= this.retryLimit) {
+               this.tryCount++;
+               if (!failed && this.tryCount <= this.retryLimit &&
+                   $('#facebox').css('display') === 'block') {
                   jQuery.ajax(this);
                   return;
                }
@@ -292,11 +294,12 @@ function doFWGet(followers, followees, show, extensionURL) {
          url: '/following/page/'+(i+1),
          dataType: "html",
          tryCount: 0,
-         retryLimit: 10,
+         retryLimit: retries,
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
-            if (!failed && this.tryCount <= this.retryLimit) {
+            if (!failed && this.tryCount <= this.retryLimit &&
+                $('#facebox').css('display') === 'block') {
                jQuery.ajax(this);
                return;
             }
@@ -318,7 +321,9 @@ function doFWGet(followers, followees, show, extensionURL) {
          },
          success: function(data, textStatus) {
             if (!(/id="dashboard_following"/.test(data))) {
-               if (!failed && this.tryCount <= this.retryLimit) {
+               this.tryCount++;
+               if (!failed && this.tryCount <= this.retryLimit &&
+                   $('#facebox').css('display') === 'block') {
                   jQuery.ajax(this);
                   return;
                }
@@ -350,7 +355,7 @@ function doFWGet(followers, followees, show, extensionURL) {
    doFWDisplay(0,0,show);
 }
 
-function tfc_init(extensionURL) {
+function tfc_init(extensionURL, retries) {
    jQuery("body").append('<div id="113977_followwhodisplay" style="display:none;">' +
                     '<div style="' +
                     'font:bold 24px Georgia,serif;color:#1f354c;">' +
@@ -385,7 +390,7 @@ function tfc_init(extensionURL) {
       }
       doFWGet(followers[1].replace(/,/g,"").replace(/\./g,""),
               followees[1].replace(/,/g,"").replace(/\./g,""), true,
-              extensionURL);
+              extensionURL, retries);
    });
 }
 
@@ -395,7 +400,6 @@ function MissingE_followChecker_doStartup(extensionURL, maxRetries) {
       jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
                             'href="' + extensionURL + 'followChecker/' +
                             'followChecker.css" />');
-      retries = maxRetries;
-      tfc_init(extensionURL);
+      tfc_init(extensionURL, maxRetries);
    }
 }

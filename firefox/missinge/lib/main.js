@@ -441,9 +441,9 @@ pageMod.PageMod({
                        data.url("timestamps/timestamps.js"),
                        data.url("facebox/facebox.js"),
                        data.url("followChecker/followChecker.js"),
+                       data.url("unfollower/unfollower.js"),
                        /*
                        data.url("magnifier/magnifier.js"),
-                       data.url("unfollower/unfollower.js"),
                        */
                        data.url("common/whoami.js")],
    onAttach: function onAttach(worker) {

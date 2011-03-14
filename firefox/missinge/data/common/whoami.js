@@ -97,10 +97,7 @@ function doStartup(message) {
          postMessage({greeting: "settings", component: "followChecker"});
       }
       if (message.unfollower) {
-         /*
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "unfollower"});
-                                         */
+         postMessage({greeting: "settings", component: "unfollower"});
       }
       if (message.postingFixes) {
          postMessage({greeting: "settings", component: "postingFixes"});
@@ -143,7 +140,7 @@ function settings_startup(message) {
       MissingE_followChecker_doStartup(message.extensionURL, message.retries);
    }
    else if (message.component === "unfollower") {
-      MissingE_unfollower_doStartup(message.retries);
+      MissingE_unfollower_doStartup(message.extensionURL, message.retries);
    }
    else if (message.component === "dashLinksToTabs") {
       MissingE_dashLinksToTabs_doStartup(message.newPostTabs,
