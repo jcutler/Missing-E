@@ -28,7 +28,6 @@ var followeetext;
 var followerdone;
 var followeedone;
 var failed = false;
-var retries = 0;
 
 function doFWFinish(followers, followees, show) {
    var youfollow = [];
@@ -184,7 +183,7 @@ function doFWDisplay(followerstart,followeestart,show) {
    }
 }
 
-function doFWGet(followers, followees, show) {
+function doFWGet(followers, followees, show, retries) {
    var i;
    failed = false;
 
@@ -218,7 +217,8 @@ function doFWGet(followers, followees, show) {
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
-            if (!failed && this.tryCount <= this.retryLimit) {
+            if (!failed && this.tryCount <= this.retryLimit &&
+                $('#facebox').css('display') === 'block') {
                $.ajax(this);
                return;
             }
@@ -241,7 +241,8 @@ function doFWGet(followers, followees, show) {
          success: function(data, textStatus) {
             if (!(/id="dashboard_followers"/.test(data))) {
                this.tryCount++;
-               if (!failed && this.tryCount <= this.retryLimit) {
+               if (!failed && this.tryCount <= this.retryLimit &&
+                   $('#facebox').css('display') === 'block') {
                   $.ajax(this);
                   return;
                }
@@ -280,7 +281,8 @@ function doFWGet(followers, followees, show) {
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
-            if (!failed && this.tryCount <= this.retryLimit) {
+            if (!failed && this.tryCount <= this.retryLimit &&
+                $('#facebox').css('display') === 'block') {
                $.ajax(this);
                return;
             }
@@ -303,7 +305,8 @@ function doFWGet(followers, followees, show) {
          success: function(data, textStatus) {
             if (!(/id="dashboard_following"/.test(data))) {
                this.tryCount++;
-               if (!failed && this.tryCount <= this.retryLimit) {
+               if (!failed && this.tryCount <= this.retryLimit &&
+                   $('#facebox').css('display') === 'block') {
                   $.ajax(this);
                   return;
                }
@@ -335,7 +338,7 @@ function doFWGet(followers, followees, show) {
    doFWDisplay(0,0,show);
 }
 
-function tfc_init() {
+function tfc_init(retries) {
    $("body").append('<div id="113977_followwhodisplay" style="display:none;">' +
                     '<div style="' +
                     'font:bold 24px Georgia,serif;color:#1f354c;">' +
@@ -369,14 +372,13 @@ function tfc_init() {
          return false;
       }
       doFWGet(followers[1].replace(/,/g,"").replace(/\./g,""),
-              followees[1].replace(/,/g,"").replace(/\./g,""), true);
+              followees[1].replace(/,/g,"").replace(/\./g,""), true, retries);
    });
 }
 
 function MissingE_followChecker_doStartup(maxRetries) {
    if (document.body.id !== "tinymce" &&
        document.body.id !== "dashboard_edit_post") {
-      retries = maxRetries;
-      tfc_init();
+      tfc_init(maxRetries);
    }
 }

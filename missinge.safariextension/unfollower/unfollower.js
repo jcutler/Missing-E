@@ -26,7 +26,6 @@
 var text;
 var done;
 var failed = false;
-var retries = 0;
 
 function parseNames(st) {
    if (st === undefined || st === null || st.length === 0) {
@@ -129,7 +128,7 @@ function doDisplay(start,show) {
    }
 }
 
-function doGet(num, show) {
+function doGet(num, show, retries) {
    var i;
    failed = false;
 
@@ -157,7 +156,8 @@ function doGet(num, show) {
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
-            if (!failed && this.tryCount <= this.retryLimit) {
+            if (!failed && this.tryCount <= this.retryLimit &&
+                $('#facebox').css('display') === 'block') {
                $.ajax(this);
                return;
             }
@@ -179,7 +179,8 @@ function doGet(num, show) {
          success: function(data, textStatus) {
             if (!(/id="dashboard_followers"/.test(data))) {
                this.tryCount++;
-               if (!failed && this.tryCount <= this.retryLimit) {
+               if (!failed && this.tryCount <= this.retryLimit &&
+                   $('#facebox').css('display') === 'block') {
                   $.ajax(this);
                   return;
                }
@@ -212,7 +213,7 @@ function doGet(num, show) {
    doDisplay(0,show);
 }
 
-function tu_init() {
+function tu_init(retries) {
    var followers;
    $("body").append('<div id="113977_unfollowdisplay" style="display:none;">' +
                     '<div style="font:bold 24px Georgia,serif;' +
@@ -230,7 +231,7 @@ function tu_init() {
       followers = fl.html().match(/([0-9][0-9,\.]*)/);
       if (followers !== undefined && followers !== null &&
           followers.length >= 2) {
-         doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false);
+         doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false, retries);
       }
    }
 
@@ -251,13 +252,12 @@ function tu_init() {
           followers.length < 2) {
          return false;
       }
-      doGet(followers[1].replace(/,/g,"").replace(/\./g,""), true);
+      doGet(followers[1].replace(/,/g,"").replace(/\./g,""), true, retries);
    });
 }
 
 function MissingE_unfollower_doStartup(maxRetries) {
    if (document.body.id !== "dashboard_edit_post") {
-      retries = maxRetries;
-      tu_init();
+      tu_init(maxRetries);
    }
 }
