@@ -30,6 +30,24 @@ var followeedone;
 var failed = false;
 var retries = 0;
 
+// Adapted from getPageSize() by quirksmode.com
+function getPageHeight() {
+   var windowHeight;
+   if (self.innerHeight) {
+      // all except Explorer
+      windowHeight = self.innerHeight;
+   }
+   else if (document.documentElement &&
+            document.documentElement.clientHeight) {
+      // Explorer 6 Strict Mode
+      windowHeight = document.documentElement.clientHeight;
+   }
+   else if (document.body) { // other Explorers
+      windowHeight = document.body.clientHeight;
+   }
+   return windowHeight;
+}
+
 function doFWFinish(followers, followees, show) {
    var youfollow = [];
    var followyou = [];
@@ -375,7 +393,7 @@ function MissingE_followChecker_doStartup(extensionURL, maxRetries) {
    if (document.body.id !== "tinymce" &&
        document.body.id !== "dashboard_edit_post") {
       jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
-                            'href="' + extensionURL + '"followChecker/' +
+                            'href="' + extensionURL + 'followChecker/' +
                             'followChecker.css" />');
       retries = maxRetries;
       tfc_init(extensionURL);

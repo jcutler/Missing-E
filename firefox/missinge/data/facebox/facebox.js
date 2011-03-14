@@ -406,11 +406,9 @@
    function hideOverlay() {
       if (skipOverlay()) return;
 
-      $('#facebox_overlay').hide(200, function(){
-         $("#facebox_overlay").removeClass("facebox_overlayBG")
+      $('#facebox_overlay').hide().removeClass("facebox_overlayBG")
                               .addClass("facebox_hide")
                               .remove();
-      });
       return false;
    }
 
@@ -419,13 +417,11 @@
     */
 
    $(document).bind('close.facebox', function() {
-      console.log('close');
       $(document).unbind('keydown.facebox');
-      $('#facebox').hide(400, function() {
-         $('#facebox .content').removeClass().addClass('content');
-         $('#facebox .loading').remove();
-         $(document).trigger('afterClose.facebox');
-      });
+      $('#facebox').hide();
+      $('#facebox .content').removeClass().addClass('content');
+      $('#facebox .loading').remove();
+      $(document).trigger('afterClose.facebox');
       hideOverlay();
    });
 
