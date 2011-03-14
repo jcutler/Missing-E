@@ -67,6 +67,12 @@ var months = ["Jan",
               "Dec"];
 
 function openSettings() {
+   for each (var tab in tabs) {
+      if (tab.url === data.url("options.html")) {
+         tab.close();
+      }
+   }
+
    tabs.open({
       url: data.url("options.html"),
       onReady: function(tab) {
@@ -85,7 +91,7 @@ function openSettings() {
 
 var widget = widgets.Widget({
    label: "Missing e",
-   contentURL: data.url("missinge16.png"),
+   contentURL: data.url("missinge32.png"),
    onClick: function() {
       openSettings();
    }
@@ -313,11 +319,9 @@ function handleMessage(message, myWorker) {
       }
    }
    else if (message.greeting == "change-setting") {
-      console.log("change " + message.name + " from:" + getStorage(message.name) + " to:" + message.val);
       setStorage(message.name, message.val);
    }
    else if (message.greeting == "all-settings") {
-      console.log("asked for settings");
       var settings = {};
       settings.greeting = "all-settings";
       for (i=0; i<componentList.length; i++) {
