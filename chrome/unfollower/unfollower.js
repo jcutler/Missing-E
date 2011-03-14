@@ -187,6 +187,7 @@ function doGet(num, show) {
          },
          success: function(data, textStatus) {
             if (!(/id="dashboard_followers"/.test(data))) {
+               this.tryCount++;
                if (!failed && this.tryCount <= this.retryLimit) {
                   $.ajax(this);
                   return;

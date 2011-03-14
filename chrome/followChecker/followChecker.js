@@ -214,7 +214,7 @@ function doFWGet(followers, followees, show) {
          url: '/followers/page/'+(i+1),
          dataType: "html",
          tryCount: 0,
-         retryLimit: 10,
+         retryLimit: retries,
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
@@ -240,6 +240,7 @@ function doFWGet(followers, followees, show) {
          },
          success: function(data, textStatus) {
             if (!(/id="dashboard_followers"/.test(data))) {
+               this.tryCount++;
                if (!failed && this.tryCount <= this.retryLimit) {
                   $.ajax(this);
                   return;
@@ -275,7 +276,7 @@ function doFWGet(followers, followees, show) {
          url: '/following/page/'+(i+1),
          dataType: "html",
          tryCount: 0,
-         retryLimit: 10,
+         retryLimit: retries,
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
@@ -301,6 +302,7 @@ function doFWGet(followers, followees, show) {
          },
          success: function(data, textStatus) {
             if (!(/id="dashboard_following"/.test(data))) {
+               this.tryCount++;
                if (!failed && this.tryCount <= this.retryLimit) {
                   $.ajax(this);
                   return;
