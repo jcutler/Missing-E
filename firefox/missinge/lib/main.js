@@ -273,7 +273,8 @@ function handleMessage(message, myWorker) {
       if (message.url == "OPTIONS") {
          options.width = message.width * 0.9;
          options.height = message.height * 0.9;
-         options.show();
+         //options.show();
+         tabs.open(data.url("options.html"));
       }
       else {
          tabs.open(message.url);
@@ -333,7 +334,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_postingFixes_addUploader = getStorage("MissingE_postingFixes_addUploader",1);
       settings.MissingE_followChecker_retries = getStorage("MissingE_followChecker_retries",defaultRetries);
       settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
-      options.postMessage(settings);
+      myWorker.postMessage(settings);
    }
    else if (message.greeting == "settings") {
       var settings = {};
@@ -544,7 +545,8 @@ function handleMessage(message, myWorker) {
 }
 
 pageMod.PageMod({
-   include: ["http://www.tumblr.com/*"],
+   include: ["http://www.tumblr.com/*",
+             data.url("options.html")],
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("common/jquery-1.5.min.js"),
                        data.url("common/addmenu.js"),

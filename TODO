@@ -1,3 +1,6 @@
-Check magnifier on Chrome+Mac
+Firefox
+   - Options page (need page-mod)
 
-Port to Firefox
+All
+   - Options page reload settings on focus
+   - reload whole page or loadSettings? Use hashes?
