@@ -120,7 +120,6 @@ function doReblogDash(stamp, id, theWorker) {
 }
 
 function requestTimestamp(url, pid, count, myWorker) {
-   console.log("timestamp: " + pid + " (" + count + ")");
    Request({
       url: url + "/api/read/json?id=" + pid,
       headers: {tryCount: count,
@@ -440,9 +439,9 @@ pageMod.PageMod({
                        data.url("replyReplies/replyReplies_fill.js"),
                        data.url("safeDash/safeDash.js"),
                        data.url("timestamps/timestamps.js"),
-                       /*
                        data.url("facebox/facebox.js"),
                        data.url("followChecker/followChecker.js"),
+                       /*
                        data.url("magnifier/magnifier.js"),
                        data.url("unfollower/unfollower.js"),
                        */

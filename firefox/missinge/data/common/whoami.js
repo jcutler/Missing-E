@@ -62,7 +62,6 @@ function doStartup(message) {
    console.log(info);
    jQuery.noConflict();
 
-   /*
    jQuery.facebox.settings.closeImage = message.extensionURL +
       'facebox/closelabel.png';
    jQuery.facebox.settings.loadingImage = message.extensionURL +
@@ -70,7 +69,6 @@ function doStartup(message) {
 
    jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
                          'href="' + message.extensionURL + 'facebox/facebox.css" />');
-   */
 
    if (window.top === window) {
       if (message.bookmarker) {
@@ -96,9 +94,7 @@ function doStartup(message) {
          }
       }
       if (message.followChecker) {
-         /*
          postMessage({greeting: "settings", component: "followChecker"});
-         */
       }
       if (message.unfollower) {
          /*
