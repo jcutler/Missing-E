@@ -124,8 +124,8 @@ function MissingE_magnifier_doStartup(extensionURL) {
             }
          }
          curr.parent().find('div.image:visible').not(curr).hide();
-         curr.fadeOut('fast');
-         next.fadeIn('slow');
+         curr.hide();
+         next.show();
       });
       jQuery('#posts li.post[class~="photo"]').each(function(){
          insertMagnifier(this);
