@@ -115,9 +115,7 @@ function doStartup(message) {
          MissingE_timestamps_doStartup();
       }
       if (message.magnifier) {
-         /*
-         MissingE_magnifier_doStartup();
-         */
+         MissingE_magnifier_doStartup(message.extensionURL);
       }
    }
    else {

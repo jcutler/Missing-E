@@ -119,6 +119,59 @@ function doReblogDash(stamp, id, theWorker) {
    theWorker.postMessage({greeting: "reblogYourself", pid: id, success: true, data: key, icons: replaceIcons});
 }
 
+function doMagnifier(stamp, id, theWorker) {
+   var url;
+   if (stamp.photos.length > 0) {
+      url = new Array();
+      for (i=0; i<stamp.photos.length; i++) {
+         url.push(stamp.photos[i]["photo-url-1280"]);
+         var cap = stamp.photos[i]["caption"];
+         if (cap == undefined || cap == null)
+            url.push("");
+         else
+            url.push(cap);
+      }
+      url = JSON.stringify(url);
+   }
+   else {
+      url = stamp["photo-url-1280"];
+   }
+   theWorker.postMessage({greeting: "magnifier", pid: id, success: true, data: url});
+}
+
+function requestMagnifier(url, pid, count, myWorker) {
+   Request({
+      url: url + "/api/read/json?id=" + pid,
+      headers: {tryCount: count,
+                retryLimit: getStorage("MissingE_magnifier_retries",defaultRetries),
+                targetId: pid},
+      onComplete: function(response) {
+         if (response.status != 200 ||
+             !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
+            var entry;
+            if ((entry = cache[this.headers.targetId])) {
+               doMagnifier(entry, this.headers.targetId, myWorker);
+            }
+            else {
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  requestMagnifier(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1), myWorker);
+               }
+               else {
+                  myWorker.postMessage({greeting: "magnifier", pid: this.headers.targetId, success:false});
+               }
+            }
+         }
+         else {
+            var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+            var stamp = JSON.parse(txt);
+            var info = stamp["posts"][0];
+            cache[this.headers.targetId] = info;
+            doMagnifier(info, this.headers.targetId, myWorker);
+         }
+      }
+   }).get();
+}
+
 function requestTimestamp(url, pid, count, myWorker) {
    Request({
       url: url + "/api/read/json?id=" + pid,
@@ -199,6 +252,15 @@ function handleMessage(message, myWorker) {
       }
       else {
          requestReblogDash(message.url, message.pid, 0, myWorker);
+      }
+   }
+   else if (message.greeting == "magnifier") {
+      var entry;
+      if ((entry = cache[message.pid])) {
+         doMagnifier(entry, message.pid, myWorker);
+      }
+      else {
+         requestMagnifier(message.url, message.pid, 0, myWorker);
       }
    }
    else if (message.greeting == "timestamp") {
@@ -442,9 +504,7 @@ pageMod.PageMod({
                        data.url("facebox/facebox.js"),
                        data.url("followChecker/followChecker.js"),
                        data.url("unfollower/unfollower.js"),
-                       /*
                        data.url("magnifier/magnifier.js"),
-                       */
                        data.url("common/whoami.js")],
    onAttach: function onAttach(worker) {
       worker.on('message', function(data) {
