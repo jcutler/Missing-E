@@ -89,8 +89,21 @@ background-color:#44546B;
 color:white;
 }
 
+#share {
+text-align:center;
+margin-top:20px;
+}
+
+#share a img {
+opacity:0.8;
+}
+
+#share a:hover img {
+opacity:1;
+}
+
 #donate {
-margin-top:40px;
+margin-top:20px;
 font-size:12px;
 }
 
