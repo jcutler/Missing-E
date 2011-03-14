@@ -30,16 +30,6 @@ var url = require("url");
 var data = require("self").data;
 var Request = require("request").Request;
 var timer = require("timer");
-var panel = require("panel");
-/*
-var widget = widgets.Widget({
-  label: "Mozilla website",
-  contentURL: "http://www.mozilla.org/favicon.ico",
-  onClick: function() {
-    tabs.open("http://www.mozilla.org/");
-  }
-});
-*/
 
 var defaultRetries = 10;
 var maxRetries = 99;
@@ -76,10 +66,28 @@ var months = ["Jan",
               "Nov",
               "Dec"];
 
-var options = panel.Panel({
-   contentURL: data.url("options.html"),
-   onMessage: function(data) {
-      console.log(data.greeting);
+function openSettings() {
+   tabs.open({
+      url: data.url("options.html"),
+      onReady: function(tab) {
+         tab.attach({
+            contentScriptFile: [data.url("common/jquery-1.5.min.js"),
+                                data.url("checkbox/jquery.checkbox.min.js"),
+                                data.url("facebox/facebox.js"),
+                                data.url("options.js")],
+            onMessage: function(data) {
+               handleMessage(data, this);
+            }
+         });
+      }
+   });
+}
+
+var widget = widgets.Widget({
+   label: "Missing e",
+   contentURL: data.url("missinge16.png"),
+   onClick: function() {
+      openSettings();
    }
 });
 
@@ -270,14 +278,11 @@ function handleMessage(message, myWorker) {
       myWorker.postMessage({greeting: "addMenu", extensionURL: data.url("")});
    }
    else if (message.greeting == "open") {
-      if (message.url == "OPTIONS") {
-         options.width = message.width * 0.9;
-         options.height = message.height * 0.9;
-         //options.show();
-         tabs.open(data.url("options.html"));
+      if (message.url !== "OPTIONS") {
+         tabs.open(message.url);
       }
       else {
-         tabs.open(message.url);
+         openSettings();
       }
    }
    else if (message.greeting == "reblogYourself") {
@@ -308,9 +313,11 @@ function handleMessage(message, myWorker) {
       }
    }
    else if (message.greeting == "change-setting") {
+      console.log("change " + message.name + " from:" + getStorage(message.name) + " to:" + message.val);
       setStorage(message.name, message.val);
    }
    else if (message.greeting == "all-settings") {
+      console.log("asked for settings");
       var settings = {};
       settings.greeting = "all-settings";
       for (i=0; i<componentList.length; i++) {
@@ -545,8 +552,7 @@ function handleMessage(message, myWorker) {
 }
 
 pageMod.PageMod({
-   include: ["http://www.tumblr.com/*",
-             data.url("options.html")],
+   include: ["http://www.tumblr.com/*"],
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("common/jquery-1.5.min.js"),
                        data.url("common/addmenu.js"),
