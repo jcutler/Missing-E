@@ -121,6 +121,9 @@ function handleRequest(request) {
                         $.ajax(this);
                         return;
                      }
+                     else {
+                        request.target.page.dispatchMessage("magnifier", {pid: this.targetId, success: false});
+                     }
                   }
                }
                else {
@@ -175,6 +178,9 @@ function handleRequest(request) {
                         $.ajax(this);
                         return;
                      }
+                     else {
+                        request.target.page.dispatchMessage("reblogYourself",{pid: this.targetId, success: false});
+                     }
                   }
                }
                else {
@@ -228,6 +234,9 @@ function handleRequest(request) {
                      if (this.tryCount <= this.retryLimit) {
                         $.ajax(this);
                         return;
+                     }
+                     else {
+                        request.target.page.dispatchMessage("timestamp",{pid: this.targetId, success: false});
                      }
                   }
                }
