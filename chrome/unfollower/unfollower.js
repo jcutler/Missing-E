@@ -162,11 +162,13 @@ function doGet(num, show, retries) {
          dataType: "html",
          tryCount: 0,
          retryLimit: retries,
+         background: !show,
          pageNumber: i,
          error: function(xhr, textStatus) {
             this.tryCount++;
             if (!failed && this.tryCount <= this.retryLimit &&
-                $('#facebox').css('display') === 'block') {
+                ($('#facebox').css('display') === 'block' ||
+                 this.background)) {
                $.ajax(this);
                return;
             }
@@ -189,7 +191,8 @@ function doGet(num, show, retries) {
             if (!(/id="dashboard_followers"/.test(data))) {
                this.tryCount++;
                if (!failed && this.tryCount <= this.retryLimit &&
-                   $('#facebox').css('display') === 'block') {
+                   ($('#facebox').css('display') === 'block' ||
+                    this.background)) {
                   $.ajax(this);
                   return;
                }
