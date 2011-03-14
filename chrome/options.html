@@ -462,6 +462,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <script type="text/javascript">
 <!--
 jQuery(document).ready(function($) {
+   chrome.extension.sendRequest({greeting: "close-options"});
    $('a[rel*=facebox]').facebox({
       loadingImage : 'facebox/loading.gif',
       closeImage   : 'facebox/closelabel.png'

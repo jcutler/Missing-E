@@ -71,6 +71,21 @@ function doMagnifier(stamp, id, sendResponse) {
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
+   else if (request.greeting == "close-options") {
+      chrome.windows.getAll({populate: true},
+                            function (windows) {
+         var i,j;
+         for (i=0; i<windows.length; i++) {
+            for (j=0; j<windows[i].tabs.length; j++) {
+               if (windows[i].tabs[j].url ==
+                   chrome.extension.getURL('options.html') &&
+                   windows[i].tabs[j].id != sender.tab.id) {
+                  chrome.tabs.remove(windows[i].tabs[j].id);
+               }
+            }
+         }
+      });
+   }
    else if (request.greeting == "magnifier") {
       var entry;
       if ((entry = cache[request.pid])) {
