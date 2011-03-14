@@ -44,7 +44,7 @@ function doStartup(message) {
    var i;
    if (MissingE_startup) { return; }
    MissingE_startup = true;
-   //document.domain = "tumblr.com";
+   document.domain = "tumblr.com";
    var info = "'Missing e' Startup on ";
    info += message.url + "\n";
    for (i in message) {
@@ -109,18 +109,13 @@ function doStartup(message) {
                                          */
       }
       if (message.postingFixes) {
-         /*
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "postingFixes"});
-                                         */
+         postMessage({greeting: "settings", component: "postingFixes"});
       }
       if (message.dashboardFixes) {
          postMessage({greeting: "settings", component: "dashboardFixes"});
       }
       if (message.reblogYourself) {
-         /*
          MissingE_reblogYourself_dash_doStartup();
-         */
       }
       if (message.safeDash) {
          /*
@@ -143,9 +138,7 @@ function doStartup(message) {
          MissingE_gotoDashPost_doStartup(message.extensionURL);
       }
       if (message.reblogYourself) {
-         /*
          MissingE_reblogYourself_post_doStartup();
-         */
       }
    }
 }

@@ -25,7 +25,6 @@
 
 function dashLinksToTabs_click(e, newPostTabs) {
    var node = e.target;
-   console.log(e.target.href);
    if (node === undefined || node === null) { return false; }
    if (newPostTabs !== 1 &&
        jQuery(node).parents('#new_post').length > 0) {

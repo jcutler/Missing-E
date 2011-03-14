@@ -1,3 +1,26 @@
+/*
+ * 'Missing e' Extension
+ *
+ * Copyright 2011, Jeremy Cutler
+ * Released under the GPL version 3 licence.
+ * SEE: GPL-LICENSE.txt
+ *
+ * This file is part of 'Missing e'.
+ *
+ * 'Missing e' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * 'Missing e' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 const requests = require("request");
 var pageMod = require("page-mod");
 const widgets = require("widget");
@@ -5,6 +28,8 @@ var tabs = require("tabs");
 var ss = require("simple-storage");
 var url = require("url");
 var data = require("self").data;
+var Request = require("request").Request;
+var timer = require("timer");
 /*
 var widget = widgets.Widget({
   label: "Mozilla website",
@@ -17,8 +42,12 @@ var widget = widgets.Widget({
 
 var defaultRetries = 10;
 var maxRetries = 99;
-
 var myWorker;
+var cache = {};
+var cacheClear;
+var tenMinutes = 600000;
+
+cacheClear = timer.setInterval(function() { cache = {}; }, tenMinutes);
 
 function getStorage(key, defVal) {
    var retval = ss.storage[key];
@@ -35,12 +64,59 @@ function getStorage(key, defVal) {
    }
 }
 
+function doReblogDash(stamp, id, theWorker) {
+   var key = stamp["reblog-key"];
+   var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
+                      getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
+   theWorker.postMessage({greeting: "reblogYourself", pid: id, success: true, data: key, icons: replaceIcons});
+}
+
+function requestReblogDash(url, pid, count) {
+   Request({
+      url: url + "/api/read/json?id=" + pid,
+      headers: {tryCount: count,
+                retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
+                targetId: pid},
+      onComplete: function(response) {
+         if (response.status != 200 ||
+             !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
+            var entry;
+            if ((entry = cache[this.headers.targetId])) {
+               doReblogDash(entry, this.headers.targetId, myWorker);
+            }
+            else {
+               this.headers.tryCount = this.headers.tryCount++;
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  requestReblogDash(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1));
+               }
+            }
+         }
+         else {
+            var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+            var stamp = JSON.parse(txt);
+            var info = stamp["posts"][0];
+            cache[this.headers.targetId] = info;
+            doReblogDash(info, this.headers.targetId, myWorker);
+         }
+      }
+   }).get();
+}
+
 function handleMessage(message) {
    if (message.greeting === "addMenu") {
       myWorker.postMessage({greeting: "addMenu", url: data.url("")});
    }
    else if (message.greeting == "open") {
       tabs.open(message.url);
+   }
+   else if (message.greeting == "reblogYourself") {
+      var entry;
+      if ((entry = cache[message.pid])) {
+         doReblogDash(entry, message.pid, request);
+      }
+      else {
+         requestReblogDash(message.url, message.pid, 0);
+      }
    }
    else if (message.greeting == "settings") {
       var settings = {};
@@ -135,7 +211,9 @@ function handleMessage(message) {
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/submissions/.test(message.url))) {
          if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
             activeScripts.dashboardFixes = true;
          }
@@ -262,13 +340,13 @@ pageMod.PageMod({
                        data.url("gotoDashPost/gotoDashPost.js"),
                        data.url("postCrushes/postCrushes.js"),
                        data.url("postCrushes/postCrushes_fill.js"),
+                       data.url("postingFixes/postingFixes.js"),
+                       data.url("reblogYourself/reblogYourself_post.js"),
+                       data.url("reblogYourself/reblogYourself_dash.js"),
                        /*
                        data.url("facebox/facebox.js"),
                        data.url("followChecker/followChecker.js"),
                        data.url("magnifier/magnifier.js"),
-                       data.url("postingFixes/postingFixes.js"),
-                       data.url("reblogYourself/reblogYourself_post.js"),
-                       data.url("reblogYourself/reblogYourself_dash.js"),
                        data.url("replyReplies/replyReplies.js"),
                        data.url("replyReplies/replyReplies_fill.js"),
                        data.url("safeDash/safeDash.js"),
