@@ -33,8 +33,9 @@ jQuery(document).ready(function (){
       doSetting(this, false);
    });
 
-   jQuery('input.setting_prefix').bind("keyup", function(e) {
-      doKeyUp(e, this,false);
+   jQuery('input.setting_prefix,input.setting_format')
+         .bind("keyup", function(e) {
+      doKeyUp(e, this, false);
    });
 
    jQuery('input.setting_retry').bind("change", function() {
@@ -44,7 +45,12 @@ jQuery(document).ready(function (){
    });
 
    jQuery('span.resetter').click(function() {
-      resetRetries(this);
+      if (this.id === "prefix-resetter") {
+         resetPrefix(this);
+      }
+      else {
+         resetRetries(this);
+      }
    });
 
 });
