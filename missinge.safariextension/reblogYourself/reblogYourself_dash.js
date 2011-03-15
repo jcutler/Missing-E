@@ -22,16 +22,24 @@
  */
 
 /*global safari, $ */
+var reblogText = {
+                  en: "reblog",
+                  fr: "rebloguer",
+                  de: "rebloggen",
+                  it: "reblogga"
+                 }
 
 function addReblog(item) {
    if (item.tagName === "LI" && $(item).hasClass('post') &&
        !$(item).hasClass('new_post') && !$(item).hasClass('note')) {
       $(item).find('div.post_controls a.MissingE_reblogYourself_retry')
                .remove();
-      if ($(item).find('div.post_controls a:contains("reblog")').length > 0 ||
+      if ($(item).find('div.post_controls a[href^="/reblog"]')
+               .length > 0 ||
           $(item).find('div.post_controls a.MissingE_reblog_control')
                .length > 0 ||
-          ($(item).find('div.post_controls a:contains("edit")').length === 0 &&
+          ($(item).find('div.post_controls a:[href^="/edit"]')
+               .length === 0 &&
            $(item).find('div.post_controls a.MissingE_edit_control')
                .length === 0)) {
          return true;
@@ -50,13 +58,14 @@ function addReblog(item) {
 function receiveReblog(response) {
    if (response.name !== "reblogYourself") { return; }
    var edit, klass, txt;
+   var reblog_text = reblogText[$('html').attr("lang")];
    if (response.message.success) {
       klass = (response.message.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
-      txt = (response.message.icons ? '' : 'reblog');
+      txt = (response.message.icons ? '' : reblog_text);
       var redir = location.href;
       edit = $('#post_'+response.message.pid)
-         .find('div.post_controls a:contains("edit")');
+               .find('div.post_controls a:[href^="/edit"]');
       if (edit.length === 0) {
          edit = $('#post_'+response.message.pid)
             .find('div.post_controls a.MissingE_edit_control');
@@ -64,13 +73,14 @@ function receiveReblog(response) {
       redir = redir.replace(/http:\/\/www.tumblr.com/,'')
                      .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                      .replace(/&/g,'%26');
-      edit.after(' <a href="/reblog/' + response.message.pid + '/' +
+      edit.after(' <a title="' + reblog_text + 'href="/reblog/' +
+                 response.message.pid + '/' +
                 response.message.data + '?redirect_to=' + redir +
                 '" class="' + klass + '">' + txt + '</a>');
    }
    else {
       edit = $('#post_'+response.message.pid)
-         .find('div.post_controls a:contains("edit")');
+         .find('div.post_controls a:[href^="/edit"]');
       if (edit.length === 0) {
          edit = $('#post_'+response.message.pid)
             .find('div.post_controls a.MissingE_edit_control');
@@ -78,7 +88,7 @@ function receiveReblog(response) {
       klass = (response.message.icons ? 'MissingE_post_control ' +
                           'MissingE_reblog_control ' +
                           'MissingE_reblog_control_retry' : '');
-      txt = (response.message.icons ? '' : '<del>reblog</del>');
+      txt = (response.message.icons ? '' : '<del>' + reblog_text + '</del>');
       edit.after(' <a href="#" class="MissingE_reblogYourself_retry ' +
                      klass + '" onclick="return false;">' +
                      txt + '</a>');
