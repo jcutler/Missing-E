@@ -22,40 +22,75 @@
  */
 
 /*global safari, $ */
+var locales = { en:
+                  {
+                  edit: "edit",
+                  del: "delete",
+                  reblog: "reblog",
+                  reply: "reply",
+                  notes: "notes"
+                  },
+               de:
+                  {
+                  edit: "bearbeiten",
+                  del: "löschen",
+                  reblog: "rebloggen",
+                  reply: "antworten",
+                  notes: "anmerkungen"
+                  },
+               fr:
+                  {
+                  edit: "éditer",
+                  del: "supprimer",
+                  reblog: "rebloguer",
+                  reply: "réagir",
+                  notes: "notes",
+                  },
+               it:
+                  {
+                  edit: "modifica",
+                  del: "elimina",
+                  reblog: "reblogga",
+                  reply: "rispondi",
+                  notes: "note"
+                  }
+};
 
 function doIcons(item) {
    if (item.tagName !== 'LI' || !($(item).hasClass('post'))) {
       return false;
    }
 
+   var lang = $('html').attr('lang'); 
    $(item).find('div.post_controls a').each(function() {
       var a = $(this);
       var txt = a.text();
       var klass = "MissingE_post_control ";
-      if (/^\s*delete\s*$/.test(txt)) {
-         a.attr('title','delete')
+      if (/delete_post_/.test(a.attr('onclick'))) {
+         a.attr('title',locales[lang]["del"])
             .addClass(klass + "MissingE_delete_control").text('');
       }
-      else if (/^\s*edit\s*$/.test(txt)) {
-         a.attr('title','edit')
+      else if (/^\/edit/.test(a.attr('href'))) {
+         a.attr('title',locales[lang]["edit"])
             .addClass(klass + "MissingE_edit_control").text('');
       }
-      else if (/^\s*reblog\s*$/.test(txt)) {
-         a.attr('title','reblog')
+      else if (/^\/reblog/.test(a.attr('href'))) {
+         a.attr('title',locales[lang]['reblog'])
             .addClass(klass + "MissingE_reblog_control").text('');
       }
-      else if (/^\s*reply\s*$/.test(txt)) {
-         a.attr('title','reply')
+      else if (/^post_control_reply_/.test(a.attr('id'))) {
+         a.attr('title',locales[lang]['reply'])
             .addClass(klass + "MissingE_reply_control").text('');
       }
-      else if (/^\s*notes\s*$/.test(txt)) {
-         a.attr('title','notes')
+      else if (/^show_notes_/.test(a.attr('id')) &&
+               a.children().length == 0) {
+         a.attr('title',locales[lang]['notes'])
             .addClass(klass + "MissingE_notes_control").text('');
       }
       else if (a.hasClass('reblog_count')) {
          a.attr('title','notes').addClass('MissingE_notes_control_container')
             .find('span').each(function() {
-            $(this).html($(this).html().replace(/([0-9,]+) notes?/,
+            $(this).html($(this).html().replace(/([0-9,\.]+) [^0-9]+/,
                                                 '<span class="notes_txt">' +
                                                 "$1" + '</span> ' +
                                                 '<span class="' + klass +
