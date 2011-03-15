@@ -23,6 +23,27 @@
 
 /*global safari, $ */
 
+var magnifyText = {
+                  title: {
+                        en: "magnify",
+                        de: "vergrößern",
+                        fr: "agrandir",
+                        it: "ingrandire"
+                         },
+                  error: {
+                        en: "An error occured. Click to reload 'Magnifier'.",
+                        de: "Ist ein Fehler aufgetreten. Klicken Sie erneut zu versuchen.",
+                        fr: "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
+                        it: "È verificato un errore. Clicca per provare di nuovo."
+                         },
+                  loading: {
+                        en: "Loading...",
+                        de: "Nicht bereit...",
+                        fr: "Pas prêt...",
+                        it: "Non pronto..."
+                           }
+};
+
 var magimg = safari.extension.baseURI + 'magnifier/magnifier.png';
 var turnimg = safari.extension.baseURI + 'magnifier/turners.png';
 
@@ -41,6 +62,7 @@ function magClick(e) {
 function insertMagnifier(item) {
    if (item.tagName === "LI" && $(item).hasClass("post") &&
        $(item).hasClass("photo")) {
+      var lang = $('html').attr('lang');
       var ctrl = $(item).find('div.post_controls');
       var bm = ctrl.find('a.s113977_mark');
       var heart = ctrl.find('a.like_button');
@@ -58,7 +80,7 @@ function insertMagnifier(item) {
             addr = 'http://' + addr + '.tumblr.com';
          }
       }
-      var mi = $('<a title="Magnifier loading..." ' +
+      var mi = $('<a title="' + magnifyText.loading[lang] + '" ' +
                  'class="s113977_magnify s113977_magnify_hide" id="magnify_' +
                  tid + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
@@ -77,15 +99,17 @@ function insertMagnifier(item) {
 
 function receiveMagnifier(response) {
    if (response.name !== "magnifier") { return; }
+   var lang = $('html').attr('lang');
    if (response.message.success) {
       $('#magnify_' + response.message.pid).attr('src',response.message.data)
-         .removeClass('s113977_magnify_hide').attr('title','Magnify');
+         .removeClass('s113977_magnify_hide')
+         .attr('title', magnifyText.title[lang]);
    }
    else {
       $('#magnify_' + response.message.pid).attr('src','')
          .addClass('s113977_magnify_err')
          .removeClass('s113977_magnify_hide')
-         .attr('title', "An error occurred. Click to reload 'Magnifier'.");
+         .attr('title', magnifyText.error[lang]);
    }
 }
 
