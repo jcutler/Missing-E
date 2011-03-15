@@ -167,7 +167,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
         /http:\/\/www\.tumblr\.com\/submissions/.test(location.href) ||
         /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/
             .test(location.href))) {
-      $('#posts li.post a:contains("answer")').live('click', function() {
+      $('#posts li.post a[id^="ask_answer_link_"]').live('click', function() {
          var post = $(this).closest("li.post");
          if (post.length > 0) {
             addAskUploader(post.get(0));
