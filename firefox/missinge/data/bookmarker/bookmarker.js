@@ -169,6 +169,13 @@ function markClick(e) {
 
 function doMarks(item) {
    if (item.tagName === 'LI' && jQuery(item).hasClass('post')) {
+      var bookmarkText = {
+                   en: "bookmark",
+                   de: "lesezeichen",
+                   fr: "marquer",
+                   it: "segnalibro"
+      };
+      var lang = jQuery('html').attr('lang');
       jQuery(item).find('div.post_controls:not(.bookmarkAdded)').each(function(i){
          var j;
          var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
@@ -184,8 +191,8 @@ function doMarks(item) {
             }
          }
          var node = jQuery('<a class="' + klass + '" id="bookmark_' + post +
-                      '" title="Bookmark" href="#" onclick="return false;">' +
-                      '</a>');
+                      '" title="' + bookmarkText[lang] + '" ' +
+                      'href="#" onclick="return false;"></a>');
          node.click(markClick);
          jQuery(this).addClass('bookmarkAdded');
          if (mag.length > 0) {

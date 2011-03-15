@@ -26,6 +26,13 @@
 var bmi = safari.extension.baseURI + 'bookmarker/sidebar_bookmark.png';
 var mimg = safari.extension.baseURI + 'bookmarker/post_bookmark.png';
 
+var bookmarkText = {
+                   en: "bookmark",
+                   de: "lesezeichen",
+                   fr: "marquer",
+                   it: "segnalibro"
+};
+
 function serializeMarks(a) {
    var s = "";
    var i;
@@ -172,6 +179,7 @@ function markClick(e) {
 
 function doMarks(item) {
    if (item.tagName === 'LI' && $(item).hasClass('post')) {
+      var lang = $('html').attr('lang');
       $(item).find('div.post_controls:not(.bookmarkAdded)').each(function(i){
          var j;
          var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
@@ -187,8 +195,8 @@ function doMarks(item) {
             }
          }
          var node = $('<a class="' + klass + '" id="bookmark_' + post +
-                      '" title="Bookmark" href="#" onclick="return false;">' +
-                      '</a>');
+                      '" title="' + bookmarkText[lang] + '" ' +
+                      'href="#" onclick="return false;"></a>');
          node.click(markClick);
          $(this).addClass('bookmarkAdded');
          if (mag.length > 0) {
