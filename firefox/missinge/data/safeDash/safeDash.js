@@ -77,7 +77,7 @@ function doHide(item) {
 
          });
       }
-      else if (node.hasClass('post')) {
+      else if (node.hasClass('post') && node.attr('id') !== 'new_post') {
          jQuery('img:not(.nsfwdone),embed.video_player:not(.nsfwdone),' +
            'embed.photoset:not(.nsfwdone)',node).each(function(){
             var klass = "";
