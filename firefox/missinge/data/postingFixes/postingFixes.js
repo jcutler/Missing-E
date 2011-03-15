@@ -79,7 +79,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
        jQuery('#regular_form_inline_image_iframe').length === 0) {
       var headings = jQuery('h2');
       var h2 = headings.last();
-      if (/Clicking/i.test(h2.html())) {
+      if (h2.parent().attr('id') === "photo_link") { 
          h2 = headings.eq(-2);
       }
       var textarea = h2.nextAll('textarea:first').attr('id');
