@@ -66,7 +66,7 @@ function doIcons(item) {
       var a = jQuery(this);
       var txt = a.text();
       var klass = "MissingE_post_control ";
-      if (/delete_post_/.test(a.attr('onclick')) ||
+      if (/^delete_post_/.test(a.prev().attr('id')) ||
           /^post_delete_/.test(a.attr('id'))) {
          a.attr('title',locales[lang]["del"])
             .addClass(klass + "MissingE_delete_control").text('');
@@ -147,6 +147,7 @@ function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
          }, false);
 
          jQuery("#posts li.post").each(function(i) {
+            if (this.id === "new_post") { return true; }
             doIcons(this);
          });
       }
