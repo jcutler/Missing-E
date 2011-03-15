@@ -42,7 +42,11 @@ $('head').prepend('<style type="text/css">' +
                '.icon.dashboard_controls_nsfw { ' +
                'background-image:url("' + lockicon + '") !important; } ' +
                '.nsfwoff { background:#FFFFFF !important; }</style>');
-               
+
+if ($('#new_post').css('background-image') !== "none") {
+   $('#new_post img').css('opacity','0 !important');
+}
+
 function undoNSFW() {
    $('#posts .nsfwed').css('opacity','1');
    $('#posts div.nsfwembed span.nsfwed').css('visibility','visible');

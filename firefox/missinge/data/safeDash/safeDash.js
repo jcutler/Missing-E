@@ -236,6 +236,10 @@ function MissingE_safeDash_doStartup(extensionURL) {
                'background-image:url("' + lockicon + '") !important; } ' +
                '.nsfwoff { background:#FFFFFF !important; }</style>');
 
+   if (jQuery('#new_post').css('background-image') !== "none") {
+      jQuery('#new_post img').css('opacity','0 !important');
+   }
+   
    var onoff;
    var extra;
    if (getStorage('MissingE_safeDash_state',0) === 0) {
