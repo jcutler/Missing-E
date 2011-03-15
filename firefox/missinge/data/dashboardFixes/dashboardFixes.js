@@ -22,13 +22,14 @@
  */
 
 /*global safari, $ */
-var locales = { en:
+var dashFixesText = { en:
                   {
                   edit: "edit",
                   del: "delete",
                   reblog: "reblog",
                   reply: "reply",
-                  notes: "notes"
+                  notes: "notes",
+                  queue: "queue"
                   },
                de:
                   {
@@ -36,7 +37,8 @@ var locales = { en:
                   del: "löschen",
                   reblog: "rebloggen",
                   reply: "antworten",
-                  notes: "anmerkungen"
+                  notes: "anmerkungen",
+                  queue: "in die Warteschleife stellen"
                   },
                fr:
                   {
@@ -45,6 +47,7 @@ var locales = { en:
                   reblog: "rebloguer",
                   reply: "réagir",
                   notes: "notes",
+                  queue: "file d'attente"
                   },
                it:
                   {
@@ -52,7 +55,8 @@ var locales = { en:
                   del: "elimina",
                   reblog: "reblogga",
                   reply: "rispondi",
-                  notes: "note"
+                  notes: "note",
+                  queue: "in coda"
                   }
 };
 
@@ -67,29 +71,36 @@ function doIcons(item) {
       var txt = a.text();
       var klass = "MissingE_post_control ";
       if (/^delete_post_/.test(a.prev().attr('id')) ||
-          /^post_delete_/.test(a.attr('id'))) {
-         a.attr('title',locales[lang]["del"])
+          /^post_delete_/.test(a.attr('id')) ||
+          (new RegExp(dashFixesText[lang]["del"], "i").test(a.text()))) {
+         a.attr('title',dashFixesText[lang]["del"])
             .addClass(klass + "MissingE_delete_control").text('');
       }
+      else if ((new RegExp(dashFixesText[lang]["queue"],
+                           "i")).test(a.text())) {
+         a.attr('title',dashFixesText[lang]["queue"])
+            .addClass(klass + "MissingE_queue_control").text('');
+      }
       else if (/^\/edit/.test(a.attr('href'))) {
-         a.attr('title',locales[lang]["edit"])
+         a.attr('title',dashFixesText[lang]["edit"])
             .addClass(klass + "MissingE_edit_control").text('');
       }
       else if (/^\/reblog/.test(a.attr('href'))) {
-         a.attr('title',locales[lang]['reblog'])
+         a.attr('title',dashFixesText[lang]['reblog'])
             .addClass(klass + "MissingE_reblog_control").text('');
       }
       else if (/^post_control_reply_/.test(a.attr('id'))) {
-         a.attr('title',locales[lang]['reply'])
+         a.attr('title',dashFixesText[lang]['reply'])
             .addClass(klass + "MissingE_reply_control").text('');
       }
       else if (/^show_notes_/.test(a.attr('id')) &&
                a.children().length == 0) {
-         a.attr('title',locales[lang]['notes'])
+         a.attr('title',dashFixesText[lang]['notes'])
             .addClass(klass + "MissingE_notes_control").text('');
       }
       else if (a.hasClass('reblog_count')) {
-         a.attr('title','notes').addClass('MissingE_notes_control_container')
+         a.attr('title',dashFixesText[lang]['notes'])
+            .addClass('MissingE_notes_control_container')
             .find('span').each(function() {
             jQuery(this).html(jQuery(this).html().replace(/([0-9,\.]+) [^0-9]+/,
                                                 '<span class="notes_txt">' +
