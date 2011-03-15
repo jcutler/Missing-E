@@ -34,11 +34,11 @@ function addReblog(item) {
        !jQuery(item).hasClass('new_post') && !jQuery(item).hasClass('note')) {
       jQuery(item).find('div.post_controls a.MissingE_reblogYourself_retry')
                .remove();
-      if ($(item).find('div.post_controls a[href^="/reblog"]')
+      if (jQuery(item).find('div.post_controls a[href^="/reblog"]')
                .length > 0 ||
           jQuery(item).find('div.post_controls a.MissingE_reblog_control')
                .length > 0 ||
-          ($(item).find('div.post_controls a:[href^="/edit"]')
+          (jQuery(item).find('div.post_controls a:[href^="/edit"]')
                .length === 0 &&
            jQuery(item).find('div.post_controls a.MissingE_edit_control')
                .length === 0)) {
@@ -58,7 +58,7 @@ function addReblog(item) {
 function receiveReblog(message) {
    if (message.greeting !== "reblogYourself") { return; }
    var edit, klass, txt;
-   var reblog_text = reblogText[$('html').attr("lang")];
+   var reblog_text = reblogText[jQuery('html').attr("lang")];
    if (message.success) {
       klass = (message.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
