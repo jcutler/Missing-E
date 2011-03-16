@@ -23,7 +23,8 @@
 
 /*global chrome, window */
 
-if (window.top === window ||
+if ((window.top === window &&
+    !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
    chrome.extension.sendRequest({greeting: "start", url: location.href,
                                  bodyId: document.body.id}, function(response){

@@ -32,7 +32,8 @@
   MissingE_timestamps_doStartup, MissingE_unfollower_doStartup */
 
 var MissingE_startup;
-if (window.top === window ||
+if ((window.top === window &&
+    !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
    var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href);
    safari.self.tab.dispatchMessage("start", {isFrame: fr, url: location.href,

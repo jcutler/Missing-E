@@ -33,7 +33,8 @@
 
 var MissingE_startup;
 
-if (window.top === window ||
+if ((window.top === window &&
+    !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
    var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href);
    postMessage({greeting: "start", isFrame: fr, url: location.href,
