@@ -144,12 +144,14 @@ function replyRepliesSettings(message) {
 
 function MissingE_replyReplies_doStartup(extensionURL) {
    on("message", replyRepliesSettings);
-   jQuery('head').append('<style type="text/css">#posts .notification ' +
-                    '.notification_type_icon { cursor: pointer; } ' +
-                    '#posts .notification .notification_type_icon:hover { ' +
+   jQuery('head').append('<style type="text/css">' +
+                    '#posts .notification .notification_type_icon {' +
                     'background-image:url("' + extensionURL +
-                    'replyReplies/notification_icons.png' +
-                    '") !important; }</style>');
+                    'replyReplies/notification_icons.png' + '") !important; ' +
+                    '}</style>');
+   jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
+                    extensionURL + 'replyReplies/replyReplies.css' +
+                    '" />');
    jQuery('div.notification_type_icon').live('mousedown', function(e) {
       if (e.shiftKey) { e.preventDefault(); }
    }).live('click', function(e) {

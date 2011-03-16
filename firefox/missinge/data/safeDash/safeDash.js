@@ -236,13 +236,9 @@ function MissingE_safeDash_doStartup(extensionURL) {
                'background-image:url("' + lockicon + '") !important; } ' +
                '.nsfwoff { background:#FFFFFF !important; }</style>');
 
-   jQuery(document).ready(function(){
-      alert(jQuery('#new_post').css('background-image'));
    if (jQuery('#new_post').css('background-image') !== "none") {
       jQuery('#new_post_icons').attr('style','opacity:0 !important;');
-      alert(jQuery('#new_post_icons').css('opacity'));
    }
-   });
    
    var onoff;
    var extra;

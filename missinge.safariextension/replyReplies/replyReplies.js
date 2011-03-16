@@ -145,12 +145,15 @@ function replyRepliesSettings(response) {
 
 function MissingE_replyReplies_doStartup() {
    safari.self.addEventListener("message", replyRepliesSettings, false);
-   $('head').append('<style type="text/css">#posts .notification ' +
-                    '.notification_type_icon { cursor: pointer; } ' +
-                    '#posts .notification .notification_type_icon:hover { ' +
+
+   $('head').append('<style type="text/css">' +
+                    '#posts .notification .notification_type_icon {' +
                     'background-image:url("' + safari.extension.baseURI +
-                    'replyReplies/notification_icons.png' +
-                    '") !important; }</style>');
+                    'replyReplies/notification_icons.png' + '") !important; ' +
+                    '}</style>');
+   $('head').append('<link rel="stylesheet" type="text/css" href="' +
+                    safari.extension.baseURI + 'replyReplies/replyReplies.css' +
+                    '" />');
    $('div.notification_type_icon').live('mousedown', function(e) {
       if (e.shiftKey) { e.preventDefault(); }
    }).live('click', function(e) {
