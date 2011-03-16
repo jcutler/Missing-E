@@ -431,6 +431,15 @@ text-decoration:underline;
 border-bottom:1px solid #44546b;
 }
 
+#faq .example {
+text-align:center;
+}
+
+#faq .example .caption {
+font-size:90%;
+font-style:italic;
+}
+
 #faq p.question {
 background-color:#f8f8f8;
 padding:12px;
