@@ -33,6 +33,7 @@ var timer = require("timer");
 
 var defaultRetries = 10;
 var maxRetries = 99;
+var maxActiveAjax = 15;
 var activeAjax = 0;
 var waitQueue = [];
 var cache = {};
@@ -186,7 +187,7 @@ function queueAjax(details) {
 }
 
 function dequeueAjax() {
-   if (activeAjax <= 15) {
+   while (activeAjax <= maxActiveAjax) {
       var call = waitQueue.shift();
       if (!call) { return false; }
       if (call.type === "magnifier") {
@@ -206,7 +207,7 @@ function startMagnifier(message, myWorker) {
    if ((entry = cache[message.pid])) {
       doMagnifier(entry, message.pid, myWorker);
    }
-   else if (activeAjax > 15) {
+   else if (activeAjax > maxActiveAjax) {
       queueAjax({type: "magnifier", message: message, worker: myWorker});
    }
    else {
@@ -259,7 +260,7 @@ function startTimestamp(message, myWorker) {
    if ((entry = cache[message.pid])) {
       doTimestamp(entry, message.pid, myWorker);
    }
-   else if (activeAjax > 15) {
+   else if (activeAjax > maxActiveAjax) {
       queueAjax({type: "timestamp", message: message, worker: myWorker});
    }
    else {
@@ -312,7 +313,7 @@ function startReblogYourself(message, myWorker) {
    if ((entry = cache[message.pid])) {
       doReblogDash(entry, message.pid, myWorker);
    }
-   else if (activeAjax > 15) {
+   else if (activeAjax > maxActiveAjax) {
       queueAjax({type: "reblogYourself", message: message, worker: myWorker});
    }
    else {

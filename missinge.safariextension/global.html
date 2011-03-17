@@ -27,12 +27,13 @@
 <script type="text/javascript" src="common/utils.js"></script>
 <script type="text/javascript" src="common/storage.js"></script>
 <script>
+var maxActiveAjax = 15;
 var activeAjax = 0;
 var waitQueue = [];
 var cache = {};
 var cacheClear;
 var tenMinutes = 600000;
-var debugMode = true;
+var debugMode = false;
 
 cacheClear = setInterval(function() { cache = {}; }, tenMinutes);
 
@@ -83,7 +84,7 @@ function queueAjax(details) {
 }
 
 function dequeueAjax() {
-   if (activeAjax <= 15) {
+   while (activeAjax <= maxActiveAjax) {
       var call = waitQueue.shift();
       if (!call) { return false; }
       debug("Dequeueing. " + (waitQueue.length) + " in queue");
@@ -104,7 +105,7 @@ function requestTimestamp(request) {
    if ((entry = cache[request.message.pid])) {
       doTimestamp(entry, request.message.pid, request);
    }
-   else if (activeAjax > 15) {
+   else if (activeAjax > maxActiveAjax) {
       queueAjax({type: "timestamp", request: request});
    }
    else {
@@ -176,7 +177,7 @@ function requestReblogYourself(request) {
    if ((entry = cache[request.message.pid])) {
       doReblogDash(entry, request.message.pid, request);
    }
-   else if (activeAjax > 15) {
+   else if (activeAjax > maxActiveAjax) {
       queueAjax({type: "reblogYourself", request: request});
    }
    else {
@@ -248,7 +249,7 @@ function requestMagnifier(request) {
    if ((entry = cache[request.message.pid])) {
       doMagnifier(entry, request.message.pid, request);
    }
-   else if (activeAjax > 15) {
+   else if (activeAjax > maxActiveAjax) {
       queueAjax({type: "magnifier", request: request});
    }
    else {

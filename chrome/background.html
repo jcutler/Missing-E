@@ -27,6 +27,7 @@
 <script type="text/javascript" src="common/utils.js"></script>
 <script type="text/javascript" src="common/storage.js"></script>
 <script>
+var maxActiveAjax = 15;
 var activeAjax = 0;
 var waitQueue = [];
 var cache = {};
@@ -84,7 +85,7 @@ function queueAjax(details) {
 }
 
 function dequeueAjax() {
-   if (activeAjax <= 15) {
+   while (activeAjax <= maxActiveAjax) {
       var call = waitQueue.shift();
       if (!call) { return false; }
       debug("Dequeueing. " + (waitQueue.length) + " in queue");
@@ -106,7 +107,7 @@ function requestReblogYourself(request, sender, sendResponse) {
       debug("Serve from cache.");
       doReblogDash(entry, request.pid, sendResponse);
    }
-   else if (activeAjax > 15) {
+   else if (activeAjax > maxActiveAjax) {
       queueAjax({type: "reblogYourself", request: request, sender: sender, sendResponse: sendResponse});
    }
    else {
@@ -180,7 +181,7 @@ function requestTimestamp(request, sender, sendResponse) {
       debug("Serve from cache.");
       doTimestamp(entry, request.pid, sendResponse);
    }
-   else if (activeAjax > 15) {
+   else if (activeAjax > maxActiveAjax) {
       queueAjax({type: "timestamp", request: request, sender: sender, sendResponse: sendResponse});
    }
    else {
@@ -253,7 +254,7 @@ function requestMagnifier(request, sender, sendResponse) {
       debug("Serve from cache.");
       doMagnifier(entry, request.pid, sendResponse);
    }
-   else if (activeAjax > 15) {
+   else if (activeAjax > maxActiveAjax) {
       queueAjax({type: "magnifier", request: request, sender: sender, sendResponse: sendResponse});
    }
    else {
