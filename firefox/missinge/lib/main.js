@@ -187,7 +187,7 @@ function queueAjax(details) {
 }
 
 function dequeueAjax() {
-   while (activeAjax <= maxActiveAjax) {
+   while (activeAjax < maxActiveAjax) {
       var call = waitQueue.shift();
       if (!call) { return false; }
       if (call.type === "magnifier") {
@@ -207,7 +207,7 @@ function startMagnifier(message, myWorker) {
    if ((entry = cache[message.pid])) {
       doMagnifier(entry, message.pid, myWorker);
    }
-   else if (activeAjax > maxActiveAjax) {
+   else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "magnifier", message: message, worker: myWorker});
    }
    else {
@@ -260,7 +260,7 @@ function startTimestamp(message, myWorker) {
    if ((entry = cache[message.pid])) {
       doTimestamp(entry, message.pid, myWorker);
    }
-   else if (activeAjax > maxActiveAjax) {
+   else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "timestamp", message: message, worker: myWorker});
    }
    else {
@@ -313,7 +313,7 @@ function startReblogYourself(message, myWorker) {
    if ((entry = cache[message.pid])) {
       doReblogDash(entry, message.pid, myWorker);
    }
-   else if (activeAjax > maxActiveAjax) {
+   else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "reblogYourself", message: message, worker: myWorker});
    }
    else {

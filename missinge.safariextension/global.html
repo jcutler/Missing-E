@@ -84,7 +84,7 @@ function queueAjax(details) {
 }
 
 function dequeueAjax() {
-   while (activeAjax <= maxActiveAjax) {
+   while (activeAjax < maxActiveAjax) {
       var call = waitQueue.shift();
       if (!call) { return false; }
       debug("Dequeueing. " + (waitQueue.length) + " in queue");
@@ -105,7 +105,7 @@ function requestTimestamp(request) {
    if ((entry = cache[request.message.pid])) {
       doTimestamp(entry, request.message.pid, request);
    }
-   else if (activeAjax > maxActiveAjax) {
+   else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "timestamp", request: request});
    }
    else {
@@ -177,7 +177,7 @@ function requestReblogYourself(request) {
    if ((entry = cache[request.message.pid])) {
       doReblogDash(entry, request.message.pid, request);
    }
-   else if (activeAjax > maxActiveAjax) {
+   else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "reblogYourself", request: request});
    }
    else {
@@ -249,7 +249,7 @@ function requestMagnifier(request) {
    if ((entry = cache[request.message.pid])) {
       doMagnifier(entry, request.message.pid, request);
    }
-   else if (activeAjax > maxActiveAjax) {
+   else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "magnifier", request: request});
    }
    else {
