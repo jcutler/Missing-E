@@ -70,6 +70,10 @@ function receiveReblog(response) {
          edit = $('#post_'+response.message.pid)
             .find('div.post_controls a.MissingE_edit_control');
       }
+      if (/http:\/\/www\.tumblr\.com\/dashboard/.test(redir)) {
+               redir = "http://www.tumblr.com/dashboard/1000/" +
+                        (Number(response.message.pid)+1) + "?lite";
+      }
       redir = redir.replace(/http:\/\/www.tumblr.com/,'')
                      .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                      .replace(/&/g,'%26');
