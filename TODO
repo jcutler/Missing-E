@@ -1,6 +1,2 @@
-Firefox
-   - Options page (need page-mod)
-
-All
-   - Options page reload settings on focus
-   - reload whole page or loadSettings? Use hashes?
+Port queueing and sleeping for Ajax requests from Chrome to other platforms
+Opera port
