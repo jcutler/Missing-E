@@ -161,12 +161,12 @@ function requestReblogYourself(request, sender, sendResponse) {
                }
             }
             else {
-               activeAjax--;
-               dequeueAjax();
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
                var info = stamp["posts"][0];
                cache[this.targetId] = info;
+               activeAjax--;
+               dequeueAjax();
                doReblogDash(info, this.targetId, sendResponse);
             }
          }
@@ -234,12 +234,12 @@ function requestTimestamp(request, sender, sendResponse) {
                }
             }
             else {
-               activeAjax--;
-               dequeueAjax();
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
                var info = stamp["posts"][0];
                cache[this.targetId] = info;
+               activeAjax--;
+               dequeueAjax();
                doTimestamp(info, this.targetId, sendResponse);
             }
          }
@@ -308,12 +308,12 @@ function requestMagnifier(request, sender, sendResponse) {
                }
             }
             else {
-               activeAjax--;
-               dequeueAjax();
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
                var info = stamp["posts"][0];
                cache[this.targetId] = info;
+               activeAjax--;
+               dequeueAjax();
                doMagnifier(info, this.targetId, sendResponse);
             }
          }
