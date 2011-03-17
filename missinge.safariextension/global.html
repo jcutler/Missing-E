@@ -29,13 +29,27 @@
 <script>
 var maxActiveAjax = 15;
 var activeAjax = 0;
+/*
+var activeRequests = {};
+var onHold = {};
+*/
 var waitQueue = [];
 var cache = {};
 var cacheClear;
+var clearQueues;
 var tenMinutes = 600000;
-var debugMode = false;
+var tenSeconds = 10000;
+var debugMode = true;
 
 cacheClear = setInterval(function() { cache = {}; }, tenMinutes);
+clearQueues = setInterval(function() {
+   if (activeAjax == 0) {
+      /* Not working
+      wakeAll();
+      */
+      dequeueAjax();
+   }
+}, tenSeconds);
 
 function debug(msg) {
    if (debugMode) {
@@ -79,37 +93,122 @@ function doMagnifier(stamp, id, request) {
 }
 
 function queueAjax(details) {
-   debug("Queueing. " + (waitQueue.length+1) + " in queue");
    waitQueue.push(details);
+   debug("Queueing " + details.type + " request. " + (waitQueue.length) +
+         " in queue");
 }
 
-function dequeueAjax() {
-   while (activeAjax < maxActiveAjax) {
-      var call = waitQueue.shift();
-      if (!call) { return false; }
-      debug("Dequeueing. " + (waitQueue.length) + " in queue");
-      if (call.type === "magnifier") {
-         requestMagnifier(call.request);
-      }
-      else if (call.type === "reblogYourself") {
-         requestReblogYourself(call.request);
-      }
-      else if (call.type === "timestamp") {
-         requestTimestamp(call.request);
-      }
+function runItem(call) {
+   if (call.type === "magnifier") {
+      requestMagnifier(call.request);
+   }
+   else if (call.type === "reblogYourself") {
+      requestReblogYourself(call.request);
+   }
+   else if (call.type === "timestamp") {
+      requestTimestamp(call.request);
    }
 }
 
-function requestTimestamp(request) {
+function dequeueAjax(id) {
+   if (id) {
+      activeAjax--;
+      /* Not working
+      wakeById(id);
+      delete activeRequests[id];
+      */
+   }
+   while (activeAjax < maxActiveAjax) {
+      var call = waitQueue.shift();
+      if (!call) { return false; }
+      debug("Dequeueing " + call.type + " request. " + (waitQueue.length) +
+            " in queue");
+      runItem(call);
+   }
+}
+
+function cacheServe(type, id, request, fn, midFlight) {
    var entry;
-   if ((entry = cache[request.message.pid])) {
-      doTimestamp(entry, request.message.pid, request);
+   if ((entry = cache[id])) {
+      debug(type + " request (" + id + ") served from cache.");
+      if (midFlight) {
+         dequeueAjax(id);
+      }
+      else {
+         dequeueAjax();
+      }
+      fn(entry, id, request);
+      return true;
+   }
+   else {
+      return false;
+   }
+}
+
+/* Not working
+function wakeAll() {
+   var call;
+   for (var i in onHold) {
+      call = onHold[i];
+      debug("Waking " + call.type + " request (" + call.request.message.pid +
+            ")");
+      delete onHold[i];
+      runItem(call);
+   }
+}
+
+function wakeById(id) {
+   var i,j;
+   for (i=0; i<activeRequests[id].length; i++) {
+      var call;
+      if ((call = activeRequests[id][i])) {
+         debug("Waking " + call.type + " request (" + call.request.message.pid +
+               ")");
+         delete onHold[call.type + call.request.message.pid];
+         runItem(call);
+      }
+   }
+}
+*/
+
+function isRequested(details) {
+   return false;
+   /* Not working
+   var bucket;
+   if ((bucket = activeRequests[details.request.message.pid])) {
+      onHold[details.type + details.request.message.pid] = details;
+      bucket.push(details);
+      debug("Sleeping " + details.type + " request (" +
+            details.request.message.pid + ")");
+      return true;
+   }
+   else {
+      return false;
+   }
+   */
+}
+
+function startAjax(id) {
+   activeAjax++;
+   /* Not working
+   activeRequests[id] = [];
+   */
+}
+
+function requestTimestamp(request) {
+   if (cacheServe("timestamp", request, request.message.pid, doTimestamp,
+                  false)) {
+      return true;
+   }
+   else if (isRequested({type: "timestamp", request: request})) {
+      return true;
    }
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "timestamp", request: request});
    }
    else {
-      activeAjax++;
+      debug("AJAX timestamp request (" + request.message.pid + ")");
+      startAjax(request.message.pid);
       $.ajax({
          type: "GET",
          url: request.message.url + "/api/read/json?id=" + request.message.pid,
@@ -118,42 +217,40 @@ function requestTimestamp(request) {
          retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),
          targetId: request.message.pid,
          error: function(xhr, textStatus) {
-            var entry;
-            if ((entry = cache[this.targetId])) {
-               activeAjax--;
-               dequeueAjax();
-               doTimestamp(entry, this.targetId, request);
+            if (cacheServe("timestamp", request, request.message.pid,
+                           doTimestamp, true)) {
+               return true;
             }
             else {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
+                  debug("Retry timestamp request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  activeAjax--;
-                  dequeueAjax();
+                  debug("timestamp request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
                   request.target.page.dispatchMessage("timestamp",{pid: this.targetId, success: false});
                }
             }
          },
          success: function(data, textStatus) {
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
-               var entry;
-               if ((entry = cache[this.targetId])) {
-                  activeAjax--;
-                  dequeueAjax();
-                  doTimestamp(entry, this.targetId, request);
+               if (cacheServe("timestamp", request, request.message.pid,
+                              doTimestamp, true)) {
+                  return true;
                }
                else {
                   this.tryCount++;
                   if (this.tryCount <= this.retryLimit) {
+                     debug("Retry timestamp request (" + this.targetId + ")");
                      $.ajax(this);
                      return;
                   }
                   else {
-                     activeAjax--;
-                     dequeueAjax();
+                     debug("timestamp request (" + this.targetId + ") failed");
+                     dequeueAjax(this.targetId);
                      request.target.page.dispatchMessage("timestamp",{pid: this.targetId, success: false});
                   }
                }
@@ -163,8 +260,7 @@ function requestTimestamp(request) {
                var stamp = JSON.parse(txt);
                var info = stamp["posts"][0];
                cache[this.targetId] = info;
-               activeAjax--;
-               dequeueAjax();
+               dequeueAjax(this.targetId);
                doTimestamp(info, this.targetId, request);
             }
          }
@@ -173,15 +269,19 @@ function requestTimestamp(request) {
 }
 
 function requestReblogYourself(request) {
-   var entry;
-   if ((entry = cache[request.message.pid])) {
-      doReblogDash(entry, request.message.pid, request);
+   if (cacheServe("reblogYourself", request.message.pid, request,
+                  doReblogDash, false)) {
+      return true;
+   }
+   else if (isRequested({type: "reblogYourself", request: request})) {
+      return true;
    }
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "reblogYourself", request: request});
    }
    else {
-      activeAjax++;
+      debug("AJAX reblogYourself request (" + request.message.pid + ")");
+      startAjax(request.message.pid);
       $.ajax({
          type: "GET",
          url: request.message.url + "/api/read/json?id=" + request.message.pid,
@@ -190,42 +290,43 @@ function requestReblogYourself(request) {
          retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
          targetId: request.message.pid,
          error: function(xhr, textStatus) {
-            var entry;
-            if ((entry = cache[this.targetId])) {
-               activeAjax--;
-               dequeueAjax();
-               doReblogDash(entry, this.targetId, request);
+            if (cacheServe("reblogYourself", request.message.pid, request,
+                  doReblogDash, true)) {
+               return true;
             }
             else {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
+                  debug("Retry reblogYourself request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  activeAjax--;
-                  dequeueAjax();
+                  debug("reblogYourself request (" + this.targetId +
+                        ") failed");
+                  dequeueAjax(this.targetId);
                   request.target.page.dispatchMessage("reblogYourself",{pid: this.targetId, success: false});
                }
             }
          },
          success: function(data, textStatus) {
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
-               var entry;
-               if ((entry = cache[this.targetId])) {
-                  activeAjax--;
-                  dequeueAjax();
-                  doReblogDash(entry, this.targetId, request);
+               if (cacheServe("reblogYourself", request.message.pid, request,
+                     doReblogDash, true)) {
+                  return true;
                }
                else {
                   this.tryCount++;
                   if (this.tryCount <= this.retryLimit) {
+                     debug("Retry reblogYourself request (" + this.targetId +
+                           ")");
                      $.ajax(this);
                      return;
                   }
                   else {
-                     activeAjax--;
-                     dequeueAjax();
+                     debug("reblogYourself request (" + this.targetId +
+                           ") failed");
+                     dequeueAjax(this.targetId);
                      request.target.page.dispatchMessage("reblogYourself",{pid: this.targetId, success: false});
                   }
                }
@@ -235,8 +336,7 @@ function requestReblogYourself(request) {
                var stamp = JSON.parse(txt);
                var info = stamp["posts"][0];
                cache[this.targetId] = info;
-               activeAjax--;
-               dequeueAjax();
+               dequeueAjax(this.targetId);
                doReblogDash(info, this.targetId, request);
             }
          }
@@ -245,15 +345,19 @@ function requestReblogYourself(request) {
 }
 
 function requestMagnifier(request) {
-   var entry;
-   if ((entry = cache[request.message.pid])) {
-      doMagnifier(entry, request.message.pid, request);
+   if (cacheServe("magnifier", request.message.pid, request, doMagnifier,
+                  false)) {
+      return true;
+   }
+   else if (isRequested({type: "magnifier", request: request})) {
+      return true;
    }
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "magnifier", request: request});
    }
    else {
-      activeAjax++;
+      debug("AJAX magnifier request (" + request.message.pid + ")");
+      startAjax(request.message.pid);
       $.ajax({
          type: "GET",
          url: request.message.url + "/api/read/json?id=" + request.message.pid,
@@ -262,42 +366,40 @@ function requestMagnifier(request) {
          retryLimit: getStorage("MissingE_magnifier_retries",defaultRetries),
          targetId: request.message.pid,
          error: function(xhr, textStatus) {
-            var entry;
-            if ((entry = cache[this.targetId])) {
-               activeAjax--;
-               dequeueAjax();
-               doMagnifier(entry, this.targetId, request);
+            if (cacheServe("magnifier", request.message.pid, request,
+                           doMagnifier, true)) {
+               return true;
             }
             else {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
+                  debug("Retry magnifier request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  activeAjax--;
-                  dequeueAjax();
+                  debug("magnifier request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
                   request.target.page.dispatchMessage("magnifier", {pid: this.targetId, success: false});
                }
             }
          },
          success: function(data, textStatus) {
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
-               var entry;
-               if ((entry = cache[this.targetId])) {
-                  activeAjax--;
-                  dequeueAjax();
-                  doMagnifier(entry, this.targetId, request);
+               if (cacheServe("magnifier", request.message.pid, request,
+                              doMagnifier, true)) {
+                  return true;
                }
                else {
                   this.tryCount++;
                   if (this.tryCount <= this.retryLimit) {
+                     debug("Retry magnifier request (" + this.targetId + ")");
                      $.ajax(this);
                      return;
                   }
                   else {
-                     activeAjax--;
-                     dequeueAjax();
+                     debug("magnifier request (" + this.targetId + ") failed");
+                     dequeueAjax(this.targetId);
                      request.target.page.dispatchMessage("magnifier", {pid: this.targetId, success: false});
                   }
                }
@@ -307,8 +409,7 @@ function requestMagnifier(request) {
                var stamp = JSON.parse(txt);
                var info = stamp["posts"][0];
                cache[this.targetId] = info;
-               activeAjax--;
-               dequeueAjax();
+               dequeueAjax(this.targetId);
                doMagnifier(info, this.targetId, request);
             }
          }
