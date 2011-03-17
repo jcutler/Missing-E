@@ -34,6 +34,75 @@ font-size:32px;
 line-height:28px;
 }
 
+#get #cont {
+text-align:center;
+}
+
+#get #logo {
+position:relative;
+display:inline-block;
+width:100px;
+height:133px;
+margin:20px auto 0;
+}
+
+#get #downloading {
+text-align:center;
+font-size:18px;
+margin:20px 20px 50px;
+padding:20px;
+color:white;
+background-color:#44546B;
+-webkit-border-radius:10px;
+-moz-border-radius:10px;
+border-radius:10px;
+}
+
+#get #downloading a {
+color:white;
+}
+
+#get #homelink {
+text-align:center;
+margin:50px 0 20px;
+}
+
+#get #cont {
+position:relative;
+margin:20px;
+font-size:32px;
+font-weight:bold;
+}
+
+#get #cont #floatcorner {
+position:relative;
+top:-85px;
+left:-116px;
+}
+
+#get #cont #floatcorner img {
+vertical-align:bottom;
+}
+
+#get #cont img {
+vertical-align:middle;
+}
+
+#instructions {
+text-align:center;
+vertical-align:top;
+}
+
+#instructions .step {
+display:inline-block;
+height:100%;
+margin:0 10px 0;
+}
+
+#instructions .step .caption {
+font-size:90%;
+}
+
 a img {
 border:0;
 }
