@@ -165,7 +165,7 @@ function isRequested(details) {
    if ((bucket = activeRequests[details.request.pid])) {
       onHold[details.type + details.request.pid] = details;
       bucket.push(details);
-      debug("Deferring " + details.type + " request (" + details.request.pid + ")");
+      debug("Sleeping " + details.type + " request (" + details.request.pid + ")");
       return true;
    }
    else {
