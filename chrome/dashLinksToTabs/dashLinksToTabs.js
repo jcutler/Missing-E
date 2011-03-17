@@ -31,6 +31,10 @@ function dashLinksToTabs_click(e, dashLinksToTabs_settings) {
       return false;
    }
    if ($(node).closest('#dashboard_controls').length > 0) { return false; }
+   if (/^\/reblog\/[0-9]+\//.test($(node).attr('href')) &&
+       dashLinksToTabs_settings.reblogLinks !== 1) {
+      return false;
+   }
    if (node.tagName!=='A') {
       while (node !== null && node.tagName !== 'AREA' &&
              node.tagName !== 'A' &&

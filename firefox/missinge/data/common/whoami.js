@@ -143,7 +143,8 @@ function settings_startup(message) {
    }
    else if (message.component === "dashLinksToTabs") {
       MissingE_dashLinksToTabs_doStartup(message.newPostTabs,
-                                         message.sidebar);
+                                         message.sidebar,
+                                         message.reblogLinks);
    }
    else if (message.component === "dashboardFixes") {
       MissingE_dashboardFixes_doStartup(message.extensionURL,

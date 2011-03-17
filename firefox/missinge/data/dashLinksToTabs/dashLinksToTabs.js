@@ -23,9 +23,13 @@
 
 /*global $ */
 
-function dashLinksToTabs_click(e, newPostTabs) {
+function dashLinksToTabs_click(e, newPostTabs, reblogLinks) {
    var node = e.target;
    if (node === undefined || node === null) { return false; }
+   if (/^\/reblog\/[0-9]+\//.test(jQuery(node).attr('href')) &&
+       reblogLinks !== 1) {
+      return false;
+   }
    if (newPostTabs !== 1 &&
        jQuery(node).parents('#new_post').length > 0) {
       return false;
@@ -45,18 +49,18 @@ function dashLinksToTabs_click(e, newPostTabs) {
    return true;
 }
 
-function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar) {
+function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks) {
    var lcol = document.getElementById('left_column');
    var rcol = document.getElementById('right_column');
    
    if (lcol) {
       lcol.addEventListener('click', function(e) {
-         dashLinksToTabs_click(e, newPostTabs);
+         dashLinksToTabs_click(e, newPostTabs, reblogLinks);
       }, false);
    }
    if (rcol && sidebar === 1) {
       rcol.addEventListener('click', function(e) {
-         dashLinksToTabs_click(e, newPostTabs);
+         dashLinksToTabs_click(e, newPostTabs, reblogLinks);
       }, false);
    }
 }

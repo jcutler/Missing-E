@@ -361,6 +361,7 @@ function handleRequest(request) {
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
             settings.sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
+            settings.reblogLinks = getStorage("MissingE_dashLinksToTabs_reblogLinks",0);
             break;
          case "replyReplies":
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
