@@ -40,7 +40,23 @@ jQuery(document).ready(function($) {
 <h2>Bookmarker</h2>
 <ul>
 <li><a href="#bookmark-issue">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</a></li>
+<li><a href="#rename-bookmark">How do I change the name of a bookmark to something more useful?</a></li>
 </ul>
+<h2>Dash Links to Tabs</h2>
+<ul>
+<li><a href="#newtabs">I don't want 'Missing e' to open up all these new tabs. How do I stop it?</a></li>
+</ul>
+<h2>Follow Checker</h2>
+<ul>
+<li><a href="#followchecker-how">How do I use Follow Checker? Where is it?</a></li>
+<li><a href="#followchecker-fail">Why does Follow Checker fail to load?</a></li>
+<li><a href="#followchecker-issues">Why is Follow Checker reporting that I am not following someone that I actually am?</a></li>
+<li><a href="#followchecker-issues">Why is Follow Checker reporting that someone is not following me even though I know they are?</a></li>
+<li><a href="#followchecker-rho">Why is Follow Checker represented by a '&rho;' (rho)?</a></li>
+</ul>
+<h2>Goto Dash Post</h2>
+<ul>
+<li><a href="#goto-issue">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</a></li></ul>
 <h2>Magnifier</h2>
 <ul>
 <li><a href="#magnifier-use">How do I use Magnifier? Where is it?</a></li>
@@ -48,9 +64,19 @@ jQuery(document).ready(function($) {
 <li><a href="#magnifier-resized">Why is the enlarged photo still not full size?</a></li>
 <li><a href="#magnifier-full">How can I open the full-size photo in its own tab or window?</a></li>
 </ul>
-<h2>Dash Links to Tabs</h2>
+<h2>Posting Fixes</h2>
 <ul>
-<li><a href="#newtabs">I don't want 'Missing e' to open up all these new tabs. How do I stop it?</a></li>
+<li><a href="#uploader-load">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</a></li>
+</ul>
+<h2>Reblog Yourself</h2>
+<ul>
+<li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del> (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</a></li>
+</ul>
+<h2>Reply Replies</h2>
+<ul>
+<li><a href="#replies-how">How do I reply to a reply (or other notification)?</a></li>
+<li><a href="#replies-inner">Why can't I reply to replies (or other notifications) inside a post's notes list?</a></li>
+<li><a href="#replies-multi">How do I reply to more than one notification at once?</a></li>
 </ul>
 <h2>Safe Dash</h2>
 <ul>
@@ -61,31 +87,6 @@ jQuery(document).ready(function($) {
 <ul>
 <li><a href="#timestamps-wrongtime">Why are some posts shown with the incorrect time?</a></li>
 <li><a href="#timestamps-load">Why do timestamps sometimes fail to load?</a></li>
-</ul>
-<h2>Goto Dash Post</h2>
-<ul>
-<li><a href="#goto-issue">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</a></li></ul>
-<h2>Posting Fixes</h2>
-<ul>
-<li><a href="#uploader-load">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</a></li>
-</ul>
-<h2>Reblog Yourself</h2>
-<ul>
-<li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del> (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</a></li>
-</ul>
-<h2>Follow Checker</h2>
-<ul>
-<li><a href="#followchecker-how">How do I use Follow Checker? Where is it?</a></li>
-<li><a href="#followchecker-fail">Why does Follow Checker fail to load?</a></li>
-<li><a href="#followchecker-issues">Why is Follow Checker reporting that I am not following someone that I actually am?</a></li>
-<li><a href="#followchecker-issues">Why is Follow Checker reporting that someone is not following me even though I know they are?</a></li>
-<li><a href="#followchecker-rho">Why is Follow Checker represented by a '&rho;' (rho)?</a></li>
-</ul>
-<h2>Reply Replies</h2>
-<ul>
-<li><a href="#replies-how">How do I reply to a reply (or other notification)?</a></li>
-<li><a href="#replies-inner">Why can't I reply to replies (or other notifications) inside a post's notes list?</a></li>
-<li><a href="#replies-multi">How do I reply to more than one notification at once?</a></li>
 </ul>
 <h2>Unfollower</h2>
 <ul>
@@ -137,50 +138,32 @@ jQuery(document).ready(function($) {
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="bookmark-issue" /><p class="question">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</p>
 <div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p><div class="totop"><a href="#">Top</a></div></div>
-<a name="magnifier-use" /><p class="question">How do I use Magnifier? Where is it?</p>
-<div class="response"><p><em>Magnifier</em> adds a small <img src="images/magnifier-icon.png" alt="Magnifier icon" /> icon to all photo posts on the dashboard. Simply click on it to view the full-size image without ever leaving the dashboard. <em>Magnifier</em> will resize the image to fit on your screen, but you can click on the enlarged image to open it in a new tab or window.</p><p>The <em>Magnifier</em> icon is also added to <strong>photoset</strong> posts. When you click on it, the enlarged images will appear as a slideshow you can navigate with arrow buttons on either side.</p>
+<a name="rename-bookmark"><p class="question">How do I change the name of a bookmark to something more useful?</p>
+<div class="response">
+<p class="singleline"><strong>You can set a custom name for a bookmark when you create it:</strong></p>
+<ul>
+<li>Hold down the <img class="inlineimg" src="images/shift.gif" alt="Shift" /> key when you click on the bookmark icon <img class="inlineimg" src="images/bookmark_icon.png" alt="Bookmark icon" style="vertical-align:middle;" /> of a post.</li>
+<li>A popup box will appear for you to write in the custom bookmark name.</li>
+</ul>
+<p class="singleline"><strong>You can also change the name of an existing bookmark:</strong></p>
+<ul>
+<li>Hold down the <img class="inlineimg" src="images/shift.gif" alt="Shift" /> key when you click on a bookmark in the list in your dashboard sidebar.</li>
+<li>The link will change to an input where you can type in the custom name.</li>
+<li>If you decide not to change the name, just press the <img class="inlineimg" src="images/esc.gif" alt="Esc" /> key.</li>
+</ul>
+<div class="example">
+<img src="images/examples/rename_bookmark.png" alt="Renaming a bookmark" />
+<div class="caption">Renaming an existing bookmark</div>
+</div>
 <div class="totop"><a href="#">Top</a></div></div>
-<a name="magnifier-load" /><p class="question">Why does the magnifier sometimes look like this <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon?</p>
-<div class="response"><p>In order to get the location of a photo post's highest resolution image, <em>Magnifier</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Magnifier</em> will retry a few times before giving up and showing the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> error icon.</p><p>You can click on the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon to tell <em>Magnifier</em> to try again.</p><div class="totop"><a href="#">Top</a></div></div>
-<a name="magnifier-resized" /><p class="question">Why is the enlarged photo still not full size?</p>
-<div class="response"><p>Photos enlarged by <em>Magnifier</em> are shown scaled down so that they fit into your browser window. You can click on the enlarged photo to open it in its own tab or window at full size.</p><div class="totop"><a href="#">Top</a></div></div>
-<a name="magnifier-full" /><p class="question">How can I open the full-size photo in its own tab or window?</p>
-<div class="response"><p>You can click on any photo enlarged by <em>Magnifier</em> to open it in its own tab or window at full size.</p><div class="totop"><a href="#">Top</a></div></div>
 <a name="newtabs" /><p class="question">I don't want 'Missing e' to open up all these new tabs. How do I stop it?</p>
 <div class="response"><p>In the settings (which you can access <a href="#settings">like this</a>), under the <em>Dashboard Features</em> tab, in the <em>Dash Links to Tabs</em> section, you can change this behaviour.</p>
 <p><strong>You can:</strong></p>
 <ul><li>turn the tab-opening feature on/off <em>completely</em> (by clicking the toggle switch)</li>
 <li>turn the tab-opening feature on/off for the <em>new post buttons</em> at the top of your dashboard</li>
 <li>turn the tab-opening feature on/off for <em>links in the sidebar</em> (on the right side of the dashboard)</li>
+<li>turn the tab-opening feature on/off for <em>dashboard post reblog buttons</em></li>
 </ul>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="safedash-disable" /><p class="question">What is the difference between turning Safe Dash off on the dashboard and turning it off on the 'Missing e' settings screen?</p>
-<div class="response"><p>Turning <em>Safe Dash</em> on and off with the link in the sidebar of your dashboard hides and unhides images immediately.</p><p>Deactivating <em>Safe Dash</em> on the 'Missing e' settings screen disables it completely. Any tumblr dashboard page loaded with <em>Safe Dash</em> disabled will not have the <em>Safe Dash</em> toggle button in the sidebar. All images will be shown, as normal.</p><div class="totop"><a href="#">Top</a></div></div>
-<a name="safedash-where" /><p class="question">Which images are hidden with Safe Dash and which images are not?</p>
-<div class="response">
-<p><strong>These images are hidden:</strong></p>
-<ul><li>All image posts</li><li>All photoset thumbnails</li><li>Photosets that have been clicked (enlarged)</li><li>Inline images in other types of posts</li><li>Album art in audio posts</li><li>All video thumbnails</li><li>All full-size videos (except videos from external sites)</li></ul>
-<p><strong>These images are NOT hidden:</strong></p>
-<ul><li>All tumblr-generated user avatars</li><li>Externally-loaded videos (YouTube, Vimeo, etc)</li><li>Images enlarged by the 'Missing e' <em>Magnifier</em> feature.</li></ul>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="timestamps-wrongtime" /><p class="question">Why are some posts shown with the incorrect time?</p>
-<div class="response">
-<p><em>Timestamps</em> uses the Tumblr API to get the time of a post. Unfortunately, Tumblr is known to sometimes report the time of a post incorrectly, often several hours after it was actually posted. For posts where Tumblr is incorrect, <em>Timestamps</em> will also be incorrect.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="timestamps-load" /><p class="question">Why do timestamps sometimes fail to load?</p>
-<div class="response">
-<p><em>Timestamps</em> uses the Tumblr API to get the time of a post. During periods when Tumblr is very busy or error-prone, the API may not work correctly. <em>Timestamps</em> will retry a few times before giving up and displaying: <em><strong>Timestamp loading failed. <span style="text-decoration:underline;">Retry</span></strong></em>.</p><p>You can click on '<strong>Retry</strong>' to tell <em>Timestamps</em> to try again.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="goto-issue" /><p class="question">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</p>
-<div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="uploader-load" /><p class="question">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</p>
-<div class="response">
-<p>Much like the '+ Upload Photo' button that Tumblr places on new text post pages by default, <em>Posting Fixes</em> must load an additional Tumblr page in the background before adding the button. During times when Tumblr is very busy or error-prone, this page may not load.</p><p>Try reloading the post page to try again.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="reblog-load" /><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>  (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</p>
-<div class="response">
-<p>In order to add a reblog link to your posts on the dashboard, <em>Reblog Yourself</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <strong><del>reblog</del></strong>.</p><p>You can click on the <strong><del>reblog</del></strong> text to tell <em>Reblog Yourself</em> to try again. If it shows up without the strikethrough (ie. '<strong>reblog</strong>'), then the link works!</p><p>You should note that the reblog button added to individual post pages (not on the dashboard) is more or less unaffected by Tumblr API problems.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="followchecker-how" /><p class="question">How do I use Follow Checker? Where is it?</p>
 <div class="response">
@@ -198,6 +181,26 @@ jQuery(document).ready(function($) {
 <div class="response">
 <p>The <a href="http://www.wikipedia.org/wiki/Rho">Greek letter <strong>&rho;</strong> (rho)</a> is used in statistics to represent the coefficient of correlation between two or more random variables. It is used in <em>Follow Checker</em> to refer to the relationship of tumblrs you follow to tumblrs that follow you.</p>
 <div class="totop"><a href="#">Top</a></div></div>
+<a name="goto-issue" /><p class="question">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</p>
+<div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="magnifier-use" /><p class="question">How do I use Magnifier? Where is it?</p>
+<div class="response"><p><em>Magnifier</em> adds a small <img src="images/magnifier-icon.png" alt="Magnifier icon" /> icon to all photo posts on the dashboard. Simply click on it to view the full-size image without ever leaving the dashboard. <em>Magnifier</em> will resize the image to fit on your screen, but you can click on the enlarged image to open it in a new tab or window.</p><p>The <em>Magnifier</em> icon is also added to <strong>photoset</strong> posts. When you click on it, the enlarged images will appear as a slideshow you can navigate with arrow buttons on either side.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="magnifier-load" /><p class="question">Why does the magnifier sometimes look like this <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon?</p>
+<div class="response"><p>In order to get the location of a photo post's highest resolution image, <em>Magnifier</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Magnifier</em> will retry a few times before giving up and showing the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> error icon.</p><p>You can click on the <img src="images/magnifier_err.png" alt="Magnifier error icon" /> icon to tell <em>Magnifier</em> to try again.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="magnifier-resized" /><p class="question">Why is the enlarged photo still not full size?</p>
+<div class="response"><p>Photos enlarged by <em>Magnifier</em> are shown scaled down so that they fit into your browser window. You can click on the enlarged photo to open it in its own tab or window at full size.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="magnifier-full" /><p class="question">How can I open the full-size photo in its own tab or window?</p>
+<div class="response"><p>You can click on any photo enlarged by <em>Magnifier</em> to open it in its own tab or window at full size.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="uploader-load" /><p class="question">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</p>
+<div class="response">
+<p>Much like the '+ Upload Photo' button that Tumblr places on new text post pages by default, <em>Posting Fixes</em> must load an additional Tumblr page in the background before adding the button. During times when Tumblr is very busy or error-prone, this page may not load.</p><p>Try reloading the post page to try again.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="reblog-load" /><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>  (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</p>
+<div class="response">
+<p>In order to add a reblog link to your posts on the dashboard, <em>Reblog Yourself</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <strong><del>reblog</del></strong>.</p><p>You can click on the <strong><del>reblog</del></strong> text to tell <em>Reblog Yourself</em> to try again. If it shows up without the strikethrough (ie. '<strong>reblog</strong>'), then the link works!</p><p>You should note that the reblog button added to individual post pages (not on the dashboard) is more or less unaffected by Tumblr API problems.</p>
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="replies-how" /><p class="question">How do I reply to a reply (or other notification)?</p>
 <div class="response">
 <p>You can reply to notifications that show up directly on your dashboard. To see these, you must have the 'Show notifications' option turned on in your Tumblr <a href="http://www.tumblr.com/preferences" target="_blank">preferences</a>.</p><p>Simply click on the notifcation icon on the right side of one of these notifications (heart, reply arrow, etc) to open a new post with the notification already added, ready for you to comment on.</p>
@@ -211,6 +214,23 @@ jQuery(document).ready(function($) {
 <a name="replies-multi" /><p class="question">How do I reply to more than one notification at once?</p>
 <div class="response">
 <ol><li>Hold down the <img class="inlineimg" src="images/shift.gif" alt="Shift"> key and click on the icons of each of the notifications you want to reply to.</li><li>Click (without <img class="inlineimg" src="images/shift.gif" alt="Shift">) on the icon of the last notification you want to include.</li><li>All the notifications will appear in a single post in chronological order!</li></ol>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="safedash-disable" /><p class="question">What is the difference between turning Safe Dash off on the dashboard and turning it off on the 'Missing e' settings screen?</p>
+<div class="response"><p>Turning <em>Safe Dash</em> on and off with the link in the sidebar of your dashboard hides and unhides images immediately.</p><p>Deactivating <em>Safe Dash</em> on the 'Missing e' settings screen disables it completely. Any tumblr dashboard page loaded with <em>Safe Dash</em> disabled will not have the <em>Safe Dash</em> toggle button in the sidebar. All images will be shown, as normal.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="safedash-where" /><p class="question">Which images are hidden with Safe Dash and which images are not?</p>
+<div class="response">
+<p><strong>These images are hidden:</strong></p>
+<ul><li>All image posts</li><li>All photoset thumbnails</li><li>Photosets that have been clicked (enlarged)</li><li>Inline images in other types of posts</li><li>Album art in audio posts</li><li>All video thumbnails</li><li>All full-size videos (except videos from external sites)</li></ul>
+<p><strong>These images are NOT hidden:</strong></p>
+<ul><li>All tumblr-generated user avatars</li><li>Externally-loaded videos (YouTube, Vimeo, etc)</li><li>Images enlarged by the 'Missing e' <em>Magnifier</em> feature.</li></ul>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="timestamps-wrongtime" /><p class="question">Why are some posts shown with the incorrect time?</p>
+<div class="response">
+<p><em>Timestamps</em> uses the Tumblr API to get the time of a post. Unfortunately, Tumblr is known to sometimes report the time of a post incorrectly, often several hours after it was actually posted. For posts where Tumblr is incorrect, <em>Timestamps</em> will also be incorrect.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="timestamps-load" /><p class="question">Why do timestamps sometimes fail to load?</p>
+<div class="response">
+<p><em>Timestamps</em> uses the Tumblr API to get the time of a post. During periods when Tumblr is very busy or error-prone, the API may not work correctly. <em>Timestamps</em> will retry a few times before giving up and displaying: <em><strong>Timestamp loading failed. <span style="text-decoration:underline;">Retry</span></strong></em>.</p><p>You can click on '<strong>Retry</strong>' to tell <em>Timestamps</em> to try again.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="unfollower-how" /><p class="question">How do I use Unfollower? Where is it?</p>
 <div class="response">
