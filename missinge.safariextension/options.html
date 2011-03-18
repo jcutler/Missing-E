@@ -469,14 +469,22 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <script type="text/javascript" src="checkbox/jquery.checkbox.min.js"></script>
 <script type="text/javascript">
 <!--
+var all_settings = {};
+
+safari.self.addEventListener("message", function(response) {
+   if (response.name !== "all-settings") { return false; }
+   all_settings = response.message;
+   loadSettings();
+   $('input.toggler').checkbox();
+});
+
 jQuery(document).ready(function($) {
    safari.self.tab.dispatchMessage("close-options");
    $('a[rel*=facebox]').facebox({
       loadingImage : 'facebox/loading.gif',
       closeImage   : 'facebox/closelabel.png'
    });
-   loadSettings();
-   $('input.toggler').checkbox();
+   safari.self.tab.dispatchMessage("all-settings",{});
 });
 
 var componentList = ["dashboardFixes",
@@ -494,14 +502,15 @@ var componentList = ["dashboardFixes",
                      "unfollower"];
 
 function getStorage(key,defaultValue) {
-   if (localStorage[key] == undefined)
+   if (all_settings[key] == undefined)
       return defaultValue;
    else
-      return localStorage[key];
+      return all_settings[key];
 }
 
 function setStorage(key,value) {
-   localStorage[key] = value;
+   all_settings[key] = value;
+   safari.self.tab.dispatchMessage("change-setting",{name: key, val: value});
 }
 
 function trim(str) {

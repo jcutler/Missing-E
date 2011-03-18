@@ -25,8 +25,21 @@
 <script type="text/javascript" src="common/jquery-1.5.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
 <script type="text/javascript" src="common/utils.js"></script>
-<script type="text/javascript" src="common/storage.js"></script>
 <script>
+var componentList = ["dashboardFixes",
+                     "bookmarker",
+                     "dashLinksToTabs",
+                     "safeDash",
+                     "timestamps",
+                     "magnifier",
+                     "gotoDashPost",
+                     "postingFixes",
+                     "reblogYourself",
+                     "followChecker",
+                     "postCrushes",
+                     "replyReplies",
+                     "unfollower"];
+
 var maxActiveAjax = 15;
 var activeAjax = 0;
 /*
@@ -42,6 +55,25 @@ var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
+
+function getStorage(key, defVal) {
+   var retval = safari.extension.settings[key];
+   if (retval === undefined || retval === null || retval === "") {
+      return defVal;
+   }
+   else {
+      if (/[^0-9]/.test(retval)) {
+         return retval;
+      }
+      else {
+         return parseInt(retval, 10);
+      }
+   }
+}
+
+function setStorage(key, val) {
+   safari.extension.settings[key] = val;
+}
 
 cacheClear = setInterval(function() {
    cache = {};
@@ -468,6 +500,42 @@ function handleRequest(request) {
    }
    else if (request.name == "timestamp") {
       requestTimestamp(request);
+   }
+   else if (request.name == "change-setting") {
+      setStorage(request.message.name, request.message.val);
+   }
+   else if (request.name == "all-settings") {
+      var settings = {};
+            for (i=0; i<componentList.length; i++) {
+         settings["MissingE_" + componentList[i] + "_enabled"] = getStorage("MissingE_" + componentList[i] +
+                                                                            "_enabled", 1);
+      }
+      settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
+      settings.MissingE_dashboardFixes_wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
+      settings.MissingE_dashboardFixes_replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
+      settings.MissingE_magnifier_retries = getStorage("MissingE_magnifier_retries",defaultRetries);
+      settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
+      settings.MissingE_dashLinksToTabs_sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
+      settings.MissingE_dashLinksToTabs_reblogLinks = getStorage("MissingE_dashLinksToTabs_reblogLinks",0);
+      settings.MissingE_dashLinksToTabs_editLinks = getStorage("MissingE_dashLinksToTabs_editLinks",0);
+      settings.MissingE_timestamps_retries = getStorage("MissingE_timestamps_retries",defaultRetries);
+      settings.MissingE_timestamps_format = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
+      settings.MissingE_postingFixes_photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
+      settings.MissingE_postingFixes_uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
+      settings.MissingE_postingFixes_addUploader = getStorage("MissingE_postingFixes_addUploader",1);
+      settings.MissingE_reblogYourself_postPage = getStorage("MissingE_reblogYourself_postPage",1);
+      settings.MissingE_reblogYourself_dashboard = getStorage("MissingE_reblogYourself_dashboard",1);
+      settings.MissingE_reblogYourself_retries = getStorage("MissingE_reblogYourself_retries",defaultRetries);
+      settings.MissingE_followChecker_retries = getStorage("MissingE_followChecker_retries",defaultRetries);
+      settings.MissingE_postCrushes_prefix = getStorage("MissingE_postCrushes_prefix","Tumblr Crushes:");
+      settings.MissingE_postCrushes_crushSize = getStorage("MissingE_postCrushes_crushSize",1);
+      settings.MissingE_postCrushes_addTags = getStorage("MissingE_postCrushes_addTags",1);
+      settings.MissingE_postCrushes_showPercent = getStorage("MissingE_postCrushes_showPercent",1);
+      settings.MissingE_replyReplies_showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
+      settings.MissingE_replyReplies_smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
+      settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
+      settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
+      request.target.page.dispatchMessage("all-settings",settings);
    }
    else if (request.name == "settings") {
       var settings = {};
