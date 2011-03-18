@@ -32,14 +32,19 @@ var activeAjax = 0;
 var activeRequests = {};
 var waitQueue = [];
 var onHold = {};
+var numSleeping = 0;
 var cache = {};
+var cacheElements = 0;
 var cacheClear;
 var clearQueues;
-var tenMinutes = 600000;
+var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
 
-cacheClear = setInterval(function() { cache = {}; }, tenMinutes);
+cacheClear = setInterval(function() {
+   cache = {};
+   cacheElements = 0;
+}, fiveMinutes);
 clearQueues = setInterval(function() {
    if (activeAjax == 0) {
       wakeAll();
@@ -108,6 +113,20 @@ function dequeueAjax(id) {
    }
 }
 
+function saveCache(id, entry) {
+   cacheElements++;
+   for (var i in entry) {
+      if (i !== "photos" &&
+          i !== "photo-url-1280" &&
+          i !== "unix-timestamp" &&
+          i !== "reblog-key" &&
+          i !== "url") {
+         delete entry[i];
+      }
+   }
+   cache[id] = entry;
+}
+
 function cacheServe(type, id, sendResponse, fn, midFlight) {
    var entry;
    if ((entry = cache[id])) {
@@ -130,8 +149,9 @@ function wakeAll() {
    var call;
    for (var i in onHold) {
       call = onHold[i];
-      debug("Waking " + call.type + " request (" + call.request.pid + ")");
       delete onHold[i];
+      numSleeping --;
+      debug("Waking " + call.type + " request (" + call.request.pid + "). " + numSleeping + " still asleep");
       runItem(call);
    }
 }
@@ -153,8 +173,9 @@ function wakeById(id) {
    for (i=0; i<activeRequests[id].length; i++) {
       var call;
       if ((call = activeRequests[id][i])) {
-         debug("Waking " + call.type + " request (" + call.request.pid + ")");
          delete onHold[call.type + call.request.pid];
+         numSleeping--;
+         debug("Selectively waking " + call.type + " request (" + call.request.pid + "). " + numSleeping + " still asleep");
          runItem(call);
       }
    }
@@ -165,7 +186,8 @@ function isRequested(details) {
    if ((bucket = activeRequests[details.request.pid])) {
       onHold[details.type + details.request.pid] = details;
       bucket.push(details);
-      debug("Sleeping " + details.type + " request (" + details.request.pid + ")");
+      numSleeping++;
+      debug("Sleeping " + details.type + " request (" + details.request.pid + "). " + numSleeping + " asleep");
       return true;
    }
    else {
@@ -239,7 +261,7 @@ function requestReblogYourself(request, sender, sendResponse) {
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
                var info = stamp["posts"][0];
-               cache[this.targetId] = info;
+               saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
                doReblogDash(info, this.targetId, sendResponse);
             }
@@ -309,7 +331,7 @@ function requestTimestamp(request, sender, sendResponse) {
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
                var info = stamp["posts"][0];
-               cache[this.targetId] = info;
+               saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
                doTimestamp(info, this.targetId, sendResponse);
             }
@@ -379,7 +401,7 @@ function requestMagnifier(request, sender, sendResponse) {
                var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
                var stamp = JSON.parse(txt);
                var info = stamp["posts"][0];
-               cache[this.targetId] = info;
+               saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
                doMagnifier(info, this.targetId, sendResponse);
             }
