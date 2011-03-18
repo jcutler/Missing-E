@@ -210,7 +210,7 @@ function wakeAll() {
 
 function wakeById(id) {
    var i,j;
-   for (i=0; i<activeRequests[id].length; i++) {
+   for (i=0; activeRequests[id] && i<activeRequests[id].length; i++) {
       var call;
       if ((call = activeRequests[id][i])) {
          delete onHold[call.type + call.request.message.pid];

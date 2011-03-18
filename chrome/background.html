@@ -170,7 +170,7 @@ function runItem(call) {
 
 function wakeById(id) {
    var i,j;
-   for (i=0; i<activeRequests[id].length; i++) {
+   for (i=0; activeRequests[id] && i<activeRequests[id].length; i++) {
       var call;
       if ((call = activeRequests[id][i])) {
          delete onHold[call.type + call.request.pid];
@@ -182,6 +182,7 @@ function wakeById(id) {
 }
 
 function isRequested(details) {
+   return false;
    var bucket;
    if ((bucket = activeRequests[details.request.pid])) {
       onHold[details.type + details.request.pid] = details;
