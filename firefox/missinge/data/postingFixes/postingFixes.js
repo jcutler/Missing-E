@@ -42,8 +42,79 @@ function addAskUploader(obj) {
    }
 }
 
-function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
-                                         addUploader) {
+function showHideButtons(newbtns, val) {
+   var tofind;
+   newbtns.find('.current').removeClass('current');
+   if (val === '0' || val === 'private') {
+       tofind = 'publish';
+   }
+   else if (val === '2') { tofind = 'queue'; }
+   else if (val === '1') { tofind = 'draft'; }
+   else if (val === 'on.2') { tofind = 'delay'; }
+
+   newbtns.find('#MissingE_' + tofind + 'Post').parent().addClass('current');
+}
+
+function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
+                                         uploaderToggle, addUploader) {
+   var submitText = {
+                     en: {
+                           publish: "Publish post",
+                           queue:   "Queue post",
+                           draft:   "Save draft"
+                         },
+                     de: {
+                           publish: "Eintrag publizieren",
+                           queue:   "Eintrag in die Warteschleife stellen",
+                           draft:   "Entwurf speichern"
+                         },
+                     fr: {
+                           publish: "Publier le billet",
+                           queue:   "Ajouter à la file d'attente",
+                           draft:   "Enregistrer le brouillon"
+                         },
+                     it: {
+                           publish: "Pubblica post",
+                           queue:   "Metti post in coda",
+                           draft:   "Salva bozza"
+                         }
+   };
+
+   jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
+                         extensionURL + 'postingFixes/postingFixes.css" />');
+
+   if (jQuery('#post_state').length > 0) {
+      var btn = jQuery('#save_button');
+      var lang = jQuery('html').attr('lang');
+
+      var allbtns = "";
+      for (var i in submitText[lang]) {
+         var klass = "";
+         var div = "";
+         allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
+                     'type="submit" class="positive" ' +
+                     'onclick="return true;"><span>' +
+                     submitText[lang][i] + '</span></button></div>';
+      }
+      var newbtns = jQuery('<div id="MissingE_postMenu">' + allbtns + '</div>')
+                     .insertAfter(btn);
+      jQuery('#post_state').bind('change', function() {
+         showHideButtons(newbtns, this.value);
+      });
+      newbtns.find('button').click(function() {
+         if (this.id === 'MissingE_publishPost') {
+            jQuery('#post_state').val('0').trigger('change');
+         }
+         else if (this.id === 'MissingE_draftPost') {
+            jQuery('#post_state').val('1').trigger('change');
+         }
+         else if (this.id === 'MissingE_queuePost') {
+            jQuery('#post_state').val('2').trigger('change');
+         }
+      });
+      showHideButtons(newbtns, jQuery('#post_state').val());
+   }
+
    if (photoReplies === 1) {
       var apr = document.getElementById("allow_photo_replies");
       if (apr !== null && apr !== undefined) { apr.checked = true; }

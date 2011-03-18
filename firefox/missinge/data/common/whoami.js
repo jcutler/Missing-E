@@ -131,7 +131,8 @@ function doStartup(message) {
 
 function settings_startup(message) {
    if (message.component === "postingFixes") {
-      MissingE_postingFixes_doStartup(message.photoReplies,
+      MissingE_postingFixes_doStartup(message.extensionURL,
+                                      message.photoReplies,
                                       message.uploaderToggle,
                                       message.addUploader);
    }

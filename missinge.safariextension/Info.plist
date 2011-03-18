@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.53</string>
+	<string>1.0.54</string>
 	<key>CFBundleVersion</key>
-	<string>53</string>
+	<string>54</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -75,6 +75,7 @@
 			<string>followChecker/followChecker.css</string>
 			<string>safeDash/safeDash.css</string>
 			<string>unfollower/unfollower.css</string>
+			<string>postingFixes/postingFixes.css</string>
 		</array>
 		<key>Whitelist</key>
 		<array>
