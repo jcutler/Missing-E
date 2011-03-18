@@ -143,6 +143,10 @@ function loadSettings() {
             frm.MissingE_dashLinksToTabs_reblogLinks.checked = true;
          else
             frm.MissingE_dashLinksToTabs_reblogLinks.checked = false;
+         if (getStorage('MissingE_dashLinksToTabs_editLinks',0) == 1)
+            frm.MissingE_dashLinksToTabs_editLinks.checked = true;
+         else
+            frm.MissingE_dashLinksToTabs_editLinks.checked = false;
       }
       else if (v == "magnifier") {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);

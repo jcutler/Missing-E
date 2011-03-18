@@ -137,7 +137,8 @@ function settings_startup(response) {
    else if (response.message.component === "dashLinksToTabs") {
       MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs,
                                          response.message.sidebar,
-                                         response.message.reblogLinks);
+                                         response.message.reblogLinks,
+                                         response.message.editLinks);
    }
    else if (response.message.component === "dashboardFixes") {
       MissingE_dashboardFixes_doStartup(response.message.reblogQuoteFit,

@@ -566,6 +566,10 @@ function loadSettings() {
             frm.MissingE_dashLinksToTabs_reblogLinks.checked = true;
          else
             frm.MissingE_dashLinksToTabs_reblogLinks.checked = false;
+         if (getStorage('MissingE_dashLinksToTabs_editLinks',0) == 1)
+            frm.MissingE_dashLinksToTabs_editLinks.checked = true;
+         else
+            frm.MissingE_dashLinksToTabs_editLinks.checked = false;
       }
       else if (v == "magnifier") {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
@@ -836,7 +840,8 @@ function doshow(component) {
 <table class="options_table">
 <tr><td class="odd">New post buttons (text, photo, quote, etc.) at the top of the dashboard open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_newPostTabs" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="even">Sidebar navigation menu items on the right side of the dashboard open in new tabs</td><td class="even"><input type="checkbox" name="MissingE_dashLinksToTabs_sidebar" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="odd">Reblog links on dashboard posts open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_reblogLinks" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
+<tr><td class="odd">Reblog links on dashboard posts open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_reblogLinks" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td class="even">Edit links on dashboard posts open in new tabs</td><td class="even"><input type="checkbox" name="MissingE_dashLinksToTabs_editLinks" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>

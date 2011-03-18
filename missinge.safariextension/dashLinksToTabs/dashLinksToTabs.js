@@ -23,18 +23,24 @@
 
 /*global $ */
 
-function dashLinksToTabs_click(e, newPostTabs, reblogLinks) {
+function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
    var node = e.target;
    if (node === undefined || node === null) { return false; }
-   if (/^\/reblog\/[0-9]+\//.test($(node).attr('href')) &&
-       reblogLinks !== 1) {
-      return false;
-   }
    if (newPostTabs !== 1 &&
        $(node).parents('#new_post').length > 0) {
       return false;
    }
    if ($(node).closest('#dashboard_controls').length > 0) { return false; }
+   if ($(node).parent().hasClass('post_controls')) {
+      if (/^\/reblog\/[0-9]+\//.test($(node).attr('href')) &&
+          reblogLinks !== 1) {
+         return false;
+      }
+      if (/^\/edit\/[0-9]+/.test($(node).attr('href')) &&
+          editLinks !== 1) {
+         return false;
+      }
+   }
    if (node.tagName!=='A') {
       while (node !== null && node.tagName !== 'AREA' &&
              node.tagName !== 'A' &&
@@ -49,18 +55,19 @@ function dashLinksToTabs_click(e, newPostTabs, reblogLinks) {
    return true;
 }
 
-function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks) {
+function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks,
+                                            editLinks) {
    var lcol = document.getElementById('left_column');
    var rcol = document.getElementById('right_column');
 
    if (lcol) {
       lcol.addEventListener('click', function(e) {
-         dashLinksToTabs_click(e, newPostTabs, reblogLinks);
+         dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);
       }, false);
    }
    if (rcol && sidebar === 1) {
       rcol.addEventListener('click', function(e) {
-         dashLinksToTabs_click(e, newPostTabs, reblogLinks);
+         dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);
       }, false);
    }
 }

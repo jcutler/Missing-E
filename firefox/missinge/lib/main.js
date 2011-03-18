@@ -393,6 +393,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
       settings.MissingE_dashLinksToTabs_reblogLinks = getStorage("MissingE_dashLinksToTabs_reblogLinks",0);
+      settings.MissingE_dashLinksToTabs_editLinks = getStorage("MissingE_dashLinksToTabs_editLinks",0);
       settings.MissingE_replyReplies_showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
       settings.MissingE_replyReplies_smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
       settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
@@ -422,6 +423,7 @@ function handleMessage(message, myWorker) {
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
             settings.sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
             settings.reblogLinks = getStorage("MissingE_dashLinksToTabs_reblogLinks",0);
+            settings.editLinks = getStorage("MissingE_dashLinksToTabs_editLinks",0);
             break;
          case "replyReplies":
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
