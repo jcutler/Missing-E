@@ -320,7 +320,7 @@ function requestTimestamp(url, pid, count, myWorker) {
    Request({
       url: url + "/api/read/json?id=" + pid,
       headers: {tryCount: count,
-                retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),
+                retryLimit: getStorage("MissingE_timestamps_retries",defaultRetries),
                 targetId: pid},
       onComplete: function(response) {
          if (response.status != 200 ||
@@ -435,21 +435,27 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
       settings.MissingE_dashboardFixes_replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
+      settings.MissingE_magnifier_retries = getStorage("MissingE_magnifier_retries",defaultRetries);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
       settings.MissingE_dashLinksToTabs_reblogLinks = getStorage("MissingE_dashLinksToTabs_reblogLinks",0);
       settings.MissingE_dashLinksToTabs_editLinks = getStorage("MissingE_dashLinksToTabs_editLinks",0);
-      settings.MissingE_replyReplies_showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
-      settings.MissingE_replyReplies_smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
-      settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
+      settings.MissingE_timestamps_retries = getStorage("MissingE_timestamps_retries",defaultRetries);
+      settings.MissingE_timestamps_format = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
+      settings.MissingE_postingFixes_photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
+      settings.MissingE_postingFixes_uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
+      settings.MissingE_postingFixes_addUploader = getStorage("MissingE_postingFixes_addUploader",1);
+      settings.MissingE_reblogYourself_postPage = getStorage("MissingE_reblogYourself_postPage",1);
+      settings.MissingE_reblogYourself_dashboard = getStorage("MissingE_reblogYourself_dashboard",1);
+      settings.MissingE_reblogYourself_retries = getStorage("MissingE_reblogYourself_retries",defaultRetries);
+      settings.MissingE_followChecker_retries = getStorage("MissingE_followChecker_retries",defaultRetries);
       settings.MissingE_postCrushes_prefix = getStorage("MissingE_postCrushes_prefix","Tumblr Crushes:");
       settings.MissingE_postCrushes_crushSize = getStorage("MissingE_postCrushes_crushSize",1);
       settings.MissingE_postCrushes_addTags = getStorage("MissingE_postCrushes_addTags",1);
       settings.MissingE_postCrushes_showPercent = getStorage("MissingE_postCrushes_showPercent",1);
-      settings.MissingE_postingFixes_photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
-      settings.MissingE_postingFixes_uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
-      settings.MissingE_postingFixes_addUploader = getStorage("MissingE_postingFixes_addUploader",1);
-      settings.MissingE_followChecker_retries = getStorage("MissingE_followChecker_retries",defaultRetries);
+      settings.MissingE_replyReplies_showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
+      settings.MissingE_replyReplies_smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
+      settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
       settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
       myWorker.postMessage(settings);
    }

@@ -288,7 +288,7 @@ function requestTimestamp(request, sender, sendResponse) {
          url: request.url + "/api/read/json?id=" + request.pid,
          dataType: "text",
          tryCount: 0,
-         retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),
+         retryLimit: getStorage("MissingE_timestamps_retries",defaultRetries),
          targetId: request.pid,
          error: function(xhr, textStatus) {
             if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, true)) {

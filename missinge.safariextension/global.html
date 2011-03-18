@@ -233,7 +233,7 @@ function requestTimestamp(request) {
          url: request.message.url + "/api/read/json?id=" + request.message.pid,
          dataType: "text",
          tryCount: 0,
-         retryLimit: getStorage("MissingE_timestamp_retries",defaultRetries),
+         retryLimit: getStorage("MissingE_timestamps_retries",defaultRetries),
          targetId: request.message.pid,
          error: function(xhr, textStatus) {
             if (cacheServe("timestamp", request, request.message.pid,
