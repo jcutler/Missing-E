@@ -66,13 +66,17 @@ on("message", function (message) {
    accmenu = jQuery("#account_menu");
    
    if (accmenu.length > 0) {
-      setlnk = jQuery('<a href="#" onclick="return false;">Missing ' +
+      setlnk = jQuery('<a href="' + message.extensionURL +
+                      'options.html" onclick="return false;" ' +
+                      'target="_blank">Missing ' +
                       '<img src="' + message.extensionURL +
                       'missinge16.png" style="' +
                       'vertical-align:bottom;" /></a>');
-      setlnk.click(function() {
-         postMessage({greeting: "open", url: "OPTIONS",
-                      width: getPageWidth(), height: getPageHeight()});
+      setlnk.mouseup(function(e) {
+         if (e.which === 1 || e.which === 2) {
+            postMessage({greeting: "open", url: "OPTIONS",
+                         width: getPageWidth(), height: getPageHeight()});
+         }
       }).insertBefore(accmenu.find('a:last'));
    }
 });
