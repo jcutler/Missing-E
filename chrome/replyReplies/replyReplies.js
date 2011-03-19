@@ -144,17 +144,26 @@ document.addEventListener("DOMNodeInserted", function(e) {
    else {
       return false;
    }
+   if (!node.closest('li.post').hasClass('is_mine')) {
+      return false;
+   }
    node.find('li').each(function() {
       var item = $(this);
       var klass = "";
-      item.css('background-image', 'none');
       if (item.hasClass('like')) { klass = "like"; }
       else if (item.hasClass('reblog')) { klass = "reblog"; }
       else if (item.hasClass('answer')) { klass = "answer"; }
       else if (item.hasClass('reply')) { klass = "reply"; }
-      if (klass !== "") {
+
+      if (klass === "" ||
+          (klass === "reblog" && item.find('a.tumblelog').length === 0) ||
+          (klass !== "reblog" && item.find('span.action a').length === 0)) {
+         return true;
+      }
+      else {
          item.append('<div class="notification_type_icon ' +
                      klass + '_icon"></div>');
+         item.css('background-image', 'none');
       }
    });
 });
@@ -175,7 +184,6 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       return;
    }
    $(this).toggleClass("s113977_rt",true);
-   $(this).parent().css("border","1px solid white");
    chrome.extension.sendRequest({greeting: "settings",
                                  component: "replyReplies"},
                                  function(response) {
@@ -243,7 +251,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             en = newcode.indexOf("</a>",st)+4;
             newcode = newcode.substring(0,st) + newcode.substr(en);
          }
-         thecode.push("<p>" + newcode.replace(/\s*$/,"") + "</p>");
+         newcode = newcode.replace(/\s*$/,'');
 
          if ($(arr[i]).parent().hasClass('note')) {
             var lang = $('html').attr('lang');
@@ -252,7 +260,44 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             var ans = $(arr[i]).parent();
             var type, chk, anstype;
             var posttxt = "";
+            var anstxt = "";
             var postlnk = main.find('a.permalink').attr('href');
+            if (main.find('div.post_question').length > 0) {
+               posttxt = main.find('div.post_question').text();
+            }
+            else if (main.find('div.post_title').length > 0) {
+               posttxt = main.find('div.post_title').text();
+            }
+            else if (main.find('div.caption').length > 0) {
+               posttxt = main.find('div.caption').text();
+            }
+            else {
+               var copy = main.find('div.post_content').clone();
+               copy.find('script').remove();
+               posttxt = copy.text();
+            }
+            posttxt = posttxt.replace(/\s+/g,' ')
+                        .replace(/^\s/,'').replace(/\s$/,'');
+
+            if (posttxt.length > 50) {
+               if (/\s/.test(posttxt.charAt(50))) {
+                  posttxt = posttxt.substr(0,50);
+               }
+               else {
+                  posttxt = posttxt.substr(0,50);
+                  if (/\s/.test(posttxt)) {
+                     var ls = posttxt.lastIndexOf(' ');
+                     posttxt = posttxt.substr(0,ls);
+                  }
+               }
+               posttxt += '...';
+            }
+
+            if (ans.find('span.answer_content').length > 0) {
+               anstxt = ans.find('span.answer_content').text()
+                           .replace(/\s+/,' ');
+            }
+
             if (main.hasClass('regular') || main.hasClass('note')) {
                type = "text";
             }
@@ -273,38 +318,54 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             newcode = newcode.replace(/<div class="clear"><\/div>/,'');
             qt = "";
             reblnk = "";
+            console.log(newcode);
             a = newcode.indexOf('</a>') + 4;
-            img = newcode.substring(0,a) + '&nbsp;';
+            if (showAvatars) {
+               img = newcode.substring(0,a) + '&nbsp;';
+            }
             b = newcode.indexOf('</a>',a) + 4;
-            user = newcode.substring(a,b);
-            user = user.replace(/^&nbsp;/,'').replace(/<span [^>]*>/,'');
+            if (showAvatars) {
+               user = newcode.substring(a,b);
+               user = user.replace(/^&nbsp;/,'').replace(/<span [^>]*>/,'');
+            }
+            else {
+               user = newcode.match(/<a href[^>]*>[a-zA-Z0-9\-_]*<\/a>/)[0];
+            }
             z = newcode.indexOf('</span>',a) + 7;
             a = newcode.indexOf('<blockquote>');
             if (a !== -1) {
                qt = newcode.substr(z);
             }
             img = img.replace(/^\s*/,'').replace(/\s*$/,'')
-                  .replace(/\s+/g,' ');
+                  .replace(/\s+/g,' ').replace(/&nbsp;$/,'');
             user = user.replace(/^\s*/,'').replace(/\s*$/,'')
                   .replace(/\s+/g,' ');
             qt = qt.replace(/^\s*/,'').replace(/\s*$/,'')
                   .replace(/\s+/g,' ');
-            
+            console.log("img\n" + img);
+            console.log("user\n" + user);
+            console.log("qt\n" + qt);
             chk = qt.match(/<a href="([^"]*)/);
             if (chk && chk.length > 1) {
                reblnk = chk[1];
-               qt = qt.replace(/<a href="[^>]*>/,'').replace(/<\/a>/,'');
             }
 
-            newcode = img;
+            if (showAvatars) {
+               newcode = img;
+            }
+            else {
+               newcode = '';
+            }
             for (x=0; x<langNotification[lang][anstype].length; x++) {
                if (anstype === 'reblog' &&
-                   x === langNotification[lang].reblogIndex) {
+                   x === langNotification[lang].reblogIndex &&
+                   reblnk !== "") {
                   newcode += ' <a href="' + reblnk + '">' +
                      langNotification[lang][anstype][x] + '</a>';
                }
                else if (langNotification[lang][anstype][x] === "U") {
-                  newcode += ' <strong>' + user;
+                  if (newcode !== '') { newcode += '&nbsp;'; }
+                  newcode += '<strong>' + user;
                }
                else if (langNotification[lang][anstype][x] === "P") {
                   var y;
@@ -332,10 +393,16 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                   newcode += ' ' + langNotification[lang][anstype][x];
                }
             }
-            newcode += '</strong>: <em>' + posttxt + '</em> ' + qt;
+            newcode += ':</strong> <em><a href="' + postlnk + '">' +
+                        posttxt + '</a></em> ';
+            if (qt !== '') { newcode += qt; }
+            else if (anstxt !== '') {
+               newcode += '<blockquote>' + anstxt + '</blockquote>';
+            }
+            newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
             console.log(newcode);
-            return false;
          }
+         thecode.push('<p>' + newcode + '</p>');
       }
 
       var code = thecode.join("") + "\n<p><br /></p>";
