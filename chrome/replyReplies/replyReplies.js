@@ -22,6 +22,79 @@
  */
 
 /*global chrome, $, localStorage, window */
+var langPosts = {
+                  en: {
+                       text:  ["your", "post"],
+                       photo: ["your", "photo"],
+                       quote: ["your", "quote"],
+                       link:  ["your", "link"],
+                       conversation:  ["your", "chat"],
+                       audio: ["your", "audio post"],
+                       video: ["your", "video"],
+                       question: ["your", "question"]
+                      },
+                  de: {
+                       text:  ["deinen", "Eintrag"],
+                       photo: ["dein", "Foto"],
+                       quote: ["dein", "Zitat"],
+                       link:  ["dein", "Link"],
+                       conversation:  ["dein", "Chat"],
+                       audio: ["dein", "audio post"],
+                       video: ["dein", "Video"],
+                       question: ["deine", "Frage"],
+                      },
+                  fr: {
+                       text:  ["votre", "billet"],
+                       photo: ["votre", "photo"],
+                       quote: ["votre", "citation"],
+                       link:  ["votre", "lien"],
+                       conversation:  ["votre", "discussion"],
+                       audio: ["votre", "billet audio"],
+                       video: ["votre", "vidéo"],
+                       question: ["votre", "question"]
+                      },
+                  it: {
+                       text:  ["il", "tuo", "post"],
+                       photo: ["la", "tua", "photo"],
+                       quote: ["il", "tuo", "quote"],
+                       link:  ["il", "tuo", "link"],
+                       conversation:  ["la", "tua", "chat"],
+                       audio: ["il", "tuo", "audio post"],
+                       video: ["il", "tuo", "video"],
+                       question: ["la", "tua", "domanda"]
+                      }
+};
+
+var langNotification = {
+                  en: {
+                       like:   ["U", "liked", "P"],
+                       reblog: ["U", "reblogged", "P"],
+                       reblogIndex: 1,
+                       answer: ["U", "answered", "P"],
+                       reply:  ["U", "replied to", "P"]
+                      },
+                  de: {
+                       like:   ["U", "hat", "P", "als Favorit markiert"],
+                       reblog: ["U", "hat", "P", "gerebloggt"],
+                       reblogIndex: 3,
+                       answer: ["U", "hat", "P", "beantwortet"],
+                       reply:  ["U", "hat auf", "P", "geantwortet"]
+                      },
+                  fr: {
+                       like:   ["U", "a ajouté", "P", "à ses coups de cur"],
+                       reblog: ["U", "a", "reblogué", "P"],
+                       reblogIndex: 2,
+                       answer: ["U", "a répondu à", "P"],
+                       reply:  ["U", "a réagi à", "P"]
+                      },
+                  it: {
+                       like:   ["A", "U", "piace", "P"],
+                       reblog: ["U", "ha", "rebloggato", "P"],
+                       reblogIndex: 2,
+                       answer: ["U", "ha riposto", "P"],
+                       reply:  ["U", "ha riposto", "P"]
+                      }
+};
 
 function reply_getValue() {
    var retval = localStorage.getItem("trr_ReplyText");
@@ -59,6 +132,33 @@ function tags_clearValue() {
    localStorage.removeItem('trr_ReplyTags');
 }
 
+document.addEventListener("DOMNodeInserted", function(e) {
+   var node = $(e.target);
+   var list;
+   if (e.target.tagName === "OL" && node.hasClass("notes")) {
+      list = node.find('li');
+   }
+   else if (e.target.tagName === "LI" && node.parent().hasClass("notes")) {
+      list = node;
+   }
+   else {
+      return false;
+   }
+   node.find('li').each(function() {
+      var item = $(this);
+      var klass = "";
+      item.css('background-image', 'none');
+      if (item.hasClass('like')) { klass = "like"; }
+      else if (item.hasClass('reblog')) { klass = "reblog"; }
+      else if (item.hasClass('answer')) { klass = "answer"; }
+      else if (item.hasClass('reply')) { klass = "reply"; }
+      if (klass !== "") {
+         item.append('<div class="notification_type_icon ' +
+                     klass + '_icon"></div>');
+      }
+   });
+});
+
 $('div.notification_type_icon').live('mousedown', function(e) {
    if (e.shiftKey) { e.preventDefault(); }
 }).live('click', function(e) {
@@ -67,10 +167,10 @@ $('div.notification_type_icon').live('mousedown', function(e) {
    if (e.shiftKey) {
       $(this).toggleClass("s113977_rt");
       if ($(this).hasClass("s113977_rt")) {
-         $(this).parent().css("border","1px solid white");
+         $(this).parent().addClass('s113977_rt_box');
       }
       else {
-         $(this).parent().css("border","");
+         $(this).parent().removeClass('s113977_rt_box');
       }
       return;
    }
@@ -88,9 +188,8 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       var addTags = replyReplies_settings.addTags;
       var size = replyReplies_settings.smallAvatars === 1 ? 16 : 64;
       for (i=arr.length-1; i>=0; i--) {
-         var st, en, nm, add;
-         $(arr.get(i)).toggleClass("s113977_rt",false);
-         $(arr.get(i)).parent().css("border","");
+         var st, en, nm, add, curr;
+         $(arr[i]).toggleClass("s113977_rt",false);
          var oldcode = $(arr[i]).parent().html();
          var link = $(arr[i]).parent().find('img.avatar');
          var newcode = "";
@@ -145,6 +244,98 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             newcode = newcode.substring(0,st) + newcode.substr(en);
          }
          thecode.push("<p>" + newcode.replace(/\s*$/,"") + "</p>");
+
+         if ($(arr[i]).parent().hasClass('note')) {
+            var lang = $('html').attr('lang');
+            var a,b,z,img,user,qt,reblnk,x;
+            var main = $(arr[i]).closest('li.post');
+            var ans = $(arr[i]).parent();
+            var type, chk, anstype;
+            var posttxt = "";
+            var postlnk = main.find('a.permalink').attr('href');
+            if (main.hasClass('regular') || main.hasClass('note')) {
+               type = "text";
+            }
+            else if (main.hasClass('quote')) { type = "quote"; }
+            else if (main.hasClass('photo')) { type = "photo"; }
+            else if (main.hasClass('link')) { type = "link"; }
+            else if (main.hasClass('conversation')) { type = "conversation"; }
+            else if (main.hasClass('audio')) { type = "audio"; }
+            else if (main.hasClass('video')) { type = "video"; }
+            
+            if (ans.hasClass('reblog')) { anstype = "reblog"; }
+            else if (ans.hasClass('reply')) { anstype = "reply"; }
+            else if (ans.hasClass('answer')) {
+               anstype = "answer";
+               type = "question";
+            }
+            else if (ans.hasClass('like')) { anstype = "like"; }
+            newcode = newcode.replace(/<div class="clear"><\/div>/,'');
+            qt = "";
+            reblnk = "";
+            a = newcode.indexOf('</a>') + 4;
+            img = newcode.substring(0,a) + '&nbsp;';
+            b = newcode.indexOf('</a>',a) + 4;
+            user = newcode.substring(a,b);
+            user = user.replace(/^&nbsp;/,'').replace(/<span [^>]*>/,'');
+            z = newcode.indexOf('</span>',a) + 7;
+            a = newcode.indexOf('<blockquote>');
+            if (a !== -1) {
+               qt = newcode.substr(z);
+            }
+            img = img.replace(/^\s*/,'').replace(/\s*$/,'')
+                  .replace(/\s+/g,' ');
+            user = user.replace(/^\s*/,'').replace(/\s*$/,'')
+                  .replace(/\s+/g,' ');
+            qt = qt.replace(/^\s*/,'').replace(/\s*$/,'')
+                  .replace(/\s+/g,' ');
+            
+            chk = qt.match(/<a href="([^"]*)/);
+            if (chk && chk.length > 1) {
+               reblnk = chk[1];
+               qt = qt.replace(/<a href="[^>]*>/,'').replace(/<\/a>/,'');
+            }
+
+            newcode = img;
+            for (x=0; x<langNotification[lang][anstype].length; x++) {
+               if (anstype === 'reblog' &&
+                   x === langNotification[lang].reblogIndex) {
+                  newcode += ' <a href="' + reblnk + '">' +
+                     langNotification[lang][anstype][x] + '</a>';
+               }
+               else if (langNotification[lang][anstype][x] === "U") {
+                  newcode += ' <strong>' + user;
+               }
+               else if (langNotification[lang][anstype][x] === "P") {
+                  var y;
+                  for (y=0; y<langPosts[lang][type].length; y++) {
+                     newcode += ' ';
+                     if (y === 0 && lang === 'it' &&
+                         (anstype === "answer" || anstype === "reply")) {
+                        if (langPosts.it[type][0] === 'il') {
+                           newcode += 'al';
+                        }
+                        else {
+                           newcode += 'alla';
+                        }
+                     }
+                     else if (y === langPosts[lang][type].length - 1) {
+                        newcode += '<a href="' + postlnk + '">' +
+                           langPosts[lang][type][y] + '</a>';
+                     }
+                     else {
+                        newcode += langPosts[lang][type][y];
+                     }
+                  }
+               }
+               else {
+                  newcode += ' ' + langNotification[lang][anstype][x];
+               }
+            }
+            newcode += '</strong>: <em>' + posttxt + '</em> ' + qt;
+            console.log(newcode);
+            return false;
+         }
       }
 
       var code = thecode.join("") + "\n<p><br /></p>";
@@ -153,7 +344,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                      .replace(/class="nsfwdone"/,'')
                      .replace(/class="nsfwed"/,'');
       }
-
+      
       reply_setValue(code);
       tags_setValue(tags);
 
