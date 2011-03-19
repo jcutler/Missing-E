@@ -909,7 +909,8 @@ function doshow(component) {
 <div class="post_content">
 <form id="postingFixes_options">
 <div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Posting Fixes</div>
-<p>A few convenient interface fixes for new Tumblr posts.</p>
+<div class="post_thumb"><a href="postingFixes/screen.png" rel="facebox"><img src="postingFixes/thumb.png" /><br />Screenshot</a></div>
+<p>A few convenient interface fixes for new Tumblr posts (including adding buttons to automatically queue or save posts as drafts).</p>
 <table class="options_table">
 <tr><td class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="even">Allow switching back to uploading images on photo posts<br /><ul><small><li>By default, Tumblr allows you to switch to a URL with a "<em>Use a URL instead</em>" option, this will allow you to switch back with a "<em>Upload images instead</em>" option.</li></small></ul></td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="odd">Allow inline image uploading for all post types (not just text posts)<br /><ul><li><small>Adds an "<em><strong>+ Upload Photo</strong></em>" option to all posting pages (including the Tumblr <a href="http://www.tumblr.com/goodies" target="_blank">bookmarklet</a>)</small></li><li><small>Much like the built-in "<strong><em>+ Upload Photo</em></strong>" options, these don't always load when Tumblr is suffering from errors.</small></li></ul></td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_addUploader" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
 </form>
