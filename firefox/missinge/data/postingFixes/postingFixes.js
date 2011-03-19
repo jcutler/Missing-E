@@ -83,7 +83,9 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                          extensionURL + 'postingFixes/postingFixes.css" />');
 
-   if (jQuery('#post_state').length > 0) {
+   if (jQuery('#post_state').length > 0 &&
+       jQuery('#post_state')
+         .children('*[value!="0"][value!="private"]').length > 2) {
       var btn = jQuery('#save_button');
       var lang = jQuery('html').attr('lang');
 

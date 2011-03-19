@@ -81,7 +81,9 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                          }
    };
 
-   if ($('#post_state').length > 0) {
+   if ($('#post_state').length > 0 &&
+       $('#post_state')
+         .children('*[value!="0"][value!="private"]').length > 2) {
       var btn = $('#save_button');
       var lang = $('html').attr('lang');
 
