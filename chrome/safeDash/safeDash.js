@@ -254,7 +254,8 @@ function doHide(item) {
          node.parent().css('visibility','hidden');
       }
    }
-   else if (item.tagName === 'OL' && node.hasClass('notes')) {
+   else if ((item.tagName === 'OL' && node.hasClass('notes')) ||
+            (item.tagName === 'LI' && node.parent().hasClass('notes'))) {
       $('img:not(.nsfwdone)',node).each(function(){
          var klass = "";
          var me = $(this);
