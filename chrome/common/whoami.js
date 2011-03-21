@@ -41,20 +41,4 @@ if ((window.top === window &&
       }
       console.log(info);
    });
-
-   /*
-   var scr = document.createElement('script');
-   scr.setAttribute('type','text/javascript');
-   scr.innerHTML = 'Ajax.Responders.register({' +
-      'onComplete: function(response){' +
-         'if ((/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/.test(response.url)) && ' +
-              'response.transport.status === 200 && ' +
-              '!(/<!-- START POSTS -->/.test(response.transport.responseText))) {' +
-            'console.log("SAVED BY ME!");' +
-            'response.options.onFailure();' +
-         '}' +
-      '}' +
-   '});';
-   document.getElementsByTagName('head')[0].appendChild(scr);
-   */
 }
