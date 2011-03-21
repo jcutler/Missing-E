@@ -318,7 +318,6 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             newcode = newcode.replace(/<div class="clear"><\/div>/,'');
             qt = "";
             reblnk = "";
-            console.log(newcode);
             a = newcode.indexOf('</a>') + 4;
             if (showAvatars) {
                img = newcode.substring(0,a) + '&nbsp;';
@@ -342,12 +341,10 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                   .replace(/\s+/g,' ');
             qt = qt.replace(/^\s*/,'').replace(/\s*$/,'')
                   .replace(/\s+/g,' ');
-            console.log("img\n" + img);
-            console.log("user\n" + user);
-            console.log("qt\n" + qt);
             chk = qt.match(/<a href="([^"]*)/);
             if (chk && chk.length > 1) {
                reblnk = chk[1];
+               qt = qt.replace(/<a href=[^>]*>/,'').replace(/<\/a>/,'');
             }
 
             if (showAvatars) {
@@ -400,7 +397,6 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                newcode += '<blockquote>' + anstxt + '</blockquote>';
             }
             newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
-            console.log(newcode);
          }
          thecode.push('<p>' + newcode + '</p>');
       }
