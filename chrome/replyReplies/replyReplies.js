@@ -133,7 +133,6 @@ function tags_clearValue() {
 }
 
 document.addEventListener("DOMNodeInserted", function(e) {
-   console.log(e.target);
    var node = $(e.target);
    var list;
    if (e.target.tagName === "OL" && node.hasClass("notes")) {
@@ -199,6 +198,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       for (i=arr.length-1; i>=0; i--) {
          var st, en, nm, add, curr;
          $(arr[i]).toggleClass("s113977_rt",false);
+         $(arr[i]).parent().removeClass('s113977_rt_box');
          var oldcode = $(arr[i]).parent().html();
          var link = $(arr[i]).parent().find('img.avatar');
          var newcode = "";
