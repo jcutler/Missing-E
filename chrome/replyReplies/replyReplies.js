@@ -166,7 +166,7 @@ document.addEventListener("DOMNodeInserted", function(e) {
          item.css('background-image', 'none');
       }
    });
-});
+}, false);
 
 $('div.notification_type_icon').live('mousedown', function(e) {
    if (e.shiftKey) { e.preventDefault(); }
@@ -196,7 +196,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       var addTags = replyReplies_settings.addTags;
       var size = replyReplies_settings.smallAvatars === 1 ? 16 : 64;
       for (i=arr.length-1; i>=0; i--) {
-         var st, en, nm, add, curr;
+         var st, en, nm, add;
          $(arr[i]).toggleClass("s113977_rt",false);
          $(arr[i]).parent().removeClass('s113977_rt_box');
          var oldcode = $(arr[i]).parent().html();

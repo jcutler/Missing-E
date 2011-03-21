@@ -146,7 +146,7 @@ function replyRepliesSettings(response) {
    var tags = [];
    arr = $('.s113977_rt');
    for (i=arr.length-1; i>=0; i--) {
-      var st, en, nm, add, curr;
+      var st, en, nm, add;
       $(arr[i]).toggleClass("s113977_rt",false);
       $(arr[i]).parent().removeClass('s113977_rt_box');
       var oldcode = $(arr[i]).parent().html();
@@ -203,6 +203,7 @@ function replyRepliesSettings(response) {
          newcode = newcode.substring(0,st) + newcode.substr(en);
       }
       newcode = newcode.replace(/\s*$/,"");
+
       if ($(arr[i]).parent().hasClass('note')) {
          var lang = $('html').attr('lang');
          var a,b,z,img,user,qt,reblnk,x;
@@ -257,7 +258,7 @@ function replyRepliesSettings(response) {
          else if (main.hasClass('conversation')) { type = "conversation"; }
          else if (main.hasClass('audio')) { type = "audio"; }
          else if (main.hasClass('video')) { type = "video"; }
-         
+
          if (ans.hasClass('reblog')) { anstype = "reblog"; }
          else if (ans.hasClass('reply')) { anstype = "reply"; }
          else if (ans.hasClass('answer')) {
@@ -405,7 +406,7 @@ function MissingE_replyReplies_doStartup() {
          else if (item.hasClass('reblog')) { klass = "reblog"; }
          else if (item.hasClass('answer')) { klass = "answer"; }
          else if (item.hasClass('reply')) { klass = "reply"; }
-   
+
          if (klass === "" ||
              (klass === "reblog" && item.find('a.tumblelog').length === 0) ||
              (klass !== "reblog" && item.find('span.action a').length === 0)) {
@@ -417,7 +418,7 @@ function MissingE_replyReplies_doStartup() {
             item.css('background-image', 'none');
          }
       });
-   });
+   }, false);
 
    $('div.notification_type_icon').live('mousedown', function(e) {
       if (e.shiftKey) { e.preventDefault(); }
