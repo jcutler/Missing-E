@@ -133,6 +133,7 @@ function tags_clearValue() {
 }
 
 document.addEventListener("DOMNodeInserted", function(e) {
+   console.log(e.target);
    var node = $(e.target);
    var list;
    if (e.target.tagName === "OL" && node.hasClass("notes")) {
@@ -147,7 +148,7 @@ document.addEventListener("DOMNodeInserted", function(e) {
    if (!node.closest('li.post').hasClass('is_mine')) {
       return false;
    }
-   node.find('li').each(function() {
+   list.each(function() {
       var item = $(this);
       var klass = "";
       if (item.hasClass('like')) { klass = "like"; }
@@ -390,8 +391,15 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                   newcode += ' ' + langNotification[lang][anstype][x];
                }
             }
-            newcode += ':</strong> <em><a href="' + postlnk + '">' +
-                        posttxt + '</a></em> ';
+            newcode += ':</strong> ';
+            if (anstype === "reblog"  && reblnk !== '') {
+               newcode += '<em><a href="' + reblnk + '">' + posttxt +
+                           '</a></em> ';
+            }
+            else {
+               newcode += '<em><a href="' + postlnk + '">' +
+                           posttxt + '</a></em> ';
+            }
             if (qt !== '') { newcode += qt; }
             else if (anstxt !== '') {
                newcode += '<blockquote>' + anstxt + '</blockquote>';
