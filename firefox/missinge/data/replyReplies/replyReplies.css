@@ -32,6 +32,11 @@ width:13px;
 height:12px;
 }
 
+#posts ol.notes .notification_type_icon.like_icon {
+width:14px !important;
+right:8px !important;
+}
+
 #posts .notification .notification_type_icon.reblog_icon, #posts ol.notes .notification_type_icon.reblog_icon {
 background-position:0 -40px !important;
 width:14px;
