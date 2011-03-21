@@ -341,13 +341,15 @@ function replyRepliesSettings(message) {
                newcode += ' ' + langNotification[lang][anstype][x];
             }
          }
-         newcode += ':</strong> ';
-         if (anstype === "reblog"  && reblnk !== '') {
-            newcode += '<em><a href="' + reblnk + '">' + posttxt +
+         if (posttxt === '') {
+            newcode += '</strong> ';
+         }
+         else if (anstype === "reblog"  && reblnk !== '') {
+            newcode += ':</strong> <em><a href="' + reblnk + '">' + posttxt +
                         '</a></em> ';
          }
          else {
-            newcode += '<em><a href="' + postlnk + '">' +
+            newcode += ':</strong> <em><a href="' + postlnk + '">' +
                         posttxt + '</a></em> ';
          }
          if (qt !== '') { newcode += qt; }
