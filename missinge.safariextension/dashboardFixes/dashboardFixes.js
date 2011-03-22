@@ -165,29 +165,41 @@ function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags,
    $('head').append('<script type="text/javascript">' +
       'Ajax.Responders.register({' +
          'onCreate: function(request) {' +
-            'request["timeoutId"] = window.setTimeout(function() {' +
-               'if (request.transport.readyState >= 1 && ' +
-                    'request.transport.readyState <= 3) {' +
-                  'console.log("TIMEOUT (" + request["timeoutId"] + ")");' +
-                  'request.transport.abort();' +
-                  'if (request.options["onFailure"]) {' +
-                     'request.options.onFailure(request.transport, ' +
-                                                'request.json);' +
+            'if (/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
+                 '.test(request.url)) {' +
+              'request["timeoutId"] = window.setTimeout(function() {' +
+                  'console.log("TIMEOUT " + request.url);' +
+                  'if (request.transport.readyState >= 1 && ' +
+                       'request.transport.readyState <= 3) {' +
+                     'console.log("ABORT");' +
+                     'request.transport.abort();' +
+                     'if (request.options["onFailure"]) {' +
+                        'request.options.onFailure(request.transport, ' +
+                                                   'request.json);' +
+                     '}' +
                   '}' +
-               '}' +
-            '}, 8000);' +
+               '}, 8000);' +
             'console.log("CREATING TIMEOUT for " + request.url + " (" + request["timeoutId"] + ")");' +
+            '}' +
          '},' +
          'onComplete: function(response){' +
             'console.log("DONE " + response.url);' +
-            'window.clearTimeout(request["timeoutId"]);' +
-            'if ((/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
-                  '.test(response.url)) && ' +
-                 'response.transport.status === 200 && ' +
-                 '!(/<!-- START POSTS -->/' +
-                    '.test(response.transport.responseText))) {' +
-               'if (request.options["onFailure"]) {' +
-                  'response.options.onFailure(request.transport, request.json);' +
+            'if (response["timeoutId"]) {' +
+               'window.clearTimeout(response["timeoutId"]);' +
+               'console.log(response);' +
+            '}' +
+            'if (request.options["onFailure"] &&
+                 '(/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
+                        '.test(response.url))) {' +
+               'if (response.transport.status === 200 && ' +
+                    '!(/<!-- START POSTS -->/' +
+                       '.test(response.transport.responseText))) {' +
+                  'response.options.onFailure(request.transport, ' +
+                                              'request.json);' +
+               '}' +
+               'else if (response.transport.status === 0) {' +
+                  'response.options.onFailure(request.transport, ' +
+                                              'request.json);' +
                '}' +
             '}' +
          '}' +
