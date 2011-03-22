@@ -136,7 +136,6 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
    }
 });
 
-/*** NOT READY
 $('head').append('<script type="text/javascript">' +
    'Ajax.Responders.register({' +
       'onCreate: function(request) {' +
@@ -180,4 +179,3 @@ $('head').append('<script type="text/javascript">' +
       '}' +
    '});' +
    '</script>');
-***/
