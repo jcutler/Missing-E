@@ -26,6 +26,7 @@ var langPosts = {
                   en: {
                        text:  ["your", "post"],
                        photo: ["your", "photo"],
+                       photoset: ["your", "photoset"],
                        quote: ["your", "quote"],
                        link:  ["your", "link"],
                        conversation:  ["your", "chat"],
@@ -36,6 +37,7 @@ var langPosts = {
                   de: {
                        text:  ["deinen", "Eintrag"],
                        photo: ["dein", "Foto"],
+                       photoset: ["deine", "Fotoserie"],
                        quote: ["dein", "Zitat"],
                        link:  ["dein", "Link"],
                        conversation:  ["dein", "Chat"],
@@ -46,6 +48,7 @@ var langPosts = {
                   fr: {
                        text:  ["votre", "billet"],
                        photo: ["votre", "photo"],
+                       photoset: ["votre", "diaporama"],
                        quote: ["votre", "citation"],
                        link:  ["votre", "lien"],
                        conversation:  ["votre", "discussion"],
@@ -56,6 +59,7 @@ var langPosts = {
                   it: {
                        text:  ["il", "tuo", "post"],
                        photo: ["la", "tua", "photo"],
+                       photoset: ["il", "tuo", "fotoset"],
                        quote: ["il", "tuo", "quote"],
                        link:  ["il", "tuo", "link"],
                        conversation:  ["la", "tua", "chat"],
@@ -253,7 +257,14 @@ function replyRepliesSettings(message) {
             type = "text";
          }
          else if (main.hasClass('quote')) { type = "quote"; }
-         else if (main.hasClass('photo')) { type = "photo"; }
+         else if (main.hasClass('photo')) {
+            if (main.find('embed.photoset').length > 0) {
+               type = "photoset";
+            }
+            else {
+               type = "photo";
+            }
+         }
          else if (main.hasClass('link')) { type = "link"; }
          else if (main.hasClass('conversation')) { type = "conversation"; }
          else if (main.hasClass('audio')) { type = "audio"; }
