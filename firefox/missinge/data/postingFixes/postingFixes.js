@@ -86,6 +86,9 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
    if (jQuery('#post_state').length > 0 &&
        jQuery('#post_state')
          .children('*[value!="0"][value!="private"]').length > 2) {
+      if (jQuery('#post_controls').css('position') !== 'absolute') {
+         jQuery('#post_controls').addClass('MissingE_post_controls');
+      }
       var btn = jQuery('#save_button');
       var lang = jQuery('html').attr('lang');
 
@@ -205,7 +208,7 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                         'allowtransparency="true" frameborder="0" ' +
                         'style="background-color:transparent; ' +
                         'overflow:hidden;"></iframe></div>' +
-                        '<div class="clear"></div>';
+                        '<div class="clear" style="clear:both;"></div>';
          if (h2.length > 0) {
             h2.before('<div style="height:' + h2.css("margin-top") +
                       ';"></div>').css({"float":"left","margin-top":"0"})

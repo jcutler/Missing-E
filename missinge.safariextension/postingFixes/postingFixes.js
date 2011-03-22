@@ -84,6 +84,9 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
    if ($('#post_state').length > 0 &&
        $('#post_state')
          .children('*[value!="0"][value!="private"]').length > 2) {
+      if ($('#post_controls').css('position') !== 'absolute') {
+         $('#post_controls').addClass('MissingE_post_controls');
+      }
       var btn = $('#save_button');
       var lang = $('html').attr('lang');
 
