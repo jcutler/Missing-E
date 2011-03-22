@@ -190,7 +190,7 @@ function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
                'window.clearTimeout(response["timeoutId"]);' +
                'console.log(response);' +
             '}' +
-            'if (request.options["onFailure"] &&
+            'if (request.options["onFailure"] && ' +
                  '(/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
                         '.test(response.url))) {' +
                'if (response.transport.status === 200 && ' +
