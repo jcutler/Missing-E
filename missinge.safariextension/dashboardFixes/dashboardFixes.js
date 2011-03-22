@@ -113,6 +113,7 @@ function doIcons(item) {
 
 function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags,
                                            replaceIcons) {
+   if (window.top !== window) { return false; }
    var css = document.createElement("style");
    css.setAttribute("type","text/css");
    var data = '';
@@ -160,4 +161,36 @@ function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags,
          });
       }
    }
+
+   $('head').append('<script type="text/javascript">' +
+      'Ajax.Responders.register({' +
+         'onCreate: function(request) {' +
+            'request["timeoutId"] = window.setTimeout(function() {' +
+               'if (request.transport.readyState >= 1 && ' +
+                    'request.transport.readyState <= 3) {' +
+                  'console.log("TIMEOUT (" + request["timeoutId"] + ")");' +
+                  'request.transport.abort();' +
+                  'if (request.options["onFailure"]) {' +
+                     'request.options.onFailure(request.transport, ' +
+                                                'request.json);' +
+                  '}' +
+               '}' +
+            '}, 8000);' +
+            'console.log("CREATING TIMEOUT for " + request.url + " (" + request["timeoutId"] + ")");' +
+         '},' +
+         'onComplete: function(response){' +
+            'console.log("DONE " + response.url);' +
+            'window.clearTimeout(request["timeoutId"]);' +
+            'if ((/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
+                  '.test(response.url)) && ' +
+                 'response.transport.status === 200 && ' +
+                 '!(/<!-- START POSTS -->/' +
+                    '.test(response.transport.responseText))) {' +
+               'if (request.options["onFailure"]) {' +
+                  'response.options.onFailure(request.transport, request.json);' +
+               '}' +
+            '}' +
+         '}' +
+      '});' +
+      '</script>');
 }
