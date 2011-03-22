@@ -161,7 +161,7 @@ function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags,
          });
       }
    }
-
+/*** NOT READY
    $('head').append('<script type="text/javascript">' +
       'Ajax.Responders.register({' +
          'onCreate: function(request) {' +
@@ -205,4 +205,5 @@ function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags,
          '}' +
       '});' +
       '</script>');
+***/
 }

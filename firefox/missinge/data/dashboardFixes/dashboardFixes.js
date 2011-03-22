@@ -163,7 +163,7 @@ function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
          });
       }
    }
-
+/*** NOT READY
    jQuery('head').append('<script type="text/javascript">' +
       'Ajax.Responders.register({' +
          'onCreate: function(request) {' +
@@ -207,4 +207,5 @@ function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
          '}' +
       '});' +
       '</script>');
+***/
 }
