@@ -114,7 +114,8 @@ function doIcons(item) {
 }
 
 function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
-                                           wrapTags, replaceIcons) {
+                                           wrapTags, replaceIcons, timeoutAJAX,
+                                           timeoutLength) {
    var css = document.createElement("style");
    css.setAttribute("type","text/css");
    var data = '';
@@ -164,47 +165,43 @@ function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
       }
    }
 
-   jQuery('head').append('<script type="text/javascript">' +
-      'Ajax.Responders.register({' +
-         'onCreate: function(request) {' +
-            'if (/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
-                 '.test(request.url)) {' +
-              'request["timeoutId"] = window.setTimeout(function() {' +
-                  'console.log("TIMEOUT " + request.url);' +
-                  'if (request.transport.readyState >= 1 && ' +
-                       'request.transport.readyState <= 3) {' +
-                     'console.log("ABORT");' +
-                     'request.transport.abort();' +
-                     'if (request.options["onFailure"]) {' +
-                        'request.options.onFailure(request.transport, ' +
-                                                   'request.json);' +
+   if (timeoutAJAX === 1) {
+      var timeout = timeoutLength * 1000;
+      jQuery('head').append('<script type="text/javascript">' +
+         'Ajax.Responders.register({' +
+            'onCreate: function(request) {' +
+               'if (/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
+                    '.test(request.url)) {' +
+                 'request["timeoutId"] = window.setTimeout(function() {' +
+                     'if ((request.transport.readyState >= 1 && ' +
+                          'request.transport.readyState <= 3) || ' +
+                          '!(/<!-- START POSTS -->/' +
+                              '.test(request.transport.responseText))) {' +
+                        'request.transport.abort();' +
+                        'if (request.options["onFailure"]) {' +
+                           'request.options.onFailure(request.transport, ' +
+                                                      'request.json);' +
+                        '}' +
                      '}' +
+                  '}, ' + timeout + ');' +
+               '}' +
+            '},' +
+            'onComplete: function(response){' +
+               'if (response["timeoutId"]) {' +
+                  'window.clearTimeout(response["timeoutId"]);' +
+               '}' +
+               'if (response.options["onFailure"] && ' +
+                    '(/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
+                           '.test(response.url))) {' +
+                  'if (request.transport.status === 200 && ' +
+                       '!(/<!-- START POSTS -->/' +
+                           '.test(response.transport.responseText))) {' +
+                     'response.options.onFailure(response.transport, ' +
+                                                 'response.json);' +
                   '}' +
-               '}, 8000);' +
-            'console.log("CREATING TIMEOUT for " + request.url + " (" + request["timeoutId"] + ")");' +
-            '}' +
-         '},' +
-         'onComplete: function(response){' +
-            'console.log("DONE " + response.url);' +
-            'if (response["timeoutId"]) {' +
-               'window.clearTimeout(response["timeoutId"]);' +
-               'console.log(response);' +
-            '}' +
-            'if (request.options["onFailure"] && ' +
-                 '(/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
-                        '.test(response.url))) {' +
-               'if (response.transport.status === 200 && ' +
-                    '!(/<!-- START POSTS -->/' +
-                       '.test(response.transport.responseText))) {' +
-                  'response.options.onFailure(request.transport, ' +
-                                              'request.json);' +
-               '}' +
-               'else if (response.transport.status === 0) {' +
-                  'response.options.onFailure(request.transport, ' +
-                                              'request.json);' +
                '}' +
             '}' +
-         '}' +
-      '});' +
-      '</script>');
+         '});' +
+         '</script>');
+   }
 }

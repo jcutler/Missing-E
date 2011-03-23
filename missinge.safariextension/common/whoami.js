@@ -143,7 +143,9 @@ function settings_startup(response) {
    else if (response.message.component === "dashboardFixes") {
       MissingE_dashboardFixes_doStartup(response.message.reblogQuoteFit,
                                         response.message.wrapTags,
-                                        response.message.replaceIcons);
+                                        response.message.replaceIcons,
+                                        response.message.timeoutAJAX,
+                                        response.message.timeoutLength);
    }
 }
 

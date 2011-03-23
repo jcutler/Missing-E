@@ -31,7 +31,11 @@ var data = require("self").data;
 var Request = require("request").Request;
 var timer = require("timer");
 
+var defaultTimeout = 10;
+var minTimeout = 5;
+var maxTimeout = 120;
 var defaultRetries = 10;
+var minRetries = 0;
 var maxRetries = 99;
 var maxActiveAjax = 15;
 var activeAjax = 0;
@@ -435,6 +439,8 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
       settings.MissingE_dashboardFixes_replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
+      settings.MissingE_dashboardFixes_timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
+      settings.MissingE_dashboardFixes_timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",defaultTimeout);
       settings.MissingE_magnifier_retries = getStorage("MissingE_magnifier_retries",defaultRetries);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
@@ -469,6 +475,8 @@ function handleMessage(message, myWorker) {
             settings.reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
             settings.wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
             settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
+            settings.timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
+            settings.timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",defaultTimeout);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);

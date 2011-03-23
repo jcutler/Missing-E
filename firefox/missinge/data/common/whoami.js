@@ -152,7 +152,9 @@ function settings_startup(message) {
       MissingE_dashboardFixes_doStartup(message.extensionURL,
                                         message.reblogQuoteFit,
                                         message.wrapTags,
-                                        message.replaceIcons);
+                                        message.replaceIcons,
+                                        message.timeoutAJAX,
+                                        message.timeoutLength);
    }
 }
 

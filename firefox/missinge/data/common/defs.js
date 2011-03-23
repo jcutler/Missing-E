@@ -21,5 +21,9 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+var defaultTimeout = 10;
+var minTimeout = 5;
+var maxTimeout = 120;
 var defaultRetries = 10;
+var minRetries = 0;
 var maxRetries = 99;

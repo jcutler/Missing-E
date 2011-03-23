@@ -442,6 +442,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       switch(request.component) {
          case "dashboardFixes":
             settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
+            settings.timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
+            settings.timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",10);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);

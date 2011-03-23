@@ -1,5 +1,10 @@
 var all_settings;
+
+var defaultTimeout = 10;
+var minTimeout = 5;
+var maxTimeout = 120;
 var defaultRetries = 10;
+var minRetries = 0;
 var maxRetries = 99;
 
 jQuery(document).ready(function (){
@@ -39,16 +44,25 @@ jQuery(document).ready(function (){
    });
 
    jQuery('input.setting_retry').bind("change", function() {
-      doSetting(this, true, defaultRetries, maxRetries);
+      doSetting(this, true, defaultRetries, minRetries, maxRetries);
    }).bind('keyup', function(e) {
-      doKeyUp(e, this, true, defaultRetries, maxRetries);
+      doKeyUp(e, this, true, defaultRetries, minRetries, maxRetries);
+   });
+
+   jQuery('input.setting_timeout').bind("change", function() {
+      doSetting(this, true, defaultTimeout, minTimeout, maxTimeout);
+   }).bind('keyup', function(e) {
+      doKeyUp(e, this, true, defaultTimeout, minTimeout, maxTimeout);
    });
 
    jQuery('span.resetter').click(function() {
       if (this.id === "prefix-resetter") {
          resetPrefix(this);
       }
-      else {
+      else if (jQuery(this).hasClass('timeout_resetter')) {
+         resetTimeout(this);
+      }
+      else if (jQuery(this).hasClass('retry_resetter')) {
          resetRetries(this);
       }
    });
@@ -85,13 +99,13 @@ function trim(str) {
    return str.replace(/^\s+/,'').replace(/\s+$/,'');
 }
 
-function doKeyUp(e, obj, isNumber, defaultValue) {
+function doKeyUp(e, obj, isNumber, defaultValue, min, max) {
    var key = e.which;
    if (key < 33 || key > 46)
-      doSetting(obj, isNumber, defaultValue);
+      doSetting(obj, isNumber, defaultValue, min, max);
 }
 
-function doSetting(obj, isNumber, defaultValue) {
+function doSetting(obj, isNumber, defaultValue, min, max) {
    if (obj.type == "checkbox")
       setStorage(obj.name, (obj.checked ? 1 : 0));
    else if (obj.type == "radio")
@@ -104,10 +118,10 @@ function doSetting(obj, isNumber, defaultValue) {
          }
          else {
             var num;
-            if (obj.value == '') num = 0;
+            if (obj.value == '') num = min;
             else num = parseInt(obj.value);
-            if (num < 0) num = 0;
-            if (num > 99) num = 99;
+            if (num < min) num = min;
+            if (num > max) num = max;
             obj.value = num;
             setStorage(obj.name, num);
          }
@@ -197,6 +211,11 @@ function loadSettings() {
             frm.MissingE_dashboardFixes_replaceIcons.checked = true;
          else
             frm.MissingE_dashboardFixes_replaceIcons.checked = false;
+         if (getStorage('MissingE_dashboardFixes_timeoutAJAX', 1) == 1)
+            frm.MissingE_dashboardFixes_timeoutAJAX.checked = true;
+         else
+            frm.MissingE_dashboardFixes_timeoutAJAX.checked = false;
+         frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
       }
       else if (v == "postingFixes") {
          if (getStorage('MissingE_postingFixes_photoReplies',1) == 1)
@@ -241,7 +260,13 @@ function resetPrefix() {
 function resetRetries(obj) {
    var input = jQuery(obj).siblings('input:text');
    input.val(defaultRetries);
-   doSetting(input.get(0), true, defaultRetries);
+   doSetting(input.get(0), true, defaultRetries, minRetries, maxRetries);
+}
+
+function resetTimeout(obj) {
+   var input = jQuery(obj).siblings('input:text');
+   input.val(defaultTimeout);
+   doSetting(input.get(0), true, defaultTimeout, minTimeout, maxTimeout);
 }
 
 function toggle(obj) {
