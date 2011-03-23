@@ -511,7 +511,9 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/submissions/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) ||
+          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
             activeScripts.dashLinksToTabs = true;
@@ -553,7 +555,9 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) ||
+          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(message.url))) {
@@ -640,7 +644,8 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url))) {
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(message.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
          }

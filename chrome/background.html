@@ -485,7 +485,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
+          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(sender.tab.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
             activeScripts.dashLinksToTabs = true;
@@ -538,7 +540,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
+          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(sender.tab.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url)) {
@@ -632,7 +636,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(sender.tab.url))) {
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(sender.tab.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(sender.tab.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "timestamps/timestamps.js"});
