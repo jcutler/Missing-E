@@ -26,18 +26,6 @@
 function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
    var node = e.target;
    if (node === undefined || node === null) { return false; }
-   if (/^#/.test($(node).attr('href'))) { return false; }
-   var urlhash = $(node).attr('href').match(/^([^#]*)#/);
-   var prehash = $(node).attr('href');
-   if (urlhash !== undefined && urlhash !== null && urlhash.length > 1) {
-      prehash = urlhash[1];
-   }
-   var lochash = location.href.match(/^([^#]*)#/);
-   var prelochash = location.href;
-   if (lochash !== undefined && lochash !== null && lochash.length > 1) {
-      prelochash = lochash[1];
-   }
-   if (prehash === prelochash) { return false; }
 
    if (newPostTabs !== 1 &&
        $(node).parents('#new_post').length > 0) {
@@ -62,9 +50,19 @@ function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
       }
    }
    if (node === null || node === this) { return false; }
-   if (!/^#/.test(node.href)) {
-      node.target='_blank';
+   if (/^#/.test($(node).attr('href'))) { return false; }
+   var urlhash = $(node).attr('href').match(/^([^#]*)#/);
+   var prehash = $(node).attr('href');
+   if (urlhash !== undefined && urlhash !== null && urlhash.length > 1) {
+      prehash = urlhash[1];
    }
+   var lochash = location.href.match(/^([^#]*)#/);
+   var prelochash = location.href;
+   if (lochash !== undefined && lochash !== null && lochash.length > 1) {
+      prelochash = lochash[1];
+   }
+   if (prehash === prelochash) { return false; }
+   node.target='_blank';
    return true;
 }
 
