@@ -18,14 +18,31 @@ margin:1px 0 1px 0 !important;
 width:100% !important;
 }
 
+#bookmarklet_index #MissingE_postMenu {
+display:none;
+margin-bottom:0;
+}
+
+#bookmarklet_index #MissingE_postMenu button {
+margin:1px 2px 1px 0 !important;
+height:auto !important;
+line-height:normal !important;
+}
+
 #save_button:hover + #MissingE_postMenu {
 visibility:visible;
 }
 
 #MissingE_postMenu:hover {
-visibility:visible;
+visibility:visible !important;
+display:block !important;
 }
 
 #MissingE_postMenu div.current {
 display:none;
+}
+
+#post_controls input:hover + #MissingE_postMenu {
+visibility:visible;
+display:block;
 }

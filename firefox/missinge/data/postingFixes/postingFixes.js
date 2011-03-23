@@ -42,6 +42,20 @@ function addAskUploader(obj) {
    }
 }
 
+function changeButtonText(val, lang, submitText) {
+   var text;
+   if (val === '2') {
+      text = submitText[lang].queue;
+   }
+   else if (val === '1') {
+      text = submitText[lang].draft;
+   }
+   else {
+      text = submitText[lang].publish;
+   }
+   jQuery('#post_controls input[type="submit"]:first').val(text);
+}
+
 function showHideButtons(newbtns, val) {
    var tofind;
    newbtns.find('.current').removeClass('current');
@@ -85,12 +99,33 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
 
    if (jQuery('#post_state').length > 0 &&
        jQuery('#post_state')
-         .children('*[value!="0"][value!="private"]').length > 2) {
+         .children('*[value="0"],*[value="1"],*[value="2"]').length >= 3) {
       if (jQuery('#post_controls').css('position') !== 'absolute') {
          jQuery('#post_controls').addClass('MissingE_post_controls');
       }
-      var btn = jQuery('#save_button');
+
       var lang = jQuery('html').attr('lang');
+      var btn;
+      var bottom;
+      var isShare;
+
+      if (jQuery('body').attr('id') === 'bookmarklet_index') {
+         isShare = true;
+         btn = jQuery('#post_controls input[type="submit"]');
+         var bottom = jQuery('#post_controls').outerHeight()/2 +
+            jQuery('#post_controls')
+               .find('input[type="submit"]').outerHeight()/2 +
+            2;
+         bottom = Math.round(bottom);
+         if (jQuery('#post_state').val() === '0') {
+            jQuery('#post_controls input[type="submit"]')
+               .val(submitText[lang].publish);
+         }
+      }
+      else {
+         isShare = false;
+         btn = jQuery('#save_button');
+      }
 
       var allbtns = "";
       for (var i in submitText[lang]) {
@@ -103,21 +138,30 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
       }
       var newbtns = jQuery('<div id="MissingE_postMenu">' + allbtns + '</div>')
                      .insertAfter(btn);
+      if (isShare) {
+         jQuery('#MissingE_postMenu').css('bottom',bottom + 'px');
+      }
       jQuery('#post_state').bind('change', function() {
          showHideButtons(newbtns, this.value);
       });
       newbtns.find('button').click(function() {
          if (this.id === 'MissingE_publishPost') {
-            jQuery('#post_state').val('0').trigger('change');
+            jQuery('#post_state').val('0').get(0).onchange();
          }
          else if (this.id === 'MissingE_draftPost') {
-            jQuery('#post_state').val('1').trigger('change');
+            jQuery('#post_state').val('1').get(0).onchange();
          }
          else if (this.id === 'MissingE_queuePost') {
-            jQuery('#post_state').val('2').trigger('change');
+            jQuery('#post_state').val('2').get(0).onchange();
+         }
+         if (isShare) {
+            jQuery('#post_controls input[type="submit"]:first').get(0).click();
          }
       });
       showHideButtons(newbtns, jQuery('#post_state').val());
+      if (isShare) {
+         changeButtonText(jQuery('#post_state').val(), lang, submitText);
+      }
    }
 
    if (photoReplies === 1) {

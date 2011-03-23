@@ -42,6 +42,20 @@ function addAskUploader(obj) {
    }
 }
 
+function changeButtonText(val, lang, submitText) {
+   var text;
+   if (val === '2') {
+      text = submitText[lang].queue;
+   }
+   else if (val === '1') {
+      text = submitText[lang].draft;
+   }
+   else {
+      text = submitText[lang].publish;
+   }
+   $('#post_controls input[type="submit"]').val(text);
+}
+
 function showHideButtons(newbtns, val) {
    var tofind;
    newbtns.find('.current').removeClass('current');
@@ -83,12 +97,32 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
 
    if ($('#post_state').length > 0 &&
        $('#post_state')
-         .children('*[value!="0"][value!="private"]').length > 2) {
+         .children('*[value="0"],*[value="1"],*[value="2"]').length >= 3) {
       if ($('#post_controls').css('position') !== 'absolute') {
          $('#post_controls').addClass('MissingE_post_controls');
       }
-      var btn = $('#save_button');
+
       var lang = $('html').attr('lang');
+      var btn;
+      var bottom;
+      var isShare;
+
+      if ($('body').attr('id') === 'bookmarklet_index') {
+         isShare = true;
+         btn = $('#post_controls input[type="submit"]');
+         var bottom = $('#post_controls').outerHeight()/2 +
+            $('#post_controls').find('input[type="submit"]').outerHeight()/2 +
+            2;
+         bottom = Math.round(bottom);
+         if ($('#post_state').val() === '0') {
+            $('#post_controls input[type="submit"]')
+               .val(submitText[lang].publish);
+         }
+      }
+      else {
+         isShare = false;
+         btn = $('#save_button');
+      }
 
       var allbtns = "";
       for (var i in submitText[lang]) {
@@ -101,6 +135,9 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       }
       var newbtns = $('<div id="MissingE_postMenu">' + allbtns + '</div>')
                      .insertAfter(btn);
+      if (isShare) {
+         $('#MissingE_postMenu').css('bottom',bottom + 'px');
+      }
       $('#post_state').bind('change', function() {
          showHideButtons(newbtns, this.value);
       });
@@ -114,9 +151,15 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          else if (this.id === 'MissingE_queuePost') {
             $('#post_state').val('2').trigger('change');
          }
+         if (isShare) {
+            $('#post_controls input[type="submit"]').trigger('click');
+         }
       });
       $(document).ready(function() {
          showHideButtons(newbtns, $('#post_state').val());
+         if (isShare) {
+            changeButtonText($('#post_state').val(), lang, submitText);
+         }
       });
    }
 
