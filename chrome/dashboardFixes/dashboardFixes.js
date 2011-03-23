@@ -134,9 +134,8 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          doIcons(this);
       });
    }
-});
 
-$('head').append('<script type="text/javascript">' +
+   $('head').append('<script type="text/javascript">' +
    'Ajax.Responders.register({' +
       'onCreate: function(request) {' +
          'if (/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
@@ -179,3 +178,4 @@ $('head').append('<script type="text/javascript">' +
       '}' +
    '});' +
    '</script>');
+});
