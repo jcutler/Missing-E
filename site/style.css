@@ -504,6 +504,10 @@ text-decoration:underline;
 border-bottom:1px solid #44546b;
 }
 
+#faq .response ul li a, #faq .response ol li a {
+text-decoration:underline;
+}
+
 #faq .example {
 text-align:center;
 }
