@@ -54,9 +54,9 @@ function doHide(item) {
          $('blockquote img:not(.nsfwdone)',node).each(function(){
             var klass = "";
             var me=$(this);
-            me.unbind('readystatechange.s113977_sd');
+            me.unbind('readystatechange.MissingE_sd');
             if (me.get(0).readyState === 'uninitialized') {
-               me.bind('readystatechange.s113977_sd', function() {
+               me.bind('readystatechange.MissingE_sd', function() {
                   doHide(item);
                });
                return;
@@ -104,7 +104,7 @@ function doHide(item) {
             }
             if (!me.hasClass('video_player') &&
                 me.get(0).readyState === 'uninitialized') {
-               me.bind('readystatechange.s113977_sd', function() {
+               me.bind('readystatechange.MissingE_sd', function() {
                   doHide(item);
                });
                return;
@@ -193,7 +193,7 @@ function doHide(item) {
             return;
          }
          if (me.get(0).readyState === 'uninitialized') {
-            me.get(0).bind('readystatechange.s113977_sd', function() {
+            me.get(0).bind('readystatechange.MissingE_sd', function() {
                doHide(item);
             });
             return;

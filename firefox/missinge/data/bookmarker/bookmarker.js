@@ -55,16 +55,16 @@ function getMarkText(dt, post, name) {
             '"><span class="icon dashboard_controls_bookmark"></span>' +
             '<span class="mark_date" timestamp="' + dt + '">' + name +
             '</span></a> <a id="unmark_' + post +
-            '" class="s113977_unmarker tracked_tag_control" ' +
+            '" class="MissingE_unmarker tracked_tag_control" ' +
             'onclick="return false;" href="#">x</a></li>';
 }
 
 function generateList() {
    var i;
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
-   var marklist = jQuery('#s113977_marklist');
+   var marklist = jQuery('#MissingE_marklist');
    if (marks.length === 0) {
-      jQuery('#posts a.s113977_ismarked').removeClass("s113977_ismarked");
+      jQuery('#posts a.MissingE_ismarked').removeClass("MissingE_ismarked");
       marklist.empty().parent().hide();
       return true;
    }
@@ -78,12 +78,12 @@ function generateList() {
          if (idx >= marks.length ||
              cd > marks[idx][0]) {
             jQuery("#bookmark_" + this.id.match(/[0-9]*$/)[0])
-                                       .removeClass("s113977_ismarked");
+                                       .removeClass("MissingE_ismarked");
             jQuery(this).remove();
          }
          else if (cd < marks[idx][0]) {
             while (idx < marks.length && cd <= marks[idx][0]) {
-               jQuery("#bookmark_" + marks[idx][1]).addClass("s113977_ismarked");
+               jQuery("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
                if (cd !== marks[idx][0]) {
                   jQuery(this).before(getMarkText(marks[idx][0], marks[idx][1],
                                              marks[idx][2]));
@@ -95,20 +95,20 @@ function generateList() {
             }
          }
          else {
-            jQuery("#bookmark_" + marks[idx][1]).addClass("s113977_ismarked");
+            jQuery("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
             jQuery(this).find('span.mark_date').text(marks[idx][2]);
             idx++;
          }
       });
       for(; idx<marks.length; idx++) {
-         jQuery("#bookmark_" + marks[idx][1]).addClass("s113977_ismarked");
+         jQuery("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
          marklist.append(getMarkText(marks[idx][0], marks[idx][1],
                                      marks[idx][2]));
       }
    }
    else {
       for (i=0; i<marks.length; i++) {
-         jQuery("#bookmark_" + marks[i][1]).addClass("s113977_ismarked");
+         jQuery("#bookmark_" + marks[i][1]).addClass("MissingE_ismarked");
          marklist.append(getMarkText(marks[i][0], marks[i][1],
                                      marks[i][2]));
       }
@@ -156,8 +156,8 @@ function addMark(post,custom) {
 
 function markClick(e) {
    if (e.which === 1) {
-      if (jQuery(this).hasClass("s113977_ismarked")) {
-         jQuery(this).removeClass("s113977_ismarked");
+      if (jQuery(this).hasClass("MissingE_ismarked")) {
+         jQuery(this).removeClass("MissingE_ismarked");
          removeMark(this.id.match(/[0-9]*$/)[0]);
       }
       else {
@@ -180,13 +180,13 @@ function doMarks(item) {
          var j;
          var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
          var heart = jQuery(this).find('a.like_button');
-         var mag = jQuery(this).find('a.s113977_magnify');
+         var mag = jQuery(this).find('a.MissingE_magnify');
          var mom = jQuery(this).parent();
          var post = mom.attr('id').match(/[0-9]*$/)[0];
-         var klass = 's113977_mark';
+         var klass = 'MissingE_mark';
          for (j=0; j < marks.length; j++) {
             if (post === marks[j][1]) {
-               klass += ' s113977_ismarked';
+               klass += ' MissingE_ismarked';
                break;
             }
          }
@@ -234,14 +234,14 @@ function handleEdit(type, evt) {
    }
    if (end) {
       par.removeData('editmode').find('span.mark_date').show();
-      par.siblings('.s113977_unmarker')
+      par.siblings('.MissingE_unmarker')
            .removeClass('MissingE_bookmarker_forceHide');
       jQuery(evt.target).remove();
-      par.siblings('#s113977_bookmark_confirmedit').remove();
+      par.siblings('#MissingE_bookmark_confirmedit').remove();
    }
 }
 
-jQuery('#s113977_marklist a.MissingE_bookmarker_marklink').live('click',
+jQuery('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
                                                            function(e) {
    if (jQuery(this).data('editmode') === "EDIT") { e.preventDefault(); }
    if (e.shiftKey) {
@@ -255,19 +255,19 @@ jQuery('#s113977_marklist a.MissingE_bookmarker_marklink').live('click',
             .keyup(function(e) { handleEdit('keyup',e); });
       title.parent().after(inp);
 
-      inp.after('<a id="s113977_bookmark_confirmedit" ' +
+      inp.after('<a id="MissingE_bookmark_confirmedit" ' +
                     'class="tracked_tag_control" onclick="return false;" ' +
                     'style="display:inline;" href="#">&#10004;</a>');
       inp.get(0).focus();
       title.hide();
-      jQuery(this).siblings('.s113977_unmarker')
+      jQuery(this).siblings('.MissingE_unmarker')
                .addClass('MissingE_bookmarker_forceHide');
    return false;
    }
 });
 
 function marklistClick(e) {
-   if (/s113977_unmarker/.test(e.target.className) && e.which === 1) {
+   if (/MissingE_unmarker/.test(e.target.className) && e.which === 1) {
       removeMark(e.target.id.match(/[0-9]*$/)[0]);
       return false;
    }
@@ -276,7 +276,7 @@ function marklistClick(e) {
 function refreshMarks() {
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
    var i;
-   jQuery("#posts a.s113977_ismarked").each(function(){
+   jQuery("#posts a.MissingE_ismarked").each(function(){
       var remove = true;
       for (i=0; i<marks.length; i++) {
          if (this.id === "bookmark_" + marks[i][1]) {
@@ -284,10 +284,10 @@ function refreshMarks() {
             break;
          }
       }
-      if (remove) { jQuery(this).removeClass("s113977_ismarked"); }
+      if (remove) { jQuery(this).removeClass("MissingE_ismarked"); }
    });
    for (i=0; i<marks.length; i++) {
-      jQuery("#bookmark_" + marks[i][1]).addClass("s113977_ismarked");
+      jQuery("#bookmark_" + marks[i][1]).addClass("MissingE_ismarked");
    }
    generateList();
 }
@@ -304,8 +304,8 @@ function MissingE_bookmarker_doStartup(extensionURL) {
                   'ul.dashboard_subpages li a ' +
                   '.icon.dashboard_controls_bookmark { ' +
                   'background-image:url("' + bmi + '") !important; } ' +
-                  '#s113977_marklist a:active { color:#C4CDD6 !important; } ' +
-                  'a.s113977_mark { background-image:url("' + mimg + '"); }';
+                  '#MissingE_marklist a:active { color:#C4CDD6 !important; } ' +
+                  'a.MissingE_mark { background-image:url("' + mimg + '"); }';
    document.getElementsByTagName('head')[0].appendChild(st);
 
    if (document.body.id !== "tinymce" &&
@@ -324,7 +324,7 @@ function MissingE_bookmarker_doStartup(extensionURL) {
       var list = jQuery('<div class="dashboard_nav_item" ' +
                    'style="padding-left:0;position:relative;">' +
                    '<div class="dashboard_nav_title">Bookmarks</div>' +
-                   '<ul id="s113977_marklist" class="dashboard_subpages">' +
+                   '<ul id="MissingE_marklist" class="dashboard_subpages">' +
                    '</ul></div>');
 
       var pos = jQuery("#dashboard_controls_radar_buttons");

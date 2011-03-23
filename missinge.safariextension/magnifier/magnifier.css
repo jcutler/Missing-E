@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-a.s113977_magnify {
+a.MissingE_magnify {
 border-width:0;
 height:14px;
 width:14px;
@@ -32,19 +32,19 @@ background-attachment:scroll;
 background-position:0 0;
 }
 
-a.s113977_magnify:hover {
+a.MissingE_magnify:hover {
 background-position:-14px 0;
 }
 
-a.s113977_magnify_hide {
+a.MissingE_magnify_hide {
 opacity:0.2;
 background-position:0 0 !important;
 }
 
-a.s113977_magnify_err {
+a.MissingE_magnify_err {
 background-position:-28px 0 !important;
 }
 
-a.s113977_magnify + a.like_button {
+a.MissingE_magnify + a.like_button {
 margin-left:8px !important;
 }

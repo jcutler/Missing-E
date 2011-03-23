@@ -46,7 +46,7 @@ var magnifyText = {
 
 function magClick(e) {
    if (e.which === 1) {
-      if (jQuery(this).hasClass('s113977_magnify_err')) {
+      if (jQuery(this).hasClass('MissingE_magnify_err')) {
          insertMagnifier(jQuery(this).closest('li.post').get(0),'a');
          return false;
       }
@@ -61,12 +61,12 @@ function insertMagnifier(item) {
        jQuery(item).hasClass("photo")) {
       var lang = jQuery('html').attr('lang');
       var ctrl = jQuery(item).find('div.post_controls');
-      var bm = ctrl.find('a.s113977_mark');
+      var bm = ctrl.find('a.MissingE_mark');
       var heart = ctrl.find('a.like_button');
       var tid = jQuery(item).attr("id").match(/[0-9]*$/)[0];
       var addr;
       var perm = jQuery(item).find("a.permalink:first");
-      ctrl.find('a.s113977_magnify').remove();
+      ctrl.find('a.MissingE_magnify').remove();
       if (perm.length > 0) {
          addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
       }
@@ -78,7 +78,7 @@ function insertMagnifier(item) {
          }
       }
       var mi = jQuery('<a title="' + magnifyText.loading[lang] + '" ' +
-                 'class="s113977_magnify s113977_magnify_hide" id="magnify_' +
+                 'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
                  tid + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
       if (bm.length > 0) {
@@ -99,13 +99,13 @@ function receiveMagnifier(message) {
    var lang = jQuery('html').attr('lang');
    if (message.success) {
       jQuery('#magnify_' + message.pid).attr('src',message.data)
-         .removeClass('s113977_magnify_hide')
+         .removeClass('MissingE_magnify_hide')
          .attr('title', magnifyText.title[lang]);
    }
    else {
       jQuery('#magnify_' + message.pid).attr('src','')
-         .addClass('s113977_magnify_err')
-         .removeClass('s113977_magnify_hide')
+         .addClass('MissingE_magnify_err')
+         .removeClass('MissingE_magnify_hide')
          .attr('title', magnifyText.error[lang]);
    }
 }
@@ -119,7 +119,7 @@ function MissingE_magnifier_doStartup(extensionURL) {
    var turnload = new Image();
    turnload.src = turnimg;
    jQuery('head').append('<style id="MissingE_magnifier_style" type="text/css">' +
-                    'a.s113977_magnify { ' +
+                    'a.MissingE_magnify { ' +
                     'background-image:url("' + magimg + '"); } ' +
                     '#facebox .slideshow .turner_left, ' +
                     '#facebox .slideshow .turner_right { ' +

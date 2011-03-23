@@ -148,11 +148,11 @@ function replyRepliesSettings(message) {
    var size = message.smallAvatars === 1 ? 16 : 64;
    var thecode = [];
    var tags = [];
-   arr = jQuery('.s113977_rt');
+   arr = jQuery('.MissingE_rt');
    for (i=arr.length-1; i>=0; i--) {
       var st, en, nm, add;
-      jQuery(arr[i]).toggleClass("s113977_rt",false);
-      jQuery(arr[i]).parent().removeClass('s113977_rt_box');
+      jQuery(arr[i]).toggleClass("MissingE_rt",false);
+      jQuery(arr[i]).parent().removeClass('MissingE_rt_box');
       var oldcode = jQuery(arr[i]).parent().html();
       var link = jQuery(arr[i]).parent().find('img.avatar');
       var newcode = "";
@@ -436,16 +436,16 @@ function MissingE_replyReplies_doStartup(extensionURL) {
    }).live('click', function(e) {
       if (e.which !== 1) { return; }
       if (e.shiftKey) {
-         jQuery(this).toggleClass("s113977_rt");
-         if (jQuery(this).hasClass("s113977_rt")) {
-            jQuery(this).parent().addClass('s113977_rt_box');
+         jQuery(this).toggleClass("MissingE_rt");
+         if (jQuery(this).hasClass("MissingE_rt")) {
+            jQuery(this).parent().addClass('MissingE_rt_box');
          }
          else {
-            jQuery(this).parent().removeClass('s113977_rt_box');
+            jQuery(this).parent().removeClass('MissingE_rt_box');
          }
          return;
       }
-      jQuery(this).toggleClass("s113977_rt",true);
+      jQuery(this).toggleClass("MissingE_rt",true);
       postMessage({greeting: "settings", component: "replyReplies"});
    });
 }

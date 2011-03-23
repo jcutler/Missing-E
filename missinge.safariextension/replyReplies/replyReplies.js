@@ -148,11 +148,11 @@ function replyRepliesSettings(response) {
    var size = response.message.smallAvatars === 1 ? 16 : 64;
    var thecode = [];
    var tags = [];
-   arr = $('.s113977_rt');
+   arr = $('.MissingE_rt');
    for (i=arr.length-1; i>=0; i--) {
       var st, en, nm, add;
-      $(arr[i]).toggleClass("s113977_rt",false);
-      $(arr[i]).parent().removeClass('s113977_rt_box');
+      $(arr[i]).toggleClass("MissingE_rt",false);
+      $(arr[i]).parent().removeClass('MissingE_rt_box');
       var oldcode = $(arr[i]).parent().html();
       var link = $(arr[i]).parent().find('img.avatar');
       var newcode = "";
@@ -438,16 +438,16 @@ function MissingE_replyReplies_doStartup() {
    }).live('click', function(e) {
       if (e.which !== 1) { return; }
       if (e.shiftKey) {
-         $(this).toggleClass("s113977_rt");
-         if ($(this).hasClass("s113977_rt")) {
-            $(this).parent().addClass('s113977_rt_box');
+         $(this).toggleClass("MissingE_rt");
+         if ($(this).hasClass("MissingE_rt")) {
+            $(this).parent().addClass('MissingE_rt_box');
          }
          else {
-            $(this).parent().removeClass('s113977_rt_box');
+            $(this).parent().removeClass('MissingE_rt_box');
          }
          return;
       }
-      $(this).toggleClass("s113977_rt",true);
+      $(this).toggleClass("MissingE_rt",true);
       safari.self.tab.dispatchMessage("settings", {component: "replyReplies"});
    });
 }

@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-a.s113977_mark {
+a.MissingE_mark {
 border-width:0;
 height:14px;
 width:6px;
@@ -32,11 +32,11 @@ background-attachment:scroll;
 background-position:0 0;
 }
 
-a.s113977_mark:hover {
+a.MissingE_mark:hover {
 background-position:-6px 0;
 }
 
-a.s113977_ismarked {
+a.MissingE_ismarked {
 background-position:-12px 0 !important;
 }
 

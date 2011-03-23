@@ -80,19 +80,19 @@ function doFinish(newlist,show) {
    txt += '</table>';
 
    if (unfollows.length === 0) {
-      $('#113977_unfollowdisplay .unfollowerlist')
+      $('#MissingE_unfollowdisplay .unfollowerlist')
          .html('<p><em>Nobody has unfollowed you.</em></p>');
    }
    else {
       txt = '<p><em style="font-size:80%;">These tumblrers have changed ' +
             'their username,<br />unfollowed you, or deleted their ' +
             'accounts:</em></p>' + txt;
-      $('#113977_unfollowdisplay .unfollowerlist').html(txt);
+      $('#MissingE_unfollowdisplay .unfollowerlist').html(txt);
    }
    if ($('#facebox').css('display') === 'block') {
-      $.facebox({ div: '#113977_unfollowdisplay' }, 'unfollowrbox');
+      $.facebox({ div: '#MissingE_unfollowdisplay' }, 'unfollowrbox');
    }
-   $('#113977_unfollowdisplay .unfollowerlist').empty();
+   $('#MissingE_unfollowdisplay .unfollowerlist').empty();
    a = [];
    b = [];
    currlist = [];
@@ -142,10 +142,10 @@ function doGet(num, show, retries) {
    failed = false;
 
    if (show) {
-      $('#113977_unfollowdisplay .unfollowerlist')
+      $('#MissingE_unfollowdisplay .unfollowerlist')
          .html('<p><img src="' +
                chrome.extension.getURL('facebox/loading.gif') + '" /></p>');
-      $.facebox({ div: '#113977_unfollowdisplay' }, 'unfollowrbox');
+      $.facebox({ div: '#MissingE_unfollowdisplay' }, 'unfollowrbox');
    }
 
    var pages = Math.ceil(num / 40) + 1;
@@ -174,7 +174,7 @@ function doGet(num, show, retries) {
             }
             else if (!failed) {
                failed = true;
-               $('#113977_unfollowdisplay .unfollowerlist')
+               $('#MissingE_unfollowdisplay .unfollowerlist')
                   .html('<p><em>Having trouble getting followers listing ' +
                         'from Tumblr\'s servers, please try again later.' +
                         '</em></p><img style="margin:20px 0;" src="' +
@@ -183,7 +183,7 @@ function doGet(num, show, retries) {
                         '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
                         '</em></div>');
                if ($('#facebox').css('display') === 'block') {
-                  $.facebox({ div: '#113977_unfollowdisplay' }, 'unfollowrbox');
+                  $.facebox({ div: '#MissingE_unfollowdisplay' }, 'unfollowrbox');
                }
             }
          },
@@ -198,7 +198,7 @@ function doGet(num, show, retries) {
                }
                else if (!failed) {
                   failed = true;
-                  $('#113977_unfollowdisplay .unfollowerlist')
+                  $('#MissingE_unfollowdisplay .unfollowerlist')
                      .html('<p><em>Having trouble getting followers ' +
                            'listing from Tumblr\'s servers, please try ' +
                            'again later.</em></p>' +
@@ -208,7 +208,7 @@ function doGet(num, show, retries) {
                            '<a href="http://theoatmeal.com/">The Oatmeal' +
                            '</a></em></div>');
                   if ($('#facebox').css('display') === 'block') {
-                     $.facebox({ div:'#113977_unfollowdisplay' },
+                     $.facebox({ div:'#MissingE_unfollowdisplay' },
                                'unfollowrbox');
                   }
                }
@@ -227,7 +227,7 @@ function doGet(num, show, retries) {
 
 function tu_init(retries) {
    var followers;
-   $("body").append('<div id="113977_unfollowdisplay" style="display:none;">' +
+   $("body").append('<div id="MissingE_unfollowdisplay" style="display:none;">' +
                     '<div style="font:bold 24px Georgia,serif;' +
                     'color:#1f354c;">unfollower</div>' +
                     '<div class="unfollowerlist" style="height:' +
@@ -247,17 +247,17 @@ function tu_init(retries) {
       }
    }
 
-   var deltxt = '<a id="113977_unfollowdelta" title="Unfollower" ' +
+   var deltxt = '<a id="MissingE_unfollowdelta" title="Unfollower" ' +
                   'class="tracked_tag_control" onclick="return false;" ' +
                   'href="#">&Delta;</a>';
-   var fw = $("#113977_followwhonotin");
+   var fw = $("#MissingE_followwhonotin");
    if (fw.size()>0) {
       fw.before(deltxt);
    }
    else {
       fl.parent().append(' ' + deltxt);
    }
-   $('#113977_unfollowdelta').click(function() {
+   $('#MissingE_unfollowdelta').click(function() {
       followers = $(this).parent().children("a:first").html()
                         .match(/([0-9][0-9,\.]*)/);
       if (followers === undefined || followers === null ||

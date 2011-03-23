@@ -49,7 +49,7 @@ var turnimg = safari.extension.baseURI + 'magnifier/turners.png';
 
 function magClick(e) {
    if (e.which === 1) {
-      if ($(this).hasClass('s113977_magnify_err')) {
+      if ($(this).hasClass('MissingE_magnify_err')) {
          insertMagnifier($(this).closest('li.post').get(0),'a');
          return false;
       }
@@ -64,12 +64,12 @@ function insertMagnifier(item) {
        $(item).hasClass("photo")) {
       var lang = $('html').attr('lang');
       var ctrl = $(item).find('div.post_controls');
-      var bm = ctrl.find('a.s113977_mark');
+      var bm = ctrl.find('a.MissingE_mark');
       var heart = ctrl.find('a.like_button');
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
       var addr;
       var perm = $(item).find("a.permalink:first");
-      ctrl.find('a.s113977_magnify').remove();
+      ctrl.find('a.MissingE_magnify').remove();
       if (perm.length > 0) {
          addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
       }
@@ -81,7 +81,7 @@ function insertMagnifier(item) {
          }
       }
       var mi = $('<a title="' + magnifyText.loading[lang] + '" ' +
-                 'class="s113977_magnify s113977_magnify_hide" id="magnify_' +
+                 'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
                  tid + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
       if (bm.length > 0) {
@@ -102,13 +102,13 @@ function receiveMagnifier(response) {
    var lang = $('html').attr('lang');
    if (response.message.success) {
       $('#magnify_' + response.message.pid).attr('src',response.message.data)
-         .removeClass('s113977_magnify_hide')
+         .removeClass('MissingE_magnify_hide')
          .attr('title', magnifyText.title[lang]);
    }
    else {
       $('#magnify_' + response.message.pid).attr('src','')
-         .addClass('s113977_magnify_err')
-         .removeClass('s113977_magnify_hide')
+         .addClass('MissingE_magnify_err')
+         .removeClass('MissingE_magnify_hide')
          .attr('title', magnifyText.error[lang]);
    }
 }
@@ -117,7 +117,7 @@ function MissingE_magnifier_doStartup() {
    var turnload = new Image();
    turnload.src = turnimg;
    $('head').append('<style id="MissingE_magnifier_style" type="text/css">' +
-                    'a.s113977_magnify { ' +
+                    'a.MissingE_magnify { ' +
                     'background-image:url("' + magimg + '"); } ' +
                     '#facebox .slideshow .turner_left, ' +
                     '#facebox .slideshow .turner_right { ' +

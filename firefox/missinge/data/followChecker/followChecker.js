@@ -120,14 +120,14 @@ function doFWFinish(followers, followees, show) {
                '">' + fentry[0] + '</a></td><td></td></tr>';
    }
    txt += '</tr></tbody></table>';
-   jQuery('#113977_followwhodisplay .followwholist').html(txt);
+   jQuery('#MissingE_followwhodisplay .followwholist').html(txt);
 
    followyou = [];
    youfollow = [];
    if (jQuery('#facebox').css('display') === 'block') {
-      jQuery.facebox({ div: '#113977_followwhodisplay' }, 'followwhobox');
+      jQuery.facebox({ div: '#MissingE_followwhodisplay' }, 'followwhobox');
    }
-   jQuery('#113977_followwhodisplay .followwholist').empty();
+   jQuery('#MissingE_followwhodisplay .followwholist').empty();
 }
 
 function doFWDisplay(followerstart,followeestart,show) {
@@ -205,10 +205,10 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
    var i;
    failed = false;
    if (show) {
-      jQuery('#113977_followwhodisplay .followwholist')
+      jQuery('#MissingE_followwhodisplay .followwholist')
          .html('<p><img src="' +
                extensionURL + 'facebox/loading.gif' + '" /></p>');
-      jQuery.facebox({ div: '#113977_followwhodisplay' }, 'followwhobox');
+      jQuery.facebox({ div: '#MissingE_followwhodisplay' }, 'followwhobox');
    }
 
    var followerpages = Math.ceil(followers / 40) + 1;
@@ -241,7 +241,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
             }
             else if (!failed) {
                failed = true;
-               jQuery('#113977_followwhodisplay .followwholist')
+               jQuery('#MissingE_followwhodisplay .followwholist')
                   .html('<p><em>Having trouble getting followers ' +
                         'listing from Tumblr\'s servers, please try again ' +
                         'later.</em></p><img style="margin:20px 0;" src="' +
@@ -250,7 +250,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
                         '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
                         '</em></div>');
                if (jQuery('#facebox').css('display') === 'block') {
-                  jQuery.facebox({ div: '#113977_followwhodisplay' },
+                  jQuery.facebox({ div: '#MissingE_followwhodisplay' },
                             'followwhobox');
                }
             }
@@ -265,7 +265,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
                }
                else if (!failed) {
                   failed = true;
-                  jQuery('#113977_followwhodisplay .followwholist')
+                  jQuery('#MissingE_followwhodisplay .followwholist')
                      .html('<p><em>Having trouble getting followers listing ' +
                            'from Tumblr\'s servers, please try again later.' +
                            '</em></p><img style="margin:20px 0;" src="' +
@@ -274,7 +274,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
                            '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
                            '</em></div>');
                   if (jQuery('#facebox').css('display') === 'block') {
-                     jQuery.facebox({ div: '#113977_followwhodisplay' },
+                     jQuery.facebox({ div: '#MissingE_followwhodisplay' },
                                'followwhobox');
                   }
                }
@@ -305,7 +305,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
             }
             else if (!failed) {
                failed = true;
-               jQuery('#113977_followwhodisplay .followwholist')
+               jQuery('#MissingE_followwhodisplay .followwholist')
                   .html('<p><em>Having trouble getting list of who you ' +
                         'follow from Tumblr\'s servers, please try again ' +
                         'later.</em></p><img style="margin:20px 0;" src="' +
@@ -314,7 +314,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
                         '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
                         '</em></div>');
                if (jQuery('#facebox').css('display') === 'block') {
-                  jQuery.facebox({ div: '#113977_followwhodisplay' },
+                  jQuery.facebox({ div: '#MissingE_followwhodisplay' },
                             'followwhobox');
                }
             }
@@ -329,7 +329,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
                }
                else if (!failed) {
                   failed = true;
-                  jQuery('#113977_followwhodisplay .followwholist')
+                  jQuery('#MissingE_followwhodisplay .followwholist')
                      .html('<p><em>Having trouble getting list of who you ' +
                            'follow from Tumblr\'s servers, please try again ' +
                            'later.</em></p><img style="margin:20px 0;" src="' +
@@ -338,7 +338,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
                            '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
                            '</em></div>');
                   if (jQuery('#facebox').css('display') === 'block') {
-                     jQuery.facebox({ div: '#113977_followwhodisplay' },
+                     jQuery.facebox({ div: '#MissingE_followwhodisplay' },
                                'followwhobox');
                   }
                }
@@ -356,7 +356,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
 }
 
 function tfc_init(extensionURL, retries) {
-   jQuery("body").append('<div id="113977_followwhodisplay" style="display:none;">' +
+   jQuery("body").append('<div id="MissingE_followwhodisplay" style="display:none;">' +
                     '<div style="' +
                     'font:bold 24px Georgia,serif;color:#1f354c;">' +
                     'follow checker</div><div class="followwholist" ' +
@@ -367,8 +367,8 @@ function tfc_init(extensionURL, retries) {
 
    var fl = jQuery('#right_column').find('a[href$="/followers"]');
 
-   var uf = jQuery("#113977_unfollowdelta");
-   var notintxt = '<a id="113977_followwhonotin" title="Follow Checker" ' +
+   var uf = jQuery("#MissingE_unfollowdelta");
+   var notintxt = '<a id="MissingE_followwhonotin" title="Follow Checker" ' +
                   'class="tracked_tag_control" onclick="return false;" ' +
                   'href="#">&rho;</a>';
 
@@ -378,7 +378,7 @@ function tfc_init(extensionURL, retries) {
    else {
       fl.parent().append(' ' + notintxt);
    }
-   jQuery('#113977_followwhonotin').click(function() {
+   jQuery('#MissingE_followwhonotin').click(function() {
       var followers = jQuery(this).parent().children("a:first").html()
                      .match(/([0-9][0-9,\.]*)/);
       var followees = jQuery('#dashboard_nav_following').children("a:first").html()
