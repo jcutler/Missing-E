@@ -535,6 +535,10 @@ margin-top:-1em;
 font-style:normal;
 }
 
+#faq p.question span {
+font-style:normal;
+}
+
 #faq div.response {
 font-size:14px;
 border-bottom:1px solid #ccc;
