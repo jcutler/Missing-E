@@ -26,6 +26,19 @@
 function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
    var node = e.target;
    if (node === undefined || node === null) { return false; }
+   if (/^#/.test(jQuery(node).attr('href'))) { return false; }
+   var urlhash = jQuery(node).attr('href').match(/^([^#]*)#/);
+   var prehash = jQuery(node).attr('href');
+   if (urlhash !== undefined && urlhash !== null && urlhash.length > 1) {
+      prehash = urlhash[1];
+   }
+   var lochash = location.href.match(/^([^#]*)#/);
+   var prelochash = location.href;
+   if (lochash !== undefined && lochash !== null && lochash.length > 1) {
+      prelochash = lochash[1];
+   }
+   if (prehash === prelochash) { return false; }
+
    if (newPostTabs !== 1 &&
        jQuery(node).parents('#new_post').length > 0) {
       return false;

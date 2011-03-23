@@ -26,6 +26,19 @@
 function dashLinksToTabs_click(e, dashLinksToTabs_settings) {
    var node = e.target;
    if (node === undefined || node === null) { return false; }
+   if (/^#/.test($(node).attr('href'))) { return false; }
+   var urlhash = $(node).attr('href').match(/^([^#]*)#/);
+   var prehash = $(node).attr('href');
+   if (urlhash !== undefined && urlhash !== null && urlhash.length > 1) {
+      prehash = urlhash[1];
+   }
+   var lochash = location.href.match(/^([^#]*)#/);
+   var prelochash = location.href;
+   if (lochash !== undefined && lochash !== null && lochash.length > 1) {
+      prelochash = lochash[1];
+   }
+   if (prehash === prelochash) { return false; }
+
    if (dashLinksToTabs_settings.newPostTabs !== 1 &&
        $(node).parents('#new_post').length > 0) {
       return false;
