@@ -1,0 +1,102 @@
+This plugin provides spin-button interface easily on your form.
+This kind of interface is very handy to set especially short or middle range numbers.
+
+Requirements:
+	Button surface image.
+
+Usage:
+	$(':input').spin(opt);
+
+Options:
+  imageBasePath:
+    In most cases, this option would be mandatory.
+    You need to specify your spin-button surface images.
+    When all your spin-related-images are on a same directory(I hope so), you can set
+    your image path onto this parameter.
+    default value is "/img/spin/".
+    You don't have to specify this option in case your environment were luckyly like this :)
+
+  spinBtnImage/spinUpImage/spinDownImage:
+    The names of spin button images.
+    default value is "spin-button.png", "spin-up.png" and "spin-down.png".
+    (these sample files are included in img directory in the download file.
+     but needless to say you can use your own images!)
+
+  interval:
+    Add/subtract this value from current value, when users click spin button.
+    default value is 1.
+
+  max/min:
+    The maximum/minimum value. Null means unlimited.
+
+  timeInterval:
+    While users keep pressing mouse button on the spin-button, the value will be increasing.
+    This value is the time interval of increasing.
+    default value is 500(milli seconds)
+
+  timeBlink:
+    The time interval of blinking the spin button when increasing/decreasing the value.
+    default value is 200(milli seconds)
+
+  btnClass:
+    Specify your own class for button image.
+
+  btnCss:
+    Specify your own styles as javascript object for button image.
+
+  txtCss:
+    Specify your own styles as javascript object for input field.
+
+  lock:
+    Prohibit direct input to text field.
+    Please don't expect perfect.
+
+  decimal:
+    Set decimal character in case you don't want to use '.'.
+    eg. decimal: ','
+
+  beforeChange:
+    Callback before value is changing.
+    When you return "false", the changing would not happen.
+    First argument is the new value, and second one is the current value.
+
+  changed:
+    Callback after value has changed.
+    First argument is the value.
+
+  buttonUp/buttonDown:
+    Callback when up/down button has clicked.
+    This function is called whether the value has changed.
+
+Note:
+  If you want to change the values of default option, you can set your own default value
+  onto $.spin object.
+  eg. $.spin.imageBasePath = '/images/spin/';
+
+Demo:
+	Try out demonstrations under "demo" directory.
+
+Changes:
+  2009-Jun-14: v1.1.1
+    fix zero value bug.
+
+  2009-Jun-13: v1.1
+    add many options below;
+     - lock
+     - btnClass
+     - btnCss
+     - txtCss
+     - decimal
+     - beforeChange
+     - changed
+     - buttonUp
+     - buttonDown
+    change value of vertical-align style on button image. buttom to middle.
+    fix max value bug.
+
+  2008-May-23: v1.0
+    first release.
+
+----
+Copyright (c) 2009 MORI Naohiko
+Dual licensed under the MIT and GPL licenses.

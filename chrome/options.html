@@ -454,6 +454,11 @@ text-align:right;
 #devpage a {
 color:white;
 }
+
+img.spinner {
+margin-left:-1px !important;
+vertical-align:top !important;
+}
 </style>
 <script type="text/javascript" src="common/jquery-1.5.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
@@ -461,6 +466,7 @@ color:white;
 <script type="text/javascript" src="facebox/facebox.js"></script>
 <link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css" />
 <link rel="stylesheet" type="text/css" href="dashboardFixes/replaceIcons.css" />
+<script type="text/javascript" src="jquery-spin/jquery-spin.js"></script>
 <style type="text/css">
 #posts .post .MissingE_post_control {
 background-image:url("dashboardFixes/icon_replacements.png");
@@ -477,6 +483,20 @@ jQuery(document).ready(function($) {
    });
    loadSettings();
    $('input.toggler').checkbox();
+   $('input.retryinput').spin({
+         min:minRetries,
+         max:maxRetries,
+         timeInterval:100,
+         lock:true,
+         btnClass:'spinner'
+   });
+   $('input.timeoutinput').spin({
+         min:minTimeout,
+         max:maxTimeout,
+         timeInterval:100,
+         lock:true,
+         btnClass:'spinner'
+   });
 });
 
 var componentList = ["dashboardFixes",
@@ -791,7 +811,7 @@ function doshow(component) {
 <div class="post_content">
 <div class="post_title">About 'Missing e'</div>
 <p class="first"><strong><big><em><a target="_blank" href="http://missinge.infraware.ca">Missing e</a></em></big></strong> is a set of tools, features and interface changes for <em>Tumblr</em>. What started out as a bunch of <a target="_blank" href="http://userscripts.org/users/113977">userscripts</a> has now been incorporated into this Google Chrome extension!<br /><br />If you enjoy this extension, please consider <a target="_blank" href='http://www.pledgie.com/campaigns/14406'>donating</a> to support future development<br /><a target="_blank" href='http://www.pledgie.com/campaigns/14406'><img alt="Click here to lend your support to: Cutlerish's Donation Jar and make a donation at www.pledgie.com !" src='images/pledgie.png' /></a></p><p>Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br />Released under the <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL Version 3 License</a></p>
-<div id="inclusions">This extension uses some great libraries:<br /><a href="http://www.jquery.com" title="jQuery 1.5" target="_blank"><img src="images/inclusions/jquery.png" alt="jQuery 1.5" /></a><a href="http://chriswanstrath.com/facebox" title="Facebox 1.3" target="_blank"><img src="images/inclusions/facebox.png" alt="Facebox 1.3" /></a><a href="http://widowmaker.kiev.ua/checkbox/" title="jQuery Checkbox 1.3.0" target="_blank"><img src="images/inclusions/checkbox.png" alt="jQuery Checkbox 1.3.0" /></a></div>
+<div id="inclusions">This extension uses some great libraries:<br /><a href="http://www.jquery.com" title="jQuery 1.5" target="_blank"><img src="images/inclusions/jquery.png" alt="jQuery 1.5" /></a><a href="http://chriswanstrath.com/facebox" title="Facebox 1.3" target="_blank"><img src="images/inclusions/facebox.png" alt="Facebox 1.3" /></a><a href="http://widowmaker.kiev.ua/checkbox/" title="jQuery Checkbox 1.3.0" target="_blank"><img src="images/inclusions/checkbox.png" alt="jQuery Checkbox 1.3.0" /></a><a href="http://code.google.com/p/jquery-spin-button/" title="jQuery Spin button" target="_blank"><img src="images/inclusions/spin.png" alt="jQuery Spin button" /></a></div>
 </div>
 <div class="clear"></div>
 <div>
@@ -810,7 +830,7 @@ function doshow(component) {
 <table class="options_table">
 <tr><td class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="even">Show all tags for posts in the dashboard</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr><tr><td class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="even">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="odd">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input class="numinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="10" size="1" onchange="doSetting(this,true,defaultTimeout,minTimeout,maxTimeout);" onkeyup="doKeyUp(this,true,defaultTimeout,minTimeout,maxTimeout);" />&nbsp;<span class="resetter" onclick="resetTimeout(this)">Reset</span></td></tr></table>
+<tr><td class="odd">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input class="numinput timeoutinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="10" size="1" onchange="doSetting(this,true,defaultTimeout,minTimeout,maxTimeout);" onkeyup="doKeyUp(this,true,defaultTimeout,minTimeout,maxTimeout);" />&nbsp;<span class="resetter" onclick="resetTimeout(this)">Reset</span></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -841,7 +861,7 @@ function doshow(component) {
 <div class="post_thumb"><a href="magnifier/screen.jpg" rel="facebox"><img src="magnifier/thumb.jpg" /><br />Screenshot</a></div>
 <p>Add a small <img src="magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.</p><p><em>Magnifier</em> also works on photoset posts!</p>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">10</span>)</td><td class="odd"><input class="numinput" type="text" name="MissingE_magnifier_retries" value="10" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr></table>
+<tr><td class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">10</span>)</td><td class="odd"><input class="numinput retryinput" type="text" name="MissingE_magnifier_retries" value="10" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -891,7 +911,7 @@ function doshow(component) {
 <div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Timestamps</div>
 <p><em>Timestamps</em> will add the date and time of a post on your dashboard.</p><p><strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.</p>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure (default <span class="defRetries">10</span>)</td><td class="odd"><input class="numinput" size="1" type="text" name="MissingE_timestamps_retries" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure (default <span class="defRetries">10</span>)</td><td class="odd"><input class="numinput retryinput" size="1" type="text" name="MissingE_timestamps_retries" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 <tr><td class="even">Timestamp format<br />
 <table class="subnotes"><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
 </td><td class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /></td></tr></table>
@@ -944,7 +964,7 @@ function doshow(component) {
 <table class="options_table">
 <tr><td class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
 <tr><td class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
-<tr><td class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" class="numinput" size="1" name="MissingE_reblogYourself_retries" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_reblogYourself_retries" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -966,7 +986,7 @@ function doshow(component) {
 <ul><li>When Tumblr is suffering from errors, <em>Follow Checker</em> may not be able to load all of your follower/followee pages and will return an error. Wait a little while and try again.</li>
 <li>Because of some limitations with the way Tumblr presents your follower/following lists, some people may appear to not be following/followed who actually are. You should always double-check!</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="numinput" size="1" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="numinput retryinput" size="1" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -1023,7 +1043,7 @@ function doshow(component) {
 <ul><li><em>Unfollower</em> can only track one tumblr account at a time.</li><li><em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.</li><li><em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.</li>
 <li>When Tumblr is suffering from errors, <em>Unfollower</em> may not be able to load all of your follower pages and will return an error. Wait a little while and try again.</li><li>Because of some limitations with the way Tumblr presents your followers list, some people may appear to have unfollowed who actually haven't. You should always double-check.</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower list (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" class="numinput" size="1" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure to load follower list (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" class="numinput retryinput" size="1" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>

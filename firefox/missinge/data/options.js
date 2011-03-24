@@ -1,11 +1,11 @@
 var all_settings;
 
-var defaultTimeout = 10;
+var defaultTimeout = 15;
 var minTimeout = 5;
 var maxTimeout = 120;
 var defaultRetries = 10;
 var minRetries = 0;
-var maxRetries = 99;
+var maxRetries = 20;
 
 jQuery(document).ready(function (){
    jQuery('a[rel*=facebox]').facebox({
@@ -45,14 +45,22 @@ jQuery(document).ready(function (){
 
    jQuery('input.setting_retry').bind("change", function() {
       doSetting(this, true, defaultRetries, minRetries, maxRetries);
-   }).bind('keyup', function(e) {
-      doKeyUp(e, this, true, defaultRetries, minRetries, maxRetries);
+   }).spin({
+      min:minRetries,
+      max:maxRetries,
+      timeInterval:100,
+      lock:true,
+      btnClass:'spinner'
    });
 
    jQuery('input.setting_timeout').bind("change", function() {
       doSetting(this, true, defaultTimeout, minTimeout, maxTimeout);
-   }).bind('keyup', function(e) {
-      doKeyUp(e, this, true, defaultTimeout, minTimeout, maxTimeout);
+   }).spin({
+      min:minRetries,
+      max:maxRetries,
+      timeInterval:100,
+      lock:true,
+      btnClass:'spinner'
    });
 
    jQuery('span.resetter').click(function() {

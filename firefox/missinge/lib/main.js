@@ -31,12 +31,12 @@ var data = require("self").data;
 var Request = require("request").Request;
 var timer = require("timer");
 
-var defaultTimeout = 10;
+var defaultTimeout = 15;
 var minTimeout = 5;
 var maxTimeout = 120;
 var defaultRetries = 10;
 var minRetries = 0;
-var maxRetries = 99;
+var maxRetries = 20;
 var maxActiveAjax = 15;
 var activeAjax = 0;
 var waitQueue = [];
@@ -98,6 +98,7 @@ function openSettings() {
             contentScriptFile: [data.url("common/jquery-1.5.min.js"),
                                 data.url("checkbox/jquery.checkbox.min.js"),
                                 data.url("facebox/facebox.js"),
+                                data.url("jquery-spin/jquery-spin.js"),
                                 data.url("options.js")],
             onMessage: function(data) {
                handleMessage(data, this);
