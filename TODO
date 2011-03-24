@@ -1,4 +1,5 @@
-Nice number adjustment for options pages
-Better timeout documentation
 One-click reblog
 Opera port
+
+Facebox fixed positioning (no longer need to compute top)
+Facebox size adjustment?
