@@ -3,10 +3,29 @@
 // @namespace      http://userscripts.org/users/113977
 // @description    Shoot the tumbeasts on Tumblr
 // @include        http://www.tumblr.com/*
-// @version        0.0.1
+// @version        0.0.2
 // @date           2011-03-24
 // @creator        Jeremy Cutler
 // ==/UserScript==
+
+function shoot(e) {
+   var i;
+   var num = Math.floor(Math.random()*bullets.length);
+
+   if (shots.length === 10) {
+      var shot = shots.shift();
+      shot.parentNode.removeChild(shot);
+   }
+   au.load(); 
+   au.play();
+   var shot = document.createElement('div');
+   shot.className = 'bullet_hole bullet' + num;
+   shot.style.left = (e.pageX - bullets[num].w/2) + 'px';
+   shot.style.top = (e.pageY - bullets[num].h/2) + 'px';
+   shot.addEventListener('click',shoot,false);
+   document.body.appendChild(shot);
+   shots.push(shot);
+}
 
 var tumbeasts = document.getElementById('tumbeasts_503_container');
 if (tumbeasts) {
@@ -49,22 +68,6 @@ if (tumbeasts) {
       tum = tum[i];
    }
    if (tum) {
-      tum.addEventListener('click', function(e) {
-         var i;
-         var num = Math.floor(Math.random()*bullets.length);
-
-         if (shots.length === 10) {
-            var shot = shots.shift();
-            shot.parentNode.removeChild(shot);
-         }
-         au.load(); 
-         au.play();
-         var shot = document.createElement('div');
-         shot.className = 'bullet_hole bullet' + num;
-         shot.style.left = (e.pageX - bullets[num].w/2) + 'px';
-         shot.style.top = (e.pageY - bullets[num].h/2) + 'px';
-         document.body.appendChild(shot);
-         shots.push(shot);
-      }, false);
+      tum.addEventListener('click', shoot, false);
    }
 }
