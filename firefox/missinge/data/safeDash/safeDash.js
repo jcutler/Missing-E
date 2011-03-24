@@ -88,7 +88,8 @@ function doHide(item) {
                me.addClass('nsfwdone');
                return;
             }
-            if (/^audio_node_[0-9]*$/.test(me.prev().attr('id'))) {
+            if (/^audio_node_[0-9]*$/.test(me.prev().attr('id')) ||
+                me.parents('.so_ie_doesnt_treat_this_as_inline').size()>0) {
                me.css('opacity','1').addClass('nsfwdone');
                return;
             }
