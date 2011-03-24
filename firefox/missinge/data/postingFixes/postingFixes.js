@@ -145,6 +145,10 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
          showHideButtons(newbtns, this.value);
       });
       newbtns.find('button').click(function() {
+         if (!isShare) {
+            jQuery('head').append('<script type="text/javascript">' +
+                             'is_preview=false;</script>');
+         }
          if (this.id === 'MissingE_publishPost') {
             jQuery('#post_state').val('0').get(0).onchange();
          }

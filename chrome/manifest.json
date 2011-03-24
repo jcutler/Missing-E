@@ -1,6 +1,6 @@
 {
    "name":        "Missing e",
-   "version":     "1.0.57",
+   "version":     "1.0.58",
    "description": "Useful features and customizations for Tumblr.",
    "icons":       { "16": "missinge16.png",
                     "48": "missinge48.png",
