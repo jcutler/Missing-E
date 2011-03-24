@@ -512,6 +512,10 @@ text-decoration:underline;
 text-align:center;
 }
 
+#faq .example img {
+max-width:80%;
+}
+
 #faq .example .caption {
 font-size:90%;
 font-style:italic;
