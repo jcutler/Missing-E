@@ -96,7 +96,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                      ja: {
                            publish: "投稿公開",
                            queue:   "キューに追加",
-                           draft:   "下書きとして保存"
+                           draft:   "下書き保存"
                          }
    };
 
