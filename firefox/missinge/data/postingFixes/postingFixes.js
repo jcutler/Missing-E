@@ -91,6 +91,11 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                            publish: "Pubblica post",
                            queue:   "Metti post in coda",
                            draft:   "Salva bozza"
+                         },
+                     ja: {
+                           publish: "投稿公開",
+                           queue:   "キューに追加",
+                           draft:   "下書きとして保存"
                          }
    };
 

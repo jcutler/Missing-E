@@ -56,7 +56,16 @@ var dashFixesText = { en:
                   reblog: "reblogga",
                   reply: "rispondi",
                   notes: "note",
-                  queue: "file d'attente"
+                  queue: "in coda"
+                  },
+               ja:
+                  {
+                  edit: "編集",
+                  del: "削除",
+                  reblog: "リブログ",
+                  reply: "返信",
+                  notes: "リアクション",
+                  queue: "キュー"
                   }
 };
 

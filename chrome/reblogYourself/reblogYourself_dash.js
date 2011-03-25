@@ -26,7 +26,8 @@ var reblogText = {
                   en: "reblog",
                   fr: "rebloguer",
                   de: "rebloggen",
-                  it: "reblogga"
+                  it: "reblogga",
+                  ja: "リブログ"
                  }
 
 function addReblog(item) {

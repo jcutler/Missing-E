@@ -66,6 +66,17 @@ var langPosts = {
                        audio: ["il", "tuo", "audio post"],
                        video: ["il", "tuo", "video"],
                        question: ["la", "tua", "domanda"]
+                      },
+                  ja: {
+                       text:  ["投稿"],
+                       photo: ["画像"],
+                       photoset: ["フォトセット"],
+                       quote: ["引用"],
+                       link:  ["リンク"],
+                       conversation:  ["チャット"],
+                       audio: ["音声投稿"],
+                       video: ["動画"],
+                       question: ["質問"]
                       }
 };
 
@@ -97,6 +108,13 @@ var langNotification = {
                        reblogIndex: 2,
                        answer: ["U", "ha riposto", "P"],
                        reply:  ["U", "ha riposto", "P"]
+                      },
+                  ja: {
+                       like:   ["U", "があなたの", "P", "を「スキ!」と言っています"],
+                       reblog: ["U", "があなたの", "P", "を", "リブログ", "しました"],
+                       reblogIndex: 4,
+                       answer: ["U", "があなたの", "P", "に回答しました"],
+                       reply:  ["U", "があなたの", "P", "に返信しました"]
                       }
 };
 

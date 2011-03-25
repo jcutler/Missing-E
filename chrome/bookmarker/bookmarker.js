@@ -30,7 +30,8 @@ var bookmarkText = {
                    en: "bookmark",
                    de: "lesezeichen",
                    fr: "marquer",
-                   it: "segnalibro"
+                   it: "segnalibro",
+                   ja: "ブックマーク"
 };
 
 var st = document.createElement('style');

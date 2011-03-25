@@ -173,7 +173,8 @@ function doMarks(item) {
                    en: "bookmark",
                    de: "lesezeichen",
                    fr: "marquer",
-                   it: "segnalibro"
+                   it: "segnalibro",
+                   ja: "ブックマーク"
       };
       var lang = jQuery('html').attr('lang');
       jQuery(item).find('div.post_controls:not(.bookmarkAdded)').each(function(i){
