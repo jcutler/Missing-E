@@ -109,7 +109,7 @@ function doIcons(item) {
          a.attr('title',dashFixesText[lang]['notes'])
             .addClass('MissingE_notes_control_container')
             .find('span').each(function() {
-            $(this).html($(this).html().replace(/([0-9,\.]+) [^0-9]+/,
+            $(this).html($(this).html().replace(/[^0-9]*([0-9,\.]+)[^0-9]*/,
                                                 '<span class="notes_txt">' +
                                                 "$1" + '</span> ' +
                                                 '<span class="' + klass +
