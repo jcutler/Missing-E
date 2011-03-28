@@ -3,7 +3,7 @@ var all_settings;
 var defaultTimeout = 15;
 var minTimeout = 5;
 var maxTimeout = 120;
-var defaultRetries = 10;
+var defaultRetries = 4;
 var minRetries = 0;
 var maxRetries = 20;
 
