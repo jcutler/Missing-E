@@ -105,7 +105,7 @@
             .append('<div style="padding:50px 0;" class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>');
 
          $('#facebox').show().css({
-            top:  getPageScroll()[1] + (getPageHeight() / 10),
+            top:  (getPageHeight() / 10),
             left: $(window).width() / 2 - 205
          });
 
@@ -125,7 +125,7 @@
          var h = $('#facebox .popup').height();
          var ph = getPageHeight();
          if (h > ((8 * ph) / 10)) {
-            $('#facebox').css('top', getPageScroll()[1] + ((getPageHeight()-h)>>1));
+            $('#facebox').css('top', ((getPageHeight()-h)>>1));
          }
          $(document).trigger('reveal.facebox').trigger('afterReveal.facebox');
       },
