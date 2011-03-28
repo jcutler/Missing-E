@@ -9,8 +9,8 @@
 // @include        http://www.tumblr.com/messages*
 // @include        http://www.tumblr.com/dashboard*
 // @include        http://www.tumblr.com/tagged*
-// @version        0.2.10
-// @date           2011-03-03
+// @version        0.2.11
+// @date           2011-03-28
 // @creator        Jeremy Cutler
 // ==/UserScript==
 
@@ -403,6 +403,9 @@ if (document.body.id != "tinymce" &&
     document.body.id != "dashboard_edit_post") {
    tbr_113977();
    document.addEventListener('DOMNodeInserted', tbr_113977, false);
-   window.addEventListener('storage', tbr_113977, false);
+   window.addEventListener('storage', function(e) {
+      if (e.key !== 'tbr_Bookmarks') { return false; }
+      else { tbr_113977(); }
+   }, false);
 }
 
