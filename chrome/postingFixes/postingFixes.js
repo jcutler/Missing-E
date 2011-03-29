@@ -116,8 +116,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          isShare = true;
          btn = $('#post_controls input[type="submit"]');
          var bottom = $('#post_controls').outerHeight()/2 +
-            $('#post_controls').find('input[type="submit"]').outerHeight()/2 +
-            2;
+            $('#post_controls').find('input[type="submit"]').outerHeight()/2;
          bottom = Math.round(bottom);
          if ($('#post_state').val() === '0') {
             $('#post_controls input[type="submit"]')

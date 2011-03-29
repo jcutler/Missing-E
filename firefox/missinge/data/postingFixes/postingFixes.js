@@ -119,8 +119,7 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
          btn = jQuery('#post_controls input[type="submit"]');
          var bottom = jQuery('#post_controls').outerHeight()/2 +
             jQuery('#post_controls')
-               .find('input[type="submit"]').outerHeight()/2 +
-            2;
+               .find('input[type="submit"]').outerHeight()/2;
          bottom = Math.round(bottom);
          if (jQuery('#post_state').val() === '0') {
             jQuery('#post_controls input[type="submit"]')
