@@ -564,7 +564,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <table class="options_table">
 <tr><td class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" class="simple_setting" /></td></tr><tr><td class="even">Show all tags for posts in the dashboard</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" class="simple_setting" /></td></tr><tr><td class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td class="even">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="odd">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input class="setting_timeout numinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="10" size="1" />&nbsp;<span class="resetter timeout_resetter">Reset</span></td></tr>
+<tr><td class="odd">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input class="setting_timeout numinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" />&nbsp;<span class="resetter timeout_resetter">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -596,7 +596,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_thumb"><a href="magnifier/screen.jpg" rel="facebox"><img src="magnifier/thumb.jpg" /><br />Screenshot</a></div>
 <p>Add a small <img src="magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.</p><p><em>Magnifier</em> also works on photoset posts!</p>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">10</span>)</td><td class="odd"><input class="setting_retry numinput" size="1" type="text" name="MissingE_magnifier_retries" value="10" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr></table>
+<tr><td class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="setting_retry numinput" size="1" type="text" name="MissingE_magnifier_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -646,7 +646,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Timestamps</div>
 <p><em>Timestamps</em> will add the date and time of a post on your dashboard.</p><p><strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.</p>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure (default <span class="defRetries">10</span>)</td><td class="odd"><input class="numinput setting_retry" size="1" type="text" name="MissingE_timestamps_retries" value="10" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput setting_retry" size="1" type="text" name="MissingE_timestamps_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
 <tr><td class="even">Timestamp format<br />
 <table class="subnotes"><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
 </td><td class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" value="%Y-%m-%D %H:%i" class="simple_setting setting_format" onkeyup="doKeyUp(this,false);" /></td></tr></table>
@@ -699,7 +699,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <table class="options_table">
 <tr><td class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" class="setting_retry numinput" size="1" name="MissingE_reblogYourself_retries" value="10" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="setting_retry numinput" size="1" name="MissingE_reblogYourself_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -721,7 +721,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <ul><li>When Tumblr is suffering from errors, <em>Follow Checker</em> may not be able to load all of your follower/followee pages and will return an error. Wait a little while and try again.</li>
 <li>Because of some limitations with the way Tumblr presents your follower/following lists, some people may appear to not be following/followed who actually are. You should always double-check!</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="setting_retry numinput" size="1" value="10" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="setting_retry numinput" size="1" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -779,7 +779,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <ul><li><em>Unfollower</em> can only track one tumblr account at a time.</li><li><em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.</li><li><em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.</li>
 <li>When Tumblr is suffering from errors, <em>Unfollower</em> may not be able to load all of your follower pages and will return an error. Wait a little while and try again.</li><li>Because of some limitations with the way Tumblr presents your followers list, some people may appear to have unfollowed who actually haven't. You should always double-check.</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower list (default <span class="defRetries">10</span>)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" class="setting_retry numinput" size="1" value="10" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td class="odd">Number of retries on failure to load follower list (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" class="setting_retry numinput" size="1" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
 </table>
 </form>
 </div>
