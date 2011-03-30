@@ -189,36 +189,39 @@ function markClick(e) {
 
 function doMarks(item) {
    if (item.tagName === 'LI' && $(item).hasClass('post')) {
+      var post = $(item).attr('id').match(/[0-9]*$/)[0];
+      if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href) &&
+          $('#user_menu_' + post + ' a[following]')
+               .attr('following') === 'false') {
+         return false;
+      }
       var lang = $('html').attr('lang');
-      $(item).find('div.post_controls:not(.bookmarkAdded)').each(function(i){
-         var j;
-         var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
-         var heart = $(this).find('a.like_button');
-         var mag = $(this).find('a.MissingE_magnify');
-         var mom = $(this).parent();
-         var post = mom.attr('id').match(/[0-9]*$/)[0];
-         var klass = 'MissingE_mark';
-         for (j=0; j < marks.length; j++) {
-            if (post === marks[j][1]) {
-               klass += ' MissingE_ismarked';
-               break;
-            }
+      var ctrl = $(item).find('div.post_controls:not(.bookmarkAdded)');
+      var j;
+      var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
+      var heart = ctrl.find('a.like_button');
+      var mag = ctrl.find('a.MissingE_magnify');
+      var klass = 'MissingE_mark';
+      for (j=0; j < marks.length; j++) {
+         if (post === marks[j][1]) {
+            klass += ' MissingE_ismarked';
+            break;
          }
-         var node = $('<a class="' + klass + '" id="bookmark_' + post +
-                      '" title="' + bookmarkText[lang] + '" ' +
-                      'href="#" onclick="return false;"></a>');
-         node.click(markClick);
-         $(this).addClass('bookmarkAdded');
-         if (mag.length > 0) {
-            mag.after(node);
-         }
-         else if (heart.length > 0) {
-            heart.before(node);
-         }
-         else {
-            $(this).append(node);
-         }
-      });
+      }
+      var node = $('<a class="' + klass + '" id="bookmark_' + post +
+                   '" title="' + bookmarkText[lang] + '" ' +
+                   'href="#" onclick="return false;"></a>');
+      node.click(markClick);
+      ctrl.addClass('bookmarkAdded');
+      if (mag.length > 0) {
+         mag.after(node);
+      }
+      else if (heart.length > 0) {
+         heart.before(node);
+      }
+      else {
+         ctrl.append(node);
+      }
    }
 }
 

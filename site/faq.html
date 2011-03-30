@@ -42,6 +42,7 @@ jQuery(document).ready(function($) {
 <li><a href="#settings">How can I see or change my settings for 'Missing e'?</a></li></ul>
 <h2>Bookmarker</h2>
 <ul>
+<li><a href="#bookmark-follow">Why does the bookmark icon not appear on some posts?</a></li>
 <li><a href="#bookmark-issue">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</a></li>
 <li><a href="#rename-bookmark">How do I change the name of a bookmark to something more useful?</a></li>
 </ul>
@@ -53,6 +54,7 @@ jQuery(document).ready(function($) {
 <ul>
 <li><a href="#newtabs">I don't want 'Missing e' to open up all these new tabs. How do I stop it?</a></li>
 <li><a href="#controltabs"><em>Reblog</em> and <em>edit</em> buttons on dashboard posts don't open in new tabs anymore. How can I get this back?</a></li>
+<li><a href="#safaritabs">When I click on a link in with the Safari browser, it opens in a new window instead of a tab. How can I change that behaviour?</a></li>
 </ul>
 <h2>Follow Checker</h2>
 <ul>
@@ -144,6 +146,9 @@ jQuery(document).ready(function($) {
 <li>On any Tumblr dashboard page, click on the <em>"Account"</em> drop-down menu at the top of the page, and select 'Missing e'.</li></ul>
 <p>For a visual example of how to get to the settings page, see the related <a href="http://blog.missinge.infraware.ca/post/3876407352/settings-page">Tumblr post.</a></p>
 <div class="totop"><a href="#">Top</a></div></div>
+<a name="bookmark-follow"></a><p class="question">Why does the bookmark icon not appear on some posts?</p>
+<div class="response"><p>The <em>Bookmarker</em> feature allows you to jump directly to a post in your dashboard without having to scroll all the way there yourself. As such, you are only able to bookmark posts by Tumblrs that you follow. These posts (which you will usually on tag search result pages like '<em>http://www.tumblr.com/tagged/sometag</em>') will not have a <em>Bookmarker</em> icon that you can click on.</p>
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="bookmark-issue"></a><p class="question">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</p>
 <div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p><div class="totop"><a href="#">Top</a></div></div>
 <a name="rename-bookmark"></a><p class="question">How do I change the name of a bookmark to something more useful?</p>
@@ -206,6 +211,13 @@ jQuery(document).ready(function($) {
 <a name="controltabs"></a><p class="question"><span>Reblog</span> and <span>edit</span> buttons on dashboard posts don't open in new tabs anymore. How can I get this back?</p>
 <div class="response">
 <p>In a recent update to 'Missing e' (version 1.0.53), custom options were added for <em>reblog</em> and <em>edit</em> buttons on dashboard posts (<strong>reblog</strong>/<strong>edit</strong> <em>OR</em> <span class="MissingE_post_control MissingE_reblog_control" style="margin-left:0px"></span> <span class="MissingE_post_control MissingE_edit_control" style="margin-left:0px"></span>), allowing you to choose whether or not to open these links in a new tabs. By default, these options are set to <em>not</em> open in new tabs.</p><p>You can change this behaviour in the settings (which you can access <a href="#settings">like this</a>) under <em>Dash Links to Tabs</em> which you can get to by clicking on the <em>Dashboard Features</em> section.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="safaritabs"></a><p class="question">When I click on a link in with the Safari browser, it opens in a new window instead of a tab. How can I change that behaviour?</p>
+<div class="response">
+<p>Unlike Chrome and Firefox, Safari will, by default, load any link that requests a new window in a new window instead of a new tab. You can change this behaviour in Safari's preferences: in the "<em>Tabs</em>" section, change the setting "<em>Open pages in tabs instead of windows</em>" to "<strong>Automatically</strong>".</p>
+<div class="example">
+<img src="images/examples/safari_tabs.png" alt="Safari tabs preferences" />
+<div class="caption">Safari preferences - open pages in tabs</div></div>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="followchecker-how"></a><p class="question">How do I use Follow Checker? Where is it?</p>
 <div class="response">

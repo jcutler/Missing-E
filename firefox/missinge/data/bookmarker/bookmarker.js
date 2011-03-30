@@ -176,36 +176,39 @@ function doMarks(item) {
                    it: "segnalibro",
                    ja: "ブックマーク"
       };
+      var post = jQuery(item).attr('id').match(/[0-9]*$/)[0];
+      if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href) &&
+          jQuery('#user_menu_' + post + ' a[following]')
+               .attr('following') === 'false') {
+         return false;
+      }
       var lang = jQuery('html').attr('lang');
-      jQuery(item).find('div.post_controls:not(.bookmarkAdded)').each(function(i){
-         var j;
-         var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
-         var heart = jQuery(this).find('a.like_button');
-         var mag = jQuery(this).find('a.MissingE_magnify');
-         var mom = jQuery(this).parent();
-         var post = mom.attr('id').match(/[0-9]*$/)[0];
-         var klass = 'MissingE_mark';
-         for (j=0; j < marks.length; j++) {
-            if (post === marks[j][1]) {
-               klass += ' MissingE_ismarked';
-               break;
-            }
+      var ctrl = jQuery(item).find('div.post_controls:not(.bookmarkAdded)');
+      var j;
+      var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
+      var heart = ctrl.find('a.like_button');
+      var mag = ctrl.find('a.MissingE_magnify');
+      var klass = 'MissingE_mark';
+      for (j=0; j < marks.length; j++) {
+         if (post === marks[j][1]) {
+            klass += ' MissingE_ismarked';
+            break;
          }
-         var node = jQuery('<a class="' + klass + '" id="bookmark_' + post +
-                      '" title="' + bookmarkText[lang] + '" ' +
-                      'href="#" onclick="return false;"></a>');
-         node.click(markClick);
-         jQuery(this).addClass('bookmarkAdded');
-         if (mag.length > 0) {
-            mag.after(node);
-         }
-         else if (heart.length > 0) {
-            heart.before(node);
-         }
-         else {
-            jQuery(this).append(node);
-         }
-      });
+      }
+      var node = jQuery('<a class="' + klass + '" id="bookmark_' + post +
+                   '" title="' + bookmarkText[lang] + '" ' +
+                   'href="#" onclick="return false;"></a>');
+      node.click(markClick);
+      ctrl.addClass('bookmarkAdded');
+      if (mag.length > 0) {
+         mag.after(node);
+      }
+      else if (heart.length > 0) {
+         heart.before(node);
+      }
+      else {
+         ctrl.append(node);
+      }
    }
 }
 
