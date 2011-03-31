@@ -21,7 +21,12 @@ jQuery(document).ready(function (){
    });
 
    jQuery('#nav a.nav_item').live('click',function() {
-      doshow(this.id.replace(/_nav$/,''));
+      if (this.id === 'close_nav') {
+         window.close();
+      }
+      else {
+         doshow(this.id.replace(/_nav$/,''));
+      }
    });
 
    jQuery('#home_nav,#settings_nav').click(function() {
