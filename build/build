@@ -1,0 +1,43 @@
+#!/bin/bash
+FIREFOX=0
+SAFARI=0
+CHROME=0
+
+until [ -z "$1" ]
+do
+   ARG=`echo $1 | tr '[A-Z]' '[a-z]'`
+   case "$ARG" in
+      "all" )
+         FIREFOX=1
+         SAFARI=1
+         CHROME=1
+         ;;
+      "f" | "ff" | "firefox" )
+         FIREFOX=1
+         ;;
+      "s" | "safari" )
+         SAFARI=1
+         ;;
+      "c" | "c" | "chrome" )
+         CHROME=1
+         ;;
+      * )
+         echo "Invalid parameter: $1"
+         exit 1
+         ;;
+   esac
+   shift
+done
+
+if [[ "$CHROME" -eq "1" ]]; then
+   echo "Building Chrome Extension"
+   ./buildChrome.sh > /dev/null
+fi
+if [[ "$FIREFOX" -eq "1" ]]; then
+   echo "Building Firefox Add-On"
+   ./buildFirefox.sh > /dev/null
+fi
+if [[ "$SAFARI" -eq "1" ]]; then
+   echo "Uploading Safari Extension"
+   ./uploadSafari.sh
+fi
