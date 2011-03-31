@@ -238,6 +238,10 @@ function loadSettings() {
             frm.MissingE_postingFixes_addUploader.checked = true;
          else
             frm.MissingE_postingFixes_addUploader.checked = false;
+         if (getStorage('MissingE_postingFixes_quickButtons',1) == 1)
+            frm.MissingE_postingFixes_quickButtons.checked = true;
+         else
+            frm.MissingE_postingFixes_quickButtons.checked = false;
       }
       else if (v == "reblogYourself") {
          if (getStorage('MissingE_reblogYourself_postPage',1) == 1)

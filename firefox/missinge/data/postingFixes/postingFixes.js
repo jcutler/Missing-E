@@ -70,7 +70,8 @@ function showHideButtons(newbtns, val) {
 }
 
 function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
-                                         uploaderToggle, addUploader) {
+                                         uploaderToggle, addUploader,
+                                         quickButtons) {
    var submitText = {
                      en: {
                            publish: "Publish post",
@@ -102,7 +103,8 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                          extensionURL + 'postingFixes/postingFixes.css" />');
 
-   if (jQuery('#post_state').length > 0 &&
+   if (quickButtons &&
+       jQuery('#post_state').length > 0 &&
        jQuery('#post_state')
          .children('*[value="0"],*[value="1"],*[value="2"]').length >= 3) {
       if (jQuery('#post_controls').css('position') !== 'absolute') {

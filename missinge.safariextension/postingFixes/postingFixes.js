@@ -70,7 +70,7 @@ function showHideButtons(newbtns, val) {
 }
 
 function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
-                                         addUploader) {
+                                         addUploader, quickButtons) {
 
    var submitText = {
                      en: {
@@ -100,7 +100,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                          }
    };
 
-   if ($('#post_state').length > 0 &&
+   if (quickButtons === 1 &&
+       $('#post_state').length > 0 &&
        $('#post_state')
          .children('*[value="0"],*[value="1"],*[value="2"]').length >= 3) {
       if ($('#post_controls').css('position') !== 'absolute') {

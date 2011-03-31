@@ -101,7 +101,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                          }
    };
 
-   if ($('#post_state').length > 0 &&
+   if (postingFixes_settings.quickButtons === 1 &&
+       $('#post_state').length > 0 &&
        $('#post_state')
          .children('*[value="0"],*[value="1"],*[value="2"]').length >= 3) {
       if ($('#post_controls').css('position') !== 'absolute') {

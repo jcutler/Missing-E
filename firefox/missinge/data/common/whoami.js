@@ -134,7 +134,8 @@ function settings_startup(message) {
       MissingE_postingFixes_doStartup(message.extensionURL,
                                       message.photoReplies,
                                       message.uploaderToggle,
-                                      message.addUploader);
+                                      message.addUploader,
+                                      message.quickButtons);
    }
    else if (message.component === "followChecker") {
       MissingE_followChecker_doStartup(message.extensionURL, message.retries);

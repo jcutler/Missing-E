@@ -525,6 +525,7 @@ function handleRequest(request) {
       settings.MissingE_postingFixes_photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
       settings.MissingE_postingFixes_uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
       settings.MissingE_postingFixes_addUploader = getStorage("MissingE_postingFixes_addUploader",1);
+      settings.MissingE_postingFixes_quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
       settings.MissingE_reblogYourself_postPage = getStorage("MissingE_reblogYourself_postPage",1);
       settings.MissingE_reblogYourself_dashboard = getStorage("MissingE_reblogYourself_dashboard",1);
       settings.MissingE_reblogYourself_retries = getStorage("MissingE_reblogYourself_retries",defaultRetries);
@@ -572,6 +573,7 @@ function handleRequest(request) {
             settings.photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
             settings.uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
             settings.addUploader = getStorage("MissingE_postingFixes_addUploader",1);
+            settings.quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
             break;
          case "unfollower":
          case "followChecker":

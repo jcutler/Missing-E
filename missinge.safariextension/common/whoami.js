@@ -126,7 +126,8 @@ function settings_startup(response) {
    else if (response.message.component === "postingFixes") {
       MissingE_postingFixes_doStartup(response.message.photoReplies,
                                       response.message.uploaderToggle,
-                                      response.message.addUploader);
+                                      response.message.addUploader,
+                                      response.message.quickButtons);
    }
    else if (response.message.component === "followChecker") {
       MissingE_followChecker_doStartup(response.message.retries);
