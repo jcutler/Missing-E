@@ -136,6 +136,14 @@ padding:2px 8px 0 8px;
 vertical-align:bottom;
 }
 
+#map a.short_mapimg img {
+margin:2px 0;
+}
+
+#map a.narrow_mapimg {
+margin:0 8px;
+}
+
 #about #map a, #features #map a, #faq #map a {
 padding:6px 8px 4px 8px;
 }
@@ -162,6 +170,10 @@ color:white;
 #share {
 text-align:center;
 margin-top:20px;
+}
+
+#share a {
+margin:0 10px;
 }
 
 #share a img {
