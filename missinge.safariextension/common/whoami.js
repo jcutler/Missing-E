@@ -151,7 +151,8 @@ function settings_startup(response) {
                                         response.message.wrapTags,
                                         response.message.replaceIcons,
                                         response.message.timeoutAJAX,
-                                        response.message.timeoutLength);
+                                        response.message.timeoutLength,
+                                        response.message.postLinks);
    }
 }
 

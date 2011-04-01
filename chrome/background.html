@@ -444,6 +444,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
             settings.timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
             settings.timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",10);
+            settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
@@ -557,6 +558,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/reblogQuoteFit.css"});
             if (getStorage("MissingE_dashboardFixes_wrapTags",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/wrapTags.css"});
+            if (getStorage("MissingE_dashboardFixes_postLinks",1) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/postLinks.css"});
          }
          else
             activeScripts.dashboardFixes = false;

@@ -22,7 +22,56 @@
  */
 
 /*global safari, $ */
-var dashFixesText = { en:
+var postTypeNames = {
+                  en: {
+                       text:  ["Text"],
+                       photo: ["Photo"],
+                       quote: ["Quote"],
+                       link:  ["Link"],
+                       chat:  ["Chat"],
+                       audio: ["Audio"],
+                       video: ["Video"],
+                      },
+                  de: {
+                       text:  ["Text"],
+                       photo: ["Foto"],
+                       quote: ["Zitat"],
+                       link:  ["Link"],
+                       chat:  ["Chat"],
+                       audio: ["Audio"],
+                       video: ["Video"],
+                      },
+                  fr: {
+                       text:  ["Texte"],
+                       photo: ["Photo"],
+                       quote: ["Citation"],
+                       link:  ["Lien"],
+                       chat:  ["Discussion"],
+                       audio: ["Audio"],
+                       video: ["Vidéo"],
+                      },
+                  it: {
+                       text:  ["Testo"],
+                       photo: ["Foto"],
+                       quote: ["Citazione"],
+                       link:  ["Link"],
+                       chat:  ["Chat"],
+                       audio: ["Audio"],
+                       video: ["Video"],
+                      },
+                  ja: {
+                       text:  ["テキスト"],
+                       photo: ["画像"],
+                       quote: ["引用"],
+                       link:  ["リンク"],
+                       chat:  ["チャット"],
+                       audio: ["音声"],
+                       video: ["動画"],
+                      }
+};
+
+var dashFixesText = {
+               en:
                   {
                   edit: "edit",
                   del: "delete",
@@ -68,6 +117,20 @@ var dashFixesText = { en:
                   queue: "キュー"
                   }
 };
+
+function addPostLinks() {
+   var pltxt = '<li class="short_new_post post new_post" id="new_post">' +
+               '<div class="short_post_labels">';
+   var lang = jQuery('html').attr('lang');
+   for (i in postTypeNames[lang]) {
+      pltxt += '<div class="short_label">' +
+               '<a href="/new/' + i + '" class="new_post_label">' +
+               postTypeNames[lang][i] + '</a></div>';
+   }
+   pltxt += '<div class="clear"></div></div></li>';
+
+   jQuery('#posts').prepend(pltxt);
+}
 
 function doIcons(item) {
    if (item.tagName !== 'LI' || !(jQuery(item).hasClass('post'))) {
@@ -125,7 +188,7 @@ function doIcons(item) {
 
 function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
                                            wrapTags, replaceIcons, timeoutAJAX,
-                                           timeoutLength) {
+                                           timeoutLength, postLinks) {
    var css = document.createElement("style");
    css.setAttribute("type","text/css");
    var data = '';
@@ -146,6 +209,16 @@ function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
    head = document.getElementsByTagName("head")[0];
    if (data !== '') {
       head.appendChild(css);
+   }
+   if (postLinks === 1 &&
+       /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
+       jQuery('#new_post').length === 0) {
+      var style = document.createElement("link");
+      style.setAttribute('rel','stylesheet');
+      style.setAttribute('type','text/css');
+      style.href = extensionURL + "dashboardFixes/postLinks.css";
+      head.appendChild(style);
+      addPostLinks();
    }
    if (replaceIcons === 1) {
       var style = document.createElement("link");

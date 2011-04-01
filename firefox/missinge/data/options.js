@@ -229,6 +229,10 @@ function loadSettings() {
          else
             frm.MissingE_dashboardFixes_timeoutAJAX.checked = false;
          frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
+         if (getStorage('MissingE_dashboardFixes_postLinks', 1) == 1)
+            frm.MissingE_dashboardFixes_postLinks.checked = true;
+         else
+            frm.MissingE_dashboardFixes_postLinks.checked = false;
       }
       else if (v == "postingFixes") {
          if (getStorage('MissingE_postingFixes_photoReplies',1) == 1)

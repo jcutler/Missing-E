@@ -160,7 +160,8 @@ function settings_startup(message) {
                                         message.wrapTags,
                                         message.replaceIcons,
                                         message.timeoutAJAX,
-                                        message.timeoutLength);
+                                        message.timeoutLength,
+                                        message.postLinks);
    }
 }
 
