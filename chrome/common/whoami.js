@@ -26,9 +26,16 @@
 if ((window.top === window &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
+
    chrome.extension.sendRequest({greeting: "start", url: location.href,
                                  bodyId: document.body.id}, function(response){
       var i;
+      if (/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/submissions/
+               .test(location.href) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
+          /http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) {
+         document.domain = "tumblr.com";
+      }
       var active = JSON.parse(response);
       var info = "'Missing e' Startup on ";
       info += active.url + "\n";

@@ -251,7 +251,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
 
          var ta = $(this);
          var textarea = ta.attr('id');
-         var h2 = ta.prev('h2');
+         var h2 = ta.prevAll('h2:first');
          var uploader = '<div style="float:right;' +
                         (/regular_/.test(this.id) ? 'margin-bottom:5px;' :
                          'padding-top:3px;') + '">' +
@@ -261,11 +261,14 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                         'allowtransparency="true" frameborder="0" ' +
                         'style="background-color:transparent; ' +
                         'overflow:hidden;"></iframe></div>' +
-                        '<div class="clear"></div>';
+                        '<div style="clear:both;"></div>';
          if (h2.length > 0) {
             h2.before('<div style="height:' + h2.css("margin-top") +
                       ';"></div>').css({"float":"left","margin-top":"0"})
                         .after(uploader);
+         }
+         else if (ta.parent().find('div.editor_controls').length > 0) {
+            ta.parent().prepend(uploader);
          }
          else {
             ta.before(uploader);

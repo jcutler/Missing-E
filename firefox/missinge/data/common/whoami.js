@@ -45,7 +45,12 @@ function doStartup(message) {
    var i;
    if (MissingE_startup) { return; }
    MissingE_startup = true;
-   document.domain = "tumblr.com";
+   if (/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/submissions/
+         .test(location.href) ||
+       /http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
+       /http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) {
+      document.domain = "tumblr.com";
+   }
    var info = "'Missing e' Startup on ";
    info += message.url + "\n";
    for (i in message) {
