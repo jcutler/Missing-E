@@ -60,10 +60,10 @@ var langPosts = {
                        text:  ["il", "tuo", "post"],
                        photo: ["la", "tua", "photo"],
                        photoset: ["il", "tuo", "fotoset"],
-                       quote: ["il", "tuo", "quote"],
+                       quote: ["il", "tuo", "citazione"],
                        link:  ["il", "tuo", "link"],
                        conversation:  ["la", "tua", "chat"],
-                       audio: ["il", "tuo", "audio post"],
+                       audio: ["il", "tuo", "post audio"],
                        video: ["il", "tuo", "video"],
                        question: ["la", "tua", "domanda"]
                       },
