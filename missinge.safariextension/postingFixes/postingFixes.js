@@ -211,6 +211,11 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          h2 = headings.eq(-2);
       }
       var textarea = h2.nextAll('textarea:first').attr('id');
+      var tag = '<img src=\\"X\\" />';
+      if (h2.parent().find('div.editor_note:contains("markdown")')
+                        .length !== 0) {
+         tag = '![](X)';
+      }
       h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
          .css({"float":"left","margin-top":"0"})
          .after('<div style="float:right;padding-top:3px;">' +
@@ -232,8 +237,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                               '}' +
                               'else {' +
                                  'insertTag("' + textarea + '", ' +
-                                            '"<img src=\\"" + src + "\\" ' +
-                                            '/>");' +
+                                            '"' + tag + '".replace(/X/,src));' +
                               '}' +
                           '}' +
                           '</script>');
@@ -241,6 +245,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
    }
    else if (addUploader === 1 &&
             /http:\/\/www\.tumblr\.com\/share/.test(location.href)) {
+      var tag = '<img src=\\"X\\" />';
       $('textarea').each(function() {
          if ((this.name !== "post[two]" &&
              this.name !== "post[three]") ||
@@ -272,6 +277,10 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          else {
             ta.before(uploader);
          }
+         if (ta.parent().find('div.editor_note:contains("markdown")')
+                        .length !== 0) {
+            tag = '![](X)';
+         }
       });
       $('head').append('<script type="text/javascript">' +
                        'document.domain = "tumblr.com";' +
@@ -286,7 +295,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                            '}' +
                            'else {'+
                               'insertTag(e, ' +
-                                         '"<img src=\\"" + src + "\\" />");' +
+                                         '"' + tag + '".replace(/X/,src));' +
                            '}' +
                        '}' +
                        '</script>');
@@ -305,6 +314,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          }
       });
       $('head').append('<script type="text/javascript">' +
+                       'document.domain = "tumblr.com";' +
                        'function catch_uploaded_photo(src) {' +
                            'var eId = catch_uploaded_photo.caller' +
                                        '.arguments[0].currentTarget' +
@@ -317,7 +327,13 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                                               '/>");' +
                            '}' +
                            'else {' +
-                              'insertTag(e, "<img src=\\"" + src + "\\" />");' +
+                              'var tag = "<img src=\\"X\\" />";' +
+                              'var ta = document.getElementById(e);' +
+                              'if (/markdown/' +
+                                    '.test(ta.previousSibling.innerHTML)) {' +
+                                 'tag = "![](X)";' +
+                              '}' +
+                              'insertTag(e, tag.replace(/X/,src));' +
                            '}' +
                        '}' +
                        '</script>');

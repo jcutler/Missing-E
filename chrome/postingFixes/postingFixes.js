@@ -212,6 +212,11 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          h2 = headings.eq(-2);
       }
       var textarea = h2.nextAll('textarea:first').attr('id');
+      var tag = '<img src=\\"X\\" />';
+      if (h2.parent().find('div.editor_note:contains("markdown")')
+                        .length !== 0) {
+         tag = '![](X)';
+      }
       h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
          .css({"float":"left","margin-top":"0"})
          .after('<div style="float:right;padding-top:3px;">' +
@@ -233,8 +238,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                               '}' +
                               'else {' +
                                  'insertTag("' + textarea + '", ' +
-                                            '"<img src=\\"" + src + "\\" ' +
-                                            '/>");' +
+                                            '"' + tag + '".replace(/X/,src));' +
                               '}' +
                           '}' +
                           '</script>');
@@ -242,6 +246,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
    }
    else if (postingFixes_settings.addUploader === 1 &&
             /http:\/\/www\.tumblr\.com\/share/.test(location.href)) {
+      var tag = '<img src=\\"X\\" />';
       $('textarea').each(function() {
          if ((this.name !== "post[two]" &&
              this.name !== "post[three]") ||
@@ -273,6 +278,10 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          else {
             ta.before(uploader);
          }
+         if (ta.parent().find('div.editor_note:contains("markdown")')
+                        .length !== 0) {
+            tag = '![](X)';
+         }
       });
       $('head').append('<script type="text/javascript">' +
                        'document.domain = "tumblr.com";' +
@@ -287,7 +296,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                            '}' +
                            'else {'+
                               'insertTag(e, ' +
-                                         '"<img src=\\"" + src + "\\" />");' +
+                                         '"' + tag + '".replace(/X/,src));' +
                            '}' +
                        '}' +
                        '</script>');
@@ -307,6 +316,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
       });
 
       $('head').append('<script type="text/javascript">' +
+                       'document.domain = "tumblr.com";' +
                        'function catch_uploaded_photo(src) {' +
                            'var eId = catch_uploaded_photo.caller' +
                                        '.arguments[0].currentTarget' +
@@ -319,7 +329,13 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                                               '/>");' +
                            '}' +
                            'else {' +
-                              'insertTag(e, "<img src=\\"" + src + "\\" />");' +
+                              'var tag = "<img src=\\"X\\" />";' +
+                              'var ta = document.getElementById(e);' +
+                              'if (/markdown/' +
+                                    '.test(ta.previousSibling.innerHTML)) {' +
+                                 'tag = "![](X)";' +
+                              '}' +
+                              'insertTag(e, tag.replace(/X/,src));' +
                            '}' +
                        '}' +
                        '</script>');
