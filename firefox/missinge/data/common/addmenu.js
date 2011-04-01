@@ -79,7 +79,7 @@ on("message", function (message) {
          else if (fp.length > 0 && fp[0].id !== 'new_post') {
             ot = fp[0].offsetTop;
          }
-         ot = ot - rcol.offsetTop - 4;
+         ot = ot - rcol.offsetTop + 4;
          if (ot > 0) {
             rcol.style.paddingTop = ot + 'px';
          }

@@ -270,7 +270,8 @@ function MissingE_safeDash_doStartup(extensionURL) {
       jQuery('#right_column')
          .prepend('<div class="dashboard_nav_item" ' +
                   'style="padding-top:0;padding-left:0;">' +
-                  '<ul class="dashboard_subpages">' + sdlnk + '</ul></div>');
+                  '<ul class="safedash_alone dashboard_subpages">' + sdlnk +
+                  '</ul></div>');
    }
 
    jQuery('.video_thumbnail div:empty').live('mouseover', function() {
