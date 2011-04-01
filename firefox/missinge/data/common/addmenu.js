@@ -63,6 +63,29 @@ postMessage({greeting:"addMenu"});
 
 on("message", function (message) {
    if (message.greeting !== "addMenu") { return false; }
+
+   if (/http:\/\/www\.tumblr\.com\/dashboard\/[0-9]/.test(location.href)) {
+      var lcol = document.getElementById('left_column');
+      var rcol = document.getElementById('right_column');
+      if (lcol && !rcol) {
+         rcol = document.createElement('div');
+         rcol.id = 'right_column';
+         lcol.parentNode.insertBefore(rcol, lcol);
+         var ot = 0;
+         var fp = document.getElementsByClassName('post');
+         if (fp.length > 1 && fp[0].id === 'new_post') {
+            ot = fp[1].offsetTop;
+         }
+         else if (fp.length > 0 && fp[0].id !== 'new_post') {
+            ot = fp[0].offsetTop;
+         }
+         ot = ot - rcol.offsetTop - 4;
+         if (ot > 0) {
+            rcol.style.paddingTop = ot + 'px';
+         }
+      }
+   }
+
    accmenu = jQuery("#account_menu");
    
    if (accmenu.length > 0) {
