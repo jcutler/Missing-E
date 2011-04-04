@@ -25,7 +25,8 @@
 
 if ((window.top === window &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
-    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
+    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
+    /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
 
    chrome.extension.sendRequest({greeting: "start", url: location.href,
                                  bodyId: document.body.id}, function(response){
@@ -39,9 +40,11 @@ if ((window.top === window &&
       var active = JSON.parse(response);
       var info = "'Missing e' Startup on ";
       info += active.url + "\n";
+      console.log(active);
       for (i in active) {
          if (active.hasOwnProperty(i)) {
             if (i !== 'url') {
+
                info += i + ": " + (active[i] ? "active" : "inactive") + "\n";
             }
          }
