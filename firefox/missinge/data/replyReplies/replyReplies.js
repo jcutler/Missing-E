@@ -206,7 +206,7 @@ function replyRepliesSettings(message) {
       }
 
       if (showAvatars === 1) {
-         newcode = img + "&nbsp;" + newcode;
+         newcode = img + newcode;
       }
 
       st = newcode.indexOf("<div class=\"notification_type_icon");
@@ -385,8 +385,11 @@ function replyRepliesSettings(message) {
          else if (anstxt !== '') {
             newcode += '<blockquote>' + anstxt + '</blockquote>';
          }
-         newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
+         newcode = newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
       }
+      newcode = newcode.replace(/white-space:nowrap;/g,'');
+      newcode = newcode.replace(/margin-right:5px;/g,'');
+      newcode = newcode.replace(/style=""/g,'');
       thecode.push('<p>' + newcode + '</p>');
    }
 

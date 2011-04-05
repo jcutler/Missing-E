@@ -256,7 +256,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
          }
 
          if (showAvatars === 1) {
-            newcode = img + "&nbsp;" + newcode;
+            newcode = img + newcode;
          }
 
          st = newcode.indexOf("<div class=\"notification_type_icon");
@@ -435,8 +435,11 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             else if (anstxt !== '') {
                newcode += '<blockquote>' + anstxt + '</blockquote>';
             }
-            newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
+            newcode = newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
          }
+         newcode = newcode.replace(/white-space:nowrap;/g,'');
+         newcode = newcode.replace(/margin-right:5px;/g,'');
+         newcode = newcode.replace(/style=""/g,'');
          thecode.push('<p>' + newcode + '</p>');
       }
 
