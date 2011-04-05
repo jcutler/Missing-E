@@ -530,6 +530,7 @@ var componentList = ["dashboardFixes",
                      "gotoDashPost",
                      "postingFixes",
                      "reblogYourself",
+                     "askFixes",
                      "followChecker",
                      "postCrushes",
                      "replyReplies",
@@ -1013,6 +1014,17 @@ function doshow(component) {
 </li>
 </div>
 <div id="social_posts">
+<li id="askFixes_section" class="post not_mine regular">
+<div class="post_content">
+<form id="askFixes_options">
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Ask Fixes</div>
+<div class="post_thumb"><a href="askFixes/screen.png" rel="facebox"><img src="askFixes/thumb.png" /><br />Screenshot</a></div>
+<p>Convenient interface fixes for Tumblr <em>ask</em> pages.</p>
+<ul><li>Add scroll bars when typing long entries into Tumblr <em>ask</em> page text boxes.</li></ul>
+</form>
+</div>
+<div class="clear"></div>
+<div><div class="post_avatar" style="background-image:url('icons/askFixes_avatar.png');"></div><span class="arrow"></span></div></li>
 <li id="followChecker_section" class="post not_mine regular">
 <div class="post_content">
 <form id="followChecker_options">

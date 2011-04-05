@@ -40,11 +40,9 @@ if ((window.top === window &&
       var active = JSON.parse(response);
       var info = "'Missing e' Startup on ";
       info += active.url + "\n";
-      console.log(active);
       for (i in active) {
          if (active.hasOwnProperty(i)) {
             if (i !== 'url') {
-
                info += i + ": " + (active[i] ? "active" : "inactive") + "\n";
             }
          }

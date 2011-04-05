@@ -565,12 +565,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.dashboardFixes = false;
       }
       if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.url)) {
-         if (getStorage("MissingE_askboxFixes_enabled",1) == 1) {
-            activeScripts.askboxFixes = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "askboxFixes/askboxScroll.css", allFrames: true});
+         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
+            activeScripts.askFixes = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askboxScroll.css", allFrames: true});
          }
          else
-            activeScripts.askboxFixes = false;
+            activeScripts.askFixes = false;
       }
       if (sender.tab.url == request.url &&
           ((request.bodyId == 'dashboard_edit_post' &&
