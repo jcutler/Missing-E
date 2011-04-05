@@ -226,7 +226,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
          var newcode = "";
          var img = "<a href=\"" + link.parent().attr("href") + "\">" +
                      "<img style=\"width:" + size + "px;height:" + size +
-                     "px;border-width:0\" src=\"" +
+                     "px;border-width:0;margin-right:3px;\" src=\"" +
                      link.attr("src")
                         .replace(/\/\/[^\.]*\.media\.tumblr\.com/,
                                  "//media.tumblr.com")
