@@ -350,7 +350,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             reblnk = "";
             a = newcode.indexOf('</a>') + 4;
             if (showAvatars) {
-               img = newcode.substring(0,a) + '&nbsp;';
+               img = newcode.substring(0,a);
             }
             b = newcode.indexOf('</a>',a) + 4;
             if (showAvatars) {
@@ -391,7 +391,9 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                      langNotification[lang][anstype][x] + '</a>';
                }
                else if (langNotification[lang][anstype][x] === "U") {
-                  if (newcode !== '') { newcode += '&nbsp;'; }
+                  if (newcode !== '' && newcode !== img) {
+                     newcode += ' ';
+                  }
                   newcode += '<strong>' + user;
                }
                else if (langNotification[lang][anstype][x] === "P") {
