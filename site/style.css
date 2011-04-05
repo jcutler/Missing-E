@@ -432,6 +432,14 @@ color:#44546B;
 background-color:white;
 }
 
+#copy {
+border-top:1px solid #CCC;
+text-align:center;
+margin-top:10px;
+padding-top:10px;
+font-size:12px;
+}
+
 #inclusions {
 text-align:center;
 margin-top:40px;

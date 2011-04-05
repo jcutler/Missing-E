@@ -8,5 +8,3 @@ Backport to userscripts? Not really interested
 FF
 - use tab property of worker to add scripts instead of calling like safari?
 - https://jetpack.mozillalabs.com/sdk/1.0b4/docs/packages/addon-kit/docs/page-mod.html
-
-Update about.html page
