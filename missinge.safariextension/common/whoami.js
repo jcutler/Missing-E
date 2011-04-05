@@ -34,8 +34,11 @@
 var MissingE_startup;
 if ((window.top === window &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
-    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
-   var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href);
+    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
+    /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
+   var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/
+               .test(location.href) ||
+            /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
    safari.self.tab.dispatchMessage("start", {isFrame: fr, url: location.href,
                                              bodyId: document.body.id});
 }
@@ -117,6 +120,9 @@ function doStartup(response) {
       }
    }
    else {
+      if (response.message.askFixes) {
+         MissingE_askFixes_doStartup();
+      }
       if (response.message.gotoDashPost) {
          MissingE_gotoDashPost_doStartup();
       }

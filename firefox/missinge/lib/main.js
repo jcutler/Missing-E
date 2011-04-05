@@ -66,6 +66,7 @@ var componentList = ["dashboardFixes",
                      "gotoDashPost",
                      "postingFixes",
                      "reblogYourself",
+                     "askFixes",
                      "followChecker",
                      "postCrushes",
                      "replyReplies",
@@ -553,6 +554,12 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.followChecker = false;
+
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+            activeScripts.askFixes = true;
+         }
+         else
+            activeScripts.askFixes = false;
       }
       if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
@@ -571,6 +578,13 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.dashboardFixes = false;
+      }
+      if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(message.url)) {
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+            activeScripts.askFixes = true;
+         }
+         else
+            activeScripts.askFixes = false;
       }
       if (!message.isFrame &&
           ((message.bodyId == 'dashboard_edit_post' &&
@@ -687,6 +701,7 @@ pageMod.PageMod({
                        data.url("common/defs.js"),
                        data.url("common/utils.js"),
                        data.url("common/storage.js"),
+                       data.url("askFixes/askFixes.js"),
                        data.url("bookmarker/bookmarker.js"),
                        data.url("dashboardFixes/dashboardFixes.js"),
                        data.url("dashLinksToTabs/dashLinksToTabs.js"),

@@ -35,8 +35,11 @@ var MissingE_startup;
 
 if ((window.top === window &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
-    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
-   var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href);
+    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
+    /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
+   var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/
+               .test(location.href) ||
+            /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
    postMessage({greeting: "start", isFrame: fr, url: location.href,
                                              bodyId: document.body.id});
 }
@@ -125,6 +128,9 @@ function doStartup(message) {
       }
    }
    else {
+      if (message.askFixes) {
+         MissingE_askFixes_doStartup(message.extensionURL);
+      }
       if (message.gotoDashPost) {
          MissingE_gotoDashPost_doStartup(message.extensionURL);
       }

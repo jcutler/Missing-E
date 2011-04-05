@@ -49,6 +49,7 @@
 				<string>common/utils.js</string>
 				<string>common/storage.js</string>
 				<string>facebox/facebox.js</string>
+				<string>askFixes/askFixes.js</string>
 				<string>bookmarker/bookmarker.js</string>
 				<string>dashLinksToTabs/dashLinksToTabs.js</string>
 				<string>followChecker/followChecker.js</string>

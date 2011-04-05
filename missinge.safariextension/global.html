@@ -35,6 +35,7 @@ var componentList = ["dashboardFixes",
                      "gotoDashPost",
                      "postingFixes",
                      "reblogYourself",
+                     "askFixes",
                      "followChecker",
                      "postCrushes",
                      "replyReplies",
@@ -649,6 +650,13 @@ function handleRequest(request) {
          }
          else
             activeScripts.dashboardFixes = false;
+      }
+      if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.message.url)) {
+         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
+            activeScripts.askFixes = true;
+         }
+         else
+            activeScripts.askFixes = false;
       }
       if (!request.message.isFrame &&
           ((request.message.bodyId == 'dashboard_edit_post' &&
