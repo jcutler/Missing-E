@@ -6,6 +6,7 @@
 **[GET IT](http://missinge.infraware.ca) - [FEATURES](http://missinge.infraware.ca/features) - [FAQ](http://missinge.infraware.ca/faq) - [TUMBLR](http://blog.missinge.infraware.ca) - [TWITTER](http://twitter.com/theMissinge)**
 
 ***
+
 Jeremy Cutler ([cutlerish.tumblr.com](cutlerish.tumblr.com))  
 Released under the [GPL Version 3 License](http://www.gnu.org/licenses/gpl-3.0.html)
 
