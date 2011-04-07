@@ -23,12 +23,21 @@
 
 /*global chrome, $ */
 var reblogText = {
-                  en: "reblog",
-                  fr: "rebloguer",
-                  de: "rebloggen",
-                  it: "reblogga",
-                  ja: "リブログ"
-                 }
+                  title: {
+                        en: "reblog",
+                        fr: "rebloguer",
+                        de: "rebloggen",
+                        it: "reblogga",
+                        ja: "リブログ"
+                         },
+                  error: {
+                        en: "An error occured. Click to reload 'Magnifier'.",
+                        de: "Ist ein Fehler aufgetreten. Klicken Sie erneut zu versuchen.",
+                        fr: "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
+                        it: "È verificato un errore. Clicca per provare di nuovo.",
+                        ja: "エラーが発生しました。 もう一度やり直してください]をクリックします。"
+                         }
+};
 
 function addReblog(item) {
    if (item.tagName === "LI" && $(item).hasClass('post') &&
@@ -55,7 +64,7 @@ function addReblog(item) {
       chrome.extension.sendRequest({greeting: "reblogYourself", pid: tid,
                                     url: addr}, function(response) {
          var edit, txt, klass;
-         var reblog_text = reblogText[$('html').attr("lang")];
+         var reblog_text = reblogText.title[$('html').attr("lang")];
          if (response.success) {
             klass = (response.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
@@ -79,6 +88,7 @@ function addReblog(item) {
                        '" class="' + klass + '">' + txt + '</a>');
          }
          else {
+            var reblog_err = reblogText.error[$('html').attr("lang")];
             edit = $(item)
                .find('div.post_controls a:[href^="/edit"]');
             if (edit.length === 0) {
@@ -88,7 +98,7 @@ function addReblog(item) {
                          'MissingE_reblog_control ' +
                         'MissingE_reblog_control_retry' : '');
             txt = (response.icons ? '' : '<del>' + reblog_text + '</del>');
-            edit.after(' <a title="reblog" href="#" ' +
+            edit.after(' <a title="' + reblog_err + '" href="#" ' +
                             'class="MissingE_reblogYourself_retry ' +
                             klass + '" onclick="return false;">' +
                             txt + '</a>');

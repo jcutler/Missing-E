@@ -23,12 +23,21 @@
 
 /*global safari, $ */
 var reblogText = {
-                  en: "reblog",
-                  fr: "rebloguer",
-                  de: "rebloggen",
-                  it: "reblogga",
-                  ja: "リブログ"
-                 }
+                  title: {
+                        en: "reblog",
+                        fr: "rebloguer",
+                        de: "rebloggen",
+                        it: "reblogga",
+                        ja: "リブログ"
+                         },
+                  error: {
+                        en: "An error occured. Click to reload 'Magnifier'.",
+                        de: "Ist ein Fehler aufgetreten. Klicken Sie erneut zu versuchen.",
+                        fr: "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
+                        it: "È verificato un errore. Clicca per provare di nuovo.",
+                        ja: "エラーが発生しました。 もう一度やり直してください]をクリックします。"
+                         }
+};
 
 function addReblog(item) {
    if (item.tagName === "LI" && jQuery(item).hasClass('post') &&
@@ -59,7 +68,7 @@ function addReblog(item) {
 function receiveReblog(message) {
    if (message.greeting !== "reblogYourself") { return; }
    var edit, klass, txt;
-   var reblog_text = reblogText[jQuery('html').attr("lang")];
+   var reblog_text = reblogText.title[jQuery('html').attr("lang")];
    if (message.success) {
       klass = (message.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
@@ -84,6 +93,7 @@ function receiveReblog(message) {
                 '" class="' + klass + '">' + txt + '</a>');
    }
    else {
+      var reblog_err = reblogText.error[jQuery('html').attr("lang")];
       edit = jQuery('#post_'+message.pid)
          .find('div.post_controls a:[href^="/edit"]');
       if (edit.length === 0) {
@@ -94,7 +104,8 @@ function receiveReblog(message) {
                           'MissingE_reblog_control ' +
                           'MissingE_reblog_control_retry' : '');
       txt = (message.icons ? '' : '<del>' + reblog_text + '</del>');
-      edit.after(' <a href="#" class="MissingE_reblogYourself_retry ' +
+      edit.after(' <a title="' + reblog_err + '" href="#" ' +
+                     'class="MissingE_reblogYourself_retry ' +
                      klass + '" onclick="return false;">' +
                      txt + '</a>');
    }
