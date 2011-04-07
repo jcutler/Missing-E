@@ -8,3 +8,5 @@ Backport to userscripts? Not really interested
 FF
 - use tab property of worker to add scripts instead of calling like safari?
 - https://jetpack.mozillalabs.com/sdk/1.0b4/docs/packages/addon-kit/docs/page-mod.html
+
+scrolling back from page 1000 until no more posts, then auto loads real page 999
