@@ -381,7 +381,9 @@ function requestReblogDash(url, pid, count, myWorker) {
                }
                else {
                   dequeueAjax(this.headers.targetId);
-                  myWorker.postMessage({greeting: "timestamp", pid: this.headers.targetId, success:false});
+                  var replaceIcons = getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
+                                       getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
+                  myWorker.postMessage({greeting: "timestamp", pid: this.headers.targetId, success:false, icons: replaceIcons});
                }
             }
          }

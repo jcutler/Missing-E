@@ -235,7 +235,9 @@ function requestReblogYourself(request, sender, sendResponse) {
                else {
                   debug("reblogYourself request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
-                  sendResponse({pid: this.targetId, success: false});
+                  var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
+                                     getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
+                  sendResponse({pid: this.targetId, success: false, icons: replaceIcons});
                }
             }
          },
@@ -254,7 +256,9 @@ function requestReblogYourself(request, sender, sendResponse) {
                   else {
                      debug("reblogYourself request (" + this.targetId + ") failed");
                      dequeueAjax(this.targetId);
-                     sendResponse({pid: this.targetId, success: false});
+                     var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
+                                          getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
+                     sendResponse({pid: this.targetId, success: false, icons: replaceIcons});
                   }
                }
             }
