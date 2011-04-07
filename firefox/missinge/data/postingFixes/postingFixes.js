@@ -212,6 +212,18 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
       if (h2.parent().attr('id') === "photo_link") { 
          h2 = headings.eq(-2);
       }
+
+      //This will probably break at some point
+      if (h2.length === 0) {
+         var par = jQuery('a.post_question_asker');
+         if (par.length > 0) {
+            par = par.parent().next();
+            h2 = jQuery('<h2>&nbsp;</h2>');
+            par.after(h2);
+            par.remove();
+         }
+      }
+
       var textarea = h2.nextAll('textarea:first').attr('id');
       var tag = '<img src=\\"X\\" />';
       if (h2.parent().find('div.editor_note:contains("markdown")')
