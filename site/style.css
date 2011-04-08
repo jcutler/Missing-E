@@ -529,6 +529,10 @@ border-bottom:1px solid #44546b;
 text-decoration:underline;
 }
 
+ol ol, ol ul, ul ol, ul ul {
+margin-top:0.6em;
+}
+
 #faq .example {
 text-align:center;
 }

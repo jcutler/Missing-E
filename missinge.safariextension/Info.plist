@@ -27,6 +27,8 @@
 				<string>missinge-settings</string>
 				<key>Image</key>
 				<string>missinge-button.png</string>
+				<key>Include By Default</key>
+				<false/>
 				<key>Label</key>
 				<string>Missing e</string>
 				<key>Palette Label</key>
