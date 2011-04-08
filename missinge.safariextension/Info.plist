@@ -28,7 +28,7 @@
 				<key>Image</key>
 				<string>missinge-button.png</string>
 				<key>Include By Default</key>
-				<false/>
+				<true/>
 				<key>Label</key>
 				<string>Missing e</string>
 				<key>Palette Label</key>
