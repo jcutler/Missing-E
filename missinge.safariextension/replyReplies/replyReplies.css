@@ -56,9 +56,9 @@ height:16px;
 }
 
 #posts .notification.MissingE_rt_box {
-border:1px solid white;
+border:1px solid white !important;
 }
 
 #posts ol.notes li.MissingE_rt_box {
-border:1px solid #567;
+border:1px solid #567 !important;
 }
