@@ -533,6 +533,10 @@ ol ol, ol ul, ul ol, ul ul {
 margin-top:0.6em;
 }
 
+#faq .example + .example {
+margin-top:10px;
+}
+
 #faq .example {
 text-align:center;
 }
