@@ -187,6 +187,11 @@ function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags,
                                            replaceIcons, timeoutAJAX,
                                            timeoutLength, postLinks) {
    if (window.top !== window) { return false; }
+
+   $('a.like_button').live('click', function(e) {
+      e.preventDefault();
+   });
+
    var css = document.createElement("style");
    css.setAttribute("type","text/css");
    var data = '';

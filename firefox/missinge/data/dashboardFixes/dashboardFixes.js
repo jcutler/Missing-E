@@ -189,6 +189,11 @@ function doIcons(item) {
 function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
                                            wrapTags, replaceIcons, timeoutAJAX,
                                            timeoutLength, postLinks) {
+
+   jQuery('a.like_button').live('click', function(e) {
+      e.preventDefault();
+   });
+
    var css = document.createElement("style");
    css.setAttribute("type","text/css");
    var data = '';

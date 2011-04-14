@@ -186,6 +186,11 @@ function doIcons(item) {
 chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
                              function(response) {
    var dashboardFixes_settings = JSON.parse(response);
+
+   $('a.like_button').live('click', function(e) {
+      e.preventDefault();
+   });
+
    if (dashboardFixes_settings.postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
        $('#new_post').length === 0) {
