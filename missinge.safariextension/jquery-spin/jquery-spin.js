@@ -9,7 +9,7 @@
   var calcFloat = {
     get: function(num){
       var num = num.toString();
-      if(num.indexOf('.')==-1) return[0, eval(num)];
+      if(num.indexOf('.')==-1) return[0, parseInt(num)];
       var nn = num.split('.');
       var po = nn[1].length;
       var st = nn.join('');
@@ -20,15 +20,15 @@
       }
       for(var i=0; i<st.length; ++i) if(st.charAt(0)=='0') st=st.substr(1, st.length);
       st = sign + st;
-      return [po, eval(st)];
+      return [po, parseInt(st)];
     },
     getInt: function(num, figure){
       var d = Math.pow(10, figure);
       var n = this.get(num);
-      var v1 = eval('num * d');
-      var v2 = eval('n[1] * d');
+      var v1 = parseInt(num) * d;
+      var v2 = n[1] * d;
       if(this.get(v1)[1]==v2) return v1;
-      return(n[0]==0 ? v1 : eval(v2 + '/Math.pow(10, n[0])'));
+      return(n[0]==0 ? v1 : v2 / Math.pow(10, n[0]));
     },
     sum: function(v1, v2){
       var n1 = this.get(v1);
@@ -36,7 +36,7 @@
       var figure = (n1[0] > n2[0] ? n1[0] : n2[0]);
       v1 = this.getInt(v1, figure);
       v2 = this.getInt(v2, figure);
-      return eval('v1 + v2')/Math.pow(10, figure);
+      return (v1 + v2)/Math.pow(10, figure);
     }
   };
   $.extend({
