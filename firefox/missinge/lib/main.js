@@ -85,6 +85,14 @@ var months = ["Jan",
               "Nov",
               "Dec"];
 
+function getStorage(key, defVal) {
+   return ps.get(key, defVal);
+}
+
+function setStorage(key, val) {
+   ps.set(key, val);
+}
+
 function openSettings() {
    for each (var tab in tabs) {
       if (tab.url === data.url("options.html")) {
@@ -109,15 +117,17 @@ function openSettings() {
    });
 }
 
-var widget = widgets.Widget({
-   label: "Missing e",
-   id: "missinge",
-   tooltip: "Missing e Settings",
-   contentURL: data.url("missinge32.png"),
-   onClick: function() {
-      openSettings();
-   }
-});
+if (!getStorage("extensions.MissingE.hideWidget",false)) {
+   var widget = widgets.Widget({
+      label: "Missing e",
+      id: "missinge",
+      tooltip: "Missing e Settings",
+      contentURL: data.url("missinge32.png"),
+      onClick: function() {
+         openSettings();
+      }
+   });
+}
 
 function zeroPad(num, len) {
    var ret = "";
@@ -145,14 +155,6 @@ function getFormattedDate(d, format) {
             .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
             .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
    return ret;
-}
-
-function getStorage(key, defVal) {
-   return ps.get(key, defVal);
-}
-
-function setStorage(key, val) {
-   ps.set(key, val);
 }
 
 function doTimestamp(stamp, id, theWorker) {
