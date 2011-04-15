@@ -385,7 +385,7 @@ function requestReblogDash(url, pid, count, myWorker) {
                   dequeueAjax(this.headers.targetId);
                   var replaceIcons = getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                                        getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
-                  myWorker.postMessage({greeting: "timestamp", pid: this.headers.targetId, success:false, icons: replaceIcons});
+                  myWorker.postMessage({greeting: "reblogYourself", pid: this.headers.targetId, success:false, icons: replaceIcons});
                }
             }
          }
