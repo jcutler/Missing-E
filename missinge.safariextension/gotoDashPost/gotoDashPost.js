@@ -24,11 +24,29 @@
 /*global safari */
 
 function MissingE_gotoDashPost_doStartup() {
-   if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/
-         .test(location.href) &&
-       /(%2[fF]|\/)post(%2[fF]|\/)/.test(location.href)) {
-      var div = document.getElementsByTagName("div")[0];
-      var controls = div.getElementsByTagName("a");
+   var noGoto = true;
+   var div = document.getElementsByTagName("div")[0];
+   var controls = div.getElementsByTagName("a");
+
+   if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) ||
+       !(/(%2[fF]|\/)post(%2[fF]|\/)/.test(location.href))) {
+      noGoto = false;
+   }
+   else {
+      var i;
+      for (i=0; noGoto && i<controls.length; i++) {
+         var imgs = controls[i].getElementsByTagName('img');
+         for (j=0; j<imgs.length; j++) {
+            if (imgs[j].src === safari.extension.baseURI +
+                                 'gotoDashPost/goto.png') {
+               noGoto = false;
+               break;
+            }
+         }
+      }
+   }
+
+   if (noGoto) {
       var i;
       var following = false;
       var you = true;
