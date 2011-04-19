@@ -39,7 +39,29 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var debugMode = false;
+var debugMode = true;
+var tabs = {};
+
+function addTab(id, url) {
+   var d = new Date();
+   tabs[id] = d;
+   debug("Adding tab (" + id + ") " + d); 
+}
+
+chrome.tabs.onRemoved.addListener(function(id, removeInfo) {
+   if (tabs[id]) {
+      delete tabs[id];
+      debug("Removing tab (" + id + ")");
+   }
+});
+
+chrome.tabs.onUpdated.addListener(function(id, updates, tab) {
+   if (tabs[id] && (updates.status === "loading" || updates.url)) {
+      var d = new Date();
+      tabs[id] = new Date();
+      debug("Updating tab (" + id + ") " + d);
+   }
+});
 
 cacheClear = setInterval(function() {
    cache = {};
@@ -161,10 +183,10 @@ function runItem(call) {
       requestMagnifier(call.request, call.sender, call.sendResponse);
    }
    else if (call.type === "reblogYourself") {
-      requestReblogYourself(call.request, call.sender, call.sendResponse);
+      requestReblogYourself(call.request, call.sender, call.sendResponse, call.hash);
    }
    else if (call.type === "timestamp") {
-      requestTimestamp(call.request, call.sender, call.sendResponse);
+      requestTimestamp(call.request, call.sender, call.sendResponse, call.hash);
    }
 }
 
@@ -183,6 +205,7 @@ function wakeById(id) {
 
 function isRequested(details) {
    return false;
+   /* Not working
    var bucket;
    if ((bucket = activeRequests[details.request.pid])) {
       onHold[details.type + details.request.pid] = details;
@@ -194,6 +217,7 @@ function isRequested(details) {
    else {
       return false;
    }
+   */
 }
 
 function startAjax(id) {
@@ -201,15 +225,19 @@ function startAjax(id) {
    activeRequests[id] = [];
 }
 
-function requestReblogYourself(request, sender, sendResponse) {
-   if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, false)) {
+function requestReblogYourself(request, sender, sendResponse, hash) {
+   if (hash !== tabs[sender.tab.id]) {
+      debug("Stop reblogYourself request: Tab closed or changed.");
+      return;
+   }
+   else if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, false)) {
       return true;
    }
    else if (isRequested({type: "reblogYourself", request: request, sender: sender, sendResponse: sendResponse})) {
       return true;
    }
    else if (activeAjax >= maxActiveAjax) {
-      queueAjax({type: "reblogYourself", request: request, sender: sender, sendResponse: sendResponse});
+      queueAjax({type: "reblogYourself", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
    }
    else {
       debug("AJAX reblogYourself request (" + request.pid + ")");
@@ -221,7 +249,13 @@ function requestReblogYourself(request, sender, sendResponse) {
          tryCount: 0,
          retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
          targetId: request.pid,
+         tabId: sender.tab.id,
+         tabHash: hash,
          error: function(xhr, textStatus) {
+            if (this.tabHash !== tabs[this.tabId]) {
+               debug("Stop reblogYourself request: Tab closed or changed.");
+               return;
+            }
             if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, true)) {
                return true;
             }
@@ -242,7 +276,12 @@ function requestReblogYourself(request, sender, sendResponse) {
             }
          },
          success: function(data, textStatus) {
+            var closed = (this.tabHash !== tabs[this.tabId]);
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               if (closed) {
+                  debug("Stop reblogYourself request: Tab closed or changed.");
+                  return;
+               }
                if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, true)) {
                   return true;
                }
@@ -268,22 +307,28 @@ function requestReblogYourself(request, sender, sendResponse) {
                var info = stamp["posts"][0];
                saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
-               doReblogDash(info, this.targetId, sendResponse);
+               if (!closed) {
+                  doReblogDash(info, this.targetId, sendResponse);
+               }
             }
          }
       });
    }
 }
 
-function requestTimestamp(request, sender, sendResponse) {
-   if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, false)) {
+function requestTimestamp(request, sender, sendResponse, hash) {
+   if (hash !== tabs[sender.tab.id]) {
+      debug("Stop timestamp request: Tab closed or changed.");
+      return false;
+   }
+   else if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, false)) {
       return true;
    }
    else if (isRequested({type: "timestamp", request: request, sender: sender, sendResponse: sendResponse})) {
       return true;
    }
    else if (activeAjax >= maxActiveAjax) {
-      queueAjax({type: "timestamp", request: request, sender: sender, sendResponse: sendResponse});
+      queueAjax({type: "timestamp", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
    }
    else {
       debug("AJAX timestamp request (" + request.pid + ")");
@@ -295,7 +340,13 @@ function requestTimestamp(request, sender, sendResponse) {
          tryCount: 0,
          retryLimit: getStorage("MissingE_timestamps_retries",defaultRetries),
          targetId: request.pid,
+         tabId: sender.tab.id,
+         tabHash: hash,
          error: function(xhr, textStatus) {
+            if (this.tabHash !== tabs[this.tabId]) {
+               debug("Stop timestamp request: Tab closed or changed.");
+               return;
+            }
             if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, true)) {
                return true;
             }
@@ -314,7 +365,12 @@ function requestTimestamp(request, sender, sendResponse) {
             }
          },
          success: function(data, textStatus) {
+            var closed = (this.tabHash !== tabs[this.tabId]); 
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               if (closed) {
+                  debug("Stop timestamp request: Tab closed or changed.");
+                  return;
+               }
                if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, true)) {
                   return true;
                }
@@ -338,7 +394,9 @@ function requestTimestamp(request, sender, sendResponse) {
                var info = stamp["posts"][0];
                saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
-               doTimestamp(info, this.targetId, sendResponse);
+               if (!closed) {
+                  doTimestamp(info, this.targetId, sendResponse);
+               }
             }
          }
       });
@@ -436,10 +494,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       requestMagnifier(request, sender, sendResponse);
    }
    else if (request.greeting == "reblogYourself") {
-      requestReblogYourself(request, sender, sendResponse);
+      requestReblogYourself(request, sender, sendResponse, tabs[sender.tab.id]);
    }
    else if (request.greeting == "timestamp") {
-      requestTimestamp(request, sender, sendResponse);
+      requestTimestamp(request, sender, sendResponse, tabs[sender.tab.id]);
    }
    else if (request.greeting == "settings") {
       var settings = {};
@@ -481,6 +539,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       sendResponse(JSON.stringify(settings));
    }
    else if (request.greeting == "start") {
+      addTab(sender.tab.id, sender.tab.url);
       chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-1.5.min.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
