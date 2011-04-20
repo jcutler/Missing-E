@@ -43,7 +43,7 @@ var debugMode = true;
 var tabs = {};
 
 function addTab(id, url) {
-   var d = new Date();
+   var d = (new Date()).valueOf();
    tabs[id] = d;
    debug("Adding tab (" + id + ") " + d); 
 }
@@ -57,8 +57,8 @@ chrome.tabs.onRemoved.addListener(function(id, removeInfo) {
 
 chrome.tabs.onUpdated.addListener(function(id, updates, tab) {
    if (tabs[id] && (updates.status === "loading" || updates.url)) {
-      var d = new Date();
-      tabs[id] = new Date();
+      var d = (new Date()).valueOf();
+      tabs[id] = d;
       debug("Updating tab (" + id + ") " + d);
    }
 });
@@ -180,7 +180,7 @@ function wakeAll() {
 
 function runItem(call) {
    if (call.type === "magnifier") {
-      requestMagnifier(call.request, call.sender, call.sendResponse);
+      requestMagnifier(call.request, call.sender, call.sendResponse, call.hash);
    }
    else if (call.type === "reblogYourself") {
       requestReblogYourself(call.request, call.sender, call.sendResponse, call.hash);
@@ -403,15 +403,19 @@ function requestTimestamp(request, sender, sendResponse, hash) {
    }
 }
 
-function requestMagnifier(request, sender, sendResponse) {
-   if (cacheServe("magnifier", request.pid, sendResponse, doMagnifier, false)) {
+function requestMagnifier(request, sender, sendResponse, hash) {
+   if (hash !== tabs[sender.tab.id]) {
+      debug("Stop magnifier request: Tab closed or changed.");
+      return;
+   }
+   else if (cacheServe("magnifier", request.pid, sendResponse, doMagnifier, false)) {
       return true;
    }
    else if (isRequested({type: "magnifier", request: request, sender: sender, sendResponse: sendResponse})) {
       return true;
    }
    else if (activeAjax >= maxActiveAjax) {
-      queueAjax({type: "magnifier", request: request, sender: sender, sendResponse: sendResponse});
+      queueAjax({type: "magnifier", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
    }
    else {
       debug("AJAX magnifier request (" + request.pid + ")");
@@ -423,7 +427,13 @@ function requestMagnifier(request, sender, sendResponse) {
          tryCount: 0,
          retryLimit: getStorage("MissingE_magnifier_retries",defaultRetries),
          targetId: request.pid,
+         tabId: sender.tab.id,
+         tabHash: hash,
          error: function(xhr, textStatus) {
+            if (this.tabHash !== tabs[this.tabId]) {
+               debug("Stop reblogYourself request: Tab closed or changed.");
+               return;
+            }
             if (cacheServe("magnifier", request.pid, sendResponse, doMagnifier, true)) {
                return true;
             }
@@ -442,7 +452,12 @@ function requestMagnifier(request, sender, sendResponse) {
             }
          },
          success: function(data, textStatus) {
+            var closed = (this.tabHash !== tabs[this.tabId]);
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               if (closed) {
+                  debug("Stop reblogYourself request: Tab closed or changed.");
+                  return;
+               }
                if (cacheServe("magnifier", request.pid, sendResponse, doMagnifier, true)) {
                   return true;
                }
@@ -466,7 +481,9 @@ function requestMagnifier(request, sender, sendResponse) {
                var info = stamp["posts"][0];
                saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
-               doMagnifier(info, this.targetId, sendResponse);
+               if (!closed) {
+                  doMagnifier(info, this.targetId, sendResponse);
+               }
             }
          }
       });
@@ -491,7 +508,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       });
    }
    else if (request.greeting == "magnifier") {
-      requestMagnifier(request, sender, sendResponse);
+      requestMagnifier(request, sender, sendResponse, tabs[sender.tab.id]);
    }
    else if (request.greeting == "reblogYourself") {
       requestReblogYourself(request, sender, sendResponse, tabs[sender.tab.id]);
