@@ -397,8 +397,12 @@ function replyRepliesSettings(message) {
 
    var code = thecode.join("") + "\n<p><br /></p>";
    if (/nsfwdone/.test(code) || /nsfwed/.test(code)) {
-      code = code.replace(/opacity:\s*[01]\s*;/,'')
-                  .replace(/class="nsfwdone"/,'').replace(/class="nsfwed"/,'');
+      code = code.replace(/opacity:\s*[01]\s*;/g,'')
+                  .replace(/class="nsfwdone"/g,'')
+                  .replace(/class="nsfwed"/g,'')
+                  .replace(/class="nsfwed nsfwdone"/g,'')
+                  .replace(/class="nsfwdone nsfwed"/g,'')
+                  .replace(/<\/?div[^>]*>/g,'');
    }
    reply_setValue(code);
    tags_setValue(tags);
