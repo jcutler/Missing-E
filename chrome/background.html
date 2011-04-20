@@ -39,7 +39,7 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var debugMode = true;
+var debugMode = false;
 var tabs = {};
 
 function addTab(id, url) {
@@ -228,6 +228,7 @@ function startAjax(id) {
 function requestReblogYourself(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop reblogYourself request: Tab closed or changed.");
+      dequeueAjax();
       return;
    }
    else if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, false)) {
@@ -254,6 +255,7 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
          error: function(xhr, textStatus) {
             if (this.tabHash !== tabs[this.tabId]) {
                debug("Stop reblogYourself request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
                return;
             }
             if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, true)) {
@@ -280,6 +282,7 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
                if (closed) {
                   debug("Stop reblogYourself request: Tab closed or changed.");
+                  dequeueAjax(this.targetId);
                   return;
                }
                if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, true)) {
@@ -319,6 +322,7 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
 function requestTimestamp(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop timestamp request: Tab closed or changed.");
+      dequeueAjax();
       return false;
    }
    else if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, false)) {
@@ -345,6 +349,7 @@ function requestTimestamp(request, sender, sendResponse, hash) {
          error: function(xhr, textStatus) {
             if (this.tabHash !== tabs[this.tabId]) {
                debug("Stop timestamp request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
                return;
             }
             if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, true)) {
@@ -369,6 +374,7 @@ function requestTimestamp(request, sender, sendResponse, hash) {
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
                if (closed) {
                   debug("Stop timestamp request: Tab closed or changed.");
+                  dequeueAjax(this.targetId);
                   return;
                }
                if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, true)) {
@@ -406,6 +412,7 @@ function requestTimestamp(request, sender, sendResponse, hash) {
 function requestMagnifier(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop magnifier request: Tab closed or changed.");
+      dequeueAjax();
       return;
    }
    else if (cacheServe("magnifier", request.pid, sendResponse, doMagnifier, false)) {
@@ -432,6 +439,7 @@ function requestMagnifier(request, sender, sendResponse, hash) {
          error: function(xhr, textStatus) {
             if (this.tabHash !== tabs[this.tabId]) {
                debug("Stop reblogYourself request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
                return;
             }
             if (cacheServe("magnifier", request.pid, sendResponse, doMagnifier, true)) {
@@ -456,6 +464,7 @@ function requestMagnifier(request, sender, sendResponse, hash) {
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
                if (closed) {
                   debug("Stop reblogYourself request: Tab closed or changed.");
+                  dequeueAjax(this.targetId);
                   return;
                }
                if (cacheServe("magnifier", request.pid, sendResponse, doMagnifier, true)) {
