@@ -625,24 +625,6 @@ function handleMessage(message, myWorker) {
          else
             activeScripts.followChecker = false;
 
-         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
-            activeScripts.askFixes = true;
-         }
-         else
-            activeScripts.askFixes = false;
-      }
-      if (!message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/drafts/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
-          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
-           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
-             .test(message.url))) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/submissions/.test(message.url))) {
          if (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1) {
             activeScripts.dashboardFixes = true;
          }
@@ -692,7 +674,7 @@ function handleMessage(message, myWorker) {
       }
       if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url))) {
+           /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url))) {
          if (getStorage("extensions.MissingE.replyReplies.enabled",1) == 1) {
             activeScripts.replyReplies = true;
             activeScripts.replyReplies_fill = false;
