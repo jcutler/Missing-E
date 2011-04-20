@@ -248,7 +248,12 @@ function startAjax(id) {
 }
 
 function requestTimestamp(request) {
-   if (cacheServe("timestamp", request, request.message.pid, doTimestamp,
+   if (request.target.page === undefined) {
+      debug("Stop timestamp request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (cacheServe("timestamp", request, request.message.pid, doTimestamp,
                   false)) {
       return true;
    }
@@ -269,6 +274,11 @@ function requestTimestamp(request) {
          retryLimit: getStorage("MissingE_timestamps_retries",defaultRetries),
          targetId: request.message.pid,
          error: function(xhr, textStatus) {
+            if (request.target.page === undefined) {
+               debug("Stop timestamp request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
             if (cacheServe("timestamp", request, request.message.pid,
                            doTimestamp, true)) {
                return true;
@@ -289,6 +299,11 @@ function requestTimestamp(request) {
          },
          success: function(data, textStatus) {
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               if (request.target.page === undefined) {
+                  debug("Stop timestamp request: Tab closed or changed.");
+                  dequeueAjax(this.targetId);
+                  return;
+               }
                if (cacheServe("timestamp", request, request.message.pid,
                               doTimestamp, true)) {
                   return true;
@@ -313,7 +328,9 @@ function requestTimestamp(request) {
                var info = stamp["posts"][0];
                saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
-               doTimestamp(info, this.targetId, request);
+               if (request.target.page !== undefined) {
+                  doTimestamp(info, this.targetId, request);
+               }
             }
          }
       });
@@ -321,7 +338,12 @@ function requestTimestamp(request) {
 }
 
 function requestReblogYourself(request) {
-   if (cacheServe("reblogYourself", request.message.pid, request,
+   if (request.target.page === undefined) {
+      debug("Stop reblogYourself request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (cacheServe("reblogYourself", request.message.pid, request,
                   doReblogDash, false)) {
       return true;
    }
@@ -342,6 +364,11 @@ function requestReblogYourself(request) {
          retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
          targetId: request.message.pid,
          error: function(xhr, textStatus) {
+            if (request.target.page === undefined) {
+               debug("Stop reblogYourself request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
             if (cacheServe("reblogYourself", request.message.pid, request,
                   doReblogDash, true)) {
                return true;
@@ -365,6 +392,11 @@ function requestReblogYourself(request) {
          },
          success: function(data, textStatus) {
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               if (request.target.page === undefined) {
+                  debug("Stop reblogYourself request: Tab closed or changed.");
+                  dequeueAjax(this.targetId);
+                  return;
+               }
                if (cacheServe("reblogYourself", request.message.pid, request,
                      doReblogDash, true)) {
                   return true;
@@ -393,7 +425,9 @@ function requestReblogYourself(request) {
                var info = stamp["posts"][0];
                saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
-               doReblogDash(info, this.targetId, request);
+               if (request.target.page !== undefined) {
+                  doReblogDash(info, this.targetId, request);
+               }
             }
          }
       });
@@ -401,7 +435,12 @@ function requestReblogYourself(request) {
 }
 
 function requestMagnifier(request) {
-   if (cacheServe("magnifier", request.message.pid, request, doMagnifier,
+   if (request.target.page === undefined) {
+      debug("Stop magnifier request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (cacheServe("magnifier", request.message.pid, request, doMagnifier,
                   false)) {
       return true;
    }
@@ -422,6 +461,11 @@ function requestMagnifier(request) {
          retryLimit: getStorage("MissingE_magnifier_retries",defaultRetries),
          targetId: request.message.pid,
          error: function(xhr, textStatus) {
+            if (request.target.page === undefined) {
+               debug("Stop magnifier request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
             if (cacheServe("magnifier", request.message.pid, request,
                            doMagnifier, true)) {
                return true;
@@ -442,6 +486,11 @@ function requestMagnifier(request) {
          },
          success: function(data, textStatus) {
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               if (request.target.page === undefined) {
+                  debug("Stop magnifier request: Tab closed or changed.");
+                  dequeueAjax(this.targetId);
+                  return;
+               }
                if (cacheServe("magnifier", request.message.pid, request,
                               doMagnifier, true)) {
                   return true;
@@ -466,7 +515,9 @@ function requestMagnifier(request) {
                var info = stamp["posts"][0];
                saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
-               doMagnifier(info, this.targetId, request);
+               if (request.target.page !== undefined) {
+                  doMagnifier(info, this.targetId, request);
+               }
             }
          }
       });

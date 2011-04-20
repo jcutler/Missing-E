@@ -255,6 +255,14 @@ function startAjax(id) {
 }
 
 function startMagnifier(message, myWorker) {
+   try {
+      var tab = myWorker.tab;
+   }
+   catch (err) {
+      console.debug("Stop magnifier request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
    if (cacheServe("magnifier", message.pid, myWorker, doMagnifier, false)) {
       return true;
    }
@@ -274,8 +282,20 @@ function requestMagnifier(url, pid, count, myWorker) {
                 retryLimit: getStorage("extensions.MissingE.magnifier.retries",defaultRetries),
                 targetId: pid},
       onComplete: function(response) {
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
          if (response.status != 200 ||
              !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
+            if (closed) {
+               console.debug("Stop magnifier request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
             if (cacheServe("magnifier", this.headers.targetId, myWorker,
                            doMagnifier, true)) {
                return true;
@@ -296,13 +316,23 @@ function requestMagnifier(url, pid, count, myWorker) {
             var info = stamp["posts"][0];
             saveCache(this.headers.targetId, info);
             dequeueAjax(this.headers.targetId);
-            doMagnifier(info, this.headers.targetId, myWorker);
+            if (!closed) {
+               doMagnifier(info, this.headers.targetId, myWorker);
+            }
          }
       }
    }).get();
 }
 
 function startTimestamp(message, myWorker) {
+   try {
+      var tab = myWorker.tab;
+   }
+   catch (err) {
+      console.debug("Stop timestamp request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
    if (cacheServe("timestamp", message.pid, myWorker, doTimestamp, false)) {
       return true;
    }
@@ -322,8 +352,20 @@ function requestTimestamp(url, pid, count, myWorker) {
                 retryLimit: getStorage("extensions.MissingE.timestamps.retries",defaultRetries),
                 targetId: pid},
       onComplete: function(response) {
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
          if (response.status != 200 ||
              !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
+            if (closed) {
+               console.debug("Stop timestamp request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
             if (cacheServe("timestamp", this.headers.targetId, myWorker,
                            doTimestamp, true)) {
                return true;
@@ -344,13 +386,23 @@ function requestTimestamp(url, pid, count, myWorker) {
             var info = stamp["posts"][0];
             saveCache(this.headers.targetId, info);
             dequeueAjax(this.headers.targetId);
-            doTimestamp(info, this.headers.targetId, myWorker);
+            if (!closed) {
+               doTimestamp(info, this.headers.targetId, myWorker);
+            }
          }
       }
    }).get();
 }
 
 function startReblogYourself(message, myWorker) {
+   try {
+      var tab = myWorker.tab;
+   }
+   catch (err) {
+      console.debug("Stop reblogYourself request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
    if (cacheServe("reblogYourself", message.pid, myWorker, doReblogDash,
                   false)) {
       return true;
@@ -371,8 +423,20 @@ function requestReblogDash(url, pid, count, myWorker) {
                 retryLimit: getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries),
                 targetId: pid},
       onComplete: function(response) {
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
          if (response.status != 200 ||
              !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
+            if (closed) {
+               console.debug("Stop reblogYourself request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
             if (cacheServe("reblogYourself", this.headers.targetId, myWorker,
                            doReblogDash, true)) {
                return true;
@@ -395,7 +459,9 @@ function requestReblogDash(url, pid, count, myWorker) {
             var info = stamp["posts"][0];
             saveCache(this.headers.targetId, info);
             dequeueAjax(this.headers.targetId);
-            doReblogDash(info, this.headers.targetId, myWorker);
+            if (!closed) {
+               doReblogDash(info, this.headers.targetId, myWorker);
+            }
          }
       }
    }).get();
