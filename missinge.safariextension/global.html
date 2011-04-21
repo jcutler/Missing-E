@@ -32,6 +32,7 @@ var componentList = ["dashboardFixes",
                      "safeDash",
                      "timestamps",
                      "magnifier",
+                     "betterReblogs",
                      "gotoDashPost",
                      "postingFixes",
                      "reblogYourself",
@@ -95,6 +96,11 @@ function debug(msg) {
    }
 }
 
+function doTags(stamp, id, request) {
+   var tags = stamp["tags"];
+   request.target.page.dispatchMessage("tags",{success: true, data: tags});
+}
+
 function doTimestamp(stamp, id, request) {
    var ts = stamp["unix-timestamp"];
    var d = new Date(ts*1000);
@@ -146,6 +152,9 @@ function runItem(call) {
    else if (call.type === "timestamp") {
       requestTimestamp(call.request);
    }
+   else if (call.type === "tags") {
+      requestTags(call.request);
+   }
 }
 
 function dequeueAjax(id) {
@@ -172,7 +181,8 @@ function saveCache(id, entry) {
           i !== "photo-url-1280" &&
           i !== "unix-timestamp" &&
           i !== "reblog-key" &&
-          i !== "url") {
+          i !== "url" &&
+          i !== "tags") {
          delete entry[i];
       }
    }
@@ -245,6 +255,96 @@ function startAjax(id) {
    /* Not working
    activeRequests[id] = [];
    */
+}
+
+function requestTags(request) {
+   if (request.target.page === undefined) {
+      debug("Stop tags request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (cacheServe("tags", request, request.message.pid, doTags,
+                  false)) {
+      return true;
+   }
+   else if (isRequested({type: "tags", request: request})) {
+      return true;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "tags", request: request});
+   }
+   else {
+      debug("AJAX tags request (" + request.message.pid + ")");
+      startAjax(request.message.pid);
+      $.ajax({
+         type: "GET",
+         url: request.message.url + "/api/read/json?id=" + request.message.pid,
+         dataType: "text",
+         tryCount: 0,
+         retryLimit: getStorage("MissingE_betterReblogs_retries",defaultRetries),
+         targetId: request.message.pid,
+         error: function(xhr, textStatus) {
+            if (request.target.page === undefined) {
+               debug("Stop tags request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (cacheServe("tags", request, request.message.pid,
+                           doTags, true)) {
+               return true;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry tags request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug("tags request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  request.target.page.dispatchMessage("tags",{success: false});
+               }
+            }
+         },
+         success: function(data, textStatus) {
+            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+               if (request.target.page === undefined) {
+                  debug("Stop tags request: Tab closed or changed.");
+                  dequeueAjax(this.targetId);
+                  return;
+               }
+               if (cacheServe("tags", request, request.message.pid,
+                              doTags, true)) {
+                  return true;
+               }
+               else {
+                  this.tryCount++;
+                  if (this.tryCount <= this.retryLimit) {
+                     debug("Retry tags request (" + this.targetId + ")");
+                     $.ajax(this);
+                     return;
+                  }
+                  else {
+                     debug("tags request (" + this.targetId + ") failed");
+                     dequeueAjax(this.targetId);
+                     request.target.page.dispatchMessage("tags",{success: false});
+                  }
+               }
+            }
+            else {
+               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+               var stamp = JSON.parse(txt);
+               var info = stamp["posts"][0];
+               saveCache(this.targetId, info);
+               dequeueAjax(this.targetId);
+               if (request.target.page !== undefined) {
+                  doTags(info, this.targetId, request);
+               }
+            }
+         }
+      });
+   }
 }
 
 function requestTimestamp(request) {
@@ -557,6 +657,9 @@ function handleRequest(request) {
    else if (request.name == "timestamp") {
       requestTimestamp(request);
    }
+   else if (request.name == "tags") {
+      requestTags(request);
+   }
    else if (request.name == "change-setting") {
       setStorage(request.message.name, request.message.val);
    }
@@ -595,6 +698,9 @@ function handleRequest(request) {
       settings.MissingE_replyReplies_smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
       settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
       settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
+      settings.MissingE_betterReblogs_passTags = getStorage("MissingE_betterReblogs_passTags",1);
+      settings.Missinge_betterReblogs_retries = getStorage("Missinge_betterReblogs_retries",defaultRetries);
+      settings.MissingE_betterReblogs_quickReblog = getStorage("MissingE_betterReblogs_quickReblog",1);
       request.target.page.dispatchMessage("all-settings",settings);
    }
    else if (request.name == "settings") {
@@ -636,6 +742,10 @@ function handleRequest(request) {
          case "unfollower":
          case "followChecker":
             settings.retries = getStorage("MissingE_" + request.component + "_retries",defaultRetries);
+            break;
+         case "betterReblogs":
+            settings.passTags = getStorage("MissingE_betterReblogs_passTags",1);
+            settings.quickReblog = getStorage("MissingE_betterReblogs_quickReblog",1);
             break;
       }
       request.target.page.dispatchMessage("settings",settings);
@@ -717,6 +827,13 @@ function handleRequest(request) {
          }
          else
             activeScripts.postingFixes = false;
+
+         if (getStorage("MissingE_betterReblogs_enabled",1) == 1) {
+            activeScripts.betterReblogs = true;
+            activeScripts.betterReblogs_fill = true;
+         }
+         else
+            activeScripts.betterReblogs = false;
       }
       if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(request.message.url) &&
           !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(request.message.url)) &&
@@ -734,6 +851,13 @@ function handleRequest(request) {
          }
          else
             activeScripts.reblogYourself = false;
+         
+         if (getStorage("MissingE_betterReblogs_enabled",1) == 1 &&
+             getStorage("MissingE_betterReblogs_passTags",1) == 1) {
+            activeScripts.betterReblogs = true;
+         }
+         else
+            activeScripts.betterReblogs = false;
       }
       if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
@@ -791,6 +915,12 @@ function handleRequest(request) {
          }
          else
             activeScripts.magnifier = false;
+
+         if (getStorage("MissingE_betterReblogs_enabled",1) == 1) {
+            activeScripts.betterReblogs = true;
+         }
+         else
+            activeScripts.betterReblogs = false;
 
          if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
              getStorage("MissingE_reblogYourself_dashboard",1) == 1) {

@@ -52,6 +52,9 @@
 				<string>common/storage.js</string>
 				<string>facebox/facebox.js</string>
 				<string>askFixes/askFixes.js</string>
+                                <string>betterReblogs/betterReblogs_dash.js</string>
+                                <string>betterReblogs/betterReblogs_fill.js</string>
+                                <string>betterReblogs/betterReblogs_post.js</string>
 				<string>bookmarker/bookmarker.js</string>
 				<string>dashLinksToTabs/dashLinksToTabs.js</string>
 				<string>followChecker/followChecker.js</string>

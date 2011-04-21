@@ -82,6 +82,15 @@ function doStartup(response) {
             MissingE_postCrushes_doStartup();
          }
       }
+      if (response.message.betterReblogs) {
+         if (response.message.betterReblogs_fill) {
+            MissingE_betterReblogs_fill_doStartup();
+         }
+         else {
+            safari.self.tab.dispatchMessage("settings",
+                                            {component: "betterReblogs"});
+         }
+      }
       if (response.message.replyReplies) {
          if (response.message.replyReplies_fill) {
             MissingE_replyReplies_fill_doStartup();
@@ -120,6 +129,9 @@ function doStartup(response) {
       }
    }
    else {
+      if (response.message.betterReblogs) {
+         MissingE_betterReblogs_post_doStartup();
+      }
       if (response.message.askFixes) {
          MissingE_askFixes_doStartup();
       }
@@ -159,6 +171,9 @@ function settings_startup(response) {
                                         response.message.timeoutAJAX,
                                         response.message.timeoutLength,
                                         response.message.postLinks);
+   }
+   else if (response.message.component === "betterReblogs") {
+      MissingE_betterReblogs_dash_doStartup(response.message.passTags);
    }
 }
 
