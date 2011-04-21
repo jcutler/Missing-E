@@ -137,7 +137,7 @@ function doStartup(message) {
    }
    else {
       if (message.betterReblogs) {
-         MissingE_betterReblogs_post_doStartup();
+         MissingE_betterReblogs_post_doStartup(message.url);
       }
       if (message.askFixes) {
          MissingE_askFixes_doStartup(message.extensionURL);

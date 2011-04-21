@@ -130,7 +130,7 @@ function doStartup(response) {
    }
    else {
       if (response.message.betterReblogs) {
-         MissingE_betterReblogs_post_doStartup();
+         MissingE_betterReblogs_post_doStartup(response.message.url);
       }
       if (response.message.askFixes) {
          MissingE_askFixes_doStartup();

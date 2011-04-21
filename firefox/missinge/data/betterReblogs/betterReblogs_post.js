@@ -64,7 +64,6 @@ function addTags(link) {
 
 function receiveTags(message) {
    if (message.greeting !== "tags") { return; }
-   if (!message.success) { return; }
    var i,link;
    var div = document.getElementsByTagName("div")[0];
    var controls = div.getElementsByTagName("a");
@@ -75,14 +74,21 @@ function receiveTags(message) {
       }
    }
    if (link !== undefined && link !== null) {
-      link.getElementsByTagName('img')[0].src =
-            message.extensionURL + 'betterReblogs/reblog_tags.png';
-      link.setAttribute('tags',message.data.join(','));
+      if (message.success) {
+         link.getElementsByTagName('img')[0].src =
+               message.extensionURL + 'betterReblogs/reblog_tags.png';
+         link.setAttribute('tags',message.data.join(','));
+      }
+      else {
+         link.getElementsByTagName('img')[0].src =
+               message.extensionURL + 'betterReblogs/reblog_tags_fail.png';
+      }
    }
 }
 
-function MissingE_betterReblogs_post_doStartup() {
-   if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
+function MissingE_betterReblogs_post_doStartup(frameURL) {
+   if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) &&
+       location.href === frameURL) {
       on("message", receiveTags);
       if (!addTags()) {
          document.addEventListener('DOMNodeInserted',function(e){

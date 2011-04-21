@@ -55,6 +55,10 @@ function addTags(link) {
             chrome.extension.getURL('betterReblogs/reblog_tags.png');
          link.setAttribute('tags',response.data.join(','));
       }
+      else {
+         link.getElementsByTagName('img')[0].src =
+            chrome.extension.getURL('betterReblogs/reblog_tags_fail.png');
+      }
    });
 
    link.addEventListener('mousedown',function(e){
