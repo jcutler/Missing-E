@@ -699,7 +699,7 @@ function handleRequest(request) {
       settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
       settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
       settings.MissingE_betterReblogs_passTags = getStorage("MissingE_betterReblogs_passTags",1);
-      settings.Missinge_betterReblogs_retries = getStorage("Missinge_betterReblogs_retries",defaultRetries);
+      settings.MissingE_betterReblogs_retries = getStorage("MissingE_betterReblogs_retries",defaultRetries);
       settings.MissingE_betterReblogs_quickReblog = getStorage("MissingE_betterReblogs_quickReblog",1);
       request.target.page.dispatchMessage("all-settings",settings);
    }
