@@ -84,8 +84,6 @@ function receiveTimestamp(response) {
 }
 
 function MissingE_timestamps_doStartup() {
-
-
    safari.self.addEventListener("message", receiveTimestamp, false);
    if (!(/drafts$/.test(location.href)) &&
        !(/queue$/.test(location.href)) &&
