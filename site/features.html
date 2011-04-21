@@ -76,7 +76,6 @@ jQuery(document).ready(function($) {
          fc.data('oldpos',fb.position().left);
          var scr = $(this).siblings('img.screen');
          var diff = (scr.outerWidth()-w)/2;
-         console.log(diff);
          $(this).hide('slow',function() {
             scr.show('slow');
             if (diff > 0)
@@ -86,7 +85,6 @@ jQuery(document).ready(function($) {
       else {
          var pos = fc.data('oldpos');
          var diff = pos - fb.position().left;
-         console.log(diff);
          var thm = $(this).siblings('div.thumb');
          $(this).hide('slow',function(){
             thm.show();

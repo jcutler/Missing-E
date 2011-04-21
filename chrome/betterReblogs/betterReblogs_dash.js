@@ -22,7 +22,6 @@
  */
 
 function setReblogTags(tags) {
-   console.log(tags.join(','));
    localStorage.setItem('tbr_ReblogTags',tags.join(','));
 }
 
@@ -43,7 +42,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
             if (entities !== undefined && entities !== null) {
                for (i=0; i<entities.length; i++) {
                   var repl = String.fromCharCode(parseInt(entities[i].replace(/%/,''),16));
-                  console.log(entities[i] + " = " + repl);
                   str = str.replace(entities[i],repl);
                }
             }

@@ -22,14 +22,12 @@
  */
 
 function setReblogTags(tags) {
-   console.log(tags.join(','));
    localStorage.setItem('tbr_ReblogTags',tags.join(','));
 }
 
 function MissingE_betterReblogs_dash_doStartup(passTags) {
    if (passTags === 1) {
       $('#posts div.post_controls a[title="reblog"]').live('mousedown', function(e) {
-         console.log(e);
          if (e.which !== 1 && e.which !== 2) { return; }
          var tags = $(this).closest('li.post').find('span.tags a');
          var tagarr = [];
@@ -41,7 +39,6 @@ function MissingE_betterReblogs_dash_doStartup(passTags) {
             if (entities !== undefined && entities !== null) {
                for (i=0; i<entities.length; i++) {
                   var repl = String.fromCharCode(parseInt(entities[i].replace(/%/,''),16));
-                  console.log(entities[i] + " = " + repl);
                   str = str.replace(entities[i],repl);
                }
             }

@@ -22,7 +22,6 @@
  */
 
 function MissingE_askFixes_doStartup(extensionURL) {
-   console.log(extensionURL);
    if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
       var style = document.createElement("link");
       style.setAttribute('rel','stylesheet');
