@@ -51,6 +51,8 @@ function addTags(link) {
    chrome.extension.sendRequest({greeting: "tags", pid: pid, url: host},
                                 function(response) {
       if (response.success) {
+         link.getElementsByTagName('img')[0].src =
+            chrome.extension.getURL('betterReblogs/reblog_tags.png');
          link.setAttribute('tags',response.data.join(','));
       }
    });

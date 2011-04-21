@@ -75,6 +75,8 @@ function receiveTags(message) {
       }
    }
    if (link !== undefined && link !== null) {
+      link.getElementsByTagName('img')[0].src =
+            message.extensionURL + 'betterReblogs/reblog_tags.png';
       link.setAttribute('tags',message.data.join(','));
    }
 }

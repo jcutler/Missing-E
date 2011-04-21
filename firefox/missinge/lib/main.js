@@ -160,7 +160,7 @@ function getFormattedDate(d, format) {
 
 function doTags(stamp, id, theWorker) {
    var tags = stamp["tags"];
-   theWorker.postMessage({greeting: "tags", success: true, data: tags});
+   theWorker.postMessage({greeting: "tags", success: true, data: tags, extensionURL: data.url("")});
 }
 
 function doTimestamp(stamp, id, theWorker) {
