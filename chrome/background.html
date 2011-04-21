@@ -438,7 +438,7 @@ function requestMagnifier(request, sender, sendResponse, hash) {
          tabHash: hash,
          error: function(xhr, textStatus) {
             if (this.tabHash !== tabs[this.tabId]) {
-               debug("Stop reblogYourself request: Tab closed or changed.");
+               debug("Stop magnifier request: Tab closed or changed.");
                dequeueAjax(this.targetId);
                return;
             }
