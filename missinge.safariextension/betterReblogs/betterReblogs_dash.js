@@ -28,7 +28,7 @@ function setReblogTags(tags) {
 
 function MissingE_betterReblogs_dash_doStartup(passTags) {
    if (passTags === 1) {
-      $('#posts div.post_controls a[title="reblog"]').live('mouseup', function(e) {
+      $('#posts div.post_controls a[title="reblog"]').live('mousedown', function(e) {
          console.log(e);
          if (e.which !== 1 && e.which !== 2) { return; }
          var tags = $(this).closest('li.post').find('span.tags a');

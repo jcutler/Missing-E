@@ -31,7 +31,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
    var reblog_settings = JSON.parse(response);
 
    if (reblog_settings.passTags === 1) {
-      $('#posts div.post_controls a[title="reblog"]').live('mouseup', function(e) {
+      $('#posts div.post_controls a[title="reblog"]').live('mousedown', function(e) {
          if (e.which !== 1 && e.which !== 2) { return; }
          var tags = $(this).closest('li.post').find('span.tags a');
          var tagarr = [];

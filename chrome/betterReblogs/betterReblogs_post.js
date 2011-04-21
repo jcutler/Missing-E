@@ -55,7 +55,7 @@ function addTags(link) {
       }
    });
 
-   link.addEventListener('mouseup',function(e){
+   link.addEventListener('mousedown',function(e){
       if (e.which === 1 || e.which === 2) {
          var tags = this.getAttribute('tags');
          if (tags !== undefined && tags !== null) {
