@@ -280,7 +280,7 @@ function requestTags(request, sender, sendResponse, hash) {
                else {
                   debug("tags request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
-                  sendResponse({pid: this.targetId, success: false});
+                  sendResponse({success: false});
                }
             }
          },
@@ -305,7 +305,7 @@ function requestTags(request, sender, sendResponse, hash) {
                   else {
                      debug("tags request (" + this.targetId + ") failed");
                      dequeueAjax(this.targetId);
-                     sendResponse({pid: this.targetId, success: false});
+                     sendResponse({success: false});
                   }
                }
             }
