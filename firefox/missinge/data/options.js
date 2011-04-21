@@ -88,6 +88,7 @@ var componentList = ["dashboardFixes",
                      "safeDash",
                      "timestamps",
                      "magnifier",
+                     "betterReblogs",
                      "gotoDashPost",
                      "postingFixes",
                      "reblogYourself",
@@ -234,6 +235,13 @@ function loadSettings() {
             frm.MissingE_dashboardFixes_postLinks.checked = true;
          else
             frm.MissingE_dashboardFixes_postLinks.checked = false;
+      }
+      else if (v == "betterReblogs") {
+         if (getStorage('MissingE_betterReblogs_passTags',1) == 1)
+            frm.MissingE_betterReblogs_passTags.checked = true;
+         else
+            frm.MissingE_betterReblogs_passTags.checked = false;
+         frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
       }
       else if (v == "postingFixes") {
          if (getStorage('MissingE_postingFixes_photoReplies',1) == 1)

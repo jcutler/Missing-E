@@ -94,6 +94,14 @@ function doStartup(message) {
             MissingE_postCrushes_doStartup(message.extensionURL);
          }
       }
+      if (message.betterReblogs) {
+         if (message.betterReblogs_fill) {
+            MissingE_betterReblogs_fill_doStartup();
+         }
+         else {
+            postMessage({greeting: "settings", component: "betterReblogs"});
+         }
+      }
       if (message.replyReplies) {
          if (message.replyReplies_fill) {
             MissingE_replyReplies_fill_doStartup();
@@ -128,6 +136,9 @@ function doStartup(message) {
       }
    }
    else {
+      if (message.betterReblogs) {
+         MissingE_betterReblogs_post_doStartup();
+      }
       if (message.askFixes) {
          MissingE_askFixes_doStartup(message.extensionURL);
       }
@@ -168,6 +179,9 @@ function settings_startup(message) {
                                         message.timeoutAJAX,
                                         message.timeoutLength,
                                         message.postLinks);
+   }
+   else if (message.component === "betterReblogs") {
+      MissingE_betterReblogs_dash_doStartup(message.passTags);
    }
 }
 
