@@ -57,7 +57,10 @@ function addTags(link) {
 
    link.addEventListener('mouseup',function(e){
       if (e.which === 1 || e.which === 2) {
-         setReblogTags(this.getAttribute('tags').split(','));
+         var tags = this.getAttribute('tags');
+         if (tags !== undefined && tags !== null) {
+            setReblogTags(this.getAttribute('tags').split(','));
+         }
       }
    }, false);
 
