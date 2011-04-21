@@ -118,40 +118,12 @@ var langNotification = {
                       }
 };
 
-function reply_getValue() {
-   var retval = localStorage.getItem("trr_ReplyText");
-   if (retval === undefined || retval === null || retval === "") {
-      return "";
-   }
-   else {
-      return retval;
-   }
-}
-
 function reply_setValue(st) {
    localStorage.setItem('trr_ReplyText',st);
 }
 
-function reply_clearValue() {
-   localStorage.removeItem('trr_ReplyText','');
-}
-
-function tags_getValue() {
-   var retval = localStorage.getItem("trr_ReplyTags");
-   if (retval === undefined || retval === null || retval === "") {
-      return [];
-   }
-   else {
-      return retval.split(",");
-   }
-}
-
 function tags_setValue(ar) {
    localStorage.setItem('trr_ReplyTags',ar.join(","));
-}
-
-function tags_clearValue() {
-   localStorage.removeItem('trr_ReplyTags');
 }
 
 function replyRepliesSettings(message) {

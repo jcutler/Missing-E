@@ -34,7 +34,7 @@ function reply_getValue() {
 }
 
 function reply_clearValue() {
-   localStorage.removeItem('trr_ReplyText','');
+   localStorage.removeItem('trr_ReplyText');
 }
 
 function tags_getValue() {
