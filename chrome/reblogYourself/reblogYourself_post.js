@@ -39,14 +39,17 @@ else {
 }
 
 if (noReblog) {
-   var url;
+   var url, redir;
    var loc = location.href;
-   loc = loc.substring(loc.indexOf("src=")+4).replace(/%3A/gi,":")
+   loc = loc.substring(loc.indexOf("src=")+4);
+   redir = loc.substring(0,loc.indexOf("&"));
+   loc = loc.replace(/%3A/gi,":")
             .replace(/%2F/gi,"/");
    url = "http://www.tumblr.com/reblog/";
    if (/&pid=([0-9]*)/.test(loc)) {
       url += loc.match(/&pid=([0-9]*)/)[1] + "/";
       url += loc.match(/&rk=([a-zA-Z0-9]*)/)[1];
+      url += '?redirect_to=' + redir;
 
       var link = document.createElement('a');
       link.setAttribute('href', url);
