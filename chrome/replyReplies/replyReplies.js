@@ -182,6 +182,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                                  component: "replyReplies"},
                                  function(response) {
       var i, n;
+      var redir = "";
       var replyReplies_settings = JSON.parse(response);
       var thecode = [];
       var tags = [];
@@ -189,6 +190,29 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       var showAvatars = replyReplies_settings.showAvatars;
       var addTags = replyReplies_settings.addTags;
       var size = replyReplies_settings.smallAvatars === 1 ? 16 : 64;
+      if ($(arr[0]).parent().hasClass('note')) {
+         $(arr[0]).closest('li.post')
+            .find('div.post_controls a').each(function() {
+               if (/redirect_to/.test(this.href)) {
+                  redir = this.href.match(/redirect_to=[^&]*$/)[0];
+                  return false;
+               }
+            });
+      }
+      else {
+         var post = $(arr[0]).parent().prevAll('li.post:first');
+         if (post.hasClass("new_post")) {
+            redir = "redirect_to=" + location.pathname.replace(/\//g,'%2F');
+         }
+         else {
+            post.find('div.post_controls a').each(function() {
+               if (/redirect_to/.test(this.href)) {
+                  redir = this.href.match(/redirect_to=[^&]*$/)[0];
+                  return false;
+               }
+            });
+         }
+      }
       for (i=arr.length-1; i>=0; i--) {
          var st, en, nm, add;
          $(arr[i]).toggleClass("MissingE_rt",false);
@@ -430,6 +454,15 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       reply_setValue(code);
       tags_setValue(tags);
 
-      window.open("http://www.tumblr.com/new/text");
+      if (replyReplies_settings.newTab === 1) {
+         window.open("http://www.tumblr.com/new/text");
+      }
+      else {
+         var url = "http://www.tumblr.com/new/text";
+         if (redir !== '') {
+            url += "?" + redir;
+         }
+         location.href = url;
+      }
    });
 });

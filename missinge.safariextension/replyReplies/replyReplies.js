@@ -133,12 +133,37 @@ function replyRepliesSettings(response) {
       return;
    }
    var i, n;
+   var redir = "";
+   var newTab = response.message.newTab;
    var showAvatars = response.message.showAvatars;
    var addTags = response.message.addTags;
    var size = response.message.smallAvatars === 1 ? 16 : 64;
    var thecode = [];
    var tags = [];
    arr = $('.MissingE_rt');
+   if ($(arr[0]).parent().hasClass('note')) {
+      $(arr[0]).closest('li.post')
+         .find('div.post_controls a').each(function() {
+            if (/redirect_to/.test(this.href)) {
+               redir = this.href.match(/redirect_to=[^&]*$/)[0];
+               return false;
+            }
+         });
+   }
+   else {
+      var post = $(arr[0]).parent().prevAll('li.post:first');
+      if (post.hasClass("new_post")) {
+         redir = "redirect_to=" + location.pathname.replace(/\//g,'%2F');
+      }
+      else {
+         post.find('div.post_controls a').each(function() {
+            if (/redirect_to/.test(this.href)) {
+               redir = this.href.match(/redirect_to=[^&]*$/)[0];
+               return false;
+            }
+         });
+      }
+   }
    for (i=arr.length-1; i>=0; i--) {
       var st, en, nm, add;
       $(arr[i]).toggleClass("MissingE_rt",false);
@@ -379,7 +404,17 @@ function replyRepliesSettings(response) {
 
    reply_setValue(code);
    tags_setValue(tags);
-   safari.self.tab.dispatchMessage("open","http://www.tumblr.com/new/text");
+
+   if (newTab === 1) {
+      safari.self.tab.dispatchMessage("open","http://www.tumblr.com/new/text");
+   }
+   else {
+      var url = "http://www.tumblr.com/new/text";
+      if (redir !== '') {
+         url += "?" + redir;
+      }
+      location.href = url;
+   }
 }
 
 function MissingE_replyReplies_doStartup() {

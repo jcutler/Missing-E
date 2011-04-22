@@ -212,6 +212,10 @@ function loadSettings() {
             frm.MissingE_replyReplies_addTags.checked = true;
          else
             frm.MissingE_replyReplies_addTags.checked = false;
+         if (getStorage('MissingE_replyReplies_newTab',1) == 1)
+            frm.MissingE_replyReplies_newTab.checked = true;
+         else
+            frm.MissingE_replyReplies_newTab.checked = false;
       }
       else if (v == "dashboardFixes") {
          if (getStorage('MissingE_dashboardFixes_reblogQuoteFit',1) == 1)

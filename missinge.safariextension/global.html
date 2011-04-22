@@ -697,6 +697,7 @@ function handleRequest(request) {
       settings.MissingE_replyReplies_showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
       settings.MissingE_replyReplies_smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
       settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
+      settings.MissingE_replyReplies_newTab = getStorage("MissingE_replyReplies_newTab",1);
       settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
       settings.MissingE_betterReblogs_passTags = getStorage("MissingE_betterReblogs_passTags",1);
       settings.MissingE_betterReblogs_retries = getStorage("MissingE_betterReblogs_retries",defaultRetries);
@@ -725,6 +726,7 @@ function handleRequest(request) {
             settings.showAvatars = getStorage("MissingE_replyReplies_showAvatars",1);
             settings.smallAvatars = getStorage("MissingE_replyReplies_smallAvatars",1);
             settings.addTags = getStorage("MissingE_replyReplies_addTags",1);
+            settings.newTab = getStorage("MissingE_replyReplies_newTab",1);
             break;
          case "postCrushes_fill":
          case "postCrushes":

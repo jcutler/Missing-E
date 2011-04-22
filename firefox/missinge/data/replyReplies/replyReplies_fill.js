@@ -53,7 +53,7 @@ function tags_clearValue() {
 
 function MissingE_replyReplies_fill_doStartup() {
    var i;
-   if (location.href === 'http://www.tumblr.com/new/text' &&
+   if (/http:\/\/www\.tumblr\.com\/new\/text/.test(location.href) &&
        document.body.id === 'dashboard_edit_post' &&
        reply_getValue().length > 0) {
 

@@ -660,6 +660,10 @@ function loadSettings() {
             frm.MissingE_replyReplies_addTags.checked = true;
          else
             frm.MissingE_replyReplies_addTags.checked = false;
+         if (getStorage('MissingE_replyReplies_newTab',1) == 1)
+            frm.MissingE_replyReplies_newTab.checked = true;
+         else
+            frm.MissingE_replyReplies_newTab.checked = false;
       }
       else if (v == "dashboardFixes") {
          if (getStorage('MissingE_dashboardFixes_reblogQuoteFit',1) == 1)
@@ -1109,7 +1113,9 @@ function doshow(component) {
 <table class="options_table">
 <tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="even">Avatar size</td><td class="even input_left"><input id="MissingE_replyReplies_smallAvatars_small" type="radio" name="MissingE_replyReplies_smallAvatars" value="1" checked="checked" onchange="doSetting(this,false);" /> Small avatars (16x16)<br /><input id="MissingE_replyReplies_smallAvatars_large" type="radio" name="MissingE_replyReplies_smallAvatars" value="0" onchange="doSetting(this,false);" /> Large avatars (64x64)</td></tr>
-<tr><td class="even">Add username(s) as tags to reply posts</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
+<tr><td class="odd">Add username(s) as tags to reply posts</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td class="even">Open replies in a new tab</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_newTab" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+</table>
 </form>
 </div>
 <div class="clear"></div>

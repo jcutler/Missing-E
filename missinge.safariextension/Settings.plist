@@ -150,6 +150,16 @@
                 <key>Type</key>
                 <string>Hidden</string>
         </dict>
+        <dict>
+                <key>DefaultValue</key>
+                <real>1</real>
+                <key>Key</key>
+                <string>MissingE_betterReblogs_enabled</string>
+                <key>Title</key>
+                <string></string>
+                <key>Type</key>
+                <string>Hidden</string>
+        </dict>
 	<dict>
 		<key>DefaultValue</key>
 		<real>1</real>
@@ -222,7 +232,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>10</real>
+		<real>4</real>
 		<key>Key</key>
 		<string>MissingE_magnifier_retries</string>
 		<key>Title</key>
@@ -272,7 +282,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>10</real>
+		<real>4</real>
 		<key>Key</key>
 		<string>MissingE_timestamps_retries</string>
 		<key>Title</key>
@@ -342,7 +352,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>10</real>
+		<real>4</real>
 		<key>Key</key>
 		<string>MissingE_reblogYourself_retries</string>
 		<key>Title</key>
@@ -352,7 +362,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>10</real>
+		<real>4</real>
 		<key>Key</key>
 		<string>MissingE_followChecker_retries</string>
 		<key>Title</key>
@@ -432,9 +442,49 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>10</real>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_replyReplies_newTab</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>4</real>
 		<key>Key</key>
 		<string>MissingE_unfollower_retries</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_betterReblogs_passTags</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_betterReblogs_quickReblog</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>4</real>
+		<key>Key</key>
+		<string>MissingE_betterReblogs_retries</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
