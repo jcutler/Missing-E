@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+window.addEventListener('load',function() {
+   console.log(location.href);
+   opera.extension.tabs.create({url:location.host + '/options.html'});
+}, false);
+</script>
+</head>
+<body></body>
+</html>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+           id="missinge"
+           version="1.0.75">
+  <name>Missing e</name>
+  <description>Useful features and customizations for Tumblr.</description>
+  <author href="http://missinge.infraware.ca/">Jeremy Cutler</author>
+  <license href="http://www.gnu.org/licenses/gpl.html">GPL 3.0</license>
+  <icon src="missinge64.png"/>
+  <access origin="*"/>
+</widget>
+
