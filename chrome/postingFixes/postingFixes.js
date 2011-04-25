@@ -108,6 +108,12 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
      'document.getElementById(\'post_tags\').value = \'\';' +
      'return false;">Clear Tags</a></div>').appendTo(set_tags);
 
+   $('#photo_src').keyup(function(){
+      if (/^http:\/\/https?:\/\//.test(this.value)) {
+         this.value = this.value.replace(/^http:\/\//,'');
+      }
+   });
+
    if (postingFixes_settings.quickButtons === 1 &&
        $('#post_state').length > 0 &&
        $('#post_state')

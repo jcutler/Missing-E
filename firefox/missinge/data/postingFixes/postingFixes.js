@@ -110,6 +110,12 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
      'document.getElementById(\'post_tags\').value = \'\';' +
      'return false;">Clear Tags</a></div>').appendTo(set_tags);
 
+   jQuery('#photo_src').keyup(function(){
+      if (/^http:\/\/https?:\/\//.test(this.value)) {
+         this.value = this.value.replace(/^http:\/\//,'');
+      }
+   });
+
    if (quickButtons &&
        jQuery('#post_state').length > 0 &&
        jQuery('#post_state')
