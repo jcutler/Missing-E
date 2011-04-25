@@ -379,6 +379,17 @@ vertical-align:middle;
 padding:10px 12px 10px 10px;
 }
 
+td.subopt {
+background:transparent url('images/subopt.png') no-repeat center center;
+padding:0;
+width:32px;
+opacity:0.65;
+}
+
+tr:hover td.subopt {
+opacity:1.0;
+}
+
 .options_table .odd {
 background-color:#ECECEC;
 }
@@ -580,10 +591,12 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_thumb"><a href="dashboardFixes/screen.png" rel="facebox"><img src="dashboardFixes/thumb.png" /><br />Screenshot</a></div>
 <p>A few convenient interface fixes for Tumblr dashboard pages.</p>
 <table class="options_table">
-<tr><td class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" class="simple_setting" /></td></tr><tr><td class="even">Show all tags for posts in the dashboard</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" class="simple_setting" /></td></tr><tr><td class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="odd">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="setting_timeout numinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" />&nbsp;<span class="resetter timeout_resetter">Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Show all tags for posts in the dashboard</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td class="subopt"></td><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="setting_timeout numinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" />&nbsp;<span class="resetter timeout_resetter">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -615,7 +628,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_thumb"><a href="magnifier/screen.jpg" rel="facebox"><img src="magnifier/thumb.jpg" /><br />Screenshot</a></div>
 <p>Add a small <img src="magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.</p><p><em>Magnifier</em> also works on photoset posts!</p>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="setting_retry numinput" size="1" type="text" name="MissingE_magnifier_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr></table>
+<tr><td colspan="2" class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="setting_retry numinput" size="1" type="text" name="MissingE_magnifier_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -630,10 +643,10 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dash Links to Tabs</div>
 <p><em>Dash Links to Tabs</em> forces all links in dashboard posts to open in a new tab. That way, you won't lose your place when you are scrolling in the dash.</p><p>Other links, such as the new post icons and the dashboard sidebar behave as you specify in these options.</p>
 <table class="options_table">
-<tr><td class="odd">New post buttons (text, photo, quote, etc.) at the top of the dashboard open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_newPostTabs" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="even">Sidebar navigation menu items on the right side of the dashboard open in new tabs</td><td class="even"><input type="checkbox" name="MissingE_dashLinksToTabs_sidebar" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="odd">Reblog links on dashboard posts open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_reblogLinks" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="even">Edit links on dashboard posts open in new tabs</td><td class="even"><input type="checkbox" name="MissingE_dashLinksToTabs_editLinks" value="0" checked="checked" class="simple_setting" /></td></tr></table>
+<tr><td colspan="2" class="odd">New post buttons (text, photo, quote, etc.) at the top of the dashboard open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_newPostTabs" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Sidebar navigation menu items on the right side of the dashboard open in new tabs</td><td class="even"><input type="checkbox" name="MissingE_dashLinksToTabs_sidebar" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Reblog links on dashboard posts open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_reblogLinks" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Edit links on dashboard posts open in new tabs</td><td class="even"><input type="checkbox" name="MissingE_dashLinksToTabs_editLinks" value="0" checked="checked" class="simple_setting" /></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -665,10 +678,10 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Timestamps</div>
 <p><em>Timestamps</em> will add the date and time of a post on your dashboard.</p><p><strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.</p>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput setting_retry" size="1" type="text" name="MissingE_timestamps_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
-<tr><td class="even">Timestamp format<br />
+<tr><td colspan="2" class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput setting_retry" size="1" type="text" name="MissingE_timestamps_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td colspan="2" class="even">Timestamp format<br />
 <table class="subnotes"><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
-</td><td class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" value="%Y-%m-%D %H:%i" class="simple_setting setting_format" onkeyup="doKeyUp(this,false);" /></td></tr></table>
+</td><td colspan="2" class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" value="%Y-%m-%D %H:%i" class="simple_setting setting_format" onkeyup="doKeyUp(this,false);" /></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>
@@ -685,8 +698,8 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Better Reblogs</div>
 <p>Additional features to make reblogging easier and more productive!</p>
 <table class="options_table">
-<tr><td class="odd">Keep original post's tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_passTags" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="even">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="even"><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Keep original post tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_passTags" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td class="subopt"></td><td class="even">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="even"><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -717,8 +730,10 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_thumb"><a href="postingFixes/screen.png" rel="facebox"><img src="postingFixes/thumb.png" /><br />Screenshot</a></div>
 <p>A few convenient interface fixes for new Tumblr posts.</p>
 <table class="options_table">
-<tr><td class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" class="simple_setting" /></td></tr><tr><td class="even">Allow switching back to uploading images on photo posts<br /><ul><li><small>By default, Tumblr allows you to switch to a URL with a "<em>Use a URL instead</em>" option, this will allow you to switch back with a "<em>Upload images instead</em>" option.</small></li></ul></td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" class="simple_setting" /></td></tr><tr><td class="odd">Allow inline image uploading for all post types (not just text posts)<br /><ul><li><small>Adds an "<em><strong>+ Upload Photo</strong></em>" option to all posting pages (including the Tumblr <a href="http://www.tumblr.com/goodies" target="_blank">bookmarklet</a>)</small></li><li><small>Much like the built-in "<strong><em>+ Upload Photo</em></strong>" options, these don't always load when Tumblr is suffering from errors.</small></li></ul></td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_addUploader" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="even">Add quick "<em>Queue Post</em>" and "<em>Save Draft</em>" buttons when posting (see screenshot)</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_quickButtons" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Allow switching back to uploading images on photo posts<br /><ul><li><small>By default, Tumblr allows you to switch to a URL with a "<em>Use a URL instead</em>" option, this will allow you to switch back with a "<em>Upload images instead</em>" option.</small></li></ul></td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Allow inline image uploading for all post types (not just text posts)<br /><ul><li><small>Adds an "<em><strong>+ Upload Photo</strong></em>" option to all posting pages (including the Tumblr <a href="http://www.tumblr.com/goodies" target="_blank">bookmarklet</a>)</small></li><li><small>Much like the built-in "<strong><em>+ Upload Photo</em></strong>" options, these don't always load when Tumblr is suffering from errors.</small></li></ul></td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_addUploader" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Add quick "<em>Queue Post</em>" and "<em>Save Draft</em>" buttons when posting (see screenshot)</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_quickButtons" value="0" checked="checked" class="simple_setting" /></td></tr>
 </table>
 </form>
 </div>
@@ -735,9 +750,9 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <p>Add reblogging functionality to your own tumblr posts, allowing you to <em>Reblog Yourself</em>.</p>
 <p><strong>Note</strong>: chat and ask posts are not normally rebloggable. <em>Reblog Yourself</em> will allow you to reblog them, but the formatting may look pretty bad.</p>
 <table class="options_table">
-<tr><td class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="setting_retry numinput" size="1" name="MissingE_reblogYourself_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="setting_retry numinput" size="1" name="MissingE_reblogYourself_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -770,7 +785,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <ul><li>When Tumblr is suffering from errors, <em>Follow Checker</em> may not be able to load all of your follower/followee pages and will return an error. Wait a little while and try again.</li>
 <li>Because of some limitations with the way Tumblr presents your follower/following lists, some people may appear to not be following/followed who actually are. You should always double-check!</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="setting_retry numinput" size="1" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="setting_retry numinput" size="1" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -787,8 +802,10 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_thumb"><a href="postCrushes/screen.jpg" rel="facebox"><img src="postCrushes/thumb.jpg" /><br />Screenshot</a></div>
 <p>Automatically create posts showing your Tumblr crushes, straight from your following page with <em>Post Crushes</em>.</p>
 <table class="options_table">
-<tr><td class="odd">Avatar size</td><td class="odd input_left"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" class="simple_setting" /> Small avatars (70x70, same as on your 'following' page)<br /><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" class="simple_setting" /> Large avatars (128x128)</td></tr>
-<tr><td class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" class="simple_setting" /></td></tr><tr><td class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" class="simple_setting" /></td></tr><tr><td class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" class="setting_prefix simple_setting" />&nbsp;<span id="prefix-resetter" class="resetter retry_resetter">Reset</span></td></tr></table></form>
+<tr><td colspan="2" class="odd">Avatar size</td><td class="odd input_left"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" class="simple_setting" /> Small avatars (70x70, same as on your 'following' page)<br /><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" class="simple_setting" /> Large avatars (128x128)</td></tr>
+<tr><td colspan="2" class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" class="setting_prefix simple_setting" />&nbsp;<span id="prefix-resetter" class="resetter retry_resetter">Reset</span></td></tr></table></form>
 </div>
 <div class="clear"></div>
 <div>
@@ -807,10 +824,10 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <ol><li>Hold down the Shift key and click on the notification icons of each of the notifications you want to reply to.</li><li>Click (without Shift) on the notification icon of the last notification you want to include.</li><li>All the notifications will appear in a single post in chronological order!</li></ol>
 <p>If the setting is enabled, a tag is automatically added to your post for each user to whom you are replying!</p>
 <table class="options_table">
-<tr><td class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="even">Avatar size</td><td class="even input_left"><input id="MissingE_replyReplies_smallAvatars_small" type="radio" name="MissingE_replyReplies_smallAvatars" value="1" checked="checked" class="simple_setting" /> Small avatars (16x16)<br /><input id="MissingE_replyReplies_smallAvatars_large" type="radio" name="MissingE_replyReplies_smallAvatars" value="0" class="simple_setting" /> Large avatars (64x64)</td></tr>
-<tr><td class="odd">Add username(s) as tags to reply posts</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="even">Open replies in a new tab</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_newTab" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td class="subopt"></td><td class="even">Avatar size</td><td class="even input_left"><input id="MissingE_replyReplies_smallAvatars_small" type="radio" name="MissingE_replyReplies_smallAvatars" value="1" checked="checked" class="simple_setting" /> Small avatars (16x16)<br /><input id="MissingE_replyReplies_smallAvatars_large" type="radio" name="MissingE_replyReplies_smallAvatars" value="0" class="simple_setting" /> Large avatars (64x64)</td></tr>
+<tr><td colspan="2" class="odd">Add username(s) as tags to reply posts</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Open replies in a new tab</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_newTab" value="0" checked="checked" class="simple_setting" /></td></tr>
 </table>
 </form>
 </div>
@@ -830,7 +847,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <ul><li><em>Unfollower</em> can only track one tumblr account at a time.</li><li><em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.</li><li><em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.</li>
 <li>When Tumblr is suffering from errors, <em>Unfollower</em> may not be able to load all of your follower pages and will return an error. Wait a little while and try again.</li><li>Because of some limitations with the way Tumblr presents your followers list, some people may appear to have unfollowed who actually haven't. You should always double-check.</li></ul>
 <table class="options_table">
-<tr><td class="odd">Number of retries on failure to load follower list (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" class="setting_retry numinput" size="1" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Number of retries on failure to load follower list (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" name="MissingE_unfollower_retries" class="setting_retry numinput" size="1" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
 </table>
 </form>
 </div>
