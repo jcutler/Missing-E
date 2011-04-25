@@ -104,20 +104,11 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                          extensionURL + 'postingFixes/postingFixes.css" />');
 
    var set_tags = jQuery('#set_tags');
-   var addHeight = jQuery('<div style="text-align:right;">' +
+   jQuery('<div style="text-align:right;">' +
      '<a class="clear_tags" style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">Clear Tags</a></div>').prependTo(set_tags).outerHeight();
-
-   var label = jQuery('#post_tags_label');
-   if (label.length > 0) {
-      var newHeight = parseInt(label.css('top').match(/[0-9]*/)[0]);
-      if (!isNaN(newHeight)) {
-         newHeight += addHeight;
-         label.css('top',newHeight+'px');
-      }
-   }
+     'return false;">Clear Tags</a></div>').appendTo(set_tags);
 
    if (quickButtons &&
        jQuery('#post_state').length > 0 &&
