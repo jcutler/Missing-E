@@ -530,7 +530,7 @@ text-decoration:underline;
 }
 
 ol ol, ol ul, ul ol, ul ul {
-margin-top:0.6em;
+margin:0.6em 0;
 }
 
 #faq .example + .example {
