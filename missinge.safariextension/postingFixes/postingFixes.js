@@ -100,6 +100,25 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                          }
    };
 
+   if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href)) {
+      var i, txt="";
+      var ctags;
+      var posttags = document.getElementById('post_tags');
+      if (posttags) {
+         ctags = posttags.value;
+      }
+      if (ctags !== undefined && ctags !== null && ctags !== '') {
+         ctags = ctags.split(',');
+      }
+      for (i=0; i<ctags.length; i++) {
+         txt += '<div class="token"><span class="tag">' + ctags[i] +
+                  '</span><a title="Remove tag" ' +
+                  'onclick="tag_editor_remove_tag($(this).up()); ' +
+                  'return false;" href="#">x</a></div>';
+      }
+      document.getElementById('tokens').innerHTML = txt;
+   }
+
    var set_tags = $('#set_tags');
    $('<div style="text-align:right;"><a class="clear_tags" ' +
      'style="color:#666;font-size:10px;" href="#" ' +
