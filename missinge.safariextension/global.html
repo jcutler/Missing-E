@@ -701,12 +701,14 @@ function handleRequest(request) {
       settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
       settings.MissingE_betterReblogs_passTags = getStorage("MissingE_betterReblogs_passTags",1);
       settings.MissingE_betterReblogs_retries = getStorage("MissingE_betterReblogs_retries",defaultRetries);
+      settings.MissingE_betterReblogs_autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
       settings.MissingE_betterReblogs_quickReblog = getStorage("MissingE_betterReblogs_quickReblog",1);
       request.target.page.dispatchMessage("all-settings",settings);
    }
    else if (request.name == "settings") {
       var settings = {};
       settings.component = request.message.component;
+      settings.subcomponent = request.message.subcomponent;
       switch(request.message.component) {
          case "dashboardFixes":
             settings.reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
@@ -747,6 +749,7 @@ function handleRequest(request) {
             break;
          case "betterReblogs":
             settings.passTags = getStorage("MissingE_betterReblogs_passTags",1);
+            settings.autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
             settings.quickReblog = getStorage("MissingE_betterReblogs_quickReblog",1);
             break;
       }

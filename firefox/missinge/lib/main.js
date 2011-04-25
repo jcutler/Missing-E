@@ -615,6 +615,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_unfollower_retries = getStorage("extensions.MissingE.unfollower.retries",defaultRetries);
       settings.MissingE_betterReblogs_passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
       settings.MissingE_betterReblogs_retries = getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries);
+      settings.MissingE_betterReblogs_autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
       settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",1);
       myWorker.postMessage(settings);
    }
@@ -622,6 +623,7 @@ function handleMessage(message, myWorker) {
       var settings = {};
       settings.greeting = "settings";
       settings.component = message.component;
+      settings.subcomponent = message.subcomponent;
       settings.extensionURL = data.url("");
       switch(message.component) {
          case "dashboardFixes":
@@ -663,6 +665,7 @@ function handleMessage(message, myWorker) {
             break;
          case "betterReblogs":
             settings.passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
+            settings.autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
             settings.quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",1);
             break;
       }

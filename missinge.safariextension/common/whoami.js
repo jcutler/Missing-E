@@ -84,11 +84,14 @@ function doStartup(response) {
       }
       if (response.message.betterReblogs) {
          if (response.message.betterReblogs_fill) {
-            MissingE_betterReblogs_fill_doStartup();
+            safari.self.tab.dispatchMessage("settings",
+                                            {component: "betterReblogs",
+                                             subcomponent: "fill"});
          }
          else {
             safari.self.tab.dispatchMessage("settings",
-                                            {component: "betterReblogs"});
+                                            {component: "betterReblogs",
+                                             subcomponent: "dash"});
          }
       }
       if (response.message.replyReplies) {
@@ -173,7 +176,12 @@ function settings_startup(response) {
                                         response.message.postLinks);
    }
    else if (response.message.component === "betterReblogs") {
-      MissingE_betterReblogs_dash_doStartup(response.message.passTags);
+      if (response.message.subcomponent === "dash") {
+         MissingE_betterReblogs_dash_doStartup(response.message.passTags);
+      }
+      else if (response.message.subcomponent === "fill") {
+         MissingE_betterReblogs_fill_doStartup(response.message.autoFillTags);
+      }
    }
 }
 

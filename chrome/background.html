@@ -666,6 +666,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             break;
          case "betterReblogs":
             settings.passTags = getStorage("MissingE_betterReblogs_passTags",1);
+            settings.autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
             settings.quickReblog = getStorage("MissingE_betterReblogs_quickReblog",1);
             break;
       }
