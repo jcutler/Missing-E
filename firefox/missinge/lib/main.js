@@ -792,7 +792,7 @@ function handleMessage(message, myWorker) {
             activeScripts.replyReplies = false;
       }
       if (!message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/new\/text/.test(message.url)) {
+          /http:\/\/www\.tumblr\.com\/new\/(text|photo)/.test(message.url)) {
          if (getStorage("extensions.MissingE.replyReplies.enabled",1) == 1) {
             activeScripts.replyReplies = true;
             activeScripts.replyReplies_fill = true;

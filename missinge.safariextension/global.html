@@ -875,7 +875,7 @@ function handleRequest(request) {
             activeScripts.replyReplies = false;
       }
       if (!request.message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/new\/text/.test(request.message.url)) {
+          /http:\/\/www\.tumblr\.com\/new\/(text|photo)/.test(request.message.url)) {
          if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
             activeScripts.replyReplies_fill = true;

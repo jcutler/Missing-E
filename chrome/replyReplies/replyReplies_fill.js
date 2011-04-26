@@ -51,11 +51,82 @@ function tags_clearValue() {
    localStorage.removeItem('trr_ReplyTags');
 }
 
-if (/http:\/\/www\.tumblr\.com\/new\/text/.test(location.href) &&
+function reply_setValue(st) {
+   localStorage.setItem('trr_ReplyText',st);
+}
+
+function tags_setValue(ar) {
+   localStorage.setItem('trr_ReplyTags',ar.join(","));
+}
+
+function getAsLinks(lang, type) {
+   var asText = {
+      en: {
+         as: 'as ...',
+         photo: 'as <strong>photo</strong>',
+         photoTitle: 'Photo Reply',
+         text: 'as <strong>text</strong>',
+         textTitle: 'Text Reply'
+          },
+      de: {
+         as: 'als ...',
+         photo: 'als <strong>Foto</strong>',
+         photoTitle: 'Foto Antwort',
+         text: 'als <strong>Text</strong>',
+         textTitle: 'Text Antwort'
+          },
+      fr: {
+         as: 'changer le type de billet',
+         photo: '<strong>photo</strong>',
+         photoTitle: 'Photo Réponse',
+         text: '<strong>texte</strong>',
+         textTitle: 'Texte Réponse'
+          },
+      it: {
+         as: 'come ...',
+         photo: 'come <strong>foto</strong>',
+         photoTitle: 'Foto Risposta',
+         text: 'come <strong>testo</strong>',
+         textTitle: 'Testo Risposta'
+          },
+      ja: {
+         as: 'リブログの投稿種別を選択',
+         photo: '<strong>画像投稿</strong>',
+         photoTitle: '画像返答',
+         text: '<strong>テキスト投稿</strong>',
+         textTitle: 'テキスト返答'
+          }
+   };
+   var othertype = (type==='text' ? 'photo' : 'text');
+   return asText[lang][type+"Title"] + "\n" +
+      '<span class="as_links"><a href="#" id="the_as_link" ' +
+      'onclick="Element.hide(this);Element.show(\'the_as_links\');' +
+      'return false;" style="font-weight:bold;" >' + asText[lang]["as"] +
+      '</a><span id="the_as_links" style="display:none;"><a id="as_switch" ' +
+      'href="/new/' + othertype + '">' + asText[lang][othertype] + '</a>' +
+      '<a href="#" onclick="Element.hide(\'the_as_links\');' +
+      'Element.show(\'the_as_link\');return false;">x</a></span></span>';
+}
+
+if (/http:\/\/www\.tumblr\.com\/new\/(text|photo)/.test(location.href) &&
     document.body.id === 'dashboard_edit_post' &&
     reply_getValue().length > 0) {
    var i;
-
+   var nowtype;
+   var reply = reply_getValue();
+   var tags = tags_getValue();
+   if (/new\/text/.test(location.href)) {
+      nowtype = 'text';
+   }
+   else {
+      nowtype = 'photo';
+   }
+   $('#left_column h1:first').html(getAsLinks($('html').attr('lang'),
+                                              nowtype));
+   $('#as_switch').click(function() {
+      reply_setValue(reply);
+      tags_setValue(tags);
+   });
    $(document).ready(function() {
       $('head').append('<script type="text/javascript">' +
                        'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
@@ -70,7 +141,6 @@ if (/http:\/\/www\.tumblr\.com\/new\/text/.test(location.href) &&
                        'localStorage.removeItem("trr_ReplyText");' +
                        '</script>');
    });
-   var tags = tags_getValue();
    if (tags.length > 0) {
       var txt = "";
       document.getElementById('post_tags').value = tags.join(",");
