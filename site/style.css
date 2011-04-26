@@ -67,7 +67,7 @@ text-align:center;
 margin:50px 0 20px;
 }
 
-#get #cont {
+#get #cont, #get #instructions .problem {
 position:relative;
 margin:20px;
 font-size:32px;

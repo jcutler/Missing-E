@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="3;url=http://missinge.infraware.ca/safari/missinge.safariextz" />
 <meta name="keywords" content="tumblr,missinge,missing,e,feature,features,blog,blogging" />
 <meta name="description" content="Missing e - The browser extension for Tumblr!"/>
 <meta name="author" content="Jeremy Cutler" />
@@ -11,10 +10,41 @@
 <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 <link rel="icon" href="/favicon.png" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="../style.css" />
+<script type="text/javascript">
+<!--
+function checkBrowser() {
+   var msg = "";
+   if (!/Apple/.test(navigator.vendor)) {
+      msg = '<p>The Apple Safari browser is required to install this extension.</p>' +
+         '<p><strong>Missing e</strong> is available for other browsers. ' +
+         '<a href="/">Check here</a> for yours.</p>';
+   }
+   else {
+      var ver = navigator.userAgent.match(/(?:Version\/)([0-9\.]+)/);
+      console.log(ver);
+      if (ver.length > 1 && ver[1].match(/^[0-9]+/)[0] < 5) {
+         msg = '<p><strong>Missing e</strong> requires Apple Safari version 5 or higher.</p>' +
+               '<p>You are currently using version <em>' + ver[1] + '</em></p>';
+      }
+   }
+   if (msg !== "") {
+      document.getElementById('titletext').innerHTML = "INSTALLATION PROBLEM";
+      document.getElementById('instructions')
+         .innerHTML = msg;
+      document.getElementById('downloading').innerHTML = '&nbsp;';
+   }
+   else {
+      setTimeout(function() {
+         location.href="http://missinge.infraware.ca/safari/missinge.safariextz";
+      }, 3000);
+   }
+}
+-->
+</script>
 </head>
-<body id="get">
+<body id="get" onload="checkBrowser();">
 <div id="downloading">Download of <em>Missing e</em> for Safari will begin in a moment...<br /><small><a href="missinge.safariextz">Click here</a> if it doesn't start automatically.</small></div>
-<div id="cont"><img src="../images/safari.jpg" alt="Apple Safari" /><a id="floatcorner" href="/"><img src="../images/missinge64.png" alt="Missing e" /></a>INSTALLATION INSTRUCTIONS</div>
+<div id="cont"><img src="../images/safari.jpg" alt="Apple Safari" /><a id="floatcorner" href="/"><img src="../images/missinge64.png" alt="Missing e" /></a><span id="titletext">INSTALLATION INSTRUCTIONS</span></div>
 <div id="instructions">
 <div class="step"><img src="open_dialog.png" alt="Open file dialog box" /><div class="caption"><strong>(1)</strong> When Safari asks you to "Open" or "Save" the file, choose "Open".</div></div>
 <div class="step"><img src="install_dialog.png" alt="Install extension dialog box" /><div class="caption"><strong>(2)</strong> Safari will then ask if you want to install the extension. Choose "Install".</div></div>
