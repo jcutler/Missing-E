@@ -24,6 +24,7 @@ opacity:1 !important;
 
 #posts .notification .notification_type_icon.follow_icon {
 background-position:0 0 !important;
+right:10px !important;
 }
 
 #posts .notification .notification_type_icon.like_icon, #posts ol.notes .notification_type_icon.like_icon {
