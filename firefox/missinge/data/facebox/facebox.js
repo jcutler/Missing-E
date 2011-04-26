@@ -125,7 +125,10 @@
          var h = $('#facebox .popup').height();
          var ph = getPageHeight();
          if (h > ((8 * ph) / 10)) {
-            $('#facebox').css('top', ((getPageHeight()-h)>>1));
+            $('#facebox').css('top', ((ph-h)>>1));
+         }
+         else if (h < (ph>>1)) {
+            $('#facebox').css('top', (ph / 5));
          }
          $(document).trigger('reveal.facebox').trigger('afterReveal.facebox');
       },
