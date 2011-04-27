@@ -320,7 +320,7 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                       ';"></div>').css({"float":"left","margin-top":"0"})
                .after(wrap[0] + uploader + wrap[1]);
          }
-         else if (ta.parent().find('div.editor_controls').length > 0) {
+         else {
             if (ta.closest('form').attr('id') === 'photo_form' &&
                 ta.parent().prevAll('img').length > 0) {
                //Single image share bookmarklet looks different
@@ -330,9 +330,6 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                uploader = wrap[0] + uploader + wrap[1];
             }
             ta.parent().prepend(uploader);
-         }
-         else {
-            ta.before(wrap[0] + uploader + wrap[1]);
          }
          if (ta.parent().find('div.editor_note:contains("markdown")')
                         .length !== 0) {
