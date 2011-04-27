@@ -188,6 +188,15 @@ function MissingE_dashboardFixes_doStartup(reblogQuoteFit, wrapTags,
                                            timeoutLength, postLinks) {
    if (window.top !== window) { return false; }
 
+   document.addEventListener('DOMNodeInserted', function(e) {
+      var node = $(e.target);
+      if (e.target.tagName === 'LI' && node.hasClass('post')) {
+         if ($('#posts li.post[id="' + node.attr('id') + '"]').length > 1) {
+            node.remove();
+         }
+      }
+   }, false);
+
    $('a.like_button').live('click', function(e) {
       e.preventDefault();
    });

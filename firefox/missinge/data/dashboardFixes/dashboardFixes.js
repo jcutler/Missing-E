@@ -189,6 +189,15 @@ function doIcons(item) {
 function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
                                            wrapTags, replaceIcons, timeoutAJAX,
                                            timeoutLength, postLinks) {
+   document.addEventListener('DOMNodeInserted', function(e) {
+      var node = jQuery(e.target);
+      if (e.target.tagName === 'LI' && node.hasClass('post')) {
+         if (jQuery('#posts li.post[id="' + node.attr('id') + '"]')
+             .length > 1) {
+            node.remove();
+         }
+      }
+   }, false);
 
    jQuery('a.like_button').live('click', function(e) {
       e.preventDefault();
