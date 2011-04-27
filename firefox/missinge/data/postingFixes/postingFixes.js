@@ -302,26 +302,37 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
          var ta = jQuery(this);
          var textarea = ta.attr('id');
          var h2 = ta.prevAll('h2:first');
-         var uploader = '<div style="float:right;' +
-                        (/regular_/.test(this.id) ? 'margin-bottom:5px;' :
-                         'padding-top:3px;') + '">' +
-                        '<iframe id="regular_form_inline_image_iframe_' +
+         var uploader = '<iframe id="regular_form_inline_image_iframe_' +
                         textarea + '" src="/upload/image?from_assets" ' +
                         'width="130" height="16" border="0" scrolling="no" ' +
                         'allowtransparency="true" frameborder="0" ' +
                         'style="background-color:transparent; ' +
-                        'overflow:hidden;"></iframe></div>' +
-                        '<div style="clear:both;"></div>';
+                        'overflow:hidden;"></iframe>';
+         var wrap = ['<div style="float:right;' +
+                     (/regular_/.test(this.id) ? 'margin-bottom:5px;' :
+                      'padding-top:3px;') + '">',
+                     '</div><div style="clear:both;"></div>'];
+         var imgwrap = ['<div style="text-align:right;margin-top:-19px;' +
+                        'margin-bottom:3px;">','</div>'];
+
          if (h2.length > 0) {
             h2.before('<div style="height:' + h2.css("margin-top") +
                       ';"></div>').css({"float":"left","margin-top":"0"})
-               .after(uploader);
+               .after(wrap[0] + uploader + wrap[1]);
          }
          else if (ta.parent().find('div.editor_controls').length > 0) {
+            if (ta.closest('form').attr('id') === 'photo_form' &&
+                ta.parent().prevAll('img').length > 0) {
+               //Single image share bookmarklet looks different
+               uploader = imgwrap[0] + uploader + imgwrap[1];
+            }
+            else {
+               uploader = wrap[0] + uploader + wrap[1];
+            }
             ta.parent().prepend(uploader);
          }
          else {
-            ta.before(uploader);
+            ta.before(wrap[0] + uploader + wrap[1]);
          }
          if (ta.parent().find('div.editor_note:contains("markdown")')
                         .length !== 0) {
