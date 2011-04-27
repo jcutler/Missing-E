@@ -55,14 +55,6 @@ chrome.tabs.onRemoved.addListener(function(id, removeInfo) {
    }
 });
 
-chrome.tabs.onUpdated.addListener(function(id, updates, tab) {
-   if (tabs[id] && (updates.status === "loading" || updates.url)) {
-      var d = (new Date()).valueOf();
-      tabs[id] = d;
-      debug("Updating tab (" + id + ") " + d);
-   }
-});
-
 cacheClear = setInterval(function() {
    cache = {};
    cacheElements = 0;
