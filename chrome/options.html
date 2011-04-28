@@ -406,6 +406,12 @@ display:none;
 
 #experimental_section .experimental_title {
 text-align:right;
+float:right;
+opacity:0.2;
+}
+
+#experimental_section .experimental_title:hover {
+opacity:1;
 }
 
 #experimental_section .experimental_title * {
@@ -920,6 +926,7 @@ function doshow(component) {
 <div id="experimental_section">
 <form id="experimentalFeatures_options">
 <div class="experimental_title"><div class="experimental_switch"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" value="1" /></div><img src="images/flask.png" alt="Experimental Features" title="Experimental Features" /></div>
+<div class="clear"></div>
 </form>
 </div>
 <div id="right_column"></div>
