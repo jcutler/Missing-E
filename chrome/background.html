@@ -621,12 +621,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "settings") {
       var settings = {};
+      settings.experimental = getStorage("MissingE_experimentalFeatures_enabled",0);
       switch(request.component) {
          case "dashboardFixes":
             settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
             settings.timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
             settings.timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",10);
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
+            settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
