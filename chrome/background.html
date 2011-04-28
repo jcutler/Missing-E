@@ -456,7 +456,7 @@ function requestTimestamp(request, sender, sendResponse, hash) {
                else {
                   debug("timestamp request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
-                  sendResponse({pid: this.targetId, success: false});
+                  sendResponse({pid: this.targetId, success: false, debugMode: debugMode});
                }
             }
          },
@@ -481,7 +481,7 @@ function requestTimestamp(request, sender, sendResponse, hash) {
                   else {
                      debug("timestamp request (" + this.targetId + ") failed");
                      dequeueAjax(this.targetId);
-                     sendResponse({pid: this.targetId, success: false});
+                     sendResponse({pid: this.targetId, success: false, debugMode: debugMode});
                   }
                }
             }

@@ -72,11 +72,16 @@ function loadTimestamp(item) {
             info.html(response.data);
          }
          else {
+            var extraHTML = '';
+            if (response.debugMode) {
+               extraHTML = ' (<a href="' + addr + '/api/read/json?id=' +
+                           response.pid + '">' + response.pid + '</a>)';
+            }
             info = $('#post_' + response.pid)
                            .find('span.MissingE_timestamp');
             info.html('Timestamp loading failed. ' +
                       '<a class="MissingE_timestamp_retry" href="#" ' +
-                      'onclick="return false;">Retry</a>');
+                      'onclick="return false;">Retry</a>' + extraHTML);
          }
       });
    }
