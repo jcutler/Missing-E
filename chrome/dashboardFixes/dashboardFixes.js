@@ -156,17 +156,24 @@ function doReplies(item) {
    if (notes.length === 0) {
       return false;
    }
-   var key = notes.attr('onclick').toString().match(/display_post_notes\([0-9]+, '([0-9A-Za-z]+)'/);
+   var key = notes.attr('onclick')
+                  .toString()
+                  .match(/display_post_notes\([0-9]+, '([0-9A-Za-z]+)'/);
    if (!key) {
       return false;
    }
    key = key[1];
 
-   notes.after('<a class="MissingE_experimental_reply" href="#" onclick="display_reply_pane([' + id + ', ' +
-      '\'' + key + '\']); return false;" id="post_control_reply_' +
-      id + '" title="' + dashFixesText[lang]['reply'] + ' [' + dashFixesText[lang]['experimental'] + ']">[' + dashFixesText[lang]['reply'] + ']</small></a>');
+   notes.after('<a class="MissingE_experimental_reply" href="#" onclick="' +
+               'display_reply_pane([' + id + ', \'' + key + '\']);' +
+               'return false;" id="post_control_reply_' + id + '" title="' +
+               dashFixesText[lang]['reply'] + ' [' +
+               dashFixesText[lang]['experimental'] + ']">[' +
+               dashFixesText[lang]['reply'] + ']</small></a>');
 
-   notes.after('<span class="MissingE_post_control MissingE_experimental_reply_wait" id="reply_fail_' + id + '"></span>');
+   notes.after('<span class="MissingE_post_control ' +
+               'MissingE_experimental_reply_wait" id="reply_fail_' + id +
+               '"></span>');
 }
 
 function doIcons(item) {
@@ -248,6 +255,13 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
       addPostLinks();
    }
 
+   var icons = chrome.extension
+                  .getURL('dashboardFixes/icon_replacements.png');
+   $('head').append('<style type="text/css">' +
+                    '#posts .post .post_controls .MissingE_post_control {' +
+                    'background-image:url("' + icons + '"); }' +
+                    '</style>');
+
    if (dashboardFixes_settings.experimental === 1 &&
        dashboardFixes_settings.reblogReplies === 1 &&
        document.body.id !== "tinymce" &&
@@ -286,13 +300,6 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          doReplies(this);
       });
    }
-
-   var icons = chrome.extension
-                  .getURL('dashboardFixes/icon_replacements.png');
-   $('head').append('<style type="text/css">' +
-                    '#posts .post .post_controls .MissingE_post_control {' +
-                    'background-image:url("' + icons + '"); }' +
-                    '</style>');
 
    if (dashboardFixes_settings.replaceIcons === 1 &&
        document.body.id !== "tinymce" &&

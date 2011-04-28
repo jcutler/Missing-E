@@ -665,7 +665,8 @@ function handleRequest(request) {
    }
    else if (request.name == "all-settings") {
       var settings = {};
-            for (i=0; i<componentList.length; i++) {
+      settings.MissingE_experimentalFeatures_enabled = getStorage("MissingE_experimentalFeatures_enabled",0);
+      for (i=0; i<componentList.length; i++) {
          settings["MissingE_" + componentList[i] + "_enabled"] = getStorage("MissingE_" + componentList[i] +
                                                                             "_enabled", 1);
       }
@@ -675,6 +676,7 @@ function handleRequest(request) {
       settings.MissingE_dashboardFixes_timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
       settings.MissingE_dashboardFixes_timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",defaultTimeout);
       settings.MissingE_dashboardFixes_postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
+      settings.MissingE_dashboardFixes_reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
       settings.MissingE_magnifier_retries = getStorage("MissingE_magnifier_retries",defaultRetries);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
@@ -709,6 +711,7 @@ function handleRequest(request) {
       var settings = {};
       settings.component = request.message.component;
       settings.subcomponent = request.message.subcomponent;
+      settings.experimental = getStorage("MissingE_experimentalFeatures_enabled",0);
       switch(request.message.component) {
          case "dashboardFixes":
             settings.reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
@@ -717,6 +720,7 @@ function handleRequest(request) {
             settings.timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
             settings.timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",defaultTimeout);
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
+            settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);

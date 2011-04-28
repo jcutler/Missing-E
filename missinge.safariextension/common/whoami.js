@@ -168,12 +168,14 @@ function settings_startup(response) {
                                          response.message.editLinks);
    }
    else if (response.message.component === "dashboardFixes") {
-      MissingE_dashboardFixes_doStartup(response.message.reblogQuoteFit,
+      MissingE_dashboardFixes_doStartup(response.message.experimental,
+                                        response.message.reblogQuoteFit,
                                         response.message.wrapTags,
                                         response.message.replaceIcons,
                                         response.message.timeoutAJAX,
                                         response.message.timeoutLength,
-                                        response.message.postLinks);
+                                        response.message.postLinks,
+                                        response.message.reblogReplies);
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {

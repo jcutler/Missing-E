@@ -202,6 +202,16 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_experimentalFeatures_enabled</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashboardFixes_reblogQuoteFit</string>
@@ -225,6 +235,46 @@
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashboardFixes_replaceIcons</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_dashboardFixes_timeoutAJAX</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>4</real>
+		<key>Key</key>
+		<string>MissingE_dashboardFixes_timeoutLength</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_dashboardFixes_postLinks</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_dashboardFixes_reblogReplies</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -325,6 +375,16 @@
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_postingFixes_addUploader</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_postingFixes_quickButtons</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

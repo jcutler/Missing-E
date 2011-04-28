@@ -400,6 +400,41 @@ td.even + td.even, td.odd + td.odd {
 text-align:center;
 }
 
+#experimental_section {
+display:none;
+}
+
+#experimental_section .experimental_title {
+text-align:right;
+float:right;
+opacity:0.2;
+}
+
+#experimental_section .experimental_title:hover {
+opacity:1;
+}
+
+#experimental_section .experimental_title * {
+vertical-align:middle;
+}
+
+#experimental_section .experimental_switch {
+display:inline-block;
+padding:10px;
+border-radius:10px;
+background-color:white;
+margin-right:-10px;
+}
+
+#experimental_section .experimental_switch img {
+height:20px;
+}
+
+.options_table td.experimental {
+display:none;
+background-image:url('images/exp_bg.png');
+}
+
 td.input_left {
 text-align:left !important;
 }
@@ -433,7 +468,7 @@ font-size:80%;
 
 div.post_thumb {
 float:right;
-margin:0 5px 2px 0;
+margin:-40px 5px 10px 2px;
 font-weight:bold;
 font-size:80%;
 text-align:center;
@@ -608,6 +643,15 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
 
 function loadSettings() {
    $('span.defRetries').text(defaultRetries);
+   var exp = document.getElementById("experimentalFeatures_options").active;
+   if (getStorage('MissingE_experimentalFeatures_enabled', 0) == 1) {
+      exp.checked = true;
+      $('#posts td.experimental').show();
+   }
+   else {
+      exp.checked = false;
+      $('#posts td.experimental').hide();
+   }
    for (i in componentList) {
       var v = componentList[i];
       var frm = document.getElementById(v + "_options");
@@ -698,6 +742,10 @@ function loadSettings() {
             frm.MissingE_dashboardFixes_postLinks.checked = true;
          else
             frm.MissingE_dashboardFixes_postLinks.checked = false;
+         if (getStorage('MissingE_dashboardFixes_reblogReplies', 0) == 1)
+            frm.MissingE_dashboardFixes_reblogReplies.checked = true;
+         else
+            frm.MissingE_dashboardFixes_reblogReplies.checked = false;
       }
       else if (v == "betterReblogs") {
          if (getStorage('MissingE_betterReblogs_passTags',1) == 1)
@@ -769,10 +817,18 @@ function resetTimeout(obj) {
 function toggle(obj) {
    var frm = $(obj).closest("form");
    var component = frm.attr("id").match(/^[a-zA-Z]+/)[0];
-   if (frm.get(0).active.checked)
+   if (frm.get(0).active.checked) {
       setStorage('MissingE_' + component + '_enabled', 1);
-   else
+      if (component == 'experimentalFeatures') {
+         $('#posts td.experimental').show();
+      }
+   }
+   else {
       setStorage('MissingE_' + component + '_enabled', 0);
+      if (component == 'experimentalFeatures') {
+         $('#posts td.experimental').hide();
+      }
+   }
 }
 
 function doshow(component) {
@@ -780,10 +836,12 @@ function doshow(component) {
    if (component == 'about') {
       document.getElementById('about_nav').className = 'nav_item active';
       document.getElementById('about_posts').style.display = 'block';
+      document.getElementById('experimental_section').style.display = 'none';
    }
    else {
       document.getElementById('about_nav').className = 'nav_item';
       document.getElementById('about_posts').style.display = 'none';
+      document.getElementById('experimental_section').style.display = 'block';
    }
    if (component == 'dashboard') {
       document.getElementById('dashboard_nav').className = 'nav_item active';
@@ -874,6 +932,12 @@ function doshow(component) {
 </div>
 </div>
 <div id="content">
+<div id="experimental_section">
+<form id="experimentalFeatures_options">
+<div class="experimental_title"><div class="experimental_switch"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" value="1" /></div><img src="images/flask.png" alt="Experimental Features" title="Experimental Features" /></div>
+<div class="clear"></div>
+</form>
+</div>
 <div id="right_column"></div>
 <div id="left_column">
 <ol id="posts">
@@ -904,7 +968,9 @@ function doshow(component) {
 <tr><td colspan="2" class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="numinput timeoutinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" onchange="doSetting(this,true,defaultTimeout,minTimeout,maxTimeout);" onkeyup="doKeyUp(this,true,defaultTimeout,minTimeout,maxTimeout);" />&nbsp;<span class="resetter" onclick="resetTimeout(this)">Reset</span></td></tr></table>
+<tr><td class="subopt"></td><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="numinput timeoutinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" onchange="doSetting(this,true,defaultTimeout,minTimeout,maxTimeout);" onkeyup="doKeyUp(this,true,defaultTimeout,minTimeout,maxTimeout);" />&nbsp;<span class="resetter" onclick="resetTimeout(this)">Reset</span></td></tr>
+<tr><td colspan="2" class="odd experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="odd experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" onchange="doSetting(this,false);" /></td></tr>
+</table>
 </table>
 </form>
 </div>
