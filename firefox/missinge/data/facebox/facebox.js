@@ -82,6 +82,7 @@
 
    $.extend($.facebox, {
       settings: {
+         width        : 370,
          opacity      : 0.2,
          overlay      : true,
          loadingImage : 'facebox/loading.gif',
@@ -328,6 +329,9 @@
                      code += '</div></div>';
                   }
                   var m = (maxHeight - 45)>>1;
+                  if (maxWidth < $.facebox.settings.width) {
+                     maxWidth = $.facebox.settings.width;
+                  }
                   code = '<div class="slideshow" style="width:' + maxWidth + 'px;height:' +
                            maxHeight + 'px">' + code + '<div style="margin:' + m +
                            'px 0;" class="turner_left"></div><div style="margin:' + m +
