@@ -135,7 +135,7 @@ function MissingE_magnifier_doStartup(extensionURL) {
       on("message", receiveMagnifier);
       jQuery('#facebox .turner_left,#facebox .turner_right')
          .live('click', function(e) {
-         
+
          var curr = jQuery(this).siblings('div.image:visible:last');
          var next;
          if (jQuery(this).hasClass('turner_right')) {

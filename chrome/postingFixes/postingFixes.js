@@ -254,7 +254,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
             par.remove();
          }
       }
-      
+
       var textarea = h2.nextAll('textarea:first').attr('id');
       var tag = '<img src=\\"X\\" />';
       if (h2.parent().find('div.editor_note:contains("markdown")')

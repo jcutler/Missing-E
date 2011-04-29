@@ -241,7 +241,7 @@ function MissingE_safeDash_doStartup(extensionURL) {
    if (jQuery('#new_post').css('background-image') !== "none") {
       jQuery('#new_post_icons').attr('style','opacity:0 !important;');
    }
-   
+
    var onoff;
    var extra;
    if (getStorage('MissingE_safeDash_state',0) === 0) {

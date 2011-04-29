@@ -127,7 +127,7 @@ if (!(/drafts$/.test(location.href)) &&
     !(/submissions[^\/]*$/.test(location.href))) {
    $('#facebox .turner_left,#facebox .turner_right')
       .live('click', function(e) {
-      
+
       var curr = $(this).siblings('div.image:visible:last');
       var next;
       if ($(this).hasClass('turner_right')) {

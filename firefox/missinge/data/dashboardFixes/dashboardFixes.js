@@ -181,7 +181,7 @@ function doIcons(item) {
       return false;
    }
 
-   var lang = jQuery('html').attr('lang'); 
+   var lang = jQuery('html').attr('lang');
    jQuery(item).find('div.post_controls a').each(function() {
       var a = jQuery(this);
       var txt = a.text();
@@ -285,7 +285,7 @@ function MissingE_dashboardFixes_doStartup(extensionURL, experimental,
       head.appendChild(style);
       addPostLinks();
    }
-   
+
    var replaceStyle = document.createElement("link");
    replaceStyle.setAttribute('rel','stylesheet');
    replaceStyle.setAttribute('type','text/css');

@@ -87,7 +87,7 @@ on("message", function (message) {
    }
 
    accmenu = jQuery("#account_menu");
-   
+
    if (accmenu.length > 0) {
       setlnk = jQuery('<a href="' + message.extensionURL +
                       'options.html" onclick="return false;" ' +

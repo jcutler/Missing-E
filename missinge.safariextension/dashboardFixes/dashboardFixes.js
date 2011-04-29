@@ -181,7 +181,7 @@ function doIcons(item) {
       return false;
    }
 
-   var lang = $('html').attr('lang'); 
+   var lang = $('html').attr('lang');
    $(item).find('div.post_controls a').each(function() {
       var a = $(this);
       var txt = a.text();
@@ -282,7 +282,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       head.appendChild(style);
       addPostLinks();
    }
-   
+
    var replaceStyle = document.createElement("link");
    replaceStyle.setAttribute('rel','stylesheet');
    replaceStyle.setAttribute('type','text/css');

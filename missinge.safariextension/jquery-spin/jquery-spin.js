@@ -69,9 +69,9 @@
 				$.each($.spin, function(k,v){
 					opt[k] = (typeof o[k]!='undefined' ? o[k] : v);
 				});
-        
+
         var txt = $(this);
-        
+
         var spinBtnImage = opt.imageBasePath+opt.spinBtnImage;
         var btnSpin = new Image();
         btnSpin.src = spinBtnImage;
@@ -81,17 +81,17 @@
         var spinDownImage = opt.imageBasePath+opt.spinDownImage;
         var btnSpinDown = new Image();
         btnSpinDown.src = spinDownImage;
-        
+
         var btn = $(document.createElement('img'));
         btn.attr('src', spinBtnImage);
         if(opt.btnClass) btn.addClass(opt.btnClass);
         if(opt.btnCss) btn.css(opt.btnCss);
         if(opt.txtCss) txt.css(opt.txtCss);
         txt.after(btn);
-				if(opt.lock){
-					txt.focus(function(){txt.blur();});
+	if(opt.lock){
+		txt.focus(function(){txt.blur();});
         }
-        
+
         function spin(vector){
           var val = txt.val();
           var org_val = val;
@@ -120,7 +120,7 @@
             if($.isFunction(opt.buttonDown)) opt.buttonDown.apply(txt, [val]);
           }
         }
-        
+
         btn.mousedown(function(e){
           var pos = e.pageY - btn.offset().top;
           var vector = (btn.height()/2 > pos ? 1 : -1);

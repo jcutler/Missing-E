@@ -238,7 +238,7 @@ function MissingE_safeDash_doStartup() {
    if ($('#new_post').css('background-image') !== "none") {
       $('#new_post img').css('opacity','0 !important');
    }
-   
+
    var onoff;
    var extra;
    if (getStorage('MissingE_safeDash_state',0) === 0) {

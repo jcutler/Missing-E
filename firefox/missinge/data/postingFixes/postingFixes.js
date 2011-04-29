@@ -241,7 +241,7 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
        jQuery('#regular_form_inline_image_iframe').length === 0) {
       var headings = jQuery('h2');
       var h2 = headings.last();
-      if (h2.parent().attr('id') === "photo_link") { 
+      if (h2.parent().attr('id') === "photo_link") {
          h2 = headings.eq(-2);
       }
 

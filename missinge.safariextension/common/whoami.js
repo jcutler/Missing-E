@@ -71,7 +71,7 @@ function doStartup(response) {
          MissingE_bookmarker_doStartup();
       }
       if (response.message.dashLinksToTabs) {
-         safari.self.tab.dispatchMessage("settings", 
+         safari.self.tab.dispatchMessage("settings",
                                          {component: "dashLinksToTabs"});
       }
       if (response.message.postCrushes) {

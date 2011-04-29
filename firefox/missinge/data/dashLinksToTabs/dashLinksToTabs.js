@@ -66,11 +66,11 @@ function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
    return true;
 }
 
-function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks, 
+function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks,
                                             editLinks) {
    var lcol = document.getElementById('left_column');
    var rcol = document.getElementById('right_column');
-   
+
    if (lcol) {
       lcol.addEventListener('click', function(e) {
          dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);

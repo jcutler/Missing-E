@@ -4,7 +4,7 @@
    "description": "Useful features and customizations for Tumblr.",
    "icons":       { "16": "missinge16.png",
                     "48": "missinge48.png",
-                    "128": "missinge128.png" },   
+                    "128": "missinge128.png" },
    "permissions": [
       "management",
       "tabs",
@@ -22,4 +22,4 @@
       }
    ]
 }
-         
+

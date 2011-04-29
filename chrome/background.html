@@ -45,7 +45,7 @@ var tabs = {};
 function addTab(id, url) {
    var d = (new Date()).valueOf();
    tabs[id] = d;
-   debug("Adding tab (" + id + ") " + d); 
+   debug("Adding tab (" + id + ") " + d);
 }
 
 chrome.tabs.onRemoved.addListener(function(id, removeInfo) {
@@ -464,7 +464,7 @@ function requestTimestamp(request, sender, sendResponse, hash) {
             }
          },
          success: function(data, textStatus) {
-            var closed = (this.tabHash !== tabs[this.tabId]); 
+            var closed = (this.tabHash !== tabs[this.tabId]);
             if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
                if (closed) {
                   debug("Stop timestamp request: Tab closed or changed.");

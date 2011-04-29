@@ -333,7 +333,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             else if (main.hasClass('conversation')) { type = "conversation"; }
             else if (main.hasClass('audio')) { type = "audio"; }
             else if (main.hasClass('video')) { type = "video"; }
-            
+
             if (ans.hasClass('reblog')) { anstype = "reblog"; }
             else if (ans.hasClass('reply')) { anstype = "reply"; }
             else if (ans.hasClass('answer')) {
@@ -450,7 +450,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                      .replace(/class="nsfwdone nsfwed"/g,'')
                      .replace(/<\/?div[^>]*>/g,'');
       }
-      
+
       reply_setValue(code);
       tags_setValue(tags);
 

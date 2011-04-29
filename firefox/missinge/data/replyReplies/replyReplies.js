@@ -222,7 +222,7 @@ function replyRepliesSettings(message) {
          newcode = newcode.substring(0,st) + newcode.substr(en);
       }
       newcode = newcode.replace(/\s*$/,"");
-      
+
       if (jQuery(arr[i]).parent().hasClass('note')) {
          var lang = jQuery('html').attr('lang');
          var a,b,z,img,user,qt,reblnk,x;
@@ -284,7 +284,7 @@ function replyRepliesSettings(message) {
          else if (main.hasClass('conversation')) { type = "conversation"; }
          else if (main.hasClass('audio')) { type = "audio"; }
          else if (main.hasClass('video')) { type = "video"; }
-         
+
          if (ans.hasClass('reblog')) { anstype = "reblog"; }
          else if (ans.hasClass('reply')) { anstype = "reply"; }
          else if (ans.hasClass('answer')) {
@@ -451,7 +451,7 @@ function MissingE_replyReplies_doStartup(extensionURL) {
          else if (item.hasClass('reblog')) { klass = "reblog"; }
          else if (item.hasClass('answer')) { klass = "answer"; }
          else if (item.hasClass('reply')) { klass = "reply"; }
-   
+
          if (klass === "" ||
              (klass === "reblog" && item.find('a.tumblelog').length === 0) ||
              (klass !== "reblog" && item.find('span.action a').length === 0)) {

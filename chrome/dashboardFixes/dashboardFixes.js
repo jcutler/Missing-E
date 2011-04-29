@@ -180,8 +180,8 @@ function doIcons(item) {
    if (item.tagName !== 'LI' || !($(item).hasClass('post'))) {
       return false;
    }
- 
-   var lang = $('html').attr('lang'); 
+
+   var lang = $('html').attr('lang');
    $(item).find('div.post_controls a').each(function() {
       var a = $(this);
       var txt = a.text();
