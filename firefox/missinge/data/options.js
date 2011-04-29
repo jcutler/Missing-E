@@ -149,6 +149,15 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
 
 function loadSettings() {
    jQuery('span.defRetries').text(defaultRetries);
+   var exp = document.getElementById("experimentalFeatures_options").active;
+   if (getStorage('MissingE_experimentalFeatures_enabled', 0) == 1) {
+      exp.checked = true;
+      jQuery('#posts td.experimental').show();
+   }
+   else {
+      exp.checked = false;
+      jQuery('#posts td.experimental').hide();
+   }
    for (i in componentList) {
       var v = componentList[i];
       var frm = document.getElementById(v + "_options");
@@ -239,6 +248,10 @@ function loadSettings() {
             frm.MissingE_dashboardFixes_postLinks.checked = true;
          else
             frm.MissingE_dashboardFixes_postLinks.checked = false;
+         if (getStorage('MissingE_dashboardFixes_reblogReplies', 0) == 1)
+            frm.MissingE_dashboardFixes_reblogReplies.checked = true;
+         else
+            frm.MissingE_dashboardFixes_reblogReplies.checked = false;
       }
       else if (v == "betterReblogs") {
          if (getStorage('MissingE_betterReblogs_passTags',1) == 1)
@@ -314,10 +327,16 @@ function toggle(obj) {
    if (obj.checked) {
       obj.checked = false;
       setStorage('MissingE_' + component + '_enabled', 0);
+      if (component == 'experimentalFeatures') {
+         jQuery('#posts td.experimental').hide();
+      }
    }
    else {
       obj.checked = true;
       setStorage('MissingE_' + component + '_enabled', 1);
+      if (component == 'experimentalFeatures') {
+         jQuery('#posts td.experimental').show();
+      }
    }
 }
 
@@ -326,10 +345,12 @@ function doshow(component) {
    if (component == 'about') {
       document.getElementById('about_nav').className = 'nav_item active';
       document.getElementById('about_posts').style.display = 'block';
+      document.getElementById('experimental_section').style.display = 'none';
    }
    else {
       document.getElementById('about_nav').className = 'nav_item';
       document.getElementById('about_posts').style.display = 'none';
+      document.getElementById('experimental_section').style.display = 'block';
    }
    if (component == 'dashboard') {
       document.getElementById('dashboard_nav').className = 'nav_item active';

@@ -402,6 +402,41 @@ td.even + td.even, td.odd + td.odd {
 text-align:center;
 }
 
+#experimental_section {
+display:none;
+}
+
+#experimental_section .experimental_title {
+text-align:right;
+float:right;
+opacity:0.2;
+}
+
+#experimental_section .experimental_title:hover {
+opacity:1;
+}
+
+#experimental_section .experimental_title * {
+vertical-align:middle;
+}
+
+#experimental_section .experimental_switch {
+display:inline-block;
+padding:10px;
+border-radius:10px;
+background-color:white;
+margin-right:-10px;
+}
+
+#experimental_section .experimental_switch img {
+height:20px;
+}
+
+.options_table td.experimental {
+display:none;
+background-image:url('images/exp_bg.png');
+}
+
 td.input_left {
 text-align:left !important;
 }
@@ -435,7 +470,7 @@ font-size:80%;
 
 div.post_thumb {
 float:right;
-margin:0 5px 2px 0;
+margin:-40px 5px 10px 2px;
 font-weight:bold;
 font-size:80%;
 text-align:center;
@@ -566,6 +601,12 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 </div>
 <div id="content">
+<div id="experimental_section">
+<form id="experimentalFeatures_options">
+<div class="experimental_title"><div class="experimental_switch"><input class="toggler" type="checkbox" name="active" value="1" /></div><img src="images/flask.png" alt="Experimental Features" title="Experimental Features" /></div>
+<div class="clear"></div>
+</form>
+</div>
 <div id="right_column"></div>
 <div id="left_column">
 <ol id="posts">
@@ -597,6 +638,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <tr><td colspan="2" class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="odd">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td class="subopt"></td><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="setting_timeout numinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" />&nbsp;<span class="resetter timeout_resetter">Reset</span></td></tr>
+<tr><td colspan="2" class="odd experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="odd experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" class="simple_setting" /></td></tr>
 </table>
 </form>
 </div>

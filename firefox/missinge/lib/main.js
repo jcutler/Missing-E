@@ -160,6 +160,9 @@ function getFormattedDate(d, format) {
 
 function doTags(stamp, id, theWorker) {
    var tags = stamp["tags"];
+   if (!tags) {
+      tags = [];
+   }
    theWorker.postMessage({greeting: "tags", success: true, data: tags, extensionURL: data.url("")});
 }
 
@@ -579,6 +582,7 @@ function handleMessage(message, myWorker) {
    else if (message.greeting == "all-settings") {
       var settings = {};
       settings.greeting = "all-settings";
+      settings.MissingE_experimentalFeatures_enabled = getStorage("extensions.MissingE.experimentalFeatures.enabled",0);
       for (i=0; i<componentList.length; i++) {
          settings["MissingE_" + componentList[i] + "_enabled"] =
             getStorage("extensions.MissingE." + componentList[i] + ".enabled", 1);
@@ -589,6 +593,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_timeoutAJAX = getStorage("extensions.MissingE.dashboardFixes.timeoutAJAX",1);
       settings.MissingE_dashboardFixes_timeoutLength = getStorage("extensions.MissingE.dashboardFixes.timeoutLength",defaultTimeout);
       settings.MissingE_dashboardFixes_postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
+      settings.MissingE_dashboardFixes_reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
       settings.MissingE_magnifier_retries = getStorage("extensions.MissingE.magnifier.retries",defaultRetries);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("extensions.MissingE.dashLinksToTabs.sidebar",0);
@@ -624,6 +629,7 @@ function handleMessage(message, myWorker) {
       settings.greeting = "settings";
       settings.component = message.component;
       settings.subcomponent = message.subcomponent;
+      settings.experimental = getStorage("extensions.MissingE.experimentalFeatures.enabled",0);
       settings.extensionURL = data.url("");
       switch(message.component) {
          case "dashboardFixes":
@@ -633,6 +639,7 @@ function handleMessage(message, myWorker) {
             settings.timeoutAJAX = getStorage("extensions.MissingE.dashboardFixes.timeoutAJAX",1);
             settings.timeoutLength = getStorage("extensions.MissingE.dashboardFixes.timeoutLength",defaultTimeout);
             settings.postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
+            settings.reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);

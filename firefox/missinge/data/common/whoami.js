@@ -175,12 +175,14 @@ function settings_startup(message) {
    }
    else if (message.component === "dashboardFixes") {
       MissingE_dashboardFixes_doStartup(message.extensionURL,
+                                        message.experimental,
                                         message.reblogQuoteFit,
                                         message.wrapTags,
                                         message.replaceIcons,
                                         message.timeoutAJAX,
                                         message.timeoutLength,
-                                        message.postLinks);
+                                        message.postLinks,
+                                        message.reblogReplies);
    }
    else if (message.component === "betterReblogs") {
       if (message.subcomponent === "dash") {

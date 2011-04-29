@@ -74,6 +74,9 @@ function debug(msg) {
 
 function doTags(stamp, id, sendResponse) {
    var tags = stamp["tags"];
+   if (!tags) {
+      tags = [];
+   }
    sendResponse({success: true, data: tags});
 }
 

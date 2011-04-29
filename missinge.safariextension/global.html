@@ -98,6 +98,9 @@ function debug(msg) {
 
 function doTags(stamp, id, request) {
    var tags = stamp["tags"];
+   if (!tags) {
+      tags = [];
+   }
    request.target.page.dispatchMessage("tags",{success: true, data: tags});
 }
 

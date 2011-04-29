@@ -78,7 +78,9 @@ var dashFixesText = {
                   reblog: "reblog",
                   reply: "reply",
                   notes: "notes",
-                  queue: "queue"
+                  queue: "queue",
+                  experimental: "EXPERIMENTAL",
+                  exp: "X"
                   },
                de:
                   {
@@ -87,7 +89,9 @@ var dashFixesText = {
                   reblog: "rebloggen",
                   reply: "antworten",
                   notes: "anmerkungen",
-                  queue: "in die Warteschleife stellen"
+                  queue: "in die Warteschleife stellen",
+                  experimental: "EXPERIMENTELLEN",
+                  exp: "X"
                   },
                fr:
                   {
@@ -96,7 +100,9 @@ var dashFixesText = {
                   reblog: "rebloguer",
                   reply: "réagir",
                   notes: "notes",
-                  queue: "file d'attente"
+                  queue: "file d'attente",
+                  experimental: "EXPÉRIMENTALE",
+                  exp: "X"
                   },
                it:
                   {
@@ -105,7 +111,9 @@ var dashFixesText = {
                   reblog: "reblogga",
                   reply: "rispondi",
                   notes: "note",
-                  queue: "in coda"
+                  queue: "in coda",
+                  experimental: "SPERIMENTALE",
+                  exp: "SP"
                   },
                ja:
                   {
@@ -114,7 +122,9 @@ var dashFixesText = {
                   reblog: "リブログ",
                   reply: "返信",
                   notes: "リアクション",
-                  queue: "キュー"
+                  queue: "キュー",
+                  experimental: "実験",
+                  exp: "実験"
                   }
 };
 
@@ -130,6 +140,40 @@ function addPostLinks() {
    pltxt += '<div class="clear"></div></div></li>';
 
    jQuery('#posts').prepend(pltxt);
+}
+
+function doReplies(item) {
+   var node = jQuery(item);
+   if (item.tagName !== 'LI' ||
+       !(node.hasClass('post')) ||
+       !(node.hasClass('is_reblog')) ||
+       node.hasClass('is_mine')) {
+      return;
+   }
+   var lang = jQuery('html').attr('lang');
+   var id = node.attr('id').match(/[0-9]*$/)[0];
+   var notes = jQuery('#show_notes_link_' + id);
+   if (notes.length === 0) {
+      return false;
+   }
+   var key = notes.parent().html()
+               .match(/display_post_notes\([0-9]+, '([0-9A-Za-z]+)'/);
+
+   if (!key) {
+      return false;
+   }
+   key = key[1];
+
+   notes.after('<a class="MissingE_experimental_reply" href="#" onclick="' +
+               'display_reply_pane([' + id + ', \'' + key + '\']);' +
+               'return false;" id="post_control_reply_' + id + '" title="' +
+               dashFixesText[lang]['reply'] + ' [' +
+               dashFixesText[lang]['experimental'] + ']">[' +
+               dashFixesText[lang]['reply'] + ']</small></a>');
+
+   notes.after('<span class="MissingE_post_control ' +
+               'MissingE_experimental_reply_wait" id="reply_fail_' + id +
+               '"></span>');
 }
 
 function doIcons(item) {
@@ -162,7 +206,12 @@ function doIcons(item) {
             .addClass(klass + "MissingE_reblog_control").text('');
       }
       else if (/^post_control_reply_/.test(a.attr('id'))) {
-         a.attr('title',dashFixesText[lang]['reply'])
+         var replyTitle = dashFixesText[lang]['reply'];
+         if (a.hasClass("MissingE_experimental_reply")) {
+            klass += "MissingE_experimental_reply_control ";
+            replyTitle += " [" + dashFixesText[lang]['experimental'] + "]";
+         }
+         a.attr('title',replyTitle)
             .addClass(klass + "MissingE_reply_control").text('');
       }
       else if (/^show_notes_/.test(a.attr('id')) &&
@@ -186,9 +235,11 @@ function doIcons(item) {
    });
 }
 
-function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
-                                           wrapTags, replaceIcons, timeoutAJAX,
-                                           timeoutLength, postLinks) {
+function MissingE_dashboardFixes_doStartup(extensionURL, experimental,
+                                           reblogQuoteFit, wrapTags,
+                                           replaceIcons, timeoutAJAX,
+                                           timeoutLength, postLinks,
+                                           reblogReplies) {
    document.addEventListener('DOMNodeInserted', function(e) {
       var node = jQuery(e.target);
       if (e.target.tagName === 'LI' && node.hasClass('post')) {
@@ -234,32 +285,69 @@ function MissingE_dashboardFixes_doStartup(extensionURL, reblogQuoteFit,
       head.appendChild(style);
       addPostLinks();
    }
-   if (replaceIcons === 1) {
-      var style = document.createElement("link");
-      style.setAttribute('rel','stylesheet');
-      style.setAttribute('type','text/css');
-      style.href = extensionURL + "dashboardFixes/replaceIcons.css";
-      head.appendChild(style);
+   
+   var replaceStyle = document.createElement("link");
+   replaceStyle.setAttribute('rel','stylesheet');
+   replaceStyle.setAttribute('type','text/css');
+   replaceStyle.href = extensionURL + "dashboardFixes/replaceIcons.css";
+   head.appendChild(replaceStyle);
+   var icons = extensionURL +
+               'dashboardFixes/icon_replacements.png';
+   jQuery('head').append('<style type="text/css">' +
+                 '#posts .post .post_controls .MissingE_post_control {' +
+                 'background-image:url("' + icons + '"); }' +
+                 '</style>');
 
-      if (document.body.id !== "tinymce" &&
-          document.body.id !== "dashboard_edit_post") {
-         var icons = extensionURL +
-                     'dashboardFixes/icon_replacements.png';
-         jQuery('head').append('<style type="text/css">' +
-                       '#posts .post .post_controls .MissingE_post_control {' +
-                       'background-image:url("' + icons + '"); }' +
-                       '</style>');
-                        
+   if (experimental === 1 &&
+       reblogReplies === 1 &&
+       document.body.id !== "tinymce" &&
+       document.body.id !== "dashboard_edit_post") {
 
-         document.addEventListener('DOMNodeInserted', function(e) {
-            doIcons(e.target);
-         }, false);
+      jQuery('head').append('<script type="text/javascript">' +
+      'Ajax.Responders.register({' +
+         'onCreate: function(request) {' +
+            'var fail;' +
+            'if (request.url === "/reply") {' +
+               'if ((fail = document.getElementById(\'reply_fail_\' + request.parameters.post_id))) {' +
+                  'fail.className="MissingE_post_control MissingE_experimental_reply_wait";' +
+               '}' +
+            '}' +
+         '},' +
+         'onComplete: function(response) {' +
+            'var fail;' +
+            'if (response.url === "/reply") {' +
+               'if ((fail = document.getElementById(\'reply_fail_\' + response.parameters.post_id))) {' +
+                  'if (response.transport.status == 200) {' +
+                     'fail.className="MissingE_post_control MissingE_experimental_reply_success";' +
+                  '}' +
+                  'else {' +
+                     'fail.className="MissingE_post_control MissingE_experimental_reply_fail";' +
+                  '}' +
+               '}' +
+            '}' +
+         '}' +
+      '});' +
+      '</script>');
 
-         jQuery("#posts li.post").each(function(i) {
-            if (this.id === "new_post") { return true; }
-            doIcons(this);
-         });
-      }
+      document.addEventListener('DOMNodeInserted', function(e) {
+         doReplies(e.target);
+      }, false);
+      jQuery('#posts li.post').each(function() {
+         doReplies(this);
+      });
+   }
+
+   if (replaceIcons === 1 &&
+       document.body.id !== "tinymce" &&
+       document.body.id !== "dashboard_edit_post") {
+      document.addEventListener('DOMNodeInserted', function(e) {
+         doIcons(e.target);
+      }, false);
+
+      jQuery("#posts li.post").each(function(i) {
+         if (this.id === "new_post") { return true; }
+         doIcons(this);
+      });
    }
 
    if (timeoutAJAX === 1) {

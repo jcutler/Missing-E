@@ -91,3 +91,22 @@ background-position:-63px 0;
 width:12px;
 background-position:-12px 0;
 }
+
+#posts .post .MissingE_experimental_reply_control {
+width:16px !important;
+background-position:-112px 0 !important;
+}
+
+#posts .post .MissingE_experimental_reply_wait {
+display:none !important;
+}
+
+#posts .post .MissingE_experimental_reply_fail {
+width:12px;
+background-position:-100px 0;
+}
+
+#posts .post .MissingE_experimental_reply_success {
+width:12px;
+background-position:-88px 0;
+}

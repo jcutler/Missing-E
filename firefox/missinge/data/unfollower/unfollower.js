@@ -283,6 +283,8 @@ function MissingE_unfollower_doStartup(extensionURL, maxRetries) {
       jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
                             'href="' + extensionURL + 'unfollower/' +
                             'unfollower.css" />');
-      tu_init(extensionURL, maxRetries);
+      if (jQuery('#right_column').find('a[href$="/followers"]').length > 0) {
+         tu_init(extensionURL, maxRetries);
+      }
    }
 }
