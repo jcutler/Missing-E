@@ -529,6 +529,19 @@ border-bottom:1px solid #44546b;
 text-decoration:underline;
 }
 
+#faq .experimental-details {
+padding:5px 0;
+background-color:#FF4;
+color:#666;
+}
+
+#faq .experimental-details p {
+text-align:center;
+text-indent:0 !important;
+margin:4px 0;
+font-size:90%;
+}
+
 ol ol, ol ul, ul ol, ul ul {
 margin:0.6em 0;
 }
