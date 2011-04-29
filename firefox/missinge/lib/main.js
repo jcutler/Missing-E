@@ -302,6 +302,12 @@ function requestTags(url, pid, count, myWorker) {
          catch (err) {
             closed = true;
          }
+         if (response.status === 404) {
+            console.debug("tags request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage({greeting: "tags", success:false});
+            return;
+         }
          if (response.status != 200 ||
              !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
             if (closed) {
@@ -371,6 +377,12 @@ function requestMagnifier(url, pid, count, myWorker) {
          }
          catch (err) {
             closed = true;
+         }
+         if (response.status === 404) {
+            console.debug("magnifier request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage({greeting: "magnifier", pid: this.headers.targetId, success:false});
+            return;
          }
          if (response.status != 200 ||
              !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
@@ -442,6 +454,12 @@ function requestTimestamp(url, pid, count, myWorker) {
          catch (err) {
             closed = true;
          }
+         if (response.status === 404) {
+            console.debug("timestamp request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage({greeting: "timestamp", pid: this.headers.targetId, success:false});
+            return;
+         }
          if (response.status != 200 ||
              !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
             if (closed) {
@@ -512,6 +530,14 @@ function requestReblogDash(url, pid, count, myWorker) {
          }
          catch (err) {
             closed = true;
+         }
+         if (response.status === 404) {
+            console.debug("reblogYourself request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            var replaceIcons = getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
+                                 getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
+            myWorker.postMessage({greeting: "reblogYourself", pid: this.headers.targetId, success:false, icons: replaceIcons});
+            return;
          }
          if (response.status != 200 ||
              !(/^\s*var\s+tumblr_api_read/.test(response.text))) {

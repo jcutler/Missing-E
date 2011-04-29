@@ -257,6 +257,12 @@ function requestTags(request, sender, sendResponse, hash) {
          tabId: sender.tab.id,
          tabHash: hash,
          error: function(xhr, textStatus) {
+            if (xhr.status === 404) {
+               debug("tags request (" + this.targetId + ") not found");
+               dequeueAjax(this.targetId);
+               sendResponse({success: false});
+               return;
+            }
             if (this.tabHash !== tabs[this.tabId]) {
                debug("Stop tags request: Tab closed or changed.");
                dequeueAjax(this.targetId);
@@ -347,6 +353,12 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
          tabId: sender.tab.id,
          tabHash: hash,
          error: function(xhr, textStatus) {
+            if (xhr.status === 404) {
+               debug("reblogYourself request (" + this.targetId + ") not found");
+               dequeueAjax(this.targetId);
+               sendResponse({success: false});
+               return;
+            }
             if (this.tabHash !== tabs[this.tabId]) {
                debug("Stop reblogYourself request: Tab closed or changed.");
                dequeueAjax(this.targetId);
@@ -440,7 +452,13 @@ function requestTimestamp(request, sender, sendResponse, hash) {
          targetId: request.pid,
          tabId: sender.tab.id,
          tabHash: hash,
-         error: function(xhr, textStatus) {
+         error: function(xhr, textStatus, thrownError) {
+            if (xhr.status === 404) {
+               debug("timestamp request (" + this.targetId + ") not found");
+               dequeueAjax(this.targetId);
+               sendResponse({success: false});
+               return;
+            }
             if (this.tabHash !== tabs[this.tabId]) {
                debug("Stop timestamp request: Tab closed or changed.");
                dequeueAjax(this.targetId);
@@ -531,6 +549,12 @@ function requestMagnifier(request, sender, sendResponse, hash) {
          tabId: sender.tab.id,
          tabHash: hash,
          error: function(xhr, textStatus) {
+            if (xhr.status === 404) {
+               debug("magnifier request (" + this.targetId + ") not found");
+               dequeueAjax(this.targetId);
+               sendResponse({success: false});
+               return;
+            }
             if (this.tabHash !== tabs[this.tabId]) {
                debug("Stop magnifier request: Tab closed or changed.");
                dequeueAjax(this.targetId);
