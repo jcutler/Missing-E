@@ -129,14 +129,21 @@ if (/http:\/\/www\.tumblr\.com\/new\/(text|photo)/.test(location.href) &&
    });
    $(document).ready(function() {
       $('head').append('<script type="text/javascript">' +
+                       'var replyText = localStorage' +
+                                          '.getItem("trr_ReplyText");' +
                        'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
                            'ed.execCommand("mceInsertContent", false, ' +
-                                           'localStorage' +
-                                           '.getItem("trr_ReplyText"));' +
+                                           'replyText);' +
+                              'ed.onInit.add(function(ed){' +
+                                 'if (ed.getContent()==""){' +
+                                    'console.debug("fixing!");' +
+                                    'ed.execCommand("mceInsertContent", ' +
+                                                    'false, replyText);' +
+                                 '}' +
+                              '});' +
                        '}' +
                        'else {' +
-                          'insertTag("post_two", ' +
-                                     'localStorage.getItem("trr_ReplyText"));' +
+                          'insertTag("post_two", replyText);' +
                        '}' +
                        'localStorage.removeItem("trr_ReplyText");' +
                        '</script>');
