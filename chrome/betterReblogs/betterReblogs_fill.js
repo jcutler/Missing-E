@@ -21,6 +21,14 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+function setReblogTags(tags) {
+   localStorage.setItem('tbr_ReblogTags',tags.join(','));
+}
+
+function setReblogTagsPlainText(tags) {
+   localStorage.setItem('tbr_ReblogTags',tags);
+}
+
 function clearReblogTags() {
    localStorage.removeItem("tbr_ReblogTags");
 }
@@ -39,11 +47,23 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                              function(response) {
 
    var betterReblogs_settings = JSON.parse(response);
+   var tags = getReblogTags();
+
+   if (document.body.id === 'dashboard_edit_post') {
+      $('#the_as_links a[href!="#"]').click(function() {
+         var pt = document.getElementById('edit_post').post_tags.value;
+         if (pt !== '') {
+            setReblogTagsPlainText(pt);
+         }
+         else if (tags !== '') {
+            setReblogTags(tags);
+         }
+      });
+   }
 
    if (document.body.id === 'dashboard_edit_post' &&
        getReblogTags().length > 0) {
       var i;
-      var tags = getReblogTags();
       if (tags.length > 0) {
          var txt = "", fill = "";
          var func = "var tags=[";
