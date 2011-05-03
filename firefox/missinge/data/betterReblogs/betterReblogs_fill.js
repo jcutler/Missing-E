@@ -60,7 +60,7 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
          ja: "タグを除去する"
          }
    };
-   var lang = $('html').attr('lang');
+   var lang = jQuery('html').attr('lang');
    var tags = getReblogTags();
 
    if (document.body.id === 'dashboard_edit_post') {
