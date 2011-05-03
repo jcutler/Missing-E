@@ -297,6 +297,13 @@ function refreshMarks() {
 }
 
 function MissingE_bookmarker_doStartup(extensionURL) {
+   var bookmarksTitle = {
+                      en: "Bookmarks",
+                      de: "Lesezeichen",
+                      fr: "Signets",
+                      it: "Segnalibri",
+                      ja: "ブックマーク"
+   };
    var bmi = extensionURL + 'bookmarker/sidebar_bookmark.png';
    var mimg = extensionURL + 'bookmarker/post_bookmark.png';
 
@@ -325,11 +332,12 @@ function MissingE_bookmarker_doStartup(extensionURL) {
          });
       }
 
+      var lang = jQuery('html').attr('lang');
       var list = jQuery('<div class="dashboard_nav_item" ' +
                    'style="padding-left:0;position:relative;">' +
-                   '<div class="dashboard_nav_title">Bookmarks</div>' +
-                   '<ul id="MissingE_marklist" class="dashboard_subpages">' +
-                   '</ul></div>');
+                   '<div class="dashboard_nav_title">' + bookmarksTitle[lang] +
+                   '</div><ul id="MissingE_marklist" ' +
+                   'class="dashboard_subpages"></ul></div>');
 
       var pos = jQuery("#dashboard_controls_radar_buttons");
       if (pos.length > 0) {

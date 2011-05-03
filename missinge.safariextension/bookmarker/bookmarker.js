@@ -33,6 +33,13 @@ var bookmarkText = {
                    it: "segnalibro",
                    ja: "ブックマーク"
 };
+var bookmarksTitle = {
+                   en: "Bookmarks",
+                   de: "Lesezeichen",
+                   fr: "Signets",
+                   it: "Segnalibri",
+                   ja: "ブックマーク"
+};
 
 function serializeMarks(a) {
    var s = "";
@@ -322,12 +329,13 @@ function MissingE_bookmarker_doStartup() {
             doMarks(this);
          });
       }
-
+      
+      var lang = $('html').attr('lang');
       var list = $('<div class="dashboard_nav_item" ' +
                    'style="padding-left:0;position:relative;">' +
-                   '<div class="dashboard_nav_title">Bookmarks</div>' +
-                   '<ul id="MissingE_marklist" class="dashboard_subpages">' +
-                   '</ul></div>');
+                   '<div class="dashboard_nav_title">' + bookmarksTitle[lang] +
+                   '</div><ul id="MissingE_marklist" ' +
+                   'class="dashboard_subpages"></ul></div>');
 
       var pos = $("#dashboard_controls_radar_buttons");
       if (pos.length > 0) {
