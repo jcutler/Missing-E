@@ -50,6 +50,9 @@ function changeButtonText(val, lang, submitText) {
    else if (val === '1') {
       text = submitText[lang].draft;
    }
+   else if (val === 'private') {
+      text = submitText[lang].private;
+   }
    else {
       text = submitText[lang].publish;
    }
@@ -59,9 +62,8 @@ function changeButtonText(val, lang, submitText) {
 function showHideButtons(newbtns, val) {
    var tofind;
    newbtns.find('.current').removeClass('current');
-   if (val === '0' || val === 'private') {
-       tofind = 'publish';
-   }
+   if (val === '0') { tofind = 'publish'; }
+   else if (val === 'private') { tofind = 'private'; }
    else if (val === '2') { tofind = 'queue'; }
    else if (val === '1') { tofind = 'draft'; }
    else if (val === 'on.2') { tofind = 'delay'; }
@@ -71,35 +73,56 @@ function showHideButtons(newbtns, val) {
 
 function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                                          addUploader, quickButtons) {
-
+   var lang = $('html').attr('lang');
    var submitText = {
                      en: {
                            publish: "Publish post",
                            queue:   "Queue post",
-                           draft:   "Save draft"
+                           draft:   "Save draft",
+                           private: "Save as private"
                          },
                      de: {
                            publish: "Eintrag publizieren",
                            queue:   "Eintrag in die Warteschleife stellen",
-                           draft:   "Entwurf speichern"
+                           draft:   "Entwurf speichern",
+                           private: "Speichern als privat",
                          },
                      fr: {
                            publish: "Publier le billet",
                            queue:   "Ajouter à la file d'attente",
-                           draft:   "Enregistrer le brouillon"
+                           draft:   "Enregistrer le brouillon",
+                           private: "Sauvegarder privé"
                          },
                      it: {
                            publish: "Pubblica post",
                            queue:   "Metti post in coda",
-                           draft:   "Salva bozza"
+                           draft:   "Salva bozza",
+                           private: "Salvare post privato"
                          },
                      ja: {
                            publish: "投稿公開",
                            queue:   "キューに追加",
-                           draft:   "下書き保存"
+                           draft:   "下書き保存",
+                           private: "プライベート保存"
                          }
    };
 
+   var uploadImagesText = {
+                           en: "Upload images instead",
+                           de: "Stattdessen fotos hochladen",
+                           fr: "Ajouter les photos à la place",
+                           it: "Altrimenti carica foto",
+                           ja: "画像をアップロード"
+   };
+
+   var clearTagsText = {
+                           en: "Clear Tags",
+                           de: "Entfernen Tags",
+                           fr: "Supprimer Tags",
+                           it: "Cancella i Tag",
+                           ja: "クリアタグを"
+   };
+   
    if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href)) {
       var i, txt="";
       var ctags;
@@ -124,7 +147,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
      'style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">Clear Tags</a></div>').appendTo(set_tags);
+     'return false;">' + clearTagsText[lang] + '</a></div>')
+         .appendTo(set_tags);
 
    $('#photo_src').keyup(function(){
       if (/^http:\/\/https?:\/\//.test(this.value)) {
@@ -135,12 +159,12 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
    if (quickButtons === 1 &&
        $('#post_state').length > 0 &&
        $('#post_state')
-         .children('*[value="0"],*[value="1"],*[value="2"]').length >= 3) {
+         .children('*[value="0"],*[value="1"],*[value="2"],*[value="private"]')
+         .length >= 4) {
       if ($('#post_controls').css('position') !== 'absolute') {
          $('#post_controls').addClass('MissingE_post_controls');
       }
 
-      var lang = $('html').attr('lang');
       var btn;
       var bottom;
       var isShare;
@@ -192,6 +216,9 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          else if (this.id === 'MissingE_queuePost') {
             $('#post_state').val('2').trigger('change');
          }
+         else if (this.id === 'MissingE_privatePost') {
+            $('#post_state').val('private').trigger('change');
+         }
          if (isShare) {
             $('#post_controls input[type="submit"]').trigger('click');
          }
@@ -220,7 +247,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           'Upload images instead</a>';
+                           uploadImagesText[lang] + '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
       }
