@@ -44,6 +44,23 @@ function getReblogTags() {
 }
 
 function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
+   var reblogTagsText = {
+      reblog: {
+         en: "Reblog Tags",
+         de: "Rebloggen Tags",
+         fr: "Rebloguer Tags",
+         it: "Reblogga i Tag",
+         ja: "タグをリブログ"
+         },
+      remove: {
+         en: "Remove tag",
+         de: "Tag entfernen",
+         fr: "Supprimer le tag",
+         it: "Rimuovi tag",
+         ja: "タグを除去する"
+         }
+   };
+   var lang = $('html').attr('lang');
    var tags = getReblogTags();
 
    if (document.body.id === 'dashboard_edit_post') {
@@ -68,8 +85,8 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
                func += '\'' + tags[i].replace(/'/g,'\\\'') + '\',';
                fill += tags[i] + ',';
                txt += '<div class="token"><span class="tag">' + tags[i] +
-                        '</span><a title="Remove tag" ' +
-                        'onclick="tag_editor_remove_tag($(this).up()); ' +
+                        '</span><a title="' + reblogTagsText.remove[lang] +
+                        '" onclick="tag_editor_remove_tag($(this).up()); ' +
                         'return false;" href="#">x</a></div>';
             }
          }
@@ -114,7 +131,8 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
             var addHeight = jQuery('<div style="text-align:left">' +
                               '<a class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
-                              'onclick="' + func + '">Reblog Tags</a></div>')
+                              'onclick="' + func + '">' +
+                              reblogTagsText.reblog[lang] + '</a></div>')
                .prependTo(set_tags).outerHeight();
             var label = jQuery('#post_tags_label');
             if (label.length > 0) {
