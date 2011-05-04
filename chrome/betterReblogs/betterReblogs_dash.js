@@ -251,34 +251,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                                   },
                            item: 'manual'}];
       $('head').append('<style type="text/css">' +
-                        '#MissingE_quick_reblog {' +
-                           'top:0;left:0;display:none;position:absolute;' +
-                           'width:150px;' +
-                        '}' +
-                        '#MissingE_quick_reblog:hover, ' +
-                        '.MissingE_quick_reblog_tags_inputting {' +
-                           'display:block !important;' +
-                        '}' +
-                        '#MissingE_quick_reblog #MissingE_quick_reblog_tags input {' +
-                           'font:normal 10px Helvetica,sans-serif;' +
-                           'width:95%;' +
-                        '}' +
-                        '.MissingE_quick_reblogging_icon, ' +
-                        '.MissingE_quick_reblogging_success {' +
-                           'opacity:1 !important;' +
-                           'background-position:0 0 !important;' +
-                        '}' +
-                        '.user_menu .user_menu_list a .user_menu_list_item {' +
-                           'height:auto;' +
-                           'min-height:12px;' +
-                        '}' +
-                        '.user_menu .user_menu_list a .user_menu_list_item.has_tag_input {' +
-                           'background-image:none;' +
-                           'background-color:black;' +
-                           'opacity:0.9;' +
-                           'padding-bottom:6px !important;' +
-                        '}</style>');
-      $('head').append('<style type="text/css">' +
                        '.MissingE_quick_reblogging_icon {' +
                           'background-image:url("' +
                           chrome.extension.getURL('betterReblogs/reblog_animated.gif') +

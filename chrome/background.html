@@ -899,6 +899,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getStorage("MissingE_betterReblogs_enabled",1) == 1) {
             activeScripts.betterReblogs = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "betterReblogs/quickReblog.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "betterReblogs/betterReblogs_dash.js"});
          }
          else
