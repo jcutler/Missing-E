@@ -747,6 +747,10 @@ function loadSettings() {
             frm.MissingE_betterReblogs_autoFillTags.checked = true;
          else
             frm.MissingE_betterReblogs_autoFillTags.checked = false;
+         if (getStorage('MissingE_betterReblogs_quickReblog',0) == 1)
+            frm.MissingE_betterReblogs_quickReblog.checked = true;
+         else
+            frm.MissingE_betterReblogs_quickReblog.checked = false;
          frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
       }
       else if (v == "postingFixes") {
@@ -1060,11 +1064,13 @@ function doshow(component) {
 <div class="post_content">
 <form id="betterReblogs_options">
 <div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Better Reblogs</div>
+<div class="post_thumb"><a href="betterReblogs/screen.jpg" rel="facebox"><img src="betterReblogs/thumb.jpg" /><br />Screenshot</a></div>
 <p>Additional features to make reblogging easier and more productive!</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Keep original post tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_passTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"><td class="even">Automatically add original tags to reblog post<br /><small><em>You can click on the </em>"Reblog Tags"<em> button to add the tags manually</em></small></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_autoFillTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
+<tr><td colspan="2" class="even">Quick (1-click) reblogging <em>(see screenshot)</em></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_quickReblog" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 </table>
 </form>
 </div>
