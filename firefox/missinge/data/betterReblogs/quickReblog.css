@@ -29,14 +29,21 @@ position:absolute;
 width:150px !important;
 }
 
-#MissingE_quick_reblog:hover, 
-.MissingE_quick_reblog_tags_inputting {
+#MissingE_quick_reblog:hover {
 display:block;
+}
+
+.MissingE_quick_reblog_tags_inputting {
+display:block !important;
 }
 
 #MissingE_quick_reblog #MissingE_quick_reblog_tags input {
 font:normal 10px Helvetica,sans-serif !important;
 width:95%;
+}
+
+#MissingE_quick_reblog #MissingE_quick_reblog_twitter input {
+vertical-align:-2px;
 }
 
 .MissingE_quick_reblogging_icon, 
