@@ -29,9 +29,12 @@ position:absolute;
 width:150px !important;
 }
 
-#MissingE_quick_reblog:hover, 
-.MissingE_quick_reblog_tags_inputting {
+#MissingE_quick_reblog:hover {
 display:block;
+}
+
+.MissingE_quick_reblog_tags_inputting {
+display:block !important;
 }
 
 #MissingE_quick_reblog #MissingE_quick_reblog_tags input {
