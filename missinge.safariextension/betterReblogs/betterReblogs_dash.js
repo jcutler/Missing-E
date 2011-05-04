@@ -36,7 +36,7 @@ function startReblog(id,replaceIcons) {
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    a.attr('oldtxt',a.attr('title'));
-   $('#MissingE_quick_reblog').css('display','none !important');
+   $('#MissingE_quick_reblog').css('display','none');
    if (replaceIcons === 1) {
       a.addClass('MissingE_quick_reblogging_icon');
    }
@@ -298,7 +298,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
             return;
          }
          var pos = reblog.offset();
-         var h = reblog.outerHeight();
+         var h = reblog.outerHeight() - 2;
          var w = (qr.outerWidth()>>1) - (reblog.innerWidth()>>1);
          var tagarr = [];
          if (passTags === 1) {
@@ -333,7 +333,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
                left:(pos.left-w)+'px !important',
                'display':'block'});
       }).live('mouseout',function() {
-         qr.css('display','none');
+         qr.css('display','');
       }).live('click',function(e) {
          var me = $(this);
          if (me.hasClass('MissingE_quick_reblogging_icon') ||
