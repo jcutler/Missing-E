@@ -186,7 +186,10 @@ function settings_startup(message) {
    }
    else if (message.component === "betterReblogs") {
       if (message.subcomponent === "dash") {
-         MissingE_betterReblogs_dash_doStartup(message.passTags);
+         MissingE_betterReblogs_dash_doStartup(message.extensionURL,
+                                               message.passTags,
+                                               message.quickReblog,
+                                               message.replaceIcons);
       }
       else if (message.subcomponent === "fill") {
          MissingE_betterReblogs_fill_doStartup(message.autoFillTags);

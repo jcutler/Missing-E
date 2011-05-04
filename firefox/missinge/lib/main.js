@@ -647,7 +647,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_betterReblogs_passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
       settings.MissingE_betterReblogs_retries = getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries);
       settings.MissingE_betterReblogs_autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
-      settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",1);
+      settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
       myWorker.postMessage(settings);
    }
    else if (message.greeting == "settings") {
@@ -699,7 +699,9 @@ function handleMessage(message, myWorker) {
          case "betterReblogs":
             settings.passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
             settings.autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
-            settings.quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",1);
+            settings.quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
+            settings.replaceIcons = (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
+                                       getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1) ? 1 : 0;
             break;
       }
       myWorker.postMessage(settings);

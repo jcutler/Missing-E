@@ -262,6 +262,10 @@ function loadSettings() {
             frm.MissingE_betterReblogs_autoFillTags.checked = true;
          else
             frm.MissingE_betterReblogs_autoFillTags.checked = false;
+         if (getStorage('MissingE_betterReblogs_quickReblog',0) == 1)
+            frm.MissingE_betterReblogs_quickReblog.checked = true;
+         else
+            frm.MissingE_betterReblogs_quickReblog.checked = false;
          frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
       }
       else if (v == "postingFixes") {
