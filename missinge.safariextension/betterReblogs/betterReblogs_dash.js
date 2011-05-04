@@ -283,10 +283,8 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
          $(this).css('display','');
       });
       qr.find('#MissingE_quick_reblog_tags input').focus(function() {
-      console.log("focus");
          qr.addClass('MissingE_quick_reblog_tags_inputting');
       }).blur(function() {
-      console.log("blur");
          qr.removeClass('MissingE_quick_reblog_tags_inputting');
       });
       $('#posts div.post_controls a[href^="/reblog/"]')

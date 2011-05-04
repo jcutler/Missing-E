@@ -783,7 +783,7 @@ function handleRequest(request) {
          case "betterReblogs":
             settings.passTags = getStorage("MissingE_betterReblogs_passTags",1);
             settings.autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
-            settings.quickReblog = getStorage("MissingE_betterReblogs_quickReblog",1);
+            settings.quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
             settings.replaceIcons = (getStorage("MissingE_dashboardFixes_enabled",1) == 1 && getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1) ? 1 : 0;
             break;
       }
