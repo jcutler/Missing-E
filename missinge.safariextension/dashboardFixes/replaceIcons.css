@@ -21,6 +21,10 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#posts .post .post_controls.MissingE_post_control_group {
+float:right !important;
+}
+
 #posts .post .MissingE_post_control {
 height:14px;
 vertical-align:-3px;

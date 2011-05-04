@@ -182,6 +182,7 @@ function doIcons(item) {
    }
 
    var lang = $('html').attr('lang');
+   $(item).find('div.post_controls').addClass('MissingE_post_control_group');
    $(item).find('div.post_controls a').each(function() {
       var a = $(this);
       var txt = a.text();

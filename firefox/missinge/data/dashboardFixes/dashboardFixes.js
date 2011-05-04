@@ -182,6 +182,8 @@ function doIcons(item) {
    }
 
    var lang = jQuery('html').attr('lang');
+   jQuery(item).find('div.post_controls')
+      .addClass('MissingE_post_control_group');
    jQuery(item).find('div.post_controls a').each(function() {
       var a = jQuery(this);
       var txt = a.text();
