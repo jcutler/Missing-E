@@ -49,6 +49,11 @@ function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
          node = node.parentNode;
       }
    }
+   if ($(node).hasClass('MissingE_quick_reblog_main')) { return false; }
+   if ($(node).attr('id') === 'MissingE_quick_reblog_manual' &&
+       reblogLinks !== 1) {
+      return false;
+   }
    if (node === null || node === this) { return false; }
    if (/^#/.test($(node).attr('href'))) { return false; }
    var urlhash = $(node).attr('href').match(/^([^#]*)#/);
@@ -81,5 +86,8 @@ function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks,
          dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);
       }, false);
    }
+   $('#MissingE_quick_reblog a').live('click', function(e) {
+         dashLinksToTabs_click(e, dashLinksToTabs_settings);
+   });
 }
 

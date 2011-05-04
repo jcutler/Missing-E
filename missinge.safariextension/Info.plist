@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.89</string>
+	<string>1.1.0</string>
 	<key>CFBundleVersion</key>
-	<string>89</string>
+	<string>100</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -52,9 +52,9 @@
 				<string>common/storage.js</string>
 				<string>facebox/facebox.js</string>
 				<string>askFixes/askFixes.js</string>
-                                <string>betterReblogs/betterReblogs_dash.js</string>
-                                <string>betterReblogs/betterReblogs_fill.js</string>
-                                <string>betterReblogs/betterReblogs_post.js</string>
+				<string>betterReblogs/betterReblogs_dash.js</string>
+				<string>betterReblogs/betterReblogs_fill.js</string>
+				<string>betterReblogs/betterReblogs_post.js</string>
 				<string>bookmarker/bookmarker.js</string>
 				<string>dashLinksToTabs/dashLinksToTabs.js</string>
 				<string>followChecker/followChecker.js</string>
@@ -76,6 +76,7 @@
 		<key>Stylesheets</key>
 		<array>
 			<string>facebox/facebox.css</string>
+			<string>betterReblogs/quickReblog.css</string>
 			<string>bookmarker/bookmarker.css</string>
 			<string>magnifier/magnifier.css</string>
 			<string>followChecker/followChecker.css</string>

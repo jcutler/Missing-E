@@ -532,7 +532,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>1</real>
+		<real>0</real>
 		<key>Key</key>
 		<string>MissingE_betterReblogs_quickReblog</string>
 		<key>Title</key>
