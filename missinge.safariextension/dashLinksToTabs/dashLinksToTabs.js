@@ -87,7 +87,7 @@ function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks,
       }, false);
    }
    $('#MissingE_quick_reblog a').live('click', function(e) {
-         dashLinksToTabs_click(e, dashLinksToTabs_settings);
+         dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);
    });
 }
 

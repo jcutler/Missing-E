@@ -24,6 +24,10 @@ function setReblogTags(tags) {
    localStorage.setItem('tbr_ReblogTags',tags.join(','));
 }
 
+function setReblogTagsPlainText(tags) {
+   localStorage.setItem('tbr_ReblogTags',tags);
+}
+
 function startReblog(id,replaceIcons) {
    var rebloggingText = {
       en: "reblogging...",
@@ -192,8 +196,18 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
    var reblog_settings = JSON.parse(response);
    var lang = $('html').attr('lang');
    if (reblog_settings.passTags === 1) {
-      $('#posts div.post_controls a[href^="/reblog/"]').live('mousedown', function(e) {
+      $('#posts div.post_controls a[href^="/reblog/"],#MissingE_quick_reblog_manual')
+            .live('mousedown', function(e) {
          if (e.which !== 1 && e.which !== 2) { return; }
+         if (this.id === 'MissingE_quick_reblog_manual') {
+            var tags = $('#MissingE_quick_reblog_tags input').val();
+            tags = tags.replace(/\s*,\s*/g,',').replace(/,$/,'')
+                     .replace(/^\s*/,'');
+            if (tags !== '') {
+               setReblogTagsPlainText(tags);
+            }
+         }
+         else {
          var tags = $(this).closest('li.post').find('span.tags a');
          var tagarr = [];
          if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href)) {
@@ -210,9 +224,10 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
             tagarr.push(str);
          }
          tags.each(function() {
-            tagarr.push($(this).html().replace(/^#/,''));
+            tagarr.push($(this).text().replace(/^#/,''));
          });
          setReblogTags(tagarr);
+         }
       });
    }
 
@@ -337,7 +352,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                tagarr.push(str);
             }
             tags.each(function() {
-               var currtag = $(this).html().replace(/^#/,'');
+               var currtag = $(this).text().replace(/^#/,'');
                if (!(/^\s*$/.test(currtag))) {
                   tagarr.push(currtag);
                }
