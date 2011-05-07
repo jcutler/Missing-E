@@ -12,7 +12,11 @@ else {
 }
 
 for ($i=0; $i<9; $i++) {
-   $crushes[] = preg_replace('/[0-9]*\.(png|jpg|gif|jpeg)$/i',"$avSize.$1",$_GET["img" . $i]);
+   $prefix = "";
+   if (preg_match('/^http/',$_GET["img" . $i]) == 0) {
+      $prefix = "http://media.tumblr.com/";
+   }
+   $crushes[] = $prefix . preg_replace('/[0-9]*\.(png|jpg|gif|jpeg)$/i',"$avSize.$1",$_GET["img" . $i]);
    $crushpercent[] = $_GET["per" . $i] . "%";
 }
 

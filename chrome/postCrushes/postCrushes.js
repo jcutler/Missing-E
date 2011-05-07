@@ -59,7 +59,7 @@ innerdiv.addEventListener('click', function() {
    for (i=0; i<crushes.length; i++) {
       crushimg[i] = crushes[i].style.backgroundImage
                      .replace(/^url\(["']*/,"").replace(/['"]*\)$/,"")
-                     .replace(from,to);
+                     .replace(/^http:\/\/[^\/]*\//,"").replace(from,to);
       crushurl[i] = crushes[i].href.replace(from,to);
       crushname[i] = crushes[i].getAttribute('title')
                         .match(/^[0-9a-zA-Z\-\_]*/)[0];
@@ -77,8 +77,7 @@ innerdiv.addEventListener('click', function() {
    var get = "";
    for (i=0; i<crushes.length; i++) {
       if (i>0) { get += "&"; }
-      get += "img" + i + "=" + crushimg[i] + "&url" + i + "=" + crushurl[i] +
-            "&per" + i + "=" + crushper[i];
+      get += "img" + i + "=" + crushimg[i] + "&per" + i + "=" + crushper[i];
    }
 
    chrome.extension.sendRequest({greeting: "settings",

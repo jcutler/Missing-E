@@ -4,15 +4,15 @@
 // @namespace      http://userscripts.org/users/113977
 // @include        http://www.tumblr.com/following*
 // @include        http://www.tumblr.com/new/photo*
-// @version        0.1.5
-// @date           2011-02-01
+// @version        0.1.6
+// @date           2011-05-07
 // ==/UserScript==
 
 (function() {
    var scriptUpdater = {
       name : "Tumblr Post Crushes",
       shortname : 'tcp',
-      version : "0.1.5",
+      version : "0.1.6",
       usoID : 95561,
       lastCheck : function() { return (window.localStorage.getItem(this.shortname + '_lastCheck') ? window.localStorage.getItem(this.shortname + '_lastCheck') : 0); },
       now : (new Date()).valueOf(),
@@ -183,7 +183,7 @@
          var crushper = new Array(9);
          var crushname = new Array(9);
          for (i=0; i<crushes.length; i++) {
-            crushimg[i] = crushes[i].style.backgroundImage.replace(/^url\(["']*/,"").replace(/['"]*\)$/,"").replace(from,to);
+            crushimg[i] = crushes[i].style.backgroundImage.replace(/^url\(["']*/,"").replace(/['"]*\)$/,"").replace(/^http:\/\/[^\/]*\//,"").replace(from,to);
             crushurl[i] = crushes[i].href.replace(from,to);
             crushname[i] = crushes[i].getAttribute('title').match(/^[0-9a-zA-Z\-\_]*/)[0];
             crushper[i] = crushes[i].getElementsByTagName("span")[0].innerHTML.replace(/%/,"").replace(from,to);
@@ -199,8 +199,7 @@
          var get = "";
          for (i=0; i<crushes.length; i++) {
             if (i>0) get += "&";
-            get += "img" + i + "=" + crushimg[i] + "&url" + i + "=" + crushurl[i] +
-                  "&per" + i + "=" + crushper[i];
+            get += "img" + i + "=" + crushimg[i] + "&per" + i + "=" + crushper[i];
          }
          var prefix = window.localStorage.getItem('tcp_crushPrefix');
          if (prefix == undefined || prefix == null) prefix = "Tumblr Crushes:";
