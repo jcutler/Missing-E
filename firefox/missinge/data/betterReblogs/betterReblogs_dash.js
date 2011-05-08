@@ -414,7 +414,7 @@ function MissingE_betterReblogs_dash_doStartup(extensionURL, passTags,
       });
       qr.find('a').click(function(e){
          if (e.target.tagName === 'INPUT') { return false; }
-         doReblog(this,reblog_settings.replaceIcons);
+         doReblog(this,replaceIcons);
       });
    }
 }
