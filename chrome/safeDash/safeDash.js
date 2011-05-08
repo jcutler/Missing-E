@@ -226,7 +226,13 @@ function doHide(item) {
                }
                if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/
                         .test(me.attr('src')))) {
-                  extra += 'min-height:' + h + 'px;' + 'min-width:' + w + 'px;';
+                  extra += 'min-height:' + h + 'px;';
+                  if (me.hasClass('inline_image')) {
+                     extra += 'min-width:' + w + 'px;';
+                  }
+                  else {
+                     extra += 'width:' + w + 'px;';
+                  }
                }
                s = '<div class="nsfwdiv ' + klass + '" style="' + extra +
                      '" />';
