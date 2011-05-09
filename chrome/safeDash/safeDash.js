@@ -151,6 +151,7 @@ function doHide(item) {
       else if (node.hasClass('post') && node.attr('id') !== 'new_post') {
          $('img:not(.nsfwdone),embed.video_player:not(.nsfwdone),' +
            'embed.photoset:not(.nsfwdone)',node).each(function(){
+            var addClear = false;
             var klass = "";
             var me = $(this);
             if (me.parents('#new_post').size()>0 ||
@@ -231,6 +232,7 @@ function doHide(item) {
                      extra += 'min-width:' + w + 'px;';
                   }
                   else {
+                     addClear = true;
                      extra += 'width:' + w + 'px;';
                   }
                }
@@ -242,6 +244,9 @@ function doHide(item) {
             }
 
             me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
+            if (addClear) {
+               me.parent().before('<div class="clear"></div>');
+            }
 
          });
       }
