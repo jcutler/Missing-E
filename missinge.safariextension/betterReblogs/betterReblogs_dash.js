@@ -89,7 +89,7 @@ function finishReblog(id,replaceIcons) {
    a.removeAttr('oldtxt');
 }
 
-function doReblog(item,replaceIcons) {
+function doReblog(item,replaceIcons,accountName) {
    var reblogMode = {
                         normal:  '0',
                         draft:   '1',
@@ -163,7 +163,7 @@ function doReblog(item,replaceIcons) {
          }
          params["post[tags]"] = this.tags;
          params["post[state]"] = this.mode;
-         params["channel_id"] = '0';
+         params["channel_id"] = accountName;
          if (!twitter) {
             delete params["send_to_twitter"];
          }
@@ -188,7 +188,8 @@ function doReblog(item,replaceIcons) {
    });
 }
 
-function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons) {
+function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons,
+                                               accountName) {
    var lang = $('html').attr('lang');
    if (passTags === 1) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
@@ -384,7 +385,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
              me.hasClass('MissingE_quick_reblogging_text_successs')) {
             return false;
          }
-         doReblog(this,replaceIcons);
+         doReblog(this,replaceIcons,accountName);
          return false;
       });
 
@@ -394,7 +395,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
       });
       qr.find('a').click(function(e){
          if (e.target.tagName === 'INPUT') { return false; }
-         doReblog(this,replaceIcons);
+         doReblog(this,replaceIcons,accountName);
       });
    }
 }

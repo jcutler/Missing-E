@@ -43,7 +43,7 @@ jQuery(document).ready(function (){
       doSetting(this, false);
    });
 
-   jQuery('input.setting_prefix,input.setting_format')
+   jQuery('input.setting_prefix,input.setting_format,input.setting_text')
          .bind("keyup", function(e) {
       doKeyUp(e, this, false);
    });
@@ -267,6 +267,11 @@ function loadSettings() {
          else
             frm.MissingE_betterReblogs_quickReblog.checked = false;
          frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
+         if (getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
+            document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;
+         else
+            document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Primary').checked = true;
+         frm.MissingE_betterReblogs_quickReblogAcctName.value = getStorage('MissingE_betterReblogs_quickReblogAcctName','');
       }
       else if (v == "postingFixes") {
          if (getStorage('MissingE_postingFixes_photoReplies',1) == 1)

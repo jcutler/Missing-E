@@ -752,6 +752,11 @@ function loadSettings() {
          else
             frm.MissingE_betterReblogs_quickReblog.checked = false;
          frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
+         if (getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
+            document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;
+         else
+            document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Primary').checked = true;
+         frm.MissingE_betterReblogs_quickReblogAcctName.value = getStorage('MissingE_betterReblogs_quickReblogAcctName','');
       }
       else if (v == "postingFixes") {
          if (getStorage('MissingE_postingFixes_photoReplies',1) == 1)
@@ -1071,6 +1076,10 @@ function doshow(component) {
 <tr><td class="subopt"><td class="even">Automatically add original tags to reblog post<br /><small><em>You can click on the </em>"Reblog Tags"<em> button to add the tags manually</em></small></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_autoFillTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Quick (1-click) reblogging <em>(see screenshot)</em></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_quickReblog" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td class="subopt"></td><td class="odd">Tumblr blog to reblog with<br /><small>You must have posting privileges on the account you select.</small></td>
+<td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" onchange="doSetting(this,false);" /> Main Blog<br />
+<input id="MissingE_betterReblogs_quickReblogAcctType_Secondary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="1" onchange="doSetting(this,false);" /> Secondary Blog:
+<div style="text-align:right;padding-top:4px;"><input type="text" name="MissingE_betterReblogs_quickReblogAcctName" style="width:90%;margin-bottom:0;" maxlength="128" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><br /><small><em>Account Name</em></small></div></td></tr>
 </table>
 </form>
 </div>

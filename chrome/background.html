@@ -689,6 +689,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.passTags = getStorage("MissingE_betterReblogs_passTags",1);
             settings.autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
             settings.quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
+            settings.accountName = '0';
+            if (getStorage("MissingE_betterReblogs_quickReblogAcctType",0) == 1) {
+               settings.accountName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'0');
+            }
             settings.replaceIcons = (getStorage("MissingE_dashboardFixes_enabled",1) == 1 && getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1) ? 1 : 0;
             break;
       }

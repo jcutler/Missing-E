@@ -181,7 +181,8 @@ function settings_startup(response) {
       if (response.message.subcomponent === "dash") {
          MissingE_betterReblogs_dash_doStartup(response.message.passTags,
                                         response.message.quickReblog,
-                                        response.message.replaceIcons);
+                                        response.message.replaceIcons,
+                                        response.message.accountName);
       }
       else if (response.message.subcomponent === "fill") {
          MissingE_betterReblogs_fill_doStartup(response.message.autoFillTags);
