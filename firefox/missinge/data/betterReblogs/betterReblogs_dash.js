@@ -196,8 +196,11 @@ function MissingE_betterReblogs_dash_doStartup(extensionURL, passTags,
                                                quickReblog, replaceIcons) {
    var lang = jQuery('html').attr('lang');
    if (passTags === 1) {
-      jQuery('#posts div.post_controls a[href^="/reblog/"],#MissingE_quick_reblog_manual')
-            .live('mousedown', function(e) {
+      var selector = '#posts div.post_controls a[href^="/reblog/"]';
+      if (quickReblog === 1) {
+         selector = '#MissingE_quick_reblog_manual';
+      }
+      jQuery(selector).live('mousedown', function(e) {
          if (e.which !== 1 && e.which !== 2) { return; }
          if (this.id === 'MissingE_quick_reblog_manual') {
             var tags = jQuery('#MissingE_quick_reblog_tags input').val();

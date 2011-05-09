@@ -196,8 +196,11 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
    var reblog_settings = JSON.parse(response);
    var lang = $('html').attr('lang');
    if (reblog_settings.passTags === 1) {
-      $('#posts div.post_controls a[href^="/reblog/"],#MissingE_quick_reblog_manual')
-            .live('mousedown', function(e) {
+      var selector = '#posts div.post_controls a[href^="/reblog/"]';
+      if (reblog_settings.quickReblog === 1) {
+         selector = '#MissingE_quick_reblog_manual';
+      }
+      $(selector).live('mousedown', function(e) {
          if (e.which !== 1 && e.which !== 2) { return; }
          if (this.id === 'MissingE_quick_reblog_manual') {
             var tags = $('#MissingE_quick_reblog_tags input').val();
