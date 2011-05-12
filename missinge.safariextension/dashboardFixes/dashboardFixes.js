@@ -129,17 +129,25 @@ var dashFixesText = {
 };
 
 function addPostLinks() {
-   var pltxt = '<li class="short_new_post post new_post" id="new_post">' +
-               '<div class="short_post_labels">';
+   var plwrap = '<li class="short_new_post post new_post" id="new_post"></li>';
+   var pltxt = '<div class="short_post_labels">';
    var lang = $('html').attr('lang');
    for (i in postTypeNames[lang]) {
       pltxt += '<div class="short_label">' +
                '<a href="/new/' + i + '" class="new_post_label">' +
                postTypeNames[lang][i] + '</a></div>';
    }
-   pltxt += '<div class="clear"></div></div></li>';
+   pltxt += '<div class="clear"></div></div>';
 
-   $('#posts').prepend(pltxt);
+   var npl = $(plwrap).prependTo('#posts');
+   npl.html(pltxt);
+   var bg = npl.css('background-image');
+   if (!bg || bg === 'none') {
+      npl.css('background-color','transparent');
+   }
+   else {
+      npl.css('background-image','none');
+   }
 }
 
 function doReplies(item) {

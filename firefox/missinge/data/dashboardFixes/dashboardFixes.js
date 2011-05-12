@@ -129,17 +129,26 @@ var dashFixesText = {
 };
 
 function addPostLinks() {
-   var pltxt = '<li class="short_new_post post new_post" id="new_post">' +
-               '<div class="short_post_labels">';
+   var plwrap = '<li class="short_new_post post new_post" id="new_post"></li>';
+   var pltxt = '<div class="short_post_labels">';
    var lang = jQuery('html').attr('lang');
    for (i in postTypeNames[lang]) {
       pltxt += '<div class="short_label">' +
                '<a href="/new/' + i + '" class="new_post_label">' +
                postTypeNames[lang][i] + '</a></div>';
    }
-   pltxt += '<div class="clear"></div></div></li>';
+   pltxt += '<div class="clear"></div></div>';
 
-   jQuery('#posts').prepend(pltxt);
+   var npl = jQuery(plwrap).prependTo('#posts');
+   npl.html(pltxt);
+   var bg;
+   var bgi = window.getComputedStyle(npl.get(0),null).getPropertyCSSValue('background-image');
+   var bgc = window.getComputedStyle(npl.get(0),null).getPropertyCSSValue('background-color');
+   if (bgi instanceof CSSValueList) { bg = bgi.item(0).cssText; }
+   else { bg = bgi.cssText; }
+   if (bgc instanceof CSSValueList) { bgc = bgc.item(0).cssText; }
+   else { bgc = bgc.cssText; }
+   npl.css('cssText', 'background:' + (bgc ? bgc : 'transparent') + ' none !important');
 }
 
 function doReplies(item) {
