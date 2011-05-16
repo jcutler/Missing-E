@@ -174,8 +174,8 @@ function doReplies(item) {
    var node = $(item);
    if (item.tagName !== 'LI' ||
        !(node.hasClass('post')) ||
-       //!(node.hasClass('is_reblog')) ||
-       false){//node.hasClass('is_mine')) {
+       !(node.hasClass('is_reblog')) ||
+       node.hasClass('is_mine')) {
       return;
    }
    var lang = $('html').attr('lang');

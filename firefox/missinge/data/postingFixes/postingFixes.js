@@ -105,6 +105,12 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                            queue:   "キューに追加",
                            draft:   "下書き保存",
                            private: "プライベート保存"
+                         },
+                     tr: {
+                           publish: "Gönderi yayınla",
+                           queue:   "Gönderiyi sıraya koy",
+                           draft:   "Taslak olarak kaydet",
+                           private: "Özel olarak kaydetmek"
                          }
    };
 
@@ -113,7 +119,8 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                            de: "Stattdessen fotos hochladen",
                            fr: "Ajouter les photos à la place",
                            it: "Altrimenti carica foto",
-                           ja: "画像をアップロード"
+                           ja: "画像をアップロード",
+                           tr: "Fotoğraf yükle yerine"
    };
 
    var clearTagsText = {
@@ -121,7 +128,8 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                            de: "Entfernen Tags",
                            fr: "Supprimer Tags",
                            it: "Cancella i Tag",
-                           ja: "クリアタグを"
+                           ja: "クリアタグを",
+                           tr: "Açık etiketleri"
    };
 
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +

@@ -77,11 +77,13 @@ function receiveTags(response) {
       if (response.message.success) {
          link.getElementsByTagName('img')[0].src =
                safari.extension.baseURI + 'betterReblogs/reblog_tags.png';
+         link.getElementsByTagName('img')[0].style.width = "64px";
          link.setAttribute('tags',response.message.data.join(','));
       }
       else {
          link.getElementsByTagName('img')[0].src =
                safari.extension.baseURI + 'betterReblogs/reblog_tags_fail.png';
+         link.getElementsByTagName('img')[0].style.width = "64px";
       }
    }
 }

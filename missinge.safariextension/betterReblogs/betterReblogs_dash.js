@@ -31,7 +31,8 @@ function startReblog(id,replaceIcons) {
       de: "rebloggend...",
       fr: "rebloguant...",
       it: "rebloggando...",
-      ja: "今リブログ..."
+      ja: "今リブログ...",
+      tr: "yeniden bloglama..."
    };
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
@@ -52,7 +53,8 @@ function failReblog(id,replaceIcons) {
       de: "Reblog gescheitert!",
       fr: "Reblog a échoué!",
       it: "Reblog fallito!",
-      ja: "リブログに失敗しました!"
+      ja: "リブログに失敗しました!",
+      tr: "Yeniden blogla başarısız"
    };
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
@@ -73,7 +75,8 @@ function finishReblog(id,replaceIcons) {
       de: "gerebloggt",
       fr: "reblogué",
       it: "rebloggato",
-      ja: "リブログ行われた"
+      ja: "リブログ行われた",
+      tr: "yeniden blogladı"
    };
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
@@ -237,21 +240,24 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
                      de: "Tags",
                      fr: "Tags",
                      it: "Tag",
-                     ja: "タグ"
+                     ja: "タグ",
+                     tr: "Etiketler"
       };
       var twitterText = {
                      en: "Send to Twitter",
                      de: "Auf Twitter posten",
                      fr: "Publier sur Twitter",
                      it: "Invia a Twitter",
-                     ja: "投稿をTwitterにも送信"
+                     ja: "投稿をTwitterにも送信",
+                     tr: "Twitter'a gönder"
       };
       var reblogOptions = [{text: {
                                     en: "Save draft",
                                     de: "Entwurf speichern",
                                     fr: "Enregistrer le brouillon",
                                     it: "Salva bozza",
-                                    ja: "下書き保存"
+                                    ja: "下書き保存",
+                                    tr: "Taslak olarak kaydet"
                                   },
                            item: 'draft'},
                            {text: {
@@ -259,7 +265,8 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
                                     de: "Warteschleife stellen",
                                     fr: "File d'attente",
                                     it: "Metti in coda",
-                                    ja: "キュー"
+                                    ja: "キュー",
+                                    tr: "Sıraya koy"
                                   },
                            item: 'queue'},
                            {text: {
@@ -267,7 +274,8 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
                                     de: "Privat",
                                     fr: "Privé",
                                     it: "Privato",
-                                    ja: "プライベート"
+                                    ja: "プライベート",
+                                    tr: "Özel"
                                   },
                            item: 'private'},
                            {text: {
@@ -275,7 +283,8 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
                                     de: "Rebloggen manuell",
                                     fr: "Rebloguer manuellement",
                                     it: "Reblogga manualmente",
-                                    ja: "手動でリブログ"
+                                    ja: "手動でリブログ",
+                                    tr: "Yeniden blogla el ile"
                                   },
                            item: 'manual'}];
       $('head').append('<style type="text/css">' +

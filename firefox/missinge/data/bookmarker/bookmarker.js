@@ -174,7 +174,8 @@ function doMarks(item) {
                    de: "lesezeichen",
                    fr: "marquer",
                    it: "segnalibro",
-                   ja: "ブックマーク"
+                   ja: "ブックマーク",
+                   tr: "kalınan yer imi"
       };
       var post = jQuery(item).attr('id').match(/[0-9]*$/)[0];
       if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href) &&
@@ -302,7 +303,8 @@ function MissingE_bookmarker_doStartup(extensionURL) {
                       de: "Lesezeichen",
                       fr: "Signets",
                       it: "Segnalibri",
-                      ja: "ブックマーク"
+                      ja: "ブックマーク",
+                      tr: "Imleri"
    };
    var bmi = extensionURL + 'bookmarker/sidebar_bookmark.png';
    var mimg = extensionURL + 'bookmarker/post_bookmark.png';

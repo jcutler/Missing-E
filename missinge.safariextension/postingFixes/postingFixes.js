@@ -104,6 +104,12 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                            queue:   "キューに追加",
                            draft:   "下書き保存",
                            private: "プライベート保存"
+                         },
+                     tr: {
+                           publish: "Gönderi yayınla",
+                           queue:   "Gönderiyi sıraya koy",
+                           draft:   "Taslak olarak kaydet",
+                           private: "Özel olarak kaydetmek"
                          }
    };
 
@@ -112,7 +118,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                            de: "Stattdessen fotos hochladen",
                            fr: "Ajouter les photos à la place",
                            it: "Altrimenti carica foto",
-                           ja: "画像をアップロード"
+                           ja: "画像をアップロード",
+                           tr: "Fotoğraf yükle yerine"
    };
 
    var clearTagsText = {
@@ -120,7 +127,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                            de: "Entfernen Tags",
                            fr: "Supprimer Tags",
                            it: "Cancella i Tag",
-                           ja: "クリアタグを"
+                           ja: "クリアタグを",
+                           tr: "Açık etiketleri"
    };
    
    if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href)) {

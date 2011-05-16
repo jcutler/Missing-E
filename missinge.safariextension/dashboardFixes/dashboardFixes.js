@@ -30,7 +30,7 @@ var postTypeNames = {
                        link:  ["Link"],
                        chat:  ["Chat"],
                        audio: ["Audio"],
-                       video: ["Video"],
+                       video: ["Video"]
                       },
                   de: {
                        text:  ["Text"],
@@ -39,7 +39,7 @@ var postTypeNames = {
                        link:  ["Link"],
                        chat:  ["Chat"],
                        audio: ["Audio"],
-                       video: ["Video"],
+                       video: ["Video"]
                       },
                   fr: {
                        text:  ["Texte"],
@@ -48,7 +48,7 @@ var postTypeNames = {
                        link:  ["Lien"],
                        chat:  ["Discussion"],
                        audio: ["Audio"],
-                       video: ["Vidéo"],
+                       video: ["Vidéo"]
                       },
                   it: {
                        text:  ["Testo"],
@@ -57,7 +57,7 @@ var postTypeNames = {
                        link:  ["Link"],
                        chat:  ["Chat"],
                        audio: ["Audio"],
-                       video: ["Video"],
+                       video: ["Video"]
                       },
                   ja: {
                        text:  ["テキスト"],
@@ -66,7 +66,16 @@ var postTypeNames = {
                        link:  ["リンク"],
                        chat:  ["チャット"],
                        audio: ["音声"],
-                       video: ["動画"],
+                       video: ["動画"]
+                      },
+                  tr: {
+                       text:  ["Metin"],
+                       photo: ["Fotoğraf"],
+                       quote: ["Alıntı"],
+                       link:  ["Bağlantı"],
+                       chat:  ["Diyalog"],
+                       audio: ["Ses"],
+                       video: ["Video"]
                       }
 };
 
@@ -125,6 +134,17 @@ var dashFixesText = {
                   queue: "キュー",
                   experimental: "実験",
                   exp: "実験"
+                  },
+               tr:
+                  {
+                  edit: "düzenle",
+                  del: "sil",
+                  reblog: "yeniden blogla",
+                  reply: "yorum yap",
+                  notes: "yorum",
+                  queue: "sırada",
+                  experimental: "deneysel",
+                  exp: "X"
                   }
 };
 
