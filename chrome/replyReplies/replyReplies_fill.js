@@ -95,6 +95,13 @@ function getAsLinks(lang, type) {
          photoTitle: '画像返答',
          text: '<strong>テキスト投稿</strong>',
          textTitle: 'テキスト返答'
+          },
+      tr: {
+         as: 'tür ...',
+         photo: '<strong>fotoğraf</strong> olarak',
+         photoTitle: 'Fotoğraf Cevap',
+         text: '<strong>metin</strong> olarak',
+         textTitle: 'Metin Cevap'
           }
    };
    var othertype = (type==='text' ? 'photo' : 'text');

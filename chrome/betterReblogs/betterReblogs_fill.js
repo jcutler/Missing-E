@@ -51,14 +51,16 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          de: "Rebloggen Tags",
          fr: "Rebloguer Tags",
          it: "Reblogga i Tag",
-         ja: "タグをリブログ"
+         ja: "タグをリブログ",
+         tr: "Yeniden blogla etiketler"
          },
       remove: {
          en: "Remove tag",
          de: "Tag entfernen",
          fr: "Supprimer le tag",
          it: "Rimuovi tag",
-         ja: "タグを除去する"
+         ja: "タグを除去する",
+         tr: "Etiketi kaldır"
          }
    };
    var betterReblogs_settings = JSON.parse(response);

@@ -31,14 +31,16 @@ var bookmarkText = {
                    de: "lesezeichen",
                    fr: "marquer",
                    it: "segnalibro",
-                   ja: "ブックマーク"
+                   ja: "ブックマーク",
+                   tr: "kalınan yer imi"
 };
 var bookmarksTitle = {
                    en: "Bookmarks",
                    de: "Lesezeichen",
                    fr: "Signets",
                    it: "Segnalibri",
-                   ja: "ブックマーク"
+                   ja: "ブックマーク",
+                   tr: "Imleri"
 };
 
 var st = document.createElement('style');

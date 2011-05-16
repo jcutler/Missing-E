@@ -28,14 +28,16 @@ var reblogText = {
                         fr: "rebloguer",
                         de: "rebloggen",
                         it: "reblogga",
-                        ja: "リブログ"
+                        ja: "リブログ",
+                        tr: "yeniden blogla"
                          },
                   error: {
                         en: "An error occured. Click to reload 'Magnifier'.",
                         de: "Ist ein Fehler aufgetreten. Klicken Sie erneut zu versuchen.",
                         fr: "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
                         it: "È verificato un errore. Clicca per provare di nuovo.",
-                        ja: "エラーが発生しました。 もう一度やり直してください]をクリックします。"
+                        ja: "エラーが発生しました。 もう一度やり直してください]をクリックします。",
+                        tr: "Bir hata oluştu. Yeniden denemek için tıklayın."
                          }
 };
 

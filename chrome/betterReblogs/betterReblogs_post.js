@@ -53,11 +53,13 @@ function addTags(link) {
       if (response.success) {
          link.getElementsByTagName('img')[0].src =
             chrome.extension.getURL('betterReblogs/reblog_tags.png');
+         link.getElementsByTagName('img')[0].style.width = "64px";
          link.setAttribute('tags',response.data.join(','));
       }
       else {
          link.getElementsByTagName('img')[0].src =
             chrome.extension.getURL('betterReblogs/reblog_tags_fail.png');
+         link.getElementsByTagName('img')[0].style.width = "64px";
       }
    });
 
