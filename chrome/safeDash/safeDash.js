@@ -210,7 +210,18 @@ function doHide(item) {
             var s;
             if (album) {
                me.click(function() {
-                  $(this).parent().toggleClass('album_nsfwdiv_enlarged');
+                  var adiv = $(this).parent();
+                  var mb = this.style.marginBottom;
+                  if (!mb || mb === '') {
+                     mb = '0px';
+                  }
+                  if (!adiv.hasClass('album_nsfwdiv_enlarged')) {
+                     adiv.css('margin-bottom',mb);
+                  }
+                  else {
+                     adiv.css('margin-bottom','');
+                  }
+                  adiv.toggleClass('album_nsfwdiv_enlarged');
                });
                if (h === undefined || h === null || h === 0) { h = 150; }
                if (w === undefined || w === null || w === 0) { w = 150; }
