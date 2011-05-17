@@ -230,7 +230,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
             $('#post_state').val('private').trigger('change');
          }
          if (isShare) {
-            $('#post_controls input[type="submit"]').trigger('click');
+            $('#post_controls input[type="submit"]').get(0).click();
          }
       });
       $(document).ready(function() {

@@ -199,12 +199,20 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
       }
 
       var allbtns = "";
+
+      var doOnClick = 'return true;';
+      if (isShare) {
+         jQuery('#post_controls input[type="submit"]:first')
+            .attr('id','the_submit_btn');
+         doOnClick = 'document.getElementById(\'the_submit_btn\').click();' +
+                     doOnClick;
+      }
       for (var i in submitText[lang]) {
          var klass = "";
          var div = "";
          allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
                      'type="submit" class="positive" ' +
-                     'onclick="return true;"><span>' +
+                     'onclick="' + doOnClick + '"><span>' +
                      submitText[lang][i] + '</span></button></div>';
       }
       var newbtns = jQuery('<div id="MissingE_postMenu">' + allbtns + '</div>')
@@ -215,7 +223,7 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
       jQuery('#post_state').bind('change', function() {
          showHideButtons(newbtns, this.value);
       });
-      newbtns.find('button').click(function() {
+      newbtns.find('button').mouseup(function() {
          if (!isShare) {
             jQuery('head').append('<script type="text/javascript">' +
                              'is_preview=false;</script>');
@@ -230,10 +238,7 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
             jQuery('#post_state').val('2').get(0).onchange();
          }
          else if (this.id === 'MissingE_privatePost') {
-            jQuery('#post_state').val('private').trigger('change');
-         }
-         if (isShare) {
-            jQuery('#post_controls input[type="submit"]:first').get(0).click();
+            jQuery('#post_state').val('private').get(0).onchange();
          }
       });
       showHideButtons(newbtns, jQuery('#post_state').val());
