@@ -168,7 +168,8 @@ function addPostLinks() {
    else { bg = bgi.cssText; }
    if (bgc instanceof CSSValueList) { bgc = bgc.item(0).cssText; }
    else { bgc = bgc.cssText; }
-   npl.css('cssText', 'background:' + (bgc ? bgc : 'transparent') + ' none !important');
+   npl.css('cssText', 'background:' +
+           ((!bg || bg === 'none') ? 'transparent' : bgc) + ' none !important');
 }
 
 function doReplies(item) {
