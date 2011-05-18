@@ -148,7 +148,7 @@ function doFWDisplay(followerstart,followeestart,show) {
             var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]*)<\/a>/)[1];
             var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
             var avre = new RegExp('a href="' + fentryurl +
-                                  '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*)','m');
+                                  '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
             var imgm = avre.exec(followertext[i]);
             var fentryava = '';
             if (imgm && imgm.length > 1) {
@@ -176,7 +176,7 @@ function doFWDisplay(followerstart,followeestart,show) {
             var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]+)<\/a>/)[1];
             var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
             var avre = new RegExp('a href="' + fentryurl +
-                                  '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*)','m');
+                                  '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
             var imgm = avre.exec(followeetext[i]);
             var fentryava = '';
             if (imgm && imgm.length > 1) {

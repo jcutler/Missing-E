@@ -676,13 +676,17 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
    }
    else if (request.greeting == "unfollow") {
-      var idx = $.inArray(request.tumblrId + ';' + request.tumblrURL, youFollow);
+      var idx = $.inArray(request.tumblrId + ';' +
+                          request.tumblrURL + ';' +
+                          request.tumblrImg, youFollow);
       if (idx != -1) {
          youFollow.splice(idx,1);
       }
    }
    else if (request.greeting == "follow") {
-      var idx = $.inArray(request.tumblrId + ';' + request.tumblrURL, followYou);
+      var idx = $.inArray(request.tumblrId + ';' +
+                          request.tumblrURL + ';' +
+                          request.tumblrImg, followYou);
       if (idx != -1) {
          followYou.splice(idx,1);
       }

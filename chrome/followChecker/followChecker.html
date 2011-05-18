@@ -144,6 +144,9 @@ chrome.extension.sendRequest({greeting: "followChecker_fill"},
          var id = this.id.replace(/(un)?follow_button_/,'');
          var url = $(this).closest('div.followee,div.follower')
                      .find('div.name a').attr('href');
+         var avatar = $(this).closest('div.followee,div.follower')
+                        .find('img.avatar').attr('src')
+                        .match(/http:\/\/[^\/]*\/avatar_(.*)$/)[1];
          var action = this.id.match(/^[^_]*/)[0];
          $('#loading_' + id).show();
          $(this).hide();
@@ -153,12 +156,14 @@ chrome.extension.sendRequest({greeting: "followChecker_fill"},
             tumblrAction: action,
             tumblrId: id,
             tumblrURL: url,
+            tumblrImg: avatar,
             data: {id: id, form_key: response.formKey},
             success: function() {
                $('#loading_' + this.tumblrId).hide();
                chrome.extension.sendRequest({greeting: this.tumblrAction,
                                              tumblrId: this.tumblrId,
-                                             tumblrURL: this.tumblrURL});
+                                             tumblrURL: this.tumblrURL,
+                                             tumblrImg: this.tumblrImg});
             },
             error: function(jqXHR, textStatus, errorThrown) {
                $('#' + this.action + '_loading_' + this.tumblrId).hide();
@@ -175,7 +180,7 @@ chrome.extension.sendRequest({greeting: "followChecker_fill"},
          txt += '<div class="follower' + ((i%2==1) ? ' alt' : '') + '">' +
                '<a href="' + entry[1] + '" target="_blank">' +
                '<img class="avatar" alt="' + entry[0] + '" src="' +
-               'http://media.tumblr.com/avatar_' + entry[2] + '_30.png" />' +
+               'http://media.tumblr.com/avatar_' + entry[2] + '" />' +
                '</a><div class="name"><a href="' + entry[1] + '" ' +
                'target="_blank">' + entry[0] + '</a></div>' +
                '<div class="control"><a href="#" class="follow_button" ' +
@@ -192,7 +197,7 @@ chrome.extension.sendRequest({greeting: "followChecker_fill"},
          txt += '<div class="followee' + ((i%2==1) ? '' : ' alt') + '">' +
                '<a href="' + entry[1] + '" target="_blank">' +
                '<img class="avatar" alt="' + entry[0] + '" src="' +
-               'http://media.tumblr.com/avatar_' + entry[2] + '_30.png" />' +
+               'http://media.tumblr.com/avatar_' + entry[2] + '" />' +
                '</a><div class="name"><a href="' + entry[1] + '" ' +
                'target="_blank">' + entry[0] + '</a></div>' +
                '<div class="control"><a href="#" class="unfollow_button" ' +
