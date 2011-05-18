@@ -56,7 +56,11 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var debugMode = true;//false;
+var debugMode = false;
+var followCheckerTab = null;
+var formKey;
+var followYou = [];
+var youFollow = [];
 
 function getStorage(key, defVal) {
    var retval = safari.extension.settings[key];
@@ -80,6 +84,12 @@ function setStorage(key, val) {
 cacheClear = setInterval(function() {
    cache = {};
    cacheElements = 0;
+   if (followCheckerTab && !followCheckerTab.page) {
+      followYou = [];
+      youFollow = [];
+      formKey = null;
+      followCheckerTab = null;
+   }
 }, fiveMinutes);
 clearQueues = setInterval(function() {
    if (activeAjax == 0) {
@@ -653,6 +663,26 @@ function requestMagnifier(request) {
    }
 }
 
+function closeTab(url, currentTab) {
+   var i,j;
+   var windows = safari.application.browserWindows;
+   for (i=0; i<windows.length; i++) {
+      for (j=0; j<windows[i].tabs.length; j++) {
+         if (windows[i].tabs[j].url === url &&
+             windows[i].tabs[j] !== currentTab) {
+            windows[i].tabs[j].close();
+         }
+      }
+   }
+}
+
+function clearFollowChecker() {
+   followYou = [];
+   youFollow = [];
+   formKey = null;
+   followCheckerTab = null;
+}
+
 safari.application.addEventListener("command", performCommand, false);
 function performCommand(cmd) {
    if (cmd.command == "missinge-settings") {
@@ -666,15 +696,45 @@ function handleRequest(request) {
       request.target.browserWindow.openTab().url = request.message;
    }
    else if (request.name == "close-options") {
-      var i,j;
-      var windows = safari.application.browserWindows;
-      for (i=0; i<windows.length; i++) {
-         for (j=0; j<windows[i].tabs.length; j++) {
-            if (windows[i].tabs[j].url === request.target.url &&
-                windows[i].tabs[j] !== request.target) {
-               windows[i].tabs[j].close();
-            }
-         }
+      closeTab(request.target.url, request.target);
+   }
+   else if (request.name == "close-followChecker") {
+      closeTab(safari.extension.baseURI + "followChecker/followChecker.html");
+   }
+   else if (request.name == "followChecker") {
+      closeTab(safari.extension.baseURI + "followChecker/followChecker.html");
+      followYou = request.message.followYou;
+      youFollow = request.message.youFollow;
+      formKey = request.message.formKey;
+      followCheckerTab = request.target.browserWindow.openTab();
+      followCheckerTab.url = safari.extension.baseURI + "followChecker/followChecker.html";
+   }
+   else if (request.name == "followChecker_fill") {
+      if (request.target == followCheckerTab &&
+          formKey) {
+         request.target.page.dispatchMessage("followChecker_fill",
+                                             {success:true, formKey:formKey,
+                                              followYou:followYou, youFollow:youFollow});
+      }
+      else {
+         request.target.page.dispatchMessage("followChecker_fill",
+                                             {success:false});
+      }
+   }
+   else if (request.name == "unfollow") {
+      var idx = $.inArray(request.message.tumblrId + ';' +
+                          request.message.tumblrURL + ';' +
+                          request.message.tumblrImg, youFollow);
+      if (idx != -1) {
+         youFollow.splice(idx,1);
+      }
+   }
+   else if (request.name == "follow") {
+      var idx = $.inArray(request.message.tumblrId + ';' +
+                          request.message.tumblrURL + ';' +
+                          request.message.tumblrImg, followYou);
+      if (idx != -1) {
+         followYou.splice(idx,1);
       }
    }
    else if (request.name == "magnifier") {
@@ -706,6 +766,7 @@ function handleRequest(request) {
       settings.MissingE_dashboardFixes_timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",defaultTimeout);
       settings.MissingE_dashboardFixes_postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
       settings.MissingE_dashboardFixes_reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
+      settings.MissingE_dashboardFixes_widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
       settings.MissingE_magnifier_retries = getStorage("MissingE_magnifier_retries",defaultRetries);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
@@ -752,6 +813,7 @@ function handleRequest(request) {
             settings.timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",defaultTimeout);
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
+            settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);

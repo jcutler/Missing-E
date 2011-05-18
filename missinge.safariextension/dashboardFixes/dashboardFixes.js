@@ -264,7 +264,8 @@ function doIcons(item) {
 function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                                            wrapTags, replaceIcons,
                                            timeoutAJAX, timeoutLength,
-                                           postLinks, reblogReplies) {
+                                           postLinks, reblogReplies,
+                                           widescreen) {
    if (window.top !== window) { return false; }
 
    document.addEventListener('DOMNodeInserted', function(e) {
@@ -300,6 +301,16 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
    head = document.getElementsByTagName("head")[0];
    if (data !== '') {
       head.appendChild(css);
+   }
+   if (widescreen === 1) {
+      var style = document.createElement("link");
+      style.setAttribute('rel','stylesheet');
+      style.setAttribute('type','text/css');
+      style.href = safari.extension.baseURI + "dashboardFixes/widescreen.css";
+      head.appendChild(style);
+      var w = $('#right_column').width() + 20;
+      $('#left_column').css('margin-right', w+'px');
+      $('#right_column').css('margin-left', '-'+w+'px');
    }
    if (postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
