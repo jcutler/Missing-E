@@ -25,6 +25,10 @@
 width:550px !important;
 }
 
+#facebox .MissingE_followChecker_newTab {
+display:none;
+}
+
 #followwhotable {
 width:100%;
 border-collapse:separate;

@@ -41,6 +41,10 @@ var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
 var tabs = {};
+var followCheckerTab = -1;
+var formKey;
+var followYou = [];
+var youFollow = [];
 
 function addTab(id, url) {
    var d = (new Date()).valueOf();
@@ -617,22 +621,71 @@ function requestMagnifier(request, sender, sendResponse, hash) {
    }
 }
 
+function closeTab(url, currentId) {
+   chrome.windows.getAll({populate: true},
+                         function (windows) {
+      var i,j;
+      for (i=0; i<windows.length; i++) {
+         for (j=0; j<windows[i].tabs.length; j++) {
+            if (windows[i].tabs[j].url == url &&
+                windows[i].tabs[j].id != currentId) {
+               chrome.tabs.remove(windows[i].tabs[j].id);
+            }
+         }
+      }
+   });
+}
+
+chrome.tabs.onRemoved.addListener(function(id, info) {
+   if (id === followCheckerTab) {
+      followYou = [];
+      youFollow = [];
+      formKey = null;
+      followCheckerTab = -1;
+   }
+});
+
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
    else if (request.greeting == "close-options") {
-      chrome.windows.getAll({populate: true},
-                            function (windows) {
-         var i,j;
-         for (i=0; i<windows.length; i++) {
-            for (j=0; j<windows[i].tabs.length; j++) {
-               if (windows[i].tabs[j].url ==
-                   chrome.extension.getURL('options.html') &&
-                   windows[i].tabs[j].id != sender.tab.id) {
-                  chrome.tabs.remove(windows[i].tabs[j].id);
-               }
-            }
-         }
+      closeTab(chrome.extension.getURL('options.html'), sender.tab.id);
+   }
+   else if (request.greeting == "close-followChecker") {
+      closeTab(chrome.extension.getURL('followChecker/followChecker.html'));
+   }
+   else if (request.greeting == "followChecker") {
+      followYou = request.followYou;
+      youFollow = request.youFollow;
+      formKey = request.formKey;
+      closeTab(chrome.extension.getURL('followChecker/followChecker.html'));
+      chrome.tabs.create({windowId: sender.tab.windowId,
+                           index: (sender.tab.index+1),
+                           url: chrome.extension.getURL('followChecker/followChecker.html')},
+                         function(newtab) {
+         followCheckerTab = newtab.id;
       });
+   }
+   else if (request.greeting == "followChecker_fill") {
+      if (sender.tab.id == followCheckerTab &&
+          formKey) {
+         sendResponse({success:true, formKey: formKey,
+                       followYou: followYou, youFollow: youFollow});
+      }
+      else {
+         sendResponse({success:false});
+      }
+   }
+   else if (request.greeting == "unfollow") {
+      var idx = $.inArray(request.tumblrId + ';' + request.tumblrURL, youFollow);
+      if (idx != -1) {
+         youFollow.splice(idx,1);
+      }
+   }
+   else if (request.greeting == "follow") {
+      var idx = $.inArray(request.tumblrId + ';' + request.tumblrURL, followYou);
+      if (idx != -1) {
+         followYou.splice(idx,1);
+      }
    }
    else if (request.greeting == "magnifier") {
       requestMagnifier(request, sender, sendResponse, tabs[sender.tab.id]);
@@ -656,6 +709,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",10);
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
+            settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
@@ -773,6 +827,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/wrapTags.css"});
             if (getStorage("MissingE_dashboardFixes_postLinks",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/postLinks.css"});
+            if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});
          }
          else
             activeScripts.dashboardFixes = false;

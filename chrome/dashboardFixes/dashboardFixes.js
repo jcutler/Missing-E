@@ -278,6 +278,11 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
       e.preventDefault();
    });
 
+   if (dashboardFixes_settings.widescreen === 1) {
+      var w = $('#content').width() - $('#right_column').width() - 20;
+      $('#left_column').css('width', w+'px');
+   }
+
    if (dashboardFixes_settings.postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
        $('#new_post').length === 0) {
