@@ -252,6 +252,10 @@ function loadSettings() {
             frm.MissingE_dashboardFixes_reblogReplies.checked = true;
          else
             frm.MissingE_dashboardFixes_reblogReplies.checked = false;
+         if (getStorage('MissingE_dashboardFixes_widescreen', 0) == 1)
+            frm.MissingE_dashboardFixes_widescreen.checked = true;
+         else
+            frm.MissingE_dashboardFixes_widescreen.checked = false;
       }
       else if (v == "betterReblogs") {
          if (getStorage('MissingE_betterReblogs_passTags',1) == 1)

@@ -620,6 +620,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_timeoutLength = getStorage("extensions.MissingE.dashboardFixes.timeoutLength",defaultTimeout);
       settings.MissingE_dashboardFixes_postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
       settings.MissingE_dashboardFixes_reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
+      settings.MissingE_dashboardFixes_widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
       settings.MissingE_magnifier_retries = getStorage("extensions.MissingE.magnifier.retries",defaultRetries);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("extensions.MissingE.dashLinksToTabs.sidebar",0);
@@ -668,6 +669,7 @@ function handleMessage(message, myWorker) {
             settings.timeoutLength = getStorage("extensions.MissingE.dashboardFixes.timeoutLength",defaultTimeout);
             settings.postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
             settings.reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
+            settings.widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);

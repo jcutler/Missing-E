@@ -182,7 +182,8 @@ function settings_startup(message) {
                                         message.timeoutAJAX,
                                         message.timeoutLength,
                                         message.postLinks,
-                                        message.reblogReplies);
+                                        message.reblogReplies,
+                                        message.widescreen);
    }
    else if (message.component === "betterReblogs") {
       if (message.subcomponent === "dash") {

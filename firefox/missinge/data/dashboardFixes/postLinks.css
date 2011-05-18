@@ -43,8 +43,8 @@ color:#79A0C4;
 text-shadow:#313F4E 1px 1px 1px;
 font-size:15px;
 opacity:1;
-width:auto;
-display:inline;
+display:inline-block;
+min-width:80%;
 float:none;
 }
 

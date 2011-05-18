@@ -271,7 +271,7 @@ function MissingE_dashboardFixes_doStartup(extensionURL, experimental,
                                            reblogQuoteFit, wrapTags,
                                            replaceIcons, timeoutAJAX,
                                            timeoutLength, postLinks,
-                                           reblogReplies) {
+                                           reblogReplies, widescreen) {
    document.addEventListener('DOMNodeInserted', function(e) {
       var node = jQuery(e.target);
       if (e.target.tagName === 'LI' && node.hasClass('post')) {
@@ -306,6 +306,16 @@ function MissingE_dashboardFixes_doStartup(extensionURL, experimental,
    head = document.getElementsByTagName("head")[0];
    if (data !== '') {
       head.appendChild(css);
+   }
+   if (widescreen === 1) {
+      var style = document.createElement("link");
+      style.setAttribute('rel','stylesheet');
+      style.setAttribute('type','text/css');
+      style.href = extensionURL + "dashboardFixes/widescreen.css";
+      head.appendChild(style);
+      var w = jQuery('#right_column').width() + 20;
+      jQuery('#left_column').css('margin-right', w+'px');
+      jQuery('#right_column').css('margin-left', '-'+w+'px');
    }
    if (postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
