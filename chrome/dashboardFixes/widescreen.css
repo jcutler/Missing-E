@@ -29,6 +29,11 @@ min-width:900px;
 #left_column {
 margin-right:300px;
 width:auto !important;
+float:none !important;
+}
+
+#left_column div.clear {
+clear:left !important;
 }
 
 #right_column {

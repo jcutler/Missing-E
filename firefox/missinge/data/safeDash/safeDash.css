@@ -52,6 +52,7 @@ visibility:visible !important;
 
 .nsfwembed {
 clear:both;
+display:inline-block;
 }
 
 .nsfwdiv img.album_art, .nsfwdiv img.image_thumbnail {
