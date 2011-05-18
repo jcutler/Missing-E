@@ -358,7 +358,7 @@ function doFWGet(followers, followees, show, retries) {
 
 function followChecker_newTab() {
    var form_key = $('#form_key').val();
-   if (form_key && followyou.length > 0 && youfollow.length > 0) {
+   if (form_key && (followyou.length > 0 || youfollow.length > 0)) {
       chrome.extension.sendRequest({greeting: "followChecker",
                                     formKey: form_key,
                                     followYou: followyou,
@@ -382,7 +382,8 @@ function tfc_init(retries) {
                     chrome.extension.getURL('missinge64.png') + '" /></div>');
 
    var fl = $('#right_column').find('a[href$="/followers"]');
-   $('#facebox .MissingE_followChecker_newTab').live('click', followChecker_newTab);
+   $('#facebox .MissingE_followChecker_newTab').live('click',
+                                                     followChecker_newTab);
    var uf = $("#MissingE_unfollowdelta");
    var notintxt = '<a id="MissingE_followwhonotin" title="Follow Checker" ' +
                   'class="tracked_tag_control" onclick="return false;" ' +
