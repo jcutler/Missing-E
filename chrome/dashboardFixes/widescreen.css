@@ -23,6 +23,16 @@
 
 #container {
 width:auto !important;
+min-width:900px;
+}
+
+#left_column {
+margin-right:300px;
+width:auto !important;
+}
+
+#right_column {
+margin-left:-300px;
 }
 
 li.new_post {

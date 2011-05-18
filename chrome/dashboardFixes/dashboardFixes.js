@@ -279,8 +279,9 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
    });
 
    if (dashboardFixes_settings.widescreen === 1) {
-      var w = $('#content').width() - $('#right_column').width() - 20;
-      $('#left_column').css('width', w+'px');
+      var w = $('#right_column').width() + 20;
+      $('#left_column').css('margin-right', w+'px');
+      $('#right_column').css('margin-left', '-'+w+'px');
    }
 
    if (dashboardFixes_settings.postLinks === 1 &&
