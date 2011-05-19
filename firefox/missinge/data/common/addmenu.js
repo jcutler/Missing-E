@@ -59,9 +59,9 @@ function getPageWidth() {
    return windowWidth;
 }
 
-postMessage({greeting:"addMenu"});
+self.postMessage({greeting:"addMenu"});
 
-on("message", function (message) {
+self.on("message", function (message) {
    if (message.greeting !== "addMenu") { return false; }
 
    if (/http:\/\/www\.tumblr\.com\/dashboard\/[0-9]/.test(location.href)) {
