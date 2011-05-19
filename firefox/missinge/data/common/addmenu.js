@@ -97,7 +97,7 @@ on("message", function (message) {
                       'vertical-align:bottom;" /></a>');
       setlnk.mouseup(function(e) {
          if (e.which === 1 || e.which === 2) {
-            postMessage({greeting: "open", url: "OPTIONS",
+            self.postMessage({greeting: "open", url: "OPTIONS",
                          width: getPageWidth(), height: getPageHeight()});
          }
       }).insertBefore(accmenu.find('a:last'));

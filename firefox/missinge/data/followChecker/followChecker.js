@@ -28,6 +28,8 @@ var followeetext;
 var followerdone;
 var followeedone;
 var failed = false;
+var youfollow = [];
+var followyou = [];
 
 // Adapted from getPageSize() by quirksmode.com
 function getPageHeight() {
@@ -48,8 +50,8 @@ function getPageHeight() {
 }
 
 function doFWFinish(followers, followees, show) {
-   var youfollow = [];
-   var followyou = [];
+   youfollow = [];
+   followyou = [];
    var yentry, fentry, yklass, fklass, klass, i;
    if (!show) { return true; }
 
@@ -122,10 +124,14 @@ function doFWFinish(followers, followees, show) {
    txt += '</tr></tbody></table>';
    jQuery('#MissingE_followwhodisplay .followwholist').html(txt);
 
-   followyou = [];
-   youfollow = [];
    if (jQuery('#facebox').css('display') === 'block') {
+      jQuery(document).one('close.facebox', function() {
+         followyou = [];
+         youfollow = [];
+      });
       jQuery.facebox({ div: '#MissingE_followwhodisplay' }, 'followwhobox');
+      jQuery('#facebox a.MissingE_followChecker_newTab')
+            .css('display','inline');
    }
    jQuery('#MissingE_followwhodisplay .followwholist').empty();
 }
@@ -158,9 +164,16 @@ function doFWDisplay(followerstart,followeestart,show) {
             continue;
          }
          for (j=0; j<raw.length; j++) {
-            followernames
-               .push(raw[j].match(/>([0-9A-Za-z\-\_]*)<\/a>/)[1] + ';' +
-                     raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1]);
+            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]*)<\/a>/)[1];
+            var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
+            var avre = new RegExp('a href="' + fentryurl +
+                                  '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
+            var imgm = avre.exec(followertext[i]);
+            var fentryava = '';
+            if (imgm && imgm.length > 1) {
+               fentryava = imgm[imgm.length-1];
+            }
+            followernames.push(fentryname + ';' + fentryurl + ';' + fentryava);
          }
       }
       followertext = [];
@@ -179,9 +192,16 @@ function doFWDisplay(followerstart,followeestart,show) {
             continue;
          }
          for (j=0; j<raw.length; j++) {
-            followeenames
-               .push(raw[j].match(/>([0-9A-Za-z\-\_]*)<\/a>/)[1] + ';' +
-                     raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1]);
+            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]+)<\/a>/)[1];
+            var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
+            var avre = new RegExp('a href="' + fentryurl +
+                                  '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
+            var imgm = avre.exec(followeetext[i]);
+            var fentryava = '';
+            if (imgm && imgm.length > 1) {
+               fentryava = imgm[imgm.length-1];
+            }
+            followeenames.push(fentryname + ';' + fentryurl + ';' + fentryava);
          }
       }
       followeetext = [];
@@ -191,7 +211,6 @@ function doFWDisplay(followerstart,followeestart,show) {
             followeenames.splice(i+1,1);
          }
       }
-
       doFWFinish(followernames, followeenames,show);
    }
    else {
@@ -355,18 +374,34 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
    doFWDisplay(0,0,show);
 }
 
+function followChecker_newTab() {
+   var form_key = jQuery('#form_key').val();
+   if (form_key && (followyou.length > 0 || youfollow.length > 0)) {
+      self.postMessage({greeting:"followChecker",
+                   formKey: form_key,
+                   followYou: followyou,
+                   youFollow: youfollow});
+   }
+}
+
 function tfc_init(extensionURL, retries) {
    jQuery("body").append('<div id="MissingE_followwhodisplay" style="display:none;">' +
                     '<div style="' +
                     'font:bold 24px Georgia,serif;color:#1f354c;">' +
-                    'follow checker</div><div class="followwholist" ' +
+                    'follow checker <a class="MissingE_followChecker_newTab"' +
+                    ' href="#" onclick="return false;" ' +
+                    'title="View in new tab"><img src="' +
+                    extensionURL + 'followChecker/ext.gif' +
+                    '" alt="View in new tab" /></a></div>' +
+                    '<div class="followwholist" ' +
                     'style="height:' + ((getPageHeight()/10)*7) +
                     'px;overflow-y:auto;text-align:center;margin-top:10px;">' +
                     '</div><img class="logo" src="' +
                     extensionURL + 'missinge64.png' + '" /></div>');
 
    var fl = jQuery('#right_column').find('a[href$="/followers"]');
-
+   jQuery('#facebox .MissingE_followChecker_newTab').live('click',
+                                                     followChecker_newTab);
    var uf = jQuery("#MissingE_unfollowdelta");
    var notintxt = '<a id="MissingE_followwhonotin" title="Follow Checker" ' +
                   'class="tracked_tag_control" onclick="return false;" ' +
@@ -379,6 +414,7 @@ function tfc_init(extensionURL, retries) {
       fl.parent().append(' ' + notintxt);
    }
    jQuery('#MissingE_followwhonotin').click(function() {
+      self.postMessage({greeting: "close-followChecker"});
       var followers = jQuery(this).parent().children("a:first").html()
                      .match(/([0-9][0-9,\.]*)/);
       var followees = jQuery('#dashboard_nav_following').children("a:first").html()

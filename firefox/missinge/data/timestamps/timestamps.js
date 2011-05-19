@@ -62,7 +62,7 @@ function loadTimestamp(item) {
          }
       }
       if (tid === undefined || tid === null || tid === "") { return; }
-      postMessage({greeting: "timestamp", pid: tid, url: addr});
+      self.postMessage({greeting: "timestamp", pid: tid, url: addr});
    }
 }
 
@@ -84,7 +84,7 @@ function receiveTimestamp(message) {
 }
 
 function MissingE_timestamps_doStartup() {
-   on("message", receiveTimestamp);
+   self.on("message", receiveTimestamp);
    if (!(/drafts$/.test(location.href)) &&
        !(/queue$/.test(location.href)) &&
        !(/messages$/.test(location.href)) &&

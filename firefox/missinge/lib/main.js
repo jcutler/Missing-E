@@ -46,10 +46,37 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
+var followCheckerTab = null;
+var formKey;
+var followYou = [];
+var youFollow = [];
+
+function clearFollowChecker() {
+   followYou = [];
+   youFollow = [];
+   formKey = null;
+   followCheckerTab = null;
+}
 
 cacheClear = timer.setInterval(function() {
+   var followCheckerClosed = true;
    cache = {};
    cacheElements = 0;
+   try {
+      if (followCheckerTab &&
+          followCheckerTab.url) {
+         followCheckerClosed = false;
+      }
+      else {
+         followCheckerClosed = true;
+      }
+   }
+   catch(e) {
+      followCheckerClosed = true;
+   }
+   if (followCheckerClosed) {
+      clearFollowChecker();
+   }
 }, fiveMinutes);
 clearQueues = timer.setInterval(function() {
    if (activeAjax == 0) {
@@ -94,12 +121,16 @@ function setStorage(key, val) {
    ps.set(key, val);
 }
 
-function openSettings() {
+function closeTab(url) {
    for each (var tab in tabs) {
-      if (tab.url === data.url("options.html")) {
+      if (tab.url === url) {
          tab.close();
       }
    }
+}
+
+function openSettings() {
+   closeTab(data.url("options.html"));
 
    tabs.open({
       url: data.url("options.html"),
@@ -576,6 +607,16 @@ function requestReblogDash(url, pid, count, myWorker) {
    }).get();
 }
 
+function inArray(entry, arr) {
+   var i;
+   for (i=0; i<arr.length; i++) {
+      if (arr[i] === entry) {
+         return i;
+      }
+   }
+   return -1;
+}
+
 function handleMessage(message, myWorker) {
    var i;
    if (message.greeting === "addMenu") {
@@ -587,6 +628,58 @@ function handleMessage(message, myWorker) {
       }
       else {
          openSettings();
+      }
+   }
+   else if (message.greeting == "close-followChecker") {
+      closeTab(data.url("followChecker/followChecker.html"));
+   }
+   else if (message.greeting == "followChecker") {
+      closeTab(data.url("followChecker/followChecker.html"));
+      followYou = message.followYou;
+      youFollow = message.youFollow;
+      formKey = message.formKey;
+      tabs.open({
+         url: data.url("followChecker/followChecker.html"),
+         onReady: function(tab) {
+            followCheckerTab = tab;
+            tab.attach({
+               contentScriptFile:[data.url("common/jquery-1.5.min.js"),
+                                  data.url("followChecker/followCheckerTab.js")
+                                 ],
+               onMessage: function(data) {
+                  handleMessage(data, this);
+               }
+            });
+         }
+      });
+   }
+   else if (message.greeting == "followChecker_fill") {
+      if (myWorker.tab == followCheckerTab &&
+          formKey) {
+         myWorker.postMessage({greeting: "followChecker_fill",
+                              success:true, formKey:formKey,
+                              followYou:followYou, youFollow:youFollow});
+      }
+      else {
+         console.log(myWorker.tab);
+         console.log(followCheckerTab);
+         console.log(formKey);
+         myWorker.postMessage({greeting: "followChecker_fill",
+                              success:false});
+      }
+   }
+   else if (message.greeting == "unfollow") {
+      var idx = inArray(message.tumblrId + ';' + message.tumblrURL + ';' +
+                        message.tumblrImg, youFollow);
+      if (idx != -1) {
+         youFollow.splice(idx,1);
+      }
+   }
+   else if (message.greeting == "follow") {
+      var idx = inArray(message.tumblrId + ';' + message.tumblrURL + ';' +
+                        message.tumblrImg, followYou);
+      if (idx != -1) {
+         followYou.splice(idx,1);
       }
    }
    else if (message.greeting == "reblogYourself") {

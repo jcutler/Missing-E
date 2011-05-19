@@ -438,7 +438,8 @@ function replyRepliesSettings(message) {
    tags_setValue(tags);
 
    if (newTab === 1) {
-      postMessage({greeting: "open", url: "http://www.tumblr.com/new/text"});
+      self.postMessage({greeting: "open",
+                        url: "http://www.tumblr.com/new/text"});
    }
    else {
       var url = "http://www.tumblr.com/new/text";
@@ -450,7 +451,7 @@ function replyRepliesSettings(message) {
 }
 
 function MissingE_replyReplies_doStartup(extensionURL) {
-   on("message", replyRepliesSettings);
+   self.on("message", replyRepliesSettings);
    jQuery('head').append('<style type="text/css">' +
                     '#posts .notification .notification_type_icon {' +
                     'background-image:url("' + extensionURL +
@@ -513,7 +514,7 @@ function MissingE_replyReplies_doStartup(extensionURL) {
          return;
       }
       jQuery(this).toggleClass("MissingE_rt",true);
-      postMessage({greeting: "settings", component: "replyReplies"});
+      self.postMessage({greeting: "settings", component: "replyReplies"});
    });
 }
 

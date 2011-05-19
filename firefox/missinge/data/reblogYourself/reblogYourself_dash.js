@@ -63,7 +63,7 @@ function addReblog(item) {
       }
       var addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
 
-      postMessage({greeting: "reblogYourself", pid: tid, url: addr});
+      self.postMessage({greeting: "reblogYourself", pid: tid, url: addr});
    }
 }
 
@@ -114,7 +114,7 @@ function receiveReblog(message) {
 }
 
 function MissingE_reblogYourself_dash_doStartup() {
-   on("message", receiveReblog);
+   self.on("message", receiveReblog);
    if (!(/drafts$/.test(location.href)) &&
        !(/queue$/.test(location.href)) &&
        !(/messages$/.test(location.href))) {

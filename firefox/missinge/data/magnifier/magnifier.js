@@ -96,7 +96,7 @@ function insertMagnifier(item) {
       else {
          ctrl.append(mi);
       }
-      postMessage({greeting: "magnifier", pid: tid, url: addr});
+      self.postMessage({greeting: "magnifier", pid: tid, url: addr});
    }
 }
 
@@ -135,7 +135,7 @@ function MissingE_magnifier_doStartup(extensionURL) {
        !(/queue$/.test(location.href)) &&
       !(/messages$/.test(location.href)) &&
       !(/submissions[^\/]*$/.test(location.href))) {
-      on("message", receiveMagnifier);
+      self.on("message", receiveMagnifier);
       jQuery('#facebox .turner_left,#facebox .turner_right')
          .live('click', function(e) {
 

@@ -48,7 +48,7 @@ function addTags(link) {
             .replace(/%2F/gi,"/");
    host = loc.match(/http:\/\/[^\/]*/)[0];
    pid = loc.match(/&pid=([0-9]*)/)[1];
-   postMessage({greeting:"tags", pid: pid, url: host});
+   self.postMessage({greeting:"tags", pid: pid, url: host});
 
    link.addEventListener('mousedown',function(e){
       if (e.which === 1 || e.which === 2) {
@@ -91,7 +91,7 @@ function receiveTags(message) {
 function MissingE_betterReblogs_post_doStartup(frameURL) {
    if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) &&
        location.href === frameURL) {
-      on("message", receiveTags);
+      self.on("message", receiveTags);
       if (!addTags()) {
          document.addEventListener('DOMNodeInserted',function(e){
             var item = e.target;

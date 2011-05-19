@@ -40,7 +40,7 @@ if ((window.top === window &&
    var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/
                .test(location.href) ||
             /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
-   postMessage({greeting: "start", isFrame: fr, url: location.href,
+   self.postMessage({greeting: "start", isFrame: fr, url: location.href,
                                              bodyId: document.body.id});
 }
 
@@ -84,7 +84,7 @@ function doStartup(message) {
          MissingE_bookmarker_doStartup(message.extensionURL);
       }
       if (message.dashLinksToTabs) {
-         postMessage({greeting: "settings", component: "dashLinksToTabs"});
+         self.postMessage({greeting: "settings", component: "dashLinksToTabs"});
       }
       if (message.postCrushes) {
          if (message.postCrushes_fill) {
@@ -96,11 +96,11 @@ function doStartup(message) {
       }
       if (message.betterReblogs) {
          if (message.betterReblogs_fill) {
-            postMessage({greeting: "settings", component: "betterReblogs",
+            self.postMessage({greeting: "settings", component: "betterReblogs",
                subcomponent: "fill"});
          }
          else {
-            postMessage({greeting: "settings", component: "betterReblogs",
+            self.postMessage({greeting: "settings", component: "betterReblogs",
                subcomponent: "dash"});
          }
       }
@@ -113,16 +113,16 @@ function doStartup(message) {
          }
       }
       if (message.followChecker) {
-         postMessage({greeting: "settings", component: "followChecker"});
+         self.postMessage({greeting: "settings", component: "followChecker"});
       }
       if (message.unfollower) {
-         postMessage({greeting: "settings", component: "unfollower"});
+         self.postMessage({greeting: "settings", component: "unfollower"});
       }
       if (message.postingFixes) {
-         postMessage({greeting: "settings", component: "postingFixes"});
+         self.postMessage({greeting: "settings", component: "postingFixes"});
       }
       if (message.dashboardFixes) {
-         postMessage({greeting: "settings", component: "dashboardFixes"});
+         self.postMessage({greeting: "settings", component: "dashboardFixes"});
       }
       if (message.reblogYourself) {
          MissingE_reblogYourself_dash_doStartup();
@@ -199,7 +199,7 @@ function settings_startup(message) {
    }
 }
 
-on('message', function onMessage(message) {
+self.on('message', function onMessage(message) {
    if (message.greeting === "startup") {
       doStartup(message);
    }

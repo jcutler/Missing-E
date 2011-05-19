@@ -27,8 +27,8 @@ function MissingE_postCrushes_fill_doStartup(extensionURL) {
    var url = window.localStorage.getItem("tcp_crushURL");
    if (document.body.id === 'dashboard_edit_post' &&
        url !== undefined && url !== null && url !== "") {
-      on('message', postCrushesFillSettings, false);
-      postMessage({greeting:"settings", component: "postCrushes_fill"});
+      self.on('message', postCrushesFillSettings, false);
+      self.postMessage({greeting:"settings", component: "postCrushes_fill"});
    }
 }
 

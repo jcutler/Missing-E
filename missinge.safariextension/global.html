@@ -62,6 +62,13 @@ var formKey;
 var followYou = [];
 var youFollow = [];
 
+function clearFollowChecker() {
+   followYou = [];
+   youFollow = [];
+   formKey = null;
+   followCheckerTab = null;
+}
+
 function getStorage(key, defVal) {
    var retval = safari.extension.settings[key];
    if (retval === undefined || retval === null || retval === "") {
@@ -85,10 +92,7 @@ cacheClear = setInterval(function() {
    cache = {};
    cacheElements = 0;
    if (followCheckerTab && !followCheckerTab.page) {
-      followYou = [];
-      youFollow = [];
-      formKey = null;
-      followCheckerTab = null;
+      clearFollowChecker();
    }
 }, fiveMinutes);
 clearQueues = setInterval(function() {
@@ -674,13 +678,6 @@ function closeTab(url, currentTab) {
          }
       }
    }
-}
-
-function clearFollowChecker() {
-   followYou = [];
-   youFollow = [];
-   formKey = null;
-   followCheckerTab = null;
 }
 
 safari.application.addEventListener("command", performCommand, false);
