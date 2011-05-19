@@ -985,6 +985,30 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
 });
 
+function getVersion() {
+   var xhr = new XMLHttpRequest();
+   xhr.open('GET', chrome.extension.getURL('manifest.json'), false);
+   xhr.send(null);
+   var manifest = JSON.parse(xhr.responseText);
+   return manifest.version;
+}
+
+function onStart(currVersion, prevVersion) {
+   if (prevVersion && prevVersion !== currVersion) {
+      console.log("Updated Missing e (" +
+                  prevVersion + " => " + currVersion +
+                  ")");
+   }
+   else if (!prevVersion) {
+      console.log("Installed Missing e " + currVersion);
+   }
+   setStorage('MissingE_version',currVersion);
+}
+
+var currVersion = getVersion();
+var prevVersion = getStorage('MissingE_version',null);
+onStart(currVersion, prevVersion);
+
 var fivedays = 432000000;
 var now = (new Date()).valueOf();
 if (now >= parseInt(getStorage("MissingE_compatCheck",0)) + fivedays) {

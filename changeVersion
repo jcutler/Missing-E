@@ -2,11 +2,14 @@
 
 WDIR=`dirname $0`
 FF=$WDIR/firefox/missinge/package.json
+FFpt=$WDIR/firefox/missinge/data/version
 CH=$WDIR/chrome/manifest.json
 SF=$WDIR/missinge.safariextension/Info.plist
+SFst=$WDIR/missinge.safariextension/Settings.plist
 
 sed -e 's/"version": "[^"]*"/"version": "'$1'"/' $FF > $FF.new
 mv $FF.new $FF
+echo $1 > $FFpt
 
 sed -e 's/"version":     "[^"]*"/"version":     "'$1'"/' $CH > $CH.new
 mv $CH.new $CH
@@ -20,4 +23,5 @@ N
 s/CFBundleVersion<\/key>\n\t<string>[^<]*/CFBundleVersion<\/key>\n\t<string>'$2'/
 }' $SF.new > $SF
 rm $SF.new
+sed -e 's/<string>MISSINGEVERSION<\/string>/<string>'$1'<\/string>/' $SFst.template > $SFst
 

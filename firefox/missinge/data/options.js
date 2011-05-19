@@ -172,6 +172,7 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
 
 function loadSettings() {
    jQuery('span.defRetries').text(defaultRetries);
+   jQuery('#versionnum').text(getStorage('MissingE_version',''));
    var exp = document.getElementById("experimentalFeatures_options").active;
    if (getStorage('MissingE_experimentalFeatures_enabled', 0) == 1) {
       exp.checked = true;

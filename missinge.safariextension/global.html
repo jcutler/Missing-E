@@ -794,6 +794,7 @@ function handleRequest(request) {
       settings.MissingE_betterReblogs_quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("MissingE_betterReblogs_quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'');
+      settings.MissingE_version = getStorage("MissingE_version",'');
       request.target.page.dispatchMessage("all-settings",settings);
    }
    else if (request.name == "settings") {
@@ -1041,6 +1042,26 @@ function handleRequest(request) {
       request.target.page.dispatchMessage("startup",activeScripts);
    }
 }
+
+function getVersion() {
+   return getStorage("MissingE_version",'');
+}
+
+function onStart(currVersion, prevVersion) {
+   if (prevVersion && prevVersion !== currVersion) {
+      console.log("Updated Missing e (" +
+                  prevVersion + " => " + currVersion +
+                  ")");
+   }
+   else if (!prevVersion) {
+      console.log("Installed Missing e " + currVersion);
+   }
+   setStorage('MissingE_installedVersion',currVersion);
+}
+
+var currVersion = getVersion();
+var prevVersion = getStorage('MissingE_installedVersion',null);
+onStart(currVersion, prevVersion);
 
 </script>
 </head>
