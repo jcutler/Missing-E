@@ -7,9 +7,9 @@ Backport to userscripts? Not really interested
 
 FF
 - use tab property of worker to add scripts instead of calling like safari?
-- https://jetpack.mozillalabs.com/sdk/1.0b4/docs/packages/addon-kit/docs/page-mod.html
 
-scrolling back from page 1000 until no more posts, then auto loads real page 999
+Widescreen Issues
+- http://gyazo.com/9f0e3543b65ba5cc7b6866500304a653.png also there's a slight cosmetic issue on ask posts
+- http://gyazo.com/d35c10d2ee6607ca23f48ef9db0a192d.png some white space tends to pop up when loading notes
 
-filtering/hiding posts, users?
-Tumblr Saviour: https://chrome.google.com/extensions/detail/oefddkjnflmjbclpnnoegglmmdfkidip
+Askbox on dash? http://userscripts.org/scripts/show/100607
