@@ -30,6 +30,7 @@ var followeedone;
 var failed = false;
 var youfollow = [];
 var followyou = [];
+var formKey;
 
 function doFWFinish(followers, followees, show) {
    youfollow = [];
@@ -139,6 +140,13 @@ function doFWDisplay(followerstart,followeestart,show) {
       followeedone = [];
       var followernames = [];
       for (i=0; i<followertext.length; i++) {
+         if (show && !formKey) {
+            var fkm = followertext[i]
+                        .match(/onclick="follow\(\s*'([^']*)',/);
+            if (fkm && fkm.length > 1) {
+               formKey = fkm[1];
+            }
+         }
          raw = followertext[i]
                      .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]*<\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
@@ -167,6 +175,13 @@ function doFWDisplay(followerstart,followeestart,show) {
 
       var followeenames = [];
       for (i=0; i<followeetext.length; i++) {
+         if (show && !formKey) {
+            var fkm = followeetext[i]
+                        .match(/onclick="follow\(\s*'([^']*)',/);
+            if (fkm && fkm.length > 1) {
+               formKey = fkm[1];
+            }
+         }
          raw = followeetext[i]
                      .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]*<\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
@@ -206,6 +221,7 @@ function doFWGet(followers, followees, show, retries) {
    failed = false;
 
    if (show) {
+      formKey = null;
       $('#MissingE_followwhodisplay .followwholist')
          .html('<p><img src="' +
                chrome.extension.getURL('facebox/loading.gif') + '" /></p>');
@@ -357,10 +373,12 @@ function doFWGet(followers, followees, show, retries) {
 }
 
 function followChecker_newTab() {
-   var form_key = $('#form_key').val();
-   if (form_key && (followyou.length > 0 || youfollow.length > 0)) {
+   if (!formKey) {
+      formKey = $('#form_key').val();
+   }
+   if (formKey && (followyou.length > 0 || youfollow.length > 0)) {
       chrome.extension.sendRequest({greeting: "followChecker",
-                                    formKey: form_key,
+                                    formKey: formKey,
                                     followYou: followyou,
                                     youFollow: youfollow});
    }
