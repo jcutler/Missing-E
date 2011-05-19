@@ -392,7 +392,7 @@ function tfc_init(retries) {
                     ' href="#" onclick="return false;" ' +
                     'title="View in new tab"><img src="' +
                     chrome.extension.getURL('followChecker/ext.gif') +
-                    '" alt="View in new tab" /></a></div>' +
+                    '" alt="View in new tab" /> New Tab</a></div>' +
                     '<div class="followwholist" ' +
                     'style="height:' + ((getPageHeight()/10)*7) +
                     'px;overflow-y:auto;text-align:center;margin-top:10px;">' +
