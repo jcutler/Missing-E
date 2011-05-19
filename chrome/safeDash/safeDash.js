@@ -79,8 +79,8 @@ else {
 var sdlnk = '<li><a id="nsfwctrl" href="#" onclick="return false;">' +
               '<span id="nsfwctrlicon" ' + extra +
               ' class="icon dashboard_controls_nsfw">' +
-              '</span>SafeDash <span id="nsfwctrltxt">' + onoff +
-              '</span></a></li>';
+              '</span>SafeDash (<span id="nsfwctrltxt">' + onoff +
+              '</span>)</a></li>';
 var custom = $('.dashboard_nav_item .dashboard_subpages a[href^="/customize"]');
 
 if (custom.length > 0) {
