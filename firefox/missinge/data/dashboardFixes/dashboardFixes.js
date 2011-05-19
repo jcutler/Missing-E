@@ -267,6 +267,18 @@ function doIcons(item) {
    });
 }
 
+function realignReplyNipple(nip) {
+   if (jQuery(nip).attr('in_final_position') !== 'true') {
+      setTimeout(function() {
+         realignReplyNipple(nip);
+      }, 500);
+      return false;
+   }
+   var right = jQuery(nip).offsetParent().innerWidth() -
+               jQuery(nip).position().left - jQuery(nip).width();
+   jQuery(nip).css({left:'auto', right:right+'px'});
+}
+
 function MissingE_dashboardFixes_doStartup(extensionURL, experimental,
                                            reblogQuoteFit, wrapTags,
                                            replaceIcons, timeoutAJAX,
@@ -320,6 +332,12 @@ function MissingE_dashboardFixes_doStartup(extensionURL, experimental,
                          (w+40) + 'px; }</style>');
       jQuery('#content').css('padding-right', (w+20) + 'px');
       jQuery('#right_column').css('margin-right', '-'+w+'px');
+      document.addEventListener('DOMNodeInserted', function(e) {
+         jQuery(e.target).children('div.reply_pane:first')
+               .each(function() {
+            realignReplyNipple(jQuery(this).find('div.nipple'));
+         });
+      }, false);
    }
    if (postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&

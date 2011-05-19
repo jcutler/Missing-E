@@ -74,6 +74,19 @@ float:none !important;
 width:auto !important;
 }
 
-textarea.reply_text {
-width:90% !important;
+#dashboard_submissions #posts form, #posts div.reply_pane form {
+display:block !important;
+padding-right:16px !important;
+}
+
+#dashboard_submissions #posts form > *, #posts div.reply_pane form > * {
+margin-right:-16px;
+}
+
+#dashboard_submissions #posts textarea.text_field, #posts div.reply_pane textarea.reply_text {
+width:100% !important;
+}
+
+#posts div.reply_pane div.nipple {
+margin-right:0 !important;
 }

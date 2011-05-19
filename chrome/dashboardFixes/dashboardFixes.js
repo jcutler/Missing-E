@@ -261,6 +261,18 @@ function doIcons(item) {
    });
 }
 
+function realignReplyNipple(nip) {
+   if ($(nip).attr('in_final_position') !== 'true') {
+      setTimeout(function() {
+         realignReplyNipple(nip);
+      }, 500);
+      return false;
+   }
+   var right = $(nip).offsetParent().innerWidth() -
+               $(nip).position().left - $(nip).width();
+   $(nip).css({left:'auto', right:right+'px'});
+}
+
 chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
                              function(response) {
    var dashboardFixes_settings = JSON.parse(response);
@@ -286,6 +298,12 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
                          (w+40) + 'px; }</style>');
       $('#content').css('padding-right', (w+20) + 'px');
       $('#right_column').css('margin-right', '-'+w+'px');
+      document.addEventListener('DOMNodeInserted', function(e) {
+         $(e.target).children('div.reply_pane:first')
+               .each(function() {
+            realignReplyNipple($(this).find('div.nipple'));
+         });
+      }, false);
    }
 
    if (dashboardFixes_settings.postLinks === 1 &&
