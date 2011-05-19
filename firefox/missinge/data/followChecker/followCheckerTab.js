@@ -104,7 +104,7 @@ function fill(message) {
                'id="unfollow_button_' + entry[0] +
                '" onclick="return false;"><img src="' +
                'http://assets.tumblr.com/images/iframe_unfollow_alpha.png" ' +
-               'alt="Follow" /></a><img class="loading" src="loading.gif" ' +
+               'alt="Unfollow" /></a><img class="loading" src="loading.gif" ' +
                'id="unfollow_loading_' + entry[0] + '" /></div></div>';
       }
       jQuery('#followees .section').html(txt);

@@ -134,10 +134,18 @@ text-decoration:none;
 font-style:italic;
 }
 </style>
+<script type="text/javascript">
+function preload() {
+   var follow = new Image();
+   var unfollow = new Image();
+   follow.src = 'http://assets.tumblr.com/images/iframe_follow.png';
+   unfollow.src = 'http://assets.tumblr.com/images/iframe_unfollow_alpha.png';
+}
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Missing e - Follow Checker</title>
 </head>
-<body>
+<body onload="preload();">
 <div id="title">follow checker</div>
 <div id="error"><h1>There was a problem building your <em>Follow Checker</em> lists.</h1><h2>Please try again.</h2><h4><a href="#" onclick="window.close();">[Close]</a></h4></div>
 <div id="container">

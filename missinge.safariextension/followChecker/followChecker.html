@@ -136,6 +136,13 @@ font-style:italic;
 </style>
 <script type="text/javascript" src="../common/jquery-1.5.min.js"></script>
 <script type="text/javascript">
+function preload() {
+   var follow = new Image();
+   var unfollow = new Image();
+   follow.src = 'http://assets.tumblr.com/images/iframe_follow.png';
+   unfollow.src = 'http://assets.tumblr.com/images/iframe_unfollow_alpha.png';
+}
+
 function fill(response) {
    if (response.name !== "followChecker_fill") {
       return false;
@@ -219,7 +226,7 @@ function fill(response) {
                'id="unfollow_button_' + entry[0] +
                '" onclick="return false;"><img src="' +
                'http://assets.tumblr.com/images/iframe_unfollow_alpha.png" ' +
-               'alt="Follow" /></a><img class="loading" src="loading.gif" ' +
+               'alt="Unfollow" /></a><img class="loading" src="loading.gif" ' +
                'id="unfollow_loading_' + entry[0] + '" /></div></div>';
       }
       $('#followees .section').html(txt);
@@ -238,7 +245,7 @@ safari.self.addEventListener("message", fill, false);
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Missing e - Follow Checker</title>
 </head>
-<body>
+<body onload="preload();">
 <div id="title">follow checker</div>
 <div id="error"><h1>There was a problem building your <em>Follow Checker</em> lists.</h1><h2>Please try again.</h2><h4><a href="#" onclick="window.close();">[Close]</a></h4></div>
 <div id="container">
