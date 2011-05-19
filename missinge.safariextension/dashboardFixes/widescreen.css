@@ -47,3 +47,8 @@ width:540px;
 li.short_new_post {
 width:auto;
 }
+
+#content .tag_page_header {
+width:100% !important;
+padding-right:40px;
+}
