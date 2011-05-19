@@ -40,7 +40,7 @@ clear:left !important;
 margin-left:-300px;
 }
 
-li.new_post {
+li.new_post, li.rescued_post {
 width:540px;
 }
 
