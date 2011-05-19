@@ -52,3 +52,25 @@ width:auto;
 width:100% !important;
 padding-right:40px;
 }
+
+li.post ol.notes li {
+background-position:100% 10px !important;
+border-right:10px solid transparent;
+padding-right:55px !important;
+}
+
+li.post ol.notes li a.block {
+right:22px !important;
+}
+
+#posts ol.notes .notification_type_icon {
+margin-right:-10px !important;
+}
+
+#posts div.post_info + div {
+clear:left !important;
+}
+
+textarea.reply_text {
+width:90% !important;
+}
