@@ -27,7 +27,7 @@ min-width:900px;
 }
 
 #content {
-padding-right:255px;
+padding-right:255px !important;
 }
 
 #left_column {
