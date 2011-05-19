@@ -310,6 +310,7 @@ function replyRepliesSettings(response) {
             type = "question";
          }
          else if (ans.hasClass('like')) { anstype = "like"; }
+         else if (ans.hasClass('photo')) { anstype = "reply"; }
          newcode = newcode.replace(/<div class="clear"><\/div>/,'');
          qt = "";
          reblnk = "";
@@ -326,7 +327,7 @@ function replyRepliesSettings(response) {
             user = newcode.match(/<a href[^>]*>[a-zA-Z0-9\-_]*<\/a>/)[0];
          }
          z = newcode.indexOf('</span>',a) + 7;
-         a = newcode.indexOf('<blockquote>');
+         a = newcode.indexOf('<blockquote');
          if (a !== -1) {
             qt = newcode.substr(z);
          }
@@ -419,9 +420,14 @@ function replyRepliesSettings(response) {
          }
          newcode = newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
       }
-      newcode = newcode.replace(/white-space:nowrap;/g,'');
-      newcode = newcode.replace(/margin-right:5px;/g,'');
-      newcode = newcode.replace(/style=""/g,'');
+      newcode = newcode.replace(/style="\s*height:[^;]*;\s*/g,'style="')
+                       .replace(/style="\s*width:[^;]*;\s*/g,'style="')
+                       .replace(/style="\s*height:[^;]*;\s*/g,'style="')
+                       .replace(/style="\s*cursor:[^;]*;\s*/g,'style="')
+                       .replace(/onclick="[^"]*"/g,'')
+                       .replace(/white-space:nowrap;/g,'')
+                       .replace(/margin-right:5px;/g,'')
+                       .replace(/style="\s*"\s*/g,'');
       thecode.push('<p>' + newcode + '</p>');
    }
 
@@ -432,6 +438,7 @@ function replyRepliesSettings(response) {
                   .replace(/class="nsfwed"/g,'')
                   .replace(/class="nsfwed nsfwdone"/g,'')
                   .replace(/class="nsfwdone nsfwed"/g,'')
+                  .replace(/style="\s*"\s*/g,'')
                   .replace(/<\/?div[^>]*>/g,'');
    }
 
@@ -486,6 +493,7 @@ function MissingE_replyReplies_doStartup() {
          else if (item.hasClass('reblog')) { klass = "reblog"; }
          else if (item.hasClass('answer')) { klass = "answer"; }
          else if (item.hasClass('reply')) { klass = "reply"; }
+         else if (item.hasClass('photo')) { klass = "reply"; }
 
          if (klass === "" ||
              (klass === "reblog" && item.find('a.tumblelog').length === 0) ||

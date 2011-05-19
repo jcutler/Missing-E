@@ -8,8 +8,4 @@ Backport to userscripts? Not really interested
 FF
 - use tab property of worker to add scripts instead of calling like safari?
 
-Widescreen Issues
-- http://gyazo.com/9f0e3543b65ba5cc7b6866500304a653.png also there's a slight cosmetic issue on ask posts
-- http://gyazo.com/d35c10d2ee6607ca23f48ef9db0a192d.png some white space tends to pop up when loading notes
-
 Askbox on dash? http://userscripts.org/scripts/show/100607

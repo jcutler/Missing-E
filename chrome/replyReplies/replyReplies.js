@@ -166,6 +166,7 @@ document.addEventListener("DOMNodeInserted", function(e) {
       else if (item.hasClass('reblog')) { klass = "reblog"; }
       else if (item.hasClass('answer')) { klass = "answer"; }
       else if (item.hasClass('reply')) { klass = "reply"; }
+      else if (item.hasClass('photo')) { klass = "reply"; }
 
       if (klass === "" ||
           (klass === "reblog" && item.find('a.tumblelog').length === 0) ||
@@ -315,7 +316,6 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             }
             posttxt = posttxt.replace(/\s+/g,' ')
                         .replace(/^\s/,'').replace(/\s$/,'');
-
             if (posttxt.length > 50) {
                if (/\s/.test(posttxt.charAt(50))) {
                   posttxt = posttxt.substr(0,50);
@@ -359,6 +359,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                type = "question";
             }
             else if (ans.hasClass('like')) { anstype = "like"; }
+            else if (ans.hasClass('photo')) { anstype = "reply"; }
             newcode = newcode.replace(/<div class="clear"><\/div>/,'');
             qt = "";
             reblnk = "";
@@ -375,7 +376,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                user = newcode.match(/<a href[^>]*>[a-zA-Z0-9\-_]*<\/a>/)[0];
             }
             z = newcode.indexOf('</span>',a) + 7;
-            a = newcode.indexOf('<blockquote>');
+            a = newcode.indexOf('<blockquote');
             if (a !== -1) {
                qt = newcode.substr(z);
             }
@@ -468,9 +469,14 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             }
             newcode = newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
          }
-         newcode = newcode.replace(/white-space:nowrap;/g,'');
-         newcode = newcode.replace(/margin-right:5px;/g,'');
-         newcode = newcode.replace(/style=""/g,'');
+         newcode = newcode.replace(/style="\s*height:[^;]*;\s*/g,'style="')
+                          .replace(/style="\s*width:[^;]*;\s*/g,'style="')
+                          .replace(/style="\s*height:[^;]*;\s*/g,'style="')
+                          .replace(/style="\s*cursor:[^;]*;\s*/g,'style="')
+                          .replace(/onclick="[^"]*"/g,'')
+                          .replace(/white-space:nowrap;/g,'')
+                          .replace(/margin-right:5px;/g,'')
+                          .replace(/style="\s*"\s*/g,'');
          thecode.push('<p>' + newcode + '</p>');
       }
 
@@ -481,6 +487,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                      .replace(/class="nsfwed"/g,'')
                      .replace(/class="nsfwed nsfwdone"/g,'')
                      .replace(/class="nsfwdone nsfwed"/g,'')
+                     .replace(/style="\s*"\s*/g,'')
                      .replace(/<\/?div[^>]*>/g,'');
       }
 
