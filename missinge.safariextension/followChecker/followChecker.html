@@ -180,10 +180,16 @@ function fill(response) {
       var txt = '';
       for (i=0; i<response.message.followYou.length; i++) {
          var entry = response.message.followYou[i].split(';');
+         if (!entry[2] || entry[2] == '') {
+            entry[2] = 'http://assets.tumblr.com/images/default_avatar_30.gif';
+         }
+         else {
+            entry[2] = 'http://media.tumblr.com/avatar_' + entry[2];
+         }
          txt += '<div class="follower' + ((i%2==1) ? ' alt' : '') + '">' +
                '<a href="' + entry[1] + '" target="_blank">' +
                '<img class="avatar" alt="' + entry[0] + '" src="' +
-               'http://media.tumblr.com/avatar_' + entry[2] + '" />' +
+               entry[2] + '" />' +
                '</a><div class="name"><a href="' + entry[1] + '" ' +
                'target="_blank">' + entry[0] + '</a></div>' +
                '<div class="control"><a href="#" class="follow_button" ' +
@@ -197,10 +203,16 @@ function fill(response) {
       var txt = '';
       for (i=0; i<response.message.youFollow.length; i++) {
          var entry = response.message.youFollow[i].split(';');
+         if (!entry[2] || entry[2] == '') {
+            entry[2] = 'http://assets.tumblr.com/images/default_avatar_30.gif';
+         }
+         else {
+            entry[2] = 'http://media.tumblr.com/avatar_' + entry[2];
+         }
          txt += '<div class="followee' + ((i%2==1) ? '' : ' alt') + '">' +
                '<a href="' + entry[1] + '" target="_blank">' +
                '<img class="avatar" alt="' + entry[0] + '" src="' +
-               'http://media.tumblr.com/avatar_' + entry[2] + '" />' +
+               entry[2] + '" />' +
                '</a><div class="name"><a href="' + entry[1] + '" ' +
                'target="_blank">' + entry[0] + '</a></div>' +
                '<div class="control"><a href="#" class="unfollow_button" ' +
