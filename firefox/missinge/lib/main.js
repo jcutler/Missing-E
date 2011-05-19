@@ -820,6 +820,8 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(message.url)) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
              .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
          if (getStorage("extensions.MissingE.dashLinksToTabs.enabled",1) == 1) {

@@ -866,6 +866,8 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) &&
            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(request.message.url)) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
              .test(request.message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
