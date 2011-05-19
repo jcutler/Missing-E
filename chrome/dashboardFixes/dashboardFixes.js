@@ -280,8 +280,12 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
 
    if (dashboardFixes_settings.widescreen === 1) {
       var w = $('#right_column').width() + 20;
-      $('#left_column').css('margin-right', w+'px');
-      $('#right_column').css('margin-left', '-'+w+'px');
+      $('head').append('<style type="text/css">' +
+                       '#pagination { margin-right:-' + w + 'px; } ' +
+                       '#content .tag_page_header { padding-right:' +
+                         (w+40) + 'px; }</style>');
+      $('#content').css('padding-right', (w+20) + 'px');
+      $('#right_column').css('margin-right', '-'+w+'px');
    }
 
    if (dashboardFixes_settings.postLinks === 1 &&

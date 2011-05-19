@@ -314,8 +314,12 @@ function MissingE_dashboardFixes_doStartup(extensionURL, experimental,
       style.href = extensionURL + "dashboardFixes/widescreen.css";
       head.appendChild(style);
       var w = jQuery('#right_column').width() + 20;
-      jQuery('#left_column').css('margin-right', w+'px');
-      jQuery('#right_column').css('margin-left', '-'+w+'px');
+      jQuery('head').append('<style type="text/css">' +
+                       '#pagination { margin-right:-' + w + 'px; } ' +
+                       '#content .tag_page_header { padding-right:' +
+                         (w+40) + 'px; }</style>');
+      jQuery('#content').css('padding-right', (w+20) + 'px');
+      jQuery('#right_column').css('margin-right', '-'+w+'px');
    }
    if (postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&

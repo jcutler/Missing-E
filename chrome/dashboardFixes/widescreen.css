@@ -26,21 +26,23 @@ width:auto !important;
 min-width:900px;
 }
 
-#left_column {
-margin-right:300px;
-width:auto !important;
-float:none !important;
+#content {
+padding-right:255px;
 }
 
-#left_column div.clear {
-clear:left !important;
+#left_column {
+width:100% !important;
 }
 
 #right_column {
-margin-left:-300px;
+margin-right:-235px;
 }
 
-li.new_post, li.rescued_post {
+#pagination {
+margin-right:-235px;
+}
+
+li.new_post, #rescued_post {
 width:540px;
 }
 
@@ -50,7 +52,7 @@ width:auto;
 
 #content .tag_page_header {
 width:100% !important;
-padding-right:40px;
+padding-right:275px;
 }
 
 li.post ol.notes li {
@@ -67,8 +69,9 @@ right:22px !important;
 margin-right:-10px !important;
 }
 
-#posts div.post_info + div {
-clear:left !important;
+ol.notes span.action {
+float:none !important;
+width:auto !important;
 }
 
 textarea.reply_text {
