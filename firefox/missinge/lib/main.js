@@ -880,11 +880,10 @@ function handleMessage(message, myWorker) {
             activeScripts.askFixes = false;
       }
       if (!message.isFrame &&
-          ((message.bodyId == 'dashboard_edit_post' &&
-            (/http:\/\/www\.tumblr\.com\/new\//.test(message.url) ||
-             /http:\/\/www\.tumblr\.com\/tumblelog\/[0-9A-Za-z\-\_]+\/new\//.test(message.url) ||
-             /http:\/\/www\.tumblr\.com\/reblog\//.test(message.url) ||
-             /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(message.url))) ||
+          ((/http:\/\/www\.tumblr\.com\/new\//.test(message.url) ||
+            /http:\/\/www\.tumblr\.com\/tumblelog\/[0-9A-Za-z\-\_]+\/new\//.test(message.url) ||
+            /http:\/\/www\.tumblr\.com\/reblog\//.test(message.url) ||
+            /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(message.url)) ||
          (/http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(message.url) ||

@@ -399,7 +399,17 @@ function MissingE_betterReblogs_dash_doStartup(extensionURL, passTags,
             qr.find('#MissingE_quick_reblog_tags input').val(tagarr.join(', '));
             qr.find('div.user_menu_list').attr('id','list_for_' + postId);
          }
-         qr.find('#MissingE_quick_reblog_manual').attr('href',reblog.attr('href'));
+         var arg = '';
+         if (accountName !== '0') {
+            arg = '&channel_id=' + accountName;
+            if (!(/\?/.test(reblog.attr('href')))) {
+               arg = arg.replace(/&/,'?');
+            }
+         }
+         var newurl = reblog.attr('href').replace(/channel_id=[^&]*/,'')
+                           .replace(/\?&/,'?').replace(/&&/,'&')
+                           .replace(/[\?&]$/,'') + arg;
+         qr.find('#MissingE_quick_reblog_manual').attr('href', newurl);
          h = Math.round(pos.top+h);
          w = Math.round(pos.left-w);
          qr.css({'top':     h+'px',

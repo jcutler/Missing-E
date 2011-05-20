@@ -191,8 +191,8 @@ function doReblog(item,replaceIcons,accountName) {
    });
 }
 
-function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons,
-                                               accountName) {
+function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
+                                               replaceIcons, accountName) {
    var lang = $('html').attr('lang');
    if (passTags === 1) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
@@ -380,7 +380,17 @@ function MissingE_betterReblogs_dash_doStartup(passTags,quickReblog,replaceIcons
             qr.find('#MissingE_quick_reblog_twitter input').attr('checked', false);
             qr.find('div.user_menu_list').attr('id','list_for_' + postId);
          }
-         qr.find('#MissingE_quick_reblog_manual').attr('href',reblog.attr('href'));
+         var arg = '';
+         if (accountName !== '0') {
+            arg = '&channel_id=' + accountName;
+            if (!(/\?/.test(reblog.attr('href')))) {
+               arg = arg.replace(/&/,'?');
+            }
+         }
+         var newurl = reblog.attr('href').replace(/channel_id=[^&]*/,'')
+                           .replace(/\?&/,'?').replace(/&&/,'&')
+                           .replace(/[\?&]$/,'') + arg;
+         qr.find('#MissingE_quick_reblog_manual').attr('href', newurl);
          qr.css({'top':(pos.top+h)+'px !important',
                left:(pos.left-w)+'px !important',
                'display':'block'});

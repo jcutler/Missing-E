@@ -43,8 +43,6 @@ function getReblogTags() {
    }
 }
 
-
-
 chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                              function(response) {
    if (document.body.id !== 'dashboard_edit_post') {
