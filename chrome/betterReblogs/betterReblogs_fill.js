@@ -43,8 +43,21 @@ function getReblogTags() {
    }
 }
 
+
+
 chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                              function(response) {
+   if (document.body.id !== 'dashboard_edit_post') {
+      if (/[\?&]channel_id=/.test(location.href) &&
+          /Request denied/i.test($('#container').text())) {
+         var blog = location.href.match(/[\?&]channel_id=([^&]*)/)[1];
+         $('<p>You attempted to reblog using Tumblr username:<br /><strong>' +
+           blog + '</strong></p><p>This may not be a valid username!<br />' +
+           'Please check your <em>Missing e</em> settings.</p>')
+            .insertBefore('#container div.sorry p:last');
+      }
+      return false;
+   }
    var reblogTagsText = {
       reblog: {
          en: "Reblog Tags",
