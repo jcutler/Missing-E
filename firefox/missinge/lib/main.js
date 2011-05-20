@@ -30,6 +30,13 @@ var url = require("url");
 var data = require("self").data;
 var Request = require("request").Request;
 var timer = require("timer");
+var widget;
+
+require("unload").when(function(reason){
+   if (widget) {
+      widget.destroy();
+   }
+});
 
 var defaultTimeout = 15;
 var minTimeout = 5;
@@ -150,7 +157,7 @@ function openSettings() {
 }
 
 if (!getStorage("extensions.MissingE.hideWidget",false)) {
-   var widget = widgets.Widget({
+   widget = widgets.Widget({
       label: "Missing e",
       id: "missinge",
       tooltip: "Missing e Settings",
