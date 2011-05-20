@@ -14,6 +14,8 @@ cfx xpi
 
 mv missinge.xpi $BUILDDIR
 
+#Do editing of harness options to avoid file length issue
+
 "c:/Program Files/Mozilla Firefox/firefox.exe" "https://addons.mozilla.org/en-US/developers/addon/missing-e/versions/#version-upload"
 
 cd $CWD
