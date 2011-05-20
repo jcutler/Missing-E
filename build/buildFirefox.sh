@@ -40,6 +40,6 @@ cd $BUILDDIR
 
 rm -rf missinge
 
-#"c:/Program Files/Mozilla Firefox/firefox.exe" "https://addons.mozilla.org/en-US/developers/addon/missing-e/versions/#version-upload"
+"c:/Program Files/Mozilla Firefox/firefox.exe" "https://addons.mozilla.org/en-US/developers/addon/missing-e/versions/#version-upload"
 
 cd $CWD
