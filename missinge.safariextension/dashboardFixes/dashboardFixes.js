@@ -273,11 +273,48 @@ function realignReplyNipple(nip) {
    $(nip).css({left:'auto', right:right+'px'});
 }
 
+function addQueueArrows(item) {
+   if (item.tagName !== 'LI' ||
+       !$(item).hasClass('post') ||
+       !$(item).hasClass('queued')) {
+      return false;
+   }
+   var ctrl = $(item).find('div.post_controls');
+   if (ctrl.length !== 1) {
+      return false;
+   }
+   if (ctrl.children('a.MissingE_queuearrow_control').length > 0) {
+      return false;
+   }
+   var up = $('<a href="#" onclick="return false;" ' +
+     'class="MissingE_queuearrow_control ' +
+     'MissingE_queueup_control"></a>')
+         .insertAfter(ctrl.children('img:last')).click(function() {
+      var qpost = $(this).closest('li.queued');
+      if (qpost.length === 1) {
+         qpost.detach();
+         qpost.insertBefore('#posts li.queued:first');
+      }
+   });
+/**** Only implement up arrow for now
+   $('<a href="#" onclick="return false;" ' +
+                'class="MissingE_queuearrow_control ' +
+                'MissingE_queuedown_control"></a>')
+         .insertBefore(up).click(function() {
+      var qpost = $(this).closest('li.queued');
+      if (qpost.length === 1) {
+         qpost.detach();
+         qpost.insertAfter('#posts li.queued:last');
+      }
+   });
+****/
+}
+
 function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                                            wrapTags, replaceIcons,
                                            timeoutAJAX, timeoutLength,
                                            postLinks, reblogReplies,
-                                           widescreen) {
+                                           widescreen, queueArrows) {
    if (window.top !== window) { return false; }
 
    document.addEventListener('DOMNodeInserted', function(e) {
@@ -393,6 +430,57 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       }, false);
       $('#posts li.post').each(function() {
          doReplies(this);
+      });
+   }
+
+   if (queueArrows === 1 &&
+       (/http:\/\/www\.tumblr\.com\/queue/.test(location.href) ||
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/queue/
+            .test(location.href))) {
+      var queueStyle = document.createElement("link");
+      queueStyle.setAttribute('rel','stylesheet');
+      queueStyle.setAttribute('type','text/css');
+      queueStyle.href = safari.extension.baseURI +
+                           "dashboardFixes/queueArrows.css";
+      head.appendChild(queueStyle);
+      var queuearrs = safari.extension.baseURI +
+                        'dashboardFixes/queue_arrows.png';
+      $('head').append('<style type="text/css">' +
+                       '#posts .post .MissingE_queuearrow_control {' +
+                       'background-image:url("' + queuearrs + '");' +
+                       '"); }</style>');
+      $('body').append('<script type="text/javascript">' +
+                       'var MissingE_queueMoves = {};' +
+                       'document.addEventListener("DOMNodeInserted",' +
+                                                  'function(e) {' +
+                          'if (e.target.tagName === "LI" && ' +
+                               '/queued/.test(e.target.className) && ' +
+                               'MissingE_queueMoves[e.target.id]) {' +
+                             'delete MissingE_queueMoves[e.target.id];' +
+                             'update_publish_on_times();' +
+                          '}}, false);' +
+                       'document.addEventListener("DOMNodeRemoved",' +
+                                                  'function(e) {' +
+                          'if (e.target.tagName === "LI" && ' +
+                               '/queued/.test(e.target.className)) {' +
+                             'var isdragging=false;' +
+                             'for (i=0; i<Sortable.sortables.posts.draggables' +
+                                    '.length; i++) {' +
+                                'if (Sortable.sortables.posts.draggables[i]' +
+                                       '.dragging) {' +
+                                   'isdragging=true;' +
+                                   'break;' +
+                                '}' +
+                             '}' +
+                             'if (!isdragging) {' +
+                                'MissingE_queueMoves[e.target.id] = true;' +
+                             '}' +
+                          '}}, false);</script>');
+      document.addEventListener('DOMNodeInserted', function(e) {
+         addQueueArrows(e.target);
+      }, false);
+      $('#posts li.queued').each(function() {
+         addQueueArrows(this);
       });
    }
 

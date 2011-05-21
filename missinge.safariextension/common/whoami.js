@@ -176,7 +176,8 @@ function settings_startup(response) {
                                         response.message.timeoutLength,
                                         response.message.postLinks,
                                         response.message.reblogReplies,
-                                        response.message.widescreen);
+                                        response.message.widescreen,
+                                        response.message.queueArrows);
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {

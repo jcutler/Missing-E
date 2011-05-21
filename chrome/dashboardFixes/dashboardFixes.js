@@ -283,6 +283,9 @@ function addQueueArrows(item) {
    if (ctrl.length !== 1) {
       return false;
    }
+   if (ctrl.children('a.MissingE_queuearrow_control').length > 0) {
+      return false;
+   }
    var up = $('<a href="#" onclick="return false;" ' +
      'class="MissingE_queuearrow_control ' +
      'MissingE_queueup_control"></a>')
