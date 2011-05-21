@@ -183,7 +183,8 @@ function settings_startup(message) {
                                         message.timeoutLength,
                                         message.postLinks,
                                         message.reblogReplies,
-                                        message.widescreen);
+                                        message.widescreen,
+                                        message.queueArrows);
    }
    else if (message.component === "betterReblogs") {
       if (message.subcomponent === "dash") {

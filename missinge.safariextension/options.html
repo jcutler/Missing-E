@@ -756,7 +756,7 @@ function loadSettings() {
             frm.MissingE_dashboardFixes_widescreen.checked = true;
          else
             frm.MissingE_dashboardFixes_widescreen.checked = false;
-         if (getStorage('MissingE_dashboardFixes_queueArrows', 0) == 1)
+         if (getStorage('MissingE_dashboardFixes_queueArrows', 1) == 1)
             frm.MissingE_dashboardFixes_queueArrows.checked = true;
          else
             frm.MissingE_dashboardFixes_queueArrows.checked = false;
@@ -998,7 +998,7 @@ function doshow(component) {
 <tr><td colspan="2" class="odd">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="numinput timeoutinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" onchange="doSetting(this,true,defaultTimeout,minTimeout,maxTimeout);" onkeyup="doKeyUp(this,true,defaultTimeout,minTimeout,maxTimeout);" />&nbsp;<span class="resetter" onclick="resetTimeout(this)">Reset</span></td></tr>
 <tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Add move to top of queue and move to end of queue buttons in queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td colspan="2" class="even">Add move to top of queue button on queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="odd experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" onchange="doSetting(this,false);" /></td></tr>
 </table>
 </table>
