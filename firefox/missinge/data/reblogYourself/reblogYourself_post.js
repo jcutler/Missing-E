@@ -42,6 +42,11 @@ function MissingE_reblogYourself_post_doStartup() {
    if (noReblog) {
       var url, redir;
       var loc = location.href;
+      var last = controls[controls.length-1];
+      var gdp = document.getElementById('MissingE_gotoDashPost_link');
+      if (gdp) {
+         last = gdp;
+      }
       loc = loc.substring(loc.indexOf("src=")+4);
       redir = loc.substring(0,loc.indexOf("&"));
       loc = loc.replace(/%3A/gi,":")
@@ -67,7 +72,7 @@ function MissingE_reblogYourself_post_doStartup() {
          icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha.png?6';
 
          link.appendChild(icon);
-         div.insertBefore(link,controls[controls.length-1]);
+         div.insertBefore(link,last);
       }
    }
 }

@@ -47,15 +47,18 @@ function MissingE_gotoDashPost_doStartup() {
    }
 
    if (noGoto) {
+      var last = controls[controls.length-1];
       var i;
       var following = false;
       var you = true;
       for (i=0; i<document.forms.length; i++) {
          if (/unfollow$/.test(document.forms[i].action)) {
             following = true;
+            last = document.forms[i];
          }
          if (/follow$/.test(document.forms[i].action)) {
             you = false;
+            last = document.forms[i];
          }
       }
       if (following || you) {
@@ -69,6 +72,7 @@ function MissingE_gotoDashPost_doStartup() {
          dashlnk.setAttribute('href', 'http://www.tumblr.com/dashboard/1000/' +
                                        pid + "?lite");
          dashlnk.setAttribute('target', '_top');
+         dashlnk.id = "MissingE_gotoDashPost_link";
          var icn = document.createElement('img');
          icn.style.width = '50px';
          icn.style.height='20px';
@@ -80,7 +84,7 @@ function MissingE_gotoDashPost_doStartup() {
          icn.setAttribute('src', safari.extension.baseURI +
                                  'gotoDashPost/goto.png');
          dashlnk.appendChild(icn);
-         div.insertBefore(dashlnk,controls[controls.length-1]);
+         div.insertBefore(dashlnk,last);
       }
    }
 }
