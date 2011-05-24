@@ -31,6 +31,13 @@ var failed = false;
 var youfollow = [];
 var followyou = [];
 var formKey;
+var debugMode = false;
+
+function debug(msg) {
+   if (debugMode) {
+      console.debug(msg);
+   }
+}
 
 function doFWFinish(followers, followees, show) {
    youfollow = [];
@@ -148,13 +155,20 @@ function doFWDisplay(followerstart,followeestart,show) {
             }
          }
          raw = followertext[i]
-                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]*<\/a>/mg);
+                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }
          for (j=0; j<raw.length; j++) {
-            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]*)<\/a>/)[1];
-            var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
+            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]*)<\/a>/);
+            var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/);
+            if (fentryname === null || fentryname.length === 0 ||
+                fentryurl === null || fentryurl.length === 0) {
+               debug("Page " + (i+1) + ", Problem with follower:");
+               debug(raw[j]);
+            }
+            fentryname = fentryname[1];
+            fentryurl = fentryurl[1];
             var avre = new RegExp('a href="' + fentryurl +
                                   '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
             var imgm = avre.exec(followertext[i]);
@@ -183,13 +197,20 @@ function doFWDisplay(followerstart,followeestart,show) {
             }
          }
          raw = followeetext[i]
-                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]*<\/a>/mg);
+                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }
          for (j=0; j<raw.length; j++) {
-            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]+)<\/a>/)[1];
-            var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
+            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]+)<\/a>/);
+            var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/);
+            if (fentryname === null || fentryname.length === 0 ||
+                fentryurl === null || fentryurl.length === 0) {
+               debug("Page " + (i+1) + ", Problem with followee:");
+               debug(raw[j]);
+            }
+            fentryname = fentryname[1];
+            fentryurl = fentryurl[1];
             var avre = new RegExp('a href="' + fentryurl +
                                   '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
             var imgm = avre.exec(followeetext[i]);

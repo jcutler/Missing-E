@@ -167,7 +167,7 @@ function doFWDisplay(followerstart,followeestart,show) {
             }
          }
          raw = followertext[i]
-                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]*<\/a>/mg);
+                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }
@@ -202,7 +202,7 @@ function doFWDisplay(followerstart,followeestart,show) {
             }
          }
          raw = followeetext[i]
-                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]*<\/a>/mg);
+                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }

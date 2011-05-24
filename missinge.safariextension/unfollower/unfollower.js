@@ -104,7 +104,7 @@ function doDisplay(start,show) {
       done = [];
       var names = [];
       for (i=0; i<text.length; i++) {
-         var raw = text[i].match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]*<\/a>/mg);
+         var raw = text[i].match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }
