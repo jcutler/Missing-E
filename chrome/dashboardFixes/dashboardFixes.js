@@ -216,11 +216,13 @@ function doIcons(item) {
       var txt = a.text();
       var klass = "MissingE_post_control ";
       if (/delete_post_/.test(a.attr('onclick')) ||
-          /^post_delete_/.test(a.attr('id'))) {
+          /^post_delete_/.test(a.attr('id')) ||
+          (new RegExp(dashFixesText[lang]["del"], "i").test(a.text()))) {
          a.attr('title',dashFixesText[lang]["del"])
             .addClass(klass + "MissingE_delete_control").text('');
       }
-      else if (/queue_post_/.test(a.attr('onclick'))) {
+      else if (/queue_post_/.test(a.attr('onclick')) ||
+               (new RegExp(dashFixesText[lang]["queue"],"i")).test(a.text())) {
          a.attr('title',dashFixesText[lang]["queue"])
             .addClass(klass + "MissingE_queue_control").text('');
       }
