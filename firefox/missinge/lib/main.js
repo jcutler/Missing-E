@@ -999,6 +999,10 @@ function handleMessage(message, myWorker) {
             activeScripts.reblogYourself = false;
       }
 
+      if (message.isFrame &&
+          (activeScripts.gotoDashPost || activeScripts.reblogYourself)) {
+         myWorker.tab.attach({contentScriptFile:data.url("common/widenIframe.js")});
+      }
       activeScripts.url = message.url;
       activeScripts.isFrame = message.isFrame;
       activeScripts.greeting = "startup";

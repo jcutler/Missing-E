@@ -27,6 +27,13 @@ var noReblog = true;
 
 if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href))) {
    noReblog = false;
+   var ctrl = document.getElementById('tumblr_controls');
+   if (ctrl) {
+      var w = ctrl.getAttribute('width');
+      if (!w || (!(/%/.test(w)) && w < 380)) {
+         ctrl.setAttribute('width',380);
+      }
+   }
 }
 else {
    var i;

@@ -1060,6 +1060,10 @@ function onStart(currVersion, prevVersion) {
    setStorage('MissingE_installedVersion',currVersion);
 }
 
+safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
+                                             "common/widenIframe.css",
+                                             "http://*");
+
 var currVersion = getVersion();
 var prevVersion = getStorage('MissingE_installedVersion',null);
 onStart(currVersion, prevVersion);
