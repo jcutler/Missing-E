@@ -10,61 +10,6 @@
  *
  * Copyright 2007, 2008 Chris Wanstrath [ chris@ozmm.org ]
  *
- * Usage:
- *
- *  jQuery(document).ready(function() {
- *    jQuery('a[rel*=facebox]').facebox()
- *  })
- *
- *  <a href="#terms" rel="facebox">Terms</a>
- *    Loads the #terms div in the box
- *
- *  <a href="terms.html" rel="facebox">Terms</a>
- *    Loads the terms.html page in the box
- *
- *  <a href="terms.png" rel="facebox">Terms</a>
- *    Loads the terms.png image in the box
- *
- *
- *  You can also use it programmatically:
- *
- *    jQuery.facebox('some html')
- *    jQuery.facebox('some html', 'my-groovy-style')
- *
- *  The above will open a facebox with "some html" as the content.
- *
- *    jQuery.facebox(function($) {
- *      $.get('blah.html', function(data) { $.facebox(data) })
- *    })
- *
- *  The above will show a loading screen before the passed function is called,
- *  allowing for a better ajaxy experience.
- *
- *  The facebox function can also display an ajax page, an image, or the contents of a div:
- *
- *    jQuery.facebox({ ajax: 'remote.html' })
- *    jQuery.facebox({ ajax: 'remote.html' }, 'my-groovy-style')
- *    jQuery.facebox({ image: 'stairs.jpg' })
- *    jQuery.facebox({ image: 'stairs.jpg' }, 'my-groovy-style')
- *    jQuery.facebox({ div: '#box' })
- *    jQuery.facebox({ div: '#box' }, 'my-groovy-style')
- *
- *  Want to close the facebox?  Trigger the 'close.facebox' document event:
- *
- *    jQuery(document).trigger('close.facebox')
- *
- *  Facebox also has a bunch of other hooks:
- *
- *    loading.facebox
- *    beforeReveal.facebox
- *    reveal.facebox (aliased as 'afterReveal.facebox')
- *    init.facebox
- *    afterClose.facebox
- *
- *  Simply bind a function to any of these hooks:
- *
- *   $(document).bind('reveal.facebox', function() { ...stuff to do after the facebox and contents are revealed... })
- *
  */
 (function($) {
    $.facebox = function(data, klass) {

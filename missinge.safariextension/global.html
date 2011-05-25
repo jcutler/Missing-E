@@ -274,6 +274,91 @@ function startAjax(id) {
    */
 }
 
+function doAjax(request, retries, type, doFunc, additional) {
+   debug("AJAX " + type + " request (" + request.message.pid + ")");
+   startAjax(request.message.pid);
+   var failMsg = {success:false};
+   if (additional) {
+      for (i in additional) {
+         if (additional.hasOwnProperty(i)) {
+            failMsg[i] = additional[i];
+         }
+      }
+   }
+   $.ajax({
+      type: "GET",
+      url: request.message.url + "/api/read/json?id=" + request.message.pid,
+      dataType: "text",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.message.pid,
+      error: function(xhr, textStatus, thrownError) {
+         if (xhr.status === 404) {
+            debug(type + " request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            request.target.page.dispatchMessage(type,failMsg);
+            return;
+         }
+         if (request.target.page === undefined) {
+            debug("Stop " + type + " request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         if (cacheServe(type, request, request.message.pid, doFunc, true)) {
+            return true;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry " + type + " request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug(type + " request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               request.target.page.dispatchMessage(type,failMsg);
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+            if (request.target.page === undefined) {
+               debug("Stop " + type + " request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (cacheServe(type, request, request.message.pid, doFunc, true)) {
+               return true;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry " + type + " request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug(type + " request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  request.target.page.dispatchMessage(type,failMsg);
+               }
+            }
+         }
+         else {
+            var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+            var stamp = JSON.parse(txt);
+            var info = stamp["posts"][0];
+            saveCache(this.targetId, info);
+            dequeueAjax(this.targetId);
+            if (request.target.page !== undefined) {
+               doFunc(info, this.targetId, request);
+            }
+         }
+      }
+   });
+}
+
 function requestTags(request) {
    if (request.target.page === undefined) {
       debug("Stop tags request: Tab closed or changed.");
@@ -291,82 +376,9 @@ function requestTags(request) {
       queueAjax({type: "tags", request: request});
    }
    else {
-      debug("AJAX tags request (" + request.message.pid + ")");
-      startAjax(request.message.pid);
-      $.ajax({
-         type: "GET",
-         url: request.message.url + "/api/read/json?id=" + request.message.pid,
-         dataType: "text",
-         tryCount: 0,
-         retryLimit: getStorage("MissingE_betterReblogs_retries",defaultRetries),
-         targetId: request.message.pid,
-         error: function(xhr, textStatus, thrownError) {
-            if (xhr.status === 404) {
-               debug("tags request (" + this.targetId + ") not found");
-               dequeueAjax(this.targetId);
-               request.target.page.dispatchMessage("tags",{success: false});
-               return;
-            }
-            if (request.target.page === undefined) {
-               debug("Stop tags request: Tab closed or changed.");
-               dequeueAjax(this.targetId);
-               return;
-            }
-            if (cacheServe("tags", request, request.message.pid,
-                           doTags, true)) {
-               return true;
-            }
-            else {
-               this.tryCount++;
-               if (this.tryCount <= this.retryLimit) {
-                  debug("Retry tags request (" + this.targetId + ")");
-                  $.ajax(this);
-                  return;
-               }
-               else {
-                  debug("tags request (" + this.targetId + ") failed");
-                  dequeueAjax(this.targetId);
-                  request.target.page.dispatchMessage("tags",{success: false});
-               }
-            }
-         },
-         success: function(data, textStatus) {
-            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
-               if (request.target.page === undefined) {
-                  debug("Stop tags request: Tab closed or changed.");
-                  dequeueAjax(this.targetId);
-                  return;
-               }
-               if (cacheServe("tags", request, request.message.pid,
-                              doTags, true)) {
-                  return true;
-               }
-               else {
-                  this.tryCount++;
-                  if (this.tryCount <= this.retryLimit) {
-                     debug("Retry tags request (" + this.targetId + ")");
-                     $.ajax(this);
-                     return;
-                  }
-                  else {
-                     debug("tags request (" + this.targetId + ") failed");
-                     dequeueAjax(this.targetId);
-                     request.target.page.dispatchMessage("tags",{success: false});
-                  }
-               }
-            }
-            else {
-               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-               var stamp = JSON.parse(txt);
-               var info = stamp["posts"][0];
-               saveCache(this.targetId, info);
-               dequeueAjax(this.targetId);
-               if (request.target.page !== undefined) {
-                  doTags(info, this.targetId, request);
-               }
-            }
-         }
-      });
+      doAjax(request,
+             getStorage("MissingE_betterReblogs_retries",defaultRetries),
+             "tags", doTags);
    }
 }
 
@@ -387,82 +399,10 @@ function requestTimestamp(request) {
       queueAjax({type: "timestamp", request: request});
    }
    else {
-      debug("AJAX timestamp request (" + request.message.pid + ")");
-      startAjax(request.message.pid);
-      $.ajax({
-         type: "GET",
-         url: request.message.url + "/api/read/json?id=" + request.message.pid,
-         dataType: "text",
-         tryCount: 0,
-         retryLimit: getStorage("MissingE_timestamps_retries",defaultRetries),
-         targetId: request.message.pid,
-         error: function(xhr, textStatus, thrownError) {
-            if (xhr.status === 404) {
-               debug("timestamp request (" + this.targetId + ") not found");
-               dequeueAjax(this.targetId);
-               request.target.page.dispatchMessage("timestamp",{pid: this.targetId, success: false});
-               return;
-            }
-            if (request.target.page === undefined) {
-               debug("Stop timestamp request: Tab closed or changed.");
-               dequeueAjax(this.targetId);
-               return;
-            }
-            if (cacheServe("timestamp", request, request.message.pid,
-                           doTimestamp, true)) {
-               return true;
-            }
-            else {
-               this.tryCount++;
-               if (this.tryCount <= this.retryLimit) {
-                  debug("Retry timestamp request (" + this.targetId + ")");
-                  $.ajax(this);
-                  return;
-               }
-               else {
-                  debug("timestamp request (" + this.targetId + ") failed");
-                  dequeueAjax(this.targetId);
-                  request.target.page.dispatchMessage("timestamp",{pid: this.targetId, success: false});
-               }
-            }
-         },
-         success: function(data, textStatus) {
-            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
-               if (request.target.page === undefined) {
-                  debug("Stop timestamp request: Tab closed or changed.");
-                  dequeueAjax(this.targetId);
-                  return;
-               }
-               if (cacheServe("timestamp", request, request.message.pid,
-                              doTimestamp, true)) {
-                  return true;
-               }
-               else {
-                  this.tryCount++;
-                  if (this.tryCount <= this.retryLimit) {
-                     debug("Retry timestamp request (" + this.targetId + ")");
-                     $.ajax(this);
-                     return;
-                  }
-                  else {
-                     debug("timestamp request (" + this.targetId + ") failed");
-                     dequeueAjax(this.targetId);
-                     request.target.page.dispatchMessage("timestamp",{pid: this.targetId, success: false});
-                  }
-               }
-            }
-            else {
-               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-               var stamp = JSON.parse(txt);
-               var info = stamp["posts"][0];
-               saveCache(this.targetId, info);
-               dequeueAjax(this.targetId);
-               if (request.target.page !== undefined) {
-                  doTimestamp(info, this.targetId, request);
-               }
-            }
-         }
-      });
+      doAjax(request,
+             getStorage("MissingE_timestamps_retries",defaultRetries),
+             "timestamp", doTimestamp,
+             {pid: request.pid});
    }
 }
 
@@ -483,91 +423,14 @@ function requestReblogYourself(request) {
       queueAjax({type: "reblogYourself", request: request});
    }
    else {
-      debug("AJAX reblogYourself request (" + request.message.pid + ")");
-      startAjax(request.message.pid);
-      $.ajax({
-         type: "GET",
-         url: request.message.url + "/api/read/json?id=" + request.message.pid,
-         dataType: "text",
-         tryCount: 0,
-         retryLimit: getStorage("MissingE_reblogYourself_retries",defaultRetries),
-         targetId: request.message.pid,
-         error: function(xhr, textStatus, thrownError) {
-            if (xhr.status === 404) {
-               debug("reblogYourself request (" + this.targetId + ") not found");
-               dequeueAjax(this.targetId);
-               var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
-                                    getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
-               request.target.page.dispatchMessage("reblogYourself",{pid: this.targetId, success: false, icons: replaceIcons});
-               return;
-            }
-            if (request.target.page === undefined) {
-               debug("Stop reblogYourself request: Tab closed or changed.");
-               dequeueAjax(this.targetId);
-               return;
-            }
-            if (cacheServe("reblogYourself", request.message.pid, request,
-                  doReblogDash, true)) {
-               return true;
-            }
-            else {
-               this.tryCount++;
-               if (this.tryCount <= this.retryLimit) {
-                  debug("Retry reblogYourself request (" + this.targetId + ")");
-                  $.ajax(this);
-                  return;
-               }
-               else {
-                  debug("reblogYourself request (" + this.targetId +
-                        ") failed");
-                  dequeueAjax(this.targetId);
-                  var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
-                                       getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
-                  request.target.page.dispatchMessage("reblogYourself",{pid: this.targetId, success: false, icons: replaceIcons});
-               }
-            }
-         },
-         success: function(data, textStatus) {
-            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
-               if (request.target.page === undefined) {
-                  debug("Stop reblogYourself request: Tab closed or changed.");
-                  dequeueAjax(this.targetId);
-                  return;
-               }
-               if (cacheServe("reblogYourself", request.message.pid, request,
-                     doReblogDash, true)) {
-                  return true;
-               }
-               else {
-                  this.tryCount++;
-                  if (this.tryCount <= this.retryLimit) {
-                     debug("Retry reblogYourself request (" + this.targetId +
-                           ")");
-                     $.ajax(this);
-                     return;
-                  }
-                  else {
-                     debug("reblogYourself request (" + this.targetId +
-                           ") failed");
-                     dequeueAjax(this.targetId);
-                     var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
-                                          getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
-                     request.target.page.dispatchMessage("reblogYourself",{pid: this.targetId, success: false, icons: replaceIcons});
-                  }
-               }
-            }
-            else {
-               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-               var stamp = JSON.parse(txt);
-               var info = stamp["posts"][0];
-               saveCache(this.targetId, info);
-               dequeueAjax(this.targetId);
-               if (request.target.page !== undefined) {
-                  doReblogDash(info, this.targetId, request);
-               }
-            }
-         }
-      });
+      doAjax(request,
+             getStorage("MissingE_reblogYourself_retries",defaultRetries),
+             "reblogYourself", doReblogDash,
+             {
+               pid:request.pid,
+               icons:getStorage("MissingE_dashboardFixes_enabled",1) == 1 && 
+                     getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1
+             });
    }
 }
 
@@ -588,82 +451,10 @@ function requestMagnifier(request) {
       queueAjax({type: "magnifier", request: request});
    }
    else {
-      debug("AJAX magnifier request (" + request.message.pid + ")");
-      startAjax(request.message.pid);
-      $.ajax({
-         type: "GET",
-         url: request.message.url + "/api/read/json?id=" + request.message.pid,
-         dataType: "text",
-         tryCount: 0,
-         retryLimit: getStorage("MissingE_magnifier_retries",defaultRetries),
-         targetId: request.message.pid,
-         error: function(xhr, textStatus, thrownError) {
-            if (xhr.status === 404) {
-               debug("magnifier request (" + this.targetId + ") not found");
-               dequeueAjax(this.targetId);
-               request.target.page.dispatchMessage("magnifier", {pid: this.targetId, success: false});
-               return;
-            }
-            if (request.target.page === undefined) {
-               debug("Stop magnifier request: Tab closed or changed.");
-               dequeueAjax(this.targetId);
-               return;
-            }
-            if (cacheServe("magnifier", request.message.pid, request,
-                           doMagnifier, true)) {
-               return true;
-            }
-            else {
-               this.tryCount++;
-               if (this.tryCount <= this.retryLimit) {
-                  debug("Retry magnifier request (" + this.targetId + ")");
-                  $.ajax(this);
-                  return;
-               }
-               else {
-                  debug("magnifier request (" + this.targetId + ") failed");
-                  dequeueAjax(this.targetId);
-                  request.target.page.dispatchMessage("magnifier", {pid: this.targetId, success: false});
-               }
-            }
-         },
-         success: function(data, textStatus) {
-            if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
-               if (request.target.page === undefined) {
-                  debug("Stop magnifier request: Tab closed or changed.");
-                  dequeueAjax(this.targetId);
-                  return;
-               }
-               if (cacheServe("magnifier", request.message.pid, request,
-                              doMagnifier, true)) {
-                  return true;
-               }
-               else {
-                  this.tryCount++;
-                  if (this.tryCount <= this.retryLimit) {
-                     debug("Retry magnifier request (" + this.targetId + ")");
-                     $.ajax(this);
-                     return;
-                  }
-                  else {
-                     debug("magnifier request (" + this.targetId + ") failed");
-                     dequeueAjax(this.targetId);
-                     request.target.page.dispatchMessage("magnifier", {pid: this.targetId, success: false});
-                  }
-               }
-            }
-            else {
-               var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-               var stamp = JSON.parse(txt);
-               var info = stamp["posts"][0];
-               saveCache(this.targetId, info);
-               dequeueAjax(this.targetId);
-               if (request.target.page !== undefined) {
-                  doMagnifier(info, this.targetId, request);
-               }
-            }
-         }
-      });
+      doAjax(request,
+             getStorage("MissingE_magnifier_retries",defaultRetries),
+             "magnifier", doMagnifier,
+             {pid: request.pid});
    }
 }
 

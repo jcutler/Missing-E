@@ -305,6 +305,73 @@ function startAjax(id) {
    activeAjax++;
 }
 
+function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
+   console.log(count);
+   var failMsg = {greeting:type, success:false};
+   if (additional) {
+      for (i in additional) {
+         if (additional.hasOwnProperty(i)) {
+            failMsg[i] = additional[i];
+         }
+      }
+   }
+   Request({
+      url: url + "/api/read/json?id=" + pid,
+      headers: {tryCount: count,
+                retryLimit: retries,
+                targetId: pid},
+      onComplete: function(response) {
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
+         if (response.status === 404) {
+            console.debug(type + " request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         if (response.status != 200 ||
+             !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
+            if (closed) {
+               console.debug("Stop " + type + " request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
+            if (cacheServe(type, this.headers.targetId, myWorker,
+                           doTags, true)) {
+               return true;
+            }
+            else {
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  doAjax(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''),
+                         this.headers.targetId, (this.headers.tryCount + 1),
+                         myWorker, this.headers.retryLimit, type, doFunc,
+                         additional);
+               }
+               else {
+                  dequeueAjax(this.headers.targetId);
+                  myWorker.postMessage(failMsg);
+               }
+            }
+         }
+         else {
+            var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
+            var stamp = JSON.parse(txt);
+            var info = stamp["posts"][0];
+            saveCache(this.headers.targetId, info);
+            dequeueAjax(this.headers.targetId);
+            if (!closed) {
+               doFunc(info, this.headers.targetId, myWorker);
+            }
+         }
+      }
+   }).get();
+}
+
 function startTags(message, myWorker) {
    try {
       var tab = myWorker.tab;
@@ -322,63 +389,10 @@ function startTags(message, myWorker) {
    }
    else {
       startAjax(message.pid);
-      requestTags(message.url, message.pid, 0, myWorker);
+      doAjax(message.url, message.pid, 0, myWorker,
+             getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries),
+             "tags", doTags);
    }
-}
-
-function requestTags(url, pid, count, myWorker) {
-   Request({
-      url: url + "/api/read/json?id=" + pid,
-      headers: {tryCount: count,
-                retryLimit: getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries),
-                targetId: pid},
-      onComplete: function(response) {
-         var closed = false;
-         try {
-            var tab = myWorker.tab;
-         }
-         catch (err) {
-            closed = true;
-         }
-         if (response.status === 404) {
-            console.debug("tags request (" + this.headers.targetId + ") not found");
-            dequeueAjax(this.headers.targetId);
-            myWorker.postMessage({greeting: "tags", success:false});
-            return;
-         }
-         if (response.status != 200 ||
-             !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
-            if (closed) {
-               console.debug("Stop tags request: Tab closed or changed.");
-               dequeueAjax(this.headers.targetId);
-               return;
-            }
-            if (cacheServe("tags", this.headers.targetId, myWorker,
-                           doTags, true)) {
-               return true;
-            }
-            else {
-               if (this.headers.tryCount <= this.headers.retryLimit) {
-                  requestTags(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1), myWorker);
-               }
-               else {
-                  dequeueAjax(this.headers.targetId);
-                  myWorker.postMessage({greeting: "tags", success:false});
-               }
-            }
-         }
-         else {
-            var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-            var stamp = JSON.parse(txt);
-            var info = stamp["posts"][0];
-            saveCache(this.headers.targetId, info);
-            dequeueAjax(this.headers.targetId);
-            if (!closed) {
-               doTags(info, this.headers.targetId, myWorker);
-            }
-         }
-      }
-   }).get();
 }
 
 function startMagnifier(message, myWorker) {
@@ -398,63 +412,10 @@ function startMagnifier(message, myWorker) {
    }
    else {
       startAjax(message.pid);
-      requestMagnifier(message.url, message.pid, 0, myWorker);
+      doAjax(message.url, message.pid, 0, myWorker,
+             getStorage("extensions.MissingE.magnifier.retries",defaultRetries),
+             "magnifier", doMagnifier, {pid: message.pid});
    }
-}
-
-function requestMagnifier(url, pid, count, myWorker) {
-   Request({
-      url: url + "/api/read/json?id=" + pid,
-      headers: {tryCount: count,
-                retryLimit: getStorage("extensions.MissingE.magnifier.retries",defaultRetries),
-                targetId: pid},
-      onComplete: function(response) {
-         var closed = false;
-         try {
-            var tab = myWorker.tab;
-         }
-         catch (err) {
-            closed = true;
-         }
-         if (response.status === 404) {
-            console.debug("magnifier request (" + this.headers.targetId + ") not found");
-            dequeueAjax(this.headers.targetId);
-            myWorker.postMessage({greeting: "magnifier", pid: this.headers.targetId, success:false});
-            return;
-         }
-         if (response.status != 200 ||
-             !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
-            if (closed) {
-               console.debug("Stop magnifier request: Tab closed or changed.");
-               dequeueAjax(this.headers.targetId);
-               return;
-            }
-            if (cacheServe("magnifier", this.headers.targetId, myWorker,
-                           doMagnifier, true)) {
-               return true;
-            }
-            else {
-               if (this.headers.tryCount <= this.headers.retryLimit) {
-                  requestMagnifier(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1), myWorker);
-               }
-               else {
-                  dequeueAjax(this.headers.targetId);
-                  myWorker.postMessage({greeting: "magnifier", pid: this.headers.targetId, success:false});
-               }
-            }
-         }
-         else {
-            var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-            var stamp = JSON.parse(txt);
-            var info = stamp["posts"][0];
-            saveCache(this.headers.targetId, info);
-            dequeueAjax(this.headers.targetId);
-            if (!closed) {
-               doMagnifier(info, this.headers.targetId, myWorker);
-            }
-         }
-      }
-   }).get();
 }
 
 function startTimestamp(message, myWorker) {
@@ -474,63 +435,10 @@ function startTimestamp(message, myWorker) {
    }
    else {
       startAjax(message.pid);
-      requestTimestamp(message.url, message.pid, 0, myWorker);
+      doAjax(message.url, message.pid, 0, myWorker,
+             getStorage("extensions.MissingE.timestamps.retries",defaultRetries),
+             "timestamp", doTimestamp, {pid: message.pid});
    }
-}
-
-function requestTimestamp(url, pid, count, myWorker) {
-   Request({
-      url: url + "/api/read/json?id=" + pid,
-      headers: {tryCount: count,
-                retryLimit: getStorage("extensions.MissingE.timestamps.retries",defaultRetries),
-                targetId: pid},
-      onComplete: function(response) {
-         var closed = false;
-         try {
-            var tab = myWorker.tab;
-         }
-         catch (err) {
-            closed = true;
-         }
-         if (response.status === 404) {
-            console.debug("timestamp request (" + this.headers.targetId + ") not found");
-            dequeueAjax(this.headers.targetId);
-            myWorker.postMessage({greeting: "timestamp", pid: this.headers.targetId, success:false});
-            return;
-         }
-         if (response.status != 200 ||
-             !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
-            if (closed) {
-               console.debug("Stop timestamp request: Tab closed or changed.");
-               dequeueAjax(this.headers.targetId);
-               return;
-            }
-            if (cacheServe("timestamp", this.headers.targetId, myWorker,
-                           doTimestamp, true)) {
-               return true;
-            }
-            else {
-               if (this.headers.tryCount <= this.headers.retryLimit) {
-                  requestTimestamp(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1), myWorker);
-               }
-               else {
-                  dequeueAjax(this.headers.targetId);
-                  myWorker.postMessage({greeting: "timestamp", pid: this.headers.targetId, success:false});
-               }
-            }
-         }
-         else {
-            var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-            var stamp = JSON.parse(txt);
-            var info = stamp["posts"][0];
-            saveCache(this.headers.targetId, info);
-            dequeueAjax(this.headers.targetId);
-            if (!closed) {
-               doTimestamp(info, this.headers.targetId, myWorker);
-            }
-         }
-      }
-   }).get();
 }
 
 function startReblogYourself(message, myWorker) {
@@ -551,67 +459,15 @@ function startReblogYourself(message, myWorker) {
    }
    else {
       startAjax(message.pid);
-      requestReblogDash(message.url, message.pid, 0, myWorker);
+      doAjax(message.url, message.pid, 0, myWorker,
+             getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries),
+             "reblogYourself", doReblogDash,
+             {
+               pid:message.pid,
+               icons:getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 && 
+                     getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1
+             });
    }
-}
-
-function requestReblogDash(url, pid, count, myWorker) {
-   Request({
-      url: url + "/api/read/json?id=" + pid,
-      headers: {tryCount: count,
-                retryLimit: getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries),
-                targetId: pid},
-      onComplete: function(response) {
-         var closed = false;
-         try {
-            var tab = myWorker.tab;
-         }
-         catch (err) {
-            closed = true;
-         }
-         if (response.status === 404) {
-            console.debug("reblogYourself request (" + this.headers.targetId + ") not found");
-            dequeueAjax(this.headers.targetId);
-            var replaceIcons = getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
-                                 getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
-            myWorker.postMessage({greeting: "reblogYourself", pid: this.headers.targetId, success:false, icons: replaceIcons});
-            return;
-         }
-         if (response.status != 200 ||
-             !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
-            if (closed) {
-               console.debug("Stop reblogYourself request: Tab closed or changed.");
-               dequeueAjax(this.headers.targetId);
-               return;
-            }
-            if (cacheServe("reblogYourself", this.headers.targetId, myWorker,
-                           doReblogDash, true)) {
-               return true;
-            }
-            else {
-               if (this.headers.tryCount <= this.headers.retryLimit) {
-                  requestReblogDash(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''), this.headers.targetId, (this.headers.tryCount + 1), myWorker);
-               }
-               else {
-                  dequeueAjax(this.headers.targetId);
-                  var replaceIcons = getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
-                                       getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
-                  myWorker.postMessage({greeting: "reblogYourself", pid: this.headers.targetId, success:false, icons: replaceIcons});
-               }
-            }
-         }
-         else {
-            var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-            var stamp = JSON.parse(txt);
-            var info = stamp["posts"][0];
-            saveCache(this.headers.targetId, info);
-            dequeueAjax(this.headers.targetId);
-            if (!closed) {
-               doReblogDash(info, this.headers.targetId, myWorker);
-            }
-         }
-      }
-   }).get();
 }
 
 function inArray(entry, arr) {
