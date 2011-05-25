@@ -306,7 +306,6 @@ function startAjax(id) {
 }
 
 function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
-   console.log(count);
    var failMsg = {greeting:type, success:false};
    if (additional) {
       for (i in additional) {
@@ -391,7 +390,7 @@ function startTags(message, myWorker) {
       startAjax(message.pid);
       doAjax(message.url, message.pid, 0, myWorker,
              getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries),
-             "tags", doTags);
+             "tags", doTags, {extensionURL:data.url("")});
    }
 }
 
