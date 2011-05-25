@@ -9,3 +9,6 @@ FF
 - use tab property of worker to add scripts instead of calling like safari?
 
 Askbox on dash? http://userscripts.org/scripts/show/100607
+
+Ask tags:
+- have background page load API regularly, add tags to all answer posts?
