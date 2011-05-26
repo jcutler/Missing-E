@@ -161,7 +161,9 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
             document.getElementById('post_tags').value = fill;
             document.getElementById('tokens').innerHTML = txt;
             var label = document.getElementById('post_tags_label');
-            label.parentNode.removeChild(label);
+            if (label) {
+               label.parentNode.removeChild(label);
+            }
          }
       }
       clearReblogTags();

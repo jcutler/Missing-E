@@ -96,7 +96,7 @@ function MissingE_betterReblogs_post_doStartup(frameURL) {
          document.addEventListener('DOMNodeInserted',function(e){
             var item = e.target;
             if (item.tagName === 'A' && /reblog/.test(item.href)) {
-               addTags();
+               addTags(item);
             }
          }, false);
       }

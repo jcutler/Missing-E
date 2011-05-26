@@ -80,7 +80,7 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
       document.addEventListener('DOMNodeInserted',function(e){
          var item = e.target;
          if (item.tagName === 'A' && /reblog/.test(item.href)) {
-            addTags();
+            addTags(item);
          }
       }, false);
    }

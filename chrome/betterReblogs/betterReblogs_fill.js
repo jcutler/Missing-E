@@ -163,7 +163,9 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
             document.getElementById('post_tags').value = fill;
             document.getElementById('tokens').innerHTML = txt;
             var label = document.getElementById('post_tags_label');
-            label.parentNode.removeChild(label);
+            if (label) {
+               label.parentNode.removeChild(label);
+            }
          }
       }
       clearReblogTags();
