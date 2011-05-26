@@ -21,18 +21,16 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-self.on('message', function (message) {
-   if (message.greeting !== "settings" ||
-       message.component !== "askFixes") {
-      return;
-   }
-   else if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
-      var style = document.createElement("link");
-      style.setAttribute('rel','stylesheet');
-      style.setAttribute('type','text/css');
-      style.href = message.extensionURL + "askFixes/askboxScroll.css";
-      document.getElementsByTagName('head')[0].appendChild(style);
+self.postMessage({greeting: "settings", component: "facebox"});
+self.on('message', function(message) {
+   if (message.greeting === 'settings' &&
+       message.component === 'facebox') {
+      jQuery.facebox.settings.closeImage = message.extensionURL +
+         'facebox/closelabel.png';
+      jQuery.facebox.settings.loadingImage = message.extensionURL +
+         'facebox/loading.gif';
+      jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
+                            'href="' + message.extensionURL +
+                            'facebox/facebox.css" />');
    }
 });
-
-self.postMessage({greeting: "settings", component: "askFixes"});

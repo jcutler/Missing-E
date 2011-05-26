@@ -44,7 +44,10 @@ if ((window.top === window &&
                                              bodyId: document.body.id});
 }
 
-function doStartup(message) {
+self.on('message', function (message) {
+   if (message.greeting !== "startup") {
+      return;
+   }
    var i;
    if (MissingE_startup) { return; }
    MissingE_startup = true;
@@ -69,142 +72,4 @@ function doStartup(message) {
       }
    }
    console.log(info);
-   jQuery.noConflict();
-
-   jQuery.facebox.settings.closeImage = message.extensionURL +
-      'facebox/closelabel.png';
-   jQuery.facebox.settings.loadingImage = message.extensionURL +
-      'facebox/loading.gif';
-
-   jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
-                         'href="' + message.extensionURL + 'facebox/facebox.css" />');
-
-   if (window.top === window) {
-      if (message.bookmarker) {
-         MissingE_bookmarker_doStartup(message.extensionURL);
-      }
-      if (message.dashLinksToTabs) {
-         self.postMessage({greeting: "settings", component: "dashLinksToTabs"});
-      }
-      if (message.postCrushes) {
-         if (message.postCrushes_fill) {
-            MissingE_postCrushes_fill_doStartup(message.extensionURL);
-         }
-         else {
-            MissingE_postCrushes_doStartup(message.extensionURL);
-         }
-      }
-      if (message.betterReblogs) {
-         if (message.betterReblogs_fill) {
-            self.postMessage({greeting: "settings", component: "betterReblogs",
-               subcomponent: "fill"});
-         }
-         else {
-            self.postMessage({greeting: "settings", component: "betterReblogs",
-               subcomponent: "dash"});
-         }
-      }
-      if (message.replyReplies) {
-         if (message.replyReplies_fill) {
-            MissingE_replyReplies_fill_doStartup();
-         }
-         else {
-            MissingE_replyReplies_doStartup(message.extensionURL);
-         }
-      }
-      if (message.followChecker) {
-         self.postMessage({greeting: "settings", component: "followChecker"});
-      }
-      if (message.unfollower) {
-         self.postMessage({greeting: "settings", component: "unfollower"});
-      }
-      if (message.postingFixes) {
-         self.postMessage({greeting: "settings", component: "postingFixes"});
-      }
-      if (message.dashboardFixes) {
-         self.postMessage({greeting: "settings", component: "dashboardFixes"});
-      }
-      if (message.reblogYourself) {
-         MissingE_reblogYourself_dash_doStartup();
-      }
-      if (message.safeDash) {
-         MissingE_safeDash_doStartup(message.extensionURL);
-      }
-      if (message.timestamps) {
-         MissingE_timestamps_doStartup();
-      }
-      if (message.magnifier) {
-         MissingE_magnifier_doStartup(message.extensionURL);
-      }
-   }
-   else {
-      if (message.betterReblogs) {
-         MissingE_betterReblogs_post_doStartup(message.url);
-      }
-      if (message.askFixes) {
-         MissingE_askFixes_doStartup(message.extensionURL);
-      }
-      if (message.gotoDashPost) {
-         MissingE_gotoDashPost_doStartup(message.extensionURL);
-      }
-      if (message.reblogYourself) {
-         MissingE_reblogYourself_post_doStartup();
-      }
-   }
-}
-
-function settings_startup(message) {
-   if (message.component === "postingFixes") {
-      MissingE_postingFixes_doStartup(message.extensionURL,
-                                      message.photoReplies,
-                                      message.uploaderToggle,
-                                      message.addUploader,
-                                      message.quickButtons);
-   }
-   else if (message.component === "followChecker") {
-      MissingE_followChecker_doStartup(message.extensionURL, message.retries);
-   }
-   else if (message.component === "unfollower") {
-      MissingE_unfollower_doStartup(message.extensionURL, message.retries);
-   }
-   else if (message.component === "dashLinksToTabs") {
-      MissingE_dashLinksToTabs_doStartup(message.newPostTabs,
-                                         message.sidebar,
-                                         message.reblogLinks,
-                                         message.editLinks);
-   }
-   else if (message.component === "dashboardFixes") {
-      MissingE_dashboardFixes_doStartup(message.extensionURL,
-                                        message.experimental,
-                                        message.reblogQuoteFit,
-                                        message.wrapTags,
-                                        message.replaceIcons,
-                                        message.timeoutAJAX,
-                                        message.timeoutLength,
-                                        message.postLinks,
-                                        message.reblogReplies,
-                                        message.widescreen,
-                                        message.queueArrows);
-   }
-   else if (message.component === "betterReblogs") {
-      if (message.subcomponent === "dash") {
-         MissingE_betterReblogs_dash_doStartup(message.extensionURL,
-                                               message.passTags,
-                                               message.quickReblog,
-                                               message.replaceIcons,
-                                               message.accountName);
-      }
-      else if (message.subcomponent === "fill") {
-         MissingE_betterReblogs_fill_doStartup(message.autoFillTags);
-      }
-   }
-}
-
-self.on('message', function onMessage(message) {
-   if (message.greeting === "startup") {
-      doStartup(message);
-   }
-   else if (message.greeting === "settings") {
-      settings_startup(message);
-   }
 });

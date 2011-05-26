@@ -23,7 +23,12 @@
 
 /*global safari */
 
-function MissingE_gotoDashPost_doStartup(extensionURL) {
+self.on('message', function(message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "gotoDashPost") {
+      return;
+   }
+   var extensionURL = message.extensionURL;
    var noGoto = true;
    var div = document.getElementsByTagName("div")[0];
    var controls = div.getElementsByTagName("a");
@@ -85,5 +90,6 @@ function MissingE_gotoDashPost_doStartup(extensionURL) {
          div.insertBefore(dashlnk,last);
       }
    }
-}
+});
 
+self.postMessage({greeting: "settings", component: "gotoDashPost"});

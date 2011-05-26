@@ -27,24 +27,6 @@ var text;
 var done;
 var failed = false;
 
-// Adapted from getPageSize() by quirksmode.com
-function getPageHeight() {
-   var windowHeight;
-   if (self.innerHeight) {
-      // all except Explorer
-      windowHeight = self.innerHeight;
-   }
-   else if (document.documentElement &&
-            document.documentElement.clientHeight) {
-      // Explorer 6 Strict Mode
-      windowHeight = document.documentElement.clientHeight;
-   }
-   else if (document.body) { // other Explorers
-      windowHeight = document.body.clientHeight;
-   }
-   return windowHeight;
-}
-
 function parseNames(st) {
    if (st === undefined || st === null || st.length === 0) {
       return [];
@@ -278,13 +260,19 @@ function tu_init(extensionURL, retries) {
    });
 }
 
-function MissingE_unfollower_doStartup(extensionURL, maxRetries) {
+self.on('message', function (message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "unfollower") {
+      return;
+   }
    if (document.body.id !== "dashboard_edit_post") {
       jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
-                            'href="' + extensionURL + 'unfollower/' +
+                            'href="' + message.extensionURL + 'unfollower/' +
                             'unfollower.css" />');
       if (jQuery('#right_column').find('a[href$="/followers"]').length > 0) {
-         tu_init(extensionURL, maxRetries);
+         tu_init(message.extensionURL, message.retries);
       }
    }
-}
+});
+
+self.postMessage({greeting: "settings", component: "unfollower"});

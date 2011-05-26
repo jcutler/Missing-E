@@ -23,15 +23,6 @@
 
 /*global safari, localStorage */
 
-function MissingE_postCrushes_fill_doStartup(extensionURL) {
-   var url = window.localStorage.getItem("tcp_crushURL");
-   if (document.body.id === 'dashboard_edit_post' &&
-       url !== undefined && url !== null && url !== "") {
-      self.on('message', postCrushesFillSettings, false);
-      self.postMessage({greeting:"settings", component: "postCrushes_fill"});
-   }
-}
-
 function postCrushesFillSettings(message) {
    var tagarr, i;
    if (message.greeting !== "settings" ||
@@ -75,3 +66,25 @@ function postCrushesFillSettings(message) {
       document.getElementById('photo_url').style.display = "block";
    }
 }
+
+function MissingE_postCrushes_fill_doStartup(message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "postCrushes" ||
+       message.subcomponent !== "fill") {
+      return;
+   }
+   else {
+      self.removeListener('message', MissingE_postCrushes_fill_doStartup);
+   }
+   var extensionURL = message.extensionURL;
+   var url = window.localStorage.getItem("tcp_crushURL");
+   if (document.body.id === 'dashboard_edit_post' &&
+       url !== undefined && url !== null && url !== "") {
+      self.on('message', postCrushesFillSettings, false);
+      self.postMessage({greeting:"settings", component: "postCrushes_fill"});
+   }
+}
+
+self.on('message',MissingE_postCrushes_fill_doStartup);
+self.postMessage({greeting: "settings", component: "postCrushes",
+                  subcomponent: "fill"});

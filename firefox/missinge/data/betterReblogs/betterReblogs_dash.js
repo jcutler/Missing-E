@@ -195,13 +195,17 @@ function doReblog(item,replaceIcons,accountName) {
    });
 }
 
-function MissingE_betterReblogs_dash_doStartup(extensionURL, passTags,
-                                               quickReblog, replaceIcons,
-                                               accountName) {
+self.on('message', function (message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "betterReblogs" ||
+       message.subcomponent !== "dash") {
+      return;
+   }
+   var extensionURL = message.extensionURL;
    var lang = jQuery('html').attr('lang');
-   if (passTags === 1) {
+   if (message.passTags === 1) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
-      if (quickReblog === 1) {
+      if (message.quickReblog === 1) {
          selector = '#MissingE_quick_reblog_manual';
       }
       jQuery(selector).live('mousedown', function(e) {
@@ -238,7 +242,7 @@ function MissingE_betterReblogs_dash_doStartup(extensionURL, passTags,
       });
    }
 
-   if (quickReblog === 1) {
+   if (message.quickReblog === 1) {
       var r,s;
       var idx;
       var tagsText = {
@@ -372,7 +376,7 @@ function MissingE_betterReblogs_dash_doStartup(extensionURL, passTags,
          var h = reblog.outerHeight() - 2;
          var w = (qr.outerWidth()>>1) - (reblog.innerWidth()>>1);
          var tagarr = [];
-         if (passTags === 1) {
+         if (message.passTags === 1) {
             var tags = reblog.closest('li.post').find('span.tags a');
             if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href)) {
                var i;
@@ -400,8 +404,8 @@ function MissingE_betterReblogs_dash_doStartup(extensionURL, passTags,
             qr.find('div.user_menu_list').attr('id','list_for_' + postId);
          }
          var arg = '';
-         if (accountName !== '0') {
-            arg = '&channel_id=' + accountName;
+         if (message.accountName !== '0') {
+            arg = '&channel_id=' + message.accountName;
             if (!(/\?/.test(reblog.attr('href')))) {
                arg = arg.replace(/&/,'?');
             }
@@ -425,7 +429,7 @@ function MissingE_betterReblogs_dash_doStartup(extensionURL, passTags,
              me.hasClass('MissingE_quick_reblogging_text_successs')) {
             return false;
          }
-         doReblog(this,replaceIcons,accountName);
+         doReblog(this,message.replaceIcons,message.accountName);
          return false;
       });
 
@@ -437,8 +441,10 @@ function MissingE_betterReblogs_dash_doStartup(extensionURL, passTags,
       });
       qr.find('a').click(function(e){
          if (e.target.tagName === 'INPUT') { return false; }
-         doReblog(this,replaceIcons,accountName);
+         doReblog(this,message.replaceIcons,message.accountName);
       });
    }
-}
+});
 
+self.postMessage({greeting: "settings", component: "betterReblogs",
+                  subcomponent: "dash"});

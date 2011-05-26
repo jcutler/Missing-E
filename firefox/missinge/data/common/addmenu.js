@@ -23,42 +23,6 @@
 
 /*global safari */
 
-// Adapted from getPageSize() by quirksmode.com
-function getPageHeight() {
-   var windowHeight;
-   if (self.innerHeight) {
-      // all except Explorer
-      windowHeight = self.innerHeight;
-   }
-   else if (document.documentElement &&
-            document.documentElement.clientHeight) {
-      // Explorer 6 Strict Mode
-      windowHeight = document.documentElement.clientHeight;
-   }
-   else if (document.body) { // other Explorers
-      windowHeight = document.body.clientHeight;
-   }
-   return windowHeight;
-}
-
-// Adapted from getPageSize() by quirksmode.com
-function getPageWidth() {
-   var windowWidth;
-   if (self.innerWidth) {
-      // all except Explorer
-      windowWidth = self.innerWidth;
-   }
-   else if (document.documentElement &&
-            document.documentElement.clientWidth) {
-      // Explorer 6 Strict Mode
-      windowWidth = document.documentElement.clientWidth;
-   }
-   else if (document.body) { // other Explorers
-      windowWidth = document.body.clientWidth;
-   }
-   return windowWidth;
-}
-
 self.postMessage({greeting:"addMenu"});
 
 self.on("message", function (message) {
@@ -86,20 +50,21 @@ self.on("message", function (message) {
       }
    }
 
-   accmenu = jQuery("#account_menu");
+   var accmenu = document.getElementById("account_menu");
 
-   if (accmenu.length > 0) {
-      setlnk = jQuery('<a href="' + message.extensionURL +
-                      'options.html" onclick="return false;" ' +
-                      'target="_blank">Missing ' +
-                      '<img src="' + message.extensionURL +
-                      'missinge16.png" style="' +
-                      'vertical-align:bottom;" /></a>');
-      setlnk.mouseup(function(e) {
+   if (accmenu) {
+      var links = accmenu.getElementsByTagName('a');
+      var setlnk = document.createElement('a');
+      setlnk.href = message.extensionURL + 'options.html';
+      setlnk.onclick = function(){return false;};
+      setlnk.setAttribute("target","_blank");
+      setlnk.innerHTML = 'Missing <img src="' + message.extensionURL +
+                        'missinge16.png" style="vertical-align:bottom;" />';
+      setlnk.addEventListener('mouseup', function(e) {
          if (e.which === 1 || e.which === 2) {
-            self.postMessage({greeting: "open", url: "OPTIONS",
-                         width: getPageWidth(), height: getPageHeight()});
+            self.postMessage({greeting: "open", url: "OPTIONS"});
          }
-      }).insertBefore(accmenu.find('a:last'));
+      }, false);
+      accmenu.insertBefore(setlnk, links[links.length-1]);
    }
 });

@@ -143,9 +143,9 @@
    // getPageScroll() by quirksmode.com
    function getPageScroll() {
       var xScroll, yScroll;
-      if (self.pageYOffset) {
-         yScroll = self.pageYOffset;
-         xScroll = self.pageXOffset;
+      if (windw.pageYOffset) {
+         yScroll = window.pageYOffset;
+         xScroll = window.pageXOffset;
       }
       else if (document.documentElement &&
                document.documentElement.scrollTop) {
@@ -164,9 +164,9 @@
    // Adapted from getPageSize() by quirksmode.com
    function getPageHeight() {
       var windowHeight;
-      if (self.innerHeight) {
+      if (window.innerHeight) {
          // all except Explorer
-         windowHeight = self.innerHeight;
+         windowHeight = window.innerHeight;
       }
       else if (document.documentElement &&
                document.documentElement.clientHeight) {

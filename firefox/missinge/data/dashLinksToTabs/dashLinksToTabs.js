@@ -70,23 +70,31 @@ function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
    return true;
 }
 
-function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks,
-                                            editLinks) {
+self.on('message', function(message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "dashLinksToTabs") {
+      return;
+   }
    var lcol = document.getElementById('left_column');
    var rcol = document.getElementById('right_column');
 
    if (lcol) {
       lcol.addEventListener('click', function(e) {
-         dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);
+         dashLinksToTabs_click(e, message.newPostTabs, message.reblogLinks,
+                               message.editLinks);
       }, false);
    }
    if (rcol && sidebar === 1) {
       rcol.addEventListener('click', function(e) {
-         dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);
+         dashLinksToTabs_click(e, message.newPostTabs, message.reblogLinks,
+                               message.editLinks);
       }, false);
    }
    jQuery('#MissingE_quick_reblog a').live('click', function(e) {
-      dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);
+      dashLinksToTabs_click(e, message.newPostTabs, message.reblogLinks,
+                            message.editLinks);
    });
-}
+});
+
+self.postMessage({greeting: "settings", component: "dashLinksToTabs"});
 

@@ -71,9 +71,12 @@ function showHideButtons(newbtns, val) {
    newbtns.find('#MissingE_' + tofind + 'Post').parent().addClass('current');
 }
 
-function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
-                                         uploaderToggle, addUploader,
-                                         quickButtons) {
+self.on('message', function(message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "postingFixes") {
+      return;
+   }
+   var extensionURL = message.extensionURL;
    var lang = jQuery('html').attr('lang');
    var submitText = {
                      en: {
@@ -168,7 +171,7 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
       }
    });
 
-   if (quickButtons &&
+   if (message.quickButtons === 1 &&
        jQuery('#post_state').length > 0 &&
        jQuery('#post_state')
          .children('*[value="0"],*[value="1"],*[value="2"],*[value="private"]')
@@ -247,12 +250,12 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
       }
    }
 
-   if (photoReplies === 1) {
+   if (message.photoReplies === 1) {
       var apr = document.getElementById("allow_photo_replies");
       if (apr !== null && apr !== undefined) { apr.checked = true; }
    }
 
-   if (uploaderToggle === 1) {
+   if (message.uploaderToggle === 1) {
       var url = document.getElementById("photo_url");
       var lnk = document.getElementById("use_url_link");
 
@@ -269,7 +272,7 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
       }
    }
 
-   if (addUploader === 1 &&
+   if (message.addUploader === 1 &&
        !(/\/new\/text/.test(location.href)) &&
        !(/\/new\/chat/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/messages/.test(location.href)) &&
@@ -330,7 +333,7 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                           '</script>');
       }
    }
-   else if (addUploader === 1 &&
+   else if (message.addUploader === 1 &&
             /http:\/\/www\.tumblr\.com\/share/.test(location.href)) {
       var tag = '<img src=\\"X\\" />';
       jQuery('textarea').each(function() {
@@ -395,14 +398,15 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                        '}' +
                        '</script>');
    }
-   else if (addUploader === 1 &&
+   else if (message.addUploader === 1 &&
        (/http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
         /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/
             .test(location.href) ||
         /http:\/\/www\.tumblr\.com\/submissions/.test(location.href) ||
         /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/
             .test(location.href))) {
-      jQuery('#posts li.post a[id^="ask_answer_link_"]').live('click', function() {
+      jQuery('#posts li.post a[id^="ask_answer_link_"]')
+            .live('click', function() {
          var post = jQuery(this).closest("li.post");
          if (post.length > 0) {
             addAskUploader(post.get(0));
@@ -433,5 +437,6 @@ function MissingE_postingFixes_doStartup(extensionURL, photoReplies,
                        '}' +
                        '</script>');
    }
-}
+});
 
+self.postMessage({greeting: "settings", component: "postingFixes"});

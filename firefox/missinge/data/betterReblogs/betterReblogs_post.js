@@ -40,7 +40,6 @@ function addTags(link) {
          return false;
       }
    }
-
    var host, pid;
    var loc = location.href;
    loc = loc.substring(loc.indexOf("src=")+4);
@@ -88,18 +87,23 @@ function receiveTags(message) {
    }
 }
 
-function MissingE_betterReblogs_post_doStartup(frameURL) {
-   if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) &&
-       location.href === frameURL) {
-      self.on("message", receiveTags);
-      if (!addTags()) {
-         document.addEventListener('DOMNodeInserted',function(e){
-            var item = e.target;
-            if (item.tagName === 'A' && /reblog/.test(item.href)) {
-               addTags();
-            }
-         }, false);
-      }
+self.on('message', function(message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "betterReblogs" ||
+       message.subcomponent !== "post") {
+      return;
    }
-}
 
+   self.on("message", receiveTags);
+   if (!addTags()) {
+      document.addEventListener('DOMNodeInserted',function(e){
+         var item = e.target;
+         if (item.tagName === 'A' && /reblog/.test(item.href)) {
+            addTags(item);
+         }
+      }, false);
+   }
+});
+
+self.postMessage({greeting: "settings", component: "betterReblogs",
+                  subcomponent: "post"});

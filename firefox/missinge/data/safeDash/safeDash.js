@@ -227,7 +227,12 @@ function doHide(item) {
    }
 }
 
-function MissingE_safeDash_doStartup(extensionURL) {
+self.on('message', function (message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "safeDash") {
+      return;
+   }
+   var extensionURL = message.extensionURL;
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                          extensionURL + 'safeDash/safeDash.css" />');
    lock = extensionURL + 'safeDash/lock.png';
@@ -322,4 +327,6 @@ function MissingE_safeDash_doStartup(extensionURL) {
    jQuery('#posts li.post, #posts li.notification, ol.notes').each(function(){
       doHide(this);
    });
-}
+});
+
+self.postMessage({greeting: "settings", component: "safeDash"});

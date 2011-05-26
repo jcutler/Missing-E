@@ -523,9 +523,6 @@ function handleMessage(message, myWorker) {
                               followYou:followYou, youFollow:youFollow});
       }
       else {
-         console.log(myWorker.tab);
-         console.log(followCheckerTab);
-         console.log(formKey);
          myWorker.postMessage({greeting: "followChecker_fill",
                               success:false});
       }
@@ -674,6 +671,8 @@ function handleMessage(message, myWorker) {
    }
    else if (message.greeting == "start") {
       var activeScripts = {};
+      var injectScripts = [data.url("common/storage.js"),
+                           data.url("common/utils.js")];
       activeScripts.extensionURL = data.url("");
       if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
@@ -690,40 +689,42 @@ function handleMessage(message, myWorker) {
              .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
          if (getStorage("extensions.MissingE.dashLinksToTabs.enabled",1) == 1) {
+            injectScripts.push(data.url("dashLinksToTabs/dashLinksToTabs.js"));
             activeScripts.dashLinksToTabs = true;
          }
          else
             activeScripts.dashLinksToTabs = false;
 
          if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
+            injectScripts.push(data.url("safeDash/safeDash.js"));
             activeScripts.safeDash = true;
          }
          else
             activeScripts.safeDash = false;
 
          if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
+            injectScripts.push(data.url("bookmarker/bookmarker.js"));
             activeScripts.bookmarker = true;
          }
          else
             activeScripts.bookmarker = false;
 
-         if (getStorage("extensions.MissingE.unfollower.enabled",1) == 1 ||
-             getStorage("extensions.MissingE.followChecker.enabled",1) == 1) {
-         }
-
          if (getStorage("extensions.MissingE.unfollower.enabled",1) == 1) {
+            injectScripts.push(data.url("unfollower/unfollower.js"));
             activeScripts.unfollower = true;
          }
          else
             activeScripts.unfollower = false;
 
          if (getStorage("extensions.MissingE.followChecker.enabled",1) == 1) {
+            injectScripts.push(data.url("followChecker/followChecker.js"));
             activeScripts.followChecker = true;
          }
          else
             activeScripts.followChecker = false;
 
          if (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1) {
+            injectScripts.push(data.url("dashboardFixes/dashboardFixes.js"));
             activeScripts.dashboardFixes = true;
          }
          else
@@ -747,12 +748,14 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(message.url)) ||
          (/http:\/\/www\.tumblr\.com\/share/.test(message.url)))) {
          if (getStorage("extensions.MissingE.postingFixes.enabled",1) == 1) {
+            injectScripts.push(data.url("postingFixes/postingFixes.js"));
             activeScripts.postingFixes = true;
          }
          else
             activeScripts.postingFixes = false;
 
          if (getStorage("MissingE.betterReblogs.enabled",1) == 1) {
+            injectScripts.push(data.url("betterReblogs/betterReblogs_fill.js"));
             activeScripts.betterReblogs = true;
             activeScripts.betterReblogs_fill = true;
          }
@@ -760,9 +763,9 @@ function handleMessage(message, myWorker) {
             activeScripts.betterReblogs = false;
       }
       if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(message.url) &&
-          !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/new\//.test(message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/new\//.test(message.url))) {
+          !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(myWorker.tab.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/new\//.test(myWorker.tab.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/new\//.test(myWorker.tab.url))) {
          if (getStorage("extensions.MissingE.gotoDashPost.enabled",1) == 1) {
             activeScripts.gotoDashPost = true;
          }
@@ -787,6 +790,7 @@ function handleMessage(message, myWorker) {
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
            /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url))) {
          if (getStorage("extensions.MissingE.replyReplies.enabled",1) == 1) {
+            injectScripts.push(data.url("replyReplies/replyReplies.js"));
             activeScripts.replyReplies = true;
             activeScripts.replyReplies_fill = false;
          }
@@ -796,6 +800,7 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/new\/(text|photo)/.test(message.url)) {
          if (getStorage("extensions.MissingE.replyReplies.enabled",1) == 1) {
+            injectScripts.push(data.url("replyReplies/replyReplies_fill.js"));
             activeScripts.replyReplies = true;
             activeScripts.replyReplies_fill = true;
          }
@@ -805,6 +810,7 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/following/.test(message.url)) {
          if (getStorage("extensions.MissingE.postCrushes.enabled",1) == 1) {
+            injectScripts.push(data.url("postCrushes/postCrushes.js"));
             activeScripts.postCrushes = true;
             activeScripts.postCrushes_fill = false;
          }
@@ -814,6 +820,7 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/new\/photo/.test(message.url)) {
          if (getStorage("extensions.MissingE.postCrushes.enabled",1) == 1) {
+            injectScripts.push(data.url("postCrushes/postCrushes_fill.js"));
             activeScripts.postCrushes = true;
             activeScripts.postCrushes_fill = true;
          }
@@ -829,18 +836,21 @@ function handleMessage(message, myWorker) {
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(message.url))) {
          if (getStorage("extensions.MissingE.timestamps.enabled",1) == 1) {
+            injectScripts.push(data.url("timestamps/timestamps.js"));
             activeScripts.timestamps = true;
          }
          else
             activeScripts.timestamps = false;
 
          if (getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1) {
+            injectScripts.push(data.url("betterReblogs/betterReblogs_dash.js"));
             activeScripts.betterReblogs = true;
          }
          else
             activeScripts.betterReblogs = false;
 
          if (getStorage("extensions.MissingE.magnifier.enabled",1) == 1) {
+            injectScripts.push(data.url("magnifier/magnifier.js"));
             activeScripts.magnifier = true;
          }
          else
@@ -848,6 +858,7 @@ function handleMessage(message, myWorker) {
 
          if (getStorage("extensions.MissingE.reblogYourself.enabled",1) == 1 &&
              getStorage("extensions.MissingE.reblogYourself.dashboard",1) == 1) {
+            injectScripts.push(data.url("reblogYourself/reblogYourself_dash.js"));
             activeScripts.reblogYourself = true;
          }
          else
@@ -856,11 +867,26 @@ function handleMessage(message, myWorker) {
 
       if (message.isFrame &&
           (activeScripts.gotoDashPost || activeScripts.reblogYourself)) {
-         myWorker.tab.attach({contentScriptFile:data.url("common/widenIframe.js")});
+         injectScripts.push(data.url("common/widenIframe.js"));
       }
+
+      if (activeScripts.unfollower ||
+          activeScripts.followChecker ||
+          activeScripts.magnifier) {
+         injectScripts.push(data.url("facebox/facebox.js"));
+         injectScripts.push(data.url("common/faceboxHelper.js"));
+      }
+
+      injectScripts.unshift(data.url("common/jquery-1.5.min.js"));
       activeScripts.url = message.url;
       activeScripts.isFrame = message.isFrame;
       activeScripts.greeting = "startup";
+      myWorker.tab.attach({
+         contentScriptFile: injectScripts,
+         onMessage: function onMessage(data) {
+            handleMessage(data, this);
+         }
+      });
       myWorker.postMessage(activeScripts);
    }
 
@@ -869,36 +895,55 @@ function handleMessage(message, myWorker) {
 pageMod.PageMod({
    include: ["http://www.tumblr.com/*"],
    contentScriptWhen: 'ready',
-   contentScriptFile: [data.url("common/jquery-1.5.min.js"),
-                       data.url("common/addmenu.js"),
-                       data.url("common/defs.js"),
-                       data.url("common/utils.js"),
-                       data.url("common/storage.js"),
-                       data.url("askFixes/askFixes.js"),
-                       data.url("betterReblogs/betterReblogs_dash.js"),
-                       data.url("betterReblogs/betterReblogs_fill.js"),
-                       data.url("betterReblogs/betterReblogs_post.js"),
-                       data.url("bookmarker/bookmarker.js"),
-                       data.url("dashboardFixes/dashboardFixes.js"),
-                       data.url("dashLinksToTabs/dashLinksToTabs.js"),
-                       data.url("gotoDashPost/gotoDashPost.js"),
-                       data.url("postCrushes/postCrushes.js"),
-                       data.url("postCrushes/postCrushes_fill.js"),
-                       data.url("postingFixes/postingFixes.js"),
-                       data.url("reblogYourself/reblogYourself_post.js"),
-                       data.url("reblogYourself/reblogYourself_dash.js"),
-                       data.url("replyReplies/replyReplies.js"),
-                       data.url("replyReplies/replyReplies_fill.js"),
-                       data.url("safeDash/safeDash.js"),
-                       data.url("timestamps/timestamps.js"),
-                       data.url("facebox/facebox.js"),
-                       data.url("followChecker/followChecker.js"),
-                       data.url("unfollower/unfollower.js"),
-                       data.url("magnifier/magnifier.js"),
+   contentScriptFile: [data.url("common/addmenu.js"),
                        data.url("common/whoami.js")],
-   onAttach: function onAttach(worker) {
+   onAttach: function (worker) {
       worker.on('message', function(data) {
          handleMessage(data, this);
+      });
+   }
+});
+
+pageMod.PageMod({
+   include: ["http://www.tumblr.com/ask_form/*"],
+   contentScriptWhen: 'ready',
+   contentScriptFile: data.url("askFixes/askFixes.js"),
+   onAttach: function (worker) {
+      worker.on('message', function(data) {
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+            handleMessage(data, this);
+         }
+      });
+   }
+});
+
+pageMod.PageMod({
+   include: ["http://www.tumblr.com/dashboard/iframe*"],
+   contentScriptWhen: 'ready',
+   contentScriptFile: [data.url("betterReblogs/betterReblogs_post.js"),
+                       data.url("gotoDashPost/gotoDashPost.js"),
+                       data.url("reblogYourself/reblogYourself_post.js")],
+   onAttach: function (worker) {
+      worker.on('message', function(data) {
+         var answer = data.greeting !== 'settings';
+         if (data.greeting === 'settings') {
+            answer = !(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(this.tab.url)) &&
+               !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(this.tab.url)) &&
+               !(/http:\/\/www\.tumblr\.com\/new\//.test(this.tab.url)) &&
+               ((data.component === 'betterReblogs' &&
+                 data.subcomponent === 'post' &&
+                 getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1 &&
+                 getStorage("extensions.MissingE.betterReblogs.passTags",1) == 1) ||
+                (data.component === 'gotoDashPost' &&
+                 getStorage("extensions.MissingE.gotoDashPost.enabled",1) == 1) ||
+                (data.component === 'reblogYourself' &&
+                 data.subcomponent === 'post' &&
+                 getStorage("extensions.MissingE.reblogYourself.enabled",1) == 1 &&
+                 getStorage("extensions.MissingE.reblogYourself.postPage",1) == 1));
+         }
+         if (answer) {
+            handleMessage(data, this);
+         }
       });
    }
 });

@@ -109,3 +109,5 @@ function MissingE_timestamps_doStartup() {
       }, false);
    }
 }
+
+MissingE_timestamps_doStartup();

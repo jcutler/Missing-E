@@ -116,7 +116,12 @@ function receiveMagnifier(message) {
    }
 }
 
-function MissingE_magnifier_doStartup(extensionURL) {
+self.on('message', function (message) {
+   if (message.greeting !== 'settings' ||
+       message.component !== 'magnifier') {
+      return;
+   }
+   var extensionURL = message.extensionURL;
    var magimg = extensionURL + 'magnifier/magnifier.png';
    var turnimg = extensionURL + 'magnifier/turners.png';
 
@@ -164,4 +169,6 @@ function MissingE_magnifier_doStartup(extensionURL) {
          insertMagnifier(e.target);
       }, false);
    }
-}
+});
+
+self.postMessage({greeting: "settings", component: "magnifier"});

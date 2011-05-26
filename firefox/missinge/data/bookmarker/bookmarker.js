@@ -297,7 +297,12 @@ function refreshMarks() {
    generateList();
 }
 
-function MissingE_bookmarker_doStartup(extensionURL) {
+self.on('message', function (message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "bookmarker") {
+      return;
+   }
+   var extensionURL = message.extensionURL;
    var bookmarksTitle = {
                       en: "Bookmarks",
                       de: "Lesezeichen",
@@ -369,4 +374,6 @@ function MissingE_bookmarker_doStartup(extensionURL) {
          else { refreshMarks(); }
       }, false);
    }
-}
+});
+
+self.postMessage({greeting: "settings", component: "bookmarker"});

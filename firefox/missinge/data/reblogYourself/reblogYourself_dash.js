@@ -131,3 +131,5 @@ function MissingE_reblogYourself_dash_doStartup() {
       }, false);
    }
 }
+
+MissingE_reblogYourself_dash_doStartup();

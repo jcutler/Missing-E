@@ -457,7 +457,16 @@ function replyRepliesSettings(message) {
    }
 }
 
-function MissingE_replyReplies_doStartup(extensionURL) {
+function MissingE_replyReplies_doStartup(message) {
+   if (message.greeting === "settings" &&
+       message.component === "replyReplies" &&
+       message.subcomponent !== "fill") {
+      self.removeListener('message', MissingE_replyReplies_doStartup);
+   }
+   else {
+      return;
+   }
+   var extensionURL = message.extensionURL;
    self.on("message", replyRepliesSettings);
    jQuery('head').append('<style type="text/css">' +
                     '#posts .notification .notification_type_icon {' +
@@ -526,3 +535,5 @@ function MissingE_replyReplies_doStartup(extensionURL) {
    });
 }
 
+self.on('message',MissingE_replyReplies_doStartup);
+self.postMessage({greeting: "settings", component: "replyReplies"});

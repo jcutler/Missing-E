@@ -85,7 +85,16 @@ function postCrushesSettings(message) {
                                    '&post%5Bthree%5D='});
 }
 
-function MissingE_postCrushes_doStartup(extensionURL) {
+function MissingE_postCrushes_doStartup(message) {
+   if (message.greeting === "settings" &&
+       message.component === "postCrushes" &&
+       message.subcomponent !== "fill") {
+      self.removeListener('message', MissingE_postCrushes_doStartup);
+   }
+   else {
+      return;
+   }
+   var extensionURL = message.extensionURL;
    var crushdiv = document.getElementById("crushes");
    var infodiv = crushdiv.nextSibling;
    while (infodiv !== undefined && infodiv !== null &&
@@ -119,3 +128,5 @@ function MissingE_postCrushes_doStartup(extensionURL) {
    infodiv.appendChild(newdiv);
 }
 
+self.on('message',MissingE_postCrushes_doStartup);
+self.postMessage({greeting: "settings", component: "postCrushes"});

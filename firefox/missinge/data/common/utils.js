@@ -66,9 +66,9 @@ function getFormattedDate(d, format) {
 
 function getPageHeight() {
    var windowHeight;
-   if (self.innerHeight) {
+   if (window.innerHeight) {
       // all except Explorer
-      windowHeight = self.innerHeight;
+      windowHeight = window.innerHeight;
    }
    return windowHeight;
 }

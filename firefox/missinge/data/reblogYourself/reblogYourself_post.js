@@ -21,7 +21,12 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-function MissingE_reblogYourself_post_doStartup() {
+self.on('message', function (message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "reblogYourself" ||
+       message.subcomponent !== "post") {
+      return;
+   }
    var div = document.getElementsByTagName("div")[0];
    var controls = div.getElementsByTagName("a");
    var noReblog = true;
@@ -75,4 +80,7 @@ function MissingE_reblogYourself_post_doStartup() {
          div.insertBefore(link,last);
       }
    }
-}
+});
+
+self.postMessage({greeting: "settings", component: "reblogYourself",
+                  subcomponent: "post"});

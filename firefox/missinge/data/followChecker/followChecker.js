@@ -32,24 +32,6 @@ var youfollow = [];
 var followyou = [];
 var formKey;
 
-// Adapted from getPageSize() by quirksmode.com
-function getPageHeight() {
-   var windowHeight;
-   if (self.innerHeight) {
-      // all except Explorer
-      windowHeight = self.innerHeight;
-   }
-   else if (document.documentElement &&
-            document.documentElement.clientHeight) {
-      // Explorer 6 Strict Mode
-      windowHeight = document.documentElement.clientHeight;
-   }
-   else if (document.body) { // other Explorers
-      windowHeight = document.body.clientHeight;
-   }
-   return windowHeight;
-}
-
 function doFWFinish(followers, followees, show) {
    youfollow = [];
    followyou = [];
@@ -449,12 +431,19 @@ function tfc_init(extensionURL, retries) {
    });
 }
 
-function MissingE_followChecker_doStartup(extensionURL, maxRetries) {
+self.on('message', function (message) {
+   if (message.greeting !== "settings" ||
+       message.component !== "followChecker") {
+      return;
+   }
+
    if (document.body.id !== "tinymce" &&
        document.body.id !== "dashboard_edit_post") {
       jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
-                            'href="' + extensionURL + 'followChecker/' +
-                            'followChecker.css" />');
-      tfc_init(extensionURL, maxRetries);
+                            'href="' + message.extensionURL +
+                            'followChecker/followChecker.css" />');
+      tfc_init(message.extensionURL, message.retries);
    }
-}
+});
+
+self.postMessage({greeting: "settings", component: "followChecker"});
