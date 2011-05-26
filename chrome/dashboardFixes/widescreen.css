@@ -69,6 +69,14 @@ right:22px !important;
 margin-right:-10px !important;
 }
 
+#posts ol.notes li.MissingE_rt_box .notification_type_icon {
+margin-right:0 !important;
+}
+
+#posts ol.notes li.MissingE_rt_box a.block {
+right:32px !important;
+}
+
 ol.notes span.action {
 float:none !important;
 width:auto !important;
@@ -90,3 +98,5 @@ width:100% !important;
 #posts div.reply_pane div.nipple {
 margin-right:0 !important;
 }
+
+#

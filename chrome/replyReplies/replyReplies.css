@@ -56,6 +56,10 @@ width:14px;
 height:16px;
 }
 
+#posts .notification.MissingE_rt_box + .notification {
+margin-top:1px;
+}
+
 #posts .notification.MissingE_rt_box {
 border:1px solid white !important;
 }
