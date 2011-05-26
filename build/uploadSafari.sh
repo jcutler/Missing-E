@@ -1,3 +1,7 @@
+if [[ "$1" == "-noupload" ]]; then
+   exit 0
+fi
+
 str=`grep -A 1 CFBundleShortVersionString ../missinge.safariextension/Info.plist | grep string | awk -F '[<>]' '{print $3}'`
 num=`grep -A 1 CFBundleVersion ../missinge.safariextension/Info.plist | grep string | awk -F '[<>]' '{print $3}'`
 

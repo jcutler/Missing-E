@@ -2,6 +2,12 @@
 FIREFOX=0
 SAFARI=0
 CHROME=0
+UPLOAD=""
+
+if [[ "$1" == "-noupload" ]]; then
+   UPLOAD="-noupload"
+   shift
+fi   
 
 until [ -z "$1" ]
 do
@@ -31,13 +37,13 @@ done
 
 if [[ "$CHROME" -eq "1" ]]; then
    echo "Building Chrome Extension"
-   ./buildChrome.sh > /dev/null
+   ./buildChrome.sh $UPLOAD > /dev/null
 fi
 if [[ "$FIREFOX" -eq "1" ]]; then
    echo "Building Firefox Add-On"
-   ./buildFirefox.sh > /dev/null
+   ./buildFirefox.sh $UPLOAD > /dev/null
 fi
 if [[ "$SAFARI" -eq "1" ]]; then
    echo "Uploading Safari Extension"
-   ./uploadSafari.sh
+   ./uploadSafari.sh $UPLOAD
 fi

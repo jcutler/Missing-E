@@ -40,6 +40,11 @@ cd $BUILDDIR
 
 rm -rf missinge
 
+cd $CWD
+
+if [[ "$1" == "-noupload" ]]; then
+   exit 0
+fi
+
 "c:/Program Files/Mozilla Firefox/firefox.exe" "https://addons.mozilla.org/en-US/developers/addon/missing-e/versions/#version-upload"
 
-cd $CWD
