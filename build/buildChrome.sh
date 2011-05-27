@@ -8,7 +8,7 @@ else
    mkdir chrome-build
 fi
 
-"c:/Program Files/7-Zip/7z.exe" a chrome-build/missinge.zip MissingE
+"c:/Program Files/7-Zip/7z.exe" a -mx9 chrome-build/missinge.zip MissingE
 rm -rf MissingE
 
 if [[ "$1" == "-noupload" ]]; then
