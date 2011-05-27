@@ -22,7 +22,6 @@
  */
 
 function zindexFixEmbed(em) {
-   console.log(em);
    var node = $(em).clone();
    node.attr('wmode','opaque').addClass('zindexfixed');
    $(em).replaceWith(node);
