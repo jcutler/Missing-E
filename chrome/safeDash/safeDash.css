@@ -46,13 +46,22 @@ position:static !important;
 background-position:0px 0px;
 }
 
+.video.nsfwembed:hover .nsfwvid {
+visibility:visible !important;
+}
+
 .nsfwembed:hover .nsfwed {
+opacity:1 !important;
 visibility:visible !important;
 }
 
 .nsfwembed {
 clear:both;
 display:inline-block;
+}
+
+.video.nsfwembed {
+display:block;
 }
 
 .nsfwdiv img.album_art, .nsfwdiv img.image_thumbnail {

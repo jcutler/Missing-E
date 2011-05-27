@@ -28,6 +28,7 @@ var lock, lockicon;
 function undoNSFW() {
    jQuery('#posts .nsfwed').css('opacity','1');
    jQuery('#posts div.nsfwembed span.nsfwed').css('visibility','visible');
+   jQuery('#posts div.nsfwembed object.nsfwvid').css('visibility','visible');
    jQuery('img.nsfw_overlay').css('opacity','1');
    jQuery('#nsfwctrltxt').html('Off');
    jQuery('#nsfwctrlicon').css('background-position','0px 0px');
@@ -37,6 +38,7 @@ function undoNSFW() {
 function doNSFW() {
    jQuery('#posts .nsfwed').css('opacity','0');
    jQuery('#posts div.nsfwembed span.nsfwed').css('visibility','hidden');
+   jQuery('#posts div.nsfwembed object.nsfwvid').css('visibility','hidden');
    jQuery('img.nsfw_overlay').css('opacity','0');
    jQuery('#nsfwctrltxt').html('On');
    jQuery('#nsfwctrlicon').css('background-position','-15px 0px');
@@ -192,6 +194,21 @@ function doHide(item) {
       }
       else {
          node.parent().css('visibility','hidden');
+      }
+   }
+   else if (item.tagName === 'OBJECT' &&
+            node.parent().hasClass('video_embed') &&
+            !node.hasClass('nsfwdone')) {
+      node.addClass('nsfwvid').addClass('nsfwdone').parent()
+            .css('background','url("' + lock + '") ' +
+                 'no-repeat scroll center center #BFBFBF')
+            .parent().addClass('nsfwembed');
+
+      if (!safe) {
+         node.css('visibility','visible');
+      }
+      else {
+         node.css('visibility','hidden');
       }
    }
    else if ((item.tagName === 'OL' && node.hasClass('notes')) ||
