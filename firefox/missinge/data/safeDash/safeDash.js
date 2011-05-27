@@ -164,6 +164,14 @@ function doHide(item) {
                   var pos = me.position();
                   extra = 'position:absolute;top:' + pos.top + 'px;left:' +
                      pos.left + 'px;';
+                  if (pos.top === 0) {
+                     if (pos.left === 0) { klass += ' nsfwphotoset4'; }
+                     else { klass += ' nsfwphotoset1'; }
+                  }
+                  else {
+                     if (pos.left === 0) { klass += ' nsfwphotoset3'; }
+                     else { klass += ' nsfwphotoset2'; }
+                  }
                }
                if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/
                      .test(me.attr('src')))) {

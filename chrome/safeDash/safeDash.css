@@ -29,6 +29,30 @@ margin-top:0 !important;
 opacity:1 !important;
 }
 
+.nsfwphotoset:hover .nsfwdiv {
+background:transparent !important;
+}
+
+.nsfwphotoset {
+border-radius:5px;
+}
+
+.nsfwphotoset .nsfwphotoset1 {
+border-top-right-radius:5px;
+}
+
+.nsfwphotoset .nsfwphotoset2 {
+border-bottom-right-radius:5px;
+}
+
+.nsfwphotoset .nsfwphotoset3 {
+border-bottom-left-radius:5px;
+}
+
+.nsfwphotoset .nsfwphotoset4 {
+border-top-left-radius:5px;
+}
+
 .nsfwdiv {
 display:inline-block !important;
 max-width:100%;
@@ -36,6 +60,10 @@ max-width:100%;
 
 .nsfwdiv:hover, .nsfwoff {
 background:#FFFFFF !important
+}
+
+.nsfwphotoset .nsfwoff {
+background:transparent !important;
 }
 
 #posts .post .video_thumbnail .nsfwdiv {
