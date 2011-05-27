@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.24</string>
+	<string>1.1.25</string>
 	<key>CFBundleVersion</key>
-	<string>124</string>
+	<string>125</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -71,6 +71,7 @@
 				<string>safeDash/safeDash.js</string>
 				<string>timestamps/timestamps.js</string>
 				<string>unfollower/unfollower.js</string>
+				<string>common/zindexFix.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>

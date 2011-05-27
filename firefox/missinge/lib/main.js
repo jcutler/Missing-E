@@ -688,6 +688,7 @@ function handleMessage(message, myWorker) {
    }
    else if (message.greeting == "start") {
       var activeScripts = {};
+      var zindexFix = false;
       var injectScripts = [data.url("common/storage.js"),
                            data.url("common/utils.js")];
       activeScripts.extensionURL = data.url("");
@@ -860,6 +861,9 @@ function handleMessage(message, myWorker) {
             activeScripts.timestamps = false;
 
          if (getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1) {
+            if (getStorage("extensions.MissingE.betterReblogs.quickReblog",0) == 1) {
+               zindexFix = true;
+            }
             injectScripts.push(data.url("betterReblogs/betterReblogs_dash.js"));
             activeScripts.betterReblogs = true;
          }
@@ -890,11 +894,15 @@ function handleMessage(message, myWorker) {
       if (activeScripts.unfollower ||
           activeScripts.followChecker ||
           activeScripts.magnifier) {
+         zindexFix = true;
          injectScripts.push(data.url("facebox/facebox.js"));
          injectScripts.push(data.url("common/faceboxHelper.js"));
       }
 
       injectScripts.unshift(data.url("common/jquery-1.5.min.js"));
+      if (zindexFix) {
+         injectScripts.push(data.url("common/zindexFix.js"));
+      }
       activeScripts.url = message.url;
       activeScripts.isFrame = message.isFrame;
       activeScripts.greeting = "startup";

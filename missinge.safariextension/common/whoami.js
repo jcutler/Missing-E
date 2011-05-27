@@ -58,7 +58,7 @@ function doStartup(response) {
    info += response.message.url + "\n";
    for (i in response.message) {
       if (response.message.hasOwnProperty(i)) {
-         if (i !== 'url' && i !== 'isFrame' && !(/_fill$/.test(i))) {
+         if (i !== 'url' && i !== 'isFrame' && !(/_fill$/.test(i)) && i !== 'zindexFix') {
             info += i + ": " + (response.message[i] ? "active" : "inactive") +
                      "\n";
          }
@@ -67,6 +67,9 @@ function doStartup(response) {
    console.log(info);
 
    if (window.top === window) {
+      if (response.message.zindexFix) {
+         doZindexFix();
+      }
       if (response.message.bookmarker) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "bookmarker"});

@@ -687,6 +687,7 @@ function handleRequest(request) {
 
          if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
              getStorage("MissingE_followChecker_enabled",1) == 1) {
+            activeScripts.zindexFix = true;
          }
 
          if (getStorage("MissingE_unfollower_enabled",1) == 1) {
@@ -813,12 +814,16 @@ function handleRequest(request) {
             activeScripts.timestamps = false;
 
          if (getStorage("MissingE_magnifier_enabled",1) == 1) {
+            activeScripts.zindexFix = true;
             activeScripts.magnifier = true;
          }
          else
             activeScripts.magnifier = false;
 
          if (getStorage("MissingE_betterReblogs_enabled",1) == 1) {
+            if (getStorage("MissingE_betterReblogs_quickReblog",0) == 1) {
+               activeScripts.zindexFix = true;
+            }
             activeScripts.betterReblogs = true;
          }
          else
