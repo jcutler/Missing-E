@@ -51,6 +51,8 @@ jQuery(document).ready(function($) {
 <ul>
 <li><a href="#bookmark-follow">Why does the bookmark icon not appear on some posts?</a></li>
 <li><a href="#bookmark-issue">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</a></li>
+<li><a href="#bookmark-format">How do I change the default bookmark labels to the 12-hour format instead of 24-hour?</a></li>
+<li><a href="#bookmark-format">How do I change the way the date and time is shown in default bookmark labels?</a></li>
 <li><a href="#rename-bookmark">How do I change the name of a bookmark to something more useful?</a></li>
 </ul>
 <h2>Dashboard Fixes</h2>
@@ -183,6 +185,12 @@ jQuery(document).ready(function($) {
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="bookmark-issue"></a><p class="question">Why does loading a bookmarked post sometimes loads the dash at the wrong post or the post immediately before the correct one?</p>
 <div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p><div class="totop"><a href="#">Top</a></div></div>
+<a name="bookmark-format"></a><p class="question">How do I change the default bookmark labels to the 12-hour format instead of 24-hour?</p>
+<p class="question">How do I change the way the date and time is shown in default bookmark labels?</p>
+<div class="response">
+<p>In the settings (which you can access <a href="#settings">like this</a>), you can change the default format of how the date and time will appear on bookmark labelss. By default, the format will be <strong>%Y-%m-%D %H:%i</strong>, which would look like <strong>2011-04-09 23:07</strong>.</p>
+<p>There are plenty of these "special sequences" that you can use, all of them conveniently listed on the settings page. For example, if you wanted that same timestamp to show up as <strong>missing-e: 9-Apr-2011 11:07pm</strong> (for a bookmarked post written by Tumblr <em>"missing-e"</em>, you would enter the format as <strong>%u: %d-%M-%Y %g:%i%a</strong>.
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="rename-bookmark"></a><p class="question">How do I change the name of a bookmark to something more useful?</p>
 <div class="response">
 <p class="singleline"><strong>You can set a custom name for a bookmark when you create it:</strong></p>
