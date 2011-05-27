@@ -120,6 +120,17 @@ var months = ["Jan",
               "Nov",
               "Dec"];
 
+function setIntegerPrefType(pref,defVal) {
+   if (ps.isSet(pref) &&
+       typeof ps.get(pref,defVal) === "string") {
+      var val = ps.get(pref, defVal);
+      if (val === "0") { val = 0; }
+      else if (val === "1") { val = 1; }
+      ps.reset(pref);
+      ps.set(pref, val);
+   }
+}
+
 function getStorage(key, defVal) {
    return ps.get(key, defVal);
 }
@@ -967,5 +978,9 @@ function onStart(currVersion, prevVersion) {
 var currVersion = getVersion();
 var prevVersion = getStorage('extensions.MissingE.version',null);
 onStart(currVersion, prevVersion);
+
+setIntegerPrefType('extensions.MissingE.betterReblogs.quickReblogAcctType',0);
+setIntegerPrefType('extensions.MissingE.postCrushes.crushSize',1);
+setIntegerPrefType('extensions.MissingE.replyReplies.smallAvatars',1);
 
 console.log("Missing e is running.");

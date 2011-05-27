@@ -84,7 +84,7 @@ self.on('message', function(message) {
                                message.editLinks);
       }, false);
    }
-   if (rcol && sidebar === 1) {
+   if (rcol && message.sidebar === 1) {
       rcol.addEventListener('click', function(e) {
          dashLinksToTabs_click(e, message.newPostTabs, message.reblogLinks,
                                message.editLinks);

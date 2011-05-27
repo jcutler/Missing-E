@@ -144,10 +144,15 @@ function doKeyUp(e, obj, isNumber, defaultValue, min, max) {
 }
 
 function doSetting(obj, isNumber, defaultValue, min, max) {
-   if (obj.type == "checkbox")
+   if (obj.type == "checkbox") {
       setStorage(obj.name, (obj.checked ? 1 : 0));
-   else if (obj.type == "radio")
-      setStorage(obj.name, (obj.value));
+   }
+   else if (obj.type == "radio") {
+      var val = obj.value;
+      if (val === "1") { val = 1; }
+      else if (val === "0") { val = 0; }
+      setStorage(obj.name, val);
+   }
    else if (obj.type == "text") {
       if (isNumber) {
          obj.value = trim(obj.value);
