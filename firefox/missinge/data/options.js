@@ -23,13 +23,6 @@
 
 var all_settings;
 
-var defaultTimeout = 15;
-var minTimeout = 5;
-var maxTimeout = 120;
-var defaultRetries = 4;
-var minRetries = 0;
-var maxRetries = 20;
-
 jQuery(document).ready(function (){
    jQuery('a[rel*=facebox]').facebox({
       loadingImage : 'facebox/loading.gif',
@@ -211,9 +204,12 @@ function loadSettings() {
       else if (v == "magnifier") {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
       }
+      else if (v == "bookmarker") {
+         frm.MissingE_bookmarker_format.value = getStorage('MissingE_bookmarker_format',defaultFormat);
+      }
       else if (v == "timestamps") {
          frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
-         frm.MissingE_timestamps_format.value = getStorage('MissingE_timestamps_format',"%Y-%m-%D %H:%i");
+         frm.MissingE_timestamps_format.value = getStorage('MissingE_timestamps_format',defaultFormat);
       }
       else if (v == "postCrushes") {
          if (getStorage('MissingE_postCrushes_crushSize',1) == 1)

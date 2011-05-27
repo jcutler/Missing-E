@@ -87,7 +87,7 @@ function doTags(stamp, id, sendResponse) {
 function doTimestamp(stamp, id, sendResponse) {
    var ts = stamp["unix-timestamp"];
    var d = new Date(ts*1000);
-   var ins = getStorage("MissingE_timestamps_format","%Y-%m-%D %H:%i");
+   var ins = getStorage("MissingE_timestamps_format",defaultFormat);
    ins = getFormattedDate(d, ins);
    ins = ins.replace(/%X/g,'<a href="' + stamp["url"].match(/http:\/\/[^\/]*/)[0] + '/api/read/json?id='+id + '">' + id + '</a>');
    sendResponse({pid: id, success: true, data: ins});
@@ -503,6 +503,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var settings = {};
       settings.experimental = getStorage("MissingE_experimentalFeatures_enabled",0);
       switch(request.component) {
+         case "bookmarker":
+            settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
+            break;
          case "dashboardFixes":
             settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
             settings.timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);

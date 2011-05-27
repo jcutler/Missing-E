@@ -64,6 +64,11 @@ function getFormattedDate(d, format) {
    return ret;
 }
 
+function getBookmarkerFormat(d, user, format) {
+   var ret = getFormattedDate(d, format);
+   return ret.replace(/%u/g,user);
+}
+
 function getPageHeight() {
    var windowHeight;
    if (self.innerHeight) {

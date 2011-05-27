@@ -27,3 +27,4 @@ var maxTimeout = 120;
 var defaultRetries = 4;
 var minRetries = 0;
 var maxRetries = 20;
+var defaultFormat = "%Y-%m-%D %H:%i";

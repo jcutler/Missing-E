@@ -45,6 +45,7 @@ var defaultRetries = 4;
 var minRetries = 0;
 var maxRetries = 20;
 var maxActiveAjax = 15;
+var defaultFormat = "%Y-%m-%D %H:%i";
 var activeAjax = 0;
 var waitQueue = [];
 var cache = {};
@@ -155,6 +156,7 @@ function openSettings() {
       onReady: function(tab) {
          tab.attach({
             contentScriptFile: [data.url("common/jquery-1.5.min.js"),
+                                data.url("common/defs.js"),
                                 data.url("checkbox/jquery.checkbox.min.js"),
                                 data.url("facebox/facebox.js"),
                                 data.url("jquery-spin/jquery-spin.js"),
@@ -218,7 +220,7 @@ function doTags(stamp, id, theWorker) {
 function doTimestamp(stamp, id, theWorker) {
    var ts = stamp["unix-timestamp"];
    var d = new Date(ts*1000);
-   var ins = getStorage("extensions.MissingE.timestamps.format","%Y-%m-%D %H:%i");
+   var ins = getStorage("extensions.MissingE.timestamps.format",defaultFormat);
    ins = getFormattedDate(d, ins);
    theWorker.postMessage({greeting: "timestamp", pid: id, success: true, data: ins});
 }
@@ -576,6 +578,7 @@ function handleMessage(message, myWorker) {
          settings["MissingE_" + componentList[i] + "_enabled"] =
             getStorage("extensions.MissingE." + componentList[i] + ".enabled", 1);
       }
+      settings.MissingE_bookmarker_format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("extensions.MissingE.dashboardFixes.wrapTags",1);
       settings.MissingE_dashboardFixes_replaceIcons = getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1);
@@ -591,7 +594,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashLinksToTabs_reblogLinks = getStorage("extensions.MissingE.dashLinksToTabs.reblogLinks",0);
       settings.MissingE_dashLinksToTabs_editLinks = getStorage("extensions.MissingE.dashLinksToTabs.editLinks",0);
       settings.MissingE_timestamps_retries = getStorage("extensions.MissingE.timestamps.retries",defaultRetries);
-      settings.MissingE_timestamps_format = getStorage("extensions.MissingE.timestamps.format","%Y-%m-%D %H:%i");
+      settings.MissingE_timestamps_format = getStorage("extensions.MissingE.timestamps.format",defaultFormat);
       settings.MissingE_postingFixes_photoReplies = getStorage("extensions.MissingE.postingFixes.photoReplies",1);
       settings.MissingE_postingFixes_uploaderToggle = getStorage("extensions.MissingE.postingFixes.uploaderToggle",1);
       settings.MissingE_postingFixes_addUploader = getStorage("extensions.MissingE.postingFixes.addUploader",1);
@@ -626,6 +629,9 @@ function handleMessage(message, myWorker) {
       settings.experimental = getStorage("extensions.MissingE.experimentalFeatures.enabled",0);
       settings.extensionURL = data.url("");
       switch(message.component) {
+         case "bookmarker":
+            settings.format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
+            break;
          case "dashboardFixes":
             settings.reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
             settings.wrapTags = getStorage("extensions.MissingE.dashboardFixes.wrapTags",1);

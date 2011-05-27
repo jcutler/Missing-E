@@ -68,7 +68,8 @@ function doStartup(response) {
 
    if (window.top === window) {
       if (response.message.bookmarker) {
-         MissingE_bookmarker_doStartup();
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "bookmarker"});
       }
       if (response.message.dashLinksToTabs) {
          safari.self.tab.dispatchMessage("settings",
@@ -149,6 +150,9 @@ function doStartup(response) {
 
 function settings_startup(response) {
    if (response.name !== "settings") { return; }
+   else if (response.message.component === "bookmarker") {
+      MissingE_bookmarker_doStartup(response.message.format);
+   }
    else if (response.message.component === "postingFixes") {
       MissingE_postingFixes_doStartup(response.message.photoReplies,
                                       response.message.uploaderToggle,

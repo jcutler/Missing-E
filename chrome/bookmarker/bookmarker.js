@@ -42,6 +42,7 @@ var bookmarksTitle = {
                    ja: "ブックマーク",
                    tr: "Imleri"
 };
+var markFormat;
 
 var st = document.createElement('style');
 st.setAttribute('type','text/css');
@@ -157,9 +158,9 @@ function removeMark(post) {
    generateList();
 }
 
-function addMark(post,custom) {
+function addMark(post,user,custom) {
    var d = new Date();
-   var ds = getFormattedDate(d, "%Y-%m-%D %H:%i:%s");
+   var ds = getBookmarkerFormat(d, user, markFormat);
 
    if (custom) {
       var ans = "";
@@ -190,7 +191,26 @@ function markClick(e) {
          removeMark(this.id.match(/[0-9]*$/)[0]);
       }
       else {
-         addMark(this.id.match(/[0-9]*$/)[0],e.shiftKey);
+         var user = '';
+         var post = $(this).closest('li.post');
+         if (post.hasClass('is_mine')) {
+            user = 'you';
+         }
+         else if (post.length !== 0) {
+            while (post.length !== 0 && post.hasClass('same_user_as_last')) {
+               post = post.prev();
+               while (post.length !== 0 && !post.is('li.post')) {
+                  post = post.prev();
+               }
+            }
+            if (post.length !== 0) {
+               var name = post.find('div.user_menu_list a[following]');
+               if (name.length !== 0) {
+                  user = name.attr('href').replace(/^\/?[^\/]*\//,'');
+               }
+            }
+         }
+         addMark(this.id.match(/[0-9]*$/)[0],user,e.shiftKey);
       }
       return false;
    }
@@ -298,36 +318,6 @@ function marklistClick(e) {
    }
 }
 
-if (document.body.id !== "tinymce" &&
-    document.body.id !== "dashboard_edit_post") {
-   if (!(/drafts$/.test(location.href)) &&
-       !(/queue$/.test(location.href)) &&
-       !(/messages$/.test(location.href)) &&
-       !(/submissions[^\/]*$/.test(location.href)) &&
-       !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
-       !(/queue\/after\/[^\/]*$/.test(location.href))) {
-      $("#posts li.post").each(function(i) {
-         doMarks(this);
-      });
-   }
-   var lang = $('html').attr('lang');
-   var list = $('<div class="dashboard_nav_item" ' +
-                'style="padding-left:0;position:relative;">' +
-                '<div class="dashboard_nav_title">' + bookmarksTitle[lang] +
-                '</div><ul id="MissingE_marklist" ' +
-                'class="dashboard_subpages"></ul></div>');
-
-   var pos = $("#dashboard_controls_radar_buttons");
-   if (pos.length > 0) {
-      pos.parent().before(list);
-   }
-   else {
-      $("#right_column").append(list);
-   }
-   list.click(marklistClick);
-   generateList();
-}
-
 function refreshMarks() {
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
    var i;
@@ -348,20 +338,45 @@ function refreshMarks() {
    generateList();
 }
 
-if (document.body.id !== "tinymce" &&
-    document.body.id !== "dashboard_edit_post") {
-   if (!(/drafts$/.test(location.href)) &&
-       !(/queue$/.test(location.href)) &&
-       !(/messages$/.test(location.href)) &&
-       !(/submissions[^\/]*$/.test(location.href)) &&
-       !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
-       !(/queue\/after\/[^\/]*$/.test(location.href))) {
-      document.addEventListener('DOMNodeInserted', function(e) {
-         doMarks(e.target);
+chrome.extension.sendRequest({greeting: "settings",
+                              component: "bookmarker"}, function(response) {
+   var bookmarker_settings = JSON.parse(response);
+   markFormat = bookmarker_settings.format;
+   if (document.body.id !== "tinymce" &&
+       document.body.id !== "dashboard_edit_post") {
+      if (!(/drafts$/.test(location.href)) &&
+          !(/queue$/.test(location.href)) &&
+          !(/messages$/.test(location.href)) &&
+          !(/submissions[^\/]*$/.test(location.href)) &&
+          !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
+          !(/queue\/after\/[^\/]*$/.test(location.href))) {
+         $("#posts li.post").each(function(i) {
+            doMarks(this);
+         });
+         document.addEventListener('DOMNodeInserted', function(e) {
+            doMarks(e.target);
+         }, false);
+      }
+      var lang = $('html').attr('lang');
+      var list = $('<div class="dashboard_nav_item" ' +
+                   'style="padding-left:0;position:relative;">' +
+                   '<div class="dashboard_nav_title">' + bookmarksTitle[lang] +
+                   '</div><ul id="MissingE_marklist" ' +
+                   'class="dashboard_subpages"></ul></div>');
+   
+      var pos = $("#dashboard_controls_radar_buttons");
+      if (pos.length > 0) {
+         pos.parent().before(list);
+      }
+      else {
+         $("#right_column").append(list);
+      }
+      list.click(marklistClick);
+      generateList();
+   
+      window.addEventListener('storage',function(e) {
+         if (e.key !== 'MissingE_bookmarker_marks') { return false; }
+         else { refreshMarks(); }
       }, false);
    }
-   window.addEventListener('storage',function(e) {
-      if (e.key !== 'MissingE_bookmarker_marks') { return false; }
-      else { refreshMarks(); }
-   }, false);
-}
+});

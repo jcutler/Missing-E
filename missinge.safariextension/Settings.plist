@@ -52,7 +52,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>1.1.23</string>
+		<string>1.1.24</string>
 		<key>Key</key>
 		<string>MissingE_version</string>
 		<key>Title</key>
@@ -365,6 +365,16 @@
 		<real>0</real>
 		<key>Key</key>
 		<string>MissingE_dashLinksToTabs_editLinks</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>%Y-%m-%D %H:%i</string>
+		<key>Key</key>
+		<string>MissingE_bookmarker_format</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

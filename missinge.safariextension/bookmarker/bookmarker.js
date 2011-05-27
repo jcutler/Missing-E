@@ -42,6 +42,7 @@ var bookmarksTitle = {
                    ja: "ブックマーク",
                    tr: "Imleri"
 };
+var markFormat;
 
 function serializeMarks(a) {
    var s = "";
@@ -148,9 +149,9 @@ function removeMark(post) {
    generateList();
 }
 
-function addMark(post,custom) {
+function addMark(post,user,custom) {
    var d = new Date();
-   var ds = getFormattedDate(d, "%Y-%m-%D %H:%i:%s");
+   var ds = getBookmarkerFormat(d, user, markFormat);
 
    if (custom) {
       var ans = "";
@@ -181,7 +182,26 @@ function markClick(e) {
          removeMark(this.id.match(/[0-9]*$/)[0]);
       }
       else {
-         addMark(this.id.match(/[0-9]*$/)[0],e.shiftKey);
+         var user = '';
+         var post = $(this).closest('li.post');
+         if (post.hasClass('is_mine')) {
+            user = 'you';
+         }
+         else if (post.length !== 0) {
+            while (post.length !== 0 && post.hasClass('same_user_as_last')) {
+               post = post.prev();
+               while (post.length !== 0 && !post.is('li.post')) {
+                  post = post.prev();
+               }
+            }
+            if (post.length !== 0) {
+               var name = post.find('div.user_menu_list a[following]');
+               if (name.length !== 0) {
+                  user = name.attr('href').replace(/^\/?[^\/]*\//,'');
+               }
+            }
+         }
+         addMark(this.id.match(/[0-9]*$/)[0],user,e.shiftKey);
       }
       return false;
    }
@@ -308,7 +328,8 @@ function refreshMarks() {
    generateList();
 }
 
-function MissingE_bookmarker_doStartup() {
+function MissingE_bookmarker_doStartup(format) {
+   markFormat = format;
    var st = document.createElement('style');
    st.setAttribute('type','text/css');
    st.innerHTML = '#right_column .dashboard_nav_item ' +
