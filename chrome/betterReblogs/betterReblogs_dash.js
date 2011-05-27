@@ -284,7 +284,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                            item: 'private'},
                            {text: {
                                     en: "Reblog manually",
-                                    de: "manuell rebloggen",
+                                    de: "Manuell rebloggen",
                                     fr: "Rebloguer manuellement",
                                     it: "Reblogga manualmente",
                                     ja: "手動でリブログ",

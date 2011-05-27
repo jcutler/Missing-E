@@ -97,7 +97,7 @@ var dashFixesText = {
                   del: "löschen",
                   reblog: "rebloggen",
                   reply: "antworten",
-                  notes: "anmerkungen",
+                  notes: "Anmerkungen",
                   queue: "in die Warteschleife stellen",
                   experimental: "EXPERIMENTELLEN",
                   exp: "X"

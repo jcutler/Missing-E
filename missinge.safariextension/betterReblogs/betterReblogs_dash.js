@@ -50,7 +50,7 @@ function startReblog(id,replaceIcons) {
 function failReblog(id,replaceIcons) {
    var reblogFailed = {
       en: "Reblog failed!",
-      de: "Reblog gescheitert!",
+      de: "Reblog ist fehlgeschlagen!",
       fr: "Reblog a échoué!",
       it: "Reblog fallito!",
       ja: "リブログに失敗しました!",
@@ -262,7 +262,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
                            item: 'draft'},
                            {text: {
                                     en: "Queue",
-                                    de: "Warteschleife stellen",
+                                    de: "in die Warteschleife stellen",
                                     fr: "File d'attente",
                                     it: "Metti in coda",
                                     ja: "キュー",
@@ -280,7 +280,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
                            item: 'private'},
                            {text: {
                                     en: "Reblog manually",
-                                    de: "Rebloggen manuell",
+                                    de: "Manuell rebloggen",
                                     fr: "Rebloguer manuellement",
                                     it: "Reblogga manualmente",
                                     ja: "手動でリブログ",
