@@ -53,7 +53,7 @@ function startReblog(id,replaceIcons) {
 function failReblog(id,replaceIcons) {
    var reblogFailed = {
       en: "Reblog failed!",
-      de: "Reblog gescheitert!",
+      de: "Reblog ist fehlgeschlagen!",
       fr: "Reblog a échoué!",
       it: "Reblog fallito!",
       ja: "リブログに失敗しました!",
@@ -266,7 +266,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                            item: 'draft'},
                            {text: {
                                     en: "Queue",
-                                    de: "Warteschleife stellen",
+                                    de: "in die Warteschleife stellen",
                                     fr: "File d'attente",
                                     it: "Metti in coda",
                                     ja: "キュー",
@@ -284,7 +284,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                            item: 'private'},
                            {text: {
                                     en: "Reblog manually",
-                                    de: "Rebloggen manuell",
+                                    de: "manuell rebloggen",
                                     fr: "Rebloguer manuellement",
                                     it: "Reblogga manualmente",
                                     ja: "手動でリブログ",
