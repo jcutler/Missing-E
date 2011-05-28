@@ -172,6 +172,10 @@ text-align:center;
 margin-top:20px;
 }
 
+#share .fb_iframe_widget iframe {
+vertical-align:0;
+}
+
 #share a {
 margin:0 10px;
 }
