@@ -59,7 +59,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
    var reblogTagsText = {
       reblog: {
          en: "Reblog Tags",
-         de: "Rebloggen Tags",
+         de: "mid den Tags rebloggen",
          fr: "Rebloguer Tags",
          it: "Reblogga i Tag",
          ja: "タグをリブログ",

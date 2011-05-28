@@ -41,7 +41,7 @@ var langPosts = {
                        quote: ["dein", "Zitat"],
                        link:  ["dein", "Link"],
                        conversation:  ["dein", "Chat"],
-                       audio: ["dein", "audio post"],
+                       audio: ["dein", "Audio-Eintrag"],
                        video: ["dein", "Video"],
                        question: ["deine", "Frage"],
                       },

@@ -115,7 +115,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
 
    var uploadImagesText = {
                            en: "Upload images instead",
-                           de: "Stattdessen fotos hochladen",
+                           de: "Stattdessen, lade fotos hoch",
                            fr: "Ajouter les photos à la place",
                            it: "Altrimenti carica foto",
                            ja: "画像をアップロード",
@@ -124,7 +124,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
 
    var clearTagsText = {
                            en: "Clear Tags",
-                           de: "Entfernen Tags",
+                           de: "Tags entfernen",
                            fr: "Supprimer Tags",
                            it: "Cancella i Tag",
                            ja: "クリアタグを",

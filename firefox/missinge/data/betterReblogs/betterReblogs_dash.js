@@ -255,7 +255,7 @@ self.on('message', function (message) {
       };
       var twitterText = {
                      en: "Send to Twitter",
-                     de: "Auf Twitter posten",
+                     de: "auf Twitter posten",
                      fr: "Publier sur Twitter",
                      it: "Invia a Twitter",
                      ja: "投稿をTwitterにも送信",

@@ -28,7 +28,7 @@ var mimg = chrome.extension.getURL('bookmarker/post_bookmark.png');
 
 var bookmarkText = {
                    en: "bookmark",
-                   de: "lesezeichen",
+                   de: "Lesezeichen hinzuf�gen",
                    fr: "marquer",
                    it: "segnalibro",
                    ja: "ブックマーク",

@@ -192,7 +192,7 @@ function doMarks(item) {
    if (item.tagName === 'LI' && jQuery(item).hasClass('post')) {
       var bookmarkText = {
                    en: "bookmark",
-                   de: "lesezeichen",
+                   de: "Lesezeichen hinzufügen",
                    fr: "marquer",
                    it: "segnalibro",
                    ja: "ブックマーク",

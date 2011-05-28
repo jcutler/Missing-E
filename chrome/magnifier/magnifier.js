@@ -34,7 +34,7 @@ var magnifyText = {
                          },
                   error: {
                         en: "An error occured. Click to reload 'Magnifier'.",
-                        de: "Ist ein Fehler aufgetreten. Klicken Sie erneut zu versuchen.",
+                        de: "Ein Fehler ist aufgetreten. Klicken Sie, erneut zu versuchen.",
                         fr: "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
                         it: "È verificato un errore. Clicca per provare di nuovo.",
                         ja: "エラーが発生しました。 もう一度やり直してください]をクリックします。",
@@ -42,7 +42,7 @@ var magnifyText = {
                          },
                   loading: {
                         en: "Loading...",
-                        de: "Nicht bereit...",
+                        de: "wird geladen...",
                         fr: "Pas prêt...",
                         it: "Non pronto...",
                         ja: "準備が整っていない",

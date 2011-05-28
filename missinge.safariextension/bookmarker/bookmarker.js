@@ -28,7 +28,7 @@ var mimg = safari.extension.baseURI + 'bookmarker/post_bookmark.png';
 
 var bookmarkText = {
                    en: "bookmark",
-                   de: "lesezeichen",
+                   de: "Lesezeichen hinzufügen",
                    fr: "marquer",
                    it: "segnalibro",
                    ja: "ブックマーク",

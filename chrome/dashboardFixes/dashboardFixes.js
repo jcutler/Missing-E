@@ -99,7 +99,7 @@ var dashFixesText = {
                   reply: "antworten",
                   notes: "Anmerkungen",
                   queue: "in die Warteschleife stellen",
-                  experimental: "EXPERIMENTELLEN",
+                  experimental: "EXPERIMENTELL",
                   exp: "X"
                   },
                fr:
