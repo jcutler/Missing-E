@@ -41,6 +41,19 @@ function addTags(link) {
       }
    }
 
+   var img = link.getElementsByTagName('img')[0];
+   var w = img.offsetWidth;
+   var h = img.offsetHeight;
+
+   var block = document.createElement('div');
+   block.innerHTML = '<div class="half" style="height:' + h + 'px;"></div>' +
+      '<div class="remhalf" style="width:' + (w-24) + 'px;height:' + h +
+      'px;background:transparent url(\'' + img.src + '\') no-repeat ' +
+      '-24px 0;float:right;"></div>';
+   block.className = 'MissingE_reblog';
+   block.style.height = h + 'px';
+   block.style.width = (w+1) + 'px';
+   link.replaceChild(block, img);
    var host, pid;
    var loc = location.href;
    loc = loc.substring(loc.indexOf("src=")+4);
@@ -75,15 +88,11 @@ function receiveTags(response) {
    }
    if (link !== undefined && link !== null) {
       if (response.message.success) {
-         link.getElementsByTagName('img')[0].src =
-               safari.extension.baseURI + 'betterReblogs/reblog_tags.png';
-         link.getElementsByTagName('img')[0].style.width = "64px";
+         link.firstChild.className += " MissingE_reblog_success";
          link.setAttribute('tags',response.message.data.join(','));
       }
       else {
-         link.getElementsByTagName('img')[0].src =
-               safari.extension.baseURI + 'betterReblogs/reblog_tags_fail.png';
-         link.getElementsByTagName('img')[0].style.width = "64px";
+         link.firstChild.className += " MissingE_reblog_fail";
       }
    }
 }
@@ -91,6 +100,22 @@ function receiveTags(response) {
 function MissingE_betterReblogs_post_doStartup(frameURL) {
    if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) &&
        location.href === frameURL) {
+      var st = document.createElement('style');
+      st.type = 'text/css';
+      st.innerHTML = '.MissingE_reblog { ' +
+                     'float:left;' +
+                     'margin-left:3px;' +
+                     'display:inline-block;}' +
+                     '.MissingE_reblog .half { ' +
+                     'float:left;' +
+                     'width:25px;' +
+                     'background:transparent url("' + safari.extension.baseURI +
+                     'betterReblogs/reblog_tags.png") no-repeat 0 0; }' +
+                     '.MissingE_reblog_success .half ' +
+                     '{ background-position: -25px 0; } ' +
+                     '.MissingE_reblog_fail .half ' +
+                     '{ background-position:-50px 0; }';
+      document.getElementsByTagName('head')[0].appendChild(st);
       safari.self.addEventListener("message", receiveTags, false);
       if (!addTags()) {
          document.addEventListener('DOMNodeInserted',function(e){
