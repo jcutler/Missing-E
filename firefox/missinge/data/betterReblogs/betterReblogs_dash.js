@@ -290,7 +290,7 @@ self.on('message', function (message) {
                            item: 'private'},
                            {text: {
                                     en: "Reblog manually",
-                                    de: "Manuell rebloggen",
+                                    de: "manuell rebloggen",
                                     fr: "Rebloguer manuellement",
                                     it: "Reblogga manualmente",
                                     ja: "手動でリブログ",

@@ -58,7 +58,7 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
    var reblogTagsText = {
       reblog: {
          en: "Reblog Tags",
-         de: "mid den Tags rebloggen",
+         de: "mit den Tags rebloggen",
          fr: "Rebloguer Tags",
          it: "Reblogga i Tag",
          ja: "タグをリブログ",

@@ -64,7 +64,7 @@ self.on('message', function (message) {
    var reblogTagsText = {
       reblog: {
          en: "Reblog Tags",
-         de: "mid den Tags rebloggen",
+         de: "mit den Tags rebloggen",
          fr: "Rebloguer Tags",
          it: "Reblogga i Tag",
          ja: "タグをリブログ",
