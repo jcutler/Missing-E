@@ -24,14 +24,6 @@
 /*global $, chrome */
 
 function loadTimestamp(item) {
-   var loadingText = {
-      en: "Loading...",
-      de: "wird geladen...",
-      fr: "Pas prêt...",
-      it: "Non pronto...",
-      ja: "準備が整っていない",
-      tr: "Hazır değil"
-   };
    var lang = $('html').attr('lang');
    var info;
    if (item.tagName === "LI" && $(item).hasClass("post") &&
@@ -41,18 +33,18 @@ function loadTimestamp(item) {
          $(item).find(".post_controls:first")
                .after('<div class="post_info">' +
                       '<span class="MissingE_timestamp" ' +
-                      'style="font-weight:normal;">' + loadingText[lang] +
+                      'style="font-weight:normal;">' + locale["loading"][lang] +
                       '</span></div>');
       }
       else {
          var spn = div.find('span.MissingE_timestamp');
          if (spn.length === 0) {
             div.append('<br><span class="MissingE_timestamp" ' +
-                       'style="font-weight:normal;">' + loadingText[lang] +
+                       'style="font-weight:normal;">' + locale["loading"][lang] +
                        '</span>');
          }
          else {
-            spn.text(loadingText[lang]);
+            spn.text(locale["loading"][lang]);
          }
       }
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];

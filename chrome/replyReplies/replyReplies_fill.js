@@ -60,57 +60,13 @@ function tags_setValue(ar) {
 }
 
 function getAsLinks(lang, type) {
-   var asText = {
-      en: {
-         as: 'as ...',
-         photo: 'as <strong>photo</strong>',
-         photoTitle: 'Photo Reply',
-         text: 'as <strong>text</strong>',
-         textTitle: 'Text Reply'
-          },
-      de: {
-         as: 'als ...',
-         photo: 'als <strong>Foto</strong>',
-         photoTitle: 'Foto Antwort',
-         text: 'als <strong>Text</strong>',
-         textTitle: 'Text Antwort'
-          },
-      fr: {
-         as: 'changer le type de billet',
-         photo: '<strong>photo</strong>',
-         photoTitle: 'Photo Réponse',
-         text: '<strong>texte</strong>',
-         textTitle: 'Texte Réponse'
-          },
-      it: {
-         as: 'come ...',
-         photo: 'come <strong>foto</strong>',
-         photoTitle: 'Foto Risposta',
-         text: 'come <strong>testo</strong>',
-         textTitle: 'Testo Risposta'
-          },
-      ja: {
-         as: 'リブログの投稿種別を選択',
-         photo: '<strong>画像投稿</strong>',
-         photoTitle: '画像返答',
-         text: '<strong>テキスト投稿</strong>',
-         textTitle: 'テキスト返答'
-          },
-      tr: {
-         as: 'tür ...',
-         photo: '<strong>fotoğraf</strong> olarak',
-         photoTitle: 'Fotoğraf Cevap',
-         text: '<strong>metin</strong> olarak',
-         textTitle: 'Metin Cevap'
-          }
-   };
    var othertype = (type==='text' ? 'photo' : 'text');
-   return asText[lang][type+"Title"] + "\n" +
+   return locale["replyType"][lang][type+"Title"] + "\n" +
       '<span class="as_links"><a href="#" id="the_as_link" ' +
       'onclick="Element.hide(this);Element.show(\'the_as_links\');' +
-      'return false;" style="font-weight:bold;" >' + asText[lang]["as"] +
+      'return false;" style="font-weight:bold;" >' + locale["replyType"][lang]["as"] +
       '</a><span id="the_as_links" style="display:none;"><a id="as_switch" ' +
-      'href="/new/' + othertype + '">' + asText[lang][othertype] + '</a>' +
+      'href="/new/' + othertype + '">' + locale["replyType"][lang][othertype] + '</a>' +
       '<a href="#" onclick="Element.hide(\'the_as_links\');' +
       'Element.show(\'the_as_link\');return false;">x</a></span></span>';
 }

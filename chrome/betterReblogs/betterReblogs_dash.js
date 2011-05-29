@@ -29,14 +29,6 @@ function setReblogTagsPlainText(tags) {
 }
 
 function startReblog(id,replaceIcons) {
-   var rebloggingText = {
-      en: "reblogging...",
-      de: "rebloggend...",
-      fr: "rebloguant...",
-      it: "rebloggando...",
-      ja: "今リブログ...",
-      tr: "yeniden bloglama..."
-   };
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    a.attr('oldtxt',a.attr('title'));
@@ -45,20 +37,12 @@ function startReblog(id,replaceIcons) {
       a.addClass('MissingE_quick_reblogging_icon');
    }
    else {
-      a.addClass('MissingE_quick_reblogging_text').text(rebloggingText[lang]);
+      a.addClass('MissingE_quick_reblogging_text').text(locale["reblogging"][lang]);
    }
-   a.attr('title',rebloggingText[lang]);
+   a.attr('title', locale["reblogging"][lang]);
 }
 
 function failReblog(id,replaceIcons) {
-   var reblogFailed = {
-      en: "Reblog failed!",
-      de: "Reblog ist fehlgeschlagen!",
-      fr: "Reblog a échoué!",
-      it: "Reblog fallito!",
-      ja: "リブログに失敗しました!",
-      tr: "Yeniden blogla başarısız"
-   };
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    if (replaceIcons === 1) {
@@ -69,18 +53,10 @@ function failReblog(id,replaceIcons) {
    }
    a.attr('title',a.attr('oldtxt'));
    a.removeAttr('oldtxt');
-   alert(reblogFailed[lang]);
+   alert(locale["reblogFailed"][lang]);
 }
 
 function finishReblog(id,replaceIcons) {
-   var rebloggedText = {
-      en: "reblogged",
-      de: "gerebloggt",
-      fr: "reblogué",
-      it: "rebloggato",
-      ja: "リブログ行われた",
-      tr: "yeniden blogladı"
-   };
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    if (replaceIcons === 1) {
@@ -89,9 +65,9 @@ function finishReblog(id,replaceIcons) {
    }
    else {
       a.addClass('MissingE_quick_reblogging_text_success')
-         .text(rebloggedText[lang]);
+         .text(locale["rebloggedText"][lang]);
    }
-   a.attr('title',rebloggedText[lang]);
+   a.attr('title', locale["rebloggedText"][lang]);
    a.removeAttr('oldtxt');
 }
 
@@ -239,22 +215,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
 
    if (reblog_settings.quickReblog === 1) {
       var idx;
-      var tagsText = {
-                     en: "Tags",
-                     de: "Tags",
-                     fr: "Tags",
-                     it: "Tag",
-                     ja: "タグ",
-                     tr: "Etiketler"
-      };
-      var twitterText = {
-                     en: "Send to Twitter",
-                     de: "auf Twitter posten",
-                     fr: "Publier sur Twitter",
-                     it: "Invia a Twitter",
-                     ja: "投稿をTwitterにも送信",
-                     tr: "Twitter'a gönder"
-      };
       var reblogOptions = [{text: {
                                     en: "Save draft",
                                     de: "Entwurf speichern",
@@ -317,12 +277,12 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       txt +=  '<a href="#" onclick="return false;">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_twitter">' +
-               '<input type="checkbox" /> ' + twitterText[lang] +
+               '<input type="checkbox" /> ' + locale["twitterText"][lang] +
                '</div></div></a>' +
                '<a href="#" onclick="return false;">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_tags">' +
-               '<input type="text" /><br />' + tagsText[lang] +
+               '<input type="text" /><br />' + locale["tagsText"][lang] +
                '</div></div></a>';
       var qr = $(txt).appendTo('body');
 
