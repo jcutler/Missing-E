@@ -269,6 +269,12 @@ background-color:#F8F8F8;
 border-radius:10px;
 }
 
+#content #series {
+text-align:center;
+font-size:14px;
+margin:0 3px 8px 3px;
+}
+
 a.brick {
 background-color:#D8DADD;
 color:#676D72;
