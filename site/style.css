@@ -696,3 +696,34 @@ width:12px;
 background-position:-88px 0;
 opacity:1;
 }
+
+#thankshtml, #thankyou {
+height:100%;
+}
+
+#thankyou #outer[id] {
+height:100%;
+width:100%;
+overflow:visible;
+display:table;
+position:static;
+}
+
+#thankyou #middle[id] {
+display:table-cell;
+vertical-align:middle;
+width:100%;
+}
+
+#thankyou #inner {
+text-align:center;
+}
+
+#thankyou #inner h1 {
+font-variant:small-caps;
+font-size:300%;
+}
+
+#thankyou #inner #homelnk {
+margin-top:40px;
+}
