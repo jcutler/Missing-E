@@ -16,15 +16,17 @@ function failAnswer(id,type) {
 function finishAnswer(id,type) {
    $('#post_control_loader_' + id).hide();
    if (type) {
-      $('#post_' + id).remove();
+      $('#post_' + id).fadeOut(function(){$(this).remove()});
    }
    console.log('done: ' + id);
 }
 
-function doManualAnswering(id,type) {
+function doManualAnswering(e,id,type) {
    var mode = '3';
    if (type === 'draft') { mode = '1'; }
    else if (type === 'private') { mode = 'private'; }
+   else if (type === 'publish') { mode = '0'; }
+   else if (type === 'queue') { mode = '2'; }
 
    if (type) {
       $('#post_control_loader_' + id).show();
@@ -46,6 +48,7 @@ function doManualAnswering(id,type) {
    }
    var twitter = $('#ask_answer_form_' + id +
                    ' input.MissingE_askFixes_twitter').is(':checked');
+   var answer = $($('#ask_answer_form_' + id).get(0).answer).val();
 
    $.ajax({
       type: "GET",
@@ -55,6 +58,7 @@ function doManualAnswering(id,type) {
       tags: tags,
       mode: mode,
       buttonType: type,
+      answer: answer,
       twitter: twitter,
       error: function() {
          failAnswer(this.postId,this.buttonType);
@@ -96,12 +100,16 @@ function doManualAnswering(id,type) {
          }
          params["post[tags]"] = this.tags;
          params["post[state]"] = this.mode;
+         params["post[date]"] = "now";
          delete params["preview_post"];
          if (!this.twitter) {
             delete params["send_to_twitter"];
          }
          else {
             params["send_to_twitter"] = "on";
+         }
+         if (this.buttonType !== '3') {
+            params["post[two]"] = this.answer;
          }
          $.ajax({
             type: 'POST',
@@ -118,6 +126,10 @@ function doManualAnswering(id,type) {
          });
       }
    });
+
+   if (type === "publish" || type === "queue") {
+      e.stopPropagation();
+   }
 }
 
 function moreAnswerOptions(item, defTags, buttons, tags) {
@@ -131,20 +143,25 @@ function moreAnswerOptions(item, defTags, buttons, tags) {
    var lang = $('html').attr("lang");
 
    if (buttons === 1) {
+      var id = $(item).attr('id').match(/[0-9]*$/)[0];
       var draft = $('<input type="button" class="MissingE_askFixes_extraBtn" ' +
-                    'value="' +
+                    'id="ask_draft_button_' + id + '" value="' +
                     locale[lang]["postingFixes"]["submitText"]["draft"] + '" />');
-      var priv = $('<input type="button" class="Missinge_askFixes_extraBtn" ' +
-                   'value="' +
+      var priv = $('<input type="button" class="MissingE_askFixes_extraBtn" ' +
+                   'id="ask_private_button_' + id + '" value="' +
                    locale[lang]["postingFixes"]["submitText"]["private"] + '" />');
 
-      draft.click(function() {
-         doManualAnswering($(this).closest('form').attr('id').match(/[0-9]*$/)[0],
-                           'draft');
+      $('#ask_publish_button_' + id).click(function(e) {
+         doManualAnswering(e, id, 'publish');
       });
-      priv.click(function() {
-         doManualAnswering($(this).closest('form').attr('id').match(/[0-9]*$/)[0],
-                           'private');
+      $('#ask_queue_button_' + id).click(function(e) {
+         doManualAnswering(e, id, 'queue');
+      });
+      draft.click(function(e) {
+         doManualAnswering(e, id, 'draft');
+      });
+      priv.click(function(e) {
+         doManualAnswering(e, id, 'private');
       });
 
       answer.find('input[name="queue"]').after(' ', draft, ' ', priv);
@@ -205,6 +222,20 @@ chrome.extension.sendRequest({greeting: "settings",
       user = user[1];
    }
 
+   if (askFixes_settings.buttons === 1 ||
+       askFixes_settings.tags === 1) {
+      $('head').append('<script type="text/javascript">' +
+                     'document.addEventListener(\'mouseup\', function(e) {' +
+                     'if (e.which !== 1) { return; }' +
+                     'if (!(/ask_[a-z]+_button/.test(e.target.id))) {' +
+                        'return;' +
+                     '}' +
+                     'var id = e.target.id.match(/[0-9]*$/);' +
+                     'if (tinyMCE && tinyMCE.get(\'ask_answer_field_\' + id)) {' +
+                        'document.getElementById(\'ask_answer_field_\' + id).value = ' +
+                        'tinyMCE.get(\'ask_answer_field_\' + id).getContent();' +
+                     '}},false);</script>');
+   }
    $('#posts li.post').each(function() {
       moreAnswerOptions(this, askFixes_settings.defTags,
                         askFixes_settings.buttons, askFixes_settings.tags);
