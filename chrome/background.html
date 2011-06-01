@@ -504,6 +504,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var settings = {};
       settings.experimental = getStorage("MissingE_experimentalFeatures_enabled",0);
       switch(request.component) {
+         case "askFixes":
+            settings.scroll = getStorage("MissingE_askFixes_scroll",1);
+            settings.buttons = getStorage("MissingE_askFixes_buttons",1);
+            settings.tags = getStorage("MissingE_askFixes_tags",1);
+            break;
          case "bookmarker":
             settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
             break;
@@ -644,7 +649,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.dashboardFixes = false;
       }
       if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.url)) {
-         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
+         if (getStorage("MissingE_askFixes_enabled",1) == 1 &&
+             getStorage("MissingE_askFixes_scroll",1) == 1) {
             activeScripts.askFixes = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askboxScroll.css", allFrames: true});
          }
@@ -743,6 +749,20 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.postCrushes = false;
+      }
+      if (sender.tab.url == request.url &&
+          (/http:\/\/www\.tumblr\.com\/(submissions|messages)/
+            .test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/
+            .test(sender.tab.url))) {
+         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
+            activeScripts.askFixes = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askFixes.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askFixes.js"});
+         }
+         else {
+            activeScripts.askFixes = false;
+         }
       }
       if (sender.tab.url == request.url &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
