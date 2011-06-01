@@ -92,7 +92,7 @@ function doReblog(item,replaceIcons,accountName) {
    url = url.replace(/\?redirect_to=.*$/,'');
    var tags = $('#MissingE_quick_reblog_tags input').val();
    tags = tags.replace(/\s*,\s*/g,',').replace(/,$/,'')
-            .replace(/^\s*/,'');
+            .replace(/^\s*/,'').replace(/\s*$/,'');
    var mode = reblogMode[type];
    var twitter = $('#MissingE_quick_reblog_twitter input').is(':checked');
    startReblog(postId,replaceIcons);
@@ -130,7 +130,6 @@ function doReblog(item,replaceIcons,accountName) {
          var params = {};
          for (i=0; i<inputs.length; i++) {
             var name = inputs[i].match(/name="([^"]*)"/);
-            var val = inputs[i].match(/[^\.]value="([^"]*)"/);
             if (name) {
                params[name[1]] = $(inputs[i]).val();
             }

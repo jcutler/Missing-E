@@ -50,8 +50,8 @@ var locale = {
          submitText: {
             publish: "Publish post",
             queue: "Queue Post",
-            draft: "Save draft",
-            private: "Save as private"
+            draft: "Save Draft",
+            private: "Save as Private"
          },
          uploadImagesText: "Upload images instead",
          clearTagsText: "Clear Tags"
