@@ -42,8 +42,10 @@ function addTags(link) {
    }
 
    var img = link.getElementsByTagName('img')[0];
-   var w = img.offsetWidth;
-   var h = img.offsetHeight;
+   var theimg = new Image();
+   theimg.src = img.src;
+   var w = theimg.width;
+   var h = theimg.height;
 
    var block = document.createElement('div');
    block.innerHTML = '<div class="half" style="height:' + h + 'px;"></div>' +
