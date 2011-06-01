@@ -22,25 +22,6 @@
  */
 
 /*global safari, $ */
-var reblogText = {
-                  title: {
-                        en: "reblog",
-                        fr: "rebloguer",
-                        de: "rebloggen",
-                        it: "reblogga",
-                        ja: "リブログ",
-                        tr: "yeniden blogla"
-                         },
-                  error: {
-                        en: "An error occured. Click to reload 'Magnifier'.",
-                        de: "Ein Fehler ist aufgetreten. Klicken Sie, erneut zu versuchen.",
-                        fr: "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
-                        it: "È verificato un errore. Clicca per provare di nuovo.",
-                        ja: "エラーが発生しました。 もう一度やり直してください]をクリックします。",
-                        tr: "Bir hata oluştu. Yeniden denemek için tıklayın."
-                         }
-};
-
 function addReblog(item) {
    if (item.tagName === "LI" && jQuery(item).hasClass('post') &&
        !jQuery(item).hasClass('new_post') && !jQuery(item).hasClass('note')) {
@@ -69,8 +50,9 @@ function addReblog(item) {
 
 function receiveReblog(message) {
    if (message.greeting !== "reblogYourself") { return; }
+   var lang = jQuery('html').attr("lang");
    var edit, klass, txt;
-   var reblog_text = reblogText.title[jQuery('html').attr("lang")];
+   var reblog_text = locale[lang]["reblog"];
    if (message.success) {
       klass = (message.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
@@ -95,7 +77,7 @@ function receiveReblog(message) {
                 '" class="' + klass + '">' + txt + '</a>');
    }
    else {
-      var reblog_err = reblogText.error[jQuery('html').attr("lang")];
+      var reblog_err = locale[lang]["error"];
       edit = jQuery('#post_'+message.pid)
          .find('div.post_controls a:[href^="/edit"]');
       if (edit.length === 0) {
