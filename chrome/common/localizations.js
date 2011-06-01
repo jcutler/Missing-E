@@ -4,6 +4,24 @@ var locale = {
       reblogging: "reblogging...",
       reblogFailed: "Reblog failed!",
       rebloggedText: "reblogged",
+      reblogOptions: [
+         {
+            item: 'draft',
+            text: "Save draft"
+         },
+         {
+            item: 'queue',
+            text: "Queue"
+         },
+         {
+            item: 'private',
+            text: "Private"
+         },
+         {
+            item: 'manual',
+            text: "Reblog manually"
+         }
+      ],
       tagsText: "Tags",
       twitterText: "Send to Twitter",
       postTypeNames: {
@@ -71,6 +89,24 @@ var locale = {
       reblogging: "rebloggend...",
       reblogFailed: "Reblog ist fehlgeschlagen!",
       rebloggedText: "gerebloggt",
+      reblogOptions: [
+         {
+            item: 'draft',
+            text: "Entwurf speichern"
+         },
+         {
+            item: 'queue',
+            text: "in die Warteschleife stellen"
+         },
+         {
+            item: 'private',
+            text: "Privat"
+         },
+         {
+            item: 'manual',
+            text: "manuell rebloggen"
+         }
+      ],
       tagsText: "Tags",
       twitterText: "auf Twitter posten",
       postTypeNames: {
@@ -138,6 +174,24 @@ var locale = {
       reblogging: "rebloguant...",
       reblogFailed: "Reblog a échoué!",
       rebloggedText: "reblogué",
+      reblogOptions: [
+         {
+            item: 'draft',
+            text: "Enregistrer le brouillon"
+         },
+         {
+            item: 'queue',
+            text: "File d'attente"
+         },
+         {
+            item: 'private',
+            text: "Privé"
+         },
+         {
+            item: 'manual',
+            text: "Rebloguer manuellement"
+         }
+      ],
       tagsText: "Tags",
       twitterText: "Publier sur Twitter",
       postTypeNames: {
@@ -205,6 +259,24 @@ var locale = {
       reblogging: "rebloggando...",
       reblogFailed: "Reblog fallito!",
       rebloggedText: "rebloggato",
+      reblogOptions: [
+         {
+            item: 'draft',
+            text: "Salva bozza"
+         },
+         {
+            item: 'queue',
+            text: "Metti in coda"
+         },
+         {
+            item: 'private',
+            text: "Privato"
+         },
+         {
+            item: 'manual',
+            text: "Reblogga manualmente"
+         }
+      ],
       tagsText: "Tag",
       twitterText: "Invia a Twitter",
       postTypeNames: {
@@ -272,6 +344,24 @@ var locale = {
       reblogging: "今リブログ...",
       reblogFailed: "リブログに失敗しました!",
       rebloggedText: "リブログ行われた",
+      reblogOptions: [
+         {
+            item: 'draft',
+            text: "下書き保存"
+         },
+         {
+            item: 'queue',
+            text: "キュー"
+         },
+         {
+            item: 'private',
+            text: "プライベート"
+         },
+         {
+            item: 'manual',
+            text: "手動でリブログ"
+         }
+      ],
       tagsText: "タグ",
       twitterText: "投稿をTwitterにも送信",
       postTypeNames: {
@@ -339,6 +429,24 @@ var locale = {
       reblogging: "yeniden bloglama...",
       reblogFailed: "Yeniden blogla başarısız!",
       rebloggedText: "yeniden blogladı",
+      reblogOptions: [
+         {
+            item: 'draft',
+            text: "Taslak olarak kaydet"
+         },
+         {
+            item: 'queue',
+            text: "Sıraya koy"
+         },
+         {
+            item: 'private',
+            text: "Özel"
+         },
+         {
+            item: 'manual',
+            text: "Yeniden blogla el ile"
+         }
+      ],
       tagsText: "Etiketler",
       twitterText: "Twitter'a gönder",
       postTypeNames: {

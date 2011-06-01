@@ -215,42 +215,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
 
    if (reblog_settings.quickReblog === 1) {
       var idx;
-      var reblogOptions = [{text: {
-                                    en: "Save draft",
-                                    de: "Entwurf speichern",
-                                    fr: "Enregistrer le brouillon",
-                                    it: "Salva bozza",
-                                    ja: "下書き保存",
-                                    tr: "Taslak olarak kaydet"
-                                  },
-                           item: 'draft'},
-                           {text: {
-                                    en: "Queue",
-                                    de: "in die Warteschleife stellen",
-                                    fr: "File d'attente",
-                                    it: "Metti in coda",
-                                    ja: "キュー",
-                                    tr: "Sıraya koy"
-                                  },
-                           item: 'queue'},
-                           {text: {
-                                    en: "Private",
-                                    de: "Privat",
-                                    fr: "Privé",
-                                    it: "Privato",
-                                    ja: "プライベート",
-                                    tr: "Özel"
-                                  },
-                           item: 'private'},
-                           {text: {
-                                    en: "Reblog manually",
-                                    de: "manuell rebloggen",
-                                    fr: "Rebloguer manuellement",
-                                    it: "Reblogga manualmente",
-                                    ja: "手動でリブログ",
-                                    tr: "Yeniden blogla el ile"
-                                  },
-                           item: 'manual'}];
       $('head').append('<style type="text/css">' +
                        '.MissingE_quick_reblogging_icon {' +
                           'background-image:url("' +
@@ -263,16 +227,17 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       var txt = '<div class="user_menu" id="MissingE_quick_reblog">' +
                  '<div class="user_menu_nipple"></div>' +
                  '<div class="user_menu_list">';
-      for (idx=0; idx<reblogOptions.length; idx++) {
+      for (idx=0; idx<locale[lang]["reblogOptions"].length; idx++) {
          var doonclick = 'onclick="return false;"';
-         if (reblogOptions[idx].item === 'manual') {
+         if (locale[lang]["reblogOptions"][idx].item === 'manual') {
             doonclick = '';
          }
          txt += '<a class="MissingE_quick_reblog_button" ' +
-                 'id="MissingE_quick_reblog_' + reblogOptions[idx].item +
+                 'id="MissingE_quick_reblog_' +
+                 locale[lang]["reblogOptions"][idx].item +
                  '" href="#" ' + doonclick + '>' +
                  '<div class="user_menu_list_item">' +
-                 reblogOptions[idx].text[lang] + '</div></a>';
+                 locale[lang]["reblogOptions"][idx].text + '</div></a>';
       }
       txt +=  '<a href="#" onclick="return false;">' +
                '<div class="user_menu_list_item has_tag_input">' +
