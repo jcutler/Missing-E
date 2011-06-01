@@ -22,24 +22,6 @@
  */
 
 /*global safari, $ */
-var reblogText = {
-                  title: {
-                        en: "reblog",
-                        fr: "rebloguer",
-                        de: "rebloggen",
-                        it: "reblogga",
-                        ja: "リブログ",
-                        tr: "yeniden blogla"
-                         },
-                  error: {
-                        en: "An error occured. Click to reload 'Magnifier'.",
-                        de: "Ein Fehler ist aufgetreten. Klicken Sie, erneut zu versuchen.",
-                        fr: "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
-                        it: "È verificato un errore. Clicca per provare di nuovo.",
-                        ja: "エラーが発生しました。 もう一度やり直してください]をクリックします。",
-                        tr: "Bir hata oluştu. Yeniden denemek için tıklayın."
-                         }
-};
 
 function addReblog(item) {
    if (item.tagName === "LI" && $(item).hasClass('post') &&
@@ -68,9 +50,10 @@ function addReblog(item) {
 }
 
 function receiveReblog(response) {
+   var lang = $('html').attr("lang");
    if (response.name !== "reblogYourself") { return; }
    var edit, klass, txt;
-   var reblog_text = reblogText.title[$('html').attr("lang")];
+   var reblog_text = locale[lang]["reblog"];
    if (response.message.success) {
       klass = (response.message.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
@@ -95,7 +78,7 @@ function receiveReblog(response) {
                 '" class="' + klass + '">' + txt + '</a>');
    }
    else {
-      var reblog_err = reblogText.error[$('html').attr("lang")];
+      var reblog_err = locale[lang]["error"];
       edit = $('#post_'+response.message.pid)
          .find('div.post_controls a:[href^="/edit"]');
       if (edit.length === 0) {

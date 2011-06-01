@@ -26,22 +26,6 @@
 var bmi = safari.extension.baseURI + 'bookmarker/sidebar_bookmark.png';
 var mimg = safari.extension.baseURI + 'bookmarker/post_bookmark.png';
 
-var bookmarkText = {
-                   en: "bookmark",
-                   de: "Lesezeichen hinzufügen",
-                   fr: "marquer",
-                   it: "segnalibro",
-                   ja: "ブックマーク",
-                   tr: "kalınan yer imi"
-};
-var bookmarksTitle = {
-                   en: "Bookmarks",
-                   de: "Lesezeichen",
-                   fr: "Signets",
-                   it: "Segnalibri",
-                   ja: "ブックマーク",
-                   tr: "Imleri"
-};
 var markFormat;
 
 function serializeMarks(a) {
@@ -229,7 +213,7 @@ function doMarks(item) {
          }
       }
       var node = $('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + bookmarkText[lang] + '" ' +
+                   '" title="' + locale[lang]["bookmarkText"] + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -356,7 +340,8 @@ function MissingE_bookmarker_doStartup(format) {
       var lang = $('html').attr('lang');
       var list = $('<div class="dashboard_nav_item" ' +
                    'style="padding-left:0;position:relative;">' +
-                   '<div class="dashboard_nav_title">' + bookmarksTitle[lang] +
+                   '<div class="dashboard_nav_title">' +
+                   locale[lang]["bookmarksTitle"] +
                    '</div><ul id="MissingE_marklist" ' +
                    'class="dashboard_subpages"></ul></div>');
 
