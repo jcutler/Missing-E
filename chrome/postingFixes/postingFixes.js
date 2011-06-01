@@ -202,7 +202,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           locale["postingFixes"]["uploadImagesText"][lang] + '</a>';
+                           locale[lang]["postingFixes"]["uploadImagesText"] + '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
       }
