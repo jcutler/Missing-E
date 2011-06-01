@@ -25,23 +25,6 @@
 
 var bmi = chrome.extension.getURL('bookmarker/sidebar_bookmark.png');
 var mimg = chrome.extension.getURL('bookmarker/post_bookmark.png');
-
-var bookmarkText = {
-                   en: "bookmark",
-                   de: "Lesezeichen hinzufügen",
-                   fr: "marquer",
-                   it: "segnalibro",
-                   ja: "ブックマーク",
-                   tr: "kalınan yer imi"
-};
-var bookmarksTitle = {
-                   en: "Bookmarks",
-                   de: "Lesezeichen",
-                   fr: "Signets",
-                   it: "Segnalibri",
-                   ja: "ブックマーク",
-                   tr: "Imleri"
-};
 var markFormat;
 
 var st = document.createElement('style');
@@ -238,7 +221,7 @@ function doMarks(item) {
          }
       }
       var node = $('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + bookmarkText[lang] + '" ' +
+                   '" title="' + locale["bookmarkText"][lang] + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -360,7 +343,7 @@ chrome.extension.sendRequest({greeting: "settings",
       var lang = $('html').attr('lang');
       var list = $('<div class="dashboard_nav_item" ' +
                    'style="padding-left:0;position:relative;">' +
-                   '<div class="dashboard_nav_title">' + bookmarksTitle[lang] +
+                   '<div class="dashboard_nav_title">' + locale["bookmarksTitle"][lang] +
                    '</div><ul id="MissingE_marklist" ' +
                    'class="dashboard_subpages"></ul></div>');
    
