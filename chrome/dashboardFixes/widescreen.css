@@ -99,4 +99,26 @@ width:100% !important;
 margin-right:0 !important;
 }
 
-#
+.answer_container .answer_form {
+margin-right:197px;
+}
+
+.answer_container .answer_button {
+position:absolute;
+top:0;
+right:-197px;
+}
+
+.answer_container .answer_avatar {
+position:absolute;
+top:0;
+left:0;
+}
+
+.answer_container .answer_input {
+width:100% !important;
+}
+
+.answer_container .answer_length {
+right:-80px !important;
+}
