@@ -72,7 +72,7 @@ function addTags(link) {
                setReblogTags(this.getAttribute('tags').split(','));
             }
          }
-   }, false);
+      }, false);
    };
    theimg.src = img.src;
    return true;

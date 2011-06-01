@@ -50,8 +50,8 @@ function addReblog(item) {
 }
 
 function receiveReblog(response) {
-   var lang = $('html').attr("lang");
    if (response.name !== "reblogYourself") { return; }
+   var lang = $('html').attr("lang");
    var edit, klass, txt;
    var reblog_text = locale[lang]["reblog"];
    if (response.message.success) {
