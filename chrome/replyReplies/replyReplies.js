@@ -285,28 +285,28 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             else {
                newcode = '';
             }
-            for (x=0; x<locale["notifications"][lang][anstype].length; x++) {
+            for (x=0; x<locale[lang]["notifications"][anstype].length; x++) {
                if (anstype === 'reblog' &&
-                   x === locale["notifications"][lang].reblogIndex &&
+                   x === locale[lang]["notifications"].reblogIndex &&
                    reblnk !== "") {
                   newcode += ' <a href="' + reblnk + '">' +
-                     locale["notifications"][lang][anstype][x] + '</a>';
+                     locale[lang]["notifications"][anstype][x] + '</a>';
                }
-               else if (locale["notifications"][lang][anstype][x] === "U") {
+               else if (locale[lang]["notifications"][anstype][x] === "U") {
                   if (newcode !== '' && newcode !== img) {
                      newcode += ' ';
                   }
                   newcode += '<strong>' + user;
                }
-               else if (locale["notifications"][lang][anstype][x] === "U,") {
+               else if (locale[lang]["notifications"][anstype][x] === "U,") {
                   if (newcode !== '' && newcode !== img) {
                      newcode += ' ';
                   }
                   newcode += '<strong>' + user + ',';
                }
-               else if (locale["notifications"][lang][anstype][x] === "P") {
+               else if (locale[lang]["notifications"][anstype][x] === "P") {
                   var y;
-                  var postType = locale["posts"][lang][type];
+                  var postType = locale[lang]["posts"][type];
                   if (!(postType instanceof Array)) {
                      if (anstype === "reply") {
                         postType = postType["reply"];
@@ -319,7 +319,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                      newcode += ' ';
                      if (y === 0 && lang === 'it' &&
                          (anstype === "answer" || anstype === "reply")) {
-                        if (locale["posts"].it[type][0] === 'il') {
+                        if (locale[lang]["posts"][type][0] === 'il') {
                            newcode += 'al';
                         }
                         else {
@@ -336,7 +336,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                   }
                }
                else {
-                  newcode += ' ' + locale["notifications"][lang][anstype][x];
+                  newcode += ' ' + locale[lang]["notifications"][anstype][x];
                }
             }
             if (posttxt === '') {

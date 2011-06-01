@@ -37,9 +37,9 @@ function startReblog(id,replaceIcons) {
       a.addClass('MissingE_quick_reblogging_icon');
    }
    else {
-      a.addClass('MissingE_quick_reblogging_text').text(locale["reblogging"][lang]);
+      a.addClass('MissingE_quick_reblogging_text').text(locale[lang]["reblogging"]);
    }
-   a.attr('title', locale["reblogging"][lang]);
+   a.attr('title', locale[lang]["reblogging"]);
 }
 
 function failReblog(id,replaceIcons) {
@@ -53,7 +53,7 @@ function failReblog(id,replaceIcons) {
    }
    a.attr('title',a.attr('oldtxt'));
    a.removeAttr('oldtxt');
-   alert(locale["reblogFailed"][lang]);
+   alert(locale[lang]["reblogFailed"]);
 }
 
 function finishReblog(id,replaceIcons) {
@@ -65,9 +65,9 @@ function finishReblog(id,replaceIcons) {
    }
    else {
       a.addClass('MissingE_quick_reblogging_text_success')
-         .text(locale["rebloggedText"][lang]);
+         .text(locale[lang]["rebloggedText"]);
    }
-   a.attr('title', locale["rebloggedText"][lang]);
+   a.attr('title', locale[lang]["rebloggedText"]);
    a.removeAttr('oldtxt');
 }
 
@@ -277,12 +277,12 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       txt +=  '<a href="#" onclick="return false;">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_twitter">' +
-               '<input type="checkbox" /> ' + locale["twitterText"][lang] +
+               '<input type="checkbox" /> ' + locale[lang]["twitterText"] +
                '</div></div></a>' +
                '<a href="#" onclick="return false;">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_tags">' +
-               '<input type="text" /><br />' + locale["tagsText"][lang] +
+               '<input type="text" /><br />' + locale[lang]["tagsText"] +
                '</div></div></a>';
       var qr = $(txt).appendTo('body');
 

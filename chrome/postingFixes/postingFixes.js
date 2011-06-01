@@ -42,24 +42,24 @@ function addAskUploader(obj) {
    }
 }
 
-function changeButtonText(val, lang, submitText) {
+function changeButtonText(val, submitText) {
    var text;
    if (val === '2') {
-      text = submitText[lang].queue;
+      text = submitText.queue;
    }
    else if (val === '1') {
-      text = submitText[lang].draft;
+      text = submitText.draft;
    }
    else if (val === 'private') {
-      text = submitText[lang].private;
+      text = submitText.private;
    }
    else {
-      text = submitText[lang].publish;
+      text = submitText.publish;
    }
    $('#post_controls input[type="submit"]').val(text);
 }
 
-function showHideButtons(newbtns, val, lang, isShare) {
+function showHideButtons(newbtns, val) {
    var tofind;
    newbtns.find('.current').removeClass('current');
    if (val === '0') { tofind = 'publish'; }
@@ -101,8 +101,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
      'style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">' + locale["postingFixes"]["clearTagsText"][lang] + '</a></div>')
-         .appendTo(set_tags);
+     'return false;">' + locale[lang]["postingFixes"]["clearTagsText"] +
+     '</a></div>').appendTo(set_tags);
 
    $('#photo_src').keyup(function(){
       if (/^http:\/\/https?:\/\//.test(this.value)) {
@@ -130,7 +130,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          bottom = Math.round(bottom);
          if ($('#post_state').val() === '0') {
             $('#post_controls input[type="submit"]')
-               .val(locale["postingFixes"]["submitText"][lang].publish);
+               .val(locale[lang]["postingFixes"]["submitText"].publish);
          }
       }
       else {
@@ -139,13 +139,14 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
       }
 
       var allbtns = "";
-      for (var i in locale["postingFixes"]["submitText"][lang]) {
+      for (var i in locale[lang]["postingFixes"]["submitText"]) {
          var klass = "";
          var div = "";
          allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
                      'type="submit" class="positive" ' +
                      'onclick="return true;"><span>' +
-                     locale["postingFixes"]["submitText"][lang][i] + '</span></button></div>';
+                     locale[lang]["postingFixes"]["submitText"][i] +
+                     '</span></button></div>';
       }
       var newbtns = $('<div id="MissingE_postMenu">' + allbtns + '</div>')
                      .insertAfter(btn);
@@ -180,7 +181,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
       $(document).ready(function() {
          showHideButtons(newbtns, $('#post_state').val());
          if (isShare) {
-            changeButtonText($('#post_state').val(), lang, locale["postingFixes"]["submitText"]);
+            changeButtonText($('#post_state').val(), locale[lang]["postingFixes"]["submitText"]);
          }
       });
    }

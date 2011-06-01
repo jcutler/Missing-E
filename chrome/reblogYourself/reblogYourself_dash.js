@@ -48,7 +48,8 @@ function addReblog(item) {
       chrome.extension.sendRequest({greeting: "reblogYourself", pid: tid,
                                     url: addr}, function(response) {
          var edit, txt, klass;
-         var reblog_text = locale["reblog"][$('html').attr("lang")];
+         var lang = $('html').attr("lang");
+         var reblog_text = locale[lang]["reblog"];
          if (response.success) {
             klass = (response.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
@@ -72,7 +73,7 @@ function addReblog(item) {
                        '" class="' + klass + '">' + txt + '</a>');
          }
          else {
-            var reblog_err = locale["error"][$('html').attr("lang")];
+            var reblog_err = locale[lang]["error"];
             edit = $(item)
                .find('div.post_controls a:[href^="/edit"]');
             if (edit.length === 0) {

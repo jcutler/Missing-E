@@ -27,10 +27,10 @@ function addPostLinks() {
    var plwrap = '<li class="short_new_post post new_post" id="new_post"></li>';
    var pltxt = '<div class="short_post_labels">';
    var lang = $('html').attr('lang');
-   for (i in locale["postTypeNames"][lang]) {
+   for (i in locale[lang]["postTypeNames"]) {
       pltxt += '<div class="short_label">' +
                '<a href="/new/' + i + '" class="new_post_label">' +
-               locale["postTypeNames"][lang][i] + '</a></div>';
+               locale[lang]["postTypeNames"][i] + '</a></div>';
    }
    pltxt += '<div class="clear"></div></div>';
 
@@ -70,9 +70,9 @@ function doReplies(item) {
    notes.after('<a class="MissingE_experimental_reply" href="#" onclick="' +
                'display_reply_pane([' + id + ', \'' + key + '\']);' +
                'return false;" id="post_control_reply_' + id + '" title="' +
-               locale["dashFixesText"][lang]['reply'] + ' [' +
-               locale["dashFixesText"][lang]['experimental'] + ']">[' +
-               locale["dashFixesText"][lang]['reply'] + ']</small></a>');
+               locale[lang]["dashFixesText"]['reply'] + ' [' +
+               locale[lang]["dashFixesText"]['experimental'] + ']">[' +
+               locale[lang]["dashFixesText"]['reply'] + ']</small></a>');
 
    notes.after('<span class="MissingE_post_control ' +
                'MissingE_experimental_reply_wait" id="reply_fail_' + id +
@@ -92,39 +92,39 @@ function doIcons(item) {
       var klass = "MissingE_post_control ";
       if (/delete_post_/.test(a.attr('onclick')) ||
           /^post_delete_/.test(a.attr('id')) ||
-          (new RegExp(locale["dashFixesText"][lang]["del"], "i").test(a.text()))) {
-         a.attr('title',locale["dashFixesText"][lang]["del"])
+          (new RegExp(locale[lang]["dashFixesText"]["del"], "i").test(a.text()))) {
+         a.attr('title',locale[lang]["dashFixesText"]["del"])
             .addClass(klass + "MissingE_delete_control").text('');
       }
       else if (/queue_post_/.test(a.attr('onclick')) ||
-               (new RegExp(locale["dashFixesText"][lang]["queue"],"i")).test(a.text())) {
-         a.attr('title',locale["dashFixesText"][lang]["queue"])
+               (new RegExp(locale[lang]["dashFixesText"]["queue"],"i")).test(a.text())) {
+         a.attr('title',locale[lang]["dashFixesText"]["queue"])
             .addClass(klass + "MissingE_queue_control").text('');
       }
       else if (/^\/edit/.test(a.attr('href'))) {
-         a.attr('title',locale["dashFixesText"][lang]["edit"])
+         a.attr('title',locale[lang]["dashFixesText"]["edit"])
             .addClass(klass + "MissingE_edit_control").text('');
       }
       else if (/^\/reblog/.test(a.attr('href'))) {
-         a.attr('title',locale["dashFixesText"][lang]['reblog'])
+         a.attr('title',locale[lang]["dashFixesText"]['reblog'])
             .addClass(klass + "MissingE_reblog_control").text('');
       }
       else if (/^post_control_reply_/.test(a.attr('id'))) {
-         var replyTitle = locale["dashFixesText"][lang]['reply'];
+         var replyTitle = locale[lang]["dashFixesText"]['reply'];
          if (a.hasClass("MissingE_experimental_reply")) {
             klass += "MissingE_experimental_reply_control ";
-            replyTitle += " [" + locale["dashFixesText"][lang]['experimental'] + "]";
+            replyTitle += " [" + locale[lang]["dashFixesText"]['experimental'] + "]";
          }
          a.attr('title',replyTitle)
             .addClass(klass + "MissingE_reply_control").text('');
       }
       else if (/^show_notes_/.test(a.attr('id')) &&
                a.children().length == 0) {
-         a.attr('title',locale["dashFixesText"][lang]['notes'])
+         a.attr('title',locale[lang]["dashFixesText"]['notes'])
             .addClass(klass + "MissingE_notes_control").text('');
       }
       else if (a.hasClass('reblog_count')) {
-         a.attr('title',locale["dashFixesText"][lang]['notes'])
+         a.attr('title',locale[lang]["dashFixesText"]['notes'])
             .addClass('MissingE_notes_control_container')
             .find('span').each(function() {
             $(this).html($(this).html().replace(/[^0-9]*([0-9,\.]+)[^0-9]*/,
