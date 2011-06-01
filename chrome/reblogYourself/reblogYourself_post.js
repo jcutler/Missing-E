@@ -20,7 +20,6 @@
  * You should have received a copy of the GNU General Public License
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
-
 var div = document.getElementsByTagName("div")[0];
 var controls = div.getElementsByTagName("a");
 var noReblog = true;
@@ -66,6 +65,8 @@ if (noReblog) {
       var link = document.createElement('a');
       link.setAttribute('href', url);
       link.setAttribute('target', '_top');
+			
+			var lang = document.getElementsByTagName('html')[0].lang; // This will unfailingly get "en" - the iframe's HTML is labeled as "en" and doesn't change.
 
       var icon = document.createElement('img');
       icon.style.height='20px';
@@ -74,8 +75,16 @@ if (noReblog) {
       icon.style.display='block';
       icon.style.cssFloat='left';
       icon.style.cursor='pointer';
-      icon.alt='Reblog';
-      icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha.png?6';
+			icon.alt=locale["reblog"][lang];
+			if(lang != "jp" && lang != "en"){
+	      icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha'+lang+'_'+lang.toUpperCase()+'.png?6';
+			}else{
+				if(lang == "ja"){
+					icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha_ja_JP.png?6';
+				}else{
+					icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha.png?6'; // English doesn't have suffix (en_EN) or (en_US/UK)
+				}
+			}
 
       link.appendChild(icon);
       div.insertBefore(link,last);

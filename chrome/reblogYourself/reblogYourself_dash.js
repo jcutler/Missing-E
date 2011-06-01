@@ -22,24 +22,6 @@
  */
 
 /*global chrome, $ */
-var reblogText = {
-                  title: {
-                        en: "reblog",
-                        fr: "rebloguer",
-                        de: "rebloggen",
-                        it: "reblogga",
-                        ja: "リブログ",
-                        tr: "yeniden blogla"
-                         },
-                  error: {
-                        en: "An error occured. Click to reload 'Magnifier'.",
-                        de: "Ein Fehler ist aufgetreten. Klicken Sie, erneut zu versuchen.",
-                        fr: "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
-                        it: "È verificato un errore. Clicca per provare di nuovo.",
-                        ja: "エラーが発生しました。 もう一度やり直してください]をクリックします。",
-                        tr: "Bir hata oluştu. Yeniden denemek için tıklayın."
-                         }
-};
 
 function addReblog(item) {
    if (item.tagName === "LI" && $(item).hasClass('post') &&
@@ -66,7 +48,7 @@ function addReblog(item) {
       chrome.extension.sendRequest({greeting: "reblogYourself", pid: tid,
                                     url: addr}, function(response) {
          var edit, txt, klass;
-         var reblog_text = reblogText.title[$('html').attr("lang")];
+         var reblog_text = locale["reblog"][$('html').attr("lang")];
          if (response.success) {
             klass = (response.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
@@ -90,7 +72,7 @@ function addReblog(item) {
                        '" class="' + klass + '">' + txt + '</a>');
          }
          else {
-            var reblog_err = reblogText.error[$('html').attr("lang")];
+            var reblog_err = locale["error"][$('html').attr("lang")];
             edit = $(item)
                .find('div.post_controls a:[href^="/edit"]');
             if (edit.length === 0) {

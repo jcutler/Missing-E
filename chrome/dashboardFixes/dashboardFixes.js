@@ -22,140 +22,15 @@
  */
 
 /*global chrome, $ */
-var postTypeNames = {
-                  en: {
-                       text:  ["Text"],
-                       photo: ["Photo"],
-                       quote: ["Quote"],
-                       link:  ["Link"],
-                       chat:  ["Chat"],
-                       audio: ["Audio"],
-                       video: ["Video"]
-                      },
-                  de: {
-                       text:  ["Text"],
-                       photo: ["Foto"],
-                       quote: ["Zitat"],
-                       link:  ["Link"],
-                       chat:  ["Chat"],
-                       audio: ["Audio"],
-                       video: ["Video"]
-                      },
-                  fr: {
-                       text:  ["Texte"],
-                       photo: ["Photo"],
-                       quote: ["Citation"],
-                       link:  ["Lien"],
-                       chat:  ["Discussion"],
-                       audio: ["Audio"],
-                       video: ["Vidéo"]
-                      },
-                  it: {
-                       text:  ["Testo"],
-                       photo: ["Foto"],
-                       quote: ["Citazione"],
-                       link:  ["Link"],
-                       chat:  ["Chat"],
-                       audio: ["Audio"],
-                       video: ["Video"]
-                      },
-                  ja: {
-                       text:  ["テキスト"],
-                       photo: ["画像"],
-                       quote: ["引用"],
-                       link:  ["リンク"],
-                       chat:  ["チャット"],
-                       audio: ["音声"],
-                       video: ["動画"]
-                      },
-                  tr: {
-                       text:  ["Metin"],
-                       photo: ["Fotoğraf"],
-                       quote: ["Alıntı"],
-                       link:  ["Bağlantı"],
-                       chat:  ["Diyalog"],
-                       audio: ["Ses"],
-                       video: ["Video"]
-                      }
-};
-
-var dashFixesText = {
-               en:
-                  {
-                  edit: "edit",
-                  del: "delete",
-                  reblog: "reblog",
-                  reply: "reply",
-                  notes: "notes",
-                  queue: "queue",
-                  experimental: "EXPERIMENTAL",
-                  exp: "X"
-                  },
-               de:
-                  {
-                  edit: "bearbeiten",
-                  del: "löschen",
-                  reblog: "rebloggen",
-                  reply: "antworten",
-                  notes: "Anmerkungen",
-                  queue: "in die Warteschleife stellen",
-                  experimental: "EXPERIMENTELL",
-                  exp: "X"
-                  },
-               fr:
-                  {
-                  edit: "éditer",
-                  del: "supprimer",
-                  reblog: "rebloguer",
-                  reply: "réagir",
-                  notes: "notes",
-                  queue: "file d'attente",
-                  experimental: "EXPÉRIMENTALE",
-                  exp: "X"
-                  },
-               it:
-                  {
-                  edit: "modifica",
-                  del: "elimina",
-                  reblog: "reblogga",
-                  reply: "rispondi",
-                  notes: "note",
-                  queue: "in coda",
-                  experimental: "SPERIMENTALE",
-                  exp: "SP"
-                  },
-               ja:
-                  {
-                  edit: "編集",
-                  del: "削除",
-                  reblog: "リブログ",
-                  reply: "返信",
-                  notes: "リアクション",
-                  queue: "キュー",
-                  experimental: "実験",
-                  exp: "実験"
-                  },
-               tr:
-                  {
-                  edit: "düzenle",
-                  del: "sil",
-                  reblog: "yeniden blogla",
-                  reply: "yorum yap",
-                  notes: "yorum",
-                  queue: "sırada",
-                  experimental: "deneysel",
-                  exp: "X"
-                  }
-};
 
 function addPostLinks() {
    var plwrap = '<li class="short_new_post post new_post" id="new_post"></li>';
    var pltxt = '<div class="short_post_labels">';
    var lang = $('html').attr('lang');
-   for (i in postTypeNames[lang]) {
+   for (i in locale["postTypeNames"][lang]) {
       pltxt += '<div class="short_label">' +
                '<a href="/new/' + i + '" class="new_post_label">' +
-               postTypeNames[lang][i] + '</a></div>';
+               locale["postTypeNames"][lang][i] + '</a></div>';
    }
    pltxt += '<div class="clear"></div></div>';
 
@@ -195,9 +70,9 @@ function doReplies(item) {
    notes.after('<a class="MissingE_experimental_reply" href="#" onclick="' +
                'display_reply_pane([' + id + ', \'' + key + '\']);' +
                'return false;" id="post_control_reply_' + id + '" title="' +
-               dashFixesText[lang]['reply'] + ' [' +
-               dashFixesText[lang]['experimental'] + ']">[' +
-               dashFixesText[lang]['reply'] + ']</small></a>');
+               locale["dashFixesText"][lang]['reply'] + ' [' +
+               locale["dashFixesText"][lang]['experimental'] + ']">[' +
+               locale["dashFixesText"][lang]['reply'] + ']</small></a>');
 
    notes.after('<span class="MissingE_post_control ' +
                'MissingE_experimental_reply_wait" id="reply_fail_' + id +
@@ -217,39 +92,39 @@ function doIcons(item) {
       var klass = "MissingE_post_control ";
       if (/delete_post_/.test(a.attr('onclick')) ||
           /^post_delete_/.test(a.attr('id')) ||
-          (new RegExp(dashFixesText[lang]["del"], "i").test(a.text()))) {
-         a.attr('title',dashFixesText[lang]["del"])
+          (new RegExp(locale["dashFixesText"][lang]["del"], "i").test(a.text()))) {
+         a.attr('title',locale["dashFixesText"][lang]["del"])
             .addClass(klass + "MissingE_delete_control").text('');
       }
       else if (/queue_post_/.test(a.attr('onclick')) ||
-               (new RegExp(dashFixesText[lang]["queue"],"i")).test(a.text())) {
-         a.attr('title',dashFixesText[lang]["queue"])
+               (new RegExp(locale["dashFixesText"][lang]["queue"],"i")).test(a.text())) {
+         a.attr('title',locale["dashFixesText"][lang]["queue"])
             .addClass(klass + "MissingE_queue_control").text('');
       }
       else if (/^\/edit/.test(a.attr('href'))) {
-         a.attr('title',dashFixesText[lang]["edit"])
+         a.attr('title',locale["dashFixesText"][lang]["edit"])
             .addClass(klass + "MissingE_edit_control").text('');
       }
       else if (/^\/reblog/.test(a.attr('href'))) {
-         a.attr('title',dashFixesText[lang]['reblog'])
+         a.attr('title',locale["dashFixesText"][lang]['reblog'])
             .addClass(klass + "MissingE_reblog_control").text('');
       }
       else if (/^post_control_reply_/.test(a.attr('id'))) {
-         var replyTitle = dashFixesText[lang]['reply'];
+         var replyTitle = locale["dashFixesText"][lang]['reply'];
          if (a.hasClass("MissingE_experimental_reply")) {
             klass += "MissingE_experimental_reply_control ";
-            replyTitle += " [" + dashFixesText[lang]['experimental'] + "]";
+            replyTitle += " [" + locale["dashFixesText"][lang]['experimental'] + "]";
          }
          a.attr('title',replyTitle)
             .addClass(klass + "MissingE_reply_control").text('');
       }
       else if (/^show_notes_/.test(a.attr('id')) &&
                a.children().length == 0) {
-         a.attr('title',dashFixesText[lang]['notes'])
+         a.attr('title',locale["dashFixesText"][lang]['notes'])
             .addClass(klass + "MissingE_notes_control").text('');
       }
       else if (a.hasClass('reblog_count')) {
-         a.attr('title',dashFixesText[lang]['notes'])
+         a.attr('title',locale["dashFixesText"][lang]['notes'])
             .addClass('MissingE_notes_control_container')
             .find('span').each(function() {
             $(this).html($(this).html().replace(/[^0-9]*([0-9,\.]+)[^0-9]*/,
