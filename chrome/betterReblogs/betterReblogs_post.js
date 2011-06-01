@@ -43,46 +43,47 @@ function addTags(link) {
 
    var img = link.getElementsByTagName('img')[0];
    var theimg = new Image();
-   theimg.src = img.src;
-   var w = theimg.width;
-   var h = theimg.height;
-
-   var block = document.createElement('div');
-   block.innerHTML = '<div class="half" style="height:' + h + 'px;"></div>' +
-      '<div class="remhalf" style="width:' + (w-24) + 'px;height:' + h +
-      'px;background:transparent url(\'' + img.src + '\') no-repeat ' +
-      '-24px 0;float:right;"></div>';
-   block.className = 'MissingE_reblog';
-   block.style.height = h + 'px';
-   block.style.width = (w+1) + 'px';
-   link.replaceChild(block, img);
-   var host, pid;
-   var loc = location.href;
-   loc = loc.substring(loc.indexOf("src=")+4);
-   loc = loc.replace(/%3A/gi,":")
-            .replace(/%2F/gi,"/");
-   host = loc.match(/http:\/\/[^\/]*/)[0];
-   pid = loc.match(/&pid=([0-9]*)/)[1];
-   chrome.extension.sendRequest({greeting: "tags", pid: pid, url: host},
-                                function(response) {
-      if (response.success) {
-         link.firstChild.className += " MissingE_reblog_success";
-         link.setAttribute('tags',response.data.join(','));
-      }
-      else {
-         link.firstChild.className += " MissingE_reblog_fail";
-      }
-   });
-
-   link.addEventListener('mousedown',function(e){
-      if (e.which === 1 || e.which === 2) {
-         var tags = this.getAttribute('tags');
-         if (tags !== undefined && tags !== null) {
-            setReblogTags(this.getAttribute('tags').split(','));
+   theimg.onload = function() {
+      var w = this.width;
+      var h = this.height;
+   
+      var block = document.createElement('div');
+      block.innerHTML = '<div class="half" style="height:' + h + 'px;"></div>' +
+         '<div class="remhalf" style="width:' + (w-24) + 'px;height:' + h +
+         'px;background:transparent url(\'' + img.src + '\') no-repeat ' +
+         '-24px 0;float:right;"></div>';
+      block.className = 'MissingE_reblog';
+      block.style.height = h + 'px';
+      block.style.width = (w+1) + 'px';
+      link.replaceChild(block, img);
+      var host, pid;
+      var loc = location.href;
+      loc = loc.substring(loc.indexOf("src=")+4);
+      loc = loc.replace(/%3A/gi,":")
+               .replace(/%2F/gi,"/");
+      host = loc.match(/http:\/\/[^\/]*/)[0];
+      pid = loc.match(/&pid=([0-9]*)/)[1];
+      chrome.extension.sendRequest({greeting: "tags", pid: pid, url: host},
+                                   function(response) {
+         if (response.success) {
+            link.firstChild.className += " MissingE_reblog_success";
+            link.setAttribute('tags',response.data.join(','));
          }
-      }
-   }, false);
-
+         else {
+            link.firstChild.className += " MissingE_reblog_fail";
+         }
+      });
+   
+      link.addEventListener('mousedown',function(e){
+         if (e.which === 1 || e.which === 2) {
+            var tags = this.getAttribute('tags');
+            if (tags !== undefined && tags !== null) {
+               setReblogTags(this.getAttribute('tags').split(','));
+            }
+         }
+      }, false);
+   };
+   theimg.src = img.src;
    return true;
 }
 
