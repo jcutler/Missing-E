@@ -45,7 +45,7 @@ else {
 }
 
 if (noReblog) {
-   var url, redir;
+   var url, redir, i;
    var loc = location.href;
    var last = controls[controls.length-1];
    var gdp = document.getElementById('MissingE_gotoDashPost_link');
@@ -65,8 +65,29 @@ if (noReblog) {
       var link = document.createElement('a');
       link.setAttribute('href', url);
       link.setAttribute('target', '_top');
-			
-			var lang = document.getElementsByTagName('html')[0].lang; // This will unfailingly get "en" - the iframe's HTML is labeled as "en" and doesn't change.
+
+      var dashimg = null;
+      for (i=controls.length-1; i>=0; i--) {
+         if (controls[i].href === 'http://www.tumblr.com/dashboard') {
+            dashimg = controls[i].getElementsByTagName('img')[0];
+            break;
+         }
+      }
+      var suffix = '';
+      var lang = 'en';
+      if (dashimg) {
+         suffix = dashimg.src.match(/alpha([^\.]*)(.*)/);
+         if (suffix !== null && suffix.length > 2) {
+            lang = suffix[1].match(/[a-z]+/);
+            if (lang === null || lang.length === 0) {
+               lang = 'en';
+            }
+            else {
+               lang = lang[0];
+            }
+            suffix = suffix[1] + suffix[2];
+         }
+      }
 
       var icon = document.createElement('img');
       icon.style.height='20px';
@@ -75,17 +96,9 @@ if (noReblog) {
       icon.style.display='block';
       icon.style.cssFloat='left';
       icon.style.cursor='pointer';
-			icon.alt=locale["reblog"][lang];
-			if(lang != "jp" && lang != "en"){
-	      icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha'+lang+'_'+lang.toUpperCase()+'.png?6';
-			}else{
-				if(lang == "ja"){
-					icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha_ja_JP.png?6';
-				}else{
-					icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha.png?6'; // English doesn't have suffix (en_EN) or (en_US/UK)
-				}
-			}
-
+      icon.alt=locale[lang]["reblog"];
+      icon.src = 'http://assets.tumblr.com/images/iframe_reblog_alpha' +
+         suffix;
       link.appendChild(icon);
       div.insertBefore(link,last);
    }

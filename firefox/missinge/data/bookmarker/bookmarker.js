@@ -190,14 +190,6 @@ function markClick(e) {
 
 function doMarks(item) {
    if (item.tagName === 'LI' && jQuery(item).hasClass('post')) {
-      var bookmarkText = {
-                   en: "bookmark",
-                   de: "Lesezeichen hinzufügen",
-                   fr: "marquer",
-                   it: "segnalibro",
-                   ja: "ブックマーク",
-                   tr: "kalınan yer imi"
-      };
       var post = jQuery(item).attr('id').match(/[0-9]*$/)[0];
       if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href) &&
           jQuery('#user_menu_' + post + ' a[following]')
@@ -218,7 +210,7 @@ function doMarks(item) {
          }
       }
       var node = jQuery('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + bookmarkText[lang] + '" ' +
+                   '" title="' + locale[lang]["bookmarkText"] + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -325,14 +317,6 @@ self.on('message', function (message) {
    }
    var extensionURL = message.extensionURL;
    markFormat = message.format;
-   var bookmarksTitle = {
-                      en: "Bookmarks",
-                      de: "Lesezeichen",
-                      fr: "Signets",
-                      it: "Segnalibri",
-                      ja: "ブックマーク",
-                      tr: "Imleri"
-   };
    var bmi = extensionURL + 'bookmarker/sidebar_bookmark.png';
    var mimg = extensionURL + 'bookmarker/post_bookmark.png';
 
@@ -364,7 +348,8 @@ self.on('message', function (message) {
       var lang = jQuery('html').attr('lang');
       var list = jQuery('<div class="dashboard_nav_item" ' +
                    'style="padding-left:0;position:relative;">' +
-                   '<div class="dashboard_nav_title">' + bookmarksTitle[lang] +
+                   '<div class="dashboard_nav_title">' +
+                   locale[lang]["bookmarksTitle"] +
                    '</div><ul id="MissingE_marklist" ' +
                    'class="dashboard_subpages"></ul></div>');
 

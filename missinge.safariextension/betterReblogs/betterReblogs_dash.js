@@ -26,14 +26,6 @@ function setReblogTags(tags) {
 }
 
 function startReblog(id,replaceIcons) {
-   var rebloggingText = {
-      en: "reblogging...",
-      de: "rebloggend...",
-      fr: "rebloguant...",
-      it: "rebloggando...",
-      ja: "今リブログ...",
-      tr: "yeniden bloglama..."
-   };
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    a.attr('oldtxt',a.attr('title'));
@@ -42,20 +34,13 @@ function startReblog(id,replaceIcons) {
       a.addClass('MissingE_quick_reblogging_icon');
    }
    else {
-      a.addClass('MissingE_quick_reblogging_text').text(rebloggingText[lang]);
+      a.addClass('MissingE_quick_reblogging_text')
+         .text(locale[lang]["rebloggingText"]);
    }
-   a.attr('title',rebloggingText[lang]);
+   a.attr('title',locale[lang]["rebloggingText"]);
 }
 
 function failReblog(id,replaceIcons) {
-   var reblogFailed = {
-      en: "Reblog failed!",
-      de: "Reblog ist fehlgeschlagen!",
-      fr: "Reblog a échoué!",
-      it: "Reblog fallito!",
-      ja: "リブログに失敗しました!",
-      tr: "Yeniden blogla başarısız"
-   };
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    if (replaceIcons === 1) {
@@ -66,18 +51,10 @@ function failReblog(id,replaceIcons) {
    }
    a.attr('title',a.attr('oldtxt'));
    a.removeAttr('oldtxt');
-   alert(reblogFailed[lang]);
+   alert(locale[lang]["reblogFailed"]);
 }
 
 function finishReblog(id,replaceIcons) {
-   var rebloggedText = {
-      en: "reblogged",
-      de: "gerebloggt",
-      fr: "reblogué",
-      it: "rebloggato",
-      ja: "リブログ行われた",
-      tr: "yeniden blogladı"
-   };
    var lang = $('html').attr('lang');
    var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    if (replaceIcons === 1) {
@@ -86,18 +63,18 @@ function finishReblog(id,replaceIcons) {
    }
    else {
       a.addClass('MissingE_quick_reblogging_text_success')
-         .text(rebloggedText[lang]);
+         .text(locale[lang]["rebloggedText"]);
    }
-   a.attr('title',rebloggedText[lang]);
+   a.attr('title',locale[lang]["rebloggedText"]);
    a.removeAttr('oldtxt');
 }
 
 function doReblog(item,replaceIcons,accountName) {
    var reblogMode = {
-                        normal:  '0',
-                        draft:   '1',
-                        queue:   '2',
-                        private: 'private'
+      normal:  '0',
+      draft:   '1',
+      queue:   '2',
+      private: 'private'
    };
    var type,url,postId;
    if ($(item).parent().hasClass('post_controls')) {
@@ -114,8 +91,8 @@ function doReblog(item,replaceIcons,accountName) {
    url = location.protocol + '//' + location.host + url;
    url = url.replace(/\?redirect_to=.*$/,'');
    var tags = $('#MissingE_quick_reblog_tags input').val();
-   tags = tags.replace(/\s*,\s*/g,',').replace(/,$/,'')
-            .replace(/^\s*/,'');
+   tags = tags.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',').replace(/,$/,'')
+            .replace(/^\s*/,'').replace(/\s*$/,'');
    var mode = reblogMode[type];
    var twitter = $('#MissingE_quick_reblog_twitter input').is(':checked');
    startReblog(postId,replaceIcons);
@@ -153,7 +130,6 @@ function doReblog(item,replaceIcons,accountName) {
          var params = {};
          for (i=0; i<inputs.length; i++) {
             var name = inputs[i].match(/name="([^"]*)"/);
-            var val = inputs[i].match(/[^\.]value="([^"]*)"/);
             if (name) {
                params[name[1]] = $(inputs[i]).val();
             }
@@ -235,58 +211,6 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
 
    if (quickReblog === 1) {
       var idx;
-      var tagsText = {
-                     en: "Tags",
-                     de: "Tags",
-                     fr: "Tags",
-                     it: "Tag",
-                     ja: "タグ",
-                     tr: "Etiketler"
-      };
-      var twitterText = {
-                     en: "Send to Twitter",
-                     de: "auf Twitter posten",
-                     fr: "Publier sur Twitter",
-                     it: "Invia a Twitter",
-                     ja: "投稿をTwitterにも送信",
-                     tr: "Twitter'a gönder"
-      };
-      var reblogOptions = [{text: {
-                                    en: "Save draft",
-                                    de: "Entwurf speichern",
-                                    fr: "Enregistrer le brouillon",
-                                    it: "Salva bozza",
-                                    ja: "下書き保存",
-                                    tr: "Taslak olarak kaydet"
-                                  },
-                           item: 'draft'},
-                           {text: {
-                                    en: "Queue",
-                                    de: "in die Warteschleife stellen",
-                                    fr: "File d'attente",
-                                    it: "Metti in coda",
-                                    ja: "キュー",
-                                    tr: "Sıraya koy"
-                                  },
-                           item: 'queue'},
-                           {text: {
-                                    en: "Private",
-                                    de: "Privat",
-                                    fr: "Privé",
-                                    it: "Privato",
-                                    ja: "プライベート",
-                                    tr: "Özel"
-                                  },
-                           item: 'private'},
-                           {text: {
-                                    en: "Reblog manually",
-                                    de: "manuell rebloggen",
-                                    fr: "Rebloguer manuellement",
-                                    it: "Reblogga manualmente",
-                                    ja: "手動でリブログ",
-                                    tr: "Yeniden blogla el ile"
-                                  },
-                           item: 'manual'}];
       $('head').append('<style type="text/css">' +
                        '.MissingE_quick_reblogging_icon {' +
                           'background-image:url("' +
@@ -299,26 +223,27 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
       var txt = '<div class="user_menu" id="MissingE_quick_reblog">' +
                  '<div class="user_menu_nipple"></div>' +
                  '<div class="user_menu_list">';
-      for (idx=0; idx<reblogOptions.length; idx++) {
+      for (idx=0; idx<locale[lang]["reblogOptions"].length; idx++) {
          var doonclick = 'onclick="return false;"';
-         if (reblogOptions[idx].item === 'manual') {
+         if (locale[lang]["reblogOptions"][idx].item === 'manual') {
             doonclick = '';
          }
          txt += '<a class="MissingE_quick_reblog_button" ' +
-                 'id="MissingE_quick_reblog_' + reblogOptions[idx].item +
+                 'id="MissingE_quick_reblog_' +
+                 locale[lang]["reblogOptions"][idx].item +
                  '" href="#" ' + doonclick + '>' +
                  '<div class="user_menu_list_item">' +
-                 reblogOptions[idx].text[lang] + '</div></a>';
+                 locale[lang]["reblogOptions"][idx].text + '</div></a>';
       }
       txt +=  '<a href="#" onclick="return false;">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_twitter">' +
-               '<input type="checkbox" /> ' + twitterText[lang] +
+               '<input type="checkbox" /> ' + locale[lang]["twitterText"] +
                '</div></div></a>' +
                '<a href="#" onclick="return false;">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_tags">' +
-               '<input type="text" /><br />' + tagsText[lang] +
+               '<input type="text" /><br />' + locale[lang]["tagsText"] +
                '</div></div></a>';
       var qr = $(txt).appendTo('body');
 

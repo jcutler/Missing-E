@@ -37,9 +37,9 @@ function startReblog(id,replaceIcons) {
       a.addClass('MissingE_quick_reblogging_icon');
    }
    else {
-      a.addClass('MissingE_quick_reblogging_text').text(locale["reblogging"][lang]);
+      a.addClass('MissingE_quick_reblogging_text').text(locale[lang]["reblogging"]);
    }
-   a.attr('title', locale["reblogging"][lang]);
+   a.attr('title', locale[lang]["reblogging"]);
 }
 
 function failReblog(id,replaceIcons) {
@@ -53,7 +53,7 @@ function failReblog(id,replaceIcons) {
    }
    a.attr('title',a.attr('oldtxt'));
    a.removeAttr('oldtxt');
-   alert(locale["reblogFailed"][lang]);
+   alert(locale[lang]["reblogFailed"]);
 }
 
 function finishReblog(id,replaceIcons) {
@@ -65,9 +65,9 @@ function finishReblog(id,replaceIcons) {
    }
    else {
       a.addClass('MissingE_quick_reblogging_text_success')
-         .text(locale["rebloggedText"][lang]);
+         .text(locale[lang]["rebloggedText"]);
    }
-   a.attr('title', locale["rebloggedText"][lang]);
+   a.attr('title', locale[lang]["rebloggedText"]);
    a.removeAttr('oldtxt');
 }
 
@@ -93,8 +93,8 @@ function doReblog(item,replaceIcons,accountName) {
    url = location.protocol + '//' + location.host + url;
    url = url.replace(/\?redirect_to=.*$/,'');
    var tags = $('#MissingE_quick_reblog_tags input').val();
-   tags = tags.replace(/\s*,\s*/g,',').replace(/,$/,'')
-            .replace(/^\s*/,'');
+   tags = tags.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',').replace(/,$/,'')
+            .replace(/^\s*/,'').replace(/\s*$/,'');
    var mode = reblogMode[type];
    var twitter = $('#MissingE_quick_reblog_twitter input').is(':checked');
    startReblog(postId,replaceIcons);
@@ -132,7 +132,6 @@ function doReblog(item,replaceIcons,accountName) {
          var params = {};
          for (i=0; i<inputs.length; i++) {
             var name = inputs[i].match(/name="([^"]*)"/);
-            var val = inputs[i].match(/[^\.]value="([^"]*)"/);
             if (name) {
                params[name[1]] = $(inputs[i]).val();
             }
@@ -215,42 +214,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
 
    if (reblog_settings.quickReblog === 1) {
       var idx;
-      var reblogOptions = [{text: {
-                                    en: "Save draft",
-                                    de: "Entwurf speichern",
-                                    fr: "Enregistrer le brouillon",
-                                    it: "Salva bozza",
-                                    ja: "下書き保存",
-                                    tr: "Taslak olarak kaydet"
-                                  },
-                           item: 'draft'},
-                           {text: {
-                                    en: "Queue",
-                                    de: "in die Warteschleife stellen",
-                                    fr: "File d'attente",
-                                    it: "Metti in coda",
-                                    ja: "キュー",
-                                    tr: "Sıraya koy"
-                                  },
-                           item: 'queue'},
-                           {text: {
-                                    en: "Private",
-                                    de: "Privat",
-                                    fr: "Privé",
-                                    it: "Privato",
-                                    ja: "プライベート",
-                                    tr: "Özel"
-                                  },
-                           item: 'private'},
-                           {text: {
-                                    en: "Reblog manually",
-                                    de: "manuell rebloggen",
-                                    fr: "Rebloguer manuellement",
-                                    it: "Reblogga manualmente",
-                                    ja: "手動でリブログ",
-                                    tr: "Yeniden blogla el ile"
-                                  },
-                           item: 'manual'}];
       $('head').append('<style type="text/css">' +
                        '.MissingE_quick_reblogging_icon {' +
                           'background-image:url("' +
@@ -263,26 +226,27 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       var txt = '<div class="user_menu" id="MissingE_quick_reblog">' +
                  '<div class="user_menu_nipple"></div>' +
                  '<div class="user_menu_list">';
-      for (idx=0; idx<reblogOptions.length; idx++) {
+      for (idx=0; idx<locale[lang]["reblogOptions"].length; idx++) {
          var doonclick = 'onclick="return false;"';
-         if (reblogOptions[idx].item === 'manual') {
+         if (locale[lang]["reblogOptions"][idx].item === 'manual') {
             doonclick = '';
          }
          txt += '<a class="MissingE_quick_reblog_button" ' +
-                 'id="MissingE_quick_reblog_' + reblogOptions[idx].item +
+                 'id="MissingE_quick_reblog_' +
+                 locale[lang]["reblogOptions"][idx].item +
                  '" href="#" ' + doonclick + '>' +
                  '<div class="user_menu_list_item">' +
-                 reblogOptions[idx].text[lang] + '</div></a>';
+                 locale[lang]["reblogOptions"][idx].text + '</div></a>';
       }
       txt +=  '<a href="#" onclick="return false;">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_twitter">' +
-               '<input type="checkbox" /> ' + locale["twitterText"][lang] +
+               '<input type="checkbox" /> ' + locale[lang]["twitterText"] +
                '</div></div></a>' +
                '<a href="#" onclick="return false;">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_tags">' +
-               '<input type="text" /><br />' + locale["tagsText"][lang] +
+               '<input type="text" /><br />' + locale[lang]["tagsText"] +
                '</div></div></a>';
       var qr = $(txt).appendTo('body');
 

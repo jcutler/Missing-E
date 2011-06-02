@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.28</string>
+	<string>1.1.29</string>
 	<key>CFBundleVersion</key>
-	<string>128</string>
+	<string>129</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -50,6 +50,7 @@
 				<string>common/defs.js</string>
 				<string>common/utils.js</string>
 				<string>common/storage.js</string>
+				<string>common/localizations.js</string>
 				<string>facebox/facebox.js</string>
 				<string>askFixes/askFixes.js</string>
 				<string>betterReblogs/betterReblogs_dash.js</string>

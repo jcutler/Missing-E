@@ -690,7 +690,8 @@ function handleMessage(message, myWorker) {
       var activeScripts = {};
       var zindexFix = false;
       var injectScripts = [data.url("common/storage.js"),
-                           data.url("common/utils.js")];
+                           data.url("common/utils.js"),
+                           data.url("common/localizations.js")];
       activeScripts.extensionURL = data.url("");
       if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
@@ -945,7 +946,8 @@ pageMod.PageMod({
 pageMod.PageMod({
    include: ["http://www.tumblr.com/dashboard/iframe*"],
    contentScriptWhen: 'ready',
-   contentScriptFile: [data.url("betterReblogs/betterReblogs_post.js"),
+   contentScriptFile: [data.url("common/localizations.js"),
+                       data.url("betterReblogs/betterReblogs_post.js"),
                        data.url("gotoDashPost/gotoDashPost.js"),
                        data.url("reblogYourself/reblogYourself_post.js")],
    onAttach: function (worker) {

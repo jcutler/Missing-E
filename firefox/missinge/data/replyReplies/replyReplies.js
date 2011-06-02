@@ -22,120 +22,6 @@
  */
 
 /*global safari, $, localStorage, window */
-var langPosts = {
-                  en: {
-                       text:  ["your", "post"],
-                       photo: ["your", "photo"],
-                       photoset: ["your", "photoset"],
-                       quote: ["your", "quote"],
-                       link:  ["your", "link"],
-                       conversation:  ["your", "chat"],
-                       audio: ["your", "audio post"],
-                       video: ["your", "video"],
-                       question: ["your", "question"]
-                      },
-                  de: {
-                       text:  ["deinen", "Eintrag"],
-                       photo: ["dein", "Foto"],
-                       photoset: ["deine", "Fotoserie"],
-                       quote: ["dein", "Zitat"],
-                       link:  ["dein", "Link"],
-                       conversation:  ["dein", "Chat"],
-                       audio: ["dein", "Audio-Eintrag"],
-                       video: ["dein", "Video"],
-                       question: ["deine", "Frage"],
-                      },
-                  fr: {
-                       text:  ["votre", "billet"],
-                       photo: ["votre", "photo"],
-                       photoset: ["votre", "diaporama"],
-                       quote: ["votre", "citation"],
-                       link:  ["votre", "lien"],
-                       conversation:  ["votre", "discussion"],
-                       audio: ["votre", "billet audio"],
-                       video: ["votre", "vidéo"],
-                       question: ["votre", "question"]
-                      },
-                  it: {
-                       text:  ["il", "tuo", "post"],
-                       photo: ["la", "tua", "photo"],
-                       photoset: ["il", "tuo", "fotoset"],
-                       quote: ["il", "tuo", "citazione"],
-                       link:  ["il", "tuo", "link"],
-                       conversation:  ["la", "tua", "chat"],
-                       audio: ["il", "tuo", "post audio"],
-                       video: ["il", "tuo", "video"],
-                       question: ["la", "tua", "domanda"]
-                      },
-                  ja: {
-                       text:  ["投稿"],
-                       photo: ["画像"],
-                       photoset: ["フォトセット"],
-                       quote: ["引用"],
-                       link:  ["リンク"],
-                       conversation:  ["チャット"],
-                       audio: ["音声投稿"],
-                       video: ["動画"],
-                       question: ["質問"]
-                      },
-                  tr: {
-                       text: { normal:["gönderini"], reply:["gönderine"] },
-                       photo: { normal:["fotoğrafını"], reply:["fotoğrafına"] },
-                       photoset: { normal:["fotoğraf albümü'nü"], reply:["fotoğraf albümüne"] },
-                       quote: { normal:["alıntısını"], reply:["alıntısına"] },
-                       link: { normal:["bağlantısını"], reply:["bağlantısına"] },
-                       conversation: { normal:["diyaloğunu"], reply:["diyaloğuna"] },
-                       audio: { normal:["ses gönderini"], reply:["ses gönderine"] },
-                       video: { normal:["videonu"], reply:["videona"] },
-                       question: ["soruya"]
-                      }
-};
-
-var langNotification = {
-                  en: {
-                       like:   ["U", "liked", "P"],
-                       reblog: ["U", "reblogged", "P"],
-                       reblogIndex: 1,
-                       answer: ["U", "answered", "P"],
-                       reply:  ["U", "replied to", "P"]
-                      },
-                  de: {
-                       like:   ["U", "hat", "P", "als Favorit markiert"],
-                       reblog: ["U", "hat", "P", "gerebloggt"],
-                       reblogIndex: 3,
-                       answer: ["U", "hat", "P", "beantwortet"],
-                       reply:  ["U", "hat auf", "P", "geantwortet"]
-                      },
-                  fr: {
-                       like:   ["U", "a ajouté", "P", "à ses coups de coeur"],
-                       reblog: ["U", "a", "reblogué", "P"],
-                       reblogIndex: 2,
-                       answer: ["U", "a répondu à", "P"],
-                       reply:  ["U", "a réagi à", "P"]
-                      },
-                  it: {
-                       like:   ["A", "U", "piace", "P"],
-                       reblog: ["U", "ha", "rebloggato", "P"],
-                       reblogIndex: 2,
-                       answer: ["U", "ha riposto", "P"],
-                       reply:  ["U", "ha riposto", "P"]
-                      },
-                  ja: {
-                       like:   ["U", "があなたの", "P", "を「スキ!」と言っています"],
-                       reblog: ["U", "があなたの", "P", "を", "リブログ", "しました"],
-                       reblogIndex: 4,
-                       answer: ["U", "があなたの", "P", "に回答しました"],
-                       reply:  ["U", "があなたの", "P", "に返信しました"]
-                      },
-                  tr: {
-                       like:   ["U,", "P", "beğendi"],
-                       reblog: ["U,", "P", "yeniden blogladı"],
-                       reblogIndex: 2,
-                       answer: ["U,", "sorduğun", "P", "cevap verdi"],
-                       reply:  ["U,", "P", "yorum yaptı"]
-                      }
-};
-
 function reply_setValue(st) {
    localStorage.setItem('trr_ReplyText',st);
 }
@@ -349,28 +235,28 @@ function replyRepliesSettings(message) {
          else {
             newcode = '';
          }
-         for (x=0; x<langNotification[lang][anstype].length; x++) {
+         for (x=0; x<locale[lang]["notifications"][anstype].length; x++) {
             if (anstype === 'reblog' &&
-                x === langNotification[lang].reblogIndex &&
+                x === locale[lang]["notifications"].reblogIndex &&
                 reblnk !== "") {
                newcode += ' <a href="' + reblnk + '">' +
-                  langNotification[lang][anstype][x] + '</a>';
+                  locale[lang]["notifications"][anstype][x] + '</a>';
             }
-            else if (langNotification[lang][anstype][x] === "U") {
+            else if (locale[lang]["notifications"][anstype][x] === "U") {
                if (newcode !== '' && newcode !== img) {
                   newcode += ' ';
                }
                newcode += '<strong>' + user;
             }
-            else if (langNotification[lang][anstype][x] === "U,") {
+            else if (locale[lang]["notifications"][anstype][x] === "U,") {
                if (newcode !== '' && newcode !== img) {
                   newcode += ' ';
                }
                newcode += '<strong>' + user + ',';
             }
-            else if (langNotification[lang][anstype][x] === "P") {
+            else if (locale[lang]["notifications"][anstype][x] === "P") {
                var y;
-               var postType = langPosts[lang][type];
+               var postType = locale[lang]["posts"][type];
                if (!(postType instanceof Array)) {
                   if (anstype === "reply") {
                      postType = postType["reply"];
@@ -383,7 +269,7 @@ function replyRepliesSettings(message) {
                   newcode += ' ';
                   if (y === 0 && lang === 'it' &&
                       (anstype === "answer" || anstype === "reply")) {
-                     if (langPosts.it[type][0] === 'il') {
+                     if (locale[lang]["posts"][type][0] === 'il') {
                         newcode += 'al';
                      }
                      else {
@@ -400,7 +286,7 @@ function replyRepliesSettings(message) {
                }
             }
             else {
-               newcode += ' ' + langNotification[lang][anstype][x];
+               newcode += ' ' + locale[lang]["notifications"][anstype][x];
             }
          }
          if (posttxt === '') {

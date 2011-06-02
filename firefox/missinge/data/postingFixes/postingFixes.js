@@ -42,19 +42,19 @@ function addAskUploader(obj) {
    }
 }
 
-function changeButtonText(val, lang, submitText) {
+function changeButtonText(val, submitText) {
    var text;
    if (val === '2') {
-      text = submitText[lang].queue;
+      text = submitText.queue;
    }
    else if (val === '1') {
-      text = submitText[lang].draft;
+      text = submitText.draft;
    }
    else if (val === 'private') {
-      text = submitText[lang].private;
+      text = submitText.private;
    }
    else {
-      text = submitText[lang].publish;
+      text = submitText.publish;
    }
    jQuery('#post_controls input[type="submit"]:first').val(text);
 }
@@ -78,62 +78,6 @@ self.on('message', function(message) {
    }
    var extensionURL = message.extensionURL;
    var lang = jQuery('html').attr('lang');
-   var submitText = {
-                     en: {
-                           publish: "Publish post",
-                           queue:   "Queue post",
-                           draft:   "Save draft",
-                           private: "Save as private"
-                         },
-                     de: {
-                           publish: "Eintrag publizieren",
-                           queue:   "Eintrag in die Warteschleife stellen",
-                           draft:   "Entwurf speichern",
-                           private: "Speichern als privat",
-                         },
-                     fr: {
-                           publish: "Publier le billet",
-                           queue:   "Ajouter à la file d'attente",
-                           draft:   "Enregistrer le brouillon",
-                           private: "Sauvegarder privé"
-                         },
-                     it: {
-                           publish: "Pubblica post",
-                           queue:   "Metti post in coda",
-                           draft:   "Salva bozza",
-                           private: "Salvare post privato"
-                         },
-                     ja: {
-                           publish: "投稿公開",
-                           queue:   "キューに追加",
-                           draft:   "下書き保存",
-                           private: "プライベート保存"
-                         },
-                     tr: {
-                           publish: "Gönderi yayınla",
-                           queue:   "Gönderiyi sıraya koy",
-                           draft:   "Taslak olarak kaydet",
-                           private: "Özel olarak kaydetmek"
-                         }
-   };
-
-   var uploadImagesText = {
-                           en: "Upload images instead",
-                           de: "Stattdessen, lade fotos hoch",
-                           fr: "Ajouter les photos à la place",
-                           it: "Altrimenti carica foto",
-                           ja: "画像をアップロード",
-                           tr: "Fotoğraf yükle yerine"
-   };
-
-   var clearTagsText = {
-                           en: "Clear Tags",
-                           de: "Tags entfernen",
-                           fr: "Supprimer Tags",
-                           it: "Cancella i Tag",
-                           ja: "クリアタグを",
-                           tr: "Açık etiketleri"
-   };
 
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                          extensionURL + 'postingFixes/postingFixes.css" />');
@@ -162,7 +106,7 @@ self.on('message', function(message) {
      '<a class="clear_tags" style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">' + clearTagsText[lang] + '</a></div>')
+     'return false;">' + locale[lang]["clearTagsText"] + '</a></div>')
          .appendTo(set_tags);
 
    jQuery('#photo_src').keyup(function(){
@@ -193,7 +137,7 @@ self.on('message', function(message) {
          bottom = Math.round(bottom);
          if (jQuery('#post_state').val() === '0') {
             jQuery('#post_controls input[type="submit"]')
-               .val(submitText[lang].publish);
+               .val(locale[lang]["postingFixes"]["submitText"].publish);
          }
       }
       else {
@@ -210,13 +154,14 @@ self.on('message', function(message) {
          doOnClick = 'document.getElementById(\'the_submit_btn\').click();' +
                      doOnClick;
       }
-      for (var i in submitText[lang]) {
+      for (var i in locale[lang]["postingFixes"]["submitText"]) {
          var klass = "";
          var div = "";
          allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
                      'type="submit" class="positive" ' +
                      'onclick="' + doOnClick + '"><span>' +
-                     submitText[lang][i] + '</span></button></div>';
+                     locale[lang]["postingFixes"]["submitText"][i] +
+                     '</span></button></div>';
       }
       var newbtns = jQuery('<div id="MissingE_postMenu">' + allbtns + '</div>')
                      .insertAfter(btn);
@@ -246,7 +191,7 @@ self.on('message', function(message) {
       });
       showHideButtons(newbtns, jQuery('#post_state').val());
       if (isShare) {
-         changeButtonText(jQuery('#post_state').val(), lang, submitText);
+         changeButtonText(jQuery('#post_state').val(), locale[lang]["postingFixes"]["submitText"]);
       }
    }
 
@@ -266,7 +211,7 @@ self.on('message', function(message) {
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           uploadImagesText[lang] + '</a>';
+                           locale[lang]["uploadImagesText"] + '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
       }

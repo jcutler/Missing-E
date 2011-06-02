@@ -221,7 +221,7 @@ function doMarks(item) {
          }
       }
       var node = $('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + locale["bookmarkText"][lang] + '" ' +
+                   '" title="' + locale[lang]["bookmarkText"] + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -343,7 +343,8 @@ chrome.extension.sendRequest({greeting: "settings",
       var lang = $('html').attr('lang');
       var list = $('<div class="dashboard_nav_item" ' +
                    'style="padding-left:0;position:relative;">' +
-                   '<div class="dashboard_nav_title">' + locale["bookmarksTitle"][lang] +
+                   '<div class="dashboard_nav_title">' +
+                   locale[lang]["bookmarksTitle"] +
                    '</div><ul id="MissingE_marklist" ' +
                    'class="dashboard_subpages"></ul></div>');
    

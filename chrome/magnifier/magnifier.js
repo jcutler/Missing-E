@@ -66,7 +66,7 @@ function insertMagnifier(item) {
             addr = 'http://' + addr + '.tumblr.com';
          }
       }
-      var mi = $('<a title="' + locale["loading"][lang] + '" ' +
+      var mi = $('<a title="' + locale[lang]["loading"] + '" ' +
                  'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
                  tid + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
@@ -85,13 +85,13 @@ function insertMagnifier(item) {
          if (response.success) {
             $('#magnify_' + response.pid).attr('src',response.data)
                .removeClass('MissingE_magnify_hide')
-               .attr('title', locale["magnify"][lang]);
+               .attr('title', locale[lang]["magnify"]);
          }
          else {
             $('#magnify_' + response.pid).attr('src','')
                .addClass('MissingE_magnify_err')
                .removeClass('MissingE_magnify_hide')
-               .attr('title', locale["error"][lang]);
+               .attr('title', locale[lang]["error"]);
          }
       });
    }

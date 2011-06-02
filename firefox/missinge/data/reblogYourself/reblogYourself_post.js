@@ -45,7 +45,7 @@ self.on('message', function (message) {
    }
 
    if (noReblog) {
-      var url, redir;
+      var url, redir, i;
       var loc = location.href;
       var last = controls[controls.length-1];
       var gdp = document.getElementById('MissingE_gotoDashPost_link');
@@ -66,6 +66,29 @@ self.on('message', function (message) {
          link.setAttribute('href', url);
          link.setAttribute('target', '_top');
 
+         var dashimg = null;
+         for (i=controls.length-1; i>=0; i--) {
+            if (controls[i].href === 'http://www.tumblr.com/dashboard') {
+               dashimg = controls[i].getElementsByTagName('img')[0];
+               break;
+            }
+         }
+         var suffix = '';
+         var lang = 'en';
+         if (dashimg) {
+            suffix = dashimg.src.match(/alpha([^\.]*)(.*)/);
+            if (suffix !== null && suffix.length > 2) {
+               lang = suffix[1].match(/[a-z]+/);
+               if (lang === null || lang.length === 0) {
+                  lang = 'en';
+               }
+               else {
+                  lang = lang[0];
+               }
+               suffix = suffix[1] + suffix[2];
+            }
+         }
+
          var icon = document.createElement('img');
          icon.style.height='20px';
          icon.style.width='64px';
@@ -73,9 +96,9 @@ self.on('message', function (message) {
          icon.style.display='block';
          icon.style.cssFloat='left';
          icon.style.cursor='pointer';
-         icon.alt='Reblog';
-         icon.src='http://assets.tumblr.com/images/iframe_reblog_alpha.png?6';
-
+         icon.alt=locale[lang]["reblog"];
+         icon.src = 'http://assets.tumblr.com/images/iframe_reblog_alpha' +
+            suffix;
          link.appendChild(icon);
          div.insertBefore(link,last);
       }

@@ -23,33 +23,6 @@
 
 /*global safari, $ */
 
-var magnifyText = {
-                  title: {
-                        en: "magnify",
-                        de: "vergrößern",
-                        fr: "agrandir",
-                        it: "ingrandire",
-                        ja: "拡大する",
-                        tr: "büyütmek"
-                         },
-                  error: {
-                        en: "An error occured. Click to reload 'Magnifier'.",
-                        de: "Ein Fehler ist aufgetreten. Klicken Sie, erneut zu versuchen.",
-                        fr: "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
-                        it: "È verificato un errore. Clicca per provare di nuovo.",
-                        ja: "エラーが発生しました。 もう一度やり直してください]をクリックします。",
-                        tr: "Bir hata oluştu. Yeniden denemek için tıklayın."
-                         },
-                  loading: {
-                        en: "Loading...",
-                        de: "wird geladen...",
-                        fr: "Pas prêt...",
-                        it: "Non pronto...",
-                        ja: "準備が整っていない",
-                        tr: "Hazır değil"
-                         }
-};
-
 var magimg = safari.extension.baseURI + 'magnifier/magnifier.png';
 var turnimg = safari.extension.baseURI + 'magnifier/turners.png';
 
@@ -86,7 +59,7 @@ function insertMagnifier(item) {
             addr = 'http://' + addr + '.tumblr.com';
          }
       }
-      var mi = $('<a title="' + magnifyText.loading[lang] + '" ' +
+      var mi = $('<a title="' + locale[lang]["loading"] + '" ' +
                  'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
                  tid + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
@@ -109,13 +82,13 @@ function receiveMagnifier(response) {
    if (response.message.success) {
       $('#magnify_' + response.message.pid).attr('src',response.message.data)
          .removeClass('MissingE_magnify_hide')
-         .attr('title', magnifyText.title[lang]);
+         .attr('title', locale[lang]["magnify"]);
    }
    else {
       $('#magnify_' + response.message.pid).attr('src','')
          .addClass('MissingE_magnify_err')
          .removeClass('MissingE_magnify_hide')
-         .attr('title', magnifyText.error[lang]);
+         .attr('title', locale[lang]["error"]);
    }
 }
 

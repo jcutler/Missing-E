@@ -42,19 +42,19 @@ function addAskUploader(obj) {
    }
 }
 
-function changeButtonText(val, lang, submitText) {
+function changeButtonText(val, submitText) {
    var text;
    if (val === '2') {
-      text = submitText[lang].queue;
+      text = submitText.queue;
    }
    else if (val === '1') {
-      text = submitText[lang].draft;
+      text = submitText.draft;
    }
    else if (val === 'private') {
-      text = submitText[lang].private;
+      text = submitText.private;
    }
    else {
-      text = submitText[lang].publish;
+      text = submitText.publish;
    }
    $('#post_controls input[type="submit"]').val(text);
 }
@@ -74,63 +74,7 @@ function showHideButtons(newbtns, val) {
 function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                                          addUploader, quickButtons) {
    var lang = $('html').attr('lang');
-   var submitText = {
-                     en: {
-                           publish: "Publish post",
-                           queue:   "Queue post",
-                           draft:   "Save draft",
-                           private: "Save as private"
-                         },
-                     de: {
-                           publish: "Eintrag publizieren",
-                           queue:   "Eintrag in die Warteschleife stellen",
-                           draft:   "Entwurf speichern",
-                           private: "Speichern als privat",
-                         },
-                     fr: {
-                           publish: "Publier le billet",
-                           queue:   "Ajouter à la file d'attente",
-                           draft:   "Enregistrer le brouillon",
-                           private: "Sauvegarder privé"
-                         },
-                     it: {
-                           publish: "Pubblica post",
-                           queue:   "Metti post in coda",
-                           draft:   "Salva bozza",
-                           private: "Salvare post privato"
-                         },
-                     ja: {
-                           publish: "投稿公開",
-                           queue:   "キューに追加",
-                           draft:   "下書き保存",
-                           private: "プライベート保存"
-                         },
-                     tr: {
-                           publish: "Gönderi yayınla",
-                           queue:   "Gönderiyi sıraya koy",
-                           draft:   "Taslak olarak kaydet",
-                           private: "Özel olarak kaydetmek"
-                         }
-   };
 
-   var uploadImagesText = {
-                           en: "Upload images instead",
-                           de: "Stattdessen, lade fotos hoch",
-                           fr: "Ajouter les photos à la place",
-                           it: "Altrimenti carica foto",
-                           ja: "画像をアップロード",
-                           tr: "Fotoğraf yükle yerine"
-   };
-
-   var clearTagsText = {
-                           en: "Clear Tags",
-                           de: "Tags entfernen",
-                           fr: "Supprimer Tags",
-                           it: "Cancella i Tag",
-                           ja: "クリアタグを",
-                           tr: "Açık etiketleri"
-   };
-   
    if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href)) {
       var i, txt="";
       var ctags;
@@ -155,7 +99,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
      'style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">' + clearTagsText[lang] + '</a></div>')
+     'return false;">' + locale[lang]["postingFixes"]["clearTagsText"] +
+     '</a></div>')
          .appendTo(set_tags);
 
    $('#photo_src').keyup(function(){
@@ -185,7 +130,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          bottom = Math.round(bottom);
          if ($('#post_state').val() === '0') {
             $('#post_controls input[type="submit"]')
-               .val(submitText[lang].publish);
+               .val(locale[lang]["postingFixes"]["submitText"].publish);
          }
       }
       else {
@@ -194,13 +139,14 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       }
 
       var allbtns = "";
-      for (var i in submitText[lang]) {
+      for (var i in locale[lang]["postingFixes"]["submitText"]) {
          var klass = "";
          var div = "";
          allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
                      'type="submit" class="positive" ' +
                      'onclick="return true;"><span>' +
-                     submitText[lang][i] + '</span></button></div>';
+                     locale[lang]["postingFixes"]["submitText"][i] +
+                     '</span></button></div>';
       }
       var newbtns = $('<div id="MissingE_postMenu">' + allbtns + '</div>')
                      .insertAfter(btn);
@@ -234,7 +180,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       $(document).ready(function() {
          showHideButtons(newbtns, $('#post_state').val());
          if (isShare) {
-            changeButtonText($('#post_state').val(), lang, submitText);
+            changeButtonText($('#post_state').val(), locale[lang]["postingFixes"]["submitText"]);
          }
       });
    }
@@ -255,7 +201,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           uploadImagesText[lang] + '</a>';
+                           locale[lang]["postingFixes"]["uploadImagesText"] +
+                           '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
       }
