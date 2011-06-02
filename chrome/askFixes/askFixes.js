@@ -5,7 +5,8 @@
 
 function failAnswer(id,type) {
    $('#post_control_loader_' + id).hide();
-   $('#ask_publish_also_button_' + id).removeAttr('disabled');
+   $('#ask_publish_button_also_' + id).removeAttr('disabled');
+   $('#ask_queue_button_also_' + id).removeAttr('disabled');
    $('#ask_cancel_button_' + id).removeAttr('disabled');
    $('#ask_answer_form_' + id + ' .MissingE_postMenu input')
       .attr('disabled','disabled');
@@ -27,7 +28,8 @@ function doManualAnswering(e,id,type) {
 
    if (type) {
       $('#post_control_loader_' + id).show();
-      $('#ask_publish_also_button_' + id).attr('disabled','disabled');
+      $('#ask_publish_button_also_' + id).attr('disabled','disabled');
+      $('#ask_queue_button_also_' + id).attr('disabled','disabled');
       $('#ask_cancel_button_' + id).attr('disabled','disabled');
       $('#ask_answer_form_' + id + ' .MissingE_postMenu input')
          .attr('disabled','disabled');
@@ -135,9 +137,9 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
       return false;
    }
    var lang = $('html').attr("lang");
+   var id = $(item).attr('id').match(/[0-9]*$/)[0];
 
    if (buttons === 1) {
-      var id = $(item).attr('id').match(/[0-9]*$/)[0];
       var allbtns = "";
       for (var i in locale[lang]["postingFixes"]["submitText"]) {
          if (i === 'publish') { continue; }
@@ -167,6 +169,26 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
       });
       $('#ask_private_button_' + id).click(function(e) {
          doManualAnswering(e, id, 'private');
+      });
+   }
+   else if (tags === 1) {
+      var pbtn = $('#ask_publish_button_' + id);
+      var qbtn = $('#ask_queue_button_' + id);
+      var npbtn = $('<input type="submit" name="publish" value="' +
+                  pbtn.val() + '" id="ask_publish_button_also_' + id +
+                  '" onclick="return false;" style="margin-right:5px;" />')
+                     .insertBefore(pbtn);
+      var nqbtn = $('<input type="submit" name="queue" value="' + qbtn.val() +
+                  '" id="ask_queue_button_also_' + id + '" onclick="' +
+                  'return false;" style="margin-right:5px;" />')
+                     .insertBefore(qbtn);
+      pbtn.hide();
+      qbtn.hide();
+      npbtn.click(function(e) {
+         doManualAnswering(e, id, 'publish');
+      });
+      nqbtn.click(function(e) {
+         doManualAnswering(e, id, 'queue');
       });
    }
 
