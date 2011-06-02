@@ -5,7 +5,7 @@
 
 function failAnswer(id,type) {
    $('#post_control_loader_' + id).hide();
-   $('#ask_publish_button_' + id).removeAttr('disabled');
+   $('#ask_publish_also_button_' + id).removeAttr('disabled');
    $('#ask_cancel_button_' + id).removeAttr('disabled');
    $('#ask_answer_form_' + id + ' .MissingE_postMenu input')
       .attr('disabled','disabled');
@@ -27,7 +27,7 @@ function doManualAnswering(e,id,type) {
 
    if (type) {
       $('#post_control_loader_' + id).show();
-      $('#ask_publish_button_' + id).attr('disabled','disabled');
+      $('#ask_publish_also_button_' + id).attr('disabled','disabled');
       $('#ask_cancel_button_' + id).attr('disabled','disabled');
       $('#ask_answer_form_' + id + ' .MissingE_postMenu input')
          .attr('disabled','disabled');
@@ -123,9 +123,7 @@ function doManualAnswering(e,id,type) {
       }
    });
 
-   if (type === "publish" || type === "queue") {
-      e.preventDefault();
-   }
+   return false;
 }
 
 function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
@@ -140,13 +138,6 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
 
    if (buttons === 1) {
       var id = $(item).attr('id').match(/[0-9]*$/)[0];
-      var draft = $('<input type="button" class="MissingE_askFixes_extraBtn" ' +
-                    'id="ask_draft_button_' + id + '" value="' +
-                    locale[lang]["postingFixes"]["submitText"]["draft"] + '" />');
-      var priv = $('<input type="button" class="MissingE_askFixes_extraBtn" ' +
-                   'id="ask_private_button_' + id + '" value="' +
-                   locale[lang]["postingFixes"]["submitText"]["private"] + '" />');
-
       var allbtns = "";
       for (var i in locale[lang]["postingFixes"]["submitText"]) {
          if (i === 'publish') { continue; }
@@ -157,12 +148,17 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
             '" /></div>';
       }
       var btn = $('#ask_publish_button_' + id);
+      var postbtn = $('<input type="submit" name="publish" value="' + btn.val() + '" ' +
+                      'id="ask_publish_button_also_' + id + '" class="positive" ' +
+                      'onclick="return false;" style="margin-right:5px;" />');
+      btn.after(postbtn);
       var newbtns = $('<div class="MissingE_postMenu">' + allbtns + '</div>')
-                     .insertAfter(btn);
-      btn.click(function(e) {
+                     .insertAfter(postbtn);
+      $('#ask_queue_button_' + id).hide();
+      btn.hide();
+      $('#ask_publish_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'publish');
       });
-      $('#ask_queue_button_' + id).hide();
       $('#ask_queue_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'queue');
       });
