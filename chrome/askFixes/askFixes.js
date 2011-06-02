@@ -6,11 +6,9 @@
 function failAnswer(id,type) {
    $('#post_control_loader_' + id).hide();
    $('#ask_publish_button_' + id).removeAttr('disabled');
-   $('#ask_queue_button_' + id).removeAttr('disabled');
    $('#ask_cancel_button_' + id).removeAttr('disabled');
-   $('#ask_answer_form_' + id + ' input.MissingE_askFixes_extraBtn')
-      .removeAttr('disabled');
-   console.log('failed: ' + id);
+   $('#ask_answer_form_' + id + ' .MissingE_postMenu input')
+      .attr('disabled','disabled');
 }
 
 function finishAnswer(id,type) {
@@ -18,7 +16,6 @@ function finishAnswer(id,type) {
    if (type) {
       $('#post_' + id).fadeOut(function(){$(this).remove()});
    }
-   console.log('done: ' + id);
 }
 
 function doManualAnswering(e,id,type) {
@@ -31,16 +28,15 @@ function doManualAnswering(e,id,type) {
    if (type) {
       $('#post_control_loader_' + id).show();
       $('#ask_publish_button_' + id).attr('disabled','disabled');
-      $('#ask_queue_button_' + id).attr('disabled','disabled');
       $('#ask_cancel_button_' + id).attr('disabled','disabled');
-      $('#ask_answer_form_' + id + ' input.MissingE_askFixes_extraBtn')
+      $('#ask_answer_form_' + id + ' .MissingE_postMenu input')
          .attr('disabled','disabled');
    }
    var tags = $('#ask_answer_form_' + id +
                 ' input.MissingE_askFixes_tags');
    if (tags.length > 0) {
       tags = tags.val();
-      tags = tags.replace(/\s*,\s*/g,'').replace(/,$/,'')
+      tags = tags.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',').replace(/,$/,'')
                .replace(/^\s*/,'').replace(/\s*$/,'');
    }
    else {
@@ -128,11 +124,11 @@ function doManualAnswering(e,id,type) {
    });
 
    if (type === "publish" || type === "queue") {
-      e.stopPropagation();
+      e.preventDefault();
    }
 }
 
-function moreAnswerOptions(item, defTags, buttons, tags) {
+function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
    if (item.tagName !== 'LI' || !$(item).hasClass('post')) {
       return false;
    }
@@ -167,11 +163,6 @@ function moreAnswerOptions(item, defTags, buttons, tags) {
          doManualAnswering(e, id, 'publish');
       });
       $('#ask_queue_button_' + id).hide();
-      /*
-         click(function(e) {
-         doManualAnswering(e, id, 'queue');
-      });
-      */
       $('#ask_queue_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'queue');
       });
@@ -181,21 +172,27 @@ function moreAnswerOptions(item, defTags, buttons, tags) {
       $('#ask_private_button_' + id).click(function(e) {
          doManualAnswering(e, id, 'private');
       });
-
-      //answer.find('input[name="queue"]').after(' ', draft, ' ', priv);
    }
 
    if (buttons === 1 || tags === 1) {
+      var x;
       var startTags = $(item).find('div.post_info').text().match(/[A-Za-z\-\_]+/);
-      if (defTags) {
-         defTags.unshift(startTags[0]);
-         startTags = defTags;
-      }
-      else {
+      if (tagAsker === 1) {
          startTags = [startTags[0]];
       }
-      if (startTags) {
+      else {
+         startTags = [];
+      }
+      if (defTags !== '') {
+         for (x=0; x<defTags.length; x++) {
+            startTags.push(defTags[x]);
+         }
+      }
+      if (startTags.length > 0) {
          startTags = startTags.join(', ');
+      }
+      else {
+         startTags = '';
       }
       var adding = '<div class="MissingE_askFixes_group">';
       if (tags === 1) {
@@ -209,17 +206,6 @@ function moreAnswerOptions(item, defTags, buttons, tags) {
       answer.find('div:first').css('padding-top','10px')
          .addClass('MissingE_askFixes_buttons').before(adding);
    }
-}
-
-function tagAnswer(item,defTags) {
-   if (item.tagName !== 'LI' || !$(item).hasClass('post')) {
-      return false;
-   }
-   var answer = $(item).find('form[action="/ask_publish"]');
-   if (answer.length === 0) {
-      return false;
-   }
-   var lang = $('html').attr("lang");
 }
 
 chrome.extension.sendRequest({greeting: "settings",
@@ -255,11 +241,15 @@ chrome.extension.sendRequest({greeting: "settings",
                      '}},false);</script>');
    }
    $('#posts li.post').each(function() {
-      moreAnswerOptions(this, askFixes_settings.defTags,
-                        askFixes_settings.buttons, askFixes_settings.tags);
+      moreAnswerOptions(this, askFixes_settings.tagAsker,
+                        askFixes_settings.defaultTags,
+                        askFixes_settings.buttons,
+                        askFixes_settings.tags);
    });
    document.addEventListener('DOMNodeInserted', function(e) {
-      moreAnswerOptions(e.target, askFixes_settings.defTags,
-                        askFixes_settings.buttons, askFixes_settings.tags);
+      moreAnswerOptions(e.target, askFixes_settings.tagAsker,
+                        askFixes_settings.defaultTags,
+                        askFixes_settings.buttons,
+                        askFixes_settings.tags);
    }, false);
 });

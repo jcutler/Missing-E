@@ -506,8 +506,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       switch(request.component) {
          case "askFixes":
             settings.scroll = getStorage("MissingE_askFixes_scroll",1);
-            settings.buttons = getStorage("MissingE_askFixes_buttons",1);
-            settings.tags = getStorage("MissingE_askFixes_tags",1);
+            settings.buttons = getStorage("MissingE_askFixes_buttons",0);
+            settings.tags = getStorage("MissingE_askFixes_tags",0);
+            settings.tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
+            settings.defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
+            if (settings.defaultTags !== '') {
+               settings.defaultTags = settings.defaultTags.replace(/, /,',').split(',');
+            }
             break;
          case "bookmarker":
             settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
