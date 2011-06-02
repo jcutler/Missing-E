@@ -50,7 +50,12 @@ function loadTimestamp(item) {
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
       var perm = $(item).find("a.permalink:first");
       var addr;
-      if (perm.length > 0) {
+      if (/^\/(messages|submissions)/.test(location.pathname) ||
+          /^\/tumblelog\/[^\/]*\/(messages|submissions)/
+            .test(location.pathname)) {
+         addr = 'http://www.tumblr.com/edit/';
+      }
+      else if (perm.length > 0) {
          addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
       }
       else {
@@ -89,9 +94,7 @@ function loadTimestamp(item) {
 }
 
 if (!(/drafts$/.test(location.href)) &&
-    !(/queue$/.test(location.href)) &&
-    !(/messages$/.test(location.href)) &&
-    !(/submissions[^\/]*$/.test(location.href))) {
+    !(/queue$/.test(location.href))) {
 
    $('head').append('<style type="text/css">' +
                     'span.MissingE_timestamp a {' +

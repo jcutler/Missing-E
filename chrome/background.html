@@ -90,7 +90,12 @@ function doTimestamp(stamp, id, sendResponse) {
    var d = new Date(ts*1000);
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
    ins = getFormattedDate(d, ins);
-   ins = ins.replace(/%X/g,'<a href="' + stamp["url"].match(/http:\/\/[^\/]*/)[0] + '/api/read/json?id='+id + '">' + id + '</a>');
+   if (stamp["url"]) {
+      ins = ins.replace(/%X/g,'<a href="' + stamp["url"].match(/http:\/\/[^\/]*/)[0] + '/api/read/json?id='+id + '">' + id + '</a>');
+   }
+   else {
+      ins = ins.replace(/%X/g,id);
+   }
    sendResponse({pid: id, success: true, data: ins});
 }
 
@@ -232,6 +237,109 @@ function isRequested(details) {
 function startAjax(id) {
    activeAjax++;
    activeRequests[id] = [];
+}
+
+function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc,
+                   additional) {
+   debug("AJAX " + type + " request (" + request.pid + ")");
+   startAjax(request.pid);
+   var failMsg = {success:false};
+   $.ajax({
+      type: "GET",
+      url: request.url + request.pid,
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.pid,
+      tabId: sender.tab.id,
+      tabHash: hash,
+      error: function(xhr, textStatus) {
+         if (xhr.status == 404) {
+            debug(type + " request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            sendResponse(failMsg);
+            return;
+         }
+         if (this.tabHash !== tabs[this.tabId]) {
+            debug("Stop " + type + " request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         if (cacheServe(type, request.pid, sendResponse, doFunc, true)) {
+            return true;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry " + type + " request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug(type + " request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               sendResponse(failMsg);
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         var closed = (this.tabHash !== tabs[this.tabId]);
+         if (!(/<input[^>]*name="post\[date\]"[^>]*>/.test(data))) {
+            if (closed) {
+               debug("Stop " + type + " request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (cacheServe(type, request.pid, sendResponse, doFunc, true)) {
+               return true;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry " + type + " request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug(type + " request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  sendResponse(failMsg);
+               }
+            }
+         }
+         else {
+            var failed = false;
+            var txt;
+            var inp = data.match(/<input[^>]*name="post\[date\]"[^>]*>/);
+            if (!inp) { failed = true; }
+            else {
+               txt = inp[0].match(/value="([^"]*)"/);
+               if (!txt || txt.length < 2) {
+                  failed = true;
+               }
+               else {
+                  txt = txt[1];
+               }
+            }
+            if (failed) {
+               debug(type + " request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               sendResponse(failMsg);
+            }
+            var m = txt.match(/([A-Za-z]+) ([0-9]+)[^,]*, ([0-9]+) ([0-9]+):([0-9]+)([aApP][mM])/);
+            var d = new Date(m[1] + ' ' + m[2] + ', ' + m[3] + ' ' +
+                             (m[6]=='pm' && m[4] !== '12' ? parseInt(m[4])+12 : m[4]) +
+                             ':' + m[5] + ':00 GMT');
+            var stamp = Math.round(d.getTime()/1000);
+            var info = {"unix-timestamp":stamp};
+            saveCache(this.targetId, info);
+            dequeueAjax(this.targetId);
+            if (!closed) {
+               doFunc(info, this.targetId, sendResponse);
+            }
+         }
+      }
+   });
 }
 
 function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
@@ -386,6 +494,11 @@ function requestTimestamp(request, sender, sendResponse, hash) {
    }
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "timestamp", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
+   }
+   else if (request.url === 'http://www.tumblr.com/edit/') {
+      doAskAjax(request, sender, sendResponse, hash,
+                getStorage("MissingE_timestamps_retries",defaultRetries),
+                "timestamp", doTimestamp);
    }
    else {
       doAjax(request, sender, sendResponse, hash,
@@ -774,8 +887,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(sender.tab.url)) &&
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/(submissions|messages)/.test(sender.tab.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/.test(sender.tab.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(sender.tab.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
@@ -783,7 +897,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.timestamps = false;
-
+      }
+      if (sender.tab.url == request.url &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(sender.tab.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(sender.tab.url))) {
          if (getStorage("MissingE_magnifier_enabled",1) == 1) {
             activeScripts.magnifier = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "magnifier/magnifier.js"});
