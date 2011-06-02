@@ -95,7 +95,7 @@ function doReblog(item,replaceIcons,accountName) {
    url = location.protocol + '//' + location.host + url;
    url = url.replace(/\?redirect_to=.*$/,'');
    var tags = jQuery('#MissingE_quick_reblog_tags input').val();
-   tags = tags.replace(/\s*,\s*/g,',').replace(/,$/,'')
+   tags = tags.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',').replace(/,$/,'')
             .replace(/^\s*/,'').replace(/\s*$/,'');
    var mode = reblogMode[type];
    var twitter = jQuery('#MissingE_quick_reblog_twitter input').is(':checked');
