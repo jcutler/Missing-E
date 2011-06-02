@@ -151,20 +151,38 @@ function moreAnswerOptions(item, defTags, buttons, tags) {
                    'id="ask_private_button_' + id + '" value="' +
                    locale[lang]["postingFixes"]["submitText"]["private"] + '" />');
 
-      $('#ask_publish_button_' + id).click(function(e) {
+      var allbtns = "";
+      for (var i in locale[lang]["postingFixes"]["submitText"]) {
+         if (i === 'publish') { continue; }
+         var x = (i=='queue' ? 'also_' : '');
+         allbtns += '<div><input id="ask_' + i + '_button_' + x + id + '" ' +
+            'type="submit" class="positive" onclick="return false;" value="' +
+            locale[lang]["postingFixes"]["submitText"][i] +
+            '" /></div>';
+      }
+      var btn = $('#ask_publish_button_' + id);
+      var newbtns = $('<div class="MissingE_postMenu">' + allbtns + '</div>')
+                     .insertAfter(btn);
+      btn.click(function(e) {
          doManualAnswering(e, id, 'publish');
       });
-      $('#ask_queue_button_' + id).click(function(e) {
+      $('#ask_queue_button_' + id).hide();
+      /*
+         click(function(e) {
          doManualAnswering(e, id, 'queue');
       });
-      draft.click(function(e) {
+      */
+      $('#ask_queue_button_also_' + id).click(function(e) {
+         doManualAnswering(e, id, 'queue');
+      });
+      $('#ask_draft_button_' + id).click(function(e) {
          doManualAnswering(e, id, 'draft');
       });
-      priv.click(function(e) {
+      $('#ask_private_button_' + id).click(function(e) {
          doManualAnswering(e, id, 'private');
       });
 
-      answer.find('input[name="queue"]').after(' ', draft, ' ', priv);
+      //answer.find('input[name="queue"]').after(' ', draft, ' ', priv);
    }
 
    if (buttons === 1 || tags === 1) {
@@ -189,7 +207,7 @@ function moreAnswerOptions(item, defTags, buttons, tags) {
                   'type="checkbox" class="MissingE_askFixes_twitter" />' +
                   '</div></div>';
       answer.find('div:first').css('padding-top','10px')
-         .before(adding);
+         .addClass('MissingE_askFixes_buttons').before(adding);
    }
 }
 

@@ -43,3 +43,36 @@ vertical-align:middle;
 #posts li.post .MissingE_askFixes_extraBtn {
 margin-right:5px;
 }
+
+.MissingE_askFixes_buttons {
+position:relative;
+}
+
+.MissingE_askFixes_buttons .MissingE_postMenu {
+display:none;
+position:absolute;
+left:0;
+top:100%;
+padding:1px 0 3px 0;
+margin:-2px 0 0 0;
+visibility:hidden;
+z-index:1337;
+}
+
+.MissingE_askFixes_buttons .MissingE_postMenu input {
+font-size:12px !important;
+line-height:normal !important;
+height:auto !important;
+margin:1px 2px !important;
+width:100% !important;
+}
+
+.MissingE_askFixes_buttons input[name=publish]:hover + .MissingE_postMenu {
+visibility:visible;
+display:block;
+}
+
+.MissingE_askFixes_buttons .MissingE_postMenu:hover {
+visibility:visible !important;
+display:block;
+}
