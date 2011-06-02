@@ -155,7 +155,7 @@ function openSettings() {
       url: data.url("options.html"),
       onReady: function(tab) {
          tab.attach({
-            contentScriptFile: [data.url("common/jquery-1.5.min.js"),
+            contentScriptFile: [data.url("common/jquery-1.6.1.min.js"),
                                 data.url("common/defs.js"),
                                 data.url("checkbox/jquery.checkbox.min.js"),
                                 data.url("facebox/facebox.js"),
@@ -518,7 +518,7 @@ function handleMessage(message, myWorker) {
          onReady: function(tab) {
             followCheckerTab = tab;
             tab.attach({
-               contentScriptFile:[data.url("common/jquery-1.5.min.js"),
+               contentScriptFile:[data.url("common/jquery-1.6.1.min.js"),
                                   data.url("followChecker/followCheckerTab.js")
                                  ],
                onMessage: function(data) {
@@ -900,7 +900,7 @@ function handleMessage(message, myWorker) {
          injectScripts.push(data.url("common/faceboxHelper.js"));
       }
 
-      injectScripts.unshift(data.url("common/jquery-1.5.min.js"));
+      injectScripts.unshift(data.url("common/jquery-1.6.1.min.js"));
       if (zindexFix) {
          injectScripts.push(data.url("common/zindexFix.js"));
       }
