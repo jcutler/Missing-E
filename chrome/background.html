@@ -22,7 +22,7 @@
 -->
 <html>
 <head>
-<script type="text/javascript" src="common/jquery-1.5.min.js"></script>
+<script type="text/javascript" src="common/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
 <script type="text/javascript" src="common/utils.js"></script>
 <script type="text/javascript" src="common/storage.js"></script>
@@ -682,7 +682,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "start") {
       addTab(sender.tab.id, sender.tab.url);
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-1.5.min.js"});
+      chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-1.6.1.min.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
