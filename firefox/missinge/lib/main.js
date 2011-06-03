@@ -723,7 +723,6 @@ function handleMessage(message, myWorker) {
       settings.extensionURL = data.url("");
       switch(message.component) {
          case "askFixes":
-            console.log("fixes");
             settings.scroll = getStorage("extensions.MissingE.askFixes.scroll",1);
             settings.buttons = getStorage("extensions.MissingE.askFixes.buttons",0);
             settings.tags = getStorage("extensions.MissingE.askFixes.tags",0);
