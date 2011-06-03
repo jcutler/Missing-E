@@ -46,7 +46,7 @@
 			<array>
 				<string>common/whoami.js</string>
 				<string>common/addmenu.js</string>
-				<string>common/jquery-1.5.min.js</string>
+				<string>common/jquery.min.js</string>
 				<string>common/defs.js</string>
 				<string>common/utils.js</string>
 				<string>common/storage.js</string>
