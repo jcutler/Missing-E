@@ -278,6 +278,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_postingFixes_uploaderToggle',1);
          loadCheck(frm,'MissingE_postingFixes_addUploader',1);
          loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
+         loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
       }
       else if (v == "reblogYourself") {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);

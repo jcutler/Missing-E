@@ -692,6 +692,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_postingFixes_uploaderToggle = getStorage("extensions.MissingE.postingFixes.uploaderToggle",1);
       settings.MissingE_postingFixes_addUploader = getStorage("extensions.MissingE.postingFixes.addUploader",1);
       settings.MissingE_postingFixes_quickButtons = getStorage("extensions.MissingE.postingFixes.quickButtons",1);
+      settings.MissingE_postingFixes_blogSelect = getStorage("extensions.MissingE.postingFixes.blogSelect",0);
       settings.MissingE_reblogYourself_postPage = getStorage("extensions.MissingE.reblogYourself.postPage",1);
       settings.MissingE_reblogYourself_dashboard = getStorage("extensions.MissingE.reblogYourself.dashboard",1);
       settings.MissingE_reblogYourself_retries = getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries);
@@ -770,6 +771,7 @@ function handleMessage(message, myWorker) {
             settings.uploaderToggle = getStorage("extensions.MissingE.postingFixes.uploaderToggle",1);
             settings.addUploader = getStorage("extensions.MissingE.postingFixes.addUploader",1);
             settings.quickButtons = getStorage("extensions.MissingE.postingFixes.quickButtons",1);
+            settings.blogSelect = getStorage("extensions.MissingE.postingFixes.blogSelect",0);
             break;
          case "unfollower":
          case "followChecker":

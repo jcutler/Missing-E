@@ -46,3 +46,23 @@ display:none;
 visibility:visible;
 display:block;
 }
+
+#post_controls #extra_channel_outer {
+display:inline-block;
+border-radius:5px;
+border:1px solid #DDD;
+border-top:1px solid #CCC;
+border-bottom:1px solid #CCC;
+margin-left:15px;
+vertical-align:top;
+}
+
+#post_controls #extra_channel {
+width:145px;
+margin:2px 0;
+border:0;
+font:14px Arial,Helvetica;
+color:#666;
+padding:5px;
+height:30px;
+}

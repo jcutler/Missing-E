@@ -115,6 +115,23 @@ self.on('message', function(message) {
       }
    });
 
+   if (message.blogSelect === 1 &&
+       jQuery('#channel_id').length > 0) {
+      var extrachan = jQuery('<select id="extra_channel"></select>')
+                        .insertAfter('#preview_button');
+      extrachan.wrap('<div id="extra_channel_outer" />');
+      extrachan.append(jQuery('#channel_id').html());
+      extrachan.val(jQuery('#channel_id').val());
+      extrachan.bind('change',function() {
+         jQuery('#channel_id').val(jQuery(this).val());
+         var evt = document.createEvent("HTMLEvents");
+         evt.initEvent("change", false, true);
+         document.getElementById('channel_id').dispatchEvent(evt);
+      });
+      jQuery('#channel_id').bind('change',function() {
+         extrachan.val(jQuery(this).val());
+      });
+   }
    if (message.quickButtons === 1 &&
        jQuery('#post_state').length > 0 &&
        jQuery('#post_state')
