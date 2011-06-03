@@ -624,7 +624,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
             settings.defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
             if (settings.defaultTags !== '') {
-               settings.defaultTags = settings.defaultTags.replace(/, /,',').split(',');
+               settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
             break;
          case "bookmarker":
