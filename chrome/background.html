@@ -239,8 +239,7 @@ function startAjax(id) {
    activeRequests[id] = [];
 }
 
-function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc,
-                   additional) {
+function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
    debug("AJAX " + type + " request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {success:false};
@@ -325,6 +324,7 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc,
                debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
+               return;
             }
             var m = txt.match(/([A-Za-z]+) ([0-9]+)[^,]*, ([0-9]+) ([0-9]+):([0-9]+)([aApP][mM])/);
             var d = new Date(m[1] + ' ' + m[2] + ', ' + m[3] + ' ' +

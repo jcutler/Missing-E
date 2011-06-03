@@ -274,7 +274,7 @@ function startAjax(id) {
    */
 }
 
-function doAskAjax(request, retries, type, doFunc, additional) {
+function doAskAjax(request, retries, type, doFunc) {
    debug("AJAX " + type + " request (" + request.pid + ")");
    startAjax(request.message.pid);
    var failMsg = {success:false};
@@ -356,6 +356,7 @@ function doAskAjax(request, retries, type, doFunc, additional) {
                debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                request.target.page.dispatchMessage(type,failMsg);
+               return;
             }
             var m = txt.match(/([A-Za-z]+) ([0-9]+)[^,]*, ([0-9]+) ([0-9]+):([0-9]+)([aApP][mM])/);
             var d = new Date(m[1] + ' ' + m[2] + ', ' + m[3] + ' ' +
@@ -655,7 +656,6 @@ function handleRequest(request) {
       settings.MissingE_askFixes_tags = getStorage("MissingE_askFixes_tags",0);
       settings.MissingE_askFixes_tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
-      settings.MissingE_askFixes_
       settings.MissingE_bookmarker_format = getStorage("MissingE_bookmarker_format",defaultFormat);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
