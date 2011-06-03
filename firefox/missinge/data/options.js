@@ -64,6 +64,10 @@ jQuery(document).ready(function (){
       doKeyUp(e, this, false);
    });
 
+   jQuery('input.blurable_setting').bind("blur", function() {
+      doSetting(this, false);
+   });
+
    jQuery('input.setting_retry').bind("change", function() {
       doSetting(this, true, defaultRetries, minRetries, maxRetries);
    }).spin({
@@ -162,6 +166,13 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
             setStorage(obj.name, num);
          }
       }
+      else if (obj.name === 'MissingE_askFixes_defaultTags') {
+         var val = trim(obj.value);
+         val = val.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,', ')
+                  .replace(/,\s*$/,'').replace(/^\s*/,'').replace(/\s*$/,'');
+         obj.value = val;
+         setStorage(obj.name, obj.value);
+      }
       else {
          setStorage(obj.name, (obj.value));
       }
@@ -194,6 +205,13 @@ function loadSettings() {
       }
       else {
          active.checked = false;
+      }
+      if (v == "askFixes") {
+         loadCheck(frm,'MissingE_askFixes_scroll',1);
+         loadCheck(frm,'MissingE_askFixes_buttons',0);
+         loadCheck(frm,'MissingE_askFixes_tags',0);
+         loadCheck(frm,'MissingE_askFixes_tagAsker',1);
+         frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
       }
       if (v == "dashLinksToTabs") {
          loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);

@@ -318,6 +318,88 @@ function startAjax(id) {
    activeAjax++;
 }
 
+function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
+   var failMsg = {greeting:type, success:false};
+   Request({
+      url: url + pid,
+      headers: {tryCount: count,
+                retryLimit: retries,
+                targetId: pid},
+      onComplete: function(response) {
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
+         if (response.status === 404) {
+            console.debug(type + " request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         if (response.status != 200 ||
+             !(/<input[^>]*name="post\[date\]"[^>]*>/.test(response.text))) {
+            if (closed) {
+               console.debug("Stop " + type + " request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
+            if (cacheServe(type, this.headers.targetId, myWorker,
+                           doFunc, true)) {
+               return true;
+            }
+            else {
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  doAskAjax('http://www.tumblr.com/edit/',
+                         this.headers.targetId, (this.headers.tryCount + 1),
+                         myWorker, this.headers.retryLimit, type, doFunc);
+               }
+               else {
+                  dequeueAjax(this.headers.targetId);
+                  myWorker.postMessage(failMsg);
+               }
+            }
+         }
+         else {
+            var failed = false;
+            var txt;
+            var inp = response.text
+                        .match(/<input[^>]*name="post\[date\]"[^>]*>/);
+            if (!inp) { failed = true; }
+            else {
+               txt = inp[0].match(/value="([^"]*)"/);
+               if (!txt || txt.length < 2) {
+                  failed = true;
+               }
+               else {
+                  txt = txt[1];
+               }
+            }
+            if (failed) {
+               console.debug(type + " request (" + this.headers.targetId +
+                             ") failed");
+               dequeueAjax(this.headers.targetId);
+               myWorker.postMessage(failMsg);
+               return;
+            }
+            var m = txt.match(/([A-Za-z]+) ([0-9]+)[^,]*, ([0-9]+) ([0-9]+):([0-9]+)([aApP][mM])/);
+            var d = new Date(m[1] + ' ' + m[2] + ', ' + m[3] + ' ' +
+                             (m[6]=='pm' && m[4] !== '12' ? parseInt(m[4])+12 : m[4]) +
+                             ':' + m[5] + ':00 GMT');
+            var stamp = Math.round(d.getTime()/1000);
+            var info = {"unix-timestamp":stamp};
+            saveCache(this.headers.targetId, info);
+            dequeueAjax(this.headers.targetId);
+            if (!closed) {
+               doFunc(info, this.headers.targetId, myWorker);
+            }
+         }
+      }
+   }).get();
+}
+
 function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
    var failMsg = {greeting:type, success:false};
    if (additional) {
@@ -354,7 +436,7 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
                return;
             }
             if (cacheServe(type, this.headers.targetId, myWorker,
-                           doTags, true)) {
+                           doFunc, true)) {
                return true;
             }
             else {
@@ -444,6 +526,12 @@ function startTimestamp(message, myWorker) {
    }
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "timestamp", message: message, worker: myWorker});
+   }
+   else if (message.url === 'http://www.tumblr.com/edit/') {
+      startAjax(message.pid);
+      doAskAjax(message.url, message.pid, 0, myWorker,
+                getStorage("extensions.MissingE.timestamps.retries",defaultRetries),
+                "timestamp", doTimestamp);
    }
    else {
       startAjax(message.pid);
@@ -578,6 +666,11 @@ function handleMessage(message, myWorker) {
          settings["MissingE_" + componentList[i] + "_enabled"] =
             getStorage("extensions.MissingE." + componentList[i] + ".enabled", 1);
       }
+      settings.MissingE_askFixes_scroll = getStorage("extensions.MissingE.askFixes.scroll",1);
+      settings.MissingE_askFixes_buttons = getStorage("extensions.MissingE.askFixes.buttons",0);
+      settings.MissingE_askFixes_tags = getStorage("extensions.MissingE.askFixes.tags",0);
+      settings.MissingE_askFixes_tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
+      settings.MissingE_askFixes_defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
       settings.MissingE_bookmarker_format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("extensions.MissingE.dashboardFixes.wrapTags",1);
@@ -629,6 +722,17 @@ function handleMessage(message, myWorker) {
       settings.experimental = getStorage("extensions.MissingE.experimentalFeatures.enabled",0);
       settings.extensionURL = data.url("");
       switch(message.component) {
+         case "askFixes":
+            console.log("fixes");
+            settings.scroll = getStorage("extensions.MissingE.askFixes.scroll",1);
+            settings.buttons = getStorage("extensions.MissingE.askFixes.buttons",0);
+            settings.tags = getStorage("extensions.MissingE.askFixes.tags",0);
+            settings.tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
+            settings.defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
+            if (settings.defaultTags !== '') {
+               settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
+            }
+            break;
          case "bookmarker":
             settings.format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
             break;
@@ -750,7 +854,9 @@ function handleMessage(message, myWorker) {
             activeScripts.dashboardFixes = false;
       }
       if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(message.url)) {
-         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1 &&
+             getStorage("extensions.MissingE.askFixes.scroll",1) == 1) {
+            /* Don't inject script. Taken care of by a page mod */
             activeScripts.askFixes = true;
          }
          else
@@ -847,12 +953,27 @@ function handleMessage(message, myWorker) {
             activeScripts.postCrushes = false;
       }
       if (!message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/(submissions|messages)/
+               .test(message.url) ||
+           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/
+               .test(message.url))) {
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+            injectScripts.push(data.url("askFixes/askFixes.js"));
+            activeScripts.askFixes = true;
+         }
+         else {
+            activeScripts.askFixes = false;
+         }
+      }
+      if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url)) &&
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/(submissions|messages)/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/.test(message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/.test(message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(message.url))) {
          if (getStorage("extensions.MissingE.timestamps.enabled",1) == 1) {
             injectScripts.push(data.url("timestamps/timestamps.js"));
@@ -860,7 +981,15 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.timestamps = false;
-
+      }
+      if (!message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(message.url))) {
          if (getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1) {
             if (getStorage("extensions.MissingE.betterReblogs.quickReblog",0) == 1) {
                zindexFix = true;
@@ -936,7 +1065,8 @@ pageMod.PageMod({
    contentScriptFile: data.url("askFixes/askFixes.js"),
    onAttach: function (worker) {
       worker.on('message', function(data) {
-         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1 &&
+             getStorage("extensions.MissingE.askFixes.scroll",1) == 1) {
             handleMessage(data, this);
          }
       });
