@@ -29,6 +29,11 @@ margin-top:0 !important;
 opacity:1 !important;
 }
 
+.nsfwphotoset .nsfwdiv {
+width:60px;
+height:60px;
+}
+
 .nsfwphotoset:hover .nsfwdiv {
 background:transparent !important;
 }
