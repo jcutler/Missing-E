@@ -164,7 +164,8 @@ function settings_startup(response) {
       MissingE_postingFixes_doStartup(response.message.photoReplies,
                                       response.message.uploaderToggle,
                                       response.message.addUploader,
-                                      response.message.quickButtons);
+                                      response.message.quickButtons,
+                                      response.message.blogSelect);
    }
    else if (response.message.component === "askFixes") {
       MissingE_askFixes_doStartup(response.message.tagAsker,
