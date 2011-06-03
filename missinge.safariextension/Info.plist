@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.29</string>
+	<string>1.2.1</string>
 	<key>CFBundleVersion</key>
-	<string>129</string>
+	<string>201</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -78,6 +78,7 @@
 		<key>Stylesheets</key>
 		<array>
 			<string>facebox/facebox.css</string>
+			<string>askFixes/askFixes.css</string>
 			<string>betterReblogs/quickReblog.css</string>
 			<string>bookmarker/bookmarker.css</string>
 			<string>magnifier/magnifier.css</string>

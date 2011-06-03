@@ -122,6 +122,10 @@ function doStartup(response) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "dashboardFixes"});
       }
+      if (response.message.askFixes) {
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "askFixes"});
+      }
       if (response.message.reblogYourself) {
          MissingE_reblogYourself_dash_doStartup();
       }
@@ -140,7 +144,7 @@ function doStartup(response) {
          MissingE_betterReblogs_post_doStartup(response.message.url);
       }
       if (response.message.askFixes) {
-         MissingE_askFixes_doStartup();
+         MissingE_askFixes_scroll_doStartup();
       }
       if (response.message.gotoDashPost) {
          MissingE_gotoDashPost_doStartup();
@@ -161,6 +165,12 @@ function settings_startup(response) {
                                       response.message.uploaderToggle,
                                       response.message.addUploader,
                                       response.message.quickButtons);
+   }
+   else if (response.message.component === "askFixes") {
+      MissingE_askFixes_doStartup(response.message.tagAsker,
+                                  response.message.defaultTags,
+                                  response.message.buttons,
+                                  response.message.tags);
    }
    else if (response.message.component === "followChecker") {
       MissingE_followChecker_doStartup(response.message.retries);
