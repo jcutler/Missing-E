@@ -662,6 +662,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
             settings.addUploader = getStorage("MissingE_postingFixes_addUploader",1);
             settings.quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
+            settings.blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
             break;
          case "unfollower":
          case "followChecker":

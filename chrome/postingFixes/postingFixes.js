@@ -110,6 +110,22 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
       }
    });
 
+   if (postingFixes_settings.blogSelect === 1 &&
+       $('#channel_id').length > 0) {
+      var extrachan = $('<select id="extra_channel"></select>')
+                        .insertAfter('#preview_button');
+      extrachan.append($('#channel_id').html());
+      extrachan.val($('#channel_id').val());
+      extrachan.bind('change',function() {
+         $('#channel_id').val($(this).val());
+         var evt = document.createEvent("HTMLEvents");
+         evt.initEvent("change", false, true);
+         document.getElementById('channel_id').dispatchEvent(evt);
+      });
+      $('#channel_id').bind('change',function() {
+         extrachan.val($(this).val());
+      });
+   }
    if (postingFixes_settings.quickButtons === 1 &&
        $('#post_state').length > 0 &&
        $('#post_state')
