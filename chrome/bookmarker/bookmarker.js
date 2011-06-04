@@ -352,6 +352,7 @@ chrome.extension.sendRequest({greeting: "settings",
                    'class="dashboard_subpages"></ul></div>');
       $(function() {
          $('#MissingE_marklist').sortable({
+            cursor:'move',
             axis:'y',
             opacity:0.6,
             revert:true,

@@ -360,6 +360,7 @@ function MissingE_bookmarker_doStartup(format) {
    }
    $(function() {
       $('#MissingE_marklist').sortable({
+         cursor:'move',
          axis:'y',
          opacity:0.6,
          revert:true,

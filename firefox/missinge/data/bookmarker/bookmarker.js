@@ -357,6 +357,7 @@ self.on('message', function (message) {
                    'class="dashboard_subpages"></ul></div>');
       jQuery(function() {
          jQuery('#MissingE_marklist').sortable({
+            cursor:'move',
             axis:'y',
             opacity:0.6,
             revert:true,

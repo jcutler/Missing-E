@@ -21,6 +21,10 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#MissingE_marklist li.ui-sortable-helper, #MissingE_marklist li.ui-sortable-helper a {
+cursor:move !important;
+}
+
 a.MissingE_mark {
 border-width:0;
 height:14px;
