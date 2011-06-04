@@ -827,6 +827,7 @@ function handleMessage(message, myWorker) {
             activeScripts.safeDash = false;
 
          if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
+            injectScripts.push(data.url("common/jquery-ui.min.js"));
             injectScripts.push(data.url("bookmarker/bookmarker.js"));
             activeScripts.bookmarker = true;
          }

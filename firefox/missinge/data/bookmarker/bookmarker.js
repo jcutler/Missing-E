@@ -28,7 +28,7 @@ var markFormat;
 function serializeMarks(a) {
    var s = "";
    var i;
-   a.sort().reverse();
+   a.reverse();
    for (i=0; i<a.length; i++) {
       s = a[i][0] + ";" + a[i][1] + ";" + a[i][2] + (i>0 ? "," : "") + s;
    }
@@ -45,7 +45,6 @@ function parseMarks(s) {
          arr.push([cm[0],cm[1],cm[2]]);
       }
    }
-   arr.sort().reverse();
    return arr;
 }
 
@@ -75,30 +74,27 @@ function generateList() {
    if (markitems.length > 0) {
       var idx = 0;
       markitems.each(function(i) {
+        if (jQuery(this).data('gone') == 'gone') {
+            return;
+         }
          var cd = jQuery(this).find('span.mark_date').attr("timestamp");
-
-         if (idx >= marks.length ||
-             cd > marks[idx][0]) {
-            jQuery("#bookmark_" + this.id.match(/[0-9]*$/)[0])
-                                       .removeClass("MissingE_ismarked");
+         var post = jQuery(this).attr('id').match(/[0-9]*$/)[0];
+         if (idx >= marks.length) {
+            jQuery('#bookmark_' + post)
+               .removeClass("MissingE_ismarked");
             jQuery(this).remove();
          }
-         else if (cd < marks[idx][0]) {
-            while (idx < marks.length && cd <= marks[idx][0]) {
-               jQuery("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
-               if (cd !== marks[idx][0]) {
-                  jQuery(this).before(getMarkText(marks[idx][0], marks[idx][1],
-                                             marks[idx][2]));
-               }
-               else {
-                  jQuery(this).find('span.mark_date').text(marks[idx][2]);
-               }
-               idx++;
-            }
+         else if (post == marks[idx][1]) {
+            jQuery(this).find('span.mark_date').text(marks[idx][2]);
+            idx++;
          }
          else {
-            jQuery("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
-            jQuery(this).find('span.mark_date').text(marks[idx][2]);
+            jQuery('#bookmark_' + post).removeClass('MissingE_ismarked');
+            jQuery('#bookmark_' + marks[idx][1]).addClass('MissingE_ismarked');
+            jQuery('#mark_' + marks[idx][1]).remove().data('gone','gone');
+            jQuery(this).before(getMarkText(marks[idx][0], marks[idx][1],
+                                       marks[idx][2]));
+            jQuery(this).remove();
             idx++;
          }
       });
@@ -151,7 +147,7 @@ function addMark(post,user,custom) {
       ds = ans;
    }
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
-   marks.push([d.getTime(),post,ds]);
+   marks.unshift([d.getTime(),post,ds]);
    setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
    generateList();
 }
@@ -310,6 +306,13 @@ function refreshMarks() {
    generateList();
 }
 
+function doMove(f,t) {
+   var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
+   var item = marks.splice(f,1)[0];
+   marks.splice(t,0,item);
+   setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
+}
+
 self.on('message', function (message) {
    if (message.greeting !== "settings" ||
        message.component !== "bookmarker") {
@@ -352,7 +355,23 @@ self.on('message', function (message) {
                    locale[lang]["bookmarksTitle"] +
                    '</div><ul id="MissingE_marklist" ' +
                    'class="dashboard_subpages"></ul></div>');
-
+      jQuery(function() {
+         jQuery('#MissingE_marklist').sortable({
+            axis:'y',
+            opacity:0.6,
+            revert:true,
+            start:function(e,ui){
+               jQuery(this).data('position',
+                                 jQuery('#MissingE_marklist li').index(ui.item));
+            },
+            update:function(e,ui){
+               var oldp = jQuery(this).data('position');
+               var newp = jQuery('#MissingE_marklist li').index(ui.item);
+               doMove(oldp,newp);
+            }
+         });
+         jQuery('#MissingE_marklist').disableSelection();
+      });
       var pos = jQuery("#dashboard_controls_radar_buttons");
       if (pos.length > 0) {
          pos.parent().before(list);

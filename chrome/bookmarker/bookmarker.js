@@ -39,7 +39,7 @@ document.getElementsByTagName('head')[0].appendChild(st);
 function serializeMarks(a) {
    var s = "";
    var i;
-   a.sort().reverse();
+   a.reverse();
    for (i=0; i<a.length; i++) {
       s = a[i][0] + ";" + a[i][1] + ";" + a[i][2] + (i>0 ? "," : "") + s;
    }
@@ -56,7 +56,6 @@ function parseMarks(s) {
          arr.push([cm[0],cm[1],cm[2]]);
       }
    }
-   arr.sort().reverse();
    return arr;
 }
 
@@ -86,30 +85,27 @@ function generateList() {
    if (markitems.length > 0) {
       var idx = 0;
       markitems.each(function(i) {
+         if ($(this).data('gone') == 'gone') {
+            return;
+         }
          var cd = $(this).find('span.mark_date').attr("timestamp");
-
-         if (idx >= marks.length ||
-             cd > marks[idx][0]) {
-            $("#bookmark_" + this.id.match(/[0-9]*$/)[0])
-                                       .removeClass("MissingE_ismarked");
+         var post = $(this).attr('id').match(/[0-9]*$/)[0];
+         if (idx >= marks.length) {
+            $('#bookmark_' + post)
+               .removeClass("MissingE_ismarked");
             $(this).remove();
          }
-         else if (cd < marks[idx][0]) {
-            while (idx < marks.length && cd <= marks[idx][0]) {
-               $("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
-               if (cd !== marks[idx][0]) {
-                  $(this).before(getMarkText(marks[idx][0], marks[idx][1],
-                                             marks[idx][2]));
-               }
-               else {
-                  $(this).find('span.mark_date').text(marks[idx][2]);
-               }
-               idx++;
-            }
+         else if (post == marks[idx][1]) {
+            $(this).find('span.mark_date').text(marks[idx][2]);
+            idx++;
          }
          else {
-            $("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
-            $(this).find('span.mark_date').text(marks[idx][2]);
+            $('#bookmark_' + post).removeClass('MissingE_ismarked');
+            $('#bookmark_' + marks[idx][1]).addClass('MissingE_ismarked');
+            $('#mark_' + marks[idx][1]).remove().data('gone','gone');
+            $(this).before(getMarkText(marks[idx][0], marks[idx][1],
+                                       marks[idx][2]));
+            $(this).remove();
             idx++;
          }
       });
@@ -162,7 +158,7 @@ function addMark(post,user,custom) {
       ds = ans;
    }
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
-   marks.push([d.getTime(),post,ds]);
+   marks.unshift([d.getTime(),post,ds]);
    setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
    generateList();
 }
@@ -321,6 +317,13 @@ function refreshMarks() {
    generateList();
 }
 
+function doMove(f,t) {
+   var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
+   var item = marks.splice(f,1)[0];
+   marks.splice(t,0,item);
+   setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
+}
+
 chrome.extension.sendRequest({greeting: "settings",
                               component: "bookmarker"}, function(response) {
    var bookmarker_settings = JSON.parse(response);
@@ -347,7 +350,22 @@ chrome.extension.sendRequest({greeting: "settings",
                    locale[lang]["bookmarksTitle"] +
                    '</div><ul id="MissingE_marklist" ' +
                    'class="dashboard_subpages"></ul></div>');
-   
+      $(function() {
+         $('#MissingE_marklist').sortable({
+            axis:'y',
+            opacity:0.6,
+            revert:true,
+            start:function(e,ui){
+               $(this).data('position',$('#MissingE_marklist li').index(ui.item));
+            },
+            update:function(e,ui){
+               var oldp = $(this).data('position');
+               var newp = $('#MissingE_marklist li').index(ui.item);
+               doMove(oldp,newp);
+            }
+         });
+         $('#MissingE_marklist').disableSelection();
+      });
       var pos = $("#dashboard_controls_radar_buttons");
       if (pos.length > 0) {
          pos.parent().before(list);
