@@ -111,7 +111,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
    });
 
    if (postingFixes_settings.blogSelect === 1 &&
-       $('#channel_id').length > 0) {
+       $('select#channel_id').length > 0) {
       var extrachan = $('<select id="extra_channel"></select>')
                         .insertAfter('#preview_button');
       extrachan.append($('#channel_id').html());

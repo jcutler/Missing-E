@@ -116,7 +116,7 @@ self.on('message', function(message) {
    });
 
    if (message.blogSelect === 1 &&
-       jQuery('#channel_id').length > 0) {
+       jQuery('select#channel_id').length > 0) {
       var extrachan = jQuery('<select id="extra_channel"></select>')
                         .insertAfter('#preview_button');
       extrachan.wrap('<div id="extra_channel_outer" />');
