@@ -212,7 +212,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
 
    if (buttons === 1 || tags === 1) {
       var x;
-      var startTags = jQuery(item).find('div.post_info').text().match(/[A-Za-z\-\_]+/);
+      var startTags = jQuery(item).find('div.post_info').text().match(/[0-9A-Za-z\-\_]+/);
       if (tagAsker === 1) {
          startTags = [startTags[0]];
       }
