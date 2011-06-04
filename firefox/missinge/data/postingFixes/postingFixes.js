@@ -106,7 +106,8 @@ self.on('message', function(message) {
      '<a class="clear_tags" style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">' + locale[lang]["clearTagsText"] + '</a></div>')
+     'return false;">' + locale[lang]["postingFixes"]["clearTagsText"] +
+     '</a></div>')
          .appendTo(set_tags);
 
    jQuery('#photo_src').keyup(function(){
