@@ -690,6 +690,40 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var activeScripts = {};
       var zindexFix = false;
       if (sender.tab.url == request.url &&
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
+              .test(sender.tab.url)) {
+         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
+            activeScripts.safeDash = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "safeDash/safeDash.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});
+         }
+         else
+            activeScripts.safeDash = false;
+
+         if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
+             getStorage("MissingE_followChecker_enabled",1) == 1) {
+            zindexFix = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
+         }
+
+         if (getStorage("MissingE_unfollower_enabled",1) == 1) {
+            activeScripts.unfollower = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "unfollower/unfollower.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "unfollower/unfollower.js"});
+         }
+         else
+            activeScripts.unfollower = false;
+
+         if (getStorage("MissingE_followChecker_enabled",1) == 1) {
+            activeScripts.followChecker = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "followChecker/followChecker.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "followChecker/followChecker.js"});
+         }
+         else
+            activeScripts.followChecker = false;
+      }
+      if (sender.tab.url == request.url &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
@@ -729,7 +763,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
              getStorage("MissingE_followChecker_enabled",1) == 1 ||
-             getStorage("MissingE_magnifier_enabled",1)) {
+             getStorage("MissingE_magnifier_enabled",1) == 1) {
             zindexFix = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
@@ -762,7 +796,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/wrapTags.css"});
             if (getStorage("MissingE_dashboardFixes_postLinks",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/postLinks.css"});
-            if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1)
+            if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1 &&
+                !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/.test(sender.tab.url)))
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});
          }
          else

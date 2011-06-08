@@ -23,6 +23,54 @@
 
 #MissingE_marklist li.ui-sortable-helper, #MissingE_marklist li.ui-sortable-helper a {
 cursor:move !important;
+border-bottom-right-radius:0 !important;
+border-bottom-left-radius:0 !important;
+}
+
+#MissingE_marklist {
+position:relative;
+}
+
+#MissingE_marklist .MissingE_bookmarker_marklink {
+padding:3px 13px 3px 26px !important;
+font-size:10px !important;
+background-position:10px 5px !important;
+}
+
+#MissingE_marklist li.MissingE_marklist_title {
+border-bottom-right-radius:0 !important;
+border-bottom-left-radius:0 !important;
+}
+
+#MissingE_marklist li.MissingE_marklist_title a {
+padding-left:8px !important;
+background:transparent;
+cursor:default;
+}
+
+#MissingE_marklist .MissingE_unmarker, #MissingE_marklist #MissingE_bookmark_confirmedit {
+display:none;
+padding:3px 1px !important;
+font-size:11px !important;
+background:transparent !important;
+position:absolute !important;
+right:9px;
+top:0 !important;
+line-height:1 !important;
+}
+
+#MissingE_bookmark_confirmedit {
+right:5px !important;
+font-weight:normal;
+cursor:pointer;
+}
+
+#MissingE_marklist li:hover .MissingE_unmarker {
+display:block;
+}
+
+#MissingE_marklist .MissingE_unmarker:hover, #MissingE_marklist #MissingE_bookmark_confirmedit:hover {
+color:white;
 }
 
 a.MissingE_mark {
@@ -45,7 +93,7 @@ background-position:-12px 0 !important;
 }
 
 #MissingE_bookmarker_edit {
-font:11px 'Lucida Grande',Verdana,sans-serif;
+font:10px 'Helvetica Neue',Helvetica,Arial,sans-serif;
 width:130px;
 border:0;
 padding:0 2px 0 6px;
