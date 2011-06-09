@@ -31,8 +31,7 @@ function undoNSFW() {
    $('#posts div.nsfwembed span.nsfwed').css('visibility','visible');
    $('#posts div.nsfwembed object.nsfwvid').css('visibility','visible');
    $('img.nsfw_overlay').css('opacity','1');
-   $('#nsfwctrltxt').html('Off');
-   $('#nsfwctrlicon').css('background-position','0px 0px');
+   $('#MissingE_safeDash li:first').removeClass('selected');
    $('#posts li div.nsfwdiv').addClass('nsfwoff');
 }
 
@@ -41,8 +40,7 @@ function doNSFW() {
    $('#posts div.nsfwembed span.nsfwed').css('visibility','hidden');
    $('#posts div.nsfwembed object.nsfwvid').css('visibility','hidden');
    $('img.nsfw_overlay').css('opacity','0');
-   $('#nsfwctrltxt').html('On');
-   $('#nsfwctrlicon').css('background-position','-15px 0px');
+   $('#MissingE_safeDash li:first').addClass('selected');
    $('#posts li div.nsfwdiv').removeClass('nsfwoff');
 }
 
@@ -268,8 +266,7 @@ function MissingE_safeDash_doStartup() {
                '.video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } ' +
                '.nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat ' +
                'scroll center center !important; } #right_column ' +
-               '.dashboard_nav_item ul.dashboard_subpages li a ' +
-               '.icon.dashboard_controls_nsfw { ' +
+               '#MissingE_safeDash li a { ' +
                'background-image:url("' + lockicon + '") !important; } ' +
                '.nsfwoff { background:#FFFFFF !important; }</style>');
 
@@ -277,36 +274,21 @@ function MissingE_safeDash_doStartup() {
       $('#new_post img').css('opacity','0 !important');
    }
 
-   var onoff;
-   var extra;
-   if (getStorage('MissingE_safeDash_state',0) === 0) {
-      onoff = "Off";
-      extra = '';
+   var sdlnk = '<ul class="right_column_section" id="MissingE_safeDash">' +
+               '<li class="' +
+               (getStorage('MissingE_safeDash_state',0) === 1 ?
+               'selected' : '') + '"><a href="#" onclick="return false;" ' +
+               'id="nsfwctrl">Safe Dash</a></li></ul>';
+
+   var afterer = $('#MissingE_marklist');
+   if (afterer.length === 0) {
+      afterer = $('#right_column .radar');
+   }
+   if (afterer.length > 0) {
+      afterer.before(sdlnk);
    }
    else {
-      onoff = "On";
-      extra = 'style="background-position:-15px 0px;"';
-   }
-
-   var sdlnk = '<li><a id="nsfwctrl" href="#" onclick="return false;">' +
-                 '<span id="nsfwctrlicon" ' + extra +
-                 ' class="icon dashboard_controls_nsfw">' +
-                 '</span>SafeDash (<span id="nsfwctrltxt">' + onoff +
-                 '</span>)</a></li>';
-
-   var custom = $('.dashboard_nav_item .dashboard_subpages ' +
-                  'a[href^="/customize"]');
-   if (custom.length > 0) {
-      custom.parent().after(sdlnk);
-   }
-   else if (!(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
-              .test(location.href))) {
-      $('#right_column div.dashboard_nav_item:first').css('padding-top','');
-      $('#right_column')
-         .prepend('<div class="dashboard_nav_item" ' +
-                  'style="padding-top:0;padding-left:0;">' +
-                  '<ul class="dashboard_subpages safedash_alone">' + sdlnk +
-                  '</ul></div>');
+      $('#right_column').append(sdlnk);
    }
 
    $('.video_thumbnail div:empty').live('mouseover', function() {

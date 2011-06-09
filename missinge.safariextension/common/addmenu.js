@@ -23,16 +23,26 @@
 
 /*global safari */
 
-var accmenu = document.getElementById("account_menu");
+var bar = document.getElementById("user_tools");
+var logout = document.getElementById("logout_button");
 
-if (accmenu) {
-   var links = accmenu.getElementsByTagName('a');
-   var setlnk = document.createElement('a');
-   setlnk.href = safari.extension.baseURI + 'options.html';
-   setlnk.setAttribute("target","_blank");
-   setlnk.innerHTML = 'Missing <img src="' + safari.extension.baseURI +
-                        'Icon-16.png' + '" style="vertical-align:bottom;" />';
-   accmenu.insertBefore(setlnk, links[links.length-1]);
+if (bar && logout) {
+   var st = document.createElement('style');
+   st.setAttribute('type', 'text/css');
+   st.innerHTML = '#header #missinge_button a {' +
+                  'background-image:url("' +
+                  safari.extension.baseURI + 'missinge_dash.png' +
+                  '") !important; background-position:center center; ' +
+                  'opacity:0.5; } ' +
+                  '#header #missinge_button a:hover {' +
+                  'opacity:1; }';
+   document.getElementsByTagName('head')[0].appendChild(st);
+   var tab = document.createElement('div');
+   tab.className = "tab iconic";
+   tab.id = "missinge_button";
+   tab.innerHTML = '<a href="' + safari.extension.baseURI + 'options.html' +
+                   '" target="_blank" title="Missing e Settings">Missing e</a>';
+   bar.insertBefore(tab, logout);
 }
 
 if (/http:\/\/www\.tumblr\.com\/dashboard\/[0-9]/.test(location.href)) {

@@ -226,7 +226,9 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
    if (data !== '') {
       head.appendChild(css);
    }
-   if (widescreen === 1) {
+   if (widescreen === 1 &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
+            .test(location.href))) {
       var style = document.createElement("link");
       style.setAttribute('rel','stylesheet');
       style.setAttribute('type','text/css');

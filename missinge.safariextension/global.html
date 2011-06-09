@@ -776,6 +776,28 @@ function handleRequest(request) {
    else if (request.name == "start") {
       var activeScripts = {};
       if (!request.message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
+               .test(request.message.url)) {
+         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
+            activeScripts.safeDash = true;
+         }
+         else
+            activeScripts.safeDash = false;
+
+         if (getStorage("MissingE_unfollower_enabled",1) == 1) {
+            activeScripts.unfollower = true;
+         }
+         else
+            activeScripts.unfollower = false;
+
+         if (getStorage("MissingE_followChecker_enabled",1) == 1) {
+            activeScripts.followChecker = true;
+         }
+         else
+            activeScripts.followChecker = false;
+
+      }
+      if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
