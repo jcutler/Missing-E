@@ -245,7 +245,13 @@ self.on('message', function(message) {
                        '#content .tag_page_header { padding-right:' +
                          (w+40) + 'px; }</style>');
       jQuery('#content').css('padding-right', (w+20) + 'px');
+      jQuery('#left_column').css('min-height',
+                                 jQuery('#right_column').height() + 'px');
       document.addEventListener('DOMNodeInserted', function(e) {
+         if (jQuery(e.target).closest('#right_column').length > 0) {
+            jQuery('#left_column').css('min-height',
+                                       jQuery('#right_column').height() + 'px');
+         }
          jQuery(e.target).children('div.reply_pane:first')
                .each(function() {
             realignReplyNipple(jQuery(this).find('div.nipple'));

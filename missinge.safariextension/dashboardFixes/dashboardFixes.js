@@ -241,7 +241,12 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                        '#content .tag_page_header { padding-right:' +
                          (w+40) + 'px; }</style>');
       $('#content').css('padding-right', (w+20) + 'px');
+      $('#left_column').css('min-height', $('#right_column').height() + 'px');
       document.addEventListener('DOMNodeInserted', function(e) {
+         if ($(e.target).closest('#right_column').length > 0) {
+            $('#left_column').css('min-height', $('#right_column').height() +
+                                  'px');
+         }
          $(e.target).children('div.reply_pane:first')
                .each(function() {
             realignReplyNipple($(this).find('div.nipple'));
