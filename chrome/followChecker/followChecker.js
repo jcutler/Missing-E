@@ -469,7 +469,7 @@ function tfc_init(retries) {
                         '" /><div><em>Artwork by ' +
                         '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
                         '</em></div>');
-               if ($('#facebox').css('display') === 'block') {
+               if ($('#facebox').css('display') !== 'block') {
                   $.facebox({ div: '#MissingE_followwhodisplay' },
                             'followwhobox');
                }
@@ -492,7 +492,7 @@ function tfc_init(retries) {
                            '" /><div><em>Artwork by ' +
                            '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
                            '</em></div>');
-                  if ($('#facebox').css('display') === 'block') {
+                  if ($('#facebox').css('display') !== 'block') {
                      $.facebox({ div: '#MissingE_followwhodisplay' },
                                'followwhobox');
                   }

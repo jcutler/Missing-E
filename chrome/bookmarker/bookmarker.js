@@ -231,7 +231,7 @@ function doMarks(item) {
    }
 }
 
-function handleEdit(type, evt, target) {
+function handleEdit(type, evt) {
    var end = false;
    var par = $(evt.target).closest('li');
    if (type === 'keyup' && evt.keyCode === 27) { end = true; }
@@ -279,7 +279,7 @@ $('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
       title.after(inp);
       var check = $('<a id="MissingE_bookmark_confirmedit" ' +
                     'onclick="return false;" style="display:inline;" ' +
-                    'ref="#"></a>').html('&#10004;').insertAfter(this);
+                    'href="#"></a>').html('&#10004;').insertAfter(this);
       check.click(function(e) { inp.get(0).blur(); }); 
       inp.get(0).focus();
       title.hide();
