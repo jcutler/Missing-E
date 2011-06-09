@@ -49,7 +49,7 @@ margin-right:-235px;
 width:100% !important;
 }
 
-#header #tabs_container {
+#header #user_tools + #tabs_container {
 width:auto !important;
 }
 
