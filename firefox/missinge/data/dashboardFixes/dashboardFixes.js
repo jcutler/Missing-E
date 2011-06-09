@@ -376,6 +376,10 @@ self.on('message', function(message) {
       });
    }
 
+   if (message.followingLink === 1) {
+      jQuery('#right_column a.following').attr('href','/following');
+   }
+
    if (message.timeoutAJAX === 1) {
       var timeout = message.timeoutLength * 1000;
       jQuery('head').append('<script type="text/javascript">' +

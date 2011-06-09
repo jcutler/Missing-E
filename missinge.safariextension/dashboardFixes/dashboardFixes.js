@@ -189,7 +189,8 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                                            wrapTags, replaceIcons,
                                            timeoutAJAX, timeoutLength,
                                            postLinks, reblogReplies,
-                                           widescreen, queueArrows) {
+                                           widescreen, queueArrows,
+                                           followingLink) {
    if (window.top !== window) { return false; }
 
    document.addEventListener('DOMNodeInserted', function(e) {
@@ -370,6 +371,10 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       $("#posts li.post").each(function(i) {
          doIcons(this);
       });
+   }
+
+   if (followingLink === 1) {
+      $('#right_column a.following').attr('href','/following');
    }
 
    if (timeoutAJAX === 1) {

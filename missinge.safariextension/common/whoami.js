@@ -195,7 +195,8 @@ function settings_startup(response) {
                                         response.message.postLinks,
                                         response.message.reblogReplies,
                                         response.message.widescreen,
-                                        response.message.queueArrows);
+                                        response.message.queueArrows,
+                                        response.message.followingLink);
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {

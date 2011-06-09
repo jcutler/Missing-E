@@ -331,6 +331,10 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
       });
    }
 
+   if (dashboardFixes_settings.followingLink === 1) {
+      $('#right_column a.following').attr('href','/following');
+   }
+
    if (dashboardFixes_settings.timeoutAJAX === 1) {
       var timeout = dashboardFixes_settings.timeoutLength * 1000;
       $('head').append('<script type="text/javascript">' +
