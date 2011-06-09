@@ -204,7 +204,9 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
       e.preventDefault();
    });
 
-   if (dashboardFixes_settings.widescreen === 1) {
+   if (dashboardFixes_settings.widescreen === 1 &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
+            .test(location.href))) {
       var w = $('#right_column').width() + 20;
       $('head').append('<style type="text/css">' +
                        '#pagination { margin-right:-' + w + 'px; } ' +

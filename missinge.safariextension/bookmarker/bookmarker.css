@@ -48,8 +48,11 @@ background:transparent !important;
 cursor:default;
 }
 
-#MissingE_marklist .MissingE_unmarker, #MissingE_marklist #MissingE_bookmark_confirmedit {
+#MissingE_marklist .MissingE_unmarker {
 display:none !important;
+}
+
+#MissingE_marklist .MissingE_unmarker, #MissingE_marklist #MissingE_bookmark_confirmedit {
 padding:3px 1px !important;
 font-size:11px !important;
 background:transparent !important;
@@ -92,8 +95,8 @@ a.MissingE_ismarked {
 background-position:-12px 0 !important;
 }
 
-#MissingE_bookmarker_edit {
-font:10px 'Helvetica Neue',Helvetica,Arial,sans-serif;
+#MissingE_marklist #MissingE_bookmarker_edit {
+font:10px 'Helvetica Neue',Helvetica,Arial,sans-serif !important;
 width:130px;
 border:0;
 padding:0 2px 0 6px;
@@ -103,6 +106,8 @@ border-radius:5px;
 margin:0 2px 0 0;
 }
 
-.MissingE_bookmarker_forceHide {
+.MissingE_bookmarker_forceHide, #MissingE_marklist li:hover .MissingE_bookmarker_forceHide {
 display:none !important;
 }
+
+
