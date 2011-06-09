@@ -4,11 +4,11 @@ Opera port
 Facebox size adjustment?
 - Not really a big deal
 
-Backport to userscripts?
-- Not really interested
-
 Askbox on dash? http://userscripts.org/scripts/show/100607
 - Meh
 
-Ask tags:
-- have background page load API regularly, add tags to all answer posts?
+Bring tumblelog panel to dashboard page?
+
+Live preview of timestamp example when setting
+
+Complete implementation of multi-unfollower and then port
