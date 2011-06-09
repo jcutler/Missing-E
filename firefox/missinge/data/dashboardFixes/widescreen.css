@@ -46,9 +46,8 @@ margin-right:-235px;
 width:100% !important;
 }
 
-#header #tabs_outter_container {
-left:auto !important;
-right:15px !important;
+#header #tabs_container {
+width:auto !important;
 }
 
 #posts li.notification {

@@ -35,7 +35,11 @@ if (bar && logout) {
                   '") !important; background-position:center center; ' +
                   'opacity:0.5; } ' +
                   '#header #missinge_button a:hover {' +
-                  'opacity:1; }';
+                  'opacity:1; } ' +
+                  '#header #tabs_outter_container {' +
+                  'min-width:645px !important;' +
+                  'left:auto !important;right:17px !important;' +
+                  'width:auto !important;}';
    document.getElementsByTagName('head')[0].appendChild(st);
    var tab = document.createElement('div');
    tab.className = "tab iconic";
