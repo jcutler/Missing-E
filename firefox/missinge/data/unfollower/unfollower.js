@@ -104,12 +104,12 @@ function doDisplay(start,show) {
       done = [];
       var names = [];
       for (i=0; i<text.length; i++) {
-         var raw = text[i].match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
+         var raw = text[i].match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*"><div class="hide_overflow">[0-9a-zA-Z\-\_]+<\/div><\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }
          for (j=0; j<raw.length; j++) {
-            names.push(raw[j].match(/>([0-9A-Za-z\-\_]*)<\/a>/)[1]);
+            names.push(raw[j].match(/>([0-9A-Za-z\-\_]*)<\/div><\/a>/)[1]);
          }
       }
       text = [];
@@ -128,7 +128,7 @@ function doDisplay(start,show) {
    }
 }
 
-function doGet(num, show, extensionURL, retries) {
+function doGet(num, show, extensionURL, retries, acct) {
    var i;
    failed = false;
 
@@ -148,7 +148,7 @@ function doGet(num, show, extensionURL, retries) {
    for (i=0; i<pages; i++) {
       jQuery.ajax({
          type: "GET",
-         url: '/followers/page/'+(i+1),
+         url: '/tumblelog/' + acct + '/followers/page/'+(i+1),
          dataType: "html",
          tryCount: 0,
          retryLimit: retries,
@@ -226,15 +226,25 @@ function tu_init(extensionURL, retries) {
                     '<img class="logo" src="' + extensionURL +
                     'Icon-64.png' + '" /></div>');
 
-   var fl = jQuery('#right_column').find('a[href$="/followers"]');
+   var acct = location.href.match(/\/tumblelog\/([^\/]*)/);
+   if (!acct || acct.length <= 1) {
+      acct = jQuery('#user_channels li.tab:first a').attr('href').match(/\/tumblelog\/([^\/]*)/);
+   }
+   if (acct && acct.length > 1) {
+      acct = acct[1];
+   }
+   else {
+      return;
+   }
+   var fl = jQuery('#right_column').find('a.followers .count');
    var lastFollows = localStorage.getItem('MissingE_unfollower_names');
    if (lastFollows === undefined || lastFollows === null ||
        lastFollows === "") {
-      followers = fl.html().match(/([0-9][0-9,\.]*)/);
+      followers = fl.text().match(/^([0-9][0-9,\.]*)/);
       if (followers !== undefined && followers !== null &&
           followers.length >= 2) {
          doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false,
-               extensionURL, retries);
+               extensionURL, retries, acct);
       }
    }
 
@@ -245,18 +255,18 @@ function tu_init(extensionURL, retries) {
    if (fw.size()>0) {
       fw.before(deltxt);
    }
-   else {
-      fl.parent().append(' ' + deltxt);
+   else if (fl.length >= 1) {
+      fl.append(deltxt);
    }
    jQuery('#MissingE_unfollowdelta').click(function() {
-      followers = jQuery(this).parent().children("a:first").html()
-                        .match(/([0-9][0-9,\.]*)/);
+      followers = jQuery(this).parent().text()
+                        .match(/^([0-9][0-9,\.]*)/);
       if (followers === undefined || followers === null ||
           followers.length < 2) {
          return false;
       }
       doGet(followers[1].replace(/,/g,"").replace(/\./g,""), true,
-            extensionURL, retries);
+            extensionURL, retries, acct);
    });
 }
 

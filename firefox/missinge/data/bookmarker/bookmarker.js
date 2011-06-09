@@ -50,13 +50,11 @@ function parseMarks(s) {
 
 function getMarkText(dt, post, name) {
    var pid = Number(post)+1;
-   return '<li id="mark_' + post + '">' +
-            '<a class="MissingE_bookmarker_marklink" href="/dashboard/1000/' +
-            pid + '?lite" post="' + post +
-            '"><span class="icon dashboard_controls_bookmark"></span>' +
-            '<span class="mark_date" timestamp="' + dt + '">' + name +
-            '</span></a> <a id="unmark_' + post +
-            '" class="MissingE_unmarker tracked_tag_control" ' +
+   return '<li post="' + post + '"><a href="/dashboard/1000/' + pid +
+            '?lite" post="' + post + '" class="MissingE_bookmarker_marklink">' +
+            '<div class="hide_overflow"><span class="mark_date" timestamp="' +
+            dt + '">' + name + '</span></div></a>' +
+            '<a id="unmark_' + post + '" class="MissingE_unmarker" ' +
             'onclick="return false;" href="#">x</a></li>';
 }
 
@@ -66,11 +64,12 @@ function generateList() {
    var marklist = jQuery('#MissingE_marklist');
    if (marks.length === 0) {
       jQuery('#posts a.MissingE_ismarked').removeClass("MissingE_ismarked");
-      marklist.empty().parent().hide();
+      marklist.hide();
+      marklist.find('li[post]').remove();
       return true;
    }
-   marklist.parent().show();
-   var markitems = marklist.find('li');
+   marklist.show();
+   var markitems = marklist.find('li[post]');
    if (markitems.length > 0) {
       var idx = 0;
       markitems.each(function(i) {
@@ -78,7 +77,7 @@ function generateList() {
             return;
          }
          var cd = jQuery(this).find('span.mark_date').attr("timestamp");
-         var post = jQuery(this).attr('id').match(/[0-9]*$/)[0];
+         var post = jQuery(this).attr('post').match(/[0-9]*$/)[0];
          if (idx >= marks.length) {
             jQuery('#bookmark_' + post)
                .removeClass("MissingE_ismarked");
@@ -224,7 +223,7 @@ function doMarks(item) {
 
 function handleEdit(type, evt) {
    var end = false;
-   var par = jQuery(evt.target).siblings('a.MissingE_bookmarker_marklink');
+   var par = jQuery(evt.target).closest('li');
    if (type === 'keyup' && evt.keyCode === 27) { end = true; }
    else if ((type === 'keyup' && evt.keyCode === 13) ||
             type === 'focusout') {
@@ -247,36 +246,37 @@ function handleEdit(type, evt) {
       }
    }
    if (end) {
-      par.removeData('editmode').find('span.mark_date').show();
-      par.siblings('.MissingE_unmarker')
+      par.removeData('editmode').find('span.mark_date').css('visibility','visible');
+      par.find('.MissingE_unmarker')
            .removeClass('MissingE_bookmarker_forceHide');
       jQuery(evt.target).remove();
-      par.siblings('#MissingE_bookmark_confirmedit').remove();
+      par.find('#MissingE_bookmark_confirmedit').remove();
    }
 }
-
 jQuery('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
                                                            function(e) {
-   if (jQuery(this).data('editmode') === "EDIT") { e.preventDefault(); }
+   if (jQuery(this).closest('li').data('editmode') === "EDIT") {
+      e.preventDefault();
+   }
    if (e.shiftKey) {
-      jQuery(this).data('editmode','EDIT');
+      jQuery(this).closest('li').data('editmode','EDIT');
       var title = jQuery(this).find('span.mark_date');
       var ds = title.text();
-      var inp = jQuery('<input name="MissingE_bookmarker_edit" type="text" ' +
-                  'size="10" value="' + ds +
-                  '" id="MissingE_bookmarker_edit">');
+      var inp = jQuery('<input name="MissingE_bookmarker_edit" ' +
+                       'type="text" size="10" value="' + ds +
+                        '" id="MissingE_bookmarker_edit">');
       inp.blur(function(e) { handleEdit('focusout',e); })
             .keyup(function(e) { handleEdit('keyup',e); });
-      title.parent().after(inp);
-
-      inp.after('<a id="MissingE_bookmark_confirmedit" ' +
-                    'class="tracked_tag_control" onclick="return false;" ' +
-                    'style="display:inline;" href="#">&#10004;</a>');
+      title.closest('li').append(inp);
+      var check = jQuery('<a id="MissingE_bookmark_confirmedit" ' +
+                    'onclick="return false;" style="display:inline;" ' +
+                    'href="#"></a>').html('&#10004;').insertAfter(this);
+      check.click(function(e) { inp.get(0).blur(); });
       inp.get(0).focus();
-      title.hide();
+      title.css('visibility','hidden');
       jQuery(this).siblings('.MissingE_unmarker')
                .addClass('MissingE_bookmarker_forceHide');
-   return false;
+      return false;
    }
 });
 
@@ -327,11 +327,8 @@ self.on('message', function (message) {
                     extensionURL + 'bookmarker/bookmarker.css" />');
    var st = document.createElement('style');
    st.setAttribute('type','text/css');
-   st.innerHTML = '#right_column .dashboard_nav_item ' +
-                  'ul.dashboard_subpages li a ' +
-                  '.icon.dashboard_controls_bookmark { ' +
+   st.innerHTML = '#MissingE_marklist .MissingE_bookmarker_marklink { ' +
                   'background-image:url("' + bmi + '") !important; } ' +
-                  '#MissingE_marklist a:active { color:#C4CDD6 !important; } ' +
                   'a.MissingE_mark { background-image:url("' + mimg + '"); }';
    document.getElementsByTagName('head')[0].appendChild(st);
 
@@ -349,38 +346,39 @@ self.on('message', function (message) {
       }
 
       var lang = jQuery('html').attr('lang');
-      var list = jQuery('<div class="dashboard_nav_item" ' +
-                   'style="padding-left:0;position:relative;">' +
-                   '<div class="dashboard_nav_title">' +
-                   locale[lang]["bookmarksTitle"] +
-                   '</div><ul id="MissingE_marklist" ' +
-                   'class="dashboard_subpages"></ul></div>');
+      var list = jQuery('<ul id="MissingE_marklist" ' +
+                        'class="right_column_section">' +
+                        '<li class="MissingE_marklist_title recessed">' +
+                        '<a href="#" onclick="return false;">' +
+                        locale[lang]["bookmarksTitle"] + '</a></li></ul>');
       jQuery(function() {
          jQuery('#MissingE_marklist').sortable({
+            items:"li[post]",
             cursor:'move',
             axis:'y',
             opacity:0.6,
             revert:true,
             start:function(e,ui){
                jQuery(this).data('position',
-                                 jQuery('#MissingE_marklist li').index(ui.item));
+                                 jQuery('#MissingE_marklist li[post]').index(ui.item));
             },
             update:function(e,ui){
                var oldp = jQuery(this).data('position');
-               var newp = jQuery('#MissingE_marklist li').index(ui.item);
+               var newp = jQuery('#MissingE_marklist li[post]').index(ui.item);
                doMove(oldp,newp);
             }
          });
-         jQuery('#MissingE_marklist').disableSelection();
+         jQuery('#MissingE_marklist li').disableSelection();
       });
-      var pos = jQuery("#dashboard_controls_radar_buttons");
+      var pos = jQuery("#right_column .radar");
       if (pos.length > 0) {
-         pos.parent().before(list);
+         pos.before(list);
       }
       else {
          jQuery("#right_column").append(list);
       }
-      list.click(marklistClick);
+      jQuery('#MissingE_marklist .MissingE_unmarker').live('click',
+                                                           marklistClick);
       generateList();
    }
 

@@ -21,6 +21,10 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#right_column {
+margin-right:-235px;
+}
+
 #container {
 width:auto !important;
 min-width:900px;
@@ -34,12 +38,25 @@ padding-right:255px !important;
 width:100% !important;
 }
 
-#right_column {
+#pagination {
 margin-right:-235px;
 }
 
-#pagination {
-margin-right:-235px;
+#container #header {
+width:100% !important;
+}
+
+#header #tabs_outter_container {
+left:auto !important;
+right:15px !important;
+}
+
+#posts li.notification {
+width:auto !important;
+}
+
+#posts li.notification .hide_overflow {
+max-width:none !important;
 }
 
 li.new_post, #rescued_post {

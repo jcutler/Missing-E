@@ -799,6 +799,38 @@ function handleMessage(message, myWorker) {
                            data.url("common/localizations.js")];
       activeScripts.extensionURL = data.url("");
       if (!message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
+               .test(message.url)) {
+         if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
+            injectScripts.push(data.url("safeDash/safeDash.js"));
+            activeScripts.safeDash = true;
+         }
+         else
+            activeScripts.safeDash = false;
+
+         if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
+            injectScripts.push(data.url("common/jquery-ui.min.js"));
+            injectScripts.push(data.url("bookmarker/bookmarker.js"));
+            activeScripts.bookmarker = true;
+         }
+         else
+            activeScripts.bookmarker = false;
+
+         if (getStorage("extensions.MissingE.unfollower.enabled",1) == 1) {
+            injectScripts.push(data.url("unfollower/unfollower.js"));
+            activeScripts.unfollower = true;
+         }
+         else
+            activeScripts.unfollower = false;
+
+         if (getStorage("extensions.MissingE.followChecker.enabled",1) == 1) {
+            injectScripts.push(data.url("followChecker/followChecker.js"));
+            activeScripts.followChecker = true;
+         }
+         else
+            activeScripts.followChecker = false;
+      }
+      if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||

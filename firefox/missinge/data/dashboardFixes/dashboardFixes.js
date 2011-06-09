@@ -231,7 +231,9 @@ self.on('message', function(message) {
    if (data !== '') {
       head.appendChild(css);
    }
-   if (message.widescreen === 1) {
+   if (message.widescreen === 1 &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
+            .test(location.href))) {
       var style = document.createElement("link");
       style.setAttribute('rel','stylesheet');
       style.setAttribute('type','text/css');
