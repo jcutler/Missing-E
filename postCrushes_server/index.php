@@ -21,9 +21,8 @@ for ($i=0; $i<9; $i++) {
 }
 
 for ($i=0; $i<9; $i++) {
-
    if (preg_match('/\.png$/i',$crushes[$i]) == 1 &&
-       ord(file_get_contents($crushes[$i], NULL, NULL, 25, 1)) == 4) {
+       ord(substr(file_get_contents($crushes[$i], NULL, NULL, 0, 26),25)) == 4) {
       //GD can't handle grayscale+alpha, so I'll cheat
       $url = 'http://tools.dynamicdrive.com/imageoptimizer/index.php';
       $fields = array(
@@ -64,7 +63,7 @@ for ($i=0; $i<9; $i++) {
 
    $cimg[$i] = imagecreatetruecolor($avCrop,$avCrop);
    imagecopyresampled($cimg[$i],$tmp,0,0,($avSize-$avCrop)/2,($avSize-$avCrop)/2,$avCrop,$avCrop,$avCrop,$avCrop);
-   imagecopymergegray($cimg[$i],$tmp,0,0,($avSize-$avCrop)/2,($avSize-$avCrop)/2,$avCrop,$avCrop,100);
+   //imagecopymergegray($cimg[$i],$tmp,0,0,($avSize-$avCrop)/2,($avSize-$avCrop)/2,$avCrop,$avCrop,100);
    imagedestroy($tmp);
 }
 
