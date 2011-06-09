@@ -245,7 +245,6 @@ self.on('message', function(message) {
                        '#content .tag_page_header { padding-right:' +
                          (w+40) + 'px; }</style>');
       jQuery('#content').css('padding-right', (w+20) + 'px');
-      jQuery('#right_column').css('margin-right', '-'+w+'px');
       document.addEventListener('DOMNodeInserted', function(e) {
          jQuery(e.target).children('div.reply_pane:first')
                .each(function() {

@@ -213,7 +213,6 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
                        '#content .tag_page_header { padding-right:' +
                          (w+40) + 'px; }</style>');
       $('#content').css('padding-right', (w+20) + 'px');
-      $('#right_column').css('margin-right', '-'+w+'px');
       document.addEventListener('DOMNodeInserted', function(e) {
          $(e.target).children('div.reply_pane:first')
                .each(function() {

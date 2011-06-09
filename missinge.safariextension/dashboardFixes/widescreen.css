@@ -22,7 +22,9 @@
 */
 
 #right_column {
-margin-right:-235px;
+position:absolute;
+right:20px;
+top:20px;
 }
 
 #container {
@@ -31,6 +33,7 @@ min-width:900px;
 }
 
 #content {
+position:relative;
 padding-right:255px !important;
 }
 
