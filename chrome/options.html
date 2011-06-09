@@ -538,9 +538,20 @@ vertical-align:top !important;
 float:right;
 font-style:italic;
 }
+
+.stamp_sample {
+font-size:13px;
+}
+
+.stamp_label {
+font-style:italic;
+font-size:11px;
+margin-top:5px;
+}
 </style>
 <script type="text/javascript" src="common/jquery.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
+<script type="text/javascript" src="common/utils.js"></script>
 <link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css" />
 <script type="text/javascript" src="facebox/facebox.js"></script>
 <link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css" />
@@ -647,6 +658,12 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
          setStorage(obj.name, (obj.value));
       }
    }
+   if (obj.name === 'MissingE_bookmarker_format') {
+      $('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', obj.value));
+   }
+   else if (obj.name === 'MissingE_timestamps_format') {
+      $('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), obj.value));
+   }
 }
 
 function loadCheck(f, i, def) {
@@ -693,11 +710,15 @@ function loadSettings() {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
       }
       else if (v == "bookmarker") {
-         frm.MissingE_bookmarker_format.value = getStorage('MissingE_bookmarker_format',defaultFormat);
+         var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
+         frm.MissingE_bookmarker_format.value = bmFormat;
+         $('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
       }
       else if (v == "timestamps") {
          frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
-         frm.MissingE_timestamps_format.value = getStorage('MissingE_timestamps_format',defaultFormat);
+         var tsFormat = getStorage('MissingE_timestamps_format',defaultFormat);
+         frm.MissingE_timestamps_format.value = tsFormat;
+         $('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), tsFormat));
       }
       else if (v == "postCrushes") {
          if (getStorage('MissingE_postCrushes_crushSize',1) == 1)
@@ -961,7 +982,7 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <table class="options_table">
 <tr><td colspan="2" class="odd">Default bookmark label<br />
 <table class="subnotes"><tr><td class="label">%u</td><td class="desc">Poster's username</td></tr><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
-</td><td colspan="2" class="odd" style="vertical-align:top;"><input type="text" name="MissingE_bookmarker_format" style="width:200px;" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /></td></tr>
+</td><td colspan="2" class="odd" style="vertical-align:top;"><input type="text" name="MissingE_bookmarker_format" style="width:200px;" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><div class="stamp_label">Sample:</div><div class="stamp_sample" id="MissingE_bookmarker_format_sample"></div></td></tr>
 </table>
 </form>
 </div>
@@ -1031,7 +1052,7 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <tr><td colspan="2" class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" size="1" type="text" name="MissingE_timestamps_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Timestamp format<br />
 <table class="subnotes"><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
-</td><td colspan="2" class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" style="width:200px;" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /></td></tr></table>
+</td><td colspan="2" class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" style="width:200px;" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><div class="stamp_label">Sample:</div><div class="stamp_sample" id="MissingE_timestamps_format_sample"></div></td></tr></table>
 </form>
 </div>
 <div class="clear"></div>

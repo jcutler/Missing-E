@@ -157,6 +157,7 @@ function openSettings() {
          tab.attach({
             contentScriptFile: [data.url("common/jquery.min.js"),
                                 data.url("common/defs.js"),
+                                data.url("common/utils.js"),
                                 data.url("checkbox/jquery.checkbox.min.js"),
                                 data.url("facebox/facebox.js"),
                                 data.url("jquery-spin/jquery-spin.js"),
