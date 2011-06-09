@@ -462,8 +462,8 @@ function tfc_init(retries) {
             else {
                failed = true;
                $('#MissingE_followwhodisplay .followwholist')
-                  .html('<p><em>Having trouble getting list of who you ' +
-                        'follow from Tumblr\'s servers, please try again ' +
+                  .html('<p><em>Having trouble getting your follower count ' +
+                        'from Tumblr\'s servers, please try again ' +
                         'later.</em></p><img style="margin:20px 0;" src="' +
                         chrome.extension.getURL('images/oh_dear.png') +
                         '" /><div><em>Artwork by ' +
@@ -485,8 +485,8 @@ function tfc_init(retries) {
                }
                else {
                   $('#MissingE_followwhodisplay .followwholist')
-                     .html('<p><em>Having trouble getting list of who you ' +
-                           'follow from Tumblr\'s servers, please try again ' +
+                     .html('<p><em>Having trouble getting your follower ' +
+                           'count from Tumblr\'s servers, please try again ' +
                            'later.</em></p><img style="margin:20px 0;" src="' +
                            chrome.extension.getURL('images/oh_dear.png') +
                            '" /><div><em>Artwork by ' +
