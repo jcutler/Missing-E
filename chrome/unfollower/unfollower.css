@@ -28,6 +28,7 @@ padding:0 !important;
 color:inherit !important;
 font-size:inherit !important;
 display:none !important;
+margin-left:2px !important;
 }
 
 li.selected #MissingE_unfollowdelta {

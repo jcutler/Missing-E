@@ -250,7 +250,7 @@ function tu_init(retries) {
    var lastFollows = localStorage.getItem('MissingE_unfollower_names');
    if (lastFollows === undefined || lastFollows === null ||
        lastFollows === "") {
-      followers = fl.text().match(/([0-9][0-9,\.]*)/);
+      followers = fl.text().match(/^([0-9][0-9,\.]*)/);
       if (followers !== undefined && followers !== null &&
           followers.length >= 2) {
          doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false, retries, acct);
@@ -265,11 +265,11 @@ function tu_init(retries) {
       fw.before(deltxt);
    }
    else if (fl.length >= 1) {
-      fl.append(' ' + deltxt);
+      fl.append(deltxt);
    }
    $('#MissingE_unfollowdelta').click(function() {
       followers = $(this).parent().text()
-                        .match(/([0-9][0-9,\.]*)/);
+                        .match(/^([0-9][0-9,\.]*)/);
       if (followers === undefined || followers === null ||
           followers.length < 2) {
          return false;
