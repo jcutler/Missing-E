@@ -270,7 +270,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             img = img.replace(/^\s*/,'').replace(/\s*$/,'')
                   .replace(/\s+/g,' ').replace(/&nbsp;$/,'');
             user = user.replace(/^\s*/,'').replace(/\s*$/,'')
-                  .replace(/\s+/g,' ');
+                  .replace(/\s+/g,' ').replace(/\stitle="[^"]*"/,'');
             qt = qt.replace(/^\s*/,'').replace(/\s*$/,'')
                   .replace(/\s+/g,' ');
             chk = qt.match(/<a href="([^"]*)/);
@@ -355,6 +355,14 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                newcode += '<blockquote>' + anstxt + '</blockquote>';
             }
             newcode = newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
+         }
+         else {
+            newcode = newcode.replace(/src="http:\/\/media\.tumblr\.com\/avatar_([a-zA-Z0-9]+)_40\.([a-z]+)"/g, "src=\"http://media.tumblr.com/avatar_$1_" + size + ".$2\"");
+            newcode = newcode.replace(/<div class="nipple[^>]*>/g,'')
+                             .replace(/<\/div[^>]*>/g,'')
+                             .replace(/<div class="hide_overflow">\s*/g,
+                                      '<strong>')
+                             .replace(/<em/g,'</strong><em');
          }
          newcode = newcode.replace(/style="\s*height:[^;]*;\s*/g,'style="')
                           .replace(/style="\s*width:[^;]*;\s*/g,'style="')
