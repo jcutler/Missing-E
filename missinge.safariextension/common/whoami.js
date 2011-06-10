@@ -197,6 +197,7 @@ function settings_startup(response) {
                                         response.message.reblogReplies,
                                         response.message.widescreen,
                                         response.message.queueArrows,
+                                        response.message.expandAll,
                                         response.message.followingLink);
    }
    else if (response.message.component === "betterReblogs") {

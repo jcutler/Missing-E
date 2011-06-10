@@ -190,6 +190,24 @@ function addQueueArrows(item) {
 ****/
 }
 
+function addExpandAllHandler(item) {
+   var post = jQuery(item);
+   if (item.tagName !== 'LI' || !post.hasClass('post')) {
+      return false;
+   }
+   post.find('.inline_image').click(function() {
+      if (!jQuery(this).hasClass('exp_inline_image')) {
+         jQuery(this).closest('.post').find('.inline_image')
+            .addClass('exp_inline_image').removeClass('inline_image');
+         jQuery(this).addClass('exp_inline_image').removeClass('inline_image');
+      }
+      else {
+         jQuery(this).closest('.post').find('.exp_inline_image')
+            .addClass('inline_image').removeClass('exp_inline_image');
+      }
+   });
+}
+
 self.on('message', function(message) {
    if (message.greeting !== "settings" ||
        message.component !== "dashboardFixes") {
@@ -230,6 +248,12 @@ self.on('message', function(message) {
    head = document.getElementsByTagName("head")[0];
    if (data !== '') {
       head.appendChild(css);
+   }
+   if (message.expandAll === 1) {
+      jQuery('#posts .post').each(function(){ addExpandAllHandler(this); });
+      document.addEventListener('DOMNodeInserted', function(e) {
+         addExpandAllHandler(e.target);
+      }, false);
    }
    if (message.widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/

@@ -278,6 +278,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
+         loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
          loadCheck(frm,'MissingE_dashboardFixes_followingLink',0);
       }
       else if (v == "betterReblogs") {
