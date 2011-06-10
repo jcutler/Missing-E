@@ -696,6 +696,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var activeScripts = {};
       var zindexFix = false;
       if (sender.tab.url == request.url &&
+          /http:\/\/www\.tumblr\.com\/mega-editor\//.test(sender.tab.url)) {
+         activeScripts.massEditor = true;
+         chrome.tabs.insertCSS(sender.tab.id, {file: "massEditor/massEditor.css"});
+         chrome.tabs.executeScript(sender.tab.id, {file: "massEditor/massEditor.js"});
+      }
+      if (sender.tab.url == request.url &&
           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
               .test(sender.tab.url)) {
          if (getStorage("MissingE_safeDash_enabled",1) == 1) {

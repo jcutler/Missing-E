@@ -24,6 +24,7 @@ var locale = {
       ],
       tagsText: "Tags",
       twitterText: "Send to Twitter",
+      askPost: "Ask",
       postTypeNames: {
          text: "Text",
          photo: "Photo",
@@ -109,6 +110,7 @@ var locale = {
       ],
       tagsText: "Tags",
       twitterText: "auf Twitter posten",
+      askPost: "Ask",
       postTypeNames: {
          text: "Text",
          photo: "Foto",
@@ -194,6 +196,7 @@ var locale = {
       ],
       tagsText: "Tags",
       twitterText: "Publier sur Twitter",
+      askPost: "Ask",
       postTypeNames: {
          text: "Texte",
          photo: "Photo",
@@ -279,6 +282,7 @@ var locale = {
       ],
       tagsText: "Tag",
       twitterText: "Invia a Twitter",
+      askPost: "Ask",
       postTypeNames: {
          text: "Testo",
          photo: "Foto",
@@ -364,6 +368,7 @@ var locale = {
       ],
       tagsText: "タグ",
       twitterText: "投稿をTwitterにも送信",
+      askPost: "Ask",
       postTypeNames: {
          text: "テキスト",
          photo: "画像",
@@ -449,6 +454,7 @@ var locale = {
       ],
       tagsText: "Etiketler",
       twitterText: "Twitter'a gönder",
+      askPost: "Ask",
       postTypeNames: {
          text: "Metin",
          photo: "Fotoğraf",
