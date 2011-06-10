@@ -392,9 +392,9 @@ function doshow(component) {
    }
 }
 
-$('#unfollower_ignore_btn').live('click', function() {
-   if ($('#ignoreDiv').length === 0) {
-      $('body').append('<div id="ignoreDiv"></div>');
+jQuery('#unfollower_ignore_btn').live('click', function() {
+   if (jQuery('#ignoreDiv').length === 0) {
+      jQuery('body').append('<div id="ignoreDiv"></div>');
    }
    var i;
    var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
@@ -411,13 +411,13 @@ $('#unfollower_ignore_btn').live('click', function() {
    igtext += '<tr><td class="bottomrow" colspan="2"><button type="button" ' +
                'class="addignore"><span>Add Ignore...</span></button>' +
                '</td></tr></table>';
-   $('#ignoreDiv').html(igtext);
-   $.facebox({ div: '#ignoreDiv' }, 'ignorelist');
+   jQuery('#ignoreDiv').html(igtext);
+   jQuery.facebox({ div: '#ignoreDiv' }, 'ignorelist');
 });
 
 jQuery('#facebox button').live('click', function() {
    if (this.className === 'remignore') {
-      var acct = $(this).attr('acct');
+      var acct = jQuery(this).attr('acct');
       var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
       var idx = jQuery.inArray(acct, list);
       if (idx >= 0) {
