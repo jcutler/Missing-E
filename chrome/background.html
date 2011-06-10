@@ -22,7 +22,7 @@
 -->
 <html>
 <head>
-<script type="text/javascript" src="common/jquery-1.5.min.js"></script>
+<script type="text/javascript" src="common/jquery.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
 <script type="text/javascript" src="common/utils.js"></script>
 <script type="text/javascript" src="common/storage.js"></script>
@@ -239,8 +239,7 @@ function startAjax(id) {
    activeRequests[id] = [];
 }
 
-function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc,
-                   additional) {
+function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
    debug("AJAX " + type + " request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {success:false};
@@ -325,6 +324,7 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc,
                debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
+               return;
             }
             var m = txt.match(/([A-Za-z]+) ([0-9]+)[^,]*, ([0-9]+) ([0-9]+):([0-9]+)([aApP][mM])/);
             var d = new Date(m[1] + ' ' + m[2] + ', ' + m[3] + ' ' +
@@ -563,6 +563,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "close-followChecker") {
       closeTab(chrome.extension.getURL('followChecker/followChecker.html'));
    }
+   else if (request.greeting == "unfollowerIgnore") {
+      localStorage.setItem('MissingE_unfollower_ignore', request.list);
+   }
    else if (request.greeting == "followChecker") {
       followYou = request.followYou;
       youFollow = request.youFollow;
@@ -624,7 +627,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
             settings.defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
             if (settings.defaultTags !== '') {
-               settings.defaultTags = settings.defaultTags.replace(/, /,',').split(',');
+               settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
             break;
          case "bookmarker":
@@ -638,6 +641,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
+            settings.followingLink = getStorage("MissingE_dashboardFixes_followingLink",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
@@ -662,8 +666,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
             settings.addUploader = getStorage("MissingE_postingFixes_addUploader",1);
             settings.quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
+            settings.blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
             break;
          case "unfollower":
+            settings.ignore = getStorage("MissingE_unfollower_ignore",'');
          case "followChecker":
             settings.retries = getStorage("MissingE_" + request.component + "_retries",defaultRetries);
             break;
@@ -682,12 +688,55 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "start") {
       addTab(sender.tab.id, sender.tab.url);
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-1.5.min.js"});
+      chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery.min.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
       chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
       var activeScripts = {};
       var zindexFix = false;
+      if (sender.tab.url == request.url &&
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
+              .test(sender.tab.url)) {
+         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
+            activeScripts.safeDash = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "safeDash/safeDash.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});
+         }
+         else
+            activeScripts.safeDash = false;
+
+         if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
+            activeScripts.bookmarker = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "bookmarker/bookmarker.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "bookmarker/bookmarker.js"});
+         }
+         else
+            activeScripts.bookmarker = false;
+
+         if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
+             getStorage("MissingE_followChecker_enabled",1) == 1) {
+            zindexFix = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
+         }
+
+         if (getStorage("MissingE_unfollower_enabled",1) == 1) {
+            activeScripts.unfollower = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "unfollower/unfollower.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "unfollower/unfollower.js"});
+         }
+         else
+            activeScripts.unfollower = false;
+
+         if (getStorage("MissingE_followChecker_enabled",1) == 1) {
+            activeScripts.followChecker = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "followChecker/followChecker.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "followChecker/followChecker.js"});
+         }
+         else
+            activeScripts.followChecker = false;
+      }
       if (sender.tab.url == request.url &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
@@ -720,6 +769,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "bookmarker/bookmarker.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
             chrome.tabs.executeScript(sender.tab.id, {file: "bookmarker/bookmarker.js"});
          }
          else
@@ -727,7 +777,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
              getStorage("MissingE_followChecker_enabled",1) == 1 ||
-             getStorage("MissingE_magnifier_enabled",1)) {
+             getStorage("MissingE_magnifier_enabled",1) == 1) {
             zindexFix = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
@@ -760,7 +810,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/wrapTags.css"});
             if (getStorage("MissingE_dashboardFixes_postLinks",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/postLinks.css"});
-            if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1)
+            if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1 &&
+                !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/.test(sender.tab.url)))
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});
          }
          else

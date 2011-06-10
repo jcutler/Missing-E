@@ -46,3 +46,18 @@ display:none;
 visibility:visible;
 display:block;
 }
+
+#post_controls #extra_channel {
+width:145px;
+margin-left:15px;
+font:14px Arial,Helvetica !important;
+color:#666 !important;
+padding:5px;
+height:36px !important;
+line-height:30px !important;
+vertical-align:top;
+border-radius:5px;
+border:1px solid #DDD !important;
+border-top:1px solid #CCC !important;
+border-bottom:1px solid #CCC !important;
+}

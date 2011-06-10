@@ -231,7 +231,9 @@ self.on('message', function(message) {
    if (data !== '') {
       head.appendChild(css);
    }
-   if (message.widescreen === 1) {
+   if (message.widescreen === 1 &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
+            .test(location.href))) {
       var style = document.createElement("link");
       style.setAttribute('rel','stylesheet');
       style.setAttribute('type','text/css');
@@ -243,8 +245,13 @@ self.on('message', function(message) {
                        '#content .tag_page_header { padding-right:' +
                          (w+40) + 'px; }</style>');
       jQuery('#content').css('padding-right', (w+20) + 'px');
-      jQuery('#right_column').css('margin-right', '-'+w+'px');
+      jQuery('#left_column').css('min-height',
+                                 jQuery('#right_column').height() + 'px');
       document.addEventListener('DOMNodeInserted', function(e) {
+         if (jQuery(e.target).closest('#right_column').length > 0) {
+            jQuery('#left_column').css('min-height',
+                                       jQuery('#right_column').height() + 'px');
+         }
          jQuery(e.target).children('div.reply_pane:first')
                .each(function() {
             realignReplyNipple(jQuery(this).find('div.nipple'));
@@ -373,6 +380,10 @@ self.on('message', function(message) {
          if (this.id === "new_post") { return true; }
          doIcons(this);
       });
+   }
+
+   if (message.followingLink === 1) {
+      jQuery('#right_column a.following').attr('href','/following');
    }
 
    if (message.timeoutAJAX === 1) {

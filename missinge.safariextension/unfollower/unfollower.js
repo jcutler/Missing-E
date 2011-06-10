@@ -26,6 +26,7 @@
 var text;
 var done;
 var failed = false;
+var ignoreList;
 
 function parseNames(st) {
    if (st === undefined || st === null || st.length === 0) {
@@ -35,14 +36,15 @@ function parseNames(st) {
 }
 
 function serializeNames(arr) {
+   if (!arr) { return ''; }
    return arr.sort().join(',');
 }
 
-function doFinish(newlist,show) {
+function doFinish(newlist,show,acct) {
    var unfollows = [];
    var c, i;
-   var currlist = parseNames(localStorage.getItem('MissingE_unfollower_names'));
-   localStorage.setItem('MissingE_unfollower_names',serializeNames(newlist));
+   var currlist = parseNames(localStorage.getItem('MissingE_unfollower_' + acct));
+   localStorage.setItem('MissingE_unfollower_' + acct,serializeNames(newlist));
    if (!show) { return true; }
    var n=0;
    var a = currlist;
@@ -91,7 +93,7 @@ function doFinish(newlist,show) {
    unfollows = [];
 }
 
-function doDisplay(start,show) {
+function doDisplay(start,show,acct) {
    var fin = true;
    var i, j;
    for (i=start; i<done.length; i++) {
@@ -104,12 +106,12 @@ function doDisplay(start,show) {
       done = [];
       var names = [];
       for (i=0; i<text.length; i++) {
-         var raw = text[i].match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
+         var raw = text[i].match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*"><div class="hide_overflow">[0-9a-zA-Z\-\_]+<\/div><\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }
          for (j=0; j<raw.length; j++) {
-            names.push(raw[j].match(/>([0-9A-Za-z\-\_]*)<\/a>/)[1]);
+            names.push(raw[j].match(/>([0-9A-Za-z\-\_]*)<\/div><\/a>/)[1]);
          }
       }
       text = [];
@@ -119,19 +121,59 @@ function doDisplay(start,show) {
             names.splice(i+1,1);
          }
       }
-      doFinish(names,show);
+      doFinish(names,show,acct);
    }
    else {
       if (!failed) {
-         window.setTimeout(function(){doDisplay(i,show);}, 500);
+         window.setTimeout(function(){doDisplay(i,show,acct);}, 500);
       }
    }
 }
 
-function doGet(num, show, retries) {
+function doChooser(acct) {
+   var i;
+   var chtext = '<p style="margin-top:5px;"><strong>' + acct +
+            '</strong> is not being tracked!<br />Was this account renamed?</p>' +
+            '<form id="unfollower_chooser_form">' +
+            '<table id="unfollower_chooser_table" border="0">' +
+            '<tr><th colspan="2"><em>Active Tracked Accounts</em>' +
+            '</tr>';
+   var listed = parseNames(localStorage.getItem('MissingE_unfollower_lists'));
+   for (i=0; i<listed.length; i++) {
+      var num = parseNames(localStorage.getItem('MissingE_unfollower_' +
+                                                listed[i])).length;
+      var klass = (i%2===1 ? 'greyrow' : '');
+      klass += (i===listed.length-1 ? ' uctlast ' : '');
+      chtext += '<tr><td class="uname ' + klass + '">' + listed[i] +
+         ' <em>(' + num + ')</em></td><td user="' + listed[i] + '" class="' +
+         klass + '"><button type="button" class="rn_btn" account="' + acct +
+         '" value="Rename"><span>Rename</span></button>' +
+         '<button type="button" class="del_btn" account="' + acct +
+         'value="Delete"><span>Delete</span></button></td></tr>';
+   }
+   if (listed.length === 0) {
+      chtext += '<tr><td colspan="2" class="uctlast"></td></tr>';
+   }
+   chtext += '</table><div class="newacct"><button type="button" ' +
+               'class="new_btn" account="' + acct + '" value="New Account">' +
+               '<span>New Account</span></button>' +
+               '<button type="button" class="ignore_btn" account="' + acct +
+               '" value="Ignore"><span>Ignore</span></button></div></form>';
+
+   $('#MissingE_unfollowdisplay .unfollowerlist').html(chtext);
+   $.facebox({ div: '#MissingE_unfollowdisplay' }, 'unfollowrbox');
+}
+
+function doGet(num, show, retries, acct) {
    var i;
    failed = false;
 
+   var followLists = localStorage.getItem('MissingE_unfollower_lists');
+   var ure = new RegExp('(^|,)' + acct + '($|,)');
+   if (!ure.test(followLists)) {
+      doChooser(acct);
+      return;
+   }
    if (show) {
       $('#MissingE_unfollowdisplay .unfollowerlist')
          .html('<p><img src="' + safari.extension.baseURI +
@@ -149,7 +191,7 @@ function doGet(num, show, retries) {
    for (i=0; i<pages; i++) {
       $.ajax({
          type: "GET",
-         url: '/followers/page/'+(i+1),
+         url: '/tumblelog/' + acct + '/followers/page/'+(i+1),
          dataType: "html",
          tryCount: 0,
          retryLimit: retries,
@@ -213,10 +255,119 @@ function doGet(num, show, retries) {
       });
    }
 
-   doDisplay(0,show);
+   doDisplay(0,show,acct);
+}
+
+function getCountAndDoSilent(acct, retries) {
+   $.ajax({
+      type: "GET",
+      url: '/tumblelog/' + acct + '/followers',
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      account: acct,
+      error: function(xhr, textStatus) {
+         this.tryCount++;
+         if (this.tryCount <= this.retryLimit) {
+            $.ajax(this);
+            return;
+         }
+      },
+      success: function(data, textStatus) {
+         if (!(/id="dashboard_followers"/.test(data))) {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               $.ajax(this);
+               return;
+            }
+            return true;
+         }
+         var followers = data.match(/href="\/tumblelog\/[^\/]+\/followers"[^>]*>\s*<div[^>]*>[^<]*<\/div>\s*<span\s+class="count">([0-9][0-9,\.]*)<\/span>/m);
+         if (followers && followers.length > 1) {
+            doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false,
+                  this.retryLimit, this.account);
+         }
+      }
+   });
 }
 
 function tu_init(retries) {
+   $('#unfollower_chooser_form button').live('click', function() {
+      var acct = $(this).attr('account');
+      switch(this.className) {
+         case 'rn_btn': {
+            var old = $(this).parent().attr('user');
+            var followerLists = parseNames(localStorage
+                                           .getItem('MissingE_unfollower_lists'));
+            var idx = $.inArray(old,followerLists);
+            if (idx >= 0) {
+               var r = confirm('Replace "' + old + '" account with "' + acct + '"?');
+               if (r) {
+                  followerLists[idx] = acct;
+                  localStorage.setItem('MissingE_unfollower_lists',
+                                       serializeNames(followerLists));
+                  var followers = localStorage.getItem('MissingE_unfollower_' + old);
+                  localStorage.removeItem('MissingE_unfollower_' + old);
+                  localStorage.setItem('MissingE_unfollower_' + acct, followers);
+                  $.facebox.close();
+               }
+            }
+            else {   
+               $.facebox.close();
+            }
+            break;
+         }
+         case 'del_btn': {
+            var old = $(this).parent().attr('user');
+            var r = confirm('Delete data for "' + old + '"?');
+            if (r) {
+               var followerLists = parseNames(localStorage
+                                              .getItem('MissingE_unfollower_lists'));
+               var idx = $.inArray(old,followerLists);
+               if (idx >= 0) {
+                  followerLists.splice(idx,1);
+                  localStorage.setItem('MissingE_unfollower_lists',
+                                       serializeNames(followerLists));
+                  localStorage.removeItem('MissingE_unfollower_' + old);
+                  $(this).parent().children('button').css('visibility','hidden');
+                  $(this).parent().prev().empty();
+               }
+            }
+            break;
+         }
+         case 'new_btn': {
+            var followerLists = parseNames(localStorage
+                                           .getItem('MissingE_unfollower_lists'));
+            followerLists.push(acct);
+            localStorage.setItem('MissingE_unfollower_lists',
+                                 serializeNames(followerLists));
+            var fl = $('#right_column').find('a.followers .count');
+            followers = fl.text().match(/^([0-9][0-9,\.]*)/);
+            if (followers !== undefined && followers !== null &&
+                followers.length >= 2) {
+               doGet(followers[1].replace(/,/g,"").replace(/\./g,""),
+                     false, retries, acct);
+            }
+            else {
+               getCountAndDoSilent(acct, retries);
+            }
+            $.facebox.close();
+            break;
+         }
+         case 'ignore_btn': {
+            var ignores = parseNames(ignoreList);
+            ignores.push(acct);
+            localStorage.removeItem('MissingE_unfollower_' + acct);
+            ignoreList = serializeNames(ignores);
+            safari.self.tab.dispatchMessage("unfollowerIgnore",
+                                            {list: ignoreList});
+            $('#MissingE_unfollowdelta').remove();
+            $.facebox.close();
+            break;
+         }
+      }
+   });
+
    var followers;
    $("body").append('<div id="MissingE_unfollowdisplay" style="display:none;">' +
                     '<div style="font:bold 24px Georgia,serif;' +
@@ -227,40 +378,84 @@ function tu_init(retries) {
                     '<img class="logo" src="' + safari.extension.baseURI +
                     'Icon-64.png' + '" /></div>');
 
-   var fl = $('#right_column').find('a[href$="/followers"]');
-   var lastFollows = localStorage.getItem('MissingE_unfollower_names');
-   if (lastFollows === undefined || lastFollows === null ||
-       lastFollows === "") {
-      followers = fl.html().match(/([0-9][0-9,\.]*)/);
-      if (followers !== undefined && followers !== null &&
-          followers.length >= 2) {
-         doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false, retries);
+   var acct = location.href.match(/\/tumblelog\/([^\/]*)/);
+   if (!acct || acct.length <= 1) {
+      acct = $('#user_channels li.tab:first a');
+      if (acct.length > 0) {
+         acct = acct.attr('href').match(/\/tumblelog\/([^\/]*)/);
       }
    }
-
-   var deltxt = '<a id="MissingE_unfollowdelta" title="Unfollower" ' +
-                  'class="tracked_tag_control" onclick="return false;" ' +
-                  'href="#">&Delta;</a>';
-   var fw = $("#MissingE_followwhonotin");
-   if (fw.size()>0) {
-      fw.before(deltxt);
+   if (acct && acct.length > 1) {
+      acct = acct[1];
    }
    else {
-      fl.parent().append(' ' + deltxt);
+      return;
    }
-   $('#MissingE_unfollowdelta').click(function() {
-      followers = $(this).parent().children("a:first").html()
-                        .match(/([0-9][0-9,\.]*)/);
-      if (followers === undefined || followers === null ||
-          followers.length < 2) {
-         return false;
+   var ignore = false;
+   var fl = $('#right_column').find('a.followers .count');
+   var followLists = localStorage.getItem('MissingE_unfollower_lists');
+   var lastFollows = localStorage.getItem('MissingE_unfollower_names');
+   if (followLists === undefined || followLists === null ||
+       followLists === "") {
+      if (lastFollows) {
+         followLists = acct;
+         localStorage.setItem('MissingE_unfollower_lists',acct);
+         localStorage.removeItem('MissingE_unfollower_names');
+         localStorage.setItem('MissingE_unfollower_' + acct, lastFollows);
       }
-      doGet(followers[1].replace(/,/g,"").replace(/\./g,""), true, retries);
-   });
+   }
+   var ure = new RegExp('(^|,)' + acct + '($|,)');
+   if (ure.test(followLists)) {
+      lastFollows = localStorage.getItem('MissingE_unfollower_' + acct);
+   }
+   else {
+      lastFollows = null;
+      if (ure.test(ignoreList)) {
+         ignore = true;
+      }
+   }
+   if (!ignore) {
+      if (lastFollows === undefined || lastFollows === null ||
+          lastFollows === "") {
+         if (followLists === undefined || followLists === null ||
+             followLists === "") {
+            followLists = acct;
+            localStorage.setItem('MissingE_unfollower_lists',acct);
+         }
+         followers = fl.text().match(/^([0-9][0-9,\.]*)/);
+         if (followers !== undefined && followers !== null &&
+             followers.length >= 2) {
+            doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false, retries, acct);
+         }
+         else {
+               getCountAndDoSilent(acct, retries);
+         }
+      }
+      var deltxt = '<a id="MissingE_unfollowdelta" title="Unfollower" ' +
+                     'onclick="return false;" href="#">&Delta;</a>';
+      var fw = $("#MissingE_followwhonotin");
+      if (fw.size()>0) {
+         fw.before(deltxt);
+      }
+      else if (fl.length >= 1) {
+         fl.append(deltxt);
+      }
+      $('#MissingE_unfollowdelta').click(function() {
+         followers = $(this).parent().text()
+                           .match(/^([0-9][0-9,\.]*)/);
+         if (followers === undefined || followers === null ||
+             followers.length < 2) {
+            return false;
+         }
+         doGet(followers[1].replace(/,/g,"").replace(/\./g,""), true, retries,
+               acct);
+      });
+   }
 }
 
-function MissingE_unfollower_doStartup(maxRetries) {
+function MissingE_unfollower_doStartup(maxRetries,ignore) {
    if (document.body.id !== "dashboard_edit_post") {
+      ignoreList = ignore;
       tu_init(maxRetries);
    }
 }

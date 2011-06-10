@@ -21,6 +21,34 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#MissingE_followwhonotin {
+display:inline !important;
+background:transparent !important;
+padding:0 !important;
+color:inherit !important;
+font-size:inherit !important;
+display:none !important;
+margin-left:2px !important;
+}
+
+li.selected #MissingE_followwhonotin {
+color:rgba(0,0,0,0.6) !important;
+text-shadow:inherity !important;
+}
+
+#right_column a.followers:hover #MissingE_followwhonotin {
+display:inline !important;
+}
+
+#MissingE_followwhonotin:hover {
+color:rgba(255,255,255,0.69) !important;
+}
+
+li.selected #MissingE_followwhonotin:hover {
+color:rgb(0,0,0) !important;
+text-shadow:0 1px 1px rgba(255,255,255,0.5) !important;
+}
+
 #facebox .followwhobox {
 width:550px !important;
 }

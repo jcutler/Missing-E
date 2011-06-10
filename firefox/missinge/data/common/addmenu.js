@@ -43,28 +43,47 @@ self.on("message", function (message) {
          else if (fp.length > 0 && fp[0].id !== 'new_post') {
             ot = fp[0].offsetTop;
          }
-         ot = ot - rcol.offsetTop + 4;
+         ot = ot - rcol.offsetTop;
          if (ot > 0) {
             rcol.style.paddingTop = ot + 'px';
          }
       }
    }
 
-   var accmenu = document.getElementById("account_menu");
+   var bar = document.getElementById("user_tools");
+   var logout = document.getElementById("logout_button");
 
-   if (accmenu) {
-      var links = accmenu.getElementsByTagName('a');
-      var setlnk = document.createElement('a');
-      setlnk.href = message.extensionURL + 'options.html';
-      setlnk.onclick = function(){return false;};
-      setlnk.setAttribute("target","_blank");
-      setlnk.innerHTML = 'Missing <img src="' + message.extensionURL +
-                        'missinge16.png" style="vertical-align:bottom;" />';
-      setlnk.addEventListener('mouseup', function(e) {
+   if (bar && logout) {
+      var st = document.createElement('style');
+      st.setAttribute('type','text/css');
+      st.innerHTML = '#header #missinge_button a {' +
+                     'background-image:url("' +
+                     message.extensionURL + 'missinge_dash.png' +
+                     '") !important; background-position:center center; ' +
+                     'opacity:0.5; } ' +
+                     '#header #missinge_button a:hover {' +
+                     'opacity:1; } ' +
+                     '#header #tabs_outter_container {' +
+                     'min-width:645px !important;' +
+                     'left:auto !important;right:17px !important;' +
+                     'width:auto !important;}';
+
+      document.getElementsByTagName('head')[0].appendChild(st);
+      var tab = document.createElement('div');
+      tab.className = "tab iconic";
+      tab.id = "missinge_button";
+      var elnk = document.createElement('a');
+      elnk.href = message.extensionURL + 'options.html';
+      elnk.setAttribute('target','_blank');
+      elnk.setAttribute('title','Missing e Settings');
+      elnk.innerHTML = 'Missing e';
+      elnk.onclick = function(){return false;};
+      elnk.addEventListener('mouseup', function(e) {
          if (e.which === 1 || e.which === 2) {
             self.postMessage({greeting: "open", url: "OPTIONS"});
          }
       }, false);
-      accmenu.insertBefore(setlnk, links[links.length-1]);
+      tab.appendChild(elnk);
+      bar.insertBefore(tab, logout);
    }
 });

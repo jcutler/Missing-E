@@ -122,6 +122,10 @@ function doStartup(response) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "dashboardFixes"});
       }
+      if (response.message.askFixes) {
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "askFixes"});
+      }
       if (response.message.reblogYourself) {
          MissingE_reblogYourself_dash_doStartup();
       }
@@ -140,7 +144,7 @@ function doStartup(response) {
          MissingE_betterReblogs_post_doStartup(response.message.url);
       }
       if (response.message.askFixes) {
-         MissingE_askFixes_doStartup();
+         MissingE_askFixes_scroll_doStartup();
       }
       if (response.message.gotoDashPost) {
          MissingE_gotoDashPost_doStartup();
@@ -160,13 +164,21 @@ function settings_startup(response) {
       MissingE_postingFixes_doStartup(response.message.photoReplies,
                                       response.message.uploaderToggle,
                                       response.message.addUploader,
-                                      response.message.quickButtons);
+                                      response.message.quickButtons,
+                                      response.message.blogSelect);
+   }
+   else if (response.message.component === "askFixes") {
+      MissingE_askFixes_doStartup(response.message.tagAsker,
+                                  response.message.defaultTags,
+                                  response.message.buttons,
+                                  response.message.tags);
    }
    else if (response.message.component === "followChecker") {
       MissingE_followChecker_doStartup(response.message.retries);
    }
    else if (response.message.component === "unfollower") {
-      MissingE_unfollower_doStartup(response.message.retries);
+      MissingE_unfollower_doStartup(response.message.retries,
+                                    response.message.ignore);
    }
    else if (response.message.component === "dashLinksToTabs") {
       MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs,
@@ -184,7 +196,8 @@ function settings_startup(response) {
                                         response.message.postLinks,
                                         response.message.reblogReplies,
                                         response.message.widescreen,
-                                        response.message.queueArrows);
+                                        response.message.queueArrows,
+                                        response.message.followingLink);
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {

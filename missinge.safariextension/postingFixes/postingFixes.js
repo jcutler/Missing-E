@@ -72,7 +72,8 @@ function showHideButtons(newbtns, val) {
 }
 
 function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
-                                         addUploader, quickButtons) {
+                                         addUploader, quickButtons,
+                                         blogSelect) {
    var lang = $('html').attr('lang');
 
    if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href)) {
@@ -109,6 +110,22 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       }
    });
 
+   if (blogSelect === 1 &&
+       $('select#channel_id').length > 0) {
+      var extrachan = $('<select id="extra_channel"></select>')
+                        .insertAfter('#preview_button');
+      extrachan.append($('#channel_id').html());
+      extrachan.val($('#channel_id').val());
+      extrachan.bind('change',function() {
+         $('#channel_id').val($(this).val());
+         var evt = document.createEvent("HTMLEvents");
+         evt.initEvent("change", false, true);
+         document.getElementById('channel_id').dispatchEvent(evt);
+      });
+      $('#channel_id').bind('change',function() {
+         extrachan.val($(this).val());
+      });
+   }
    if (quickButtons === 1 &&
        $('#post_state').length > 0 &&
        $('#post_state')

@@ -106,7 +106,8 @@ self.on('message', function(message) {
      '<a class="clear_tags" style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">' + locale[lang]["clearTagsText"] + '</a></div>')
+     'return false;">' + locale[lang]["postingFixes"]["clearTagsText"] +
+     '</a></div>')
          .appendTo(set_tags);
 
    jQuery('#photo_src').keyup(function(){
@@ -115,6 +116,23 @@ self.on('message', function(message) {
       }
    });
 
+   if (message.blogSelect === 1 &&
+       jQuery('select#channel_id').length > 0) {
+      var extrachan = jQuery('<select id="extra_channel"></select>')
+                        .insertAfter('#preview_button');
+      extrachan.wrap('<div id="extra_channel_outer" />');
+      extrachan.append(jQuery('#channel_id').html());
+      extrachan.val(jQuery('#channel_id').val());
+      extrachan.bind('change',function() {
+         jQuery('#channel_id').val(jQuery(this).val());
+         var evt = document.createEvent("HTMLEvents");
+         evt.initEvent("change", false, true);
+         document.getElementById('channel_id').dispatchEvent(evt);
+      });
+      jQuery('#channel_id').bind('change',function() {
+         extrachan.val(jQuery(this).val());
+      });
+   }
    if (message.quickButtons === 1 &&
        jQuery('#post_state').length > 0 &&
        jQuery('#post_state')

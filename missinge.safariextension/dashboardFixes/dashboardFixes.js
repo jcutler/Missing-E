@@ -189,7 +189,8 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                                            wrapTags, replaceIcons,
                                            timeoutAJAX, timeoutLength,
                                            postLinks, reblogReplies,
-                                           widescreen, queueArrows) {
+                                           widescreen, queueArrows,
+                                           followingLink) {
    if (window.top !== window) { return false; }
 
    document.addEventListener('DOMNodeInserted', function(e) {
@@ -226,7 +227,9 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
    if (data !== '') {
       head.appendChild(css);
    }
-   if (widescreen === 1) {
+   if (widescreen === 1 &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
+            .test(location.href))) {
       var style = document.createElement("link");
       style.setAttribute('rel','stylesheet');
       style.setAttribute('type','text/css');
@@ -238,8 +241,12 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                        '#content .tag_page_header { padding-right:' +
                          (w+40) + 'px; }</style>');
       $('#content').css('padding-right', (w+20) + 'px');
-      $('#right_column').css('margin-right', '-'+w+'px');
+      $('#left_column').css('min-height', $('#right_column').height() + 'px');
       document.addEventListener('DOMNodeInserted', function(e) {
+         if ($(e.target).closest('#right_column').length > 0) {
+            $('#left_column').css('min-height', $('#right_column').height() +
+                                  'px');
+         }
          $(e.target).children('div.reply_pane:first')
                .each(function() {
             realignReplyNipple($(this).find('div.nipple'));
@@ -369,6 +376,10 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       $("#posts li.post").each(function(i) {
          doIcons(this);
       });
+   }
+
+   if (followingLink === 1) {
+      $('#right_column a.following').attr('href','/following');
    }
 
    if (timeoutAJAX === 1) {

@@ -64,6 +64,10 @@ jQuery(document).ready(function (){
       doKeyUp(e, this, false);
    });
 
+   jQuery('input.blurable_setting').bind("blur", function() {
+      doSetting(this, false);
+   });
+
    jQuery('input.setting_retry').bind("change", function() {
       doSetting(this, true, defaultRetries, minRetries, maxRetries);
    }).spin({
@@ -126,6 +130,17 @@ function setStorage(key,value) {
    self.postMessage({greeting: "change-setting", name: key, val: value});
 }
 
+function parseNames(st) {
+   if (!st || st.length === 0) {
+      return [];
+   }
+   return st.split(',').sort();
+}
+
+function serializeNames(arr) {
+   return arr.sort().join(',');
+}
+
 function trim(str) {
    return str.replace(/^\s+/,'').replace(/\s+$/,'');
 }
@@ -162,9 +177,22 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
             setStorage(obj.name, num);
          }
       }
+      else if (obj.name === 'MissingE_askFixes_defaultTags') {
+         var val = trim(obj.value);
+         val = val.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,', ')
+                  .replace(/,\s*$/,'').replace(/^\s*/,'').replace(/\s*$/,'');
+         obj.value = val;
+         setStorage(obj.name, obj.value);
+      }
       else {
          setStorage(obj.name, (obj.value));
       }
+   }
+   if (obj.name === 'MissingE_bookmarker_format') {
+      jQuery('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', obj.value));
+   }
+   else if (obj.name === 'MissingE_timestamps_format') {
+      jQuery('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), obj.value));
    }
 }
 
@@ -195,6 +223,13 @@ function loadSettings() {
       else {
          active.checked = false;
       }
+      if (v == "askFixes") {
+         loadCheck(frm,'MissingE_askFixes_scroll',1);
+         loadCheck(frm,'MissingE_askFixes_buttons',0);
+         loadCheck(frm,'MissingE_askFixes_tags',0);
+         loadCheck(frm,'MissingE_askFixes_tagAsker',1);
+         frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
+      }
       if (v == "dashLinksToTabs") {
          loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
          loadCheck(frm,'MissingE_dashLinksToTabs_sidebar',0);
@@ -205,11 +240,15 @@ function loadSettings() {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
       }
       else if (v == "bookmarker") {
-         frm.MissingE_bookmarker_format.value = getStorage('MissingE_bookmarker_format',defaultFormat);
+         var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
+         frm.MissingE_bookmarker_format.value = bmFormat;
+         jQuery('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
       }
       else if (v == "timestamps") {
          frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
-         frm.MissingE_timestamps_format.value = getStorage('MissingE_timestamps_format',defaultFormat);
+         var tsFormat = getStorage('MissingE_timestamps_format',defaultFormat);
+         frm.MissingE_timestamps_format.value = tsFormat;
+         jQuery('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), tsFormat));
       }
       else if (v == "postCrushes") {
          if (getStorage('MissingE_postCrushes_crushSize',1) == 1)
@@ -239,6 +278,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
+         loadCheck(frm,'MissingE_dashboardFixes_followingLink',0);
       }
       else if (v == "betterReblogs") {
          loadCheck(frm,'MissingE_betterReblogs_passTags',1);
@@ -260,6 +300,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_postingFixes_uploaderToggle',1);
          loadCheck(frm,'MissingE_postingFixes_addUploader',1);
          loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
+         loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
       }
       else if (v == "reblogYourself") {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);
@@ -350,3 +391,63 @@ function doshow(component) {
       document.getElementById('social_posts').style.display = 'none';
    }
 }
+
+$('#unfollower_ignore_btn').live('click', function() {
+   if ($('#ignoreDiv').length === 0) {
+      $('body').append('<div id="ignoreDiv"></div>');
+   }
+   var i;
+   var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
+   var igtext = '<p>Tumblr accounts ignored by ' +
+               '<strong>Unfollower</strong>:</p>' +
+               '<table border="0">';
+   for (i=0; i<list.length; i++) {
+      var klass = (i%2==1 ? 'class="greyrow"' : '');
+      igtext += '<tr><td ' + klass + '>' + list[i] + '</td>' +
+                  '<td ' + klass + '><button type="button" acct="' +
+                  list[i] + '" class="remignore"><span>Remove</span>' +
+                  '</button></td></tr>';
+   }
+   igtext += '<tr><td class="bottomrow" colspan="2"><button type="button" ' +
+               'class="addignore"><span>Add Ignore...</span></button>' +
+               '</td></tr></table>';
+   $('#ignoreDiv').html(igtext);
+   $.facebox({ div: '#ignoreDiv' }, 'ignorelist');
+});
+
+jQuery('#facebox button').live('click', function() {
+   if (this.className === 'remignore') {
+      var acct = $(this).attr('acct');
+      var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
+      var idx = jQuery.inArray(acct, list);
+      if (idx >= 0) {
+         list.splice(idx,1);
+         setStorage('MissingE_unfollower_ignore',serializeNames(list));
+      }
+      jQuery(this).closest('tr').remove();
+      jQuery('#facebox table tr:even td').removeClass('greyrow');
+      jQuery('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
+   }
+   else if (this.className === 'addignore') {
+      var acct = prompt("Enter a Tumblr username for Unfollower to ignore",'');
+      if (acct) { acct = trim(acct.toLowerCase()); }
+      if (acct && acct !== '' && !(/[^0-9a-zA-Z\-]/.test(acct))) {
+         var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
+         if (jQuery.inArray(acct,list) !== -1) {
+            return;
+         }
+         list.push(acct);
+         list.sort();
+         var idx = jQuery.inArray(acct,list);
+         setStorage('MissingE_unfollower_ignore',serializeNames(list));
+         if (idx >= 0) {
+            jQuery('#facebox table tr:eq(' + idx + ')')
+              .before('<tr><td>' + acct + '</td><td><button type="button" ' +
+                      'acct="' + acct + '" class="remignore"><span>Remove' +
+                      '</span></button></td></tr>');
+            jQuery('#facebox table tr:even td').removeClass('greyrow');
+            jQuery('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
+         }
+      }
+   }
+});

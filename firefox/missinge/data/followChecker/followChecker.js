@@ -149,12 +149,12 @@ function doFWDisplay(followerstart,followeestart,show) {
             }
          }
          raw = followertext[i]
-                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
+                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*"><div class="hide_overflow">[0-9a-zA-Z\-\_]+<\/div><\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }
          for (j=0; j<raw.length; j++) {
-            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]*)<\/a>/)[1];
+            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]*)<\/div><\/a>/)[1];
             var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
             var avre = new RegExp('a href="' + fentryurl +
                                   '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
@@ -217,7 +217,7 @@ function doFWDisplay(followerstart,followeestart,show) {
    }
 }
 
-function doFWGet(followers, followees, show, extensionURL, retries) {
+function doFWGet(followers, followees, show, extensionURL, retries, acct) {
    var i;
    failed = false;
 
@@ -245,7 +245,7 @@ function doFWGet(followers, followees, show, extensionURL, retries) {
    for (i=0; i<followerpages; i++) {
       jQuery.ajax({
          type: "GET",
-         url: '/followers/page/'+(i+1),
+         url: '/tumblelog/' + acct + '/followers/page/'+(i+1),
          dataType: "html",
          tryCount: 0,
          retryLimit: retries,
@@ -400,34 +400,100 @@ function tfc_init(extensionURL, retries) {
                     '</div><img class="logo" src="' +
                     extensionURL + 'missinge64.png' + '" /></div>');
 
-   var fl = jQuery('#right_column').find('a[href$="/followers"]');
+   var acct = location.href.match(/\/tumblelog\/([^\/]*)/);
+   if (!acct || acct.length <= 1) {
+      acct = jQuery('#user_channels li.tab:first a').attr('href').match(/\/tumblelog\/([^\/]*)/);
+   }
+   if (acct && acct.length > 1) {
+      acct = acct[1];
+   }
+   else {
+      return;
+   }
+   var fl = jQuery('#right_column').find('a.followers .count');
    jQuery('#facebox .MissingE_followChecker_newTab').live('click',
                                                      followChecker_newTab);
    var uf = jQuery("#MissingE_unfollowdelta");
    var notintxt = '<a id="MissingE_followwhonotin" title="Follow Checker" ' +
-                  'class="tracked_tag_control" onclick="return false;" ' +
-                  'href="#">&rho;</a>';
+                  'onclick="return false;" href="#">&rho;</a>';
 
    if (uf.size()>0) {
       uf.after(notintxt);
    }
-   else {
-      fl.parent().append(' ' + notintxt);
+   else if (fl.length >= 1) {
+      fl.append(notintxt);
    }
    jQuery('#MissingE_followwhonotin').click(function() {
       self.postMessage({greeting: "close-followChecker"});
-      var followers = jQuery(this).parent().children("a:first").html()
-                     .match(/([0-9][0-9,\.]*)/);
-      var followees = jQuery('#dashboard_nav_following').children("a:first").html()
-                     .match(/[\s>]([0-9][0-9,\.]*)/);
-      if (followers === undefined || followers === null ||
-          followers.length < 2 || followees === undefined ||
-          followees === null || followees.length < 2) {
-         return false;
-      }
-      doFWGet(followers[1].replace(/,/g,"").replace(/\./g,""),
-              followees[1].replace(/,/g,"").replace(/\./g,""), true,
-              extensionURL, retries);
+      var followers = jQuery(this).parent().text()
+                     .match(/^([0-9][0-9,\.]*)/);
+
+      jQuery.ajax({
+         type: "GET",
+         url: '/following',
+         dataType: "html",
+         tryCount: 0,
+         retryLimit: retries,
+         error: function(xhr, textStatus) {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               $.ajax(this);
+               return;
+            }
+            else {
+               failed = true;
+               jQuery('#MissingE_followwhodisplay .followwholist')
+                  .html('<p><em>Having trouble getting your follower count ' +
+                        'from Tumblr\'s servers, please try again later.' +
+                        '</em></p><img style="margin:20px 0;" src="' +
+                        extensionURL + 'images/oh_dear.png' +
+                        '" /><div><em>Artwork by ' +
+                        '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
+                        '</em></div>');
+               if (jQuery('#facebox').css('display') !== 'block') {
+                  jQuery.facebox({ div: '#MissingE_followwhodisplay' },
+                            'followwhobox');
+               }
+            }
+         },
+         success: function(data, textStatus) {
+            if(!(/a\s+class="tab selected"\s+href="\/following">[^<]*<\/a>/mg
+                     .test(data))) {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  failed = true;
+                  jQuery('#MissingE_followwhodisplay .followwholist')
+                     .html('<p><em>Having trouble getting your follower ' +
+                           'count from Tumblr\'s servers, please try again ' +
+                           'later.</em></p><img style="margin:20px 0;" src="' +
+                           extensionURL + 'images/oh_dear.png' +
+                           '" /><div><em>Artwork by ' +
+                           '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
+                           '</em></div>');
+                  if (jQuery('#facebox').css('display') !== 'block') {
+                     jQuery.facebox({ div: '#MissingE_followwhodisplay' },
+                               'followwhobox');
+                  }
+               }
+               return true;
+            }
+
+            var followees = data.match(/a\s+class="tab selected"\s+href="\/following">[^<0-9]*([0-9,\.]+)[^<]*<\/a>/m);
+
+            if (followers === undefined || followers === null ||
+                followers.length < 2 || followees === undefined ||
+                followees === null || followees.length < 2) {
+               return false;
+            }
+            doFWGet(followers[1].replace(/,/g,"").replace(/\./g,""),
+                    followees[1].replace(/,/g,"").replace(/\./g,""), true,
+                    extensionURL, retries, acct);
+         }
+      });
    });
 }
 

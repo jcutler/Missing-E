@@ -155,8 +155,9 @@ function openSettings() {
       url: data.url("options.html"),
       onReady: function(tab) {
          tab.attach({
-            contentScriptFile: [data.url("common/jquery-1.5.min.js"),
+            contentScriptFile: [data.url("common/jquery.min.js"),
                                 data.url("common/defs.js"),
+                                data.url("common/utils.js"),
                                 data.url("checkbox/jquery.checkbox.min.js"),
                                 data.url("facebox/facebox.js"),
                                 data.url("jquery-spin/jquery-spin.js"),
@@ -318,6 +319,88 @@ function startAjax(id) {
    activeAjax++;
 }
 
+function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
+   var failMsg = {greeting:type, success:false};
+   Request({
+      url: url + pid,
+      headers: {tryCount: count,
+                retryLimit: retries,
+                targetId: pid},
+      onComplete: function(response) {
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
+         if (response.status === 404) {
+            console.debug(type + " request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         if (response.status != 200 ||
+             !(/<input[^>]*name="post\[date\]"[^>]*>/.test(response.text))) {
+            if (closed) {
+               console.debug("Stop " + type + " request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
+            if (cacheServe(type, this.headers.targetId, myWorker,
+                           doFunc, true)) {
+               return true;
+            }
+            else {
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  doAskAjax('http://www.tumblr.com/edit/',
+                         this.headers.targetId, (this.headers.tryCount + 1),
+                         myWorker, this.headers.retryLimit, type, doFunc);
+               }
+               else {
+                  dequeueAjax(this.headers.targetId);
+                  myWorker.postMessage(failMsg);
+               }
+            }
+         }
+         else {
+            var failed = false;
+            var txt;
+            var inp = response.text
+                        .match(/<input[^>]*name="post\[date\]"[^>]*>/);
+            if (!inp) { failed = true; }
+            else {
+               txt = inp[0].match(/value="([^"]*)"/);
+               if (!txt || txt.length < 2) {
+                  failed = true;
+               }
+               else {
+                  txt = txt[1];
+               }
+            }
+            if (failed) {
+               console.debug(type + " request (" + this.headers.targetId +
+                             ") failed");
+               dequeueAjax(this.headers.targetId);
+               myWorker.postMessage(failMsg);
+               return;
+            }
+            var m = txt.match(/([A-Za-z]+) ([0-9]+)[^,]*, ([0-9]+) ([0-9]+):([0-9]+)([aApP][mM])/);
+            var d = new Date(m[1] + ' ' + m[2] + ', ' + m[3] + ' ' +
+                             (m[6]=='pm' && m[4] !== '12' ? parseInt(m[4])+12 : m[4]) +
+                             ':' + m[5] + ':00 GMT');
+            var stamp = Math.round(d.getTime()/1000);
+            var info = {"unix-timestamp":stamp};
+            saveCache(this.headers.targetId, info);
+            dequeueAjax(this.headers.targetId);
+            if (!closed) {
+               doFunc(info, this.headers.targetId, myWorker);
+            }
+         }
+      }
+   }).get();
+}
+
 function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
    var failMsg = {greeting:type, success:false};
    if (additional) {
@@ -354,7 +437,7 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
                return;
             }
             if (cacheServe(type, this.headers.targetId, myWorker,
-                           doTags, true)) {
+                           doFunc, true)) {
                return true;
             }
             else {
@@ -445,6 +528,12 @@ function startTimestamp(message, myWorker) {
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "timestamp", message: message, worker: myWorker});
    }
+   else if (message.url === 'http://www.tumblr.com/edit/') {
+      startAjax(message.pid);
+      doAskAjax(message.url, message.pid, 0, myWorker,
+                getStorage("extensions.MissingE.timestamps.retries",defaultRetries),
+                "timestamp", doTimestamp);
+   }
    else {
       startAjax(message.pid);
       doAjax(message.url, message.pid, 0, myWorker,
@@ -505,6 +594,9 @@ function handleMessage(message, myWorker) {
          openSettings();
       }
    }
+   else if (message.greeting == "unfollowerIgnore") {
+      setStorage('extensions.MissingE.unfollower.ignore', message.list);
+   }
    else if (message.greeting == "close-followChecker") {
       closeTab(data.url("followChecker/followChecker.html"));
    }
@@ -518,7 +610,7 @@ function handleMessage(message, myWorker) {
          onReady: function(tab) {
             followCheckerTab = tab;
             tab.attach({
-               contentScriptFile:[data.url("common/jquery-1.5.min.js"),
+               contentScriptFile:[data.url("common/jquery.min.js"),
                                   data.url("followChecker/followCheckerTab.js")
                                  ],
                onMessage: function(data) {
@@ -578,6 +670,11 @@ function handleMessage(message, myWorker) {
          settings["MissingE_" + componentList[i] + "_enabled"] =
             getStorage("extensions.MissingE." + componentList[i] + ".enabled", 1);
       }
+      settings.MissingE_askFixes_scroll = getStorage("extensions.MissingE.askFixes.scroll",1);
+      settings.MissingE_askFixes_buttons = getStorage("extensions.MissingE.askFixes.buttons",0);
+      settings.MissingE_askFixes_tags = getStorage("extensions.MissingE.askFixes.tags",0);
+      settings.MissingE_askFixes_tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
+      settings.MissingE_askFixes_defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
       settings.MissingE_bookmarker_format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("extensions.MissingE.dashboardFixes.wrapTags",1);
@@ -588,6 +685,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
       settings.MissingE_dashboardFixes_widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
       settings.MissingE_dashboardFixes_queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
+      settings.MissingE_dashboardFixes_followingLink = getStorage("extensions.MissingE.dashboardFixes.followingLink",0);
       settings.MissingE_magnifier_retries = getStorage("extensions.MissingE.magnifier.retries",defaultRetries);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("extensions.MissingE.dashLinksToTabs.sidebar",0);
@@ -599,6 +697,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_postingFixes_uploaderToggle = getStorage("extensions.MissingE.postingFixes.uploaderToggle",1);
       settings.MissingE_postingFixes_addUploader = getStorage("extensions.MissingE.postingFixes.addUploader",1);
       settings.MissingE_postingFixes_quickButtons = getStorage("extensions.MissingE.postingFixes.quickButtons",1);
+      settings.MissingE_postingFixes_blogSelect = getStorage("extensions.MissingE.postingFixes.blogSelect",0);
       settings.MissingE_reblogYourself_postPage = getStorage("extensions.MissingE.reblogYourself.postPage",1);
       settings.MissingE_reblogYourself_dashboard = getStorage("extensions.MissingE.reblogYourself.dashboard",1);
       settings.MissingE_reblogYourself_retries = getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries);
@@ -612,6 +711,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_replyReplies_addTags = getStorage("extensions.MissingE.replyReplies.addTags",1);
       settings.MissingE_replyReplies_newTab = getStorage("extensions.MissingE.replyReplies.newTab",1);
       settings.MissingE_unfollower_retries = getStorage("extensions.MissingE.unfollower.retries",defaultRetries);
+      settings.MissingE_unfollower_ignore = getStorage("extensions.MissingE.unfollower.ignore",'');
       settings.MissingE_betterReblogs_passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
       settings.MissingE_betterReblogs_retries = getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries);
       settings.MissingE_betterReblogs_autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
@@ -629,6 +729,16 @@ function handleMessage(message, myWorker) {
       settings.experimental = getStorage("extensions.MissingE.experimentalFeatures.enabled",0);
       settings.extensionURL = data.url("");
       switch(message.component) {
+         case "askFixes":
+            settings.scroll = getStorage("extensions.MissingE.askFixes.scroll",1);
+            settings.buttons = getStorage("extensions.MissingE.askFixes.buttons",0);
+            settings.tags = getStorage("extensions.MissingE.askFixes.tags",0);
+            settings.tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
+            settings.defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
+            if (settings.defaultTags !== '') {
+               settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
+            }
+            break;
          case "bookmarker":
             settings.format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
             break;
@@ -642,6 +752,7 @@ function handleMessage(message, myWorker) {
             settings.reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
             settings.widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
             settings.queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
+            settings.followingLink = getStorage("extensions.MissingE.dashboardFixes.followingLink",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
@@ -667,8 +778,10 @@ function handleMessage(message, myWorker) {
             settings.uploaderToggle = getStorage("extensions.MissingE.postingFixes.uploaderToggle",1);
             settings.addUploader = getStorage("extensions.MissingE.postingFixes.addUploader",1);
             settings.quickButtons = getStorage("extensions.MissingE.postingFixes.quickButtons",1);
+            settings.blogSelect = getStorage("extensions.MissingE.postingFixes.blogSelect",0);
             break;
          case "unfollower":
+            settings.ignore = getStorage("extensions.MissingE.unfollower.ignore",'');
          case "followChecker":
             settings.retries = getStorage("extensions.MissingE." + message.component + ".retries",defaultRetries);
             break;
@@ -693,6 +806,38 @@ function handleMessage(message, myWorker) {
                            data.url("common/utils.js"),
                            data.url("common/localizations.js")];
       activeScripts.extensionURL = data.url("");
+      if (!message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
+               .test(message.url)) {
+         if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
+            injectScripts.push(data.url("safeDash/safeDash.js"));
+            activeScripts.safeDash = true;
+         }
+         else
+            activeScripts.safeDash = false;
+
+         if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
+            injectScripts.push(data.url("common/jquery-ui.min.js"));
+            injectScripts.push(data.url("bookmarker/bookmarker.js"));
+            activeScripts.bookmarker = true;
+         }
+         else
+            activeScripts.bookmarker = false;
+
+         if (getStorage("extensions.MissingE.unfollower.enabled",1) == 1) {
+            injectScripts.push(data.url("unfollower/unfollower.js"));
+            activeScripts.unfollower = true;
+         }
+         else
+            activeScripts.unfollower = false;
+
+         if (getStorage("extensions.MissingE.followChecker.enabled",1) == 1) {
+            injectScripts.push(data.url("followChecker/followChecker.js"));
+            activeScripts.followChecker = true;
+         }
+         else
+            activeScripts.followChecker = false;
+      }
       if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(message.url) ||
@@ -722,6 +867,7 @@ function handleMessage(message, myWorker) {
             activeScripts.safeDash = false;
 
          if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
+            injectScripts.push(data.url("common/jquery-ui.min.js"));
             injectScripts.push(data.url("bookmarker/bookmarker.js"));
             activeScripts.bookmarker = true;
          }
@@ -750,7 +896,9 @@ function handleMessage(message, myWorker) {
             activeScripts.dashboardFixes = false;
       }
       if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(message.url)) {
-         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1 &&
+             getStorage("extensions.MissingE.askFixes.scroll",1) == 1) {
+            /* Don't inject script. Taken care of by a page mod */
             activeScripts.askFixes = true;
          }
          else
@@ -847,12 +995,27 @@ function handleMessage(message, myWorker) {
             activeScripts.postCrushes = false;
       }
       if (!message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/(submissions|messages)/
+               .test(message.url) ||
+           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/
+               .test(message.url))) {
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+            injectScripts.push(data.url("askFixes/askFixes.js"));
+            activeScripts.askFixes = true;
+         }
+         else {
+            activeScripts.askFixes = false;
+         }
+      }
+      if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url)) &&
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/(submissions|messages)/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/.test(message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/.test(message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(message.url))) {
          if (getStorage("extensions.MissingE.timestamps.enabled",1) == 1) {
             injectScripts.push(data.url("timestamps/timestamps.js"));
@@ -860,7 +1023,15 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.timestamps = false;
-
+      }
+      if (!message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(message.url))) {
          if (getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1) {
             if (getStorage("extensions.MissingE.betterReblogs.quickReblog",0) == 1) {
                zindexFix = true;
@@ -896,11 +1067,11 @@ function handleMessage(message, myWorker) {
           activeScripts.followChecker ||
           activeScripts.magnifier) {
          zindexFix = true;
-         injectScripts.push(data.url("facebox/facebox.js"));
-         injectScripts.push(data.url("common/faceboxHelper.js"));
+         injectScripts.unshift(data.url("common/faceboxHelper.js"));
+         injectScripts.unshift(data.url("facebox/facebox.js"));
       }
 
-      injectScripts.unshift(data.url("common/jquery-1.5.min.js"));
+      injectScripts.unshift(data.url("common/jquery.min.js"));
       if (zindexFix) {
          injectScripts.push(data.url("common/zindexFix.js"));
       }
@@ -936,7 +1107,8 @@ pageMod.PageMod({
    contentScriptFile: data.url("askFixes/askFixes.js"),
    onAttach: function (worker) {
       worker.on('message', function(data) {
-         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1 &&
+             getStorage("extensions.MissingE.askFixes.scroll",1) == 1) {
             handleMessage(data, this);
          }
       });

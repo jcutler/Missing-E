@@ -29,8 +29,12 @@ self.on('message', function(message) {
          'facebox/closelabel.png';
       jQuery.facebox.settings.loadingImage = message.extensionURL +
          'facebox/loading.gif';
-      jQuery('head').append('<link rel="stylesheet" type="text/css" ' +
-                            'href="' + message.extensionURL +
+      jQuery('#facebox .close_image')
+         .attr('src', jQuery.facebox.settings.closeImage);
+      if (jQuery('#facebox_style').length === 0) {
+         jQuery('head').append('<link id="facebox_style" rel="stylesheet" ' +
+                            'type="text/css" href="' + message.extensionURL +
                             'facebox/facebox.css" />');
+      }
    }
 });
