@@ -591,6 +591,9 @@ function handleRequest(request) {
    else if (request.name == "close-options") {
       closeTab(request.target.url, request.target);
    }
+   else if (request.name == "unfollowerIgnore") {
+      setStorage('MissingE_unfollower_ignore', request.message.list);
+   }
    else if (request.name == "close-followChecker") {
       closeTab(safari.extension.baseURI + "followChecker/followChecker.html");
    }
@@ -692,6 +695,7 @@ function handleRequest(request) {
       settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
       settings.MissingE_replyReplies_newTab = getStorage("MissingE_replyReplies_newTab",1);
       settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
+      settings.MissingE_unfollower_ignore = getStorage("MissingE_unfollower_ignore",'');
       settings.MissingE_betterReblogs_passTags = getStorage("MissingE_betterReblogs_passTags",1);
       settings.MissingE_betterReblogs_retries = getStorage("MissingE_betterReblogs_retries",defaultRetries);
       settings.MissingE_betterReblogs_autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
@@ -759,6 +763,7 @@ function handleRequest(request) {
             settings.blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
             break;
          case "unfollower":
+            settings.ignore = getStorage("MissingE_unfollower_ignore",'');
          case "followChecker":
             settings.retries = getStorage("MissingE_" + request.component + "_retries",defaultRetries);
             break;

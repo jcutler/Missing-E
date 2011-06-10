@@ -78,3 +78,38 @@ width:100%;
 #unfollowrtable .tu-greyrow {
 background-color:#DDD;
 }
+
+#unfollower_chooser_table {
+border-collapse:collapse !important;
+width:100%;
+}
+
+#unfollower_chooser_table th {
+background-color:#444 !important;
+color:white !important;
+}
+
+#unfollower_chooser_table td {
+font-size:80%;
+padding:1px 4px;
+}
+
+#unfollower_chooser_table td:last-child {
+text-align:right;
+}
+
+#unfollower_chooser_table td.greyrow {
+background-color:#ddd;
+}
+
+#unfollower_chooser_table td.uctlast {
+border-bottom:1px solid #444 !important;
+}
+
+#unfollower_chooser_table button {
+font-size:80%;
+}
+
+.unfollowerlist .newacct {
+margin-top:4px;
+}

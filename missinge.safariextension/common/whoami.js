@@ -177,7 +177,8 @@ function settings_startup(response) {
       MissingE_followChecker_doStartup(response.message.retries);
    }
    else if (response.message.component === "unfollower") {
-      MissingE_unfollower_doStartup(response.message.retries);
+      MissingE_unfollower_doStartup(response.message.retries,
+                                    response.message.ignore);
    }
    else if (response.message.component === "dashLinksToTabs") {
       MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs,
