@@ -90,8 +90,10 @@ function doIcons(item) {
       var a = $(this);
       var txt = a.text();
       var klass = "MissingE_post_control ";
-      if (/delete_post_/.test(a.attr('onclick')) ||
-          /^post_delete_/.test(a.attr('id'))) {
+      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?messages/.test(location.href)) &&
+          !(/http:\/\/www\.tumblr\.com\/inbox/.test(location.href)) &&
+          (/delete_post_/.test(a.attr('onclick')) ||
+          /^post_delete_/.test(a.attr('id')))) {
          a.attr('title',locale[lang]["dashFixesText"]["del"])
             .addClass(klass + "MissingE_delete_control").text('');
       }
