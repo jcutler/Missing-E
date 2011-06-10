@@ -26,7 +26,7 @@
 var text;
 var done;
 var failed = false;
-var followcount = {};
+var ignoreList;
 
 var curr = localStorage.getItem('tu_Names');
 if (curr) {
@@ -359,12 +359,12 @@ function tu_init(retries) {
             break;
          }
          case 'ignore_btn': {
-            var ignoreList = parseNames(localStorage
-                                        .getItem('MissingE_unfollower_ignore'));
-            ignoreList.push(acct);
+            var ignores = parseNames(ignoreList);
+            ignores.push(acct);
             localStorage.removeItem('MissingE_unfollower_' + acct);
-            localStorage.setItem('MissingE_unfollower_ignore',
-                                 serializeNames(ignoreList));
+            ignoreList = serializeNames(ignores);
+            chrome.extension.sendRequest({greeting: "unfollowerIgnore", list: ignoreList});
+            $('#MissingE_unfollowdelta').remove();
             $.facebox.close();
             break;
          }
@@ -394,7 +394,6 @@ function tu_init(retries) {
    var ignore = false;
    var fl = $('#right_column').find('a.followers .count');
    var followLists = localStorage.getItem('MissingE_unfollower_lists');
-   var ignoreList = localStorage.getItem('MissingE_unfollower_ignore');
    var lastFollows = localStorage.getItem('MissingE_unfollower_names');
    if (followLists === undefined || followLists === null ||
        followLists === "") {
@@ -453,6 +452,7 @@ if (document.body.id !== "dashboard_edit_post") {
    chrome.extension.sendRequest({greeting: "settings", component: "unfollower"},
                                 function(response) {
       var settings = JSON.parse(response);
+      ignoreList = settings.ignore;
       tu_init(settings.retries);
    });
 }
