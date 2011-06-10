@@ -185,12 +185,30 @@ function addQueueArrows(item) {
 ****/
 }
 
+function addExpandAllHandler(item) {
+   var post = $(item);
+   if (item.tagName !== 'LI' || !post.hasClass('post')) {
+      return false;
+   }
+   post.find('.inline_image').click(function() {
+      if (!$(this).hasClass('exp_inline_image')) {
+         $(this).closest('.post').find('.inline_image')
+            .addClass('exp_inline_image').removeClass('inline_image');
+         $(this).addClass('exp_inline_image').removeClass('inline_image');
+      }
+      else {
+         $(this).closest('.post').find('.exp_inline_image')
+            .addClass('inline_image').removeClass('exp_inline_image');
+      }
+   });
+}
+
 function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                                            wrapTags, replaceIcons,
                                            timeoutAJAX, timeoutLength,
                                            postLinks, reblogReplies,
                                            widescreen, queueArrows,
-                                           followingLink) {
+                                           expandAll, followingLink) {
    if (window.top !== window) { return false; }
 
    document.addEventListener('DOMNodeInserted', function(e) {
@@ -226,6 +244,12 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
    head = document.getElementsByTagName("head")[0];
    if (data !== '') {
       head.appendChild(css);
+   }
+   if (expandAll === 1) {
+      $('#posts .post').each(function(){ addExpandAllHandler(this); });
+      document.addEventListener('DOMNodeInserted', function(e) {
+         addExpandAllHandler(e.target);
+      }, false);
    }
    if (widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/

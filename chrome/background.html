@@ -641,6 +641,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
+            settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
             settings.followingLink = getStorage("MissingE_dashboardFixes_followingLink",0);
             break;
          case "dashLinksToTabs":
