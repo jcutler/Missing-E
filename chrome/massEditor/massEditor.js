@@ -152,5 +152,4 @@ $.globalEval('document.getElementById("MissingE_select_btn")' +
              'var max = 100-$$("a.brick.highlighted").size();' +
              '$$("a.brick." + type).each(function(obj,i){' +
              'if (i<max){$(obj).addClassName("highlighted");}}); ' +
-             'console.log($$("a.brick.highlighted").size());' +
              'get_selected_post_ids();},false);}}');
