@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
  - 'Missing e' Extension
  -
@@ -22,1343 +23,2160 @@
  - along with 'Missing e'.  If not, see [http://www.gnu.org/licenses/].
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Missing e - Settings</title>
-<style type="text/css">
-body{
-background:#2c4762 url('images/background.png') top repeat-x;
-font:normal 14px Arial,Helvetica,sans-serif;
-line-height:1.4;
-color:#444;
-margin:0;
-padding:0
-}
-
-a img{
-border-width:0
-}
-
-a{
-color:#444
-}
-
-p,ul,blockquote{
-margin-top:20px;
-margin-bottom:20px
-}
-
-ul ul,ul ol,ol ul,ol ol{
-margin:5px 0
-}
-
-form{
-margin:0;
-padding:0;
-display:inline
-}
-
-*,*:active,*:focus{
-outline:0;
-outline-style:none;
-outline-width:0;
--moz-outline-width:0
-}
-
-.clear{
-clear:both;
-height:0;
-overflow:hidden
-}
-
-input,select{
-font:normal 13px 'Lucida Grande',Helvetica,Arial,sans-serif;
-color:#444
-}
-
-select{
-border:solid 1px #bbb
-}
-
-input.text_field,textarea{
-border:solid 1px #bbb;
-padding:7px;
-font:normal 13px 'Lucida Grande',Helvetica,Arial,sans-serif;
-color:#222;
-background:#fff url('/images/input_bg.gif') repeat-x top;
-outline:0;
-margin:0;
-border:solid 1px #bbb
-}
-
-input.text_field:disabled,textarea:disabled{
-background:#f5f5f5
-}
-
-input.text_field.big{
-font-size:24px
-}
-
-input.text_field.huge{
-border-color:#bbb;
-font:normal 50px Georgia;
--webkit-border-radius:8px;
--moz-border-radius:8px;
-border-radius:8px
-}
-
-input.text_field.huge:focus{
-background:#f3faff url('/images/input_highlight_bg.png') top repeat-x;
-border-color:#b7c7d3
-}
-
-#container{
-width:900px;
-margin:auto;
-padding:0 30px
-}
-
-#header{
-height:80px;
-position:relative;
-z-index:80
-}
-
-#logo{
-width:66px;
-height:48px;
-position:absolute;
-left:15px;
-top:16px;
-}
-
-#nav{
-position:absolute;
-right:0px;
-top:26px;
-font-size:16px;
-z-index:90;
-white-space:nowrap;
-text-align:right;
-}
-
-#nav .nav_item{
-display:inline-block;
-position:relative;
-padding:3px 8px 2px 8px;
-margin-left:10px;
-color:#fff;
-text-decoration:none;
-cursor:pointer
-}
-
-#nav .nav_item img {
-vertical-align:middle;
-}
-
-#nav .nav_item:hover{
-color:#dde7f0;
-}
-
-#nav .nav_item:hover img {
-opacity:0.75;
-}
-
-#nav .nav_item .nav_item_nipple{
-position:absolute;
-left:0;
-right:0;
-bottom:-6px;
-height:6px;
-background:top center no-repeat;
-display:none
-}
-
-#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel{
-margin:0 auto;
-height:1px;
-background:#1f354c
-}
-
-#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_1{
-width:11px
-}
-
-#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_2{
-width:9px
-}
-
-#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_3{
-width:7px
-}
-
-#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_4{
-width:5px
-}
-
-#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_5{
-width:3px
-}
-
-#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_6{
-width:1px
-}
-
-#nav .nav_item.active{
-background-color:#1f354c
-}
-
-#nav .nav_item.active .nav_item_nipple{
-display:block
-}
-
-#nav #close_nav {
-padding:0;
-margin:4px 8px 2px 10px;
-}
-
-#nav #close_nav img {
-vertical-align:1px;
-opacity:0.5;
-}
-
-#nav #close_nav:hover img {
-opacity:1;
-}
-
-#content{
-background:#2c4762;
-padding:20px;
--webkit-border-radius:15px;
--moz-border-radius:15px;
-border-radius:15px
-}
-
-#posts{
-list-style-type:none;
-margin:0 0 0 85px;
-padding:0
-}
-
-#posts .post{
-margin:20px 0 0 0;
--webkit-border-radius:10px;
--moz-border-radius:10px;
-border-radius:10px;
-background-color:#fff;
-padding:15px 20px 15px 20px;
-position:relative;
-border-bottom:solid 2px #bbb;
-word-wrap:break-word
-}
-
-#posts .post img{
-max-width:100%
-}
-
-#posts .post p,#posts .post ul,#posts .post ol{
-margin:10px 0
-}
-
-#posts .post p:last-child,#posts .post ul:last-child,#posts .post ol:last-child{
-margin-bottom:0
-}
-
-#posts .post ul{
-list-style-type:disc
-}
-
-#posts .post li{
-margin:0
-}
-
-#posts .post .post_avatar{
-display:block;
-width:64px;
-height:64px;
-position:absolute;
-left:-85px;
-top:0;
-overflow:hidden;
--webkit-border-radius:6px;
--moz-border-radius:6px;
-border-radius:6px;
-text-decoration:none;
-border-bottom:solid 1px #0a2939;
-background:#0a2939 no-repeat top right
-}
-
-#posts .post .arrow{
-width:8px;
-height:15px;
-position:absolute;
-left:-7px;
-top:25px;
-background:url('images/post_nipple.png') no-repeat transparent
-}
-
-#posts .post .post_info,#posts .post .post_controls{
-font:bold 13px Arial,Helvetica;
-color:#a8b1ba;
-min-height:16px;
-margin-bottom:15px;
-line-height:15px
-}
-
-#posts .post .post_info a,#posts .post .post_controls a{
-color:#a8b1ba;
-text-decoration:none
-}
-
-#posts .post .post_info a:hover{
-text-decoration:underline
-}
-
-#posts .post .post_content *:first-child{
-margin-top:0!important
-}
-
-#posts .post .post_content *:last-child{
-margin-bottom:0!important
-}
-
-#posts .post .post_title{
-font:bold 22px Arial,Helvetica;
-line-height:40px;
-height:40px;
-margin-bottom:10px
-}
-
-.toggler {
-cursor:pointer;
-float:right;
-}
-
-.new_post_notice{
-position:absolute;
-left:80px;
-top:10px;
-display:block;
-font:bold 14px Arial,sans-serif;
-text-decoration:none;
-background:#e53f29;
-color:#fff;
-padding:3px 7px;
-border-right:1px solid #3c444c;
-border-bottom:1px solid #3c444c;
--webkit-border-radius:5px;
--moz-border-radius:5px;
-border-radius:5px
-}
-
-.new_post_notice .new_post_notice_nipple{
-position:absolute;
-bottom:-7px;
-left:7px;
-width:8px;
-height:7px;
-background:url('images/new_post_nipple.png') no-repeat transparent
-}
-
-form table td {
-vertical-align:top;
-}
-
-#dashboard_posts, #posting_posts, #social_posts {
-display:none;
-}
-
-.options_table {
-clear:both;
-}
-
-.options_table td {
-vertical-align:middle;
-padding:10px 12px 10px 10px;
-}
-
-td.subopt {
-background:transparent url('images/subopt.png') no-repeat center center;
-padding:0;
-width:32px;
-opacity:0.65;
-}
-
-tr:hover td.subopt {
-opacity:1.0;
-}
-
-.options_table .odd {
-background-color:#ECECEC;
-}
-
-.options_table .even {
-background-color:#F4F4F4;
-}
-
-td.even + td.even, td.odd + td.odd {
-text-align:center;
-}
-
-#experimental_section {
-display:none;
-}
-
-#experimental_section .experimental_title {
-text-align:right;
-float:right;
-opacity:0.2;
-}
-
-#experimental_section .experimental_title:hover {
-opacity:1;
-}
-
-#experimental_section .experimental_title * {
-vertical-align:middle;
-}
-
-#experimental_section .experimental_switch {
-display:inline-block;
-padding:10px;
-border-radius:10px;
-background-color:white;
-margin-right:-10px;
-}
-
-#experimental_section .experimental_switch img {
-height:20px;
-}
-
-.options_table td.experimental {
-display:none;
-background-image:url('images/exp_bg.png');
-}
-
-td.input_left {
-text-align:left !important;
-}
-
-table.subnotes {
-padding-left:20px;
-font-size:80%;
-border-collapse:collapse;
-margin-top:10px;
-}
-
-table.subnotes .label {
-font-weight:bold;
-padding-right:5px
-padding-left:10px;
-border-top:1px solid #eee;
-border-bottom:1px solid #eee;
-}
-
-table.subnotes .desc {
-font-style:italic;
-border-top:1px solid #eee;
-border-bottom:1px solid #eee;
-}
-
-td.odd table.subnotes .label, td.odd table.subnotes .desc {
-border-top:1px solid #f6f6f6;
-border-bottom:1px solid #f6f6f6;
-}
-
-span.resetter {
-text-decoration:underline;
-cursor:pointer;
-font-size:80%;
-}
-
-div.post_thumb {
-float:right;
-margin:-40px 5px 10px 2px;
-font-weight:bold;
-font-size:80%;
-text-align:center;
-background-color:#CCC;
-padding:4px 4px 2px;
-min-width:66px;
-}
-
-div.post_thumb a {
-display:block;
-width:100%;
-text-decoration:none;
-}
-
-div.post_thumb a:hover {
-font-style:italic;
-}
-
-li#about_section p {
-text-align:center;
-border-top:1px solid #CCC;
-padding-top:10px;
-}
-
-li#about_section p.first {
-border-top:0;
-padding-top:0;
-}
-
-input.numinput {
-text-align:right;
-}
-
-#inclusions {
-margin-top:60px;
-text-align:center;
-font-style:italic;
-}
-
-#inclusions img {
-vertical-align:middle;
-}
-
-#inclusions a {
-margin:0 20px;
-}
-
-#devpage {
-text-align:right;
-}
-
-#devpage a {
-color:white;
-}
-
-img.spinner {
-margin-left:-1px !important;
-vertical-align:top !important;
-}
-
-#version {
-float:right;
-font-style:italic;
-}
-
-.stamp_sample {
-font-size:13px;
-}
-
-.stamp_label {
-font-style:italic;
-font-size:11px;
-margin-top:5px;
-}
-
-#ignoreDiv {
-display:none;
-}
-
-.ignorelist table {
-border-collapse:collapse;
-margin:0 auto;
-}
-
-.ignorelist table tr:first-child td {
-border-top:1px solid #444;
-}
-
-.ignorelist table td:last-child {
-text-align:right;
-}
-
-.ignorelist table td {
-font-size:13px;
-padding:0 5px;
-}
-
-.ignorelist table td:first-child {
-padding:0 10px;
-}
-
-.ignorelist table td button {
-font-size:11px;
-}
-
-.ignorelist table td.greyrow {
-background-color:#DDD;
-}
-
-.ignorelist table td.bottomrow {
-border-top:1px solid #444;
-padding-top:6px;
-text-align:center;
-}
-</style>
-<script type="text/javascript" src="common/jquery.min.js"></script>
-<script type="text/javascript" src="common/defs.js"></script>
-<script type="text/javascript" src="common/utils.js"></script>
-<link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css" />
-<script type="text/javascript" src="facebox/facebox.js"></script>
-<link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css" />
-<link rel="stylesheet" type="text/css" href="dashboardFixes/replaceIcons.css" />
-<script type="text/javascript" src="jquery-spin/jquery-spin.js"></script>
-<style type="text/css">
-#posts .post .MissingE_post_control {
-background-image:url("dashboardFixes/icon_replacements.png");
-}
-</style>
-<script type="text/javascript" src="checkbox/jquery.checkbox.min.js"></script>
-<script type="text/javascript">
-<!--
-jQuery(document).ready(function($) {
-   chrome.extension.sendRequest({greeting: "close-options"});
-   $('a[rel*=facebox]').facebox({
-      loadingImage : 'facebox/loading.gif',
-      closeImage   : 'facebox/closelabel.png'
-   });
-   loadSettings();
-   $('input.toggler').checkbox();
-   $('input.retryinput').spin({
-         min:minRetries,
-         max:maxRetries,
-         timeInterval:100,
-         lock:true,
-         btnClass:'spinner'
-   });
-   $('input.timeoutinput').spin({
-         min:minTimeout,
-         max:maxTimeout,
-         timeInterval:100,
-         lock:true,
-         btnClass:'spinner'
-   });
-});
-
-var componentList = ["dashboardFixes",
-                     "bookmarker",
-                     "dashLinksToTabs",
-                     "safeDash",
-                     "timestamps",
-                     "magnifier",
-                     "betterReblogs",
-                     "gotoDashPost",
-                     "postingFixes",
-                     "reblogYourself",
-                     "askFixes",
-                     "followChecker",
-                     "postCrushes",
-                     "replyReplies",
-                     "unfollower"];
-
-function getStorage(key,defaultValue) {
-   if (localStorage[key] == undefined)
-      return defaultValue;
-   else
-      return localStorage[key];
-}
-
-function setStorage(key,value) {
-   localStorage[key] = value;
-}
-
-function parseNames(st) {
-   if (!st || st.length === 0) {
-      return [];
-   }
-   return st.split(',').sort();
-}
-
-function serializeNames(arr) {
-   return arr.sort().join(',');
-}
-
-function trim(str) {
-   return str.replace(/^\s+/,'').replace(/\s+$/,'');
-}
-
-function doKeyUp(obj, isNumber, defaultValue, min, max) {
-   var key = window.event.which;
-   if (key < 33 || key > 46)
-      doSetting(obj, isNumber, defaultValue, min, max);
-}
-
-function doSetting(obj, isNumber, defaultValue, min, max) {
-   if (obj.type == "checkbox")
-      setStorage(obj.name, (obj.checked ? 1 : 0));
-   else if (obj.type == "radio")
-      setStorage(obj.name, (obj.value));
-   else if (obj.type == "text") {
-      if (isNumber) {
-         obj.value = trim(obj.value);
-         if (/[^0-9]/.test(obj.value)) {
-            obj.value = getStorage(obj.name, defaultValue);
-         }
-         else {
-            var num;
-            if (obj.value == '') num = min;
-            else num = parseInt(obj.value);
-            if (num < min) num = min;
-            if (num > max) num = max;
-            obj.value = num;
-            setStorage(obj.name, num);
-         }
-      }
-      else if (obj.name === 'MissingE_askFixes_defaultTags') {
-         var val = trim(obj.value);
-         val = val.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,', ')
-                  .replace(/,\s*$/,'').replace(/^\s*/,'').replace(/\s*$/,'');
-         obj.value = val;
-         setStorage(obj.name, obj.value);
-      }
-      else {
-         setStorage(obj.name, (obj.value));
-      }
-   }
-   if (obj.name === 'MissingE_bookmarker_format') {
-      $('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', obj.value));
-   }
-   else if (obj.name === 'MissingE_timestamps_format') {
-      $('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), obj.value));
-   }
-}
-
-function loadCheck(f, i, def) {
-   if (getStorage(i,def) == 1) { f[i].checked = true; }
-   else { f[i].checked = false; }
-}
-
-function loadSettings() {
-   $('span.defRetries').text(defaultRetries);
-   $('#versionnum').text(getStorage('MissingE_version',''));
-   var exp = document.getElementById("experimentalFeatures_options").active;
-   if (getStorage('MissingE_experimentalFeatures_enabled', 0) == 1) {
-      exp.checked = true;
-      $('#posts td.experimental').show();
-   }
-   else {
-      exp.checked = false;
-      $('#posts td.experimental').hide();
-   }
-   for (i in componentList) {
-      var v = componentList[i];
-      var frm = document.getElementById(v + "_options");
-      var active = frm.active;
-      if (getStorage('MissingE_' + v + '_enabled', 1) == 1) {
-         active.checked = true;
-      }
-      else {
-         active.checked = false;
-      }
-      if (v == "askFixes") {
-         loadCheck(frm,'MissingE_askFixes_scroll',1);
-         loadCheck(frm,'MissingE_askFixes_buttons',0);
-         loadCheck(frm,'MissingE_askFixes_tags',0);
-         loadCheck(frm,'MissingE_askFixes_tagAsker',1);
-         frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
-      }
-      if (v == "dashLinksToTabs") {
-         loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
-         loadCheck(frm,'MissingE_dashLinksToTabs_sidebar',0);
-         loadCheck(frm,'MissingE_dashLinksToTabs_reblogLinks',0);
-         loadCheck(frm,'MissingE_dashLinksToTabs_editLinks',0);
-      }
-      else if (v == "magnifier") {
-         frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
-      }
-      else if (v == "bookmarker") {
-         var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
-         frm.MissingE_bookmarker_format.value = bmFormat;
-         $('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
-      }
-      else if (v == "timestamps") {
-         frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
-         var tsFormat = getStorage('MissingE_timestamps_format',defaultFormat);
-         frm.MissingE_timestamps_format.value = tsFormat;
-         $('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), tsFormat));
-      }
-      else if (v == "postCrushes") {
-         if (getStorage('MissingE_postCrushes_crushSize',1) == 1)
-            document.getElementById("MissingE_postCrushes_crushSize_small").checked = true;
-         else
-            document.getElementById("MissingE_postCrushes_crushSize_large").checked = true;
-         loadCheck(frm,'MissingE_postCrushes_addTags',1);
-         loadCheck(frm,'MissingE_postCrushes_showPercent',1);
-         frm.MissingE_postCrushes_prefix.value = getStorage('MissingE_postCrushes_prefix',"Tumblr Crushes:");
-      }
-      else if (v == "replyReplies") {
-         if (getStorage('MissingE_replyReplies_smallAvatars',1) == 1)
-            document.getElementById("MissingE_replyReplies_smallAvatars_small").checked = true;
-         else
-            document.getElementById("MissingE_replyReplies_smallAvatars_large").checked = true;
-         loadCheck(frm,'MissingE_replyReplies_showAvatars',1);
-         loadCheck(frm,'MissingE_replyReplies_addTags',1);
-         loadCheck(frm,'MissingE_replyReplies_newTab',1);
-      }
-      else if (v == "dashboardFixes") {
-         loadCheck(frm,'MissingE_dashboardFixes_reblogQuoteFit',1);
-         loadCheck(frm,'MissingE_dashboardFixes_wrapTags',1);
-         loadCheck(frm,'MissingE_dashboardFixes_replaceIcons',1);
-         loadCheck(frm,'MissingE_dashboardFixes_timeoutAJAX',1);
-         frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
-         loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
-         loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
-         loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
-         loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
-         loadCheck(frm,'MissingE_dashboardFixes_followingLink',0);
-      }
-      else if (v == "betterReblogs") {
-         loadCheck(frm,'MissingE_betterReblogs_passTags',1);
-         loadCheck(frm,'MissingE_betterReblogs_autoFillTags',1);
-         loadCheck(frm,'MissingE_betterReblogs_quickReblog',0);
-         frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
-         if (getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
-            document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;
-         else
-            document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Primary').checked = true;
-         frm.MissingE_betterReblogs_quickReblogAcctName.value = getStorage('MissingE_betterReblogs_quickReblogAcctName','');
-      }
-      else if (v == "postingFixes") {
-         loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
-         loadCheck(frm,'MissingE_postingFixes_uploaderToggle',1);
-         loadCheck(frm,'MissingE_postingFixes_addUploader',1);
-         loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
-         loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
-      }
-      else if (v == "reblogYourself") {
-         loadCheck(frm,'MissingE_reblogYourself_postPage',1);
-         loadCheck(frm,'MissingE_reblogYourself_dashboard',1);
-         frm.MissingE_reblogYourself_retries.value = getStorage('MissingE_reblogYourself_retries',defaultRetries);
-      }
-      else if (v == "unfollower") {
-         frm.MissingE_unfollower_retries.value = getStorage('MissingE_unfollower_retries',defaultRetries);
-      }
-      else if (v == "followChecker") {
-         frm.MissingE_followChecker_retries.value = getStorage('MissingE_followChecker_retries',defaultRetries);
-      }
-   }
-}
-
-function resetPrefix() {
-   var prefix = document.getElementById("postCrushes_options").MissingE_postCrushes_prefix;
-   prefix.value = "Tumblr Crushes:";
-   doSetting(prefix, false);
-}
-
-function resetRetries(obj) {
-   var input = $(obj).siblings('input:text');
-   input.val(defaultRetries);
-   doSetting(input.get(0), true, defaultRetries, minRetries, maxRetries);
-}
-
-function resetTimeout(obj) {
-   var input = $(obj).siblings('input:text');
-   input.val(defaultTimeout);
-   doSetting(input.get(0), true, defaultTimeout, minTimeout, maxTimeout);
-}
-
-function toggle(obj) {
-   var frm = $(obj).closest("form");
-   var component = frm.attr("id").match(/^[a-zA-Z]+/)[0];
-   if (frm.get(0).active.checked) {
-      setStorage('MissingE_' + component + '_enabled', 1);
-      if (component == 'experimentalFeatures') {
-         $('#posts td.experimental').show();
-      }
-   }
-   else {
-      setStorage('MissingE_' + component + '_enabled', 0);
-      if (component == 'experimentalFeatures') {
-         $('#posts td.experimental').hide();
-      }
-   }
-}
-
-function doshow(component) {
-   var itm;
-   if (component == 'about') {
-      document.getElementById('about_nav').className = 'nav_item active';
-      document.getElementById('about_posts').style.display = 'block';
-      document.getElementById('experimental_section').style.display = 'none';
-   }
-   else {
-      document.getElementById('about_nav').className = 'nav_item';
-      document.getElementById('about_posts').style.display = 'none';
-      document.getElementById('experimental_section').style.display = 'block';
-   }
-   if (component == 'dashboard') {
-      document.getElementById('dashboard_nav').className = 'nav_item active';
-      document.getElementById('dashboard_posts').style.display = 'block';
-   }
-   else {
-      document.getElementById('dashboard_nav').className = 'nav_item';
-      document.getElementById('dashboard_posts').style.display = 'none';
-   }
-   if (component == 'posting') {
-      document.getElementById('posting_nav').className = 'nav_item active';
-      document.getElementById('posting_posts').style.display = 'block';
-   }
-   else {
-      document.getElementById('posting_nav').className = 'nav_item';
-      document.getElementById('posting_posts').style.display = 'none';
-   }
-   if (component == 'social') {
-      document.getElementById('social_nav').className = 'nav_item active';
-      document.getElementById('social_posts').style.display = 'block';
-   }
-   else {
-      document.getElementById('social_nav').className = 'nav_item';
-      document.getElementById('social_posts').style.display = 'none';
-   }
-}
-
-$('#unfollower_ignore_btn').live('click', function() {
-   if ($('#ignoreDiv').length === 0) {
-      $('body').append('<div id="ignoreDiv"></div>');
-   }
-   var i;
-   var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
-   var igtext = '<p>Tumblr accounts ignored by ' +
-               '<strong>Unfollower</strong>:</p>' +
-               '<table border="0">';
-   for (i=0; i<list.length; i++) {
-      var klass = (i%2==1 ? 'class="greyrow"' : '');
-      igtext += '<tr><td ' + klass + '>' + list[i] + '</td>' +
-                  '<td ' + klass + '><button type="button" acct="' +
-                  list[i] + '" class="remignore"><span>Remove</span>' +
-                  '</button></td></tr>';
-   }
-   igtext += '<tr><td class="bottomrow" colspan="2"><button type="button" ' +
-               'class="addignore"><span>Add Ignore...</span></button>' +
-               '</td></tr></table>';
-   $('#ignoreDiv').html(igtext);
-   $.facebox({ div: '#ignoreDiv' }, 'ignorelist');
-});
-
-$('#facebox button').live('click', function() {
-   if (this.className === 'remignore') {
-      var acct = $(this).attr('acct');
-      var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
-      var idx = $.inArray(acct, list);
-      if (idx >= 0) {
-         list.splice(idx,1);
-         setStorage('MissingE_unfollower_ignore',serializeNames(list));
-      }
-      $(this).closest('tr').remove();
-      $('#facebox table tr:even td').removeClass('greyrow');
-      $('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
-   }
-   else if (this.className === 'addignore') {
-      var acct = prompt("Enter a Tumblr username for Unfollower to ignore",'');
-      if (acct) { acct = trim(acct.toLowerCase()); }
-      if (acct && acct !== '' && !(/[^0-9a-zA-Z\-]/.test(acct))) {
-         var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
-         if ($.inArray(acct,list) !== -1) {
-            return;
-         }
-         list.push(acct);
-         list.sort();
-         var idx = $.inArray(acct,list);
-         setStorage('MissingE_unfollower_ignore',serializeNames(list));
-         if (idx >= 0) {
-            $('#facebox table tr:eq(' + idx + ')')
-              .before('<tr><td>' + acct + '</td><td><button type="button" ' +
-                      'acct="' + acct + '" class="remignore"><span>Remove' +
-                      '</span></button></td></tr>');
-            $('#facebox table tr:even td').removeClass('greyrow');
-            $('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
-         }
-      }
-   }
-});
--->
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>
+			Missing e - Settings
+		</title>
+		<style type="text/css">
+/*<![CDATA[*/
+		body{
+		background:#2c4762 url('images/background.png') top repeat-x;
+		font:normal 14px Arial,Helvetica,sans-serif;
+		line-height:1.4;
+		color:#444;
+		margin:0;
+		padding:0
+		}
+
+		a img{
+		border-width:0
+		}
+
+		a{
+		color:#444
+		}
+
+		p,ul,blockquote{
+		margin-top:20px;
+		margin-bottom:20px
+		}
+
+		ul ul,ul ol,ol ul,ol ol{
+		margin:5px 0
+		}
+
+		form{
+		margin:0;
+		padding:0;
+		display:inline
+		}
+
+		*,*:active,*:focus{
+		outline:0;
+		outline-style:none;
+		outline-width:0;
+		-moz-outline-width:0
+		}
+
+		.clear{
+		clear:both;
+		height:0;
+		overflow:hidden
+		}
+
+		input,select{
+		font:normal 13px 'Lucida Grande',Helvetica,Arial,sans-serif;
+		color:#444
+		}
+
+		select{
+		border:solid 1px #bbb
+		}
+
+		input.text_field,textarea{
+		border:solid 1px #bbb;
+		padding:7px;
+		font:normal 13px 'Lucida Grande',Helvetica,Arial,sans-serif;
+		color:#222;
+		background:#fff url('/images/input_bg.gif') repeat-x top;
+		outline:0;
+		margin:0;
+		border:solid 1px #bbb
+		}
+
+		input.text_field:disabled,textarea:disabled{
+		background:#f5f5f5
+		}
+
+		input.text_field.big{
+		font-size:24px
+		}
+
+		input.text_field.huge{
+		border-color:#bbb;
+		font:normal 50px Georgia;
+		-webkit-border-radius:8px;
+		-moz-border-radius:8px;
+		border-radius:8px
+		}
+
+		input.text_field.huge:focus{
+		background:#f3faff url('/images/input_highlight_bg.png') top repeat-x;
+		border-color:#b7c7d3
+		}
+
+		#container{
+		width:900px;
+		margin:auto;
+		padding:0 30px
+		}
+
+		#header{
+		height:80px;
+		position:relative;
+		z-index:80
+		}
+
+		#logo{
+		width:66px;
+		height:48px;
+		position:absolute;
+		left:15px;
+		top:16px;
+		}
+
+		#nav{
+		position:absolute;
+		right:0px;
+		top:26px;
+		font-size:16px;
+		z-index:90;
+		white-space:nowrap;
+		text-align:right;
+		}
+
+		#nav .nav_item{
+		display:inline-block;
+		position:relative;
+		padding:3px 8px 2px 8px;
+		margin-left:10px;
+		color:#fff;
+		text-decoration:none;
+		cursor:pointer
+		}
+
+		#nav .nav_item img {
+		vertical-align:middle;
+		}
+
+		#nav .nav_item:hover{
+		color:#dde7f0;
+		}
+
+		#nav .nav_item:hover img {
+		opacity:0.75;
+		}
+
+		#nav .nav_item .nav_item_nipple{
+		position:absolute;
+		left:0;
+		right:0;
+		bottom:-6px;
+		height:6px;
+		background:top center no-repeat;
+		display:none
+		}
+
+		#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel{
+		margin:0 auto;
+		height:1px;
+		background:#1f354c
+		}
+
+		#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_1{
+		width:11px
+		}
+
+		#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_2{
+		width:9px
+		}
+
+		#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_3{
+		width:7px
+		}
+
+		#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_4{
+		width:5px
+		}
+
+		#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_5{
+		width:3px
+		}
+
+		#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_6{
+		width:1px
+		}
+
+		#nav .nav_item.active{
+		background-color:#1f354c
+		}
+
+		#nav .nav_item.active .nav_item_nipple{
+		display:block
+		}
+
+		#nav #close_nav {
+		padding:0;
+		margin:4px 8px 2px 10px;
+		}
+
+		#nav #close_nav img {
+		vertical-align:1px;
+		opacity:0.5;
+		}
+
+		#nav #close_nav:hover img {
+		opacity:1;
+		}
+
+		#content{
+		background:#2c4762;
+		padding:20px;
+		-webkit-border-radius:15px;
+		-moz-border-radius:15px;
+		border-radius:15px
+		}
+
+		#posts{
+		list-style-type:none;
+		margin:0 0 0 85px;
+		padding:0
+		}
+
+		#posts .post{
+		margin:20px 0 0 0;
+		-webkit-border-radius:10px;
+		-moz-border-radius:10px;
+		border-radius:10px;
+		background-color:#fff;
+		padding:15px 20px 15px 20px;
+		position:relative;
+		border-bottom:solid 2px #bbb;
+		word-wrap:break-word
+		}
+
+		#posts .post img{
+		max-width:100%
+		}
+
+		#posts .post p,#posts .post ul,#posts .post ol{
+		margin:10px 0
+		}
+
+		#posts .post p:last-child,#posts .post ul:last-child,#posts .post ol:last-child{
+		margin-bottom:0
+		}
+
+		#posts .post ul{
+		list-style-type:disc
+		}
+
+		#posts .post li{
+		margin:0
+		}
+
+		#posts .post .post_avatar{
+		display:block;
+		width:64px;
+		height:64px;
+		position:absolute;
+		left:-85px;
+		top:0;
+		overflow:hidden;
+		-webkit-border-radius:6px;
+		-moz-border-radius:6px;
+		border-radius:6px;
+		text-decoration:none;
+		border-bottom:solid 1px #0a2939;
+		background:#0a2939 no-repeat top right
+		}
+
+		#posts .post .arrow{
+		width:8px;
+		height:15px;
+		position:absolute;
+		left:-7px;
+		top:25px;
+		background:url('images/post_nipple.png') no-repeat transparent
+		}
+
+		#posts .post .post_info,#posts .post .post_controls{
+		font:bold 13px Arial,Helvetica;
+		color:#a8b1ba;
+		min-height:16px;
+		margin-bottom:15px;
+		line-height:15px
+		}
+
+		#posts .post .post_info a,#posts .post .post_controls a{
+		color:#a8b1ba;
+		text-decoration:none
+		}
+
+		#posts .post .post_info a:hover{
+		text-decoration:underline
+		}
+
+		#posts .post .post_content *:first-child{
+		margin-top:0!important
+		}
+
+		#posts .post .post_content *:last-child{
+		margin-bottom:0!important
+		}
+
+		#posts .post .post_title{
+		font:bold 22px Arial,Helvetica;
+		line-height:40px;
+		height:40px;
+		margin-bottom:10px
+		}
+
+		.toggler {
+		cursor:pointer;
+		float:right;
+		}
+
+		.new_post_notice{
+		position:absolute;
+		left:80px;
+		top:10px;
+		display:block;
+		font:bold 14px Arial,sans-serif;
+		text-decoration:none;
+		background:#e53f29;
+		color:#fff;
+		padding:3px 7px;
+		border-right:1px solid #3c444c;
+		border-bottom:1px solid #3c444c;
+		-webkit-border-radius:5px;
+		-moz-border-radius:5px;
+		border-radius:5px
+		}
+
+		.new_post_notice .new_post_notice_nipple{
+		position:absolute;
+		bottom:-7px;
+		left:7px;
+		width:8px;
+		height:7px;
+		background:url('images/new_post_nipple.png') no-repeat transparent
+		}
+
+		form table td {
+		vertical-align:top;
+		}
+
+		#dashboard_posts, #posting_posts, #social_posts {
+		display:none;
+		}
+
+		.options_table {
+		clear:both;
+		}
+
+		.options_table td {
+		vertical-align:middle;
+		padding:10px 12px 10px 10px;
+		}
+
+		td.subopt {
+		background:transparent url('images/subopt.png') no-repeat center center;
+		padding:0;
+		width:32px;
+		opacity:0.65;
+		}
+
+		tr:hover td.subopt {
+		opacity:1.0;
+		}
+
+		.options_table .odd {
+		background-color:#ECECEC;
+		}
+
+		.options_table .even {
+		background-color:#F4F4F4;
+		}
+
+		td.even + td.even, td.odd + td.odd {
+		text-align:center;
+		}
+
+		#experimental_section {
+		display:none;
+		}
+
+		#experimental_section .experimental_title {
+		text-align:right;
+		float:right;
+		opacity:0.2;
+		}
+
+		#experimental_section .experimental_title:hover {
+		opacity:1;
+		}
+
+		#experimental_section .experimental_title * {
+		vertical-align:middle;
+		}
+
+		#experimental_section .experimental_switch {
+		display:inline-block;
+		padding:10px;
+		border-radius:10px;
+		background-color:white;
+		margin-right:-10px;
+		}
+
+		#experimental_section .experimental_switch img {
+		height:20px;
+		}
+
+		.options_table td.experimental {
+		display:none;
+		background-image:url('images/exp_bg.png');
+		}
+
+		td.input_left {
+		text-align:left !important;
+		}
+
+		table.subnotes {
+		padding-left:20px;
+		font-size:80%;
+		border-collapse:collapse;
+		margin-top:10px;
+		}
+
+		table.subnotes .label {
+		font-weight:bold;
+		padding-right:5px
+		padding-left:10px;
+		border-top:1px solid #eee;
+		border-bottom:1px solid #eee;
+		}
+
+		table.subnotes .desc {
+		font-style:italic;
+		border-top:1px solid #eee;
+		border-bottom:1px solid #eee;
+		}
+
+		td.odd table.subnotes .label, td.odd table.subnotes .desc {
+		border-top:1px solid #f6f6f6;
+		border-bottom:1px solid #f6f6f6;
+		}
+
+		span.resetter {
+		text-decoration:underline;
+		cursor:pointer;
+		font-size:80%;
+		}
+
+		div.post_thumb {
+		float:right;
+		margin:-40px 5px 10px 2px;
+		font-weight:bold;
+		font-size:80%;
+		text-align:center;
+		background-color:#CCC;
+		padding:4px 4px 2px;
+		min-width:66px;
+		}
+
+		div.post_thumb a {
+		display:block;
+		width:100%;
+		text-decoration:none;
+		}
+
+		div.post_thumb a:hover {
+		font-style:italic;
+		}
+
+		li#about_section p {
+		text-align:center;
+		border-top:1px solid #CCC;
+		padding-top:10px;
+		}
+
+		li#about_section p.first {
+		border-top:0;
+		padding-top:0;
+		}
+
+		input.numinput {
+		text-align:right;
+		}
+
+		#inclusions {
+		margin-top:60px;
+		text-align:center;
+		font-style:italic;
+		}
+
+		#inclusions img {
+		vertical-align:middle;
+		}
+
+		#inclusions a {
+		margin:0 20px;
+		}
+
+		#devpage {
+		text-align:right;
+		}
+
+		#devpage a {
+		color:white;
+		}
+
+		img.spinner {
+		margin-left:-1px !important;
+		vertical-align:top !important;
+		}
+
+		#version {
+		float:right;
+		font-style:italic;
+		}
+
+		.stamp_sample {
+		font-size:13px;
+		}
+
+		.stamp_label {
+		font-style:italic;
+		font-size:11px;
+		margin-top:5px;
+		}
+
+		#ignoreDiv {
+		display:none;
+		}
+
+		.ignorelist table {
+		border-collapse:collapse;
+		margin:0 auto;
+		}
+
+		.ignorelist table tr:first-child td {
+		border-top:1px solid #444;
+		}
+
+		.ignorelist table td:last-child {
+		text-align:right;
+		}
+
+		.ignorelist table td {
+		font-size:13px;
+		padding:0 5px;
+		}
+
+		.ignorelist table td:first-child {
+		padding:0 10px;
+		}
+
+		.ignorelist table td button {
+		font-size:11px;
+		}
+
+		.ignorelist table td.greyrow {
+		background-color:#DDD;
+		}
+
+		.ignorelist table td.bottomrow {
+		border-top:1px solid #444;
+		padding-top:6px;
+		text-align:center;
+		}
+		/*]]>*/
+		</style>
+		<script type="text/javascript" src="common/jquery.min.js">
 </script>
-</head>
-<body id="MissingE_settings">
-<div id="container">
-<div id="header_container">
-<div id="header">
-<a href="#" onclick="doshow('about');return false;"><img src="missinge_logo.png" alt="Missing e" id="logo" /></a>
-<div id="nav">
-<a href="#" class="nav_item active" id="about_nav" onclick="doshow('about');return false;">
-<div>About</div>
-<div class="nav_item_nipple">
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_1"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_2"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_3"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_4"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_5"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
-</div>
-</a>
-<a target="_blank" class="nav_item" href="http://missinge.infraware.ca/faq">FAQ <img src="images/external_link.gif" alt="FAQ on external site" /></a>
-<a href="#" class="nav_item" id="dashboard_nav" onclick="doshow('dashboard');return false;">
-<div>Dashboard Features</div>
-<div class="nav_item_nipple">
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_1"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_2"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_3"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_4"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_5"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
-</div>
-</a>
-<a href="#" class="nav_item" id="posting_nav" onclick="doshow('posting');return false;">
-<div>Post Features</div>
-<div class="nav_item_nipple">
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_1"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_2"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_3"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_4"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_5"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
-</div>
-</a>
-<a href="#" class="nav_item" id="social_nav" onclick="doshow('social');return false;">
-<div>Social Features</div>
-<div class="nav_item_nipple">
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_1"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_2"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_3"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_4"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_5"></div>
-<div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
-</div>
-</a>
-<a href="#" class="nav_item" id="close_nav" onclick="window.close();return false;">
-<img src="images/close.png" alt="Close Settings" />
-</a>
-</div>
-<div id="new_post_notice_container">
-<a href="#" class="new_post_notice" onclick="doshow('about');return false;">Settings<div class="new_post_notice_nipple"></div></a>
-</div>
-</div>
-</div>
-<div id="content">
-<div id="experimental_section">
-<form id="experimentalFeatures_options">
-<div class="experimental_title"><div class="experimental_switch"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" value="1" /></div><img src="images/flask.png" alt="Experimental Features" title="Experimental Features" /></div>
-<div class="clear"></div>
-</form>
-</div>
-<div id="right_column"></div>
-<div id="left_column">
-<ol id="posts">
-<div id="about_posts">
-<li id="about_section" class="post not_mine regular">
-<div class="post_content">
-<div id="version"><small>version</small> <span id="versionnum"></span></div>
-<div class="post_title">About 'Missing e'</div>
-<p class="first"><strong><big><em><a target="_blank" href="http://missinge.infraware.ca">Missing e</a></em></big></strong> is a set of tools, features and interface changes for <em>Tumblr</em>. What started out as a bunch of <a target="_blank" href="http://userscripts.org/users/113977">userscripts</a> has now been incorporated into this Google Chrome extension!<br /><br />
-If you enjoy this extension, please consider <a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8">donating</a> to support future development<br />
-<a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8"><img src="images/pledgie.png" border="0" alt="Support development by donating to Missing e! [PayPal]"></a></p>
-<p>Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br />Released under the <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL Version 3 License</a></p>
-<div id="inclusions">This extension uses some great tools:<br /><a href="http://www.jquery.com" title="jQuery 1.6.1" target="_blank"><img src="images/inclusions/jquery.png" alt="jQuery 1.6.1" /></a><a href="http://chriswanstrath.com/facebox" title="Facebox 1.3" target="_blank"><img src="images/inclusions/facebox.png" alt="Facebox 1.3" /></a><a href="http://widowmaker.kiev.ua/checkbox/" title="jQuery Checkbox 1.3.0" target="_blank"><img src="images/inclusions/checkbox.png" alt="jQuery Checkbox 1.3.0" /></a><a href="http://code.google.com/p/jquery-spin-button/" title="jQuery Spin button" target="_blank"><img src="images/inclusions/spin.png" alt="jQuery Spin button" /></a><a href="http://pixel-mixer.com/" title="Basic Set 1 & 2 icons by pixel-mixer" target="_blank"><img src="images/inclusions/box_48.png" alt="Basic Set 1 & 2 icons by pixel-mixer" /></a></div>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/cutlerish_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-</div>
-<div id="dashboard_posts">
-<li id="dashboardFixes_section" class="post not_mine regular">
-<div class="post_content">
-<form id="dashboardFixes_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dashboard Fixes</div>
-<div class="post_thumb"><a href="dashboardFixes/screen.png" rel="facebox"><img src="dashboardFixes/thumb.png" /><br />Screenshot</a></div>
-<p>A few convenient interface fixes for Tumblr dashboard pages.</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Show all tags for posts in the dashboard</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="odd">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="numinput timeoutinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" onchange="doSetting(this,true,defaultTimeout,minTimeout,maxTimeout);" onkeyup="doKeyUp(this,true,defaultTimeout,minTimeout,maxTimeout);" />&nbsp;<span class="resetter" onclick="resetTimeout(this)">Reset</span></td></tr>
-<tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Make the <em>Following</em> button on the Dashboard sidebar load your following list page (instead of reloading the Dashboard)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_followingLink" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="odd">Add a move to top of queue button in queued posts</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="even experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" onchange="doSetting(this,false);" /></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/dashboardFixes_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="bookmarker_section" class="post not_mine regular">
-<div class="post_content">
-<form id="bookmarker_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Bookmarker</div>
-<div class="post_thumb"><a href="bookmarker/screen.png" rel="facebox"><img src="bookmarker/thumb.png" /><br />Screenshot</a></div>
-<p>Add bookmarks to posts on your dashboard so you can go back to them later! <em>Bookmarker</em> adds a small bookmark button to posts, and a list of current bookmarks in your sidebar.</p>
-<ul><li>Hold down the shift key when clicking on a bookmark icon to create a new bookmark with a custom name.</li><li>Hold down the shift key when clicking on an existing bookmark to rename it.</li></ul>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Default bookmark label<br />
-<table class="subnotes"><tr><td class="label">%u</td><td class="desc">Poster's username</td></tr><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
-</td><td colspan="2" class="odd" style="vertical-align:top;"><input type="text" name="MissingE_bookmarker_format" style="width:200px;" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><div class="stamp_label">Sample:</div><div class="stamp_sample" id="MissingE_bookmarker_format_sample"></div></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/bookmarker_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="magnifier_section" class="post not_mine regular">
-<div class="post_content">
-<form id="magnifier_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Magnifier</div>
-<div class="post_thumb"><a href="magnifier/screen.jpg" rel="facebox"><img src="magnifier/thumb.jpg" /><br />Screenshot</a></div>
-<p>Add a small <img src="magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.</p><p><em>Magnifier</em> also works on photoset posts!</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" type="text" name="MissingE_magnifier_retries" value="4" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr></table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/magnifier_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="dashLinksToTabs_section" class="post not_mine regular">
-<div class="post_content">
-<form id="dashLinksToTabs_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dash Links to Tabs</div>
-<p><em>Dash Links to Tabs</em> forces all links in dashboard posts to open in a new tab. That way, you won't lose your place when you are scrolling in the dash.</p><p>Other links, such as the new post icons and the dashboard sidebar behave as you specify in these options.</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">New post buttons (text, photo, quote, etc.) at the top of the dashboard open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_newPostTabs" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Sidebar navigation menu items on the right side of the dashboard open in new tabs</td><td class="even"><input type="checkbox" name="MissingE_dashLinksToTabs_sidebar" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="odd">Reblog links on dashboard posts open in new tabs</td><td class="odd"><input type="checkbox" name="MissingE_dashLinksToTabs_reblogLinks" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Edit links on dashboard posts open in new tabs</td><td class="even"><input type="checkbox" name="MissingE_dashLinksToTabs_editLinks" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr></table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/dashLinksToTabs_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="safeDash_section" class="post not_mine regular">
-<div class="post_content">
-<form id="safeDash_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Safe Dash</div>
-<div class="post_thumb"><a href="safeDash/screen.png" rel="facebox"><img src="safeDash/thumb.png" /><br />Screenshot</a></div>
-<p>At work? Have kids about? <em>Safe Dash</em> will hide images in tumblr posts in case any of them are unsafe! Simply hover your mouse over the picture to reveal it. Turn <em>Safe Dash</em> on and off with a link in your dashboard sidebar! Turning <em>Safe Dash</em> off on this settings page will disable it completely.</p><p><strong>Note</strong>: Safe Dash is not effective for posts on a user's tumblr page, only on <strong>dashboard-like</strong> pages (ie. dashboard, tumblelog, likes, queue and drafts).</p><p><strong>These images are hidden:</strong></p>
-<ul><li>All image posts</li><li>All photoset thumbnails</li><li>Photosets that have been clicked (enlarged)</li><li>Inline images in other types of posts</li><li>Album art in audio posts</li><li>All video thumbnails</li><li>All full-size videos (except videos from external sites)</li></ul>
-<p><strong>These images are NOT hidden:</strong></p>
-<ul><li>All tumblr-generated user avatars</li><li>Externally-loaded videos (YouTube, Vimeo, etc)</li></ul>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/safeDash_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="timestamps_section" class="post not_mine regular">
-<div class="post_content">
-<form id="timestamps_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Timestamps</div>
-<p><em>Timestamps</em> will add the date and time of a post on your dashboard.</p><p><strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" size="1" type="text" name="MissingE_timestamps_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
-<tr><td colspan="2" class="even">Timestamp format<br />
-<table class="subnotes"><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
-</td><td colspan="2" class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" style="width:200px;" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><div class="stamp_label">Sample:</div><div class="stamp_sample" id="MissingE_timestamps_format_sample"></div></td></tr></table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/timestamps_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-</div>
-<div id="posting_posts">
-<li id="betterReblogs_section" class="post not_mine regular">
-<div class="post_content">
-<form id="betterReblogs_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Better Reblogs</div>
-<div class="post_thumb"><a href="betterReblogs/screen.png" rel="facebox"><img src="betterReblogs/thumb.png" /><br />Screenshot</a></div>
-<p>Additional features to make reblogging easier and more productive!</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Keep original post tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_passTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"><td class="even">Automatically add original tags to reblog post<br /><small><em>You can click on the </em>"Reblog Tags"<em> button to add the tags manually</em></small></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_autoFillTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
-<tr><td colspan="2" class="even">Quick (1-click) reblogging <em>(see screenshot)</em></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_quickReblog" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Tumblr blog to reblog with<br /><small>You must have posting privileges on the account you select.</small></td>
-<td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" onchange="doSetting(this,false);" /> Main Blog<br />
-<input id="MissingE_betterReblogs_quickReblogAcctType_Secondary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="1" onchange="doSetting(this,false);" /> Secondary Blog:
-<div style="text-align:right;padding-top:4px;"><input type="text" name="MissingE_betterReblogs_quickReblogAcctName" style="width:90%;margin-bottom:0;" maxlength="128" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><br /><small><em>Account Name</em></small></div></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/betterReblogs_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="gotoDashPost_section" class="post not_mine regular">
-<div class="post_content">
-<form id="gotoDashPost_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Goto Dash Post</div>
-<div class="post_thumb"><a href="gotoDashPost/screen.png" rel="facebox"><img src="gotoDashPost/thumb.png" /><br />Screenshot</a></div>
-<p>If you are on a tumblr post page and you want to jump directly to it on your dashboard so you can reply to it (assuming that the tumblr user's setup allows you to), <em>Goto Dash Post</em> is your best bet. A "goto dash" control button is added to individual post pages for you to use.</p>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/gotoDashPost_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="postingFixes_section" class="post not_mine regular">
-<div class="post_content">
-<form id="postingFixes_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Posting Fixes</div>
-<div class="post_thumb"><a href="postingFixes/screen.png" rel="facebox"><img src="postingFixes/thumb.png" /><br />Screenshot</a></div>
-<p>A few convenient interface fixes for new Tumblr posts.</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Allow switching back to uploading images on photo posts<br /><ul><li><small>By default, Tumblr allows you to switch to a URL with a "<em>Use a URL instead</em>" option, this will allow you to switch back with a "<em>Upload images instead</em>" option.</small></li></ul></td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="odd" colspan="2">Allow inline image uploading for all post types (not just text posts)<br /><ul><li><small>Adds an "<em><strong>+ Upload Photo</strong></em>" option to all posting pages (including the Tumblr <a href="http://www.tumblr.com/goodies" target="_blank">bookmarklet</a>)</small></li><li><small>Much like the built-in "<strong><em>+ Upload Photo</em></strong>" options, these don't always load when Tumblr is suffering from errors.</small></li></ul></td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_addUploader" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Add quick "<em>Queue Post</em>" and "<em>Save Draft</em>" buttons when posting (see screenshot)</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_quickButtons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="odd">Add extra <em>"Post to"</em> menu (for selecting Tumblr blog to post to) nearer to new post publish buttons (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_blogSelect" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/postingFixes_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="reblogYourself_section" class="post not_mine regular">
-<div class="post_content">
-<form id="reblogYourself_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Reblog Yourself</div>
-<p>Add reblogging functionality to your own tumblr posts, allowing you to <em>Reblog Yourself</em>.</p>
-<p><strong>Note</strong>: chat and ask posts are not normally rebloggable. <em>Reblog Yourself</em> will allow you to reblog them, but the formatting may look pretty bad.</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
-<tr><td colspan="2" class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
-<tr><td colspan="2" class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_reblogYourself_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/reblogYourself_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-</div>
-<div id="social_posts">
-<li id="askFixes_section" class="post not_mine regular">
-<div class="post_content">
-<form id="askFixes_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Ask Fixes</div>
-<div class="post_thumb"><a href="askFixes/screen.png" rel="facebox"><img src="askFixes/thumb.png" /><br />Screenshot</a></div>
-<p>Convenient interface fixes for Tumblr <em>ask</em> posts.</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Add scroll bars when typing long entries into Tumblr <em>ask</em> page text boxes</td><td class="odd"><input type="checkbox" name="MissingE_askFixes_scroll" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Add "Draft" and "Private" buttons when answering messages</td><td class="even"><input type="checkbox" name="MissingE_askFixes_buttons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="odd">Allow tags to be added when answering messages</td><td class="odd"><input type="checkbox" name="MissingE_askFixes_tags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="even">Add asker's username as a tag when answering messages</td><td class="even"><input type="checkbox" name="MissingE_askFixes_tagAsker" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Other tags to add to all ask posts (separated by commas)</td><td class="odd"><input type="text" name="MissingE_askFixes_defaultTags" style="width:250px;" value="" onchange="doSetting(this,false);" onblur="doSetting(this,false);" /></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div><div class="post_avatar" style="background-image:url('icons/askFixes_avatar.png');"></div><span class="arrow"></span></div></li>
-<li id="followChecker_section" class="post not_mine regular">
-<div class="post_content">
-<form id="followChecker_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Follow Checker</div>
-<div class="post_thumb"><a href="followChecker/screen.png" rel="facebox"><img src="followChecker/thumb.png" /><br />Screenshot</a></div>
-<p>Find out who you follow on Tumblr that doesn't follow you back and who follows you that you don't follow back with <em>Follow Checker</em>.</p>
-<p><strong>Limitations:</strong></p>
-<ul><li>When Tumblr is suffering from errors, <em>Follow Checker</em> may not be able to load all of your follower/followee pages and will return an error. Wait a little while and try again.</li>
-<li>Because of some limitations with the way Tumblr presents your follower/following lists, some people may appear to not be following/followed who actually are. You should always double-check!</li></ul>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="numinput retryinput" size="1" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/followChecker_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="postCrushes_section" class="post not_mine regular">
-<div class="post_content">
-<form id="postCrushes_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Post Crushes</div>
-<div class="post_thumb"><a href="postCrushes/screen.jpg" rel="facebox"><img src="postCrushes/thumb.jpg" /><br />Screenshot</a></div>
-<p>Automatically create posts showing your Tumblr crushes, straight from your following page with <em>Post Crushes</em>.</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Avatar size</td><td class="odd input_left"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" onchange="doSetting(this,false);" /> Small avatars (70x70, same as on your 'following' page)<br /><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" onchange="doSetting(this,false);" /> Large avatars (128x128)</td></tr>
-<tr><td colspan="2" class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="even" colspan="2">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" />&nbsp;<span class="resetter" onclick="resetPrefix()">Reset</span></td></tr></table></form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/postCrushes_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="replyReplies_section" class="post not_mine regular">
-<div class="post_content">
-<form id="replyReplies_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Reply Replies</div>
-<div class="post_thumb"><a href="replyReplies/screen.png" rel="facebox"><img src="replyReplies/thumb.png" /><br />Screenshot</a></div>
-<p>With <em>Reply Replies</em>, when you click on the icon of a notification in your dash, it'll open a new text post with that notification (and quoted reply, for post replies) in it, ready for you to comment on and post.</p><p>Although you can also reply to notes loaded by clicking on the "notes" button of a dashboard post, it is best if you have "<em>Show notifications</em>" turned on in your <a target="_blank" href="http://www.tumblr.com/preferences">Tumblr preferences</a>.</p>
-<p><strong>If you want to reply to multiple notifications in the same post, you can:</strong></p>
-<ol><li>Hold down the Shift key and click on the notification icons of each of the notifications you want to reply to.</li><li>Click (without Shift) on the notification icon of the last notification you want to include.</li><li>All the notifications will appear in a single post in chronological order!</li></ol>
-<p>If the setting is enabled, a tag is automatically added to your post for each user to whom you are replying!</p>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Show user avatar in replies</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="even">Avatar size</td><td class="even input_left"><input id="MissingE_replyReplies_smallAvatars_small" type="radio" name="MissingE_replyReplies_smallAvatars" value="1" checked="checked" onchange="doSetting(this,false);" /> Small avatars (16x16)<br /><input id="MissingE_replyReplies_smallAvatars_large" type="radio" name="MissingE_replyReplies_smallAvatars" value="0" onchange="doSetting(this,false);" /> Large avatars (64x64)</td></tr>
-<tr><td colspan="2" class="odd">Add username(s) as tags to reply posts</td><td class="odd"><input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Open replies in a new tab</td><td class="even"><input type="checkbox" name="MissingE_replyReplies_newTab" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/replyReplies_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="unfollower_section" class="post not_mine regular">
-<div class="post_content">
-<form id="unfollower_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Unfollower</div>
-<div class="post_thumb"><a href="unfollower/screen.png" rel="facebox"><img src="unfollower/thumb.png" /><br />Screenshot</a></div>
-<p>Find out who has unfollowed you on Tumblr (since the last time you checked) with <em>Unfollower</em>.</p>
-<p><strong>Limitations:</strong></p>
-<ul><li><em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.</li><li><em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.</li>
-<li>When Tumblr is suffering from errors, <em>Unfollower</em> may not be able to load all of your follower pages and will return an error. Wait a little while and try again.</li><li>Because of some limitations with the way Tumblr presents your followers list, some people may appear to have unfollowed who actually haven't. You should always double-check.</li></ul>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Edit your list of accounts <em>Unfollower</em> will ignore</td><td class="odd"><button type="button" id="unfollower_ignore_btn"><span>Ignore List...</span></button></td></tr>
-<tr><td colspan="2" class="even">Number of retries on failure to load follower list (default <span class="defRetries">4</span>)</td><td class="even"><input type="text" name="MissingE_unfollower_retries" class="numinput retryinput" size="1" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/unfollower_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-</div>
-</ol>
-<div id="devpage"><a target="_blank" href="http://missinge.infraware.ca">Extension Homepage</a></div>
-</div>
-</div>
-</div>
-</body>
-</html>
+		<script type="text/javascript" src="common/defs.js">
+</script>
+		<script type="text/javascript" src="common/utils.js">
+</script>
+		<link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css" />
+		<script type="text/javascript" src="facebox/facebox.js">
+</script>
+		<link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css" />
+		<link rel="stylesheet" type="text/css" href="dashboardFixes/replaceIcons.css" />
+		<script type="text/javascript" src="jquery-spin/jquery-spin.js">
+</script>
+		<style type="text/css">
+/*<![CDATA[*/
+		#posts .post .MissingE_post_control {
+		background-image:url("dashboardFixes/icon_replacements.png");
+		}
+		/*]]>*/
+		</style>
+		<script type="text/javascript" src="checkbox/jquery.checkbox.min.js">
+</script>
+		<script type="text/javascript">
+//<![CDATA[
+		<!--
+		jQuery(document).ready(function($) {
+		chrome.extension.sendRequest({greeting: "close-options"});
+		$('a[rel*=facebox]').facebox({
+		loadingImage : 'facebox/loading.gif',
+		closeImage   : 'facebox/closelabel.png'
+		});
+		loadSettings();
+		$('input.toggler').checkbox();
+		$('input.retryinput').spin({
+		 min:minRetries,
+		 max:maxRetries,
+		 timeInterval:100,
+		 lock:true,
+		 btnClass:'spinner'
+		});
+		$('input.timeoutinput').spin({
+		 min:minTimeout,
+		 max:maxTimeout,
+		 timeInterval:100,
+		 lock:true,
+		 btnClass:'spinner'
+		});
+		});
 
+		var componentList = ["dashboardFixes",
+					 "bookmarker",
+					 "dashLinksToTabs",
+					 "safeDash",
+					 "timestamps",
+					 "magnifier",
+					 "betterReblogs",
+					 "gotoDashPost",
+					 "postingFixes",
+					 "reblogYourself",
+					 "askFixes",
+					 "followChecker",
+					 "postCrushes",
+					 "replyReplies",
+					 "unfollower"];
+
+		function getStorage(key,defaultValue) {
+		if (localStorage[key] == undefined)
+		return defaultValue;
+		else
+		return localStorage[key];
+		}
+
+		function setStorage(key,value) {
+		localStorage[key] = value;
+		}
+
+		function parseNames(st) {
+		if (!st || st.length === 0) {
+		return [];
+		}
+		return st.split(',').sort();
+		}
+
+		function serializeNames(arr) {
+		return arr.sort().join(',');
+		}
+
+		function trim(str) {
+		return str.replace(/^\s+/,'').replace(/\s+$/,'');
+		}
+
+		function doKeyUp(obj, isNumber, defaultValue, min, max) {
+		var key = window.event.which;
+		if (key < 33 || key > 46)
+		doSetting(obj, isNumber, defaultValue, min, max);
+		}
+
+		function doSetting(obj, isNumber, defaultValue, min, max) {
+		if (obj.type == "checkbox")
+		setStorage(obj.name, (obj.checked ? 1 : 0));
+		else if (obj.type == "radio")
+		setStorage(obj.name, (obj.value));
+		else if (obj.type == "text") {
+		if (isNumber) {
+		 obj.value = trim(obj.value);
+		 if (/[^0-9]/.test(obj.value)) {
+			obj.value = getStorage(obj.name, defaultValue);
+		 }
+		 else {
+			var num;
+			if (obj.value == '') num = min;
+			else num = parseInt(obj.value);
+			if (num < min) num = min;
+			if (num > max) num = max;
+			obj.value = num;
+			setStorage(obj.name, num);
+		 }
+		}
+		else if (obj.name === 'MissingE_askFixes_defaultTags') {
+		 var val = trim(obj.value);
+		 val = val.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,', ')
+				  .replace(/,\s*$/,'').replace(/^\s*/,'').replace(/\s*$/,'');
+		 obj.value = val;
+		 setStorage(obj.name, obj.value);
+		}
+		else {
+		 setStorage(obj.name, (obj.value));
+		}
+		}
+		if (obj.name === 'MissingE_bookmarker_format') {
+		$('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', obj.value));
+		}
+		else if (obj.name === 'MissingE_timestamps_format') {
+		$('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), obj.value));
+		}
+		}
+
+		function loadCheck(f, i, def) {
+		if (getStorage(i,def) == 1) { f[i].checked = true; }
+		else { f[i].checked = false; }
+		}
+
+		function loadSettings() {
+		$('span.defRetries').text(defaultRetries);
+		$('#versionnum').text(getStorage('MissingE_version',''));
+		var exp = document.getElementById("experimentalFeatures_options").active;
+		if (getStorage('MissingE_experimentalFeatures_enabled', 0) == 1) {
+		exp.checked = true;
+		$('#posts td.experimental').show();
+		}
+		else {
+		exp.checked = false;
+		$('#posts td.experimental').hide();
+		}
+		for (i in componentList) {
+		var v = componentList[i];
+		var frm = document.getElementById(v + "_options");
+		var active = frm.active;
+		if (getStorage('MissingE_' + v + '_enabled', 1) == 1) {
+		 active.checked = true;
+		}
+		else {
+		 active.checked = false;
+		}
+		if (v == "askFixes") {
+		 loadCheck(frm,'MissingE_askFixes_scroll',1);
+		 loadCheck(frm,'MissingE_askFixes_buttons',0);
+		 loadCheck(frm,'MissingE_askFixes_tags',0);
+		 loadCheck(frm,'MissingE_askFixes_tagAsker',1);
+		 frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
+		}
+		if (v == "dashLinksToTabs") {
+		 loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
+		 loadCheck(frm,'MissingE_dashLinksToTabs_sidebar',0);
+		 loadCheck(frm,'MissingE_dashLinksToTabs_reblogLinks',0);
+		 loadCheck(frm,'MissingE_dashLinksToTabs_editLinks',0);
+		}
+		else if (v == "magnifier") {
+		 frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
+		}
+		else if (v == "bookmarker") {
+		 var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
+		 frm.MissingE_bookmarker_format.value = bmFormat;
+		 $('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
+		}
+		else if (v == "timestamps") {
+		 frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
+		 var tsFormat = getStorage('MissingE_timestamps_format',defaultFormat);
+		 frm.MissingE_timestamps_format.value = tsFormat;
+		 $('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), tsFormat));
+		}
+		else if (v == "postCrushes") {
+		 if (getStorage('MissingE_postCrushes_crushSize',1) == 1)
+			document.getElementById("MissingE_postCrushes_crushSize_small").checked = true;
+		 else
+			document.getElementById("MissingE_postCrushes_crushSize_large").checked = true;
+		 loadCheck(frm,'MissingE_postCrushes_addTags',1);
+		 loadCheck(frm,'MissingE_postCrushes_showPercent',1);
+		 frm.MissingE_postCrushes_prefix.value = getStorage('MissingE_postCrushes_prefix',"Tumblr Crushes:");
+		}
+		else if (v == "replyReplies") {
+		 if (getStorage('MissingE_replyReplies_smallAvatars',1) == 1)
+			document.getElementById("MissingE_replyReplies_smallAvatars_small").checked = true;
+		 else
+			document.getElementById("MissingE_replyReplies_smallAvatars_large").checked = true;
+		 loadCheck(frm,'MissingE_replyReplies_showAvatars',1);
+		 loadCheck(frm,'MissingE_replyReplies_addTags',1);
+		 loadCheck(frm,'MissingE_replyReplies_newTab',1);
+		}
+		else if (v == "dashboardFixes") {
+		 loadCheck(frm,'MissingE_dashboardFixes_reblogQuoteFit',1);
+		 loadCheck(frm,'MissingE_dashboardFixes_wrapTags',1);
+		 loadCheck(frm,'MissingE_dashboardFixes_replaceIcons',1);
+		 loadCheck(frm,'MissingE_dashboardFixes_timeoutAJAX',1);
+		 frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
+		 loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
+		 loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
+		 loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
+		 loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
+		 loadCheck(frm,'MissingE_dashboardFixes_followingLink',0);
+		}
+		else if (v == "betterReblogs") {
+		 loadCheck(frm,'MissingE_betterReblogs_passTags',1);
+		 loadCheck(frm,'MissingE_betterReblogs_autoFillTags',1);
+		 loadCheck(frm,'MissingE_betterReblogs_quickReblog',0);
+		 frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
+		 if (getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
+			document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;
+		 else
+			document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Primary').checked = true;
+		 frm.MissingE_betterReblogs_quickReblogAcctName.value = getStorage('MissingE_betterReblogs_quickReblogAcctName','');
+		}
+		else if (v == "postingFixes") {
+		 loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
+		 loadCheck(frm,'MissingE_postingFixes_uploaderToggle',1);
+		 loadCheck(frm,'MissingE_postingFixes_addUploader',1);
+		 loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
+		 loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
+		}
+		else if (v == "reblogYourself") {
+		 loadCheck(frm,'MissingE_reblogYourself_postPage',1);
+		 loadCheck(frm,'MissingE_reblogYourself_dashboard',1);
+		 frm.MissingE_reblogYourself_retries.value = getStorage('MissingE_reblogYourself_retries',defaultRetries);
+		}
+		else if (v == "unfollower") {
+		 frm.MissingE_unfollower_retries.value = getStorage('MissingE_unfollower_retries',defaultRetries);
+		}
+		else if (v == "followChecker") {
+		 frm.MissingE_followChecker_retries.value = getStorage('MissingE_followChecker_retries',defaultRetries);
+		}
+		}
+		}
+
+		function resetPrefix() {
+		var prefix = document.getElementById("postCrushes_options").MissingE_postCrushes_prefix;
+		prefix.value = "Tumblr Crushes:";
+		doSetting(prefix, false);
+		}
+
+		function resetRetries(obj) {
+		var input = $(obj).siblings('input:text');
+		input.val(defaultRetries);
+		doSetting(input.get(0), true, defaultRetries, minRetries, maxRetries);
+		}
+
+		function resetTimeout(obj) {
+		var input = $(obj).siblings('input:text');
+		input.val(defaultTimeout);
+		doSetting(input.get(0), true, defaultTimeout, minTimeout, maxTimeout);
+		}
+
+		function toggle(obj) {
+		var frm = $(obj).closest("form");
+		var component = frm.attr("id").match(/^[a-zA-Z]+/)[0];
+		if (frm.get(0).active.checked) {
+		setStorage('MissingE_' + component + '_enabled', 1);
+		if (component == 'experimentalFeatures') {
+		 $('#posts td.experimental').show();
+		}
+		}
+		else {
+		setStorage('MissingE_' + component + '_enabled', 0);
+		if (component == 'experimentalFeatures') {
+		 $('#posts td.experimental').hide();
+		}
+		}
+		}
+
+		function doshow(component) {
+		var itm;
+		if (component == 'about') {
+		document.getElementById('about_nav').className = 'nav_item active';
+		document.getElementById('about_posts').style.display = 'block';
+		document.getElementById('experimental_section').style.display = 'none';
+		}
+		else {
+		document.getElementById('about_nav').className = 'nav_item';
+		document.getElementById('about_posts').style.display = 'none';
+		document.getElementById('experimental_section').style.display = 'block';
+		}
+		if (component == 'dashboard') {
+		document.getElementById('dashboard_nav').className = 'nav_item active';
+		document.getElementById('dashboard_posts').style.display = 'block';
+		}
+		else {
+		document.getElementById('dashboard_nav').className = 'nav_item';
+		document.getElementById('dashboard_posts').style.display = 'none';
+		}
+		if (component == 'posting') {
+		document.getElementById('posting_nav').className = 'nav_item active';
+		document.getElementById('posting_posts').style.display = 'block';
+		}
+		else {
+		document.getElementById('posting_nav').className = 'nav_item';
+		document.getElementById('posting_posts').style.display = 'none';
+		}
+		if (component == 'social') {
+		document.getElementById('social_nav').className = 'nav_item active';
+		document.getElementById('social_posts').style.display = 'block';
+		}
+		else {
+		document.getElementById('social_nav').className = 'nav_item';
+		document.getElementById('social_posts').style.display = 'none';
+		}
+		}
+
+		$('#unfollower_ignore_btn').live('click', function() {
+		if ($('#ignoreDiv').length === 0) {
+		$('body').append('<div id="ignoreDiv"><\/div>');
+		}
+		var i;
+		var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
+		var igtext = '<p>Tumblr accounts ignored by ' +
+			   '<strong>Unfollower<\/strong>:<\/p>' +
+			   '<table border="0">';
+		for (i=0; i<list.length; i++) {
+		var klass = (i%2==1 ? 'class="greyrow"' : '');
+		igtext += '<tr><td ' + klass + '>' + list[i] + '<\/td>' +
+				  '<td ' + klass + '><button type="button" acct="' +
+				  list[i] + '" class="remignore"><span>Remove<\/span>' +
+				  '<\/button><\/td><\/tr>';
+		}
+		igtext += '<tr><td class="bottomrow" colspan="2"><button type="button" ' +
+			   'class="addignore"><span>Add Ignore...<\/span><\/button>' +
+			   '<\/td><\/tr><\/table>';
+		$('#ignoreDiv').html(igtext);
+		$.facebox({ div: '#ignoreDiv' }, 'ignorelist');
+		});
+
+		$('#facebox button').live('click', function() {
+		if (this.className === 'remignore') {
+		var acct = $(this).attr('acct');
+		var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
+		var idx = $.inArray(acct, list);
+		if (idx >= 0) {
+		 list.splice(idx,1);
+		 setStorage('MissingE_unfollower_ignore',serializeNames(list));
+		}
+		$(this).closest('tr').remove();
+		$('#facebox table tr:even td').removeClass('greyrow');
+		$('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
+		}
+		else if (this.className === 'addignore') {
+		var acct = prompt("Enter a Tumblr username for Unfollower to ignore",'');
+		if (acct) { acct = trim(acct.toLowerCase()); }
+		if (acct && acct !== '' && !(/[^0-9a-zA-Z\-]/.test(acct))) {
+		 var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
+		 if ($.inArray(acct,list) !== -1) {
+			return;
+		 }
+		 list.push(acct);
+		 list.sort();
+		 var idx = $.inArray(acct,list);
+		 setStorage('MissingE_unfollower_ignore',serializeNames(list));
+		 if (idx >= 0) {
+			$('#facebox table tr:eq(' + idx + ')')
+			  .before('<tr><td>' + acct + '<\/td><td><button type="button" ' +
+					  'acct="' + acct + '" class="remignore"><span>Remove' +
+					  '<\/span><\/button><\/td><\/tr>');
+			$('#facebox table tr:even td').removeClass('greyrow');
+			$('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
+		 }
+		}
+		}
+		});
+		-->
+		//]]>
+		</script>
+	</head>
+	<body id="MissingE_settings">
+		<div id="container">
+			<div id="header_container">
+				<div id="header">
+					<a href="#" onclick="doshow('about');return false;"><img src="missinge_logo.png" alt="Missing e" id="logo" /></a>
+					<div id="nav">
+						<a href="#" class="nav_item active" id="about_nav" onclick="doshow('about');return false;" name="about_nav"></a>
+						<div>
+							About
+						</div>
+						<div class="nav_item_nipple">
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_1"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_2"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_3"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_4"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_5"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
+						</div><a target="_blank" class="nav_item" href="http://missinge.infraware.ca/faq">FAQ <img src="images/external_link.gif" alt="FAQ on external site" /></a> <a href="#" class="nav_item" id="dashboard_nav" onclick="doshow('dashboard');return false;" name="dashboard_nav"></a>
+						<div>
+							Dashboard Features
+						</div>
+						<div class="nav_item_nipple">
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_1"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_2"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_3"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_4"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_5"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
+						</div><a href="#" class="nav_item" id="posting_nav" onclick="doshow('posting');return false;" name="posting_nav"></a>
+						<div>
+							Post Features
+						</div>
+						<div class="nav_item_nipple">
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_1"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_2"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_3"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_4"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_5"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
+						</div><a href="#" class="nav_item" id="social_nav" onclick="doshow('social');return false;" name="social_nav"></a>
+						<div>
+							Social Features
+						</div>
+						<div class="nav_item_nipple">
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_1"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_2"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_3"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_4"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_5"></div>
+							<div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
+						</div><a href="#" class="nav_item" id="close_nav" onclick="window.close();return false;" name="close_nav"><img src="images/close.png" alt="Close Settings" /></a>
+					</div>
+					<div id="new_post_notice_container">
+						<a href="#" class="new_post_notice" onclick="doshow('about');return false;">Settings</a>
+						<div class="new_post_notice_nipple"></div>
+					</div>
+				</div>
+			</div>
+			<div id="content">
+				<div id="experimental_section">
+					<form id="experimentalFeatures_options">
+						<div class="experimental_title">
+							<div class="experimental_switch">
+								<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" value="1" />
+							</div><img src="images/flask.png" alt="Experimental Features" title="Experimental Features" />
+						</div>
+						<div class="clear"></div>
+					</form>
+				</div>
+				<div id="right_column"></div>
+				<div id="left_column">
+					<div style="margin-left: 2em" id="posts">
+						<div id="about_posts">
+							<ul>
+								<li id="about_section" class="post not_mine regular">
+									<div class="post_content">
+										<div id="version">
+											<small>version</small> <span id="versionnum"></span>
+										</div>
+										<div class="post_title">
+											About 'Missing e'
+										</div>
+										<p class="first">
+											<strong><big><em><a target="_blank" href="http://missinge.infraware.ca">Missing e</a></em></big></strong> is a set of tools, features and interface changes for <em>Tumblr</em>. What started out as a bunch of <a target="_blank" href="http://userscripts.org/users/113977">userscripts</a> has now been incorporated into this Google Chrome extension!<br />
+											<br />
+											If you enjoy this extension, please consider <a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">donating</a> to support future development<br />
+											<a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8"><img src="images/pledgie.png" border="0" alt="Support development by donating to Missing e! [PayPal]" /></a>
+										</p>
+										<p>
+											Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br />
+											Released under the <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL Version 3 License</a>
+										</p>
+										<div id="inclusions">
+											This extension uses some great tools:<br />
+											<a href="http://www.jquery.com" title="jQuery 1.6.1" target="_blank"><img src="images/inclusions/jquery.png" alt="jQuery 1.6.1" /></a><a href="http://chriswanstrath.com/facebox" title="Facebox 1.3" target="_blank"><img src="images/inclusions/facebox.png" alt="Facebox 1.3" /></a><a href="http://widowmaker.kiev.ua/checkbox/" title="jQuery Checkbox 1.3.0" target="_blank"><img src="images/inclusions/checkbox.png" alt="jQuery Checkbox 1.3.0" /></a><a href="http://code.google.com/p/jquery-spin-button/" title="jQuery Spin button" target="_blank"><img src="images/inclusions/spin.png" alt="jQuery Spin button" /></a><a href="http://pixel-mixer.com/" title="Basic Set 1 &amp; 2 icons by pixel-mixer" target="_blank"><img src="images/inclusions/box_48.png" alt="Basic Set 1 &amp; 2 icons by pixel-mixer" /></a>
+										</div>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/cutlerish_avatar.png');"></div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div id="dashboard_posts">
+							<ul>
+								<li id="dashboardFixes_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="dashboardFixes_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dashboard Fixes
+											</div>
+											<div class="post_thumb">
+												<a href="dashboardFixes/screen.png" rel="facebox"><img src="dashboardFixes/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												A few convenient interface fixes for Tumblr dashboard pages.
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Fit quoted reblog posts into a smaller area for easier reading (see screenshot)
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Show all tags for posts in the dashboard
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br />
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br />
+														<small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small>
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td class="subopt"></td>
+													<td class="even">
+														Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br />
+														<small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small>
+													</td>
+													<td class="even">
+														<input class="numinput timeoutinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" onchange="doSetting(this,true,defaultTimeout,minTimeout,maxTimeout);" onkeyup="doKeyUp(this,true,defaultTimeout,minTimeout,maxTimeout);" />&nbsp;<span class="resetter" onclick="resetTimeout(this)">Reset</span>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Widescreen dashboard
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Make the <em>Following</em> button on the Dashboard sidebar load your following list page (instead of reloading the Dashboard)
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_dashboardFixes_followingLink" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Add a move to top of queue button in queued posts
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even experimental">
+														<strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br />
+														<small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small>
+													</td>
+													<td class="even experimental">
+														<input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/dashboardFixes_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="bookmarker_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="bookmarker_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Bookmarker
+											</div>
+											<div class="post_thumb">
+												<a href="bookmarker/screen.png" rel="facebox"><img src="bookmarker/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												Add bookmarks to posts on your dashboard so you can go back to them later! <em>Bookmarker</em> adds a small bookmark button to posts, and a list of current bookmarks in your sidebar.
+											</p>
+											<ul>
+												<li>Hold down the shift key when clicking on a bookmark icon to create a new bookmark with a custom name.
+												</li>
+												<li>Hold down the shift key when clicking on an existing bookmark to rename it.
+												</li>
+											</ul>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Default bookmark label<br />
+														<table class="subnotes">
+															<tr>
+																<td class="label">
+																	%u
+																</td>
+																<td class="desc">
+																	Poster's username
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%Y
+																</td>
+																<td class="desc">
+																	Full year (i.e. 2011)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%y
+																</td>
+																<td class="desc">
+																	Two digit year (i.e. 11)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%M
+																</td>
+																<td class="desc">
+																	Short month name (Jan, Feb, ...)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%m
+																</td>
+																<td class="desc">
+																	Numeric month, two digits with leading zeros (01-12)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%n
+																</td>
+																<td class="desc">
+																	Numeric month (1-12)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%D
+																</td>
+																<td class="desc">
+																	Day of the month, two digits with leading zeros (01-31)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%d
+																</td>
+																<td class="desc">
+																	Day of the month (1-31)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%G
+																</td>
+																<td class="desc">
+																	Hour, 12-hour format with leading zeros (01-12)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%g
+																</td>
+																<td class="desc">
+																	Hour, 12-hour format (1-12)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%H
+																</td>
+																<td class="desc">
+																	Hour, 24-hour format with leading zeros (00-23)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%h
+																</td>
+																<td class="desc">
+																	Hour, 24-hour format (0-23)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%i
+																</td>
+																<td class="desc">
+																	Minutes with leading zeros (00-59)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%s
+																</td>
+																<td class="desc">
+																	Seconds with leading zeros (00-59)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%A
+																</td>
+																<td class="desc">
+																	Uppercase Ante meridiem and Post meridiem (AM/PM)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%a
+																</td>
+																<td class="desc">
+																	Lowercase Ante meridiem and Post meridiem (am/pm)
+																</td>
+															</tr>
+														</table>
+													</td>
+													<td colspan="2" class="odd" style="vertical-align:top;">
+														<input type="text" name="MissingE_bookmarker_format" style="width:200px;" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" />
+														<div class="stamp_label">
+															Sample:
+														</div>
+														<div class="stamp_sample" id="MissingE_bookmarker_format_sample"></div>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/bookmarker_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="magnifier_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="magnifier_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Magnifier
+											</div>
+											<div class="post_thumb">
+												<a href="magnifier/screen.jpg" rel="facebox"><img src="magnifier/thumb.jpg" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												Add a small <img src="magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.
+											</p>
+											<p>
+												<em>Magnifier</em> also works on photoset posts!
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)
+													</td>
+													<td class="odd">
+														<input class="numinput retryinput" type="text" name="MissingE_magnifier_retries" value="4" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/magnifier_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="dashLinksToTabs_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="dashLinksToTabs_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dash Links to Tabs
+											</div>
+											<p>
+												<em>Dash Links to Tabs</em> forces all links in dashboard posts to open in a new tab. That way, you won't lose your place when you are scrolling in the dash.
+											</p>
+											<p>
+												Other links, such as the new post icons and the dashboard sidebar behave as you specify in these options.
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														New post buttons (text, photo, quote, etc.) at the top of the dashboard open in new tabs
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_dashLinksToTabs_newPostTabs" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Sidebar navigation menu items on the right side of the dashboard open in new tabs
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_dashLinksToTabs_sidebar" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Reblog links on dashboard posts open in new tabs
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_dashLinksToTabs_reblogLinks" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Edit links on dashboard posts open in new tabs
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_dashLinksToTabs_editLinks" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/dashLinksToTabs_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="safeDash_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="safeDash_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Safe Dash
+											</div>
+											<div class="post_thumb">
+												<a href="safeDash/screen.png" rel="facebox"><img src="safeDash/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												At work? Have kids about? <em>Safe Dash</em> will hide images in tumblr posts in case any of them are unsafe! Simply hover your mouse over the picture to reveal it. Turn <em>Safe Dash</em> on and off with a link in your dashboard sidebar! Turning <em>Safe Dash</em> off on this settings page will disable it completely.
+											</p>
+											<p>
+												<strong>Note</strong>: Safe Dash is not effective for posts on a user's tumblr page, only on <strong>dashboard-like</strong> pages (ie. dashboard, tumblelog, likes, queue and drafts).
+											</p>
+											<p>
+												<strong>These images are hidden:</strong>
+											</p>
+											<ul>
+												<li>All image posts
+												</li>
+												<li>All photoset thumbnails
+												</li>
+												<li>Photosets that have been clicked (enlarged)
+												</li>
+												<li>Inline images in other types of posts
+												</li>
+												<li>Album art in audio posts
+												</li>
+												<li>All video thumbnails
+												</li>
+												<li>All full-size videos (except videos from external sites)
+												</li>
+											</ul>
+											<p>
+												<strong>These images are NOT hidden:</strong>
+											</p>
+											<ul>
+												<li>All tumblr-generated user avatars
+												</li>
+												<li>Externally-loaded videos (YouTube, Vimeo, etc)
+												</li>
+											</ul>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/safeDash_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="timestamps_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="timestamps_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Timestamps
+											</div>
+											<p>
+												<em>Timestamps</em> will add the date and time of a post on your dashboard.
+											</p>
+											<p>
+												<strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Number of retries on failure (default <span class="defRetries">4</span>)
+													</td>
+													<td class="odd">
+														<input class="numinput retryinput" size="1" type="text" name="MissingE_timestamps_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Timestamp format<br />
+														<table class="subnotes">
+															<tr>
+																<td class="label">
+																	%Y
+																</td>
+																<td class="desc">
+																	Full year (i.e. 2011)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%y
+																</td>
+																<td class="desc">
+																	Two digit year (i.e. 11)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%M
+																</td>
+																<td class="desc">
+																	Short month name (Jan, Feb, ...)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%m
+																</td>
+																<td class="desc">
+																	Numeric month, two digits with leading zeros (01-12)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%n
+																</td>
+																<td class="desc">
+																	Numeric month (1-12)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%D
+																</td>
+																<td class="desc">
+																	Day of the month, two digits with leading zeros (01-31)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%d
+																</td>
+																<td class="desc">
+																	Day of the month (1-31)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%G
+																</td>
+																<td class="desc">
+																	Hour, 12-hour format with leading zeros (01-12)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%g
+																</td>
+																<td class="desc">
+																	Hour, 12-hour format (1-12)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%H
+																</td>
+																<td class="desc">
+																	Hour, 24-hour format with leading zeros (00-23)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%h
+																</td>
+																<td class="desc">
+																	Hour, 24-hour format (0-23)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%i
+																</td>
+																<td class="desc">
+																	Minutes with leading zeros (00-59)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%s
+																</td>
+																<td class="desc">
+																	Seconds with leading zeros (00-59)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%A
+																</td>
+																<td class="desc">
+																	Uppercase Ante meridiem and Post meridiem (AM/PM)
+																</td>
+															</tr>
+															<tr>
+																<td class="label">
+																	%a
+																</td>
+																<td class="desc">
+																	Lowercase Ante meridiem and Post meridiem (am/pm)
+																</td>
+															</tr>
+														</table>
+													</td>
+													<td colspan="2" class="even" style="vertical-align:top;">
+														<input type="text" name="MissingE_timestamps_format" style="width:200px;" value="%Y-%m-%D %H:%i" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" />
+														<div class="stamp_label">
+															Sample:
+														</div>
+														<div class="stamp_sample" id="MissingE_timestamps_format_sample"></div>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/timestamps_avatar.png');"></div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div id="posting_posts">
+							<ul>
+								<li id="betterReblogs_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="betterReblogs_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Better Reblogs
+											</div>
+											<div class="post_thumb">
+												<a href="betterReblogs/screen.png" rel="facebox"><img src="betterReblogs/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												Additional features to make reblogging easier and more productive!
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Keep original post tags when reblogging
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_betterReblogs_passTags" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td class="subopt"></td>
+													<td class="even">
+														Automatically add original tags to reblog post<br />
+														<small><em>You can click on the</em> "Reblog Tags" <em>button to add the tags manually</em></small>
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_betterReblogs_autoFillTags" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td class="subopt"></td>
+													<td class="odd">
+														Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)
+													</td>
+													<td class="odd">
+														<input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Quick (1-click) reblogging <em>(see screenshot)</em>
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_betterReblogs_quickReblog" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td class="subopt"></td>
+													<td class="odd">
+														Tumblr blog to reblog with<br />
+														<small>You must have posting privileges on the account you select.</small>
+													</td>
+													<td class="odd input_left">
+														<input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" onchange="doSetting(this,false);" /> Main Blog<br />
+														<input id="MissingE_betterReblogs_quickReblogAcctType_Secondary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="1" onchange="doSetting(this,false);" /> Secondary Blog:
+														<div style="text-align:right;padding-top:4px;">
+															<input type="text" name="MissingE_betterReblogs_quickReblogAcctName" style="width:90%;margin-bottom:0;" maxlength="128" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><br />
+															<small><em>Account Name</em></small>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/betterReblogs_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="gotoDashPost_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="gotoDashPost_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Goto Dash Post
+											</div>
+											<div class="post_thumb">
+												<a href="gotoDashPost/screen.png" rel="facebox"><img src="gotoDashPost/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												If you are on a tumblr post page and you want to jump directly to it on your dashboard so you can reply to it (assuming that the tumblr user's setup allows you to), <em>Goto Dash Post</em> is your best bet. A "goto dash" control button is added to individual post pages for you to use.
+											</p>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/gotoDashPost_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="postingFixes_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="postingFixes_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Posting Fixes
+											</div>
+											<div class="post_thumb">
+												<a href="postingFixes/screen.png" rel="facebox"><img src="postingFixes/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												A few convenient interface fixes for new Tumblr posts.
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Always enable photo replies (where possible)
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Allow switching back to uploading images on photo posts<br />
+														<ul>
+															<li>
+																<small>By default, Tumblr allows you to switch to a URL with a "<em>Use a URL instead</em>" option, this will allow you to switch back with a "<em>Upload images instead</em>" option.</small>
+															</li>
+														</ul>
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td class="odd" colspan="2">
+														Allow inline image uploading for all post types (not just text posts)<br />
+														<ul>
+															<li>
+																<small>Adds an "<em><strong>+ Upload Photo</strong></em>" option to all posting pages (including the Tumblr <a href="http://www.tumblr.com/goodies" target="_blank">bookmarklet</a>)</small>
+															</li>
+															<li>
+																<small>Much like the built-in "<strong><em>+ Upload Photo</em></strong>" options, these don't always load when Tumblr is suffering from errors.</small>
+															</li>
+														</ul>
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_postingFixes_addUploader" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Add quick "<em>Queue Post</em>" and "<em>Save Draft</em>" buttons when posting (see screenshot)
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_postingFixes_quickButtons" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Add extra <em>"Post to"</em> menu (for selecting Tumblr blog to post to) nearer to new post publish buttons (see screenshot)
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_postingFixes_blogSelect" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/postingFixes_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="reblogYourself_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="reblogYourself_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Reblog Yourself
+											</div>
+											<p>
+												Add reblogging functionality to your own tumblr posts, allowing you to <em>Reblog Yourself</em>.
+											</p>
+											<p>
+												<strong>Note</strong>: chat and ask posts are not normally rebloggable. <em>Reblog Yourself</em> will allow you to reblog them, but the formatting may look pretty bad.
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Add reblog button to individual post pages
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" onchange="doSetting(this,false)" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Add reblog links to your posts on the dashboard
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" onchange="doSetting(this,false)" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">4</span>)
+													</td>
+													<td class="odd">
+														<input type="text" class="numinput retryinput" size="1" name="MissingE_reblogYourself_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/reblogYourself_avatar.png');"></div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div id="social_posts">
+							<ul>
+								<li id="askFixes_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="askFixes_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Ask Fixes
+											</div>
+											<div class="post_thumb">
+												<a href="askFixes/screen.png" rel="facebox"><img src="askFixes/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												Convenient interface fixes for Tumblr <em>ask</em> posts.
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Add scroll bars when typing long entries into Tumblr <em>ask</em> page text boxes
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_askFixes_scroll" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Add "Draft" and "Private" buttons when answering messages
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_askFixes_buttons" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Allow tags to be added when answering messages
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_askFixes_tags" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td class="subopt"></td>
+													<td class="even">
+														Add asker's username as a tag when answering messages
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_askFixes_tagAsker" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td class="subopt"></td>
+													<td class="odd">
+														Other tags to add to all ask posts (separated by commas)
+													</td>
+													<td class="odd">
+														<input type="text" name="MissingE_askFixes_defaultTags" style="width:250px;" value="" onchange="doSetting(this,false);" onblur="doSetting(this,false);" />
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/askFixes_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="followChecker_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="followChecker_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Follow Checker
+											</div>
+											<div class="post_thumb">
+												<a href="followChecker/screen.png" rel="facebox"><img src="followChecker/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												Find out who you follow on Tumblr that doesn't follow you back and who follows you that you don't follow back with <em>Follow Checker</em>.
+											</p>
+											<p>
+												<strong>Limitations:</strong>
+											</p>
+											<ul>
+												<li>When Tumblr is suffering from errors, <em>Follow Checker</em> may not be able to load all of your follower/followee pages and will return an error. Wait a little while and try again.
+												</li>
+												<li>Because of some limitations with the way Tumblr presents your follower/following lists, some people may appear to not be following/followed who actually are. You should always double-check!
+												</li>
+											</ul>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Number of retries on failure to load follower/followee lists (default <span class="defRetries">4</span>)
+													</td>
+													<td class="odd">
+														<input type="text" name="MissingE_followChecker_retries" class="numinput retryinput" size="1" value="10" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/followChecker_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="postCrushes_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="postCrushes_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Post Crushes
+											</div>
+											<div class="post_thumb">
+												<a href="postCrushes/screen.jpg" rel="facebox"><img src="postCrushes/thumb.jpg" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												Automatically create posts showing your Tumblr crushes, straight from your following page with <em>Post Crushes</em>.
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Avatar size
+													</td>
+													<td class="odd input_left">
+														<input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" onchange="doSetting(this,false);" /> Small avatars (70x70, same as on your 'following' page)<br />
+														<input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" onchange="doSetting(this,false);" /> Large avatars (128x128)
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Add crush names to post tags
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Show crush percentages
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td class="even" colspan="2">
+														Prefix text for crush list
+													</td>
+													<td class="even">
+														<input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" />&nbsp;<span class="resetter" onclick="resetPrefix()">Reset</span>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/postCrushes_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="replyReplies_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="replyReplies_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Reply Replies
+											</div>
+											<div class="post_thumb">
+												<a href="replyReplies/screen.png" rel="facebox"><img src="replyReplies/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												With <em>Reply Replies</em>, when you click on the icon of a notification in your dash, it'll open a new text post with that notification (and quoted reply, for post replies) in it, ready for you to comment on and post.
+											</p>
+											<p>
+												Although you can also reply to notes loaded by clicking on the "notes" button of a dashboard post, it is best if you have "<em>Show notifications</em>" turned on in your <a target="_blank" href="http://www.tumblr.com/preferences">Tumblr preferences</a>.
+											</p>
+											<p>
+												<strong>If you want to reply to multiple notifications in the same post, you can:</strong>
+											</p>
+											<ol>
+												<li>Hold down the Shift key and click on the notification icons of each of the notifications you want to reply to.
+												</li>
+												<li>Click (without Shift) on the notification icon of the last notification you want to include.
+												</li>
+												<li>All the notifications will appear in a single post in chronological order!
+												</li>
+											</ol>
+											<p>
+												If the setting is enabled, a tag is automatically added to your post for each user to whom you are replying!
+											</p>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Show user avatar in replies
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_replyReplies_showAvatars" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td class="subopt"></td>
+													<td class="even">
+														Avatar size
+													</td>
+													<td class="even input_left">
+														<input id="MissingE_replyReplies_smallAvatars_small" type="radio" name="MissingE_replyReplies_smallAvatars" value="1" checked="checked" onchange="doSetting(this,false);" /> Small avatars (16x16)<br />
+														<input id="MissingE_replyReplies_smallAvatars_large" type="radio" name="MissingE_replyReplies_smallAvatars" value="0" onchange="doSetting(this,false);" /> Large avatars (64x64)
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="odd">
+														Add username(s) as tags to reply posts
+													</td>
+													<td class="odd">
+														<input type="checkbox" name="MissingE_replyReplies_addTags" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Open replies in a new tab
+													</td>
+													<td class="even">
+														<input type="checkbox" name="MissingE_replyReplies_newTab" value="0" checked="checked" onchange="doSetting(this,false);" />
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/replyReplies_avatar.png');"></div>
+									</div>
+								</li>
+								<li id="unfollower_section" class="post not_mine regular">
+									<div class="post_content">
+										<form id="unfollower_options">
+											<div class="post_title">
+												<input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Unfollower
+											</div>
+											<div class="post_thumb">
+												<a href="unfollower/screen.png" rel="facebox"><img src="unfollower/thumb.png" /><br />
+												Screenshot</a>
+											</div>
+											<p>
+												Find out who has unfollowed you on Tumblr (since the last time you checked) with <em>Unfollower</em>.
+											</p>
+											<p>
+												<strong>Limitations:</strong>
+											</p>
+											<ul>
+												<li>
+													<em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.
+												</li>
+												<li>
+													<em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.
+												</li>
+												<li>When Tumblr is suffering from errors, <em>Unfollower</em> may not be able to load all of your follower pages and will return an error. Wait a little while and try again.
+												</li>
+												<li>Because of some limitations with the way Tumblr presents your followers list, some people may appear to have unfollowed who actually haven't. You should always double-check.
+												</li>
+											</ul>
+											<table class="options_table">
+												<tr>
+													<td colspan="2" class="odd">
+														Edit your list of accounts <em>Unfollower</em> will ignore
+													</td>
+													<td class="odd">
+														<button type="button" id="unfollower_ignore_btn"><span>Ignore List...</span></button>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" class="even">
+														Number of retries on failure to load follower list (default <span class="defRetries">4</span>)
+													</td>
+													<td class="even">
+														<input type="text" name="MissingE_unfollower_retries" class="numinput retryinput" size="1" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class="clear"></div>
+									<div>
+										<div class="post_avatar" style="background-image:url('icons/unfollower_avatar.png');"></div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div id="devpage">
+						<a target="_blank" href="http://missinge.infraware.ca">Extension Homepage</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
