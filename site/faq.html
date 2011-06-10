@@ -120,6 +120,7 @@ jQuery(document).ready(function($) {
 <li><a href="#unfollower-how">How do I use Unfollower? Where is it?</a></li>
 <li><a href="#unfollower-fail">Why does Unfollower fail to load?</a></li>
 <li><a href="#unfollower-issues">Why does Unfollower report that someone has unfollowed that I know has not?</a></li>
+<li><a href="#unfollower-issues">Why does Unfollower report that nobody has unfollowed me even though my follower count has dropped?</a></li>
 <li><a href="#unfollower-secondary">Can Unfollower track your unfollows on multiple tumblr accounts?</a></li>
 <li><a href="#unfollower-delta">Why is Unfollower represented by a '&Delta;' (delta)?</a></li>
 </ul>
@@ -284,7 +285,7 @@ jQuery(document).ready(function($) {
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="followchecker-issues"></a><p class="question">Why is Follow Checker reporting that I am not following someone that I actually am?</p><p class="question">Why is Follow Checker reporting that someone is not following me even though I know they are?</p>
 <div class="response">
-<p>Unfortunately, Tumblr sometimes does not show all of your followers or accounts you follow on the follower/following pages. Some may be missing from one or both of these lists.</p><p><em>Follow Checker</em> presents information purely for entertainment purposes. Before you take any rash actions based on information you get from it, you would be wise to double-check whether or not you follow someone or they follow you.</p>
+<p>Unfortunately, Tumblr often does not show all of your followers or accounts you follow on the follower/following pages. Some may be missing from one or both of these lists.</p><p><em>Follow Checker</em> presents information purely for entertainment purposes. Before you take any rash actions based on information you get from it, you would be wise to double-check whether or not you follow someone or they follow you.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="followchecker-rho"></a><p class="question">Why is Follow Checker represented by a '&rho;' (rho)?</p>
 <div class="response">
@@ -354,9 +355,9 @@ jQuery(document).ready(function($) {
 <div class="response">
 <p><em>Unfollower</em> must load every single one of your follower pages behind the scenes. This can take a while, especially if you are followed by a lot of tumblr accounts. During times when Tumblr is very busy or error-prone, one or more of these pages may fail to load. <em>Unfollower</em> will retry a few times before giving up and returning an error screen.</p>
 <div class="totop"><a href="#">Top</a></div></div>
-<a name="unfollower-issues"></a><p class="question">Why does Unfollower report that someone has unfollowed that I know has not?</p>
+<a name="unfollower-issues"></a><p class="question">Why does Unfollower report that someone has unfollowed that I know has not?</p><p class="question">Why does Unfollower report that nobody has unfollowed me even though my follower count has dropped?</p>
 <div class="response">
-<p>First of all, <em>Unfollower</em> displays all tumblr accounts that have either unfollowed you, been deactivated or have changed usernames. It cannot determine the difference in these situations.</p><p>Also, Tumblr, unfortunately, sometimes does not show all of your followers on the follower pages. Some may be missing from the list <em>Unfollower</em> receives from Tumblr.</p><p><em>Unfollower</em> presents information purely for entertainment purposes. Before you take any rash actions based on information you get from it, you would be wise to double-check whether or not someone still follows you.</p>
+<p>First of all, <em>Unfollower</em> displays all tumblr accounts that have either unfollowed you, been deactivated or have changed usernames. It cannot determine the difference in these situations. In addition, <em>Unfollower</em> can only show you who has unfollowed since you last checked (or since you first opened Tumblr after installing 'Missing e' if you haven't checked yet). If somebody follows you and unfollows you in the meantime, <em>Unfollower</em> will be not be able to report that to you.</p><p>Also, Tumblr, unfortunately, often does not show all of your followers on the follower pages. Some may be missing from the list <em>Unfollower</em> receives from Tumblr.</p><p><em>Unfollower</em> presents information purely for entertainment purposes. Before you take any rash actions based on information you get from it, you would be wise to double-check whether or not someone still follows you.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="unfollower-secondary"></a><p class="question">Can Unfollower track your unfollows on multiple tumblr accounts?</p>
 <div class="response">
