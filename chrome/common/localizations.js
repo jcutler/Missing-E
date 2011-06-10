@@ -25,6 +25,8 @@ var locale = {
       tagsText: "Tags",
       twitterText: "Send to Twitter",
       askPost: "Ask",
+      select: "Select",
+      first100: "First 100",
       postTypeNames: {
          text: "Text",
          photo: "Photo",
@@ -110,7 +112,9 @@ var locale = {
       ],
       tagsText: "Tags",
       twitterText: "auf Twitter posten",
-      askPost: "Ask",
+      askPost: "Fragen",
+      select: "Selektieren",
+      first100: "ersten 100",
       postTypeNames: {
          text: "Text",
          photo: "Foto",
@@ -196,7 +200,9 @@ var locale = {
       ],
       tagsText: "Tags",
       twitterText: "Publier sur Twitter",
-      askPost: "Ask",
+      askPost: "Question",
+      select: "Sélectionner",
+      first100: "Première 100",
       postTypeNames: {
          text: "Texte",
          photo: "Photo",
@@ -282,7 +288,9 @@ var locale = {
       ],
       tagsText: "Tag",
       twitterText: "Invia a Twitter",
-      askPost: "Ask",
+      askPost: "Chiedi",
+      select: "Seleziona",
+      first100: "Primi 100",
       postTypeNames: {
          text: "Testo",
          photo: "Foto",
@@ -368,7 +376,9 @@ var locale = {
       ],
       tagsText: "タグ",
       twitterText: "投稿をTwitterにも送信",
-      askPost: "Ask",
+      askPost: "質問",
+      select: "選択",
+      first100: "100最新の",
       postTypeNames: {
          text: "テキスト",
          photo: "画像",
@@ -454,7 +464,9 @@ var locale = {
       ],
       tagsText: "Etiketler",
       twitterText: "Twitter'a gönder",
-      askPost: "Ask",
+      askPost: "Sor",
+      select: "Seçim yapmak",
+      first100: "Ilk 100",
       postTypeNames: {
          text: "Metin",
          photo: "Fotoğraf",

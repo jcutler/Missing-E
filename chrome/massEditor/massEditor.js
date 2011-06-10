@@ -52,7 +52,15 @@ function handleAjaxRemove(s,list,fn) {
    }
 }
 
-var lang = $('html').attr('lang');
+var lang = 'en';
+var deltext = $('#delete_posts').text().toLowerCase();
+for (var o in locale) {
+   if (locale.hasOwnProperty(o) &&
+       locale[o]["dashFixesText"]["del"] == deltext) {
+      lang = o;
+      break;
+   }
+}
 
 $('head').append('<style type="text/css">' +
                 '#MissingE_selecttype_btn.force_border .chrome_button, ' +
@@ -69,7 +77,8 @@ $('#nav .header_button:last')
    .after('<div id="MissingE_selecttype_btn" class="header_button">' +
            '<button id="MissingE_selecttype" type="button" ' +
            'class="chrome big_dark"><div class="chrome_button">' +
-           '<div class="chrome_button_left"></div>Select ' +
+           '<div class="chrome_button_left"></div>' +
+           locale[lang]["select"] + ' ' +
            '<img src="http://assets.tumblr.com/images/archive_header_' +
            'button_arrow.png" width="9" height="6" ' +
            'style="vertical-align:2px; margin:0 0 0 3px;" />' +
@@ -81,7 +90,8 @@ var sbtlisttext = '<div id="MissingE_selecttype_list">';
 sbtlisttext += '<div id="MissingE_select_btn" class="header_button">' +
            '<button id="MissingE_select" type="button" ' +
            'class="chrome big_dark"><div class="chrome_button">' +
-           '<div class="chrome_button_left"></div>First 100<div ' +
+           '<div class="chrome_button_left"></div>' +
+           locale[lang]["first100"] + '<div ' +
            'class="chrome_button_right"></div></div></button></div>';
 for (i in locale[lang]["postTypeNames"]) {
    if (locale[lang]["postTypeNames"].hasOwnProperty(i)) {
