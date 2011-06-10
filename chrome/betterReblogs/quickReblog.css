@@ -22,45 +22,53 @@
  */
 
 #MissingE_quick_reblog {
-top:0;
-left:0;
-display:none;
-position:absolute;
-width:150px !important;
+	top: 0;
+	left: 0;
+	display: none;
+	position: absolute;
+	width: 150px !important;
 }
 
 #MissingE_quick_reblog:hover {
-display:block;
+	display: block;
 }
 
 .MissingE_quick_reblog_tags_inputting {
-display:block !important;
+	display: block !important;
 }
 
 #MissingE_quick_reblog #MissingE_quick_reblog_tags input {
-font:normal 10px Helvetica,sans-serif !important;
-width:95%;
+	font: normal 10px Helvetica,sans-serif !important;
+	width: 95%;
 }
 
 #MissingE_quick_reblog #MissingE_quick_reblog_twitter input {
-vertical-align:-2px;
+	vertical-align: -2px;
 }
 
 .MissingE_quick_reblogging_icon, 
 .MissingE_quick_reblogging_success {
-opacity:1 !important;
-background-position:0 0 !important;
+	opacity: 1 !important;
+	background-position: 0 0 !important;
+}
+
+a.MissingE_quick_reblog_button {
+	color: white !important;
 }
 
 #MissingE_quick_reblog .user_menu_list a .user_menu_list_item {
-height:auto !important;
-min-height:12px !important;
-color:white !important;
+	height: auto !important;
+	min-height: 12px !important;
+	color: white !important;
 }
 
 #MissingE_quick_reblog .user_menu_list a .user_menu_list_item.has_tag_input {
-background-image:none !important;
-background-color:black !important;
-opacity:0.9;
-padding-bottom:6px !important;
+	background-image: none !important;
+	background-color: black !important;
+	opacity: 0.9;
+	padding-bottom: 6px !important;
+}
+
+#MissingE_quick_reblog .user_menu_list a, #MissingE_quick_reblog .user_menu_list .user_menu_list_item {
+	color: white !important;
 }
