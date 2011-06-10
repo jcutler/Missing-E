@@ -11,5 +11,7 @@ Bring tumblelog panel to dashboard page?
 
 Complete implementation of multi-unfollower and then port
 - done, but needs testing
+- what happens on inbox? Primary blog gets attention?
 
 Mega-editor add-ins (select all, select all by type)
+-port to other browsers
