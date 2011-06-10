@@ -417,6 +417,11 @@ function tu_init(retries) {
    if (!ignore) {
       if (lastFollows === undefined || lastFollows === null ||
           lastFollows === "") {
+         if (followLists === undefined || followLists === null ||
+             followLists === "") {
+            followLists = acct;
+            localStorage.setItem('MissingE_unfollower_lists',acct);
+         }
          followers = fl.text().match(/^([0-9][0-9,\.]*)/);
          if (followers !== undefined && followers !== null &&
              followers.length >= 2) {
