@@ -588,6 +588,10 @@ border-top:1px solid #444;
 padding-top:6px;
 text-align:center;
 }
+
+.ignorelist table td.bottomrow:first-child {
+border-top:0;
+}
 </style>
 <script type="text/javascript" src="common/jquery.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
@@ -923,8 +927,8 @@ $('#unfollower_ignore_btn').live('click', function() {
                   '</button></td></tr>';
    }
    igtext += '<tr><td class="bottomrow" colspan="2"><button type="button" ' +
-               'class="addignore"><span>Ignore...</span></button></td></tr>' +
-               '</table>';
+               'class="addignore"><span>Add Ignore...</span></button>' +
+               '</td></tr></table>';
    $('#ignoreDiv').html(igtext);
    $.facebox({ div: '#ignoreDiv' }, 'ignorelist');
 });

@@ -41,6 +41,7 @@ function parseNames(st) {
 }
 
 function serializeNames(arr) {
+   if (!arr) { return ''; }
    return arr.sort().join(',');
 }
 
@@ -125,7 +126,7 @@ function doDisplay(start,show,acct) {
             names.splice(i+1,1);
          }
       }
-      doFinish(names,show, acct);
+      doFinish(names,show,acct);
    }
    else {
       if (!failed) {
