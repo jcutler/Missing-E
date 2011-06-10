@@ -99,20 +99,20 @@ float:none !important;
 width:auto !important;
 }
 
-#dashboard_submissions #posts form, #posts div.reply_pane form {
+#dashboard_inbox #posts form, #dashboard_submissions #posts form, #posts div.reply_pane form {
 display:block !important;
 padding-right:16px !important;
 }
 
-#dashboard_submissions #posts form > *, #posts div.reply_pane form > * {
+#dashboard_inbox #posts form > *, #dashboard_submissions #posts form > *, #posts div.reply_pane form > * {
 margin-right:-16px;
 }
 
-#dashboard_submissions #posts form > .mceEditor {
+#dashboard_inbox #posts form > .mceEditor, #dashboard_submissions #posts form > .mceEditor {
 display:block;
 }
 
-#dashboard_submissions #posts textarea.text_field, #posts div.reply_pane textarea.reply_text {
+#dashboard_inbox #posts textarea.text_field, #dashboard_submissions #posts textarea.text_field, #posts div.reply_pane textarea.reply_text {
 width:100% !important;
 }
 

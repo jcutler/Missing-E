@@ -750,6 +750,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
            /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
            (/http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) &&
@@ -839,6 +840,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             /http:\/\/www\.tumblr\.com\/reblog\//.test(sender.tab.url) ||
             /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(sender.tab.url)) ||
          (/http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(sender.tab.url)) ||
@@ -927,7 +929,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.postCrushes = false;
       }
       if (sender.tab.url == request.url &&
-          (/http:\/\/www\.tumblr\.com\/(submissions|messages)/
+          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/
             .test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/
             .test(sender.tab.url))) {
@@ -946,7 +948,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/(submissions|messages)/.test(sender.tab.url)) &&
+          /http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(sender.tab.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/.test(sender.tab.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(sender.tab.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
