@@ -594,6 +594,9 @@ function handleMessage(message, myWorker) {
          openSettings();
       }
    }
+   else if (message.greeting == "unfollowerIgnore") {
+      setStorage('extensions.MissingE.unfollower.ignore', message.list);
+   }
    else if (message.greeting == "close-followChecker") {
       closeTab(data.url("followChecker/followChecker.html"));
    }
@@ -708,6 +711,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_replyReplies_addTags = getStorage("extensions.MissingE.replyReplies.addTags",1);
       settings.MissingE_replyReplies_newTab = getStorage("extensions.MissingE.replyReplies.newTab",1);
       settings.MissingE_unfollower_retries = getStorage("extensions.MissingE.unfollower.retries",defaultRetries);
+      settings.MissingE_unfollower_ignore = getStorage("extensions.MissingE.unfollower.ignore",'');
       settings.MissingE_betterReblogs_passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
       settings.MissingE_betterReblogs_retries = getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries);
       settings.MissingE_betterReblogs_autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
@@ -777,6 +781,7 @@ function handleMessage(message, myWorker) {
             settings.blogSelect = getStorage("extensions.MissingE.postingFixes.blogSelect",0);
             break;
          case "unfollower":
+            settings.ignore = getStorage("extensions.MissingE.unfollower.ignore",'');
          case "followChecker":
             settings.retries = getStorage("extensions.MissingE." + message.component + ".retries",defaultRetries);
             break;
@@ -1062,8 +1067,8 @@ function handleMessage(message, myWorker) {
           activeScripts.followChecker ||
           activeScripts.magnifier) {
          zindexFix = true;
-         injectScripts.push(data.url("facebox/facebox.js"));
-         injectScripts.push(data.url("common/faceboxHelper.js"));
+         injectScripts.unshift(data.url("common/faceboxHelper.js"));
+         injectScripts.unshift(data.url("facebox/facebox.js"));
       }
 
       injectScripts.unshift(data.url("common/jquery.min.js"));

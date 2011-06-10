@@ -63,11 +63,18 @@
       },
 
       reveal: function(data, klass) {
+         init();
+         $('#facebox .close_image').attr('src', $.facebox.settings.closeImage);
          $(document).trigger('beforeReveal.facebox');
          if (klass) $('#facebox .content').addClass(klass);
          $('#facebox .content').empty().append(data);
          $('#facebox .popup').children().fadeIn('normal');
-         $('#facebox').css('left', $(window).width() / 2 - ($('#facebox .popup').width() / 2));
+         if (/early/.test(klass)) {
+            $('#facebox').css('left', $(window).width() / 2 - (390 / 2));
+         }
+         else {
+            $('#facebox').css('left', $(window).width() / 2 - ($('#facebox .popup').width() / 2));
+         }
          var h = $('#facebox .popup').height();
          var ph = getPageHeight();
          if (h > ((8 * ph) / 10)) {

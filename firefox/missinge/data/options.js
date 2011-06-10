@@ -130,6 +130,17 @@ function setStorage(key,value) {
    self.postMessage({greeting: "change-setting", name: key, val: value});
 }
 
+function parseNames(st) {
+   if (!st || st.length === 0) {
+      return [];
+   }
+   return st.split(',').sort();
+}
+
+function serializeNames(arr) {
+   return arr.sort().join(',');
+}
+
 function trim(str) {
    return str.replace(/^\s+/,'').replace(/\s+$/,'');
 }
@@ -380,3 +391,63 @@ function doshow(component) {
       document.getElementById('social_posts').style.display = 'none';
    }
 }
+
+$('#unfollower_ignore_btn').live('click', function() {
+   if ($('#ignoreDiv').length === 0) {
+      $('body').append('<div id="ignoreDiv"></div>');
+   }
+   var i;
+   var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
+   var igtext = '<p>Tumblr accounts ignored by ' +
+               '<strong>Unfollower</strong>:</p>' +
+               '<table border="0">';
+   for (i=0; i<list.length; i++) {
+      var klass = (i%2==1 ? 'class="greyrow"' : '');
+      igtext += '<tr><td ' + klass + '>' + list[i] + '</td>' +
+                  '<td ' + klass + '><button type="button" acct="' +
+                  list[i] + '" class="remignore"><span>Remove</span>' +
+                  '</button></td></tr>';
+   }
+   igtext += '<tr><td class="bottomrow" colspan="2"><button type="button" ' +
+               'class="addignore"><span>Add Ignore...</span></button>' +
+               '</td></tr></table>';
+   $('#ignoreDiv').html(igtext);
+   $.facebox({ div: '#ignoreDiv' }, 'ignorelist');
+});
+
+jQuery('#facebox button').live('click', function() {
+   if (this.className === 'remignore') {
+      var acct = $(this).attr('acct');
+      var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
+      var idx = jQuery.inArray(acct, list);
+      if (idx >= 0) {
+         list.splice(idx,1);
+         setStorage('MissingE_unfollower_ignore',serializeNames(list));
+      }
+      jQuery(this).closest('tr').remove();
+      jQuery('#facebox table tr:even td').removeClass('greyrow');
+      jQuery('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
+   }
+   else if (this.className === 'addignore') {
+      var acct = prompt("Enter a Tumblr username for Unfollower to ignore",'');
+      if (acct) { acct = trim(acct.toLowerCase()); }
+      if (acct && acct !== '' && !(/[^0-9a-zA-Z\-]/.test(acct))) {
+         var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
+         if (jQuery.inArray(acct,list) !== -1) {
+            return;
+         }
+         list.push(acct);
+         list.sort();
+         var idx = jQuery.inArray(acct,list);
+         setStorage('MissingE_unfollower_ignore',serializeNames(list));
+         if (idx >= 0) {
+            jQuery('#facebox table tr:eq(' + idx + ')')
+              .before('<tr><td>' + acct + '</td><td><button type="button" ' +
+                      'acct="' + acct + '" class="remignore"><span>Remove' +
+                      '</span></button></td></tr>');
+            jQuery('#facebox table tr:even td').removeClass('greyrow');
+            jQuery('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
+         }
+      }
+   }
+});
