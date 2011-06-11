@@ -109,6 +109,9 @@ jQuery(document).ready(function($) {
 <li>Add simple text buttons for creating new posts to secondary dashboard pages (ie. <em>/dashboard/2/*</em>).</li>
 <li>Improve the performance and responsiveness of Tumblr's <em>endless scrolling</em> dashboard.</li>
 <li>Fit the Tumblr dashboard to a widescreen display.</li>
+<li>Change the <em>Following</button> on the dashboard sidebar to load the following list page (instead of reloading the dashboard).</li>
+<li>Add a <em>move to top of queue</em> button on queued posts.</li>
+<li>Expand/minimize <em>all</em> thumbnail images in a dashboard post, together.</li>
 </ul>
 <div class="screenshot"><img class="screen" src="screens/dashboardFixes.png" alt="Screenshot of Dashboard Fixes fitting reblog posts into a smaller area" /><img class="thumb" src="screens/dashboardFixes_thumb.png" alt="Screenshot of Dashboard Fixes fitting reblog posts into a smaller area" /></div><div class="overlay"></div><div class="overlayname">Dashboard Fixes</div></a>
 <a id="brick_bookmarker" class="brick" href="#" rel="facebox[.exploded]" rev="facebox_content"><div class="brickname">Bookmarker</div><img class="icon" alt="Bookmarker" src="icons/bookmarker_avatar.png" /><p>Add bookmarks to posts on your dashboard so you can go back to them later!</p><p><em>Bookmarker</em> adds a small bookmark button to posts, and a list of current bookmarks in your sidebar.</p><ul><li>Hold down the <img class="inlineimg" src="images/shift.gif" alt="Shift" /> key when clicking on a bookmark icon to create a new bookmark with a custom name.</li><li>Hold down the <img class="inlineimg" src="images/shift.gif" alt="Shift" /> key when clicking on an existing bookmark to rename it.</li>
@@ -164,9 +167,13 @@ jQuery(document).ready(function($) {
 <a id="brick_unfollower" class="brick" href="#" rel="facebox[.exploded]" rev="facebox_content"><div class="brickname">Unfollower</div><img class="icon" alt="Unfollower" src="icons/unfollower_avatar.png" />
 <p>Find out who has unfollowed you on Tumblr (since the last time you checked) with <em>Unfollower</em>.</p>
 <p><strong>Limitations:</strong></p>
-<ul><li><em>Unfollower</em> can only track one tumblr account at a time.</li><li><em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.</li><li><em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.</li>
+<ul><li><em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.</li><li><em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.</li>
 <li>When Tumblr is suffering from errors, <em>Unfollower</em> may not be able to load all of your follower pages and will return an error. Wait a little while and try again.</li><li>Because of some limitations with the way Tumblr presents your followers list, some people may appear to have unfollowed who actually haven't. You should always double-check.</li></ul>
 <div class="screenshot"><img class="screen" src="screens/unfollower.png" alt="Screenshot of Unfollower" /><img class="thumb" src="screens/unfollower_thumb.png" alt="Screenshot of Unfollower" /></div><div class="overlay"></div><div class="overlayname">Unfollower</div></a>
+<a id="brick_unfollower" class="brick" href="#" rel="facebox[.exploded]" rev="facebox_content"><div class="brickname">Mass Editor</div><img class="icon" alt="Mass Editor" src="icons/massEditor_avatar.png" />
+<p>Additional select button for the Tumblr mass editor.</p>
+<ul><li>Select by post type</li></ul>
+<div class="screenshot"><img class="screen" src="screens/massEditor.png" alt="Screenshot of Mass Editor added feature" /><img class="thumb" src="screens/massEditor_thumb.png" alt="Screenshot of Mass Editor added feature" /></div><div class="overlay"></div><div class="overlayname">Mass Editor</div></a>
 <div class="clear"></div>
 </div>
 <div id="faq-link">Problems? Please consult the <a href="faq">FAQ</a>.</div>

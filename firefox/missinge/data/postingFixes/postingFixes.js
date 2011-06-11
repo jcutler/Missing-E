@@ -239,6 +239,7 @@ self.on('message', function(message) {
        !(/\/new\/text/.test(location.href)) &&
        !(/\/new\/chat/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/messages/.test(location.href)) &&
+       !(/http:\/\/www\.tumblr\.com\/inbox/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/
             .test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/share/.test(location.href)) &&
@@ -363,10 +364,11 @@ self.on('message', function(message) {
    }
    else if (message.addUploader === 1 &&
        (/http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/
+        /http:\/\/www\.tumblr\.com\/inbox/.test(location.href) ||
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]+\/messages/
             .test(location.href) ||
         /http:\/\/www\.tumblr\.com\/submissions/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]+\/submissions/
             .test(location.href))) {
       jQuery('#posts li.post a[id^="ask_answer_link_"]')
             .live('click', function() {

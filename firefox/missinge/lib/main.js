@@ -106,7 +106,8 @@ var componentList = ["dashboardFixes",
                      "followChecker",
                      "postCrushes",
                      "replyReplies",
-                     "unfollower"];
+                     "unfollower",
+                     "massEditor"];
 
 var months = ["Jan",
               "Feb",
@@ -809,6 +810,15 @@ function handleMessage(message, myWorker) {
                            data.url("common/localizations.js")];
       activeScripts.extensionURL = data.url("");
       if (!message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/mega-editor\//.test(message.url)) {
+            if (getStorage("extensions.MissingE.massEditor.enabled",1) == 1) {
+               injectScripts.push(data.url("massEditor/massEditor.js"));
+               activeScripts.massEditor = true;
+            }
+            else
+               activeScripts.massEditor = false;
+         }
+         if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
                .test(message.url)) {
          if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
@@ -847,6 +857,7 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/inbox/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
@@ -912,6 +923,7 @@ function handleMessage(message, myWorker) {
             /http:\/\/www\.tumblr\.com\/reblog\//.test(message.url) ||
             /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(message.url)) ||
          (/http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/inbox/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(message.url)) ||
@@ -997,7 +1009,7 @@ function handleMessage(message, myWorker) {
             activeScripts.postCrushes = false;
       }
       if (!message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/(submissions|messages)/
+          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/
                .test(message.url) ||
            /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/
                .test(message.url))) {
@@ -1015,7 +1027,7 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/(submissions|messages)/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/.test(message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/.test(message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(message.url))) {
