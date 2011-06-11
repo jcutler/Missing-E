@@ -116,7 +116,8 @@ var componentList = ["dashboardFixes",
                      "followChecker",
                      "postCrushes",
                      "replyReplies",
-                     "unfollower"];
+                     "unfollower",
+                     "massEditor"];
 
 function getStorage(key,defaultValue) {
    if (all_settings[key] == undefined)
@@ -230,7 +231,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_askFixes_tagAsker',1);
          frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
       }
-      if (v == "dashLinksToTabs") {
+      else if (v == "dashLinksToTabs") {
          loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
          loadCheck(frm,'MissingE_dashLinksToTabs_sidebar',0);
          loadCheck(frm,'MissingE_dashLinksToTabs_reblogLinks',0);

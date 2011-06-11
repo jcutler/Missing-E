@@ -106,7 +106,8 @@ var componentList = ["dashboardFixes",
                      "followChecker",
                      "postCrushes",
                      "replyReplies",
-                     "unfollower"];
+                     "unfollower",
+                     "massEditor"];
 
 var months = ["Jan",
               "Feb",
@@ -809,6 +810,15 @@ function handleMessage(message, myWorker) {
                            data.url("common/localizations.js")];
       activeScripts.extensionURL = data.url("");
       if (!message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/mega-editor\//.test(message.url)) {
+            if (getStorage("extensions.MissingE.massEditor.enabled",1) == 1) {
+               injectScripts.push(data.url("massEditor/massEditor.js"));
+               activeScripts.massEditor = true;
+            }
+            else
+               activeScripts.massEditor = false;
+         }
+         if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
                .test(message.url)) {
          if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
