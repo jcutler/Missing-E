@@ -49,6 +49,7 @@ width:100% !important;
 
 #header #user_tools + #tabs_container {
 width:auto !important;
+max-width:430px !important;
 }
 
 #posts li.notification {
