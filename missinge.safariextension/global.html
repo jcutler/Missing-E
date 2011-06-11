@@ -40,7 +40,8 @@ var componentList = ["dashboardFixes",
                      "followChecker",
                      "postCrushes",
                      "replyReplies",
-                     "unfollower"];
+                     "unfollower",
+                     "massEditor"];
 
 var maxActiveAjax = 15;
 var activeAjax = 0;
@@ -784,6 +785,14 @@ function handleRequest(request) {
    }
    else if (request.name == "start") {
       var activeScripts = {};
+      if (!request.message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/mega-editor\//.test(request.message.url)) {
+         if (getStorage("MissingE_massEditor_enabled",1) == 1) {
+            activeScripts.massEditor = true;
+         }
+         else
+            activeScripts.massEditor = false;
+      }
       if (!request.message.isFrame &&
           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
                .test(request.message.url)) {

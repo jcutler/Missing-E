@@ -651,7 +651,8 @@ var componentList = ["dashboardFixes",
                      "followChecker",
                      "postCrushes",
                      "replyReplies",
-                     "unfollower"];
+                     "unfollower",
+                     "massEditor"];
 
 function getStorage(key,defaultValue) {
    if (all_settings[key] == undefined)
@@ -760,7 +761,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_askFixes_tagAsker',1);
          frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
       }
-      if (v == "dashLinksToTabs") {
+      else if (v == "dashLinksToTabs") {
          loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
          loadCheck(frm,'MissingE_dashLinksToTabs_sidebar',0);
          loadCheck(frm,'MissingE_dashLinksToTabs_reblogLinks',0);
@@ -1188,6 +1189,15 @@ $('#facebox button').live('click', function() {
 </li>
 </div>
 <div id="posting_posts">
+<li id="massEditor" class="post not_mine regular">
+<div class="post_content">
+<form id="massEditor_options">
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Mass Editor</div>
+<div class="post_thumb"><a href="massEditor/screen.png" rel="facebox"><img src="massEditor/thumb.png" /><br />Screenshot</a></div>
+<p>Additional selection menu for the Tumblr mass editor.</p>
+</form></div><div class="clear"></div>
+<div><div class="post_avatar" style="background-image:url('icons/massEditor_avatar.png');"></div><span class="arrow"></span>
+</div></li>
 <li id="betterReblogs_section" class="post not_mine regular">
 <div class="post_content">
 <form id="betterReblogs_options">

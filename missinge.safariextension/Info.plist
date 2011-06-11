@@ -73,6 +73,7 @@
 				<string>safeDash/safeDash.js</string>
 				<string>timestamps/timestamps.js</string>
 				<string>unfollower/unfollower.js</string>
+				<string>massEditor/massEditor.js</string>
 				<string>common/zindexFix.js</string>
 			</array>
 		</dict>
@@ -87,6 +88,7 @@
 			<string>safeDash/safeDash.css</string>
 			<string>unfollower/unfollower.css</string>
 			<string>postingFixes/postingFixes.css</string>
+			<string>massEditor/massEditor.css</string>
 		</array>
 		<key>Whitelist</key>
 		<array>

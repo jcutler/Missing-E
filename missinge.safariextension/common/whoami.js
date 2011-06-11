@@ -70,6 +70,9 @@ function doStartup(response) {
       if (response.message.zindexFix) {
          doZindexFix();
       }
+      if (response.message.massEditor) {
+         MissingE_massEditor_doStartup();
+      }
       if (response.message.bookmarker) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "bookmarker"});
