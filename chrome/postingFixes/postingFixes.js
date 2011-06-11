@@ -25,6 +25,10 @@
 
 function addAskUploader(obj) {
    if (obj.tagName === 'LI' && $(obj).hasClass('post')) {
+      if ($(obj).find('div.post_controls a[id^="ask_answer_link"]')
+            .length === 0) {
+         return;
+      }
       var aid = obj.id.match(/[0-9]+$/)[0];
       var it = document.getElementById('ask_answer_form_container_' + aid);
       $(it).css('padding-top','0')
@@ -228,6 +232,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
        !(/\/new\/text/.test(location.href)) &&
        !(/\/new\/chat/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/messages/.test(location.href)) &&
+       !(/http:\/\/www\.tumblr\.com\/inbox/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/
             .test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/share/.test(location.href)) &&
@@ -352,9 +357,10 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
    }
    else if (postingFixes_settings.addUploader === 1 &&
        (/http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/
+        /http:\/\/www\.tumblr\.com\/inbox/.test(location.href) ||
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]+\/messages/
             .test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/
+        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]+\/submissions/
             .test(location.href) ||
         /http:\/\/www\.tumblr\.com\/submissions/.test(location.href))) {
       $('#posts li.post a[id^="ask_answer_link_"]').live('click', function() {

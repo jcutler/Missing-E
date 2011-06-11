@@ -332,6 +332,7 @@ chrome.extension.sendRequest({greeting: "settings",
       if (!(/drafts$/.test(location.href)) &&
           !(/queue$/.test(location.href)) &&
           !(/messages$/.test(location.href)) &&
+          !(/inbox$/.test(location.href)) &&
           !(/submissions[^\/]*$/.test(location.href)) &&
           !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
           !(/queue\/after\/[^\/]*$/.test(location.href))) {
