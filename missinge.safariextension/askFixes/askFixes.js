@@ -24,8 +24,11 @@
 function failAnswer(id,type) {
    $('#post_control_loader_' + id).hide();
    $('#ask_publish_button_also_' + id).removeAttr('disabled');
-   $('#ask_queue_button_also_' + id).removeAttr('disabled');
+   $('#ask_queue_button_' + id).removeAttr('disabled');
+   $('#ask_draft_button_' + id).removeAttr('disabled');
+   $('#ask_private_button_' + id).removeAttr('disabled');
    $('#ask_cancel_button_' + id).removeAttr('disabled');
+   $('#private_answer_button_' + id).removeAttr('disabled');
    $('#ask_answer_form_' + id + ' .MissingE_postMenu input')
       .attr('disabled','disabled');
 }
@@ -47,8 +50,11 @@ function doManualAnswering(e,id,type) {
    if (type) {
       $('#post_control_loader_' + id).show();
       $('#ask_publish_button_also_' + id).attr('disabled','disabled');
-      $('#ask_queue_button_also_' + id).attr('disabled','disabled');
+      $('#ask_queue_button_' + id).attr('disabled','disabled');
+      $('#ask_draft_button_' + id).attr('disabled','disabled');
+      $('#ask_private_button_' + id).attr('disabled','disabled');
       $('#ask_cancel_button_' + id).attr('disabled','disabled');
+      $('#private_answer_button_' + id).attr('disabled','disabled');
       $('#ask_answer_form_' + id + ' .MissingE_postMenu input')
          .attr('disabled','disabled');
    }
@@ -150,7 +156,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
    if (item.tagName !== 'LI' || !$(item).hasClass('post')) {
       return false;
    }
-   var answer = $(item).find('form[action="/ask_publish"]');
+   var answer = $(item).find('form[action="#"]');
    if (answer.length === 0) {
       return false;
    }
@@ -161,25 +167,29 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
       var allbtns = "";
       for (var i in locale[lang]["postingFixes"]["submitText"]) {
          if (i === 'publish') { continue; }
-         var x = (i=='queue' ? 'also_' : '');
-         allbtns += '<div><input id="ask_' + i + '_button_' + x + id + '" ' +
-            'type="submit" class="positive" onclick="return false;" value="' +
+         allbtns += '<button class="chrome" id="ask_' + i + '_button_' + id +
+            '" onclick="return false;"><div class="chrome_button">' +
+            '<div class="chrome_button_left"></div>' +
             locale[lang]["postingFixes"]["submitText"][i] +
-            '" /></div>';
+            '<div class="chrome_button_right"></div></div></button><br />';
       }
+      allbtns = allbtns.replace(/<br \/>$/,'');
       var btn = $('#ask_publish_button_' + id);
-      var postbtn = $('<input type="submit" name="publish" value="' + btn.val() + '" ' +
-                      'id="ask_publish_button_also_' + id + '" class="positive" ' +
-                      'onclick="return false;" style="margin-right:5px;" />');
+      var postbtn = $('<button class="chrome blue" ' +
+                      'id="ask_publish_button_also_' + id + '" ' +
+                      'name="publish" type="submit" onclick="return false;">' +
+                      '<div class="chrome_button"><div ' +
+                      'class="chrome_button_left"></div>' +
+                      btn.text() + '<div class="chrome_button_right"></div>' +
+                      '</div></button>');
       btn.after(postbtn);
       var newbtns = $('<div class="MissingE_postMenu">' + allbtns + '</div>')
                      .insertAfter(postbtn);
-      $('#ask_queue_button_' + id).hide();
       btn.hide();
       $('#ask_publish_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'publish');
       });
-      $('#ask_queue_button_also_' + id).click(function(e) {
+      $('#ask_queue_button_' + id).click(function(e) {
          doManualAnswering(e, id, 'queue');
       });
       $('#ask_draft_button_' + id).click(function(e) {
@@ -191,22 +201,15 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
    }
    else if (tags === 1) {
       var pbtn = $('#ask_publish_button_' + id);
-      var qbtn = $('#ask_queue_button_' + id);
-      var npbtn = $('<input type="submit" name="publish" value="' +
-                  pbtn.val() + '" id="ask_publish_button_also_' + id +
-                  '" onclick="return false;" style="margin-right:5px;" />')
-                     .insertBefore(pbtn);
-      var nqbtn = $('<input type="submit" name="queue" value="' + qbtn.val() +
-                  '" id="ask_queue_button_also_' + id + '" onclick="' +
-                  'return false;" style="margin-right:5px;" />')
-                     .insertBefore(qbtn);
+      var npbtn = $('<button class="chrome blue" id="ask_publish_button_also_' +
+                    id + '" name="publish" type="submit" ' +
+                    'onclick="return false;"><div class="chrome_button"><div ' +
+                    'class="chrome_button_left"></div>' +
+                    pbtn.text() + '<div class="chrome_button_right"></div>' +
+                    '</div></button>');
       pbtn.hide();
-      qbtn.hide();
       npbtn.click(function(e) {
          doManualAnswering(e, id, 'publish');
-      });
-      nqbtn.click(function(e) {
-         doManualAnswering(e, id, 'queue');
       });
    }
 
@@ -245,29 +248,21 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
 }
 
 function MissingE_askFixes_doStartup(tagAsker, defaultTags, buttons, tags) {
-   var user = location.href
-               .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
-   if (user === null || user.length < 2) {
-      var me = $('#right_column span.dashboard_controls_posts');
-      if (me.length > 0) {
-         user = me.parent().attr('href').match(/[^\/]*$/)[0];
-      }
-      else {
-         user = null;
-      }
-   }
-   else {
-      user = user[1];
-   }
-
    if (buttons === 1 || tags === 1) {
       $('head').append('<script type="text/javascript">' +
                      'document.addEventListener(\'mouseup\', function(e) {' +
                      'if (e.which !== 1) { return; }' +
-                     'if (!(/ask_[a-z]+_button/.test(e.target.id))) {' +
+                     'var trg = e.target;' +
+                     'while (trg) {' +
+                        'if (/ask_[a-z]+_button/.test(trg.id)) {' +
+                           'break;' +
+                        '}' +
+                        'trg = trg.parentNode;' +
+                     '}' +
+                     'if (!trg || !(/ask_[a-z]+_button/.test(trg.id))) {' +
                         'return;' +
                      '}' +
-                     'var id = e.target.id.match(/[0-9]*$/);' +
+                     'var id = trg.id.match(/[0-9]*$/);' +
                      'if (tinyMCE && tinyMCE.get(\'ask_answer_field_\' + id)) {' +
                         'document.getElementById(\'ask_answer_field_\' + id).value = ' +
                         'tinyMCE.get(\'ask_answer_field_\' + id).getContent();' +
