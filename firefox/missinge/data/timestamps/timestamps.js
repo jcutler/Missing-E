@@ -51,7 +51,7 @@ function loadTimestamp(item) {
       var tid = jQuery(item).attr("id").match(/[0-9]*$/)[0];
       var perm = jQuery(item).find("a.permalink:first");
       var addr;
-      if (/^\/(messages|submissions)/.test(location.pathname) ||
+      if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
           /^\/tumblelog\/[^\/]*\/(messages|submissions)/
             .test(location.pathname)) {
          addr = 'http://www.tumblr.com/edit/';
