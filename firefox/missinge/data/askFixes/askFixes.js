@@ -24,8 +24,11 @@
 function failAnswer(id,type) {
    jQuery('#post_control_loader_' + id).hide();
    jQuery('#ask_publish_button_also_' + id).removeAttr('disabled');
-   jQuery('#ask_queue_button_also_' + id).removeAttr('disabled');
+   jQuery('#ask_queue_button_' + id).removeAttr('disabled');
+   jQuery('#ask_draft_button_' + id).removeAttr('disabled');
+   jQuery('#ask_private_button_' + id).removeAttr('disabled');
    jQuery('#ask_cancel_button_' + id).removeAttr('disabled');
+   jQuery('#private_answer_button_' + id).removeAttr('disabled');
    jQuery('#ask_answer_form_' + id + ' .MissingE_postMenu input')
       .attr('disabled','disabled');
 }
@@ -47,8 +50,11 @@ function doManualAnswering(e,id,type) {
    if (type) {
       jQuery('#post_control_loader_' + id).show();
       jQuery('#ask_publish_button_also_' + id).attr('disabled','disabled');
-      jQuery('#ask_queue_button_also_' + id).attr('disabled','disabled');
+      jQuery('#ask_queue_button_' + id).attr('disabled','disabled');
+      jQuery('#ask_draft_button_' + id).attr('disabled','disabled');
+      jQuery('#ask_private_button_' + id).attr('disabled','disabled');
       jQuery('#ask_cancel_button_' + id).attr('disabled','disabled');
+      jQuery('#private_answer_button_' + id).attr('disabled','disabled');
       jQuery('#ask_answer_form_' + id + ' .MissingE_postMenu input')
          .attr('disabled','disabled');
    }
@@ -150,36 +156,39 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
    if (item.tagName !== 'LI' || !jQuery(item).hasClass('post')) {
       return false;
    }
-   var answer = jQuery(item).find('form[action="/ask_publish"]');
+   var answer = jQuery(item).find('form[action="#"]');
    if (answer.length === 0) {
       return false;
    }
    var lang = jQuery('html').attr("lang");
    var id = jQuery(item).attr('id').match(/[0-9]*$/)[0];
-
    if (buttons === 1) {
       var allbtns = "";
       for (var i in locale[lang]["postingFixes"]["submitText"]) {
          if (i === 'publish') { continue; }
-         var x = (i=='queue' ? 'also_' : '');
-         allbtns += '<div><input id="ask_' + i + '_button_' + x + id + '" ' +
-            'type="submit" class="positive" onclick="return false;" value="' +
+         allbtns += '<button class="chrome" id="ask_' + i + '_button_' + id +
+            '" onclick="return false;"><div class="chrome_button">' +
+            '<div class="chrome_button_left"></div>' +
             locale[lang]["postingFixes"]["submitText"][i] +
-            '" /></div>';
+            '<div class="chrome_button_right"></div></div></button><br />';
       }
+      allbtns = allbtns.replace(/<br \/>$/,'');
       var btn = jQuery('#ask_publish_button_' + id);
-      var postbtn = jQuery('<input type="submit" name="publish" value="' + btn.val() + '" ' +
-                      'id="ask_publish_button_also_' + id + '" class="positive" ' +
-                      'onclick="return false;" style="margin-right:5px;" />');
+      var postbtn = jQuery('<button class="chrome blue" ' +
+                      'id="ask_publish_button_also_' + id + '" ' +
+                      'name="publish" type="submit" onclick="return false;">' +
+                      '<div class="chrome_button"><div ' +
+                      'class="chrome_button_left"></div>' +
+                      btn.text() + '<div class="chrome_button_right"></div>' +
+                      '</div></button>');
       btn.after(postbtn);
       var newbtns = jQuery('<div class="MissingE_postMenu">' + allbtns + '</div>')
                      .insertAfter(postbtn);
-      jQuery('#ask_queue_button_' + id).hide();
       btn.hide();
       jQuery('#ask_publish_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'publish');
       });
-      jQuery('#ask_queue_button_also_' + id).click(function(e) {
+      jQuery('#ask_queue_button_' + id).click(function(e) {
          doManualAnswering(e, id, 'queue');
       });
       jQuery('#ask_draft_button_' + id).click(function(e) {
@@ -191,22 +200,16 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
    }
    else if (tags === 1) {
       var pbtn = jQuery('#ask_publish_button_' + id);
-      var qbtn = jQuery('#ask_queue_button_' + id);
-      var npbtn = jQuery('<input type="submit" name="publish" value="' +
-                  pbtn.val() + '" id="ask_publish_button_also_' + id +
-                  '" onclick="return false;" style="margin-right:5px;" />')
-                     .insertBefore(pbtn);
-      var nqbtn = jQuery('<input type="submit" name="queue" value="' + qbtn.val() +
-                  '" id="ask_queue_button_also_' + id + '" onclick="' +
-                  'return false;" style="margin-right:5px;" />')
-                     .insertBefore(qbtn);
+      var npbtn = jQuery('<button class="chrome blue" ' +
+                    'id="ask_publish_button_also_' +
+                    id + '" name="publish" type="submit" ' +
+                    'onclick="return false;"><div class="chrome_button"><div ' +
+                    'class="chrome_button_left"></div>' +
+                    pbtn.text() + '<div class="chrome_button_right"></div>' +
+                    '</div></button>');
       pbtn.hide();
-      qbtn.hide();
       npbtn.click(function(e) {
          doManualAnswering(e, id, 'publish');
-      });
-      nqbtn.click(function(e) {
-         doManualAnswering(e, id, 'queue');
       });
    }
 
@@ -261,30 +264,23 @@ self.on('message', function (message) {
    }
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                     message.extensionURL + 'askFixes/askFixes.css" />');
-   var user = location.href
-               .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
-   if (user === null || user.length < 2) {
-      var me = jQuery('#right_column span.dashboard_controls_posts');
-      if (me.length > 0) {
-         user = me.parent().attr('href').match(/[^\/]*$/)[0];
-      }
-      else {
-         user = null;
-      }
-   }
-   else {
-      user = user[1];
-   }
 
    if (message.buttons === 1 ||
        message.tags === 1) {
       jQuery('head').append('<script type="text/javascript">' +
                      'document.addEventListener(\'mouseup\', function(e) {' +
                      'if (e.which !== 1) { return; }' +
-                     'if (!(/ask_[a-z]+_button/.test(e.target.id))) {' +
+                     'var trg = e.target;' +
+                     'while (trg) {' +
+                        'if (/ask_[a-z]+_button/.test(trg.id)) {' +
+                           'break;' +
+                        '}' +
+                        'trg = trg.parentNode;' +
+                     '}' +
+                     'if (!trg || !(/ask_[a-z]+_button/.test(trg.id))) {' +
                         'return;' +
                      '}' +
-                     'var id = e.target.id.match(/[0-9]*$/);' +
+                     'var id = trg.id.match(/[0-9]*$/);' +
                      'if (tinyMCE && tinyMCE.get(\'ask_answer_field_\' + id)) {' +
                         'document.getElementById(\'ask_answer_field_\' + id).value = ' +
                         'tinyMCE.get(\'ask_answer_field_\' + id).getContent();' +
