@@ -90,6 +90,12 @@ self.on('message', function(message) {
                                message.editLinks);
       }, false);
    }
+   if (message.sidebar === 1) {
+      jQuery('#inbox_button a').bind('click', function(e) {
+         jQuery(this).attr('target','_blank');
+         return true;
+      });
+   }
    jQuery('#MissingE_quick_reblog a').live('click', function(e) {
       dashLinksToTabs_click(e, message.newPostTabs, message.reblogLinks,
                             message.editLinks);

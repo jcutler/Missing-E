@@ -74,24 +74,28 @@ function dashLinksToTabs_click(e, dashLinksToTabs_settings) {
 var lcol = document.getElementById('left_column');
 var rcol = document.getElementById('right_column');
 
-if (lcol || rcol) {
-   chrome.extension.sendRequest({greeting: "settings",
-                                 component: "dashLinksToTabs"},
-                                 function(response) {
+chrome.extension.sendRequest({greeting: "settings",
+                              component: "dashLinksToTabs"},
+                              function(response) {
 
-      var dashLinksToTabs_settings = JSON.parse(response);
-      if (lcol) {
-         lcol.addEventListener('click', function(e) {
-            dashLinksToTabs_click(e, dashLinksToTabs_settings);
-         }, false);
-      }
-      if (rcol && dashLinksToTabs_settings.sidebar === 1) {
-         rcol.addEventListener('click', function(e) {
-            dashLinksToTabs_click(e, dashLinksToTabs_settings);
-         }, false);
-      }
-      $('#MissingE_quick_reblog a').live('click', function(e) {
-            dashLinksToTabs_click(e, dashLinksToTabs_settings);
+   var dashLinksToTabs_settings = JSON.parse(response);
+   if (lcol) {
+      lcol.addEventListener('click', function(e) {
+         dashLinksToTabs_click(e, dashLinksToTabs_settings);
+      }, false);
+   }
+   if (rcol && dashLinksToTabs_settings.sidebar === 1) {
+      rcol.addEventListener('click', function(e) {
+         dashLinksToTabs_click(e, dashLinksToTabs_settings);
+      }, false);
+   }
+   if (dashLinksToTabs_settings.sidebar === 1) {
+      $('#inbox_button a').bind('click', function(e) {
+         $(this).attr('target','_blank');
+         return true;
       });
+   }
+   $('#MissingE_quick_reblog a').live('click', function(e) {
+         dashLinksToTabs_click(e, dashLinksToTabs_settings);
    });
-}
+});
