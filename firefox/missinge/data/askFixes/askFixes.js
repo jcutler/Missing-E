@@ -207,6 +207,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
                     'class="chrome_button_left"></div>' +
                     pbtn.text() + '<div class="chrome_button_right"></div>' +
                     '</div></button>');
+      pbtn.after(npbtn);
       pbtn.hide();
       npbtn.click(function(e) {
          doManualAnswering(e, id, 'publish');
