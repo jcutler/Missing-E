@@ -86,6 +86,12 @@ function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks,
          dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);
       }, false);
    }
+   if (sidebar === 1) {
+      $('#inbox_button a').bind('click', function(e) {
+         $(this).attr('target','_blank');
+         return true;
+      });
+   }
    $('#MissingE_quick_reblog a').live('click', function(e) {
          dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks);
    });
