@@ -194,15 +194,49 @@ function addExpandAllHandler(item) {
    if (item.tagName !== 'LI' || !post.hasClass('post')) {
       return false;
    }
-   post.find('.inline_image').click(function() {
+   post.find('.inline_image,.inline_external_image').click(function() {
+      var me = this;
       if (!$(this).hasClass('exp_inline_image')) {
          $(this).closest('.post').find('.inline_image')
             .addClass('exp_inline_image').removeClass('inline_image');
-         $(this).addClass('exp_inline_image').removeClass('inline_image');
+         $(this).closest('.post').find('.inline_external_image')
+               .each(function() {
+            if (this === me) { return; }
+            var x = this;
+            var imgsrc = $(this).attr('onclick').match(/this,'([^']*)'/)[1];
+            if (!$(this).hasClass('enlarged')) {
+               $(this).attr('original_src',this.src);
+               $(this).addClass('enlarged');
+               if (this.hasAttribute('loader')) {
+                  this.src = $(this).attr('loader');
+               }
+               var img = new Image();
+               img.onload = function() {
+                  x.src = imgsrc;
+               };
+               img.src = imgsrc;
+            }
+            $(this).addClass('exp_inline_image');
+         });
+         $(this).addClass('exp_inline_image');
+         if (!$(this).hasClass('inline_external_image')) {
+            $(this).removeClass('inline_image');
+         }
       }
       else {
-         $(this).closest('.post').find('.exp_inline_image')
-            .addClass('inline_image').removeClass('exp_inline_image');
+         $(this).closest('.post').find('.exp_inline_image').each(function() {
+            $(this).removeClass('exp_inline_image');
+            if (!$(this).hasClass('inline_external_image')) {
+               $(this).addClass('inline_image');
+            }
+            else {
+               if (this === me) { return; }
+               if ($(this).hasClass('enlarged')) {
+                  this.src = $(this).attr('original_src');
+                  $(this).removeClass('enlarged');
+               }
+            }
+         });
       }
    });
 }
