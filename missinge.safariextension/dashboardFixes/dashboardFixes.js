@@ -244,7 +244,8 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                                            timeoutAJAX, timeoutLength,
                                            postLinks, reblogReplies,
                                            widescreen, queueArrows,
-                                           expandAll, followingLink) {
+                                           expandAll, followingLink,
+                                           slimSidebar) {
    if (window.top !== window) { return false; }
 
    document.addEventListener('DOMNodeInserted', function(e) {
@@ -286,6 +287,14 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       document.addEventListener('DOMNodeInserted', function(e) {
          addExpandAllHandler(e.target);
       }, false);
+   }
+   if (slimSidebar === 1) {
+      $('#right_column').addClass('MissingE_slim_sidebar');
+      var style = document.createElement("link");
+      style.setAttribute('rel','stylesheet');
+      style.setAttribute('type','text/css');
+      style.href = safari.extension.baseURI + "dashboardFixes/slimSidebar.css";
+      head.appendChild(style);
    }
    if (widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/

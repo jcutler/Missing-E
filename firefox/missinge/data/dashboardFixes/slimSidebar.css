@@ -1,0 +1,149 @@
+.right_column_section {
+margin-top:12px !important;
+}
+
+.right_column_section:first-child {
+margin:0 !important;
+}
+
+.right_column_section li a {
+padding:4px 13px 4px 34px !important;
+}
+
+.right_column_section li.recessed a {
+padding:2px 13px 4px 34px !important;
+}
+
+.right_column_section li .with_subtitle {
+padding:3px 13px 3px 34px !important;
+}
+
+.right_column_section li .tag {
+background-position:7px -643px !important;
+}
+
+.right_column_section li.selected .tag {
+background-position:6px -693px !important;
+}
+
+.right_column_section li.recessed .explore_more_tags {
+background-position:6px -1147px !important;
+}
+
+.remove_tag {
+top:8px !important;
+}
+
+.right_column_section a .count {
+top:6px !important;
+}
+
+.right_column_section li .following {
+background-position:4px -845px !important;
+}
+
+.right_column_section li.selected .following {
+background-position:4px -894px !important;
+}
+
+.right_column_section li .add_and_remove {
+background-position:7px -947px !important;
+}
+
+.right_column_section li .likes {
+background-position:7px -743px !important;
+}
+
+.right_column_section li.selected .likes {
+background-position:7px -793px !important;
+}
+
+.right_column_section li .posts {
+background-position:9px -146px !important;
+}
+
+.right_column_section li.selected .posts {
+background-position:-442px -146px !important;
+}
+
+.right_column_section li .followers {
+background-position:7px -194px !important;
+}
+
+.right_column_section li .messages {
+background-position:7px -293px !important;
+}
+
+.right_column_section li.selected .messages {
+background-position:-444px -293px !important;
+}
+
+.right_column_section li .drafts {
+background-position:9px -345px !important;
+}
+
+.right_column_section li.selected .drafts {
+background-position:-442px -345px !important;
+}
+
+.right_column_section li .queue {
+background-position:7px -445px !important;
+}
+
+.right_column_section li.selected .queue {
+background-position:-444px -445px !important;
+}
+
+.right_column_section li .open_blog {
+background-position:9px 10px !important;
+}
+
+.right_column_section li .customize {
+background-position:9px -47px !important;
+}
+
+.right_column_section li .mass_editor {
+background-position:10px -497px !important;
+}
+
+.right_column_section li .settings {
+background-position:7px -96px !important;
+}
+
+.right_column_section li.selected .settings {
+background-position:-444px -96px !important;
+}
+
+.right_column_section li .members {
+background-position:5px -244px !important;
+}
+
+.right_column_section li.selected .members {
+background-position:-446px -244px !important;
+}
+
+#MissingE_safeDash li a {
+background-position:8px -4px !important;
+}
+
+#MissingE_safeDash li.selected a {
+background-position:8px -33px !important;
+}
+
+#content #search_query {
+padding:4px 40px 4px 9px !important;
+background-position:192px -545px !important;
+}
+
+#content #search_controls_button {
+height:18px !important;
+padding:2px 3px 4px 3px !important;
+}
+
+#search_controls_wrapper #search_controls {
+top:27px !important;
+}
+
+#content #search_form {
+margin:16px 0 !important;
+}

@@ -291,6 +291,13 @@ self.on('message', function(message) {
          addExpandAllHandler(e.target);
       }, false);
    }
+   if (message.slimSidebar === 1) {
+      var style = document.createElement("link");
+      style.setAttribute('rel','stylesheet');
+      style.setAttribute('type','text/css');
+      style.href = extensionURL + "dashboardFixes/slimSidebar.css";
+      head.appendChild(style);
+   }
    if (message.widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
             .test(location.href))) {

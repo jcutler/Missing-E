@@ -640,6 +640,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
+            settings.slimSidebar = getStorage("MissingE_dashboardFixes_slimSidebar",0);
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
             settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
             settings.followingLink = getStorage("MissingE_dashboardFixes_followingLink",0);
@@ -825,6 +826,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1 &&
                 !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/.test(sender.tab.url)))
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});
+            if (getStorage("MissingE_dashboardFixes_slimSidebar",0) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/slimSidebar.css"});
          }
          else
             activeScripts.dashboardFixes = false;
