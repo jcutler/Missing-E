@@ -442,7 +442,7 @@ var locale = {
    tr: {
       reblog: "yeniden blogla",
       reblogging: "yeniden bloglama...",
-      reblogFailed: "Yeniden blogla başarısız!",
+      reblogFailed: "Yeniden bloglama başarısız oldu!",
       rebloggedText: "yeniden blogladı",
       reblogOptions: [
          {
@@ -459,13 +459,13 @@ var locale = {
          },
          {
             item: 'manual',
-            text: "Yeniden blogla el ile"
+            text: "Yeniden blogla düzenleyerek"
          }
       ],
       tagsText: "Etiketler",
       twitterText: "Twitter'a gönder",
       askPost: "Sor",
-      select: "Seçim yapmak",
+      select: "Seç",
       first100: "Ilk 100",
       postTypeNames: {
          text: "Metin",
@@ -483,24 +483,24 @@ var locale = {
          reply: "yorum yap",
          notes: "yorum",
          queue: "sırada",
-         experimental: "DENEYSEL",
+         experimental: "DENEME",
          exp: "X"
       },
       bookmarkText: "kalınan yer imi",
-      bookmarksTitle: "Imleri",
-      magnify: "büyütmek",
+      bookmarksTitle: "Yer imleri",
+      magnify: "büyüt",
       postingFixes: {
          submitText: {
             publish: "Gönderi yayınla",
             queue: "Gönderiyi sıraya koy",
             draft: "Taslak olarak kaydet",
-            private: "Özel olarak kaydetmek"
+            private: "Özel olarak kaydet"
          },
-         uploadImagesText: "Fotoğraf yükle yerine",
-         clearTagsText: "Açık etiketleri"
+         uploadImagesText: "Bunun yerine başka fotograf yükle",
+         clearTagsText: "Etiketleri sil"
       },
-      loading: "Hazır değil",
-      error: "Bir hata oluştu. Yeniden denemek için tıklayın.",
+      loading: "Yüklüyor",
+      error: "Bir hata oluştu! Lütfen yeniden deneyin.",
       posts: {
          text: {
             normal: ["gönderini"],
@@ -515,12 +515,12 @@ var locale = {
             reply: ["fotoğraf albümüne"]
          },
          quote: {
-            normal: ["alıntısını"],
-            reply: ["alıntısına"]
+            normal: ["alıntın"],
+            reply: ["alıntına"]
          },
          link: {
-            normal: ["bağlantısını"],
-            reply: ["bağlantısına"]
+            normal: ["bağlantını"],
+            reply: ["bağlantına"]
          },
          conversation: {
             normal: ["diyaloğunu"],
@@ -544,11 +544,11 @@ var locale = {
          reply: ["U,", "P", "yorum yaptı"]
       },
       replyType: {
-         as: 'tür ...',
+         as: 'gibi ...',
          photo: '<strong>fotoğraf</strong> olarak',
-         photoTitle: 'Fotoğraf Cevap',
+         photoTitle: 'Fotoğraf\'la Cevapla',
          text: '<strong>metin</strong> olarak',
-         textTitle: 'Metin Cevap'
+         textTitle: 'Metin\'le Cevapla'
       },
    }
 }
