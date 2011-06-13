@@ -58,7 +58,7 @@ min-height:12px !important;
 }
 
 #MissingE_quick_reblog .user_menu_list a, #MissingE_quick_reblog .user_menu_list .user_menu_list_item {
-color:white !important;
+color:#FEFEFE !important;
 }
 
 #MissingE_quick_reblog .user_menu_list a .user_menu_list_item.has_tag_input {
