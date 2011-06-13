@@ -197,15 +197,49 @@ function addExpandAllHandler(item) {
    if (item.tagName !== 'LI' || !post.hasClass('post')) {
       return false;
    }
-   post.find('.inline_image').click(function() {
+   post.find('.inline_image,.inline_external_image').click(function() {
+      var me = this;
       if (!jQuery(this).hasClass('exp_inline_image')) {
          jQuery(this).closest('.post').find('.inline_image')
             .addClass('exp_inline_image').removeClass('inline_image');
-         jQuery(this).addClass('exp_inline_image').removeClass('inline_image');
+         jQuery(this).closest('.post').find('.inline_external_image')
+               .each(function() {
+            if (this === me) { return; }
+            var x = this;
+            var imgsrc = jQuery(this).attr('onclick').match(/this,'([^']*)'/)[1];
+            if (!jQuery(this).hasClass('enlarged')) {
+               jQuery(this).attr('original_src',this.src);
+               jQuery(this).addClass('enlarged');
+               if (this.hasAttribute('loader')) {
+                  this.src = jQuery(this).attr('loader');
+               }
+               var img = new Image();
+               img.onload = function() {
+                  x.src = imgsrc;
+               };
+               img.src = imgsrc;
+            }
+            jQuery(this).addClass('exp_inline_image');
+         });
+         jQuery(this).addClass('exp_inline_image');
+         if (!jQuery(this).hasClass('inline_external_image')) {
+            jQuery(this).removeClass('inline_image');
+         }
       }
       else {
-         jQuery(this).closest('.post').find('.exp_inline_image')
-            .addClass('inline_image').removeClass('exp_inline_image');
+         jQuery(this).closest('.post').find('.exp_inline_image').each(function() {
+            jQuery(this).removeClass('exp_inline_image');
+            if (!jQuery(this).hasClass('inline_external_image')) {
+               jQuery(this).addClass('inline_image');
+            }
+            else {
+               if (this === me) { return; }
+               if (jQuery(this).hasClass('enlarged')) {
+                  this.src = jQuery(this).attr('original_src');
+                  jQuery(this).removeClass('enlarged');
+               }
+            }
+         });
       }
    });
 }

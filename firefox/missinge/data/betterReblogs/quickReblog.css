@@ -56,7 +56,10 @@ background-position:0 0 !important;
 #MissingE_quick_reblog .user_menu_list span .user_menu_list_item {
 height:auto !important;
 min-height:12px !important;
-color:white !important;
+}
+
+#MissingE_quick_reblog .user_menu_list a, #MissingE_quick_reblog .user_menu_list .user_menu_list_item {
+color:#FEFEFE !important;
 }
 
 #MissingE_quick_reblog .user_menu_list span .user_menu_list_item.has_tag_input {
