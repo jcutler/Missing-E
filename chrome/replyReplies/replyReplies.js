@@ -360,9 +360,9 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             newcode = newcode.replace(/src="http:\/\/media\.tumblr\.com\/avatar_([a-zA-Z0-9]+)_40\.([a-z]+)"/g, "src=\"http://media.tumblr.com/avatar_$1_" + size + ".$2\"");
             newcode = newcode.replace(/<div class="nipple[^>]*>/g,'')
                              .replace(/<\/div[^>]*>/g,'')
-                             .replace(/<div class="hide_overflow">\s*/g,
-                                      '<strong>')
-                             .replace(/<em/g,'</strong><em');
+                             .replace(/<div class="hide_overflow">\s*/g,'')
+                             .replace(/<a /g,'<strong><a ')
+                             .replace(/<\/a>/g,'</a></strong>');
          }
          newcode = newcode.replace(/style="\s*height:[^;]*;\s*/g,'style="')
                           .replace(/style="\s*width:[^;]*;\s*/g,'style="')
