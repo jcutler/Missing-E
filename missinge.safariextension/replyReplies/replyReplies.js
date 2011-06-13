@@ -312,7 +312,8 @@ function replyRepliesSettings(response) {
                           .replace(/<\/div[^>]*>/g,'')
                           .replace(/<div class="hide_overflow">\s*/g,'')
                           .replace(/<a /g,'<strong><a ')
-                          .replace(/<\/a>/g,'</a></strong>');
+                          .replace(/<\/a>/g,'</a></strong>')
+                          .replace(/ id="xpreview[0-9]+"/,'');
       }
       newcode = newcode.replace(/style="\s*height:[^;]*;\s*/g,'style="')
                        .replace(/style="\s*width:[^;]*;\s*/g,'style="')
