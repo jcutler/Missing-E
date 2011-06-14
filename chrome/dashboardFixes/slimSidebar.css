@@ -34,6 +34,10 @@ background-position:6px -1147px !important;
 top:8px !important;
 }
 
+.keep_tag {
+top:4px !important;
+}
+
 .right_column_section a .count {
 top:6px !important;
 }
@@ -123,11 +127,11 @@ background-position:-446px -244px !important;
 }
 
 #MissingE_safeDash li a {
-background-position:8px -4px !important;
+background-position:9px -4px !important;
 }
 
 #MissingE_safeDash li.selected a {
-background-position:8px -33px !important;
+background-position:9px -33px !important;
 }
 
 #content #search_query {
