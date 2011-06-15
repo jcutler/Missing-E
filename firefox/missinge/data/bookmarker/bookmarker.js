@@ -167,13 +167,24 @@ function addMark(post,user,custom) {
    marks.unshift([d.getTime(),post,ds]);
    setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
    generateList();
+   return true;
 }
 
 function markClick(e) {
    if (e.which === 1) {
       if (jQuery(this).hasClass("MissingE_ismarked")) {
+         var post = jQuery(this).closest('li.post');
+         var pid = this.id.match(/[0-9]*$/)[0];
+         var moveWin = jQuery('#bookmarkbar_' + pid).offset().top -
+                        jQuery(window).scrollTop() <= 34;
+         var oldPos = post.offset().top;
          jQuery(this).removeClass("MissingE_ismarked");
          removeMark(this.id.match(/[0-9]*$/)[0]);
+         if (moveWin) {
+            var scrollTo = jQuery(window).scrollTop() + post.offset().top -
+                           oldPos;
+            jQuery(window).scrollTop(scrollTo);
+         }
       }
       else {
          var user = '';
@@ -195,7 +206,16 @@ function markClick(e) {
                }
             }
          }
-         addMark(this.id.match(/[0-9]*$/)[0],user,e.shiftKey);
+         var pid = this.id.match(/[0-9]*$/)[0];
+         var oldPos = post.offset().top;
+         if (addMark(pid,user,e.shiftKey)) {
+            if (jQuery('#bookmarkbar_' + pid).offset().top -
+                  jQuery(window).scrollTop() <= 34) {
+               var scrollTo = jQuery(window).scrollTop() + post.offset().top -
+                              oldPos;
+               jQuery(window).scrollTop(scrollTo);
+            }
+         }
       }
       return false;
    }
