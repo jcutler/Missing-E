@@ -92,8 +92,7 @@ function doIcons(item) {
       var a = jQuery(this);
       var txt = a.text();
       var klass = "MissingE_post_control ";
-      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?messages/.test(location.href)) &&
-          !(/http:\/\/www\.tumblr\.com\/inbox/.test(location.href)) &&
+      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/^delete_post_/.test(a.prev().attr('id')) ||
           /^post_delete_/.test(a.attr('id')) ||
           (new RegExp(locale[lang]["dashFixesText"]["del"], "i").test(a.text())))) {

@@ -344,6 +344,9 @@ self.on('message', function (message) {
          jQuery("#posts li.post").each(function(i) {
             doMarks(this);
          });
+         document.addEventListener('DOMNodeInserted', function(e) {
+            doMarks(e.target);
+         }, false);
       }
 
       var lang = jQuery('html').attr('lang');
@@ -381,20 +384,7 @@ self.on('message', function (message) {
       jQuery('#MissingE_marklist .MissingE_unmarker').live('click',
                                                            marklistClick);
       generateList();
-   }
 
-   if (document.body.id !== "tinymce" &&
-       document.body.id !== "dashboard_edit_post") {
-      if (!(/drafts$/.test(location.href)) &&
-          !(/queue$/.test(location.href)) &&
-          !(/messages$/.test(location.href)) &&
-          !(/submissions[^\/]*$/.test(location.href)) &&
-          !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
-          !(/queue\/after\/[^\/]*$/.test(location.href))) {
-         document.addEventListener('DOMNodeInserted', function(e) {
-            doMarks(e.target);
-         }, false);
-      }
       window.addEventListener('storage',function(e) {
          if (e.key !== 'MissingE_bookmarker_marks') { return false; }
          else { refreshMarks(); }

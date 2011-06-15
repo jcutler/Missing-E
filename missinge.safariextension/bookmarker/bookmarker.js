@@ -336,6 +336,9 @@ function MissingE_bookmarker_doStartup(format) {
          $("#posts li.post").each(function(i) {
             doMarks(this);
          });
+         document.addEventListener('DOMNodeInserted', function(e) {
+            doMarks(e.target);
+         }, false);
       }
       
       var lang = $('html').attr('lang');
@@ -354,37 +357,26 @@ function MissingE_bookmarker_doStartup(format) {
       }
       list.click(marklistClick);
       generateList();
-   }
-   $(function() {
-      $('#MissingE_marklist').sortable({
-         items:"li[post]",
-         cursor:'move',
-         axis:'y',
-         opacity:0.6,
-         revert:true,
-         start:function(e,ui){
-            $(this).data('position',$('#MissingE_marklist li[post]').index(ui.item));
-         },
-         update:function(e,ui){
-            var oldp = $(this).data('position');
-            var newp = $('#MissingE_marklist li[post]').index(ui.item);
-            doMove(oldp,newp);
-         }
+
+      $(function() {
+         $('#MissingE_marklist').sortable({
+            items:"li[post]",
+            cursor:'move',
+            axis:'y',
+            opacity:0.6,
+            revert:true,
+            start:function(e,ui){
+               $(this).data('position',$('#MissingE_marklist li[post]').index(ui.item));
+            },
+            update:function(e,ui){
+               var oldp = $(this).data('position');
+               var newp = $('#MissingE_marklist li[post]').index(ui.item);
+               doMove(oldp,newp);
+            }
+         });
+         $('#MissingE_marklist li').disableSelection();
       });
-      $('#MissingE_marklist li').disableSelection();
-   });
-   if (document.body.id !== "tinymce" &&
-       document.body.id !== "dashboard_edit_post") {
-      if (!(/drafts$/.test(location.href)) &&
-          !(/queue$/.test(location.href)) &&
-          !(/messages$/.test(location.href)) &&
-          !(/submissions[^\/]*$/.test(location.href)) &&
-          !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
-          !(/queue\/after\/[^\/]*$/.test(location.href))) {
-         document.addEventListener('DOMNodeInserted', function(e) {
-            doMarks(e.target);
-         }, false);
-      }
+
       window.addEventListener('storage',function(e) {
          if (e.key !== 'MissingE_bookmarker_marks') { return false; }
          else { refreshMarks(); }
