@@ -53,7 +53,8 @@ function parseMarks(s) {
 
 function getMarkText(dt, post, name) {
    var pid = Number(post)+1;
-   return '<li post="' + post + '"><a href="/dashboard/1000/' + pid +
+   return '<li post="' + post + '" id="mark_' + post + '">' +
+            '<a href="/dashboard/1000/' + pid +
             '?lite" post="' + post + '" class="MissingE_bookmarker_marklink">' +
             '<div class="hide_overflow"><span class="mark_date" timestamp="' +
             dt + '">' + name + '</span></div></a>' +
