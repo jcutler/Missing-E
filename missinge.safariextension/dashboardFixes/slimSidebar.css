@@ -74,6 +74,10 @@ background-position:-442px -146px !important;
 background-position:7px -194px !important;
 }
 
+.right_column_section li.selected .followers {
+background-position:-445px -194px !important;
+}
+
 .right_column_section li .messages {
 background-position:7px -293px !important;
 }
