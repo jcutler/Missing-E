@@ -241,6 +241,7 @@ function loadSettings() {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
       }
       else if (v == "bookmarker") {
+         loadCheck(frm,'MissingE_bookmarker_addBar',1);
          var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
          frm.MissingE_bookmarker_format.value = bmFormat;
          jQuery('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', bmFormat));

@@ -46,7 +46,8 @@ var locale = {
          experimental: "EXPERIMENTAL",
          exp: "X"
       },
-      bookmarkText: "bookmark",
+      bookmarkVerb: "bookmark",
+      bookmarkNoun: "Bookmark",
       bookmarksTitle: "Bookmarks",
       magnify: "magnify",
       postingFixes: {
@@ -134,7 +135,8 @@ var locale = {
          experimental: "EXPERIMENTELL",
          exp: "X"
       },
-      bookmarkText: "Lesezeichen hinzufügen",
+      bookmarkVerb: "Lesezeichen hinzufügen",
+      bookmarkNoun: "Lesezeichen",
       bookmarksTitle: "Lesezeichen",
       magnify: "vergrößern",
       postingFixes: {
@@ -222,7 +224,8 @@ var locale = {
          experimental: "EXPÉRIMENTALE",
          exp: "X"
       },
-      bookmarkText: "marquer",
+      bookmarkVerb: "marquer",
+      bookmarkNoun: "Signet",
       bookmarksTitle: "Signets",
       magnify: "agrandir",
       postingFixes: {
@@ -310,7 +313,8 @@ var locale = {
          experimental: "SPERIMENTALE",
          exp: "SP"
       },
-      bookmarkText: "segnalibro",
+      bookmarkVerb: "segnalibro",
+      bookmarkNoun: "Segnalibro",
       bookmarksTitle: "Segnalibri",
       magnify: "ingrandire",
       postingFixes: {
@@ -398,7 +402,8 @@ var locale = {
          experimental: "実験",
          exp: "実験"
       },
-      bookmarkText: "ブックマーク",
+      bookmarkVerb: "ブックマーク",
+      bookmarkNoun: "ブックマーク",
       bookmarksTitle: "ブックマーク",
       magnify: "拡大する",
       postingFixes: {
@@ -486,7 +491,8 @@ var locale = {
          experimental: "DENEME",
          exp: "X"
       },
-      bookmarkText: "kalınan yer imi",
+      bookmarkVerb: "kalınan yer imi",
+      bookmarkNoun: "Yer imi",
       bookmarksTitle: "Yer imleri",
       magnify: "büyüt",
       postingFixes: {

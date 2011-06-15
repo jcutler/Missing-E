@@ -632,6 +632,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             break;
          case "bookmarker":
             settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
+            settings.addBar = getStorage("MissingE_bookmarker_addBar",1);
             break;
          case "dashboardFixes":
             settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);

@@ -661,6 +661,7 @@ function handleRequest(request) {
       settings.MissingE_askFixes_tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
       settings.MissingE_bookmarker_format = getStorage("MissingE_bookmarker_format",defaultFormat);
+      settings.MissingE_bookmarker_addBar = getStorage("MissingE_bookmarker_addBar",1);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
       settings.MissingE_dashboardFixes_replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
@@ -726,6 +727,7 @@ function handleRequest(request) {
             break;
          case "bookmarker":
             settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
+            settings.addBar = getStorage("MissingE_bookmarker_addBar",1);
             break;
          case "dashboardFixes":
             settings.reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);

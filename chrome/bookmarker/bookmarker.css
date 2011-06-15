@@ -106,3 +106,31 @@ margin:0 2px 0 0;
 .MissingE_bookmarker_forceHide {
 display:none !important;
 }
+
+#posts .MissingE_bookmark_bar {
+margin:24px 0;
+position:relative;
+text-align:center;
+padding:0 10px;
+}
+
+#posts .MissingE_bookmark_bar .MissingE_bookmark_line {
+width:100%;
+height:0;
+border-top:1px solid #1E3144;
+border-bottom:1px solid #325372;
+position:absolute;
+top:50%;
+left:0;
+}
+
+#posts .MissingE_bookmark_bar .MissingE_bookmark_text {
+background-color:#2C4762;
+background-repeat:no-repeat;
+background-position:10px center;
+display:inline-block;
+color:rgba(255,255,255,0.69);
+position:relative;
+padding:0 10px 0 20px;
+font:bold 11px "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
+}
