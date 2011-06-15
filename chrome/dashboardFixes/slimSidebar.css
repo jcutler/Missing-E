@@ -126,6 +126,10 @@ background-position:5px -244px !important;
 background-position:-446px -244px !important;
 }
 
+.right_column_section li .delete_all_messages {
+background-position:12px -1293px !important;
+}
+
 #MissingE_safeDash li a {
 background-position:9px -4px !important;
 }
