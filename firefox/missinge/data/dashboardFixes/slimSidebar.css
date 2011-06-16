@@ -26,6 +26,10 @@ background-position:7px -643px !important;
 background-position:6px -693px !important;
 }
 
+.right_column_section li .explore_tumblr {
+background-position:6px -1195px !important;
+}
+
 .right_column_section li.recessed .explore_more_tags {
 background-position:6px -1147px !important;
 }
