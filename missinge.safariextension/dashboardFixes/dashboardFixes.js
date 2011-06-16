@@ -294,6 +294,11 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       style.setAttribute('type','text/css');
       style.href = safari.extension.baseURI + "dashboardFixes/slimSidebar.css";
       head.appendChild(style);
+      $('#tag_contributors li.item, #tag_editors li.item').each(function() {
+         var bg = $(this).css('background-image');
+         bg = bg.replace(/_40\./,'_30.');
+         $(this).css('background-image',bg);
+      });
    }
    if (widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/

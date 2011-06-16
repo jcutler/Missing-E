@@ -39,7 +39,7 @@ top:8px !important;
 }
 
 .keep_tag {
-top:4px !important;
+top:3px !important;
 }
 
 .right_column_section a .count {
@@ -162,6 +162,30 @@ top:27px !important;
 
 #content #search_form {
 margin:16px 0 !important;
+}
+
+.right_column_section.promo .description_and_title {
+padding:4px 8px 5px 8px !important;
+line-height:12px !important;
+}
+
+.right_column_section li .blog {
+height:28px !important;
+padding:1px 13px 1px 34px !important;
+font-size:11px !important;
+line-height:13px !important;
+}
+
+.right_column_section li .blog small {
+font-size:9px !important;
+}
+
+.right_column_section li .follow {
+top:5px !important;
+}
+
+.right_column_section li .show_more_contributors {
+background-position:7px -1098px !important;
 }
 
 #aah_spider {

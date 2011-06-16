@@ -284,7 +284,13 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          });
       }, false);
    }
-
+   if (dashboardFixes_settings.slimSidebar === 1) {
+      $('#tag_contributors li.item, #tag_editors li.item').each(function() {
+         var bg = $(this).css('background-image');
+         bg = bg.replace(/_40\./,'_30.');
+         $(this).css('background-image',bg);
+      });
+   }
    if (dashboardFixes_settings.postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
        $('#new_post').length === 0) {

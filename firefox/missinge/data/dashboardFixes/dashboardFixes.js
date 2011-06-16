@@ -296,6 +296,11 @@ self.on('message', function(message) {
       style.setAttribute('type','text/css');
       style.href = extensionURL + "dashboardFixes/slimSidebar.css";
       head.appendChild(style);
+      jQuery('#tag_contributors li.item, #tag_editors li.item').each(function(){
+         var bg = jQuery(this).css('background-image');
+         bg = bg.replace(/_40\./,'_30.');
+         jQuery(this).css('background-image',bg);
+      });
    }
    if (message.widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
