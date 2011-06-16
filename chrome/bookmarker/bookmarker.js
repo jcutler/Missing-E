@@ -414,6 +414,9 @@ chrome.extension.sendRequest({greeting: "settings",
          $('#MissingE_marklist li').disableSelection();
       });
       var pos = $("#right_column .radar");
+      if (pos.length === 0) {
+         pos = $("#right_column .promo");
+      }
       if (pos.length > 0) {
          pos.before(list);
       }

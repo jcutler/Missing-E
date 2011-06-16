@@ -292,6 +292,9 @@ self.on('message', function (message) {
    if (afterer.length === 0) {
       afterer = jQuery('#right_column .radar');
    }
+   if (afterer.length === 0) {
+      afterer = jQuery('#right_column .promo');
+   }
    if (afterer.length > 0) {
       afterer.before(sdlnk);
    }

@@ -284,6 +284,9 @@ function MissingE_safeDash_doStartup() {
    if (afterer.length === 0) {
       afterer = $('#right_column .radar');
    }
+   if (afterer.length === 0) {
+      afterer = $('#right_column .promo');
+   }
    if (afterer.length > 0) {
       afterer.before(sdlnk);
    }

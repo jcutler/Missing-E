@@ -71,7 +71,6 @@ function addBar(mark, lang) {
 }
 
 function generateList() {
-   console.log('hi');
    var i;
    var lang = $('html').attr('lang');
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
@@ -395,6 +394,9 @@ function MissingE_bookmarker_doStartup(format) {
                    locale[lang]["bookmarksTitle"] + '</a></li></ul>');
 
       var pos = $("#right_column .radar");
+      if (pos.length === 0) {
+         pos = $("#right_column .promo");
+      }
       if (pos.length > 0) {
          pos.before(list);
       }
@@ -402,7 +404,6 @@ function MissingE_bookmarker_doStartup(format) {
          $("#right_column").append(list);
       }
       list.click(marklistClick);
-      console.log('a');
       generateList();
 
       $(function() {

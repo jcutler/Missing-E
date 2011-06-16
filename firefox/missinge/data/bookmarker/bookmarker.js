@@ -421,6 +421,9 @@ self.on('message', function (message) {
          jQuery('#MissingE_marklist li').disableSelection();
       });
       var pos = jQuery("#right_column .radar");
+      if (pos.length === 0) {
+         pos = jQuery("#right_column .promo");
+      }
       if (pos.length > 0) {
          pos.before(list);
       }
