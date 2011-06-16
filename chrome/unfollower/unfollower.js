@@ -429,7 +429,7 @@ function tu_init(retries) {
             doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false, retries, acct);
          }
          else {
-               getCountAndDoSilent(acct, retries);
+            getCountAndDoSilent(acct, retries);
          }
       }
       var deltxt = '<a id="MissingE_unfollowdelta" title="Unfollower" ' +
