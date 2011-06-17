@@ -802,7 +802,7 @@ function handleRequest(request) {
       request.target.page.dispatchMessage("settings",settings);
    }
    else if (request.name == "start") {
-      var activeScripts = {};
+      var activeScripts = {url: request.message.url};
       if (!request.message.isFrame &&
           /http:\/\/www\.tumblr\.com\/mega-editor\//.test(request.message.url)) {
          if (getStorage("MissingE_massEditor_enabled",1) == 1) {

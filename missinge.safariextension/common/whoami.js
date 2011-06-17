@@ -31,7 +31,6 @@
   MissingE_replyReplies_fill_doStartup, MissingE_safeDash_doStartup,
   MissingE_timestamps_doStartup, MissingE_unfollower_doStartup */
 
-var MissingE_startup = false;
 if ((window.top === window &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
@@ -39,16 +38,16 @@ if ((window.top === window &&
    var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/
                .test(location.href) ||
             /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
-   if (!MissingE_startup) {
-      MissingE_startup = true;
-      safari.self.tab.dispatchMessage("start", {isFrame: fr, url: location.href,
-                                                bodyId: document.body.id});
-   }
+   safari.self.tab.dispatchMessage("start", {isFrame: fr, url: location.href,
+                                             bodyId: document.body.id});
 }
 
 function doStartup(response) {
    var i;
-   if (response.name !== "startup") { return; }
+   if (response.name !== "startup" ||
+       window.location.href !== response.message.url) {
+      return;
+   }
    if (/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/submissions/
          .test(location.href) ||
        /http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
@@ -187,7 +186,8 @@ function settings_startup(response) {
    }
    else if (response.message.component === "unfollower") {
       MissingE_unfollower_doStartup(response.message.retries,
-                                    response.message.ignore);
+                                    response.message.ignore,
+                                    response.message.addSidebar);
    }
    else if (response.message.component === "dashLinksToTabs") {
       MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs,
