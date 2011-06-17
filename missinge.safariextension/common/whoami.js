@@ -121,6 +121,10 @@ function doStartup(response) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "postingFixes"});
       }
+      if (response.message.sidebarTweaks) {
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "sidebarTweaks"});
+      }
       if (response.message.dashboardFixes) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "dashboardFixes"});
@@ -190,6 +194,14 @@ function settings_startup(response) {
                                          response.message.reblogLinks,
                                          response.message.editLinks);
    }
+   else if (response.message.component === "sidebarTweaks") {
+      MissingE_sidebarTweaks_doStartup(response.message.retries,
+                                       response.message.accountNum,
+                                       response.message.hideRadar,
+                                       response.message.slimSidebar,
+                                       response.message.followingLink,
+                                       response.message.addSidebar);
+   }
    else if (response.message.component === "dashboardFixes") {
       MissingE_dashboardFixes_doStartup(response.message.experimental,
                                         response.message.reblogQuoteFit,
@@ -201,9 +213,7 @@ function settings_startup(response) {
                                         response.message.reblogReplies,
                                         response.message.widescreen,
                                         response.message.queueArrows,
-                                        response.message.expandAll,
-                                        response.message.followingLink,
-                                        response.message.slimSidebar);
+                                        response.message.expandAll);
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {
