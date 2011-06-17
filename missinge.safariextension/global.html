@@ -1033,6 +1033,15 @@ function handleRequest(request) {
    }
 }
 
+function moveSetting(oldpref, newpref) {
+   var pref;
+   if ((pref = safari.extension.settings.getItem(oldpref))) {
+      console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+      safari.extension.settings[newpref] = pref;
+      safari.extension.settings.removeItem(oldpref);
+   }
+}
+
 function getVersion() {
    return getStorage("MissingE_version",'');
 }
@@ -1057,6 +1066,8 @@ var currVersion = getVersion();
 var prevVersion = getStorage('MissingE_installedVersion',null);
 onStart(currVersion, prevVersion);
 
+moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
+moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
 </script>
 </head>
 </html>

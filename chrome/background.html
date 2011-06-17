@@ -988,6 +988,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
 });
 
+function moveSetting(oldpref, newpref) {
+   var pref;
+   if ((pref = localStorage[oldpref])) {
+      console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+      localStorage[newpref] = pref;
+      localStorage.removeItem(oldpref);
+   }
+}
+
 function getVersion() {
    var xhr = new XMLHttpRequest();
    xhr.open('GET', chrome.extension.getURL('manifest.json'), false);
@@ -1011,6 +1020,9 @@ function onStart(currVersion, prevVersion) {
 var currVersion = getVersion();
 var prevVersion = getStorage('MissingE_version',null);
 onStart(currVersion, prevVersion);
+
+moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
+moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
 
 var fivedays = 432000000;
 var now = (new Date()).valueOf();
