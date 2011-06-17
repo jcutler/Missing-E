@@ -188,6 +188,15 @@ top:5px !important;
 background-position:7px -1098px !important;
 }
 
+#MissingE_sidebar_title a {
+background-position:7px 5px !important;
+padding:3px 13px 4px 34px !important;
+}
+
+#MissingE_sidebar_menu li a {
+padding:3px 13px 4px 13px !important;
+}
+
 #aah_spider {
 background-position:9px 5px !important;
 }

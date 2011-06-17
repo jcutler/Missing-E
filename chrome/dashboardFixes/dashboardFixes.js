@@ -284,13 +284,6 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          });
       }, false);
    }
-   if (dashboardFixes_settings.slimSidebar === 1) {
-      $('#tag_contributors li.item, #tag_editors li.item').each(function() {
-         var bg = $(this).css('background-image');
-         bg = bg.replace(/_40\./,'_30.');
-         $(this).css('background-image',bg);
-      });
-   }
    if (dashboardFixes_settings.postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
        $('#new_post').length === 0) {
@@ -400,11 +393,6 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          doIcons(this);
       });
    }
-
-   if (dashboardFixes_settings.followingLink === 1) {
-      $('#right_column a.following').attr('href','/following');
-   }
-
    if (dashboardFixes_settings.timeoutAJAX === 1) {
       var timeout = dashboardFixes_settings.timeoutLength * 1000;
       $('head').append('<script type="text/javascript">' +

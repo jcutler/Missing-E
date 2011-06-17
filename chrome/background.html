@@ -616,6 +616,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "tags") {
       requestTags(request, sender, sendResponse, tabs[sender.tab.id]);
    }
+   else if (request.greeting == "sidebarTweaks") {
+      setStorage("MissingE_sidebarTweaks_accountNum", request.accountNum);
+      sendResponse();
+   }
    else if (request.greeting == "settings") {
       var settings = {};
       settings.experimental = getStorage("MissingE_experimentalFeatures_enabled",0);
@@ -630,6 +634,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
             break;
+         case "sidebarTweaks":
+            settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
+            settings.accountNum = getStorage("MissingE_sidebarTweaks_accountNum",0);
+            settings.hideRadar = getStorage("MissingE_sidebarTweaks_hideRadar",0);
+            settings.slimSidebar = getStorage("MissingE_sidebarTweaks_slimSidebar",0);
+            settings.followingLink = getStorage("MissingE_sidebarTweaks_followingLink",0);
+            settings.addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);
+            break;
          case "bookmarker":
             settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
             settings.addBar = getStorage("MissingE_bookmarker_addBar",1);
@@ -641,10 +653,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
-            settings.slimSidebar = getStorage("MissingE_dashboardFixes_slimSidebar",0);
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
             settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
-            settings.followingLink = getStorage("MissingE_dashboardFixes_followingLink",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
@@ -768,6 +778,16 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.followChecker = false;
 
+         if (getStorage("MissingE_sidebarTweaks_enabled",1) == 1) {
+            activeScripts.sidebarTweaks = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "sidebarTweaks/sidebarTweaks.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "sidebarTweaks/sidebarTweaks.js"});
+            if (getStorage("MissingE_sidebarTweaks_slimSidebar",0) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "sidebarTweaks/slimSidebar.css"});
+         }
+         else
+            activeScripts.sidebarTweaks = false;
+
          if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
             activeScripts.dashboardFixes = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/replaceIcons.css"});
@@ -782,8 +802,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1 &&
                 !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/.test(sender.tab.url)))
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});
-            if (getStorage("MissingE_dashboardFixes_slimSidebar",0) == 1)
-               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/slimSidebar.css"});
          }
          else
             activeScripts.dashboardFixes = false;
