@@ -113,6 +113,11 @@ jQuery(document).ready(function($) {
 <li><a href="#safedash-disable">What is the difference between turning Safe Dash off on the dashboard and turning it off on the 'Missing e' settings screen?</a></li>
 <li><a href="#safedash-where">Which images are hidden with Safe Dash and which images are not?</a></li>
 </ul>
+<h2>Sidebar Tweaks</h2>
+<ul>
+<li><a href="#add-sidebar">How do I get my tumblelog sidebar (posts, followers, messages, etc.) on every dashboard page?</a></li>
+<li><a href="#sidebar-switch">How do I choose which Tumblr account sidebar gets added to every dashboard page?</a></li>
+</ul>
 <h2>Timestamps</h2>
 <ul>
 <li><a href="#timestamps-format">How do I change the timestamp to the 12-hour format instead of 24-hour?</a></li>
@@ -123,6 +128,8 @@ jQuery(document).ready(function($) {
 <h2>Unfollower</h2>
 <ul>
 <li><a href="#unfollower-how">How do I use Unfollower? Where is it?</a></li>
+<li><a href="#unfollower-ignore">Why doesn't the Unfollower '&Delta;' show up for one of my Tumblr accounts?</a></li>
+<li><a href="#unfollower-ignore">How can I make Unfollower track accounts I have previously told it to ignore?</a></li>
 <li><a href="#unfollower-fail">Why does Unfollower fail to load?</a></li>
 <li><a href="#unfollower-issues">Why does Unfollower report that someone has unfollowed that I know has not?</a></li>
 <li><a href="#unfollower-issues">Why does Unfollower report that nobody has unfollowed me even though my follower count has dropped?</a></li>
@@ -339,6 +346,16 @@ jQuery(document).ready(function($) {
 <p><strong>These images are NOT hidden:</strong></p>
 <ul><li>All tumblr-generated user avatars</li><li>Images enlarged by the 'Missing e' <em>Magnifier</em> feature.</li></ul>
 <div class="totop"><a href="#">Top</a></div></div>
+<a name="add-sidebar"></a><p class="question">How do I get my tumblelog sidebar (posts, followers, messages, etc.) on every dashboard page?</p>
+<div class="response">
+<p>You can add a tumblelog sidebar (which includes your post, follower, message, draft and queue counts) to dashboard pages that don't normally have them. You can activate this feature in the settings page (which you can access <a href="#settings">like this</a>), under the <em>Dashboard Features</em> tab, in the <em>Sidebar Tweaks</em> section.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="sidebar-switch"></a><p class="question">How do I choose which Tumblr account sidebar gets added to every dashboard page?</p>
+<div class="response">
+<p>When you turn on the <em>"Add Tumblr sidebar..."</em> feature (<a href="#add-sidebar">find out how</a>), <em>Sidebar Tweaks</em> will start out by adding the tumblelog sidebar for your <strong>primary</strong> Tumblr account. If you wish a different account's tumblelog sidebar to appear, simply click on the blog title at the top of the added sidebar, and select a different Tumblr account.</p>
+<div class="example"><img src="images/examples/sidebarTweaks.png" alt="Selecting an account for the added sidebar" /><div class="caption">Selecting an account for the added sidebar</div></div>
+<p>When you select a different account, your choice will be remembered the next time you load the dashboard! <em>Note that you cannot switch the tumblelog sidebars shown on tumblelog pages</em> (<strong>/tumbelog/your-name</strong>).</p>
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="timestamps-format"></a><p class="question">How do I change the timestamp to the 12-hour format instead of 24-hour?</p>
 <p class="question">How do I change the way the date and time is shown in timestamps?</p>
 <div class="response">
@@ -357,6 +374,19 @@ jQuery(document).ready(function($) {
 <div class="response">
 <p>You can use <em>Unfollower</em> by clicking on the <strong>&Delta;</strong> (Greek letter delta) symbol beside your follower count in the sidebar on your tumblelog page (ie. <em>http://www.tumblr.com/tumblelog/<strong>yourusername</strong></em>). The <strong>&Delta;</strong> is hidden until you place your mouse on or next to your follower count.</p>
 <p>Note that <em>Unfollower</em> cannot tell the difference between Tumblr accounts that have unfollowed you, been deleted, or <strong>been renamed</strong>. You should also note that <em>Unfollower</em> will only show the difference since the last time you used <em>Unfollower</em> (or since you installed 'Missing e', if you have not used it). Any Tumblr accounts that have followed you and then unfollowed (or deleted or renamed) during that time cannot be shown.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="unfollower-ignore"></a><p class="question">Why doesn't the Unfollower '&Delta;' show up for one of my Tumblr accounts?</p>
+<p class="question">How can I make Unfollower track accounts I have previously told it to ignore?</p>
+<div class="response">
+<p><em>Unfollower</em> is capable of tracking multiple accounts. Whenever <em>Unfollower</em> encounters a Tumblr account it has not started tracking (a new account or a renamed account, for example), this popup box appears:</p>
+<div class="example"><img src="images/examples/multiunfollower_newtrack.png" alt="Unfollower encounters new account" /><div class="caption"><em>Unfollower</em> encounters a new or renamed Tumblr account</div></div>
+<ul><li>If the untracked account (<strong>missing-e-testing</strong> in the example above) was renamed from one of the existing tracked accounts (for example, you renamed <strong>cutlerish</strong> to <strong>missing-e-testing</strong>), click on the <em>"Rename"</em> button beside the old account name to transfer all <em>Unfollower</em> data to the new account name.</li>
+<li>If the untracked account is a new account <em>Unfollower</em> is encountering for the first time, click the <em>"New Account"</em> button and <em>Unfollower</em> will track the new account.</li>
+<li>If the account is untracked, and you do not want <em>Unfollower</em> to keep track of it, click the <em>"Ignore"</em> button and no new data will be stored.</li>
+</ul>
+<p>If you <em>ignore</em> a Tumblr account, the <em>Unfollower</em> '&Delta;' (delta) symbol will not appear on that account's sidebar. If you later change your mind, you can remove accounts from the ignore list. To do so, go to the settings page (<a href="#settings">find out how</a>) and under the <em>Social Features</em> tab, in the <em>Unfollower</em> section, click on the button labelled <em>"Ignore List..."</em>.</p>
+<div class="example"><img src="images/examples/multiunfollower_ignorelist.png" alt="Unfollower ignore list" /><div class="caption">List of Tumblr accounts ignored by <em>Unfollower</em></div></div>
+<p>In the popup box that appears, a list of the currently-ignored accounts is show. To cause <em>Unfollower</em> to stop ignoring an account, simply click the <em>"Remove"</em> button beside the account name. From this popup box, you can also manually add accounts to ignore by clicking on the <em>"Add Ignore..."</em> button and typing in the account name of the Tumblr account you wish <em>Unfollower</em> to ignore.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="unfollower-fail"></a><p class="question">Why does Unfollower fail to load?</p>
 <div class="response">
