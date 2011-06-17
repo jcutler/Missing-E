@@ -949,7 +949,8 @@ function handleMessage(message, myWorker) {
             activeScripts.replyReplies = false;
       }
       if (!message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/new\/(text|photo)/.test(message.url)) {
+          /http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?new\/(text|photo)/
+            .test(sender.tab.url)) {
          if (getStorage("extensions.MissingE.replyReplies.enabled",1) == 1) {
             injectScripts.push(data.url("replyReplies/replyReplies_fill.js"));
             activeScripts.replyReplies = true;

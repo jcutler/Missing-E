@@ -340,11 +340,19 @@ function replyRepliesSettings(response) {
    reply_setValue(code);
    tags_setValue(tags);
 
-   if (newTab === 1) {
-      safari.self.tab.dispatchMessage("open","http://www.tumblr.com/new/text");
+   var urlPref = location.href.match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
+   if (urlPref && urlPref.length >= 2) {
+      urlPref = '/tumblelog/' + urlPref[1];
    }
    else {
-      var url = "http://www.tumblr.com/new/text";
+      urlPref = '';
+   }
+   if (newTab === 1) {
+      safari.self.tab.dispatchMessage("open","http://www.tumblr.com" +
+                                      urlPref + "/new/text");
+   }
+   else {
+      var url = "http://www.tumblr.com/" + urlPref + "new/text";
       if (redir !== '') {
          url += "?" + redir;
       }
