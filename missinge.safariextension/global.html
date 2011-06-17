@@ -716,7 +716,6 @@ function handleRequest(request) {
    else if (request.name == "sidebarTweaks") {
       setStorage("MissingE_sidebarTweaks_accountNum",
                  request.message.accountNum);
-      request.target.page.dispatchMessage("sidebarTweaks");
    }
    else if (request.name == "settings") {
       var settings = {};
