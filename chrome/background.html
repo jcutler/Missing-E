@@ -1015,6 +1015,7 @@ function onStart(currVersion, prevVersion) {
       console.log("Installed Missing e " + currVersion);
    }
    setStorage('MissingE_version',currVersion);
+   setStorage('MissingE_compatCheck',0);
 }
 
 var currVersion = getVersion();
@@ -1046,6 +1047,7 @@ if (now >= parseInt(getStorage("MissingE_compatCheck",0)) + fivedays) {
                case "Tumblr SafeDash":
                case "Tumblr Timestamps":
                case "Tumblr Unfollowr":
+               case "Tumblr Sidebr":
                   repl.push(arr[i].name);
                   ids.push(arr[i].id);
                   break;
@@ -1054,11 +1056,19 @@ if (now >= parseInt(getStorage("MissingE_compatCheck",0)) + fivedays) {
       }
 
       if (repl.length > 0) {
-         var answer = confirm("These installed scripts have been replaced by the 'Missing e' extension:\n" +
-                              " - " + repl.join("\n - ") + "\n\nDo you want to disable them?\nYou can re-enable or uninstall them later in your Extensions menu.");
+         var msg = "======\n Missing e\n======\n\n" +
+                   "Functionality of the following installed scripts has been replaced by the 'Missing e' extension. " +
+                   "Using them may cause compatibility problems.\n\n" +
+                   " - " + repl.join("\n - ") +
+                   "\n\nDo you want to disable them?\n\nYou can re-enable or uninstall them later in your " +
+                   "Extensions menu.\n\nSee http://missinge.infraware.ca/faq for more information.";
+         var answer = confirm(msg);
          if (answer) {
             for (i=0; i<ids.length; i++) {
                chrome.management.setEnabled(ids[i], false);
+               if (repl[i] === "Tumblr Sidebr") {
+                  setStorage("MissingE_sidebarTweaks_addSidebar",1);
+               }
             }
          }
       }
