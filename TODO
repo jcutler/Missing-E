@@ -7,6 +7,5 @@ Build "read more" loads into existing post with AJAX
 - suggested by asianfusion
 
 sidebar tweaks
-- port to FF
 - Integrate with Follow Checker/Unfollower
 - on failure, add retry icons?
