@@ -450,7 +450,7 @@ function tu_init(extensionURL, retries, addSidebar) {
          return false;
       }
       doGet(followers[1].replace(/,/g,"").replace(/\./g,""), true,
-            extensionURL, retries, acct);
+            extensionURL, retries, account);
    });
 }
 

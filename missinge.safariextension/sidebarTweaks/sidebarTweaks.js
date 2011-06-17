@@ -124,29 +124,36 @@ function makeSidebar(tumblrAcctNum, retries) {
                   return;
                }
                msb.find('span.count').remove();
+               var len = data.length;
                var postIdx = data.indexOf('<!-- Posts -->');
                var followerIdx = data.indexOf('<!-- Followers -->');
                var msgsIdx = data.indexOf('<!-- Messages -->');
                var draftIdx = data.indexOf('<!-- Drafts -->');
                var queueIdx = data.indexOf('<!-- Queue -->');
                var endIdx = data.indexOf('<!-- Launch Mass Post editor -->');
+               if (followerIdx === -1) { followerIdx = len; }
+               if (msgsIdx === -1) { msgsIdx = len; }
                var postNum = data.substring(postIdx, followerIdx)
                   .match(/<span class="count">([^>]*)/);
                if (postNum && postNum.length >= 2) {
                   msb.find('a.posts').append('<span class="count">' +
                              postNum[1] + '</span>');
                }
-               var followerNum = data.substring(followerIdx, msgsIdx)
-                  .match(/<span class="count">([^>]*)/);
-               if (followerNum && followerNum.length >= 2) {
-                  msb.find('a.followers').append('<span class="count">' +
-                             followerNum[1] + '</span>');
+               if (followerIdx !== len) {
+                  var followerNum = data.substring(followerIdx, msgsIdx)
+                     .match(/<span class="count">([^>]*)/);
+                  if (followerNum && followerNum.length >= 2) {
+                     msb.find('a.followers').append('<span class="count">' +
+                                followerNum[1] + '</span>');
+                  }
                }
-               var msgsNum = data.substring(msgsIdx, draftIdx)
-                  .match(/<span class="count">([^>]*)/);
-               if (msgsNum && msgsNum.length >= 2) {
-                  msb.find('a.messages').append('<span class="count">' +
-                             msgsNum[1] + '</span>');
+               if (msgsIdx !== len) {
+                  var msgsNum = data.substring(msgsIdx, draftIdx)
+                     .match(/<span class="count">([^>]*)/);
+                  if (msgsNum && msgsNum.length >= 2) {
+                     msb.find('a.messages').append('<span class="count">' +
+                                msgsNum[1] + '</span>');
+                  }
                }
                var draftNum = data.substring(draftIdx, queueIdx)
                   .match(/<span class="count">([^>]*)/);
