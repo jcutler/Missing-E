@@ -802,6 +802,10 @@ function handleMessage(message, myWorker) {
             settings.blogSelect = getStorage("extensions.MissingE.postingFixes.blogSelect",0);
             break;
          case "unfollower":
+            settings.addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
+            if (getStorage("extensions.MissingE.sidebarTweaks.enabled",1) == 0) {
+               settings.addSidebar = 0;
+            }
             settings.ignore = getStorage("extensions.MissingE.unfollower.ignore",'');
          case "followChecker":
             settings.retries = getStorage("extensions.MissingE." + message.component + ".retries",defaultRetries);

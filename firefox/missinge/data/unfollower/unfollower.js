@@ -290,7 +290,63 @@ function getCountAndDoSilent(acct, extensionURL, retries) {
    });
 }
 
-function tu_init(extensionURL, retries) {
+function addUnfollowerButton(extensionURL, acct, retries) {
+   var followers;
+   var ignore = false;
+   var fl = jQuery('#right_column').find('a.followers .count');
+   var followLists = localStorage.getItem('MissingE_unfollower_lists');
+   var lastFollows = localStorage.getItem('MissingE_unfollower_names');
+   if (followLists === undefined || followLists === null ||
+       followLists === "") {
+      if (lastFollows) {
+         followLists = acct;
+         localStorage.setItem('MissingE_unfollower_lists',acct);
+         localStorage.removeItem('MissingE_unfollower_names');
+         localStorage.setItem('MissingE_unfollower_' + acct, lastFollows);
+      }
+   }
+   var ure = new RegExp('(^|,)' + acct + '($|,)');
+   if (ure.test(followLists)) {
+      lastFollows = localStorage.getItem('MissingE_unfollower_' + acct);
+   }
+   else {
+      lastFollows = null;
+      if (ure.test(ignoreList)) {
+         ignore = true;
+      }
+   }
+   if (!ignore) {
+      if (lastFollows === undefined || lastFollows === null ||
+          lastFollows === "") {
+         if (followLists === undefined || followLists === null ||
+             followLists === "") {
+            followLists = acct;
+            localStorage.setItem('MissingE_unfollower_lists',acct);
+         }
+         followers = fl.text().match(/^([0-9][0-9,\.]*)/);
+         if (followers !== undefined && followers !== null &&
+             followers.length >= 2) {
+            doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false,
+                  extensionURL, retries, acct);
+         }
+         else {
+            getCountAndDoSilent(acct, extensionURL, retries);
+         }
+      }
+      var deltxt = '<a account="' + acct + '" id="MissingE_unfollowdelta" ' +
+                     'title="Unfollower" onclick="return false;" ' +
+                     'href="#">&Delta;</a>';
+      var fw = jQuery("#MissingE_followwhonotin");
+      if (fw.size()>0) {
+         fw.before(deltxt);
+      }
+      else if (fl.length >= 1) {
+         fl.append(deltxt);
+      }
+   }
+}
+
+function tu_init(extensionURL, retries, addSidebar) {
    jQuery('#unfollower_chooser_form button').live('click', function() {
       var acct = jQuery(this).attr('account');
       switch(this.className) {
@@ -366,7 +422,6 @@ function tu_init(extensionURL, retries) {
       }
    });
 
-   var followers;
    jQuery("body").append('<div id="MissingE_unfollowdisplay" style="display:none;">' +
                     '<div style="font:bold 24px Georgia,serif;' +
                     'color:#1f354c;">unfollower</div>' +
@@ -377,77 +432,26 @@ function tu_init(extensionURL, retries) {
                     'Icon-64.png' + '" /></div>');
 
    var acct = location.href.match(/\/tumblelog\/([^\/]*)/);
-   if (!acct || acct.length <= 1) {
+   if (addSidebar === 0 && (!acct || acct.length <= 1)) {
       acct = jQuery('#user_channels li.tab:first a').attr('href').match(/\/tumblelog\/([^\/]*)/);
    }
    if (acct && acct.length > 1) {
-      acct = acct[1];
+      addUnfollowerButton(extensionURL, acct[1], retries);
    }
-   else {
-      return;
-   }
-   var ignore = false;
-   var fl = jQuery('#right_column').find('a.followers .count');
-   var followLists = localStorage.getItem('MissingE_unfollower_lists');
-   var lastFollows = localStorage.getItem('MissingE_unfollower_names');
-   if (followLists === undefined || followLists === null ||
-       followLists === "") {
-      if (lastFollows) {
-         followLists = acct;
-         localStorage.setItem('MissingE_unfollower_lists',acct);
-         localStorage.removeItem('MissingE_unfollower_names');
-         localStorage.setItem('MissingE_unfollower_' + acct, lastFollows);
+   jQuery('#MissingE_sidebar').live('load.sidebar', function(e, account) {
+      addUnfollowerButton(extensionURL, account, retries);
+   });
+   jQuery('#MissingE_unfollowdelta').live('click', function() {
+      var account = jQuery(this).attr('account');
+      followers = jQuery(this).parent().text()
+                        .match(/^([0-9][0-9,\.]*)/);
+      if (followers === undefined || followers === null ||
+          followers.length < 2) {
+         return false;
       }
-   }
-   var ure = new RegExp('(^|,)' + acct + '($|,)');
-   if (ure.test(followLists)) {
-      lastFollows = localStorage.getItem('MissingE_unfollower_' + acct);
-   }
-   else {
-      lastFollows = null;
-      if (ure.test(ignoreList)) {
-         ignore = true;
-      }
-   }
-   if (!ignore) {
-      if (lastFollows === undefined || lastFollows === null ||
-          lastFollows === "") {
-         if (followLists === undefined || followLists === null ||
-             followLists === "") {
-            followLists = acct;
-            localStorage.setItem('MissingE_unfollower_lists',acct);
-         }
-         followers = fl.text().match(/^([0-9][0-9,\.]*)/);
-         if (followers !== undefined && followers !== null &&
-             followers.length >= 2) {
-            doGet(followers[1].replace(/,/g,"").replace(/\./g,""), false,
-                  extensionURL, retries, acct);
-         }
-         else {
-            getCountAndDoSilent(acct, extensionURL, retries);
-         }
-      }
-      var deltxt = '<a id="MissingE_unfollowdelta" title="Unfollower" ' +
-                     'onclick="return false;" ' +
-                     'href="#">&Delta;</a>';
-      var fw = jQuery("#MissingE_followwhonotin");
-      if (fw.size()>0) {
-         fw.before(deltxt);
-      }
-      else if (fl.length >= 1) {
-         fl.append(deltxt);
-      }
-      jQuery('#MissingE_unfollowdelta').click(function() {
-         followers = jQuery(this).parent().text()
-                           .match(/^([0-9][0-9,\.]*)/);
-         if (followers === undefined || followers === null ||
-             followers.length < 2) {
-            return false;
-         }
-         doGet(followers[1].replace(/,/g,"").replace(/\./g,""), true,
-               extensionURL, retries, acct);
-      });
-   }
+      doGet(followers[1].replace(/,/g,"").replace(/\./g,""), true,
+            extensionURL, retries, acct);
+   });
 }
 
 self.on('message', function (message) {
@@ -460,7 +464,7 @@ self.on('message', function (message) {
                             'href="' + message.extensionURL + 'unfollower/' +
                             'unfollower.css" />');
       ignoreList = message.ignore;
-      tu_init(message.extensionURL, message.retries);
+      tu_init(message.extensionURL, message.retries, message.addSidebar);
    }
 });
 

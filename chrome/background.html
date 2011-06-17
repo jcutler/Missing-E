@@ -682,6 +682,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
             break;
          case "unfollower":
+            settings.addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);
+            if (getStorage("MissingE_sidebarTweaks_enabled",1) == 0) {
+               settings.addSidebar = 0;
+            }
             settings.ignore = getStorage("MissingE_unfollower_ignore",'');
          case "followChecker":
             settings.retries = getStorage("MissingE_" + request.component + "_retries",defaultRetries);
