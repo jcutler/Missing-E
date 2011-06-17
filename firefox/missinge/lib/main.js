@@ -107,7 +107,8 @@ var componentList = ["dashboardFixes",
                      "postCrushes",
                      "replyReplies",
                      "unfollower",
-                     "massEditor"];
+                     "massEditor",
+                     "sidebarTweaks"];
 
 var months = ["Jan",
               "Feb",
@@ -686,10 +687,13 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
       settings.MissingE_dashboardFixes_reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
       settings.MissingE_dashboardFixes_widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
-      settings.MissingE_dashboardFixes_slimSidebar = getStorage("extensions.MissingE.dashboardFixes.slimSidebar",0);
       settings.MissingE_dashboardFixes_queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
       settings.MissingE_dashboardFixes_expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
-      settings.MissingE_dashboardFixes_followingLink = getStorage("extensions.MissingE.dashboardFixes.followingLink",0);
+      settings.MissingE_sidebarTweaks_retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
+      settings.MissingE_sidebarTweaks_addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
+      settings.MissingE_sidebarTweaks_hideRadar = getStorage("extensions.MissingE.sidebarTweaks.hideRadar",0);
+      settings.MissingE_sidebarTweaks_slimSidebar = getStorage("extensions.MissingE.sidebarTweaks.slimSidebar",0);
+      settings.MissingE_sidebarTweaks_followingLink = getStorage("extensions.MissingE.sidebarTweaks.followingLink",0);
       settings.MissingE_magnifier_retries = getStorage("extensions.MissingE.magnifier.retries",defaultRetries);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("extensions.MissingE.dashLinksToTabs.sidebar",0);
@@ -725,6 +729,10 @@ function handleMessage(message, myWorker) {
       settings.MissingE_version = getStorage("extensions.MissingE.version",'');
       myWorker.postMessage(settings);
    }
+   else if (message.greeting == "sidebarTweaks") {
+      setStorage('extensions.MissingE.sidebarTweaks.accountNum',
+                 message.accountNum);
+   }
    else if (message.greeting == "settings") {
       var settings = {};
       settings.greeting = "settings";
@@ -743,6 +751,14 @@ function handleMessage(message, myWorker) {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
             break;
+         case "sidebarTweaks":
+            settings.retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
+            settings.accountNum = getStorage("extensions.MissingE.sidebarTweaks.accountNum",0);
+            settings.hideRadar = getStorage("extensions.MissingE.sidebarTweaks.hideRadar",0);
+            settings.slimSidebar = getStorage("extensions.MissingE.sidebarTweaks.slimSidebar",0);
+            settings.followingLink = getStorage("extensions.MissingE.sidebarTweaks.followingLink",0);
+            settings.addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
+            break;
          case "bookmarker":
             settings.format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
             settings.addBar = getStorage("extensions.MissingE.bookmarker.addBar",1);
@@ -756,10 +772,8 @@ function handleMessage(message, myWorker) {
             settings.postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
             settings.reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
             settings.widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
-            settings.slimSidebar = getStorage("extensions.MissingE.dashboardFixes.slimSidebar",0);
             settings.queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
             settings.expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
-            settings.followingLink = getStorage("extensions.MissingE.dashboardFixes.followingLink",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
@@ -871,6 +885,13 @@ function handleMessage(message, myWorker) {
          else
             activeScripts.followChecker = false;
 
+         if (getStorage("extensions.MissingE.sidebarTweaks.enabled",1) == 1) {
+            injectScripts.push(data.url("sidebarTweaks/sidebarTweaks.js"));
+            activeScripts.sidebarTweaks = true;
+         }
+         else
+            activeScripts.sidebarTweaks = false;
+
          if (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1) {
             injectScripts.push(data.url("dashboardFixes/dashboardFixes.js"));
             activeScripts.dashboardFixes = true;
@@ -950,7 +971,7 @@ function handleMessage(message, myWorker) {
       }
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?new\/(text|photo)/
-            .test(sender.tab.url)) {
+            .test(message.url)) {
          if (getStorage("extensions.MissingE.replyReplies.enabled",1) == 1) {
             injectScripts.push(data.url("replyReplies/replyReplies_fill.js"));
             activeScripts.replyReplies = true;
