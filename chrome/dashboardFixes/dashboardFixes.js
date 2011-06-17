@@ -90,8 +90,7 @@ function doIcons(item) {
       var a = $(this);
       var txt = a.text();
       var klass = "MissingE_post_control ";
-      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?messages/.test(location.href)) &&
-          !(/http:\/\/www\.tumblr\.com\/inbox/.test(location.href)) &&
+      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/delete_post_/.test(a.attr('onclick')) ||
           /^post_delete_/.test(a.attr('id')) ||
           (new RegExp(locale[lang]["dashFixesText"]["del"], "i").test(a.text())))) {
@@ -285,7 +284,13 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          });
       }, false);
    }
-
+   if (dashboardFixes_settings.slimSidebar === 1) {
+      $('#tag_contributors li.item, #tag_editors li.item').each(function() {
+         var bg = $(this).css('background-image');
+         bg = bg.replace(/_40\./,'_30.');
+         $(this).css('background-image',bg);
+      });
+   }
    if (dashboardFixes_settings.postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
        $('#new_post').length === 0) {

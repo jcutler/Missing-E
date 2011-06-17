@@ -77,7 +77,7 @@ function doFinish(newlist,show,acct) {
          .html('<p><em>Nobody has unfollowed you.</em></p>');
    }
    else {
-      txt = '<p><em style="font-size:80%;">These tumblrers have changed ' +
+      txt = '<p><em style="font-size:80%;">These tumblrs have changed ' +
             'their username,<br />unfollowed you, or deleted their ' +
             'accounts:</em></p>' + txt;
       $('#MissingE_unfollowdisplay .unfollowerlist').html(txt);

@@ -92,8 +92,7 @@ function doIcons(item) {
       var a = jQuery(this);
       var txt = a.text();
       var klass = "MissingE_post_control ";
-      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?messages/.test(location.href)) &&
-          !(/http:\/\/www\.tumblr\.com\/inbox/.test(location.href)) &&
+      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/^delete_post_/.test(a.prev().attr('id')) ||
           /^post_delete_/.test(a.attr('id')) ||
           (new RegExp(locale[lang]["dashFixesText"]["del"], "i").test(a.text())))) {
@@ -290,6 +289,18 @@ self.on('message', function(message) {
       document.addEventListener('DOMNodeInserted', function(e) {
          addExpandAllHandler(e.target);
       }, false);
+   }
+   if (message.slimSidebar === 1) {
+      var style = document.createElement("link");
+      style.setAttribute('rel','stylesheet');
+      style.setAttribute('type','text/css');
+      style.href = extensionURL + "dashboardFixes/slimSidebar.css";
+      head.appendChild(style);
+      jQuery('#tag_contributors li.item, #tag_editors li.item').each(function(){
+         var bg = jQuery(this).css('background-image');
+         bg = bg.replace(/_40\./,'_30.');
+         jQuery(this).css('background-image',bg);
+      });
    }
    if (message.widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/

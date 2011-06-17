@@ -661,6 +661,7 @@ function handleRequest(request) {
       settings.MissingE_askFixes_tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
       settings.MissingE_bookmarker_format = getStorage("MissingE_bookmarker_format",defaultFormat);
+      settings.MissingE_bookmarker_addBar = getStorage("MissingE_bookmarker_addBar",1);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
       settings.MissingE_dashboardFixes_replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
@@ -669,6 +670,7 @@ function handleRequest(request) {
       settings.MissingE_dashboardFixes_postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
       settings.MissingE_dashboardFixes_reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
       settings.MissingE_dashboardFixes_widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
+      settings.MissingE_dashboardFixes_slimSidebar = getStorage("MissingE_dashboardFixes_slimSidebar",0);
       settings.MissingE_dashboardFixes_queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
       settings.MissingE_dashboardFixes_expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
       settings.MissingE_dashboardFixes_followingLink = getStorage("MissingE_dashboardFixes_followingLink",0);
@@ -725,6 +727,7 @@ function handleRequest(request) {
             break;
          case "bookmarker":
             settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
+            settings.addBar = getStorage("MissingE_bookmarker_addBar",1);
             break;
          case "dashboardFixes":
             settings.reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
@@ -735,6 +738,7 @@ function handleRequest(request) {
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
+            settings.slimSidebar = getStorage("MissingE_dashboardFixes_slimSidebar",0);
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
             settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
             settings.followingLink = getStorage("MissingE_dashboardFixes_followingLink",0);
@@ -794,34 +798,6 @@ function handleRequest(request) {
             activeScripts.massEditor = false;
       }
       if (!request.message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
-               .test(request.message.url)) {
-         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
-            activeScripts.safeDash = true;
-         }
-         else
-            activeScripts.safeDash = false;
-
-         if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
-            activeScripts.bookmarker = true;
-         }
-         else
-            activeScripts.bookmarker = false;
-
-         if (getStorage("MissingE_unfollower_enabled",1) == 1) {
-            activeScripts.unfollower = true;
-         }
-         else
-            activeScripts.unfollower = false;
-
-         if (getStorage("MissingE_followChecker_enabled",1) == 1) {
-            activeScripts.followChecker = true;
-         }
-         else
-            activeScripts.followChecker = false;
-
-      }
-      if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/drafts/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
@@ -832,8 +808,6 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) &&
            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
-             .test(request.message.url)) &&
-           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
              .test(request.message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {

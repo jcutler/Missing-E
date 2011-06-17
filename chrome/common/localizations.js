@@ -46,7 +46,8 @@ var locale = {
          experimental: "EXPERIMENTAL",
          exp: "X"
       },
-      bookmarkText: "bookmark",
+      bookmarkVerb: "bookmark",
+      bookmarkNoun: "Bookmark",
       bookmarksTitle: "Bookmarks",
       magnify: "magnify",
       postingFixes: {
@@ -134,7 +135,8 @@ var locale = {
          experimental: "EXPERIMENTELL",
          exp: "X"
       },
-      bookmarkText: "Lesezeichen hinzufügen",
+      bookmarkVerb: "Lesezeichen hinzufügen",
+      bookmarkNoun: "Lesezeichen",
       bookmarksTitle: "Lesezeichen",
       magnify: "vergrößern",
       postingFixes: {
@@ -222,7 +224,8 @@ var locale = {
          experimental: "EXPÉRIMENTALE",
          exp: "X"
       },
-      bookmarkText: "marquer",
+      bookmarkVerb: "marquer",
+      bookmarkNoun: "Signet",
       bookmarksTitle: "Signets",
       magnify: "agrandir",
       postingFixes: {
@@ -287,7 +290,7 @@ var locale = {
          }
       ],
       tagsText: "Tag",
-      twitterText: "Invia a Twitter",
+      twitterText: "Posta su Twitter",
       askPost: "Chiedi",
       select: "Seleziona",
       first100: "Primi 100",
@@ -310,7 +313,8 @@ var locale = {
          experimental: "SPERIMENTALE",
          exp: "SP"
       },
-      bookmarkText: "segnalibro",
+      bookmarkVerb: "segnalibro",
+      bookmarkNoun: "Segnalibro",
       bookmarksTitle: "Segnalibri",
       magnify: "ingrandire",
       postingFixes: {
@@ -318,18 +322,18 @@ var locale = {
             publish: "Pubblica post",
             queue: "Metti post in coda",
             draft: "Salva bozza",
-            private: "Salvare post privato"
+            private: "Salva post privato"
          },
-         uploadImagesText: "Altrimenti carica foto",
+         uploadImagesText: "Oppure carica foto",
          clearTagsText: "Cancella i Tag"
       },
-      loading: "Non pronto...",
-      error: "È verificato un errore. Clicca per provare di nuovo.",
+      loading: "In caricamento...",
+      error: "Si è verificato un errore. Clicca per provare di nuovo.",
       posts: {
          text: ["il", "tuo", "post"],
-         photo: ["la", "tua", "photo"],
+         photo: ["la", "tua", "foto"],
          photoset: ["il", "tuo", "fotoset"],
-         quote: ["il", "tuo", "citazione"],
+         quote: ["la", "tua", "citazione"],
          link: ["il", "tuo", "link"],
          conversation: ["la", "tua", "chat"],
          audio: ["il", "tuo", "post audio"],
@@ -346,9 +350,9 @@ var locale = {
       replyType: {
          as: 'come ...',
          photo: 'come <strong>foto</strong>',
-         photoTitle: 'Foto Risposta',
+         photoTitle: 'Rispondi con una foto',
          text: 'come <strong>testo</strong>',
-         textTitle: 'Testo Risposta'
+         textTitle: 'Rispondi con un testo'
       },
    },
    ja: {
@@ -398,7 +402,8 @@ var locale = {
          experimental: "実験",
          exp: "実験"
       },
-      bookmarkText: "ブックマーク",
+      bookmarkVerb: "ブックマーク",
+      bookmarkNoun: "ブックマーク",
       bookmarksTitle: "ブックマーク",
       magnify: "拡大する",
       postingFixes: {
@@ -486,7 +491,8 @@ var locale = {
          experimental: "DENEME",
          exp: "X"
       },
-      bookmarkText: "kalınan yer imi",
+      bookmarkVerb: "kalınan yer imi",
+      bookmarkNoun: "Yer imi",
       bookmarksTitle: "Yer imleri",
       magnify: "büyüt",
       postingFixes: {

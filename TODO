@@ -1,6 +1,3 @@
-Opera port
-- SO UGLY I DON'T WANT TO DO IT
-
 Facebox size adjustment?
 - Not really a big deal
 
@@ -9,9 +6,18 @@ Askbox on dash? http://userscripts.org/scripts/show/100607
 
 Bring tumblelog panel to dashboard page?
 
-Complete implementation of multi-unfollower and then port
-- done, but needs testing
-
-Port ask fixes fix to Safari/Firefox
-
 Edit button on secondary tumblr permalink pages
+
+Build "read more" loads into existing post with AJAX
+- suggested by asianfusion
+
+sidebar tweaks
+- move slimSidebar, followingLink here
+- hide radar
+- add sidebar to:
+   - dashboard (after liked, or after following)
+   - likes (same)
+   - tagged/* (same)
+   - inbox (above search_form)
+- add tumblr acct selection
+- retry

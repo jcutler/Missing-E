@@ -52,7 +52,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>1.4.2</string>
+		<string>1.4.6</string>
 		<key>Key</key>
 		<string>MissingE_version</string>
 		<key>Title</key>
@@ -372,6 +372,16 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_dashboardFixes_slimSidebar</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashboardFixes_queueArrows</string>
@@ -445,6 +455,16 @@
 		<real>0</real>
 		<key>Key</key>
 		<string>MissingE_dashLinksToTabs_editLinks</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_bookmarker_addBar</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

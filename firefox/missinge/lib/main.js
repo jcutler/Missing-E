@@ -677,6 +677,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_askFixes_tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
       settings.MissingE_bookmarker_format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
+      settings.MissingE_bookmarker_addBar = getStorage("extensions.MissingE.bookmarker.addBar",1);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("extensions.MissingE.dashboardFixes.wrapTags",1);
       settings.MissingE_dashboardFixes_replaceIcons = getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1);
@@ -685,6 +686,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
       settings.MissingE_dashboardFixes_reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
       settings.MissingE_dashboardFixes_widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
+      settings.MissingE_dashboardFixes_slimSidebar = getStorage("extensions.MissingE.dashboardFixes.slimSidebar",0);
       settings.MissingE_dashboardFixes_queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
       settings.MissingE_dashboardFixes_expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
       settings.MissingE_dashboardFixes_followingLink = getStorage("extensions.MissingE.dashboardFixes.followingLink",0);
@@ -743,6 +745,7 @@ function handleMessage(message, myWorker) {
             break;
          case "bookmarker":
             settings.format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
+            settings.addBar = getStorage("extensions.MissingE.bookmarker.addBar",1);
             break;
          case "dashboardFixes":
             settings.reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
@@ -753,6 +756,7 @@ function handleMessage(message, myWorker) {
             settings.postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
             settings.reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
             settings.widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
+            settings.slimSidebar = getStorage("extensions.MissingE.dashboardFixes.slimSidebar",0);
             settings.queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
             settings.expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
             settings.followingLink = getStorage("extensions.MissingE.dashboardFixes.followingLink",0);
@@ -817,38 +821,6 @@ function handleMessage(message, myWorker) {
             }
             else
                activeScripts.massEditor = false;
-         }
-         if (!message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
-               .test(message.url)) {
-         if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
-            injectScripts.push(data.url("safeDash/safeDash.js"));
-            activeScripts.safeDash = true;
-         }
-         else
-            activeScripts.safeDash = false;
-
-         if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
-            injectScripts.push(data.url("common/jquery-ui.min.js"));
-            injectScripts.push(data.url("bookmarker/bookmarker.js"));
-            activeScripts.bookmarker = true;
-         }
-         else
-            activeScripts.bookmarker = false;
-
-         if (getStorage("extensions.MissingE.unfollower.enabled",1) == 1) {
-            injectScripts.push(data.url("unfollower/unfollower.js"));
-            activeScripts.unfollower = true;
-         }
-         else
-            activeScripts.unfollower = false;
-
-         if (getStorage("extensions.MissingE.followChecker.enabled",1) == 1) {
-            injectScripts.push(data.url("followChecker/followChecker.js"));
-            activeScripts.followChecker = true;
-         }
-         else
-            activeScripts.followChecker = false;
       }
       if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
@@ -861,8 +833,6 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
-             .test(message.url)) &&
-           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
              .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
          if (getStorage("extensions.MissingE.dashLinksToTabs.enabled",1) == 1) {

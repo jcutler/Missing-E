@@ -53,7 +53,8 @@ function parseMarks(s) {
 
 function getMarkText(dt, post, name) {
    var pid = Number(post)+1;
-   return '<li post="' + post + '"><a href="/dashboard/1000/' + pid +
+   return '<li post="' + post + '" id="mark_' + post + '">' +
+            '<a href="/dashboard/1000/' + pid +
             '?lite" post="' + post + '" class="MissingE_bookmarker_marklink">' +
             '<div class="hide_overflow"><span class="mark_date" timestamp="' +
             dt + '">' + name + '</span></div></a>' +
@@ -61,12 +62,22 @@ function getMarkText(dt, post, name) {
             'onclick="return false;" href="#">x</a></li>';
 }
 
+function addBar(mark, lang) {
+   $('#post_' + mark[1]).before('<div id="bookmarkbar_' + mark[1] + '" ' +
+         'class="MissingE_bookmark_bar"><div class="MissingE_bookmark_line">' +
+         '</div><div class="MissingE_bookmark_text">' +
+         locale[lang]["bookmarkNoun"] + ' - <em id="bookmarkbar_label_' +
+         mark[1] + '">' + mark[2] + '</em></div></div>');
+}
+
 function generateList() {
    var i;
+   var lang = $('html').attr('lang');
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
    var marklist = $('#MissingE_marklist');
    if (marks.length === 0) {
       $('#posts a.MissingE_ismarked').removeClass("MissingE_ismarked");
+      $('#posts div.MissingE_bookmark_bar').remove();
       marklist.hide();
       marklist.find('li[post]').remove();
       return true;
@@ -84,16 +95,21 @@ function generateList() {
          if (idx >= marks.length) {
             $('#bookmark_' + post)
                .removeClass("MissingE_ismarked");
+            $('#bookmarkbar_' + post).remove();
             $(this).remove();
          }
          else if (post == marks[idx][1]) {
+            $('#bookmarkbar_label_' + post).text(marks[idx][2]);
             $(this).find('span.mark_date').text(marks[idx][2]);
             idx++;
          }
          else {
             $('#bookmark_' + post).removeClass('MissingE_ismarked');
+            $('#bookmarkbar_' + post).remove();
             $('#bookmark_' + marks[idx][1]).addClass('MissingE_ismarked');
             $('#mark_' + marks[idx][1]).remove().data('gone','gone');
+            $('#bookmarkbar_' + marks[idx][1]).remove();
+            addBar(marks[idx], lang);
             $(this).before(getMarkText(marks[idx][0], marks[idx][1],
                                        marks[idx][2]));
             $(this).remove();
@@ -102,6 +118,7 @@ function generateList() {
       });
       for(; idx<marks.length; idx++) {
          $("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
+         addBar(marks[idx], lang);
          marklist.append(getMarkText(marks[idx][0], marks[idx][1],
                                      marks[idx][2]));
       }
@@ -109,6 +126,7 @@ function generateList() {
    else {
       for (i=0; i<marks.length; i++) {
          $("#bookmark_" + marks[i][1]).addClass("MissingE_ismarked");
+         addBar(marks[i], lang);
          marklist.append(getMarkText(marks[i][0], marks[i][1],
                                      marks[i][2]));
       }
@@ -152,13 +170,24 @@ function addMark(post,user,custom) {
    marks.unshift([d.getTime(),post,ds]);
    setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
    generateList();
+   return true;
 }
 
 function markClick(e) {
    if (e.which === 1) {
       if ($(this).hasClass("MissingE_ismarked")) {
+         var post = $(this).closest('li.post');
+         var pid = this.id.match(/[0-9]*$/)[0];
+         var moveWin = $('#bookmarkbar_' + pid).offset().top -
+                        $(window).scrollTop() <= 34;
+         var oldPos = post.offset().top;
          $(this).removeClass("MissingE_ismarked");
          removeMark(this.id.match(/[0-9]*$/)[0]);
+         if (moveWin) {
+            var scrollTo = $(window).scrollTop() + post.offset().top -
+                           oldPos;
+            $(window).scrollTop(scrollTo);
+         }
       }
       else {
          var user = '';
@@ -180,7 +209,16 @@ function markClick(e) {
                }
             }
          }
-         addMark(this.id.match(/[0-9]*$/)[0],user,e.shiftKey);
+         var pid = this.id.match(/[0-9]*$/)[0];
+         var oldPos = post.offset().top;
+         if (addMark(pid,user,e.shiftKey)) {
+            if ($('#bookmarkbar_' + pid).offset().top -
+                  $(window).scrollTop() <= 34) {
+               var scrollTo = $(window).scrollTop() + post.offset().top -
+                              oldPos;
+               $(window).scrollTop(scrollTo);
+            }
+         }
       }
       return false;
    }
@@ -208,7 +246,7 @@ function doMarks(item) {
          }
       }
       var node = $('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + locale[lang]["bookmarkText"] + '" ' +
+                   '" title="' + locale[lang]["bookmarkVerb"] + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -246,6 +284,7 @@ function handleEdit(type, evt) {
          marks[i][2] = newval;
          setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
          par.find('span.mark_date').html(newval);
+         $('#bookmarkbar_label_' + post).text(newval);
       }
    }
    if (end) {
@@ -319,7 +358,8 @@ function MissingE_bookmarker_doStartup(format) {
    markFormat = format;
    var st = document.createElement('style');
    st.setAttribute('type','text/css');
-   st.innerHTML = '#MissingE_marklist .MissingE_bookmarker_marklink { ' +
+   st.innerHTML = '#MissingE_marklist .MissingE_bookmarker_marklink, ' +
+                  '.MissingE_bookmark_text { ' +
                   'background-image:url("' + bmi + '") !important; } ' +
                   'a.MissingE_mark { background-image:url("' + mimg + '"); }';
    document.getElementsByTagName('head')[0].appendChild(st);
@@ -336,8 +376,16 @@ function MissingE_bookmarker_doStartup(format) {
          $("#posts li.post").each(function(i) {
             doMarks(this);
          });
+         document.addEventListener('DOMNodeInserted', function(e) {
+            doMarks(e.target);
+         }, false);
+
+         if (addBar === 0) {
+            $('head').append('<style type="text/css">' +
+                             '#posts .MissingE_bookmark_bar { ' +
+                             'display:none; }</style>');
+         }
       }
-      
       var lang = $('html').attr('lang');
       var list = $('<ul id="MissingE_marklist" ' +
                    'class="right_column_section">' +
@@ -346,6 +394,9 @@ function MissingE_bookmarker_doStartup(format) {
                    locale[lang]["bookmarksTitle"] + '</a></li></ul>');
 
       var pos = $("#right_column .radar");
+      if (pos.length === 0) {
+         pos = $("#right_column .promo");
+      }
       if (pos.length > 0) {
          pos.before(list);
       }
@@ -354,37 +405,26 @@ function MissingE_bookmarker_doStartup(format) {
       }
       list.click(marklistClick);
       generateList();
-   }
-   $(function() {
-      $('#MissingE_marklist').sortable({
-         items:"li[post]",
-         cursor:'move',
-         axis:'y',
-         opacity:0.6,
-         revert:true,
-         start:function(e,ui){
-            $(this).data('position',$('#MissingE_marklist li[post]').index(ui.item));
-         },
-         update:function(e,ui){
-            var oldp = $(this).data('position');
-            var newp = $('#MissingE_marklist li[post]').index(ui.item);
-            doMove(oldp,newp);
-         }
+
+      $(function() {
+         $('#MissingE_marklist').sortable({
+            items:"li[post]",
+            cursor:'move',
+            axis:'y',
+            opacity:0.6,
+            revert:true,
+            start:function(e,ui){
+               $(this).data('position',$('#MissingE_marklist li[post]').index(ui.item));
+            },
+            update:function(e,ui){
+               var oldp = $(this).data('position');
+               var newp = $('#MissingE_marklist li[post]').index(ui.item);
+               doMove(oldp,newp);
+            }
+         });
+         $('#MissingE_marklist li').disableSelection();
       });
-      $('#MissingE_marklist li').disableSelection();
-   });
-   if (document.body.id !== "tinymce" &&
-       document.body.id !== "dashboard_edit_post") {
-      if (!(/drafts$/.test(location.href)) &&
-          !(/queue$/.test(location.href)) &&
-          !(/messages$/.test(location.href)) &&
-          !(/submissions[^\/]*$/.test(location.href)) &&
-          !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
-          !(/queue\/after\/[^\/]*$/.test(location.href))) {
-         document.addEventListener('DOMNodeInserted', function(e) {
-            doMarks(e.target);
-         }, false);
-      }
+
       window.addEventListener('storage',function(e) {
          if (e.key !== 'MissingE_bookmarker_marks') { return false; }
          else { refreshMarks(); }

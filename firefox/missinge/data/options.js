@@ -241,6 +241,7 @@ function loadSettings() {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
       }
       else if (v == "bookmarker") {
+         loadCheck(frm,'MissingE_bookmarker_addBar',1);
          var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
          frm.MissingE_bookmarker_format.value = bmFormat;
          jQuery('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
@@ -278,6 +279,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
          loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
+         loadCheck(frm,'MissingE_dashboardFixes_slimSidebar',0);
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
          loadCheck(frm,'MissingE_dashboardFixes_followingLink',0);

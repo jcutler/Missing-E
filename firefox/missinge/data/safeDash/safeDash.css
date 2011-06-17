@@ -30,11 +30,11 @@ border-radius:6px;
 }
 
 #MissingE_safeDash li a {
-background-position:11px 0;
+background-position:12px 1px;
 }
 
 #MissingE_safeDash li.selected a {
-background-position:11px -29px;
+background-position:12px -28px;
 }
 
 #posts #new_post img, #posts .post .post_controls img, #posts .post img:hover, .notification blockquote img:hover, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img, .editor_controls img {

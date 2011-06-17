@@ -50,7 +50,8 @@ function parseMarks(s) {
 
 function getMarkText(dt, post, name) {
    var pid = Number(post)+1;
-   return '<li post="' + post + '"><a href="/dashboard/1000/' + pid +
+   return '<li post="' + post + '" id="mark_' + post + '">' +
+            '<a href="/dashboard/1000/' + pid +
             '?lite" post="' + post + '" class="MissingE_bookmarker_marklink">' +
             '<div class="hide_overflow"><span class="mark_date" timestamp="' +
             dt + '">' + name + '</span></div></a>' +
@@ -58,12 +59,22 @@ function getMarkText(dt, post, name) {
             'onclick="return false;" href="#">x</a></li>';
 }
 
+function addBar(mark, lang) {
+   jQuery('#post_' + mark[1]).before('<div id="bookmarkbar_' + mark[1] + '" ' +
+         'class="MissingE_bookmark_bar"><div class="MissingE_bookmark_line">' +
+         '</div><div class="MissingE_bookmark_text">' +
+         locale[lang]["bookmarkNoun"] + ' - <em id="bookmarkbar_label_' +
+         mark[1] + '">' + mark[2] + '</em></div></div>');
+}
+
 function generateList() {
    var i;
+   var lang = jQuery('html').attr('lang');
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
    var marklist = jQuery('#MissingE_marklist');
    if (marks.length === 0) {
       jQuery('#posts a.MissingE_ismarked').removeClass("MissingE_ismarked");
+      jQuery('#posts div.MissingE_bookmark_bar').remove();
       marklist.hide();
       marklist.find('li[post]').remove();
       return true;
@@ -73,7 +84,7 @@ function generateList() {
    if (markitems.length > 0) {
       var idx = 0;
       markitems.each(function(i) {
-        if (jQuery(this).data('gone') == 'gone') {
+        if (jQuery(this).attr('gone') == 'gone') {
             return;
          }
          var cd = jQuery(this).find('span.mark_date').attr("timestamp");
@@ -81,16 +92,21 @@ function generateList() {
          if (idx >= marks.length) {
             jQuery('#bookmark_' + post)
                .removeClass("MissingE_ismarked");
+            jQuery('#bookmarkbar_' + post).remove();
             jQuery(this).remove();
          }
          else if (post == marks[idx][1]) {
+            jQuery('#bookmarkbar_label_' + post).text(marks[idx][2]);
             jQuery(this).find('span.mark_date').text(marks[idx][2]);
             idx++;
          }
          else {
             jQuery('#bookmark_' + post).removeClass('MissingE_ismarked');
+            jQuery('#bookmarkbar_' + post).remove();
             jQuery('#bookmark_' + marks[idx][1]).addClass('MissingE_ismarked');
-            jQuery('#mark_' + marks[idx][1]).remove().data('gone','gone');
+            jQuery('#mark_' + marks[idx][1]).remove().attr('gone','gone');
+            jQuery('#bookmarkbar_' + marks[idx][1]).remove();
+            addBar(marks[idx], lang);
             jQuery(this).before(getMarkText(marks[idx][0], marks[idx][1],
                                        marks[idx][2]));
             jQuery(this).remove();
@@ -99,6 +115,7 @@ function generateList() {
       });
       for(; idx<marks.length; idx++) {
          jQuery("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
+         addBar(marks[idx], lang);
          marklist.append(getMarkText(marks[idx][0], marks[idx][1],
                                      marks[idx][2]));
       }
@@ -106,6 +123,7 @@ function generateList() {
    else {
       for (i=0; i<marks.length; i++) {
          jQuery("#bookmark_" + marks[i][1]).addClass("MissingE_ismarked");
+         addBar(marks[i], lang);
          marklist.append(getMarkText(marks[i][0], marks[i][1],
                                      marks[i][2]));
       }
@@ -149,13 +167,24 @@ function addMark(post,user,custom) {
    marks.unshift([d.getTime(),post,ds]);
    setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
    generateList();
+   return true;
 }
 
 function markClick(e) {
    if (e.which === 1) {
       if (jQuery(this).hasClass("MissingE_ismarked")) {
+         var post = jQuery(this).closest('li.post');
+         var pid = this.id.match(/[0-9]*$/)[0];
+         var moveWin = jQuery('#bookmarkbar_' + pid).offset().top -
+                        jQuery(window).scrollTop() <= 34;
+         var oldPos = post.offset().top;
          jQuery(this).removeClass("MissingE_ismarked");
          removeMark(this.id.match(/[0-9]*$/)[0]);
+         if (moveWin) {
+            var scrollTo = jQuery(window).scrollTop() + post.offset().top -
+                           oldPos;
+            jQuery(window).scrollTop(scrollTo);
+         }
       }
       else {
          var user = '';
@@ -177,7 +206,16 @@ function markClick(e) {
                }
             }
          }
-         addMark(this.id.match(/[0-9]*$/)[0],user,e.shiftKey);
+         var pid = this.id.match(/[0-9]*$/)[0];
+         var oldPos = post.offset().top;
+         if (addMark(pid,user,e.shiftKey)) {
+            if (jQuery('#bookmarkbar_' + pid).offset().top -
+                  jQuery(window).scrollTop() <= 34) {
+               var scrollTo = jQuery(window).scrollTop() + post.offset().top -
+                              oldPos;
+               jQuery(window).scrollTop(scrollTo);
+            }
+         }
       }
       return false;
    }
@@ -205,7 +243,7 @@ function doMarks(item) {
          }
       }
       var node = jQuery('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + locale[lang]["bookmarkText"] + '" ' +
+                   '" title="' + locale[lang]["bookmarkVerb"] + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -243,6 +281,7 @@ function handleEdit(type, evt) {
          marks[i][2] = newval;
          setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
          par.find('span.mark_date').html(newval);
+         jQuery('#bookmarkbar_label_' + post).text(newval);
       }
    }
    if (end) {
@@ -327,7 +366,8 @@ self.on('message', function (message) {
                     extensionURL + 'bookmarker/bookmarker.css" />');
    var st = document.createElement('style');
    st.setAttribute('type','text/css');
-   st.innerHTML = '#MissingE_marklist .MissingE_bookmarker_marklink { ' +
+   st.innerHTML = '#MissingE_marklist .MissingE_bookmarker_marklink, ' +
+                  '.MissingE_bookmark_text { ' +
                   'background-image:url("' + bmi + '") !important; } ' +
                   'a.MissingE_mark { background-image:url("' + mimg + '"); }';
    document.getElementsByTagName('head')[0].appendChild(st);
@@ -344,6 +384,15 @@ self.on('message', function (message) {
          jQuery("#posts li.post").each(function(i) {
             doMarks(this);
          });
+         document.addEventListener('DOMNodeInserted', function(e) {
+            doMarks(e.target);
+         }, false);
+
+         if (message.addBar === 0) {
+            jQuery('head').append('<style type="text/css">' +
+                             '#posts .MissingE_bookmark_bar { ' +
+                             'display:none; }</style>');
+         }
       }
 
       var lang = jQuery('html').attr('lang');
@@ -372,6 +421,9 @@ self.on('message', function (message) {
          jQuery('#MissingE_marklist li').disableSelection();
       });
       var pos = jQuery("#right_column .radar");
+      if (pos.length === 0) {
+         pos = jQuery("#right_column .promo");
+      }
       if (pos.length > 0) {
          pos.before(list);
       }
@@ -381,20 +433,7 @@ self.on('message', function (message) {
       jQuery('#MissingE_marklist .MissingE_unmarker').live('click',
                                                            marklistClick);
       generateList();
-   }
 
-   if (document.body.id !== "tinymce" &&
-       document.body.id !== "dashboard_edit_post") {
-      if (!(/drafts$/.test(location.href)) &&
-          !(/queue$/.test(location.href)) &&
-          !(/messages$/.test(location.href)) &&
-          !(/submissions[^\/]*$/.test(location.href)) &&
-          !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
-          !(/queue\/after\/[^\/]*$/.test(location.href))) {
-         document.addEventListener('DOMNodeInserted', function(e) {
-            doMarks(e.target);
-         }, false);
-      }
       window.addEventListener('storage',function(e) {
          if (e.key !== 'MissingE_bookmarker_marks') { return false; }
          else { refreshMarks(); }

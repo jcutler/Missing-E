@@ -632,6 +632,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             break;
          case "bookmarker":
             settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
+            settings.addBar = getStorage("MissingE_bookmarker_addBar",1);
             break;
          case "dashboardFixes":
             settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
@@ -640,6 +641,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
+            settings.slimSidebar = getStorage("MissingE_dashboardFixes_slimSidebar",0);
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
             settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
             settings.followingLink = getStorage("MissingE_dashboardFixes_followingLink",0);
@@ -706,49 +708,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.massEditor = false;
       }
       if (sender.tab.url == request.url &&
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
-              .test(sender.tab.url)) {
-         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
-            activeScripts.safeDash = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "safeDash/safeDash.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});
-         }
-         else
-            activeScripts.safeDash = false;
-
-         if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
-            activeScripts.bookmarker = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "bookmarker/bookmarker.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "bookmarker/bookmarker.js"});
-         }
-         else
-            activeScripts.bookmarker = false;
-
-         if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
-             getStorage("MissingE_followChecker_enabled",1) == 1) {
-            zindexFix = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
-         }
-
-         if (getStorage("MissingE_unfollower_enabled",1) == 1) {
-            activeScripts.unfollower = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "unfollower/unfollower.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "unfollower/unfollower.js"});
-         }
-         else
-            activeScripts.unfollower = false;
-
-         if (getStorage("MissingE_followChecker_enabled",1) == 1) {
-            activeScripts.followChecker = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "followChecker/followChecker.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "followChecker/followChecker.js"});
-         }
-         else
-            activeScripts.followChecker = false;
-      }
-      if (sender.tab.url == request.url &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
            /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
@@ -759,8 +718,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
            /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
            (/http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) &&
             !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
-              .test(sender.tab.url)) &&
-            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/followers/
               .test(sender.tab.url))) ||
            /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url))) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
@@ -825,6 +782,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1 &&
                 !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/.test(sender.tab.url)))
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});
+            if (getStorage("MissingE_dashboardFixes_slimSidebar",0) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/slimSidebar.css"});
          }
          else
             activeScripts.dashboardFixes = false;

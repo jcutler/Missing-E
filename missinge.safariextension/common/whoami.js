@@ -161,7 +161,8 @@ function doStartup(response) {
 function settings_startup(response) {
    if (response.name !== "settings") { return; }
    else if (response.message.component === "bookmarker") {
-      MissingE_bookmarker_doStartup(response.message.format);
+      MissingE_bookmarker_doStartup(response.message.format,
+                                    response.message.addBar);
    }
    else if (response.message.component === "postingFixes") {
       MissingE_postingFixes_doStartup(response.message.photoReplies,
@@ -201,7 +202,8 @@ function settings_startup(response) {
                                         response.message.widescreen,
                                         response.message.queueArrows,
                                         response.message.expandAll,
-                                        response.message.followingLink);
+                                        response.message.followingLink,
+                                        response.message.slimSidebar);
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {
