@@ -117,6 +117,7 @@ jQuery(document).ready(function($) {
 <ul>
 <li><a href="#add-sidebar">How do I get my tumblelog sidebar (posts, followers, messages, etc.) on every dashboard page?</a></li>
 <li><a href="#sidebar-switch">How do I choose which Tumblr account sidebar gets added to every dashboard page?</a></li>
+<li><a href="#sidebar-fail">Why do my sidebar Post/Follower/Message counts sometimes show up like this: <strong>&#x21bb;</strong>?</a></li>
 </ul>
 <h2>Timestamps</h2>
 <ul>
@@ -355,6 +356,11 @@ jQuery(document).ready(function($) {
 <p>When you turn on the <em>"Add Tumblr sidebar..."</em> feature (<a href="#add-sidebar">find out how</a>), <em>Sidebar Tweaks</em> will start out by adding the tumblelog sidebar for your <strong>primary</strong> Tumblr account. If you wish a different account's tumblelog sidebar to appear, simply click on the blog title at the top of the added sidebar, and select a different Tumblr account.</p>
 <div class="example"><img src="images/examples/sidebarTweaks.png" alt="Selecting an account for the added sidebar" /><div class="caption">Selecting an account for the added sidebar</div></div>
 <p>When you select a different account, your choice will be remembered the next time you load the dashboard! <em>Note that you cannot switch the tumblelog sidebars shown on tumblelog pages</em> (<strong>/tumbelog/your-name</strong>).</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="sidebar-fail"></a><p class="question">Why do my sidebar Post/Follower/Message counts sometimes show up like this: <span><strong>&#x21bb;</strong></span>?</p>
+<div class="response">
+<p>During times when tumblr is very busy or error-prone, <em>Sidebar Fixes</em> may not be able to get your post, follower, messages, draft and queue counts. It will retry a number of times before giving up.</p>
+<p>When <em>Sidebar Fixes</em> cannot get the information from Tumblr, it will replace the numbers in the Tumblelog sidebar with: <strong>&#x21bb;</strong>. You can click on that symbol to make <em>Sidebar Fixes</em> try again.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="timestamps-format"></a><p class="question">How do I change the timestamp to the 12-hour format instead of 24-hour?</p>
 <p class="question">How do I change the way the date and time is shown in timestamps?</p>
