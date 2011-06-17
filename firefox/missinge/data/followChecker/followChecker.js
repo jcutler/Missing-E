@@ -385,6 +385,20 @@ function followChecker_newTab() {
    }
 }
 
+function addFollowCheckerButton(acct) {
+   var fl = jQuery('#right_column').find('a.followers .count');
+   var uf = jQuery("#MissingE_unfollowdelta");
+   var notintxt = '<a account="' + acct + '" id="MissingE_followwhonotin" ' +
+                  'title="Follow Checker" onclick="return false;" href="#">' +
+                  '&rho;</a>';
+   if (uf.size()>0) {
+      uf.after(notintxt);
+   }
+   else if (fl.length >= 1) {
+      fl.append(notintxt);
+   }
+}
+
 function tfc_init(extensionURL, retries) {
    jQuery("body").append('<div id="MissingE_followwhodisplay" style="display:none;">' +
                     '<div style="' +
@@ -410,24 +424,17 @@ function tfc_init(extensionURL, retries) {
    else {
       return;
    }
-   var fl = jQuery('#right_column').find('a.followers .count');
+   addFollowCheckerButton(acct);
+   jQuery('#MissingE_sidebar').live('load.sidebar', function(e, account) {
+      addFollowCheckerButton(account);
+   });
    jQuery('#facebox .MissingE_followChecker_newTab').live('click',
                                                      followChecker_newTab);
-   var uf = jQuery("#MissingE_unfollowdelta");
-   var notintxt = '<a id="MissingE_followwhonotin" title="Follow Checker" ' +
-                  'onclick="return false;" href="#">&rho;</a>';
-
-   if (uf.size()>0) {
-      uf.after(notintxt);
-   }
-   else if (fl.length >= 1) {
-      fl.append(notintxt);
-   }
-   jQuery('#MissingE_followwhonotin').click(function() {
+   jQuery('#MissingE_followwhonotin').live('click',function() {
       self.postMessage({greeting: "close-followChecker"});
+      var account = jQuery(this).attr('account');
       var followers = jQuery(this).parent().text()
                      .match(/^([0-9][0-9,\.]*)/);
-
       jQuery.ajax({
          type: "GET",
          url: '/following',
@@ -491,7 +498,7 @@ function tfc_init(extensionURL, retries) {
             }
             doFWGet(followers[1].replace(/,/g,"").replace(/\./g,""),
                     followees[1].replace(/,/g,"").replace(/\./g,""), true,
-                    extensionURL, retries, acct);
+                    extensionURL, retries, account);
          }
       });
    });
