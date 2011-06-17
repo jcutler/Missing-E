@@ -9,3 +9,4 @@ Build "read more" loads into existing post with AJAX
 sidebar tweaks
 - port to FF
 - Integrate with Follow Checker/Unfollower
+- on failure, add retry icons?
