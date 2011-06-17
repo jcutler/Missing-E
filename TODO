@@ -12,12 +12,5 @@ Build "read more" loads into existing post with AJAX
 - suggested by asianfusion
 
 sidebar tweaks
-- move slimSidebar, followingLink here
-- hide radar
-- add sidebar to:
-   - dashboard (after liked, or after following)
-   - likes (same)
-   - tagged/* (same)
-   - inbox (above search_form)
-- add tumblr acct selection
-- retry
+- port to Safari, FF
+- Integrate with Follow Checker/Unfollower
