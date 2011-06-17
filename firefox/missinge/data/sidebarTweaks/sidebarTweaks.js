@@ -53,7 +53,8 @@ function makeSidebar(tumblrAcctNum, retries) {
          klass: "queue"
          }
       ];
-      sidebartxt = '<ul class="right_column_section" id="MissingE_sidebar">' +
+      sidebartxt = '<ul account="' + tumblrAcctNum + '" ' +
+         'class="right_column_section" id="MissingE_sidebar">' +
          '<li id="MissingE_sidebar_title" class="recessed selected">' +
             '<a href="#" onclick="return false;">' + tumblrText + '</a>' +
             bloglist + '</li>';
@@ -84,25 +85,45 @@ function makeSidebar(tumblrAcctNum, retries) {
          jQuery.ajax({
             type: "GET",
             url: "http://www.tumblr.com/tumblelog/" + tumblrAcct,
+            tumblrAcctNum: tumblrAcctNum,
+            tumblrAcct: tumblrAcct,
             dataType: "html",
             tryCount: 0,
             retryLimit: retries,
             error: function(xhr, textStatus) {
+               var msb = jQuery('#MissingE_sidebar');
+               if (msb.attr('account') != this.tumblrAcctNum) {
+                  return;
+               }
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
                   jQuery.ajax(this);
                   return;
                }
+               msb.find('span.count').remove();
+               msb.find('a.posts,a.followers,a.messages,a.drafts,a.queue')
+                  .append('<span onclick="return false;" ' +
+                          'class="count MissingE_sidebar_retry">&#x21bb;' +
+                          '</span>');
             },
             success: function(data, textStatus) {
+               var msb = jQuery('#MissingE_sidebar');
+               if (msb.attr('account') != this.tumblrAcctNum) {
+                  return;
+               }
                if (!(/id="dashboard_index"/.test(data))) {
                   this.tryCount++;
                   if (this.tryCount <= this.retryLimit) {
                      jQuery.ajax(this);
                      return;
                   }
+                  msb.find('a.posts,a.followers,a.messages,a.drafts,a.queue')
+                     .append('<span onclick="return false;" ' +
+                             'class="count MissingE_sidebar_retry">&#x21bb;' +
+                             '</span>');
                   return;
                }
+               msb.find('span.count').remove();
                var postIdx = data.indexOf('<!-- Posts -->');
                var followerIdx = data.indexOf('<!-- Followers -->');
                var msgsIdx = data.indexOf('<!-- Messages -->');
@@ -112,74 +133,55 @@ function makeSidebar(tumblrAcctNum, retries) {
                var postNum = data.substring(postIdx, followerIdx)
                   .match(/<span class="count">([^>]*)/);
                if (postNum && postNum.length >= 2) {
-                  postNum = postNum[1];
-               }
-               else {
-                  postNum = null;
+                  msb.find('a.posts').append('<span class="count">' +
+                             postNum[1] + '</span>');
                }
                var followerNum = data.substring(followerIdx, msgsIdx)
                   .match(/<span class="count">([^>]*)/);
                if (followerNum && followerNum.length >= 2) {
-                  followerNum = followerNum[1];
-               }
-               else {
-                  followerNum = null;
+                  msb.find('a.followers').append('<span class="count">' +
+                             followerNum[1] + '</span>');
                }
                var msgsNum = data.substring(msgsIdx, draftIdx)
                   .match(/<span class="count">([^>]*)/);
                if (msgsNum && msgsNum.length >= 2) {
-                  msgsNum = msgsNum[1];
-               }
-               else {
-                  msgsNum = null;
+                  msb.find('a.messages').append('<span class="count">' +
+                             msgsNum[1] + '</span>');
                }
                var draftNum = data.substring(draftIdx, queueIdx)
                   .match(/<span class="count">([^>]*)/);
                if (draftNum && draftNum.length >= 2) {
-                  draftNum = draftNum[1];
-               }
-               else {
-                  draftNum = null;
+                  msb.find('a.drafts').append('<span class="count">' +
+                             draftNum[1] + '</span>');
                }
                var queueNum = data.substring(queueIdx, endIdx)
                   .match(/<span class="count">([^>]*)/);
                if (queueNum && queueNum.length >= 2) {
-                  queueNum = queueNum[1];
+                  msb.find('a.queue').append('<span class="count">' +
+                             queueNum[1] + '</span>');
                }
-               else {
-                  queueNum = null;
-               }
-               if (postNum) {
-                  jQuery('#MissingE_sidebar a.posts').append('<span class="count">' +
-                                                        postNum + '</span>');
-               }
-               if (followerNum) {
-                  jQuery('#MissingE_sidebar a.followers').append('<span class="count">' +
-                                                        followerNum + '</span>');
-               }
-               if (msgsNum) {
-                  jQuery('#MissingE_sidebar a.messages').append('<span class="count">' +
-                                                        msgsNum + '</span>');
-               }
-               if (draftNum) {
-                  jQuery('#MissingE_sidebar a.drafts').append('<span class="count">' +
-                                                        draftNum + '</span>');
-               }
-               if (queueNum) {
-                  jQuery('#MissingE_sidebar a.queue').append('<span class="count">' +
-                                                        queueNum + '</span>');
-               }
+               msb.trigger('load.sidebar', this.tumblrAcct);
             }
+         });
+         jQuery('#MissingE_sidebar span.MissingE_sidebar_retry').live('click',
+                                                                 function() {
+            var acct = parseInt(jQuery('#MissingE_sidebar').attr('account'));
+            if (isNaN(acct)) { acct = 0; }
+            jQuery('#MissingE_sidebar').remove();
+            makeSidebar(acct, retries);
+            return false;
          });
          jQuery('#MissingE_sidebar_title').click(function() {
             var menu = jQuery('#MissingE_sidebar_menu');
             if (menu.length > 0 &&
                 menu.find('li:not(.current_sidebar)').length > 0) {
                if (menu.is(':visible')) {
+                  jQuery('#MissingE_sidebar').removeClass('hiddenish');
                   jQuery('#overlay_for_active_menu').hide();
                   menu.hide();
                }
                else {
+                  jQuery('#MissingE_sidebar').addClass('hiddenish');
                   if (jQuery('#overlay_for_active_menu').length === 0) {
                      jQuery('body').prepend('<div id="overlay_for_active_menu"></div>');
                   }
@@ -198,6 +200,7 @@ function makeSidebar(tumblrAcctNum, retries) {
          });
          jQuery('#overlay_for_active_menu').live('click', function() {
             if (jQuery('#MissingE_sidebar_menu').is(':visible')) {
+               jQuery('#MissingE_sidebar').removeClass('hiddenish');
                jQuery(this).hide();
                jQuery('#MissingE_sidebar_menu').hide();
             }

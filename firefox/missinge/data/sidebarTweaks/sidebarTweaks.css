@@ -5,6 +5,10 @@ color:rgba(0,0,0,0.73);
 text-shadow:1px 1px 1px rgba(255,255,255,0.5);
 }
 
+.MissingE_sidebar_retry:hover {
+color:rgba(255,255,255,0.69) !important;
+}
+
 #MissingE_sidebar_menu {
 position:absolute;
 z-index:150;
@@ -29,4 +33,12 @@ text-shadow:0 0 0 transparent !important;
 
 #MissingE_sidebar_menu li.current_sidebar {
 display:none;
+}
+
+#MissingE_sidebar.hiddenish > li {
+opacity:0.5;
+}
+
+#MissingE_sidebar_title {
+opacity:1 !important;
 }
