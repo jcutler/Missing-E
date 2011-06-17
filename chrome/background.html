@@ -1010,12 +1010,13 @@ function onStart(currVersion, prevVersion) {
       console.log("Updated Missing e (" +
                   prevVersion + " => " + currVersion +
                   ")");
+      setStorage('MissingE_compatCheck',0);
    }
    else if (!prevVersion) {
       console.log("Installed Missing e " + currVersion);
+      setStorage('MissingE_compatCheck',0);
    }
    setStorage('MissingE_version',currVersion);
-   setStorage('MissingE_compatCheck',0);
 }
 
 var currVersion = getVersion();
