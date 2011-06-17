@@ -32,12 +32,6 @@ var Request = require("request").Request;
 var timer = require("timer");
 var widget;
 
-require("unload").when(function(reason){
-   if (widget) {
-      widget.destroy();
-   }
-});
-
 var defaultTimeout = 15;
 var minTimeout = 5;
 var maxTimeout = 120;
