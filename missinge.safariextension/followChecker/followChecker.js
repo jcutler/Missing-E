@@ -414,19 +414,9 @@ function tfc_init(retries) {
                     safari.extension.baseURI + 'Icon-64.png' + '" /></div>');
 
    var acct = location.href.match(/\/tumblelog\/([^\/]*)/);
-   if (!acct || acct.length <= 1) {
-      acct = $('#user_channels li.tab:first a');
-      if (acct.length > 0) {
-         acct = acct.attr('href').match(/\/tumblelog\/([^\/]*)/);
-      }
-   }
    if (acct && acct.length > 1) {
-      acct = acct[1];
+      addFollowCheckerButton(acct[1]);
    }
-   else {
-      return;
-   }
-   addFollowCheckerButton(acct);
    $('#MissingE_sidebar').live('load.sidebar', function(e, account) {
       addFollowCheckerButton(account);
    });

@@ -415,16 +415,9 @@ function tfc_init(extensionURL, retries) {
                     extensionURL + 'missinge64.png' + '" /></div>');
 
    var acct = location.href.match(/\/tumblelog\/([^\/]*)/);
-   if (!acct || acct.length <= 1) {
-      acct = jQuery('#user_channels li.tab:first a').attr('href').match(/\/tumblelog\/([^\/]*)/);
-   }
    if (acct && acct.length > 1) {
-      acct = acct[1];
+      addFollowCheckerButton(acct[1]);
    }
-   else {
-      return;
-   }
-   addFollowCheckerButton(acct);
    jQuery('#MissingE_sidebar').live('load.sidebar', function(e, account) {
       addFollowCheckerButton(account);
    });
