@@ -389,8 +389,8 @@ var locale = {
    },
    ja: {
       sidebar: {
-         posts: "総投稿数", 	// or 全投稿数, or  just 投稿数
-         followers: "ファン",	// or just フォロアー is fine
+         posts: "総合投稿数",
+         followers: "ファン",
          messages: "メッセージ",
          drafts: "下書き",
          queue: "予約投稿",
@@ -440,7 +440,7 @@ var locale = {
          notes: "リアクション",
          queue: "キュー",
          experimental: "実験的",
-         exp: "実験"	// ??? I cannot find text 'X'. So I don't know how to translate it.
+         exp: "実験"
       },
       bookmarkVerb: "ブックマーク",
       bookmarkNoun: "ブックマーク",
@@ -448,20 +448,20 @@ var locale = {
       magnify: "拡大する",
       postingFixes: {
          submitText: {
-            publish: "投稿を公開",	// or just 公開する
+            publish: "投稿を公開",
             queue: "キューに追加",
             draft: "下書き保存",
             private: "プライベート保存"
          },
          uploadImagesText: "画像をアップロード",
-         clearTagsText: "タグをクリア"	// or タグを削除. "クリア" should be a little bit technical term.
+         clearTagsText: "タグをクリア"
       },
       loading: "読込中...",
       error: "エラーが発生しました。 クリックしてもう一度やり直してください。",
       posts: {
          text: ["投稿"],
          photo: ["画像"],
-         photoset: ["フォトセット"],	// or 画像セット. Anyway both words are not popular...
+         photoset: ["フォトセット"],
          quote: ["引用"],
          link: ["リンク"],
          conversation: ["チャット"],
@@ -470,7 +470,6 @@ var locale = {
          question: ["質問"]
       },
       notifications: {
-	 // Whitespace between Japanese and other language is easy for reading.
          like: ["U", " があなたの ", "P", " を「スキ!」と言っています"],
          reblog: ["U", " があなたの ", "P", " を", "リブログ", "しました"],
          reblogIndex: 4,
@@ -479,7 +478,7 @@ var locale = {
       },
       replyType: {
          as: '返信種別を選択',
-         photo: '<strong>画像</strong>', // or <strong>画像</striong> で返信
+         photo: '<strong>画像</strong>',
          photoTitle: '画像返信',
          text: '<strong>テキスト</strong>',
          textTitle: 'テキスト返信'
