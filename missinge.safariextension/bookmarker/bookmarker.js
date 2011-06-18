@@ -63,11 +63,14 @@ function getMarkText(dt, post, name) {
 }
 
 function addBar(mark, lang) {
-   $('#post_' + mark[1]).before('<div id="bookmarkbar_' + mark[1] + '" ' +
-         'class="MissingE_bookmark_bar"><div class="MissingE_bookmark_line">' +
-         '</div><div class="MissingE_bookmark_text">' +
-         locale[lang]["bookmarkNoun"] + ' - <em id="bookmarkbar_label_' +
-         mark[1] + '">' + mark[2] + '</em></div></div>');
+   if ($('#bookmarkbar_' + mark[1]).length === 0) {
+      $('#post_' + mark[1]).before('<div id="bookmarkbar_' + mark[1] + '" ' +
+            'class="MissingE_bookmark_bar"><div ' +
+            'class="MissingE_bookmark_line"></div><div ' +
+            'class="MissingE_bookmark_text">' +
+            locale[lang]["bookmarkNoun"] + ' - <em id="bookmarkbar_label_' +
+            mark[1] + '">' + mark[2] + '</em></div></div>');
+   }
 }
 
 function generateList() {
@@ -226,6 +229,7 @@ function markClick(e) {
 
 function doMarks(item) {
    if (item.tagName === 'LI' && $(item).hasClass('post')) {
+      var lang = $('html').attr('lang');
       var post = $(item).attr('id').match(/[0-9]*$/)[0];
       if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href) &&
           $('#user_menu_' + post + ' a[following]')
@@ -242,6 +246,7 @@ function doMarks(item) {
       for (j=0; j < marks.length; j++) {
          if (post === marks[j][1]) {
             klass += ' MissingE_ismarked';
+            addBar(marks[j], lang);
             break;
          }
       }
