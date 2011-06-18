@@ -117,7 +117,8 @@ var componentList = ["dashboardFixes",
                      "postCrushes",
                      "replyReplies",
                      "unfollower",
-                     "massEditor"];
+                     "massEditor",
+                     "sidebarTweaks"];
 
 function getStorage(key,defaultValue) {
    if (all_settings[key] == undefined)
@@ -231,6 +232,13 @@ function loadSettings() {
          loadCheck(frm,'MissingE_askFixes_tagAsker',1);
          frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
       }
+      else if (v == "sidebarTweaks") {
+         loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
+         loadCheck(frm,'MissingE_sidebarTweaks_slimSidebar',0);
+         loadCheck(frm,'MissingE_sidebarTweaks_followingLink',0);
+         loadCheck(frm,'MissingE_sidebarTweaks_hideRadar',0);
+         frm.MissingE_sidebarTweaks_retries.value = getStorage('MissingE_sidebarTweaks_retries',defaultRetries);
+      }
       else if (v == "dashLinksToTabs") {
          loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
          loadCheck(frm,'MissingE_dashLinksToTabs_sidebar',0);
@@ -279,10 +287,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
          loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
-         loadCheck(frm,'MissingE_dashboardFixes_slimSidebar',0);
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
-         loadCheck(frm,'MissingE_dashboardFixes_followingLink',0);
       }
       else if (v == "betterReblogs") {
          loadCheck(frm,'MissingE_betterReblogs_passTags',1);

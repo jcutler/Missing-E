@@ -4,8 +4,9 @@
 // @description    This script adds nothing of any real value to your Tumblr dashboard. Don't bother installing it. Seriously.
 // @include        http://www.tumblr.com/tumblelog/*
 // @include        http://www.tumblr.com/dashboard*
-// @version        0.0.1
-// @date           2011-06-14
+// @include        http://www.tumblr.com/inbox*
+// @version        0.0.3
+// @date           2011-06-17
 // @creator        Jeremy Cutler
 // ==/UserScript==
 
@@ -41,12 +42,7 @@ doSpider();
 
 document.addEventListener('DOMNodeInserted', function(e) {
    if (e.target &&
-       e.target.parentNode &&
-       e.target.parentNode.id === 'sidebr' &&
-       e.target.id !== 'aah_spider_item' &&
-       e.target.getElementsByTagName &&
-       e.target.getElementsByTagName('a').length > 0 &&
-       /queue/.test(e.target.getElementsByTagName('a')[0].className)) {
+       e.target.id === 'MissingE_sidebar') {
       doSpider();
    }
 }, false);

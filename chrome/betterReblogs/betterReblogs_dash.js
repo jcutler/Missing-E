@@ -271,6 +271,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          var pos = reblog.offset();
          var h = reblog.outerHeight() - 2;
          var w = (qr.outerWidth()>>1) - (reblog.innerWidth()>>1);
+         var marg = parseInt($('body').css('margin-top'));
+         if (isNaN(marg)) { marg = 0; }
          var tagarr = [];
          if (reblog_settings.passTags === 1) {
             var tags = reblog.closest('li.post').find('span.tags a');
@@ -311,7 +313,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                            .replace(/\?&/,'?').replace(/&&/,'&')
                            .replace(/[\?&]$/,'') + arg;
          qr.find('#MissingE_quick_reblog_manual').attr('href', newurl);
-         qr.css({'top':(pos.top+h)+'px !important',
+         qr.css({'top':(pos.top+h-marg)+'px !important',
                left:(pos.left-w)+'px !important',
                'display':'block'});
       }).live('mouseout',function() {

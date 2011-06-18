@@ -31,7 +31,6 @@
   MissingE_replyReplies_fill_doStartup, MissingE_safeDash_doStartup,
   MissingE_timestamps_doStartup, MissingE_unfollower_doStartup */
 
-var MissingE_startup;
 if ((window.top === window &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
@@ -45,15 +44,16 @@ if ((window.top === window &&
 
 function doStartup(response) {
    var i;
-   if (MissingE_startup) { return; }
-   MissingE_startup = true;
+   if (response.name !== "startup" ||
+       window.location.href !== response.message.url) {
+      return;
+   }
    if (/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/submissions/
          .test(location.href) ||
        /http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
        /http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) {
       document.domain = "tumblr.com";
    }
-   if (response.name !== "startup") { return; }
    var info = "'Missing e' Startup on ";
    info += response.message.url + "\n";
    for (i in response.message) {
@@ -121,6 +121,10 @@ function doStartup(response) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "postingFixes"});
       }
+      if (response.message.sidebarTweaks) {
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "sidebarTweaks"});
+      }
       if (response.message.dashboardFixes) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "dashboardFixes"});
@@ -182,13 +186,22 @@ function settings_startup(response) {
    }
    else if (response.message.component === "unfollower") {
       MissingE_unfollower_doStartup(response.message.retries,
-                                    response.message.ignore);
+                                    response.message.ignore,
+                                    response.message.addSidebar);
    }
    else if (response.message.component === "dashLinksToTabs") {
       MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs,
                                          response.message.sidebar,
                                          response.message.reblogLinks,
                                          response.message.editLinks);
+   }
+   else if (response.message.component === "sidebarTweaks") {
+      MissingE_sidebarTweaks_doStartup(response.message.retries,
+                                       response.message.accountNum,
+                                       response.message.hideRadar,
+                                       response.message.slimSidebar,
+                                       response.message.followingLink,
+                                       response.message.addSidebar);
    }
    else if (response.message.component === "dashboardFixes") {
       MissingE_dashboardFixes_doStartup(response.message.experimental,
@@ -201,9 +214,7 @@ function settings_startup(response) {
                                         response.message.reblogReplies,
                                         response.message.widescreen,
                                         response.message.queueArrows,
-                                        response.message.expandAll,
-                                        response.message.followingLink,
-                                        response.message.slimSidebar);
+                                        response.message.expandAll);
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {

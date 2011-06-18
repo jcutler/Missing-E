@@ -1,23 +1,7 @@
-Facebox size adjustment?
-- Not really a big deal
-
 Askbox on dash? http://userscripts.org/scripts/show/100607
 - Meh
-
-Bring tumblelog panel to dashboard page?
 
 Edit button on secondary tumblr permalink pages
 
 Build "read more" loads into existing post with AJAX
 - suggested by asianfusion
-
-sidebar tweaks
-- move slimSidebar, followingLink here
-- hide radar
-- add sidebar to:
-   - dashboard (after liked, or after following)
-   - likes (same)
-   - tagged/* (same)
-   - inbox (above search_form)
-- add tumblr acct selection
-- retry

@@ -339,12 +339,19 @@ function replyRepliesSettings(message) {
    reply_setValue(code);
    tags_setValue(tags);
 
-   if (newTab === 1) {
-      self.postMessage({greeting: "open",
-                        url: "http://www.tumblr.com/new/text"});
+   var urlPref = location.href.match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
+   if (urlPref && urlPref.length >= 2) {
+      urlPref = '/tumblelog/' + urlPref[1];
    }
    else {
-      var url = "http://www.tumblr.com/new/text";
+      urlPref = '';
+   }
+   if (newTab === 1) {
+      self.postMessage({greeting: "open",
+                        url: "http://www.tumblr.com" + urlPref + "/new/text"});
+   }
+   else {
+      var url = "http://www.tumblr.com" + urlPref + "/new/text";
       if (redir !== '') {
          url += "?" + redir;
       }

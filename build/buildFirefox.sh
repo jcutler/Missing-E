@@ -22,13 +22,14 @@ cd $BUILDDIR/missinge
 "$SEVZ" x missinge.zip
 
 rm missinge.zip
+mv resources/jid0-0pgffacvvhubiefykrvvc5w6liu-at-jetpack-missinge-data resources/data
 
-mv resources/jid0-0pgffacvvhubiefykrvvc5w6liu-missinge-data resources/data
-
-sed -e '/\s*"jid0-0pgffacvvhubiefykrvvc5w6liu-missinge-data":\s*\[/{
+sed -e '/\s*"jid0-0pgffacvvhubiefykrvvc5w6liu-at-jetpack-missinge-data":\s*\[/{
 N; N;
-s/\s*"jid0-0pgffacvvhubiefykrvvc5w6liu-missinge-data":\s*\[\s*\n\s*"resources",\s*\n\s*"jid0-0pgffacvvhubiefykrvvc5w6liu-missinge-data"/  "jid0-0pgffacvvhubiefykrvvc5w6liu-missinge-data": \[\n   "resources", \n   "data"/
+s/\s*"jid0-0pgffacvvhubiefykrvvc5w6liu-at-jetpack-missinge-data":\s*\[\s*\n\s*"resources",\s*\n\s*"jid0-0pgffacvvhubiefykrvvc5w6liu-at-jetpack-missinge-data"/  "jid0-0pgffacvvhubiefykrvvc5w6liu-at-jetpack-missinge-data": \[\n   "resources", \n   "data"/
 }' harness-options.json > harness-options.new
+
+sed -e 's/resource:\/\/jid0-0pgffacvvhubiefykrvvc5w6liu-at-jetpack-missinge-data/resource:\/\/data"/g' harness-options.new > harness-options.json
 
 mv harness-options.new harness-options.json
 

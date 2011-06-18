@@ -1,5 +1,13 @@
 var locale = {
    en: {
+      sidebar: {
+         posts: "Posts",
+         followers: "Followers",
+         messages: "Messages",
+         drafts: "Drafts",
+         queue: "Queue",
+         massEditor: "Launch Mass Post Editor"
+      },
       reblog: "reblog",
       reblogging: "reblogging...",
       reblogFailed: "Reblog failed!",
@@ -89,6 +97,14 @@ var locale = {
       },
    },
    de: {
+      sidebar: {
+         posts: "Einträge",
+         followers: "Follower",
+         messages: "Nachrichten",
+         drafts: "Entwürfe",
+         queue: "Warteschleife",
+         massEditor: "Zum Mega-Editor"
+      },
       reblog: "rebloggen",
       reblogging: "rebloggend...",
       reblogFailed: "Reblog ist fehlgeschlagen!",
@@ -178,6 +194,14 @@ var locale = {
       },
    },
    fr: {
+      sidebar: {
+         posts: "Billets",
+         followers: "Abonnés",
+         messages: "Messages",
+         drafts: "Brouillons",
+         queue: "File d'attente",
+         massEditor: "Lancer le multi-éditeur de billets"
+      },
       reblog: "rebloguer",
       reblogging: "rebloguant...",
       reblogFailed: "Reblog a échoué!",
@@ -267,6 +291,14 @@ var locale = {
       },
    },
    it: {
+      sidebar: {
+         posts: "Post",
+         followers: "Lettori",
+         messages: "Messagi",
+         drafts: "Bozze",
+         queue: "In Coda",
+         massEditor: "Usa la Modifica di Massa"
+      },
       reblog: "reblogga",
       reblogging: "rebloggando...",
       reblogFailed: "Reblog fallito!",
@@ -356,6 +388,14 @@ var locale = {
       },
    },
    ja: {
+      sidebar: {
+         posts: "総合投稿数",
+         followers: "ファン",
+         messages: "メッセージ",
+         drafts: "下書き",
+         queue: "予約投稿",
+         massEditor: "メガエディターを開く"
+      },
       reblog: "リブログ",
       reblogging: "今リブログ...",
       reblogFailed: "リブログに失敗しました!",
@@ -445,6 +485,14 @@ var locale = {
       },
    },
    tr: {
+      sidebar: {
+         posts: "Gönderiler",
+         followers: "Takipçiler",
+         messages: "Mesajlar",
+         drafts: "Taslaklar",
+         queue: "Sırada",
+         massEditor: "Toplu Gönderi Editörünü Aç"
+      },
       reblog: "yeniden blogla",
       reblogging: "yeniden bloglama...",
       reblogFailed: "Yeniden bloglama başarısız oldu!",

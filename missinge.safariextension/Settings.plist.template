@@ -74,6 +74,16 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
+		<string>MissingE_sidebarTweaks_enabled</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
 		<string>MissingE_dashboardFixes_enabled</string>
 		<key>Title</key>
 		<string></string>
@@ -372,16 +382,6 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>0</real>
-		<key>Key</key>
-		<string>MissingE_dashboardFixes_slimSidebar</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashboardFixes_queueArrows</string>
@@ -404,7 +404,57 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_followingLink</string>
+		<string>MissingE_sidebarTweaks_hideRadar</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_sidebarTweaks_accountNum</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>4</real>
+		<key>Key</key>
+		<string>MissingE_sidebarTweaks_retries</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_sidebarTweaks_followingLink</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_sidebarTweaks_addSidebar</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_sidebarTweaks_slimSidebar</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

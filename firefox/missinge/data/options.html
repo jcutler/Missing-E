@@ -701,8 +701,6 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <tr><td colspan="2" class="odd">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td class="subopt"></td><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="setting_timeout numinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" />&nbsp;<span class="resetter timeout_resetter">Reset</span></td></tr>
 <tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Slimmer dashboard sidebar</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_slimSidebar" value="0" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Make the <em>Following</em> button on the Dashboard sidebar load your following list page (instead of reloading the Dashboard)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_followingLink" value="0" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Add a move to top of queue button on queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="odd">Expand/Minimize <strong>all</strong> thumbnail images in a dashboard post, together</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_expandAll" value="0" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="even experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" class="simple_setting" /></td></tr>
@@ -712,6 +710,27 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="clear"></div>
 <div>
 <div class="post_avatar" style="background-image:url('icons/dashboardFixes_avatar.png');"></div>
+<span class="arrow"></span>
+</div>
+</li>
+<li id="sidebarTweaks_section" class="post not_mine regular">
+<div class="post_content">
+<form id="sidebarTweaks_options">
+<div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Sidebar Tweaks</div>
+<div class="post_thumb"><a href="sidebarTweaks/screen.png" rel="facebox"><img src="sidebarTweaks/thumb.png" /><br />Screenshot</a></div>
+<p>Some useful interface fixes for the Tumblr dashboard sidebar.</p>
+<table class="options_table">
+<tr><td colspan="2" class="odd">Add Tumblelog sidebar to <em>all</em> dashboard pages (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_sidebarTweaks_addSidebar" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td class="subopt"></td><td class="even">Number of retries on failure to load sidebar counts (default <span class="defRetries">4</span>)</td><td class="even" style="white-space:nowrap;"><input class="setting_retry numinput" type="text" name="MissingE_sidebarTweaks_retries" value="4" size="1" />&nbsp;<span class="resetter retry_resetter">Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Slimmer dashboard sidebar</td><td class="odd"><input type="checkbox" name="MissingE_sidebarTweaks_slimSidebar" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Make the <em>Following</em> button on the Dashboard sidebar load your following list page (instead of reloading the Dashboard)</td><td class="even"><input type="checkbox" name="MissingE_sidebarTweaks_followingLink" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Hide the Tumblr Radar</td><td class="odd"><input type="checkbox" name="MissingE_sidebarTweaks_hideRadar" value="0" checked="checked" class="simple_setting" /></td></tr>
+</table>
+</form>
+</div>
+<div class="clear"></div>
+<div>
+<div class="post_avatar" style="background-image:url('icons/sidebarTweaks_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>

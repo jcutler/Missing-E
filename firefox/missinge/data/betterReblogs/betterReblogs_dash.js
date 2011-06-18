@@ -301,6 +301,8 @@ self.on('message', function (message) {
          var h = reblog.outerHeight() - 2;
          var w = (qr.outerWidth()>>1) - (reblog.innerWidth()>>1);
          var tagarr = [];
+         var marg = parseInt(jQuery('body').css('margin-top'));
+         if (isNaN(marg)) { marg = 0; }
          if (message.passTags === 1) {
             var tags = reblog.closest('li.post').find('span.tags a');
             if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href)) {
@@ -339,7 +341,7 @@ self.on('message', function (message) {
                            .replace(/\?&/,'?').replace(/&&/,'&')
                            .replace(/[\?&]$/,'') + arg;
          qr.find('#MissingE_quick_reblog_manual').attr('href', newurl);
-         h = Math.round(pos.top+h);
+         h = Math.round(pos.top+h-marg);
          w = Math.round(pos.left-w);
          qr.css('cssText', 'top:' + h + 'px !important;' +
                            'left:' + w + 'px !important;' +

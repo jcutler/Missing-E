@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.4.6</string>
+	<string>1.5.3</string>
 	<key>CFBundleVersion</key>
-	<string>406</string>
+	<string>503</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -66,6 +66,7 @@
 				<string>postCrushes/postCrushes_fill.js</string>
 				<string>postingFixes/postingFixes.js</string>
 				<string>dashboardFixes/dashboardFixes.js</string>
+				<string>sidebarTweaks/sidebarTweaks.js</string>
 				<string>reblogYourself/reblogYourself_post.js</string>
 				<string>reblogYourself/reblogYourself_dash.js</string>
 				<string>replyReplies/replyReplies.js</string>
@@ -89,6 +90,7 @@
 			<string>unfollower/unfollower.css</string>
 			<string>postingFixes/postingFixes.css</string>
 			<string>massEditor/massEditor.css</string>
+			<string>sidebarTweaks/sidebarTweaks.css</string>
 		</array>
 		<key>Whitelist</key>
 		<array>
