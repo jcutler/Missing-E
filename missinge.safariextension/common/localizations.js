@@ -397,9 +397,9 @@ var locale = {
          massEditor: "メガエディターを開く"
       },
       reblog: "リブログ",
-      reblogging: "今リブログ...",
+      reblogging: "リブログ中...",
       reblogFailed: "リブログに失敗しました!",
-      rebloggedText: "リブログ行われた",
+      rebloggedText: "リブログしました",
       reblogOptions: [
          {
             item: 'draft',
@@ -419,10 +419,10 @@ var locale = {
          }
       ],
       tagsText: "タグ",
-      twitterText: "投稿をTwitterにも送信",
+      twitterText: "投稿を Twitter にも送信",
       askPost: "質問",
       select: "選択",
-      first100: "100最新の",
+      first100: "最新100",
       postTypeNames: {
          text: "テキスト",
          photo: "画像",
@@ -439,7 +439,7 @@ var locale = {
          reply: "返信",
          notes: "リアクション",
          queue: "キュー",
-         experimental: "実験",
+         experimental: "実験的",
          exp: "実験"
       },
       bookmarkVerb: "ブックマーク",
@@ -448,16 +448,16 @@ var locale = {
       magnify: "拡大する",
       postingFixes: {
          submitText: {
-            publish: "投稿公開",
+            publish: "投稿を公開",
             queue: "キューに追加",
             draft: "下書き保存",
             private: "プライベート保存"
          },
          uploadImagesText: "画像をアップロード",
-         clearTagsText: "クリアタグを"
+         clearTagsText: "タグをクリア"
       },
-      loading: "準備が整っていない",
-      error: "エラーが発生しました。 もう一度やり直してください]をクリックします。",
+      loading: "読込中...",
+      error: "エラーが発生しました。 クリックしてもう一度やり直してください。",
       posts: {
          text: ["投稿"],
          photo: ["画像"],
@@ -470,18 +470,18 @@ var locale = {
          question: ["質問"]
       },
       notifications: {
-         like: ["U", "があなたの", "P", "を「スキ!」と言っています"],
-         reblog: ["U", "があなたの", "P", "を", "リブログ", "しました"],
+         like: ["U", " があなたの ", "P", " を「スキ!」と言っています"],
+         reblog: ["U", " があなたの ", "P", " を", "リブログ", "しました"],
          reblogIndex: 4,
-         answer: ["U", "があなたの", "P", "に回答しました"],
-         reply: ["U", "があなたの", "P", "に返信しました"]
+         answer: ["U", " があなたの ", "P", " に回答しました"],
+         reply: ["U", " があなたの ", "P", " に返信しました"]
       },
       replyType: {
-         as: 'リブログの投稿種別を選択',
-         photo: '<strong>画像投稿</strong>',
-         photoTitle: '画像返答',
-         text: '<strong>テキスト投稿</strong>',
-         textTitle: 'テキスト返答'
+         as: '返信種別を選択',
+         photo: '<strong>画像</strong>',
+         photoTitle: '画像返信',
+         text: '<strong>テキスト</strong>',
+         textTitle: 'テキスト返信'
       },
    },
    tr: {
