@@ -255,9 +255,11 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       }
    }, false);
 
+/*
    $('a.like_button').live('click', function(e) {
       e.preventDefault();
    });
+*/
 
    var css = document.createElement("style");
    css.setAttribute("type","text/css");

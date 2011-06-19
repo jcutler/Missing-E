@@ -253,9 +253,11 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
       }
    }, false);
 
+/*
    $('a.like_button').live('click', function(e) {
       e.preventDefault();
    });
+*/
 
    if (dashboardFixes_settings.expandAll === 1) {
       $('#posts .post').each(function(){ addExpandAllHandler(this); });
