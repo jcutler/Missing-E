@@ -732,6 +732,29 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
            /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
            (/http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) &&
             !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+              .test(sender.tab.url)) &&
+            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/processing/
+              .test(sender.tab.url))) ||
+           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url))) {
+         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
+            activeScripts.safeDash = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "safeDash/safeDash.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});
+         }
+         else
+            activeScripts.safeDash = false;
+      }
+      if (sender.tab.url == request.url &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
+           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) &&
+            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
               .test(sender.tab.url))) ||
            /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url))) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
@@ -740,14 +763,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.dashLinksToTabs = false;
-
-         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
-            activeScripts.safeDash = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "safeDash/safeDash.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});
-         }
-         else
-            activeScripts.safeDash = false;
 
          if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;

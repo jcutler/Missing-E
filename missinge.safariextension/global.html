@@ -826,6 +826,27 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) &&
            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(request.message.url)) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/processing/
+             .test(request.message.url))) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
+         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
+            activeScripts.safeDash = true;
+         }
+         else
+            activeScripts.safeDash = false;
+      }
+      if (!request.message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/drafts/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/submissions/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/inbox/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
+          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
              .test(request.message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
@@ -833,12 +854,6 @@ function handleRequest(request) {
          }
          else
             activeScripts.dashLinksToTabs = false;
-
-         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
-            activeScripts.safeDash = true;
-         }
-         else
-            activeScripts.safeDash = false;
 
          if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;

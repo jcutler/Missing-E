@@ -856,6 +856,28 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(message.url)) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/processing/
+             .test(message.url))) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
+         if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
+            injectScripts.push(data.url("safeDash/safeDash.js"));
+            activeScripts.safeDash = true;
+         }
+         else
+            activeScripts.safeDash = false;
+      }
+      if (!message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/drafts/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/submissions/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/inbox/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
+          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
              .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
          if (getStorage("extensions.MissingE.dashLinksToTabs.enabled",1) == 1) {
@@ -864,13 +886,6 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.dashLinksToTabs = false;
-
-         if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
-            injectScripts.push(data.url("safeDash/safeDash.js"));
-            activeScripts.safeDash = true;
-         }
-         else
-            activeScripts.safeDash = false;
 
          if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
             injectScripts.push(data.url("common/jquery-ui.min.js"));
