@@ -138,6 +138,14 @@ background-position:-446px -244px !important;
 background-position:12px -1293px !important;
 }
 
+.right_column_section li .processing {
+background-position:6px -395px;
+}
+
+.right_column_section li.selected .processing {
+background-position:-445px -395px;
+}
+
 #MissingE_safeDash li a {
 background-position:9px -4px !important;
 }
