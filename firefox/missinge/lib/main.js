@@ -222,7 +222,13 @@ function doTags(stamp, id, theWorker) {
    if (!tags) {
       tags = [];
    }
-   theWorker.postMessage({greeting: "tags", success: true, data: tags, extensionURL: data.url("")});
+   if (stamp["type"] === "regular" &&
+       getStorage("MissingE_betterReblogs_fullText",0) === 1) {
+      fullText = true;
+   }
+   else { fullText = false; }
+   theWorker.postMessage({greeting: "tags", success: true, data: tags,
+      fullText: fullText, extensionURL: data.url("")});
 }
 
 function doTimestamp(stamp, id, theWorker) {
@@ -298,7 +304,8 @@ function saveCache(id, entry) {
           i !== "unix-timestamp" &&
           i !== "reblog-key" &&
           i !== "url" &&
-          i !== "tags") {
+          i !== "tags" &&
+          i !== "type") {
          delete entry[i];
       }
    }
@@ -731,6 +738,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
+      settings.MissingE_betterReblogs_fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
       settings.MissingE_version = getStorage("extensions.MissingE.version",'');
       myWorker.postMessage(settings);
    }
@@ -825,6 +833,7 @@ function handleMessage(message, myWorker) {
             }
             settings.replaceIcons = (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                                        getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1) ? 1 : 0;
+            settings.fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
             break;
       }
       myWorker.postMessage(settings);

@@ -73,6 +73,27 @@ function finishReblog(id,replaceIcons) {
    a.removeAttr('oldtxt');
 }
 
+function reblogTextFull(item) {
+   var post = jQuery(item);
+   if (item.tagName === 'LI' &&
+       post.hasClass('post') &&
+       post.hasClass('regular')) {
+      post.find('div.post_controls a[href^="/reblog/"]').each(function() {
+         if (/[a-zA-Z0-9]\?/.test(this.href)) {
+            this.setAttribute('href',
+               this.getAttribute('href').replace(/\?/,'/text?'));
+         }
+      });
+   }
+   else if (item.tagName === 'A' &&
+            post.closest('li.post').hasClass('regular')) {
+      if (/[a-zA-Z0-9]\?/.test(item.href)) {
+         item.setAttribute('href',
+            item.getAttribute('href').replace(/\?/,'/text?'));
+      }
+   }
+}
+
 function doReblog(item,replaceIcons,accountName) {
    var reblogMode = {
       normal:  '0',
@@ -217,7 +238,14 @@ self.on('message', function (message) {
          }
       });
    }
-
+   if (message.fullText === 1) {
+      jQuery('#posts li.post.regular').each(function() {
+         reblogTextFull(this);
+      });
+      document.addEventListener('DOMNodeInserted', function(e) {
+         reblogTextFull(e.target);
+      }, false);
+   }
    if (message.quickReblog === 1) {
       var r,s;
       var idx;

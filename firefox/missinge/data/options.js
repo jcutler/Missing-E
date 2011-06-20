@@ -304,6 +304,7 @@ function loadSettings() {
             qran = '';
          }
          frm.MissingE_betterReblogs_quickReblogAcctName.value = qran;
+         loadCheck(frm,'MissingE_betterReblogs_fullText',0);
       }
       else if (v == "postingFixes") {
          loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
