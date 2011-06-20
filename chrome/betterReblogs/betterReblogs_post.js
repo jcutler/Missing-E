@@ -68,6 +68,10 @@ function addTags(link) {
          if (response.success) {
             link.firstChild.className += " MissingE_reblog_success";
             link.setAttribute('tags',response.data.join(','));
+            if (response.fullText) {
+               link.setAttribute('href',
+                  link.getAttribute('href').replace(/\?/,'/text?'));
+            }
          }
          else {
             link.firstChild.className += " MissingE_reblog_fail";

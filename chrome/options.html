@@ -821,6 +821,7 @@ function loadSettings() {
          else
             document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Primary').checked = true;
          frm.MissingE_betterReblogs_quickReblogAcctName.value = getStorage('MissingE_betterReblogs_quickReblogAcctName','');
+         loadCheck(frm,'MissingE_betterReblogs_fullText',0);
       }
       else if (v == "postingFixes") {
          loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
@@ -1230,6 +1231,7 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" onchange="doSetting(this,false);" /> Main Blog<br />
 <input id="MissingE_betterReblogs_quickReblogAcctType_Secondary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="1" onchange="doSetting(this,false);" /> Secondary Blog:
 <div style="text-align:right;padding-top:4px;"><input type="text" name="MissingE_betterReblogs_quickReblogAcctName" style="width:90%;margin-bottom:0;" maxlength="128" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><br /><small><em>Account Name</em></small></div></td></tr>
+<tr><td colspan="2" class="even">Always reblog long text posts as text</td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_fullText" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 </table>
 </form>
 </div>

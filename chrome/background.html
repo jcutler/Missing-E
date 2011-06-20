@@ -82,7 +82,12 @@ function doTags(stamp, id, sendResponse) {
    if (!tags) {
       tags = [];
    }
-   sendResponse({success: true, data: tags});
+   if (stamp["type"] === "regular" &&
+       getStorage("MissingE_betterReblogs_fullText",0) === 1) {
+      fullText = true;
+   }
+   else { fullText = false; }
+   sendResponse({success: true, data: tags, fullText: fullText});
 }
 
 function doTimestamp(stamp, id, sendResponse) {
@@ -153,7 +158,8 @@ function saveCache(id, entry) {
           i !== "unix-timestamp" &&
           i !== "reblog-key" &&
           i !== "url" &&
-          i !== "tags") {
+          i !== "tags" &&
+          i !== "type") {
          delete entry[i];
       }
    }
@@ -699,6 +705,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                settings.accountName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'0');
             }
             settings.replaceIcons = (getStorage("MissingE_dashboardFixes_enabled",1) == 1 && getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1) ? 1 : 0;
+            settings.fullText = getStorage("MissingE_betterReblogs_fullText",0);
             break;
       }
       sendResponse(JSON.stringify(settings));
