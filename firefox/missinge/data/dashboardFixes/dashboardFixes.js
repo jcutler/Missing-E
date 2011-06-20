@@ -36,12 +36,8 @@ function addPostLinks() {
    var npl = jQuery(plwrap).prependTo('#posts');
    npl.html(pltxt);
    var bg;
-   var bgi = window.getComputedStyle(npl.get(0),null).getPropertyCSSValue('background-image');
-   var bgc = window.getComputedStyle(npl.get(0),null).getPropertyCSSValue('background-color');
-   if (bgi instanceof CSSValueList) { bg = bgi.item(0).cssText; }
-   else { bg = bgi.cssText; }
-   if (bgc instanceof CSSValueList) { bgc = bgc.item(0).cssText; }
-   else { bgc = bgc.cssText; }
+   bg = npl.css('background-image');
+   bgc = npl.css('background-color');
    npl.css('cssText', 'background:' +
            ((!bg || bg === 'none') ? 'transparent' : bgc) + ' none !important');
 }
