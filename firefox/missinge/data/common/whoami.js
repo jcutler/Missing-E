@@ -40,8 +40,10 @@ if ((window.top === window &&
    var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/
                .test(location.href) ||
             /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
-   self.postMessage({greeting: "start", isFrame: fr, url: location.href,
-                                             bodyId: document.body.id});
+   if (document.body.id !== 'tinymce') {
+      self.postMessage({greeting: "start", isFrame: fr, url: location.href,
+                                              bodyId: document.body.id});
+   }
 }
 
 self.on('message', function (message) {
