@@ -612,7 +612,7 @@ jQuery(document).ready(function($) {
       closeImage   : 'facebox/closelabel.png'
    });
    $('#MissingE_dashboardFixes_maxBigSize_sample').click(function() {
-      var size = $(this).siblings('input').val();
+      var size = $(this).closest('td').find('input').val();
       $('#sample_size p').css('font-size', size + 'px');
       $.facebox({ div: '#sample_size' });
    });
@@ -823,8 +823,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
          loadCheck(frm,'MissingE_dashboardFixes_maxBig',0);
-         var maxBigSize = getStorage('MissingE_dashboardFixes_maxBigSize',defaultMaxBig);
-         frm.MissingE_dashboardFixes_maxBigSize.value = maxBigSize;
+         frm.MissingE_dashboardFixes_maxBigSize.value = getStorage('MissingE_dashboardFixes_maxBigSize',defaultMaxBig);
       }
       else if (v == "betterReblogs") {
          loadCheck(frm,'MissingE_betterReblogs_passTags',1);
