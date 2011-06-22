@@ -64,7 +64,6 @@ display:inline
 outline:0;
 outline-style:none;
 outline-width:0;
--moz-outline-width:0
 }
 
 .clear{
@@ -140,7 +139,7 @@ right:0px;
 top:26px;
 font-size:16px;
 z-index:90;
-white-space:nowrap;
+white-space:no-wrap;
 text-align:right;
 }
 
@@ -450,7 +449,7 @@ margin-top:10px;
 
 table.subnotes .label {
 font-weight:bold;
-padding-right:5px
+padding-right:5px;
 padding-left:10px;
 border-top:1px solid #eee;
 border-bottom:1px solid #eee;
@@ -703,6 +702,8 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Add a move to top of queue button on queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="odd">Expand/Minimize <strong>all</strong> thumbnail images in a dashboard post, together</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_expandAll" value="0" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Enforce maximum font size in dashboard posts<br /><small><em><a href="http://missinge.infraware.ca/faq#maxbig" target="_blank">What is this?</a></em></small></td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_maxBig" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td class="subopt"></td><td class="odd">Maximum font size in dashboard posts (in pixels)</td><td class="odd" style="white-space:no-wrap;"><input class="setting_fontsize numinput" type="text" name="MissingE_dashboardFixes_maxBigSize" value="30" size="1" class="setting_fontsize numinput" />&nbsp;<span class="resetter fontsize_resetter">Reset</span><br /><small><a href="#" onclick="return false;" id="MissingE_dashboardFixes_maxBigSize_sample">[Click&nbsp;for&nbsp;sample]</a></small></td></tr>
 <tr><td colspan="2" class="even experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="even experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" class="simple_setting" /></td></tr>
 </table>
 </form>
@@ -1022,6 +1023,6 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 </div>
 </div>
+<div id="sample_size" style="display:none;"><p style="text-align:center;min-height:128px;line-height:128px;">Sample</p></div>
 </body>
 </html>
-

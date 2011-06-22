@@ -28,6 +28,11 @@ jQuery(document).ready(function (){
       loadingImage : 'facebox/loading.gif',
       closeImage   : 'facebox/closelabel.png'
    });
+   jQuery('#MissingE_dashboardFixes_maxBigSize_sample').click(function() {
+      var size = jQuery(this).closest('td').find('input').val();
+      jQuery('#sample_size p').css('font-size', size + 'px');
+      jQuery.facebox({ div: '#sample_size' });
+   });
    self.postMessage({greeting: "all-settings"});
    self.on('message', function(message) {
       if (message.greeting !== "all-settings") { return false; }
@@ -88,6 +93,16 @@ jQuery(document).ready(function (){
       btnClass:'spinner'
    });
 
+   jQuery('input.setting_fontsize').bind("change", function() {
+      doSetting(this, true, defaultMaxBig, minFontSize, maxFontSize);
+   }).spin({
+      min:minFontSize,
+      max:maxFontSize,
+      timeInterval:100,
+      lock:true,
+      btnClass:'spinner'
+   });
+
    jQuery('span.resetter').click(function() {
       if (this.id === "prefix-resetter") {
          resetPrefix(this);
@@ -97,6 +112,9 @@ jQuery(document).ready(function (){
       }
       else if (jQuery(this).hasClass('retry_resetter')) {
          resetRetries(this);
+      }
+      else if (jQuery(this).hasClass('fontsize_resetter')) {
+         resetFontSize(this);
       }
    });
 
@@ -289,6 +307,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
+         loadCheck(frm,'MissingE_dashboardFixes_maxBig',0);
+         frm.MissingE_dashboardFixes_maxBigSize.value = getStorage('MissingE_dashboardFixes_maxBigSize',defaultMaxBig);
       }
       else if (v == "betterReblogs") {
          loadCheck(frm,'MissingE_betterReblogs_passTags',1);
@@ -343,6 +363,12 @@ function resetTimeout(obj) {
    var input = jQuery(obj).siblings('input:text');
    input.val(defaultTimeout);
    doSetting(input.get(0), true, defaultTimeout, minTimeout, maxTimeout);
+}
+
+function resetFontSize(obj) {
+   var input = jQuery(obj).siblings('input:text');
+   input.val(defaultMaxBig);
+   doSetting(input.get(0), true, defaultMaxBig, minFontSize, maxFontSize);
 }
 
 function toggle(obj) {
