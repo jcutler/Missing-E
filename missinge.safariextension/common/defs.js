@@ -28,3 +28,6 @@ var defaultRetries = 4;
 var minRetries = 0;
 var maxRetries = 20;
 var defaultFormat = "%Y-%m-%D %H:%i";
+var defaultMaxBig = 30;
+var minFontSize = 14;
+var maxFontSize = 128;

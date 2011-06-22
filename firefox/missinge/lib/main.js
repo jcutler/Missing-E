@@ -40,6 +40,10 @@ var minRetries = 0;
 var maxRetries = 20;
 var maxActiveAjax = 15;
 var defaultFormat = "%Y-%m-%D %H:%i";
+var defaultMaxBig = 30;
+var minFontSize = 14;
+var maxFontSize = 128;
+
 var activeAjax = 0;
 var waitQueue = [];
 var cache = {};
@@ -222,7 +226,13 @@ function doTags(stamp, id, theWorker) {
    if (!tags) {
       tags = [];
    }
-   theWorker.postMessage({greeting: "tags", success: true, data: tags, extensionURL: data.url("")});
+   if (stamp["type"] === "regular" &&
+       getStorage("MissingE_betterReblogs_fullText",0) === 1) {
+      fullText = true;
+   }
+   else { fullText = false; }
+   theWorker.postMessage({greeting: "tags", success: true, data: tags,
+      fullText: fullText, extensionURL: data.url("")});
 }
 
 function doTimestamp(stamp, id, theWorker) {
@@ -298,7 +308,8 @@ function saveCache(id, entry) {
           i !== "unix-timestamp" &&
           i !== "reblog-key" &&
           i !== "url" &&
-          i !== "tags") {
+          i !== "tags" &&
+          i !== "type") {
          delete entry[i];
       }
    }
@@ -694,6 +705,8 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
       settings.MissingE_dashboardFixes_queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
       settings.MissingE_dashboardFixes_expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
+      settings.MissingE_dashboardFixes_maxBig = getStorage("extensions.MissingE.dashboardFixes.maxBig",0);
+      settings.MissingE_dashboardFixes_maxBigSize = getStorage("extensions.MissingE.dashboardFixes.maxBigSize",defaultMaxBig);
       settings.MissingE_sidebarTweaks_retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
       settings.MissingE_sidebarTweaks_hideRadar = getStorage("extensions.MissingE.sidebarTweaks.hideRadar",0);
@@ -731,6 +744,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
+      settings.MissingE_betterReblogs_fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
       settings.MissingE_version = getStorage("extensions.MissingE.version",'');
       myWorker.postMessage(settings);
    }
@@ -779,6 +793,8 @@ function handleMessage(message, myWorker) {
             settings.widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
             settings.queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
             settings.expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
+            settings.maxBig = getStorage("extensions.MissingE.dashboardFixes.maxBig",0);
+            settings.maxBigSize = getStorage("extensions.MissingE.dashboardFixes.maxBigSize",defaultMaxBig);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
@@ -825,6 +841,7 @@ function handleMessage(message, myWorker) {
             }
             settings.replaceIcons = (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                                        getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1) ? 1 : 0;
+            settings.fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
             break;
       }
       myWorker.postMessage(settings);
@@ -856,6 +873,28 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(message.url)) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/processing/
+             .test(message.url))) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
+         if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
+            injectScripts.push(data.url("safeDash/safeDash.js"));
+            activeScripts.safeDash = true;
+         }
+         else
+            activeScripts.safeDash = false;
+      }
+      if (!message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/drafts/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/submissions/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/inbox/.test(message.url) ||
+          /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
+          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
              .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
          if (getStorage("extensions.MissingE.dashLinksToTabs.enabled",1) == 1) {
@@ -864,13 +903,6 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.dashLinksToTabs = false;
-
-         if (getStorage("extensions.MissingE.safeDash.enabled",1) == 1) {
-            injectScripts.push(data.url("safeDash/safeDash.js"));
-            activeScripts.safeDash = true;
-         }
-         else
-            activeScripts.safeDash = false;
 
          if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
             injectScripts.push(data.url("common/jquery-ui.min.js"));

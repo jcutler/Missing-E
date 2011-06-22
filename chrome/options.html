@@ -63,7 +63,6 @@ display:inline
 outline:0;
 outline-style:none;
 outline-width:0;
--moz-outline-width:0
 }
 
 .clear{
@@ -139,7 +138,7 @@ right:0px;
 top:26px;
 font-size:16px;
 z-index:90;
-white-space:nowrap;
+white-space:no-wrap;
 text-align:right;
 }
 
@@ -449,7 +448,7 @@ margin-top:10px;
 
 table.subnotes .label {
 font-weight:bold;
-padding-right:5px
+padding-right:5px;
 padding-left:10px;
 border-top:1px solid #eee;
 border-bottom:1px solid #eee;
@@ -612,6 +611,11 @@ jQuery(document).ready(function($) {
       loadingImage : 'facebox/loading.gif',
       closeImage   : 'facebox/closelabel.png'
    });
+   $('#MissingE_dashboardFixes_maxBigSize_sample').click(function() {
+      var size = $(this).closest('td').find('input').val();
+      $('#sample_size p').css('font-size', size + 'px');
+      $.facebox({ div: '#sample_size' });
+   });
    loadSettings();
    $('input.toggler').checkbox();
    $('input.retryinput').spin({
@@ -624,6 +628,13 @@ jQuery(document).ready(function($) {
    $('input.timeoutinput').spin({
          min:minTimeout,
          max:maxTimeout,
+         timeInterval:100,
+         lock:true,
+         btnClass:'spinner'
+   });
+   $('input.fontsizeinput').spin({
+         min:minFontSize,
+         max:maxFontSize,
          timeInterval:100,
          lock:true,
          btnClass:'spinner'
@@ -811,6 +822,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
+         loadCheck(frm,'MissingE_dashboardFixes_maxBig',0);
+         frm.MissingE_dashboardFixes_maxBigSize.value = getStorage('MissingE_dashboardFixes_maxBigSize',defaultMaxBig);
       }
       else if (v == "betterReblogs") {
          loadCheck(frm,'MissingE_betterReblogs_passTags',1);
@@ -822,6 +835,7 @@ function loadSettings() {
          else
             document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Primary').checked = true;
          frm.MissingE_betterReblogs_quickReblogAcctName.value = getStorage('MissingE_betterReblogs_quickReblogAcctName','');
+         loadCheck(frm,'MissingE_betterReblogs_fullText',0);
       }
       else if (v == "postingFixes") {
          loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
@@ -860,6 +874,12 @@ function resetTimeout(obj) {
    var input = $(obj).siblings('input:text');
    input.val(defaultTimeout);
    doSetting(input.get(0), true, defaultTimeout, minTimeout, maxTimeout);
+}
+
+function resetFontSize(obj) {
+   var input = $(obj).siblings('input:text');
+   input.val(defaultMaxBig);
+   doSetting(input.get(0), true, defaultMaxBig, minFontSize, maxFontSize);
 }
 
 function toggle(obj) {
@@ -1084,6 +1104,8 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Add a move to top of queue button in queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Expand/Minimize <strong>all</strong> thumbnail images in a dashboard post, together</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_expandAll" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td colspan="2" class="even">Enforce maximum font size in dashboard posts<br /><small><em><a href="http://missinge.infraware.ca/faq#maxbig" target="_blank">What is this?</a></em></small></td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_maxBig" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td class="subopt"></td><td class="odd">Maximum font size in dashboard posts (in pixels)</td><td class="odd" style="white-space:no-wrap;"><input class="numinput fontsizeinput" type="text" name="MissingE_dashboardFixes_maxBigSize" value="30" size="1" onchange="doSetting(this,true,defaultMaxBig,minFontSize,maxFontSize);" />&nbsp;<span class="resetter" onclick="resetFontSize(this)">Reset</span><br /><small><a href="#" onclick="return false;" id="MissingE_dashboardFixes_maxBigSize_sample">[Click&nbsp;for&nbsp;sample]</a></small></td></tr>
 <tr><td colspan="2" class="even experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="even experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" onchange="doSetting(this,false);" /></td></tr>
 </table>
 </form>
@@ -1231,6 +1253,7 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" onchange="doSetting(this,false);" /> Main Blog<br />
 <input id="MissingE_betterReblogs_quickReblogAcctType_Secondary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="1" onchange="doSetting(this,false);" /> Secondary Blog:
 <div style="text-align:right;padding-top:4px;"><input type="text" name="MissingE_betterReblogs_quickReblogAcctName" style="width:90%;margin-bottom:0;" maxlength="128" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><br /><small><em>Account Name</em></small></div></td></tr>
+<tr><td colspan="2" class="even">Always reblog long text posts as text</td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_fullText" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 </table>
 </form>
 </div>
@@ -1401,5 +1424,6 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 </div>
 </div>
 </div>
+<div id="sample_size" style="display:none;"><p style="text-align:center;min-height:128px;line-height:128px;">Sample</p></div>
 </body>
 </html>

@@ -229,8 +229,9 @@ function doMarks(item) {
       var lang = jQuery('html').attr('lang');
       var post = jQuery(item).attr('id').match(/[0-9]*$/)[0];
       if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href) &&
-          jQuery('#user_menu_' + post + ' a[following]')
-               .attr('following') === 'false') {
+          (jQuery('#user_menu_' + post + ' a[following]')
+                .attr('following') === 'false' ||
+           jQuery('#user_menu_' + post).length === 0)) {
          return false;
       }
       var lang = jQuery('html').attr('lang');

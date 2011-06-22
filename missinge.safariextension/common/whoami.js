@@ -214,14 +214,17 @@ function settings_startup(response) {
                                         response.message.reblogReplies,
                                         response.message.widescreen,
                                         response.message.queueArrows,
-                                        response.message.expandAll);
+                                        response.message.expandAll,
+                                        response.message.maxBig,
+                                        response.message.maxBigSize);
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {
          MissingE_betterReblogs_dash_doStartup(response.message.passTags,
                                         response.message.quickReblog,
                                         response.message.replaceIcons,
-                                        response.message.accountName);
+                                        response.message.accountName,
+                                        response.message.fullText);
       }
       else if (response.message.subcomponent === "fill") {
          MissingE_betterReblogs_fill_doStartup(response.message.autoFillTags);

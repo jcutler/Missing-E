@@ -93,6 +93,10 @@ function receiveTags(message) {
       if (message.success) {
          link.firstChild.className += " MissingE_reblog_success";
          link.setAttribute('tags',message.data.join(','));
+         if (message.fullText) {
+            link.setAttribute('href',
+               link.getAttribute('href').replace(/\?/,'/text?'));
+         }
       }
       else {
          link.firstChild.className += " MissingE_reblog_fail";

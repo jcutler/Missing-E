@@ -32,7 +32,7 @@ function addReblog(item) {
                .length > 0 ||
           $(item).find('div.post_controls a.MissingE_reblog_control')
                   .length > 0 ||
-          ($(item).find('div.post_controls a:[href^="/edit"]')
+          ($(item).find('div.post_controls a[href^="/edit"]')
                .length === 0 &&
            $(item).find('div.post_controls a.MissingE_edit_control')
                   .length === 0)) {
@@ -56,7 +56,7 @@ function addReblog(item) {
             txt = (response.icons ? '' : reblog_text);
             var redir = location.href;
             edit = $(item)
-               .find('div.post_controls a:[href^="/edit"]');
+               .find('div.post_controls a[href^="/edit"]');
             if (edit.length === 0) {
                edit = $(item).find('div.post_controls a.MissingE_edit_control');
             }
@@ -75,7 +75,7 @@ function addReblog(item) {
          else {
             var reblog_err = locale[lang]["error"];
             edit = $(item)
-               .find('div.post_controls a:[href^="/edit"]');
+               .find('div.post_controls a[href^="/edit"]');
             if (edit.length === 0) {
                edit = $(item).find('div.post_controls a.MissingE_edit_control');
             }

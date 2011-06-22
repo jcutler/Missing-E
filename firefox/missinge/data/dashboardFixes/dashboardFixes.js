@@ -36,12 +36,8 @@ function addPostLinks() {
    var npl = jQuery(plwrap).prependTo('#posts');
    npl.html(pltxt);
    var bg;
-   var bgi = window.getComputedStyle(npl.get(0),null).getPropertyCSSValue('background-image');
-   var bgc = window.getComputedStyle(npl.get(0),null).getPropertyCSSValue('background-color');
-   if (bgi instanceof CSSValueList) { bg = bgi.item(0).cssText; }
-   else { bg = bgi.cssText; }
-   if (bgc instanceof CSSValueList) { bgc = bgc.item(0).cssText; }
-   else { bgc = bgc.cssText; }
+   bg = npl.css('background-image');
+   bgc = npl.css('background-color');
    npl.css('cssText', 'background:' +
            ((!bg || bg === 'none') ? 'transparent' : bgc) + ' none !important');
 }
@@ -259,9 +255,11 @@ self.on('message', function(message) {
       }
    }, false);
 
+/*
    jQuery('a.like_button').live('click', function(e) {
       e.preventDefault();
    });
+*/
 
    var css = document.createElement("style");
    css.setAttribute("type","text/css");
@@ -283,6 +281,27 @@ self.on('message', function(message) {
    head = document.getElementsByTagName("head")[0];
    if (data !== '') {
       head.appendChild(css);
+   }
+   if (message.maxBig === 1) {
+      var maxSize = message.maxBigSize;
+      var i, bigcount = 1;
+      var testpost = jQuery('<li style="display:none;" class="regular">' +
+                       '<div class="post_content"><p><big></big></p></div>' +
+                       '</li>').insertAfter('#posts li.post:first');
+      var normal = parseInt(testpost.find('p').css('font-size'));
+      var big = testpost.find('big');
+      if (normal > maxSize) { maxSize = normal; }
+      while (parseInt(big.css('font-size')) < maxSize) {
+         big = jQuery('<big></big>').appendTo(big);
+         bigcount++;
+      }
+      testpost.remove();
+      var selector = '#posts div.post_content big ';
+      for (; bigcount > 1; bigcount--) {
+         selector += '> big ';
+      }
+      jQuery('head').append('<style type="text/css">' +
+                       selector + '{ font-size:' + maxSize + 'px; }</style>');
    }
    if (message.expandAll === 1) {
       jQuery('#posts .post').each(function(){ addExpandAllHandler(this); });

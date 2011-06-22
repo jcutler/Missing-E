@@ -71,6 +71,27 @@ function finishReblog(id,replaceIcons) {
    a.removeAttr('oldtxt');
 }
 
+function reblogTextFull(item) {
+   var post = $(item);
+   if (item.tagName === 'LI' &&
+       post.hasClass('post') &&
+       post.hasClass('regular')) {
+      post.find('div.post_controls a[href^="/reblog/"]').each(function() {
+         if (/[a-zA-Z0-9]\?/.test(this.href)) {
+            this.setAttribute('href',
+               this.getAttribute('href').replace(/\?/,'/text?'));
+         }
+      });
+   }
+   else if (item.tagName === 'A' &&
+            post.closest('li.post').hasClass('regular')) {
+      if (/[a-zA-Z0-9]\?/.test(item.href)) {
+         item.setAttribute('href',
+            item.getAttribute('href').replace(/\?/,'/text?'));
+      }
+   }
+}
+
 function doReblog(item,replaceIcons,accountName) {
    var reblogMode = {
                         normal:  '0',
@@ -210,6 +231,15 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          setReblogTags(tagarr);
          }
       });
+   }
+
+   if (reblog_settings.fullText === 1) {
+      $('#posts li.post.regular').each(function() {
+         reblogTextFull(this);
+      });
+      document.addEventListener('DOMNodeInserted', function(e) {
+         reblogTextFull(e.target);
+      }, false);
    }
 
    if (reblog_settings.quickReblog === 1) {

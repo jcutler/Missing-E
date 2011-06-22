@@ -117,7 +117,13 @@ function doTags(stamp, id, request) {
    if (!tags) {
       tags = [];
    }
-   request.target.page.dispatchMessage("tags",{success: true, data: tags});
+   if (stamp["type"] === "regular" &&
+       getStorage("MissingE_betterReblogs_fullText",0) === 1) {
+      fullText = true;
+   }
+   else { fullText = false; }
+   request.target.page.dispatchMessage("tags",{success: true, data: tags,
+                                               fullText: fullText});
 }
 
 function doTimestamp(stamp, id, request) {
@@ -201,7 +207,8 @@ function saveCache(id, entry) {
           i !== "unix-timestamp" &&
           i !== "reblog-key" &&
           i !== "url" &&
-          i !== "tags") {
+          i !== "tags" &&
+          i !== "type") {
          delete entry[i];
       }
    }
@@ -673,6 +680,8 @@ function handleRequest(request) {
       settings.MissingE_dashboardFixes_widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
       settings.MissingE_dashboardFixes_queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
       settings.MissingE_dashboardFixes_expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
+      settings.MissingE_dashboardFixes_maxBig = getStorage("MissingE_dashboardFixes_maxBig",0);
+      settings.MissingE_dashboardFixes_maxBigSize = getStorage("MissingE_dashboardFixes_maxBigSize",defaultMaxBig);
       settings.MissingE_sidebarTweaks_retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);
       settings.MissingE_sidebarTweaks_hideRadar = getStorage("MissingE_sidebarTweaks_hideRadar",0);
@@ -710,6 +719,7 @@ function handleRequest(request) {
       settings.MissingE_betterReblogs_quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("MissingE_betterReblogs_quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'');
+      settings.MissingE_betterReblogs_fullText = getStorage("MissingE_betterReblogs_fullText",0);
       settings.MissingE_version = getStorage("MissingE_version",'');
       request.target.page.dispatchMessage("all-settings",settings);
    }
@@ -756,6 +766,8 @@ function handleRequest(request) {
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
             settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
+            settings.maxBig = getStorage("MissingE_dashboardFixes_maxBig",0);
+            settings.maxBigSize = getStorage("MissingE_dashboardFixes_maxBigSize",defaultMaxBig);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
@@ -801,6 +813,7 @@ function handleRequest(request) {
                settings.accountName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'0');
             }
             settings.replaceIcons = (getStorage("MissingE_dashboardFixes_enabled",1) == 1 && getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1) ? 1 : 0;
+            settings.fullText = getStorage("MissingE_betterReblogs_fullText",0);
             break;
       }
       request.target.page.dispatchMessage("settings",settings);
@@ -826,6 +839,27 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) &&
            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+             .test(request.message.url)) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/processing/
+             .test(request.message.url))) ||
+          /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
+         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
+            activeScripts.safeDash = true;
+         }
+         else
+            activeScripts.safeDash = false;
+      }
+      if (!request.message.isFrame &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/drafts/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/submissions/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/inbox/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
+          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) &&
+           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
              .test(request.message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
@@ -833,12 +867,6 @@ function handleRequest(request) {
          }
          else
             activeScripts.dashLinksToTabs = false;
-
-         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
-            activeScripts.safeDash = true;
-         }
-         else
-            activeScripts.safeDash = false;
 
          if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;

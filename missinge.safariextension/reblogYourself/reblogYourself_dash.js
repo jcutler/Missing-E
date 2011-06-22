@@ -32,7 +32,7 @@ function addReblog(item) {
                .length > 0 ||
           $(item).find('div.post_controls a.MissingE_reblog_control')
                .length > 0 ||
-          ($(item).find('div.post_controls a:[href^="/edit"]')
+          ($(item).find('div.post_controls a[href^="/edit"]')
                .length === 0 &&
            $(item).find('div.post_controls a.MissingE_edit_control')
                .length === 0)) {
@@ -60,7 +60,7 @@ function receiveReblog(response) {
       txt = (response.message.icons ? '' : reblog_text);
       var redir = location.href;
       edit = $('#post_'+response.message.pid)
-               .find('div.post_controls a:[href^="/edit"]');
+               .find('div.post_controls a[href^="/edit"]');
       if (edit.length === 0) {
          edit = $('#post_'+response.message.pid)
             .find('div.post_controls a.MissingE_edit_control');
@@ -80,7 +80,7 @@ function receiveReblog(response) {
    else {
       var reblog_err = locale[lang]["error"];
       edit = $('#post_'+response.message.pid)
-         .find('div.post_controls a:[href^="/edit"]');
+         .find('div.post_controls a[href^="/edit"]');
       if (edit.length === 0) {
          edit = $('#post_'+response.message.pid)
             .find('div.post_controls a.MissingE_edit_control');

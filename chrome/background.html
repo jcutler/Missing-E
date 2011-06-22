@@ -82,7 +82,12 @@ function doTags(stamp, id, sendResponse) {
    if (!tags) {
       tags = [];
    }
-   sendResponse({success: true, data: tags});
+   if (stamp["type"] === "regular" &&
+       getStorage("MissingE_betterReblogs_fullText",0) === 1) {
+      fullText = true;
+   }
+   else { fullText = false; }
+   sendResponse({success: true, data: tags, fullText: fullText});
 }
 
 function doTimestamp(stamp, id, sendResponse) {
@@ -153,7 +158,8 @@ function saveCache(id, entry) {
           i !== "unix-timestamp" &&
           i !== "reblog-key" &&
           i !== "url" &&
-          i !== "tags") {
+          i !== "tags" &&
+          i !== "type") {
          delete entry[i];
       }
    }
@@ -655,6 +661,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
             settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
+            settings.maxBig = getStorage("MissingE_dashboardFixes_maxBig",0);
+            settings.maxBigSize = getStorage("MissingE_dashboardFixes_maxBigSize",defaultMaxBig);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
@@ -699,6 +707,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                settings.accountName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'0');
             }
             settings.replaceIcons = (getStorage("MissingE_dashboardFixes_enabled",1) == 1 && getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1) ? 1 : 0;
+            settings.fullText = getStorage("MissingE_betterReblogs_fullText",0);
             break;
       }
       sendResponse(JSON.stringify(settings));
@@ -732,6 +741,29 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
            /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
            (/http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) &&
             !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+              .test(sender.tab.url)) &&
+            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/processing/
+              .test(sender.tab.url))) ||
+           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url))) {
+         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
+            activeScripts.safeDash = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "safeDash/safeDash.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});
+         }
+         else
+            activeScripts.safeDash = false;
+      }
+      if (sender.tab.url == request.url &&
+          (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
+           (/http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) &&
+            !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
               .test(sender.tab.url))) ||
            /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url))) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
@@ -740,14 +772,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.dashLinksToTabs = false;
-
-         if (getStorage("MissingE_safeDash_enabled",1) == 1) {
-            activeScripts.safeDash = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "safeDash/safeDash.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "safeDash/safeDash.js"});
-         }
-         else
-            activeScripts.safeDash = false;
 
          if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;
