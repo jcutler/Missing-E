@@ -84,6 +84,7 @@ function reblogTextFull(item) {
       });
    }
    else if (item.tagName === 'A' &&
+            post.parent().is('div.post_controls') &&
             post.closest('li.post').hasClass('regular')) {
       if (/[a-zA-Z0-9]\?/.test(item.href)) {
          item.setAttribute('href',
