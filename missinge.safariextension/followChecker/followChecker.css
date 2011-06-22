@@ -33,7 +33,7 @@ margin-left:2px !important;
 
 li.selected #MissingE_followwhonotin {
 color:rgba(0,0,0,0.6) !important;
-text-shadow:inherity !important;
+text-shadow:inherit !important;
 }
 
 #right_column a.followers:hover #MissingE_followwhonotin {
