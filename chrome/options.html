@@ -399,6 +399,10 @@ td.even + td.even, td.odd + td.odd {
 text-align:center;
 }
 
+.options_table img {
+vertical-align:bottom;
+}
+
 #experimental_section {
 display:none;
 }
@@ -763,6 +767,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_askFixes_tags',0);
          loadCheck(frm,'MissingE_askFixes_tagAsker',1);
          frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
+         loadCheck(frm,'MissingE_askFixes_askDash',0);
       }
       else if (v == "sidebarTweaks") {
          loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
@@ -1330,6 +1335,7 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <tr><td colspan="2" class="odd">Allow tags to be added when answering messages</td><td class="odd"><input type="checkbox" name="MissingE_askFixes_tags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="even">Add asker's username as a tag when answering messages</td><td class="even"><input type="checkbox" name="MissingE_askFixes_tagAsker" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Other tags to add to all ask posts (separated by commas)</td><td class="odd"><input type="text" name="MissingE_askFixes_defaultTags" style="width:250px;" value="" onchange="doSetting(this,false);" onblur="doSetting(this,false);" /></td></tr>
+<tr><td colspan="2" class="even">Open <em>Ask</em> boxes from a user menu (<img src="askFixes/usermenu_i.png" alt="User menu icon" />) without leaving the dashboard</td><td class="even"><input type="checkbox" name="MissingE_askFixes_askDash" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 </table>
 </form>
 </div>

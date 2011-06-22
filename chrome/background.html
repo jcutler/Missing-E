@@ -639,6 +639,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (settings.defaultTags !== '') {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
+            settings.askDash = getStorage("MissingE_askFixes_askDash",0);
             break;
          case "sidebarTweaks":
             settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
@@ -714,10 +715,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "start") {
       addTab(sender.tab.id, sender.tab.url);
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery.min.js"});
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
+      if (!(/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.url))) {
+         chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery.min.js"});
+         chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
+         chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
+         chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
+      }
       var activeScripts = {};
       var zindexFix = false;
       if (sender.tab.url == request.url &&
@@ -833,6 +836,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.dashboardFixes = false;
+
+         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
+            activeScripts.askFixes = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askFixes.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askFixes.js"});
+         }
+         else {
+            activeScripts.askFixes = false;
+         }
       }
       if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.url)) {
          if (getStorage("MissingE_askFixes_enabled",1) == 1 &&
@@ -936,20 +948,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.postCrushes = false;
-      }
-      if (sender.tab.url == request.url &&
-          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/
-            .test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/
-            .test(sender.tab.url))) {
-         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
-            activeScripts.askFixes = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askFixes.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askFixes.js"});
-         }
-         else {
-            activeScripts.askFixes = false;
-         }
       }
       if (sender.tab.url == request.url &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
