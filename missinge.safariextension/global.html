@@ -668,6 +668,7 @@ function handleRequest(request) {
       settings.MissingE_askFixes_tags = getStorage("MissingE_askFixes_tags",0);
       settings.MissingE_askFixes_tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
+      settings.MissingE_askFixes_askDash = getStorage("MissingE_askFixes_askDash",0);
       settings.MissingE_bookmarker_format = getStorage("MissingE_bookmarker_format",defaultFormat);
       settings.MissingE_bookmarker_addBar = getStorage("MissingE_bookmarker_addBar",1);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
@@ -742,6 +743,7 @@ function handleRequest(request) {
             if (settings.defaultTags !== '') {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
+            settings.askDash = getStorage("MissingE_askFixes_askDash",0);
             break;
          case "sidebarTweaks":
             settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
@@ -902,6 +904,12 @@ function handleRequest(request) {
          }
          else
             activeScripts.dashboardFixes = false;
+
+         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
+            activeScripts.askFixes = true;
+         }
+         else
+            activeScripts.askFixes = false;
       }
       if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.message.url)) {
          if (getStorage("MissingE_askFixes_enabled",1) == 1 &&
@@ -995,18 +1003,6 @@ function handleRequest(request) {
          }
          else
             activeScripts.postCrushes = false;
-      }
-      if (!request.message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/
-               .test(request.message.url) ||
-           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/
-               .test(request.message.url))) {
-         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
-            activeScripts.askFixes = true;
-         }
-         else {
-            activeScripts.askFixes = false;
-         }
       }
       if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||

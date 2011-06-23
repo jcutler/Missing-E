@@ -179,7 +179,8 @@ function settings_startup(response) {
       MissingE_askFixes_doStartup(response.message.tagAsker,
                                   response.message.defaultTags,
                                   response.message.buttons,
-                                  response.message.tags);
+                                  response.message.tags,
+                                  response.message.askDash);
    }
    else if (response.message.component === "followChecker") {
       MissingE_followChecker_doStartup(response.message.retries);

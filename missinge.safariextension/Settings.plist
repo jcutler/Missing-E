@@ -302,6 +302,16 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_askFixes_askDash</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashboardFixes_reblogQuoteFit</string>
