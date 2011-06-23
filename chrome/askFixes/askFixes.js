@@ -273,13 +273,16 @@ chrome.extension.sendRequest({greeting: "settings",
       $('#posts div.user_menu_list a[href$="/ask"]').live('click', function() {
          var user = $(this).closest('div.user_menu_list').find('a[following]')
                         .attr('href').match(/[^\/]*$/);
-         var avatar = $(this).closest('li.post').find('div.avatar_and_i a.post_avatar').css('background-image');
+         var avatar = $(this).closest('li.post')
+                        .find('div.avatar_and_i a.post_avatar')
+                        .css('background-image');
          avatar = avatar.replace(/64\./,'40.');
          var url = this.href.match(/(http[s]?:\/\/([^\/]*))/);
          if (url && url.length > 2) {
-            $('#MissingE_askbox .MissingE_askPerson').html('<a href="' + url[1] + '">' + user +
-                                          '</a>');
-            $('#MissingE_askbox .MissingE_askPerson_avatar').attr('href',url[1]).css('background-image',avatar);
+            $('#MissingE_askbox .MissingE_askPerson')
+               .html('<a href="' + url[1] + '">' + user + '</a>');
+            $('#MissingE_askbox .MissingE_askPerson_avatar')
+               .attr('href',url[1]).css('background-image',avatar);
             $.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
             $('#facebox .MissingE_askbox_loaded iframe')
                .attr('src','http://www.tumblr.com/ask_form/' + url[2]);
