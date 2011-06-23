@@ -24,7 +24,7 @@
 var controls = document.getElementById('tumblr_controls');
 if (controls) {
    var w = controls.getAttribute('width');
-   if (!w || (!(/%/.test(w)) && w < 380)) {
-      controls.setAttribute('width',380);
+   if (!w || (!(/%/.test(w)) && w < 445)) {
+      controls.setAttribute('width',445);
    }
 }
