@@ -693,6 +693,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_askFixes_tags = getStorage("extensions.MissingE.askFixes.tags",0);
       settings.MissingE_askFixes_tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
+      settings.MissingE_askFixes_askDash = getStorage("extensions.MissingE.askFixes.askDash",0);
       settings.MissingE_bookmarker_format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
       settings.MissingE_bookmarker_addBar = getStorage("extensions.MissingE.bookmarker.addBar",1);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
@@ -769,6 +770,7 @@ function handleMessage(message, myWorker) {
             if (settings.defaultTags !== '') {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
+            settings.askDash = getStorage("extensions.MissingE.askFixes.askDash",0);
             break;
          case "sidebarTweaks":
             settings.retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
@@ -939,6 +941,13 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.dashboardFixes = false;
+
+         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+            injectScripts.push(data.url("askFixes/askFixes.js"));
+            activeScripts.askFixes = true;
+         }
+         else
+            activeScripts.askFixes = false;
       }
       if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(message.url)) {
          if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1 &&
@@ -1042,19 +1051,6 @@ function handleMessage(message, myWorker) {
             activeScripts.postCrushes = false;
       }
       if (!message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/
-               .test(message.url) ||
-           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/
-               .test(message.url))) {
-         if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
-            injectScripts.push(data.url("askFixes/askFixes.js"));
-            activeScripts.askFixes = true;
-         }
-         else {
-            activeScripts.askFixes = false;
-         }
-      }
-      if (!message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
@@ -1112,7 +1108,9 @@ function handleMessage(message, myWorker) {
 
       if (activeScripts.unfollower ||
           activeScripts.followChecker ||
-          activeScripts.magnifier) {
+          activeScripts.magnifier ||
+          (activeScripts.askFixes &&
+           getStorage("extensions.MissingE.askFixes.askDash",0) == 1)) {
          zindexFix = true;
          injectScripts.unshift(data.url("common/faceboxHelper.js"));
          injectScripts.unshift(data.url("facebox/facebox.js"));

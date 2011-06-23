@@ -33,6 +33,7 @@ var locale = {
       tagsText: "Tags",
       twitterText: "Send to Twitter",
       askPost: "Ask",
+      askPerson: ["Ask", "U"],
       select: "Select",
       first100: "First 100",
       postTypeNames: {
@@ -130,6 +131,7 @@ var locale = {
       tagsText: "Tags",
       twitterText: "auf Twitter posten",
       askPost: "Fragen",
+      askPerson: ["Fragen Sie", "U"],
       select: "Selektieren",
       first100: "ersten 100",
       postTypeNames: {
@@ -227,6 +229,7 @@ var locale = {
       tagsText: "Tags",
       twitterText: "Publier sur Twitter",
       askPost: "Question",
+      askPerson: ["Demandez", "U"],
       select: "Sélectionner",
       first100: "Première 100",
       postTypeNames: {
@@ -324,6 +327,7 @@ var locale = {
       tagsText: "Tag",
       twitterText: "Posta su Twitter",
       askPost: "Chiedi",
+      askPerson: ["Chiedi", "U"],
       select: "Seleziona",
       first100: "Primi 100",
       postTypeNames: {
@@ -421,6 +425,7 @@ var locale = {
       tagsText: "タグ",
       twitterText: "投稿を Twitter にも送信",
       askPost: "質問",
+      askPerson: ["U", "尋ねる"],
       select: "選択",
       first100: "最新100",
       postTypeNames: {
@@ -518,6 +523,7 @@ var locale = {
       tagsText: "Etiketler",
       twitterText: "Twitter'a gönder",
       askPost: "Sor",
+      askPerson: ["U", "Sor"],
       select: "Seç",
       first100: "Ilk 100",
       postTypeNames: {

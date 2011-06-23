@@ -33,10 +33,8 @@
 
 var MissingE_startup;
 
-if ((window.top === window &&
-    !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
-    /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
-    /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
+if (!(/http:\/\/www\.tumblr\.com\/customize/.test(location.href)) &&
+    !(/http:\/\/www\.tumblr\.com\/upload\/image/.test(location.href))) {
    var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/
                .test(location.href) ||
             /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
