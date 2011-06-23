@@ -348,6 +348,51 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
    });
 }
 
+function checkPermission(request, sender, sendResponse, hash, retries) {
+   $.ajax({
+      type: "GET",
+      url: "http://www.tumblr.com/tumblelog/" + request.user,
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      tabId: sender.tab.id,
+      tabHash: hash,
+      error: function(xhr, textStatus) {
+         if (xhr.stats === 404) {
+            sendResponse({allow: false});
+            return;
+         }
+         if (this.tabHash !== tabs[this.tabId]) {
+            return;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               $.ajax(this);
+               return;
+            }
+            else {
+               sendResponse({allow: false});
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         var closed = (this.tabHash !== tabs[this.tabId]);
+         if (!(/<\s*body\s*id="dashboard_index"/.test(data))) {
+            if (closed) {
+               return;
+            }
+            sendResponse({allow: false});
+         }
+         else {
+            if (!closed) {
+               sendResponse({allow: true});
+            }
+         }
+      }
+   });
+}
+
 function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
                 additional) {
    debug("AJAX " + type + " request (" + request.pid + ")");
@@ -625,6 +670,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "sidebarTweaks") {
       setStorage("MissingE_sidebarTweaks_accountNum", request.accountNum);
       sendResponse();
+   }
+   else if (request.greeting == "tumblrPermission") {
+      checkPermission(request, sender, sendResponse, tabs[sender.tab.id],
+                      getStorage("MissingE_postingFixes_subEditRetries",defaultRetries));
    }
    else if (request.greeting == "settings") {
       var settings = {};
@@ -911,6 +960,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.betterReblogs = false;
+
+         if (getStorage("MissingE_postingFixes_enabled",1) == 1 &&
+             getStorage("MissingE_postingFixes_subEdit",1) == 1) {
+            activeScripts.postingFixes = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/subEdit.js", allFrames: true});
+         }
+         else
+            activeScripts.postingFixes = false;
       }
       if (sender.tab.url == request.url &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||

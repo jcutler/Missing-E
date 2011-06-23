@@ -847,6 +847,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_postingFixes_addUploader',1);
          loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
          loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
+         loadCheck(frm,'MissingE_postingFixes_subEdit',1);
+         frm.MissingE_postingFixes_subEditRetries.value = getStorage('MissingE_postingFixes_subEditRetries',defaultRetries);
       }
       else if (v == "reblogYourself") {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);
@@ -1293,6 +1295,8 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <tr><td class="odd" colspan="2">Allow inline image uploading for all post types (not just text posts)<br /><ul><li><small>Adds an "<em><strong>+ Upload Photo</strong></em>" option to all posting pages (including the Tumblr <a href="http://www.tumblr.com/goodies" target="_blank">bookmarklet</a>)</small></li><li><small>Much like the built-in "<strong><em>+ Upload Photo</em></strong>" options, these don't always load when Tumblr is suffering from errors.</small></li></ul></td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_addUploader" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Add quick "<em>Queue Post</em>", "<em>Save Draft</em>" and "<em>Save as Private</em>" buttons when posting (see screenshot)</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_quickButtons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Add extra <em>"Post to"</em> menu (for selecting Tumblr blog to post to) nearer to new post publish buttons (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_blogSelect" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td colspan="2" class="odd">Add an "Edit" button to your sub-Tumblr's individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_subEdit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td class="subopt"></td><td class="even">Number of retries on failure to check for sub-Tumblr post permissions (default <span class="defRetries">4</span>)</td><td class="even" style="white-space:nowrap;"><input class="numinput retryinput" type="text" name="MissingE_postingFixes_subEditRetries" value="4" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
