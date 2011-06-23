@@ -37,7 +37,7 @@ self.on('message', function (message) {
    }
    else {
       for (i=0; i<controls.length; i++) {
-         if (/reblog/.test(controls[i].href)) {
+         if (/\/reblog\//.test(controls[i].href)) {
             noReblog = false;
             break;
          }
