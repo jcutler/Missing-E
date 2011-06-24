@@ -159,6 +159,9 @@ function doStartup(response) {
       if (response.message.reblogYourself) {
          MissingE_reblogYourself_post_doStartup();
       }
+      if (response.message.postingFixes) {
+         MissingE_postingFixes_subEdit_doStartup();
+      }
    }
 }
 

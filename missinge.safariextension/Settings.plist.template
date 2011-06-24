@@ -634,6 +634,26 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
+		<string>MissingE_postingFixes_subEdit</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>4</real>
+		<key>Key</key>
+		<string>MissingE_postingFixes_subEditRetries</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
 		<string>MissingE_reblogYourself_postPage</string>
 		<key>Title</key>
 		<string></string>

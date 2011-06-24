@@ -75,6 +75,7 @@
 				<string>timestamps/timestamps.js</string>
 				<string>unfollower/unfollower.js</string>
 				<string>massEditor/massEditor.js</string>
+				<string>postingFixes/subEdit.js</string>
 				<string>common/zindexFix.js</string>
 			</array>
 		</dict>

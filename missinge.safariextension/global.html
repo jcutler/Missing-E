@@ -383,6 +383,51 @@ function doAskAjax(request, retries, type, doFunc) {
    });
 }
 
+function checkPermission(request, retries) {
+   $.ajax({
+      type: "GET",
+      url: "http://www.tumblr.com/tumblelog/" + request.message.user,
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      error: function(xhr, textStatus) {
+         if (xhr.stats === 404) {
+            request.target.page.dispatchMessage("tumblrPermission",
+                                                {allow: false});
+            return;
+         }
+         if (request.target.page === undefined) {
+            return;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               $.ajax(this);
+               return;
+            }
+            else {
+               request.target.page.dispatchMessage("tumblrPermission",
+                                                   {allow: false});
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         if (!(/<\s*body\s*id="dashboard_index"/.test(data))) {
+            if (request.target.page !== undefined) {
+               request.target.page.dispatchMessage("tumblrPermission",
+                                                   {allow: false});
+            }
+         }
+         else {
+            if (request.target.page !== undefined) {
+               request.target.page.dispatchMessage("tumblrPermission",
+                                                   {allow: true});
+            }
+         }
+      }
+   });
+}
+
 function doAjax(request, retries, type, doFunc, additional) {
    debug("AJAX " + type + " request (" + request.message.pid + ")");
    startAjax(request.message.pid);
@@ -700,6 +745,8 @@ function handleRequest(request) {
       settings.MissingE_postingFixes_addUploader = getStorage("MissingE_postingFixes_addUploader",1);
       settings.MissingE_postingFixes_quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
       settings.MissingE_postingFixes_blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
+      settings.MissingE_postingFixes_subEdit = getStorage("MissingE_postingFixes_subEdit",1);
+      settings.MissingE_postingFixes_subEditRetries = getStorage("MissingE_postingFixes_subEditRetries",defaultRetries);
       settings.MissingE_reblogYourself_postPage = getStorage("MissingE_reblogYourself_postPage",1);
       settings.MissingE_reblogYourself_dashboard = getStorage("MissingE_reblogYourself_dashboard",1);
       settings.MissingE_reblogYourself_retries = getStorage("MissingE_reblogYourself_retries",defaultRetries);
@@ -727,6 +774,10 @@ function handleRequest(request) {
    else if (request.name == "sidebarTweaks") {
       setStorage("MissingE_sidebarTweaks_accountNum",
                  request.message.accountNum);
+   }
+   else if (request.name == "tumblrPermission") {
+      checkPermission(request,
+                      getStorage("MissingE_postingFixes_subEditRetries",defaultRetries));
    }
    else if (request.name == "settings") {
       var settings = {};
@@ -966,6 +1017,13 @@ function handleRequest(request) {
          }
          else
             activeScripts.betterReblogs = false;
+
+         if (getStorage("MissingE_postingFixes_enabled",1) == 1 &&
+             getStorage("MissingE_postingFixes_subEdit",1) == 1) {
+            activeScripts.postingFixes = true;
+         }
+         else
+            activeScripts.postingFixes = false;
       }
       if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
