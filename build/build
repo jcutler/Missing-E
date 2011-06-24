@@ -10,6 +10,9 @@ if [[ "$1" == "-noupload" ]]; then
 elif [[ "$1" == "--noupload" ]]; then
    UPLOAD="-noupload"
    shift
+elif [[ "$1" == "--no-upload" ]]; then
+   UPLOAD="-noupload"
+   shift
 fi   
 
 until [ -z "$1" ]
