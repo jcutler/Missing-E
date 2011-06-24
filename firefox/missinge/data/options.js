@@ -333,6 +333,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_postingFixes_addUploader',1);
          loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
          loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
+         loadCheck(frm,'MissingE_postingFixes_subEdit',1);
+         frm.MissingE_postingFixes_subEditRetries.value = getStorage('MissingE_postingFixes_subEditRetries',defaultRetries);
       }
       else if (v == "reblogYourself") {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);
