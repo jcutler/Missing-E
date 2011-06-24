@@ -31,13 +31,6 @@ if (div) { controls = div.getElementsByTagName("a"); }
 if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) ||
     !(/(%2[fF]|\/)post(%2[fF]|\/)/.test(location.href))) {
    noGoto = false;
-   var ctrl = document.getElementById('tumblr_controls');
-   if (ctrl) {
-      var w = ctrl.getAttribute('width');
-      if (!w || (!(/%/.test(w)) && w < 445)) {
-         ctrl.setAttribute('width',445);
-      }
-   }
 }
 else {
    var i;

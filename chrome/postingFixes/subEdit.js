@@ -29,13 +29,6 @@ var noEdit = true;
 
 if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href))) {
    noEdit = false;
-   var ctrl = document.getElementById('tumblr_controls');
-   if (ctrl) {
-      var w = ctrl.getAttribute('width');
-      if (!w || (!(/%/.test(w)) && w < 445)) {
-         ctrl.setAttribute('width',445);
-      }
-   }
 }
 else {
    var i;

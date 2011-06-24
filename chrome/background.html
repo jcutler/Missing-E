@@ -772,6 +772,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
       var activeScripts = {};
       var zindexFix = false;
+      var widenIframe = false;
       if (sender.tab.url == request.url &&
           /http:\/\/www\.tumblr\.com\/mega-editor\//.test(sender.tab.url)) {
          if (getStorage("MissingE_massEditor_enabled",1) == 1) {
@@ -940,6 +941,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          chrome.tabs.insertCSS(sender.tab.id, {file: "common/endlessPages.css", allFrames:true});
          if (getStorage("MissingE_gotoDashPost_enabled",1) == 1) {
             activeScripts.gotoDashPost = true;
+            widenIframe = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "gotoDashPost/gotoDashPost.js", allFrames: true});
          }
          else
@@ -948,6 +950,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
              getStorage("MissingE_reblogYourself_postPage",1) == 1) {
             activeScripts.reblogYourself = true;
+            widenIframe = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "reblogYourself/reblogYourself_post.js", allFrames: true});
          }
          else
@@ -956,6 +959,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_betterReblogs_enabled",1) == 1 &&
              getStorage("MissingE_betterReblogs_passTags",1) == 1) {
             activeScripts.betterReblogs = true;
+            widenIframe = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "betterReblogs/betterReblogs_post.js", allFrames: true});
          }
          else
@@ -964,6 +968,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_postingFixes_enabled",1) == 1 &&
              getStorage("MissingE_postingFixes_subEdit",1) == 1) {
             activeScripts.postingFixes = true;
+            widenIframe = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/subEdit.js", allFrames: true});
          }
          else
@@ -1062,6 +1067,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
       if (zindexFix) {
          chrome.tabs.executeScript(sender.tab.id, {file: "common/zindexFix.js"});
+      }
+      if (widenIframe) {
+         chrome.tabs.insertCSS(sender.tab.id, {file: "common/widenIframe.css"});
       }
 
       activeScripts.url = request.url;
