@@ -52,7 +52,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>1.5.8</string>
+		<string>1.5.7</string>
 		<key>Key</key>
 		<string>MissingE_version</string>
 		<key>Title</key>
