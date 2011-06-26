@@ -53,3 +53,7 @@ if [[ "$SAFARI" -eq "1" ]]; then
    echo "Uploading Safari Extension"
    ./uploadSafari.sh $UPLOAD
 fi
+if [[ "$UPLOAD" -eq "" ]]; then
+   echo "Changing site version info"
+   ./changeSiteVersion.sh
+fi
