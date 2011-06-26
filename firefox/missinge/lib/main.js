@@ -651,6 +651,10 @@ function handleMessage(message, myWorker) {
          openSettings();
       }
    }
+   else if (message.greeting == "version") {
+      myWorker.postMessage({greeting: "version",
+         uptodate:(message.v === getStorage('extensions.MissingE.version',0))});
+   }
    else if (message.greeting == "unfollowerIgnore") {
       setStorage('extensions.MissingE.unfollower.ignore', message.list);
    }
@@ -1245,6 +1249,17 @@ pageMod.PageMod({
          if (answer) {
             handleMessage(data, this);
          }
+      });
+   }
+});
+
+pageMod.PageMod({
+   include: ["http://missinge.infraware.ca/*"],
+   contentScriptWhen: 'ready',
+   contentScriptFile: [data.url("common/versionchk.js")],
+   onAttach: function (worker) {
+      worker.on('message', function(data) {
+         handleMessage(data, this);
       });
    }
 });
