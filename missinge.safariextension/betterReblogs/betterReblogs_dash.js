@@ -35,9 +35,9 @@ function startReblog(id,replaceIcons) {
    }
    else {
       a.addClass('MissingE_quick_reblogging_text')
-         .text(locale[lang]["rebloggingText"]);
+         .text(locale[lang]["reblogging"]);
    }
-   a.attr('title',locale[lang]["rebloggingText"]);
+   a.attr('title',locale[lang]["reblogging"]);
 }
 
 function failReblog(id,replaceIcons) {
