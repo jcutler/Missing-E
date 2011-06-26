@@ -96,6 +96,7 @@
 		<key>Whitelist</key>
 		<array>
 			<string>http://www.tumblr.com/*</string>
+			<string>http://missinge.infraware.ca/*</string>
 		</array>
 	</dict>
 	<key>Description</key>

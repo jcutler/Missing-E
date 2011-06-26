@@ -32,6 +32,7 @@
   MissingE_timestamps_doStartup, MissingE_unfollower_doStartup */
 
 if ((window.top === window &&
+    !(/http:\/\/missinge\.infraware\.ca/.test(location.href)) &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
     /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
@@ -40,6 +41,23 @@ if ((window.top === window &&
             /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
    safari.self.tab.dispatchMessage("start", {isFrame: fr, url: location.href,
                                              bodyId: document.body.id});
+}
+else if (/http:\/\/missinge\.infraware\.ca/.test(location.href)) {
+   var versiondiv = document.getElementById('versioncheck');
+   if (versiondiv) {
+      var ver = versiondiv.getAttribute('version');
+      safari.self.tab.dispatchMessage("version", {v: ver});
+   }
+}
+
+function versionCheck(response) {
+   if (response.name !== "version") { return; }
+   if (response.message.uptodate) {
+      document.getElementById('uptodate').style.display = 'inline-block';
+   }
+   else {
+      document.getElementById('notuptodate').style.display = 'inline-block';
+   }
 }
 
 function doStartup(response) {
@@ -238,3 +256,4 @@ function settings_startup(response) {
 
 safari.self.addEventListener("message", doStartup, false);
 safari.self.addEventListener("message", settings_startup, false);
+safari.self.addEventListener("message", versionCheck, false);

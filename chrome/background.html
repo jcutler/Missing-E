@@ -608,6 +608,9 @@ chrome.tabs.onRemoved.addListener(function(id, info) {
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
+   else if (request.greeting == "version") {
+      sendResponse({uptodate:(request.v === getStorage("MissingE_version",'0'))});
+   }
    else if (request.greeting == "close-options") {
       closeTab(chrome.extension.getURL('options.html'), sender.tab.id);
    }

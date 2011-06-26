@@ -642,6 +642,10 @@ function handleRequest(request) {
    if (request.name == "open") {
       request.target.browserWindow.openTab().url = request.message;
    }
+   else if (request.name == "version") {
+      request.target.page.dispatchMessage("version",
+         {uptodate:(request.message.v === getStorage('MissingE_installedVersion','0'))});
+   }
    else if (request.name == "close-options") {
       closeTab(request.target.url, request.target);
    }
