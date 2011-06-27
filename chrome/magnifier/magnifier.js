@@ -75,22 +75,23 @@ function magAvatarClick(e) {
 }
 
 function insertAvatarMagnifier(item) {
-   if (item.tagName === "LI" && $(item).hasClass("notification")) {
+   var it = $(item);
+   if (item.tagName === "LI" && it.hasClass("notification")) {
       var mag = $('<div class="MissingE_magnify_avatar"></div>')
-         .appendTo($(item).find('a.avatar_frame'));
+         .appendTo(it.find('a.avatar_frame'));
       mag.click(magAvatarClick);
    }
-   else if (item.tagName === "LI" && $(item).hasClass("post")) {
+   else if (item.tagName === "LI" && it.hasClass("post")) {
       var mag = $('<div class="MissingE_magnify_avatar"></div>')
-         .appendTo($(item).find('div.avatar_and_i'));
+         .appendTo(it.find('div.avatar_and_i'));
       mag.click(magAvatarClick);
    }
-   else if (item.tagName === "DIV" && $(item).hasClass("follower")) {
+   else if (item.tagName === "DIV" && it.hasClass("follower")) {
       var mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(item);
       mag.click(magAvatarClick);
    }
-   else if (item.tagName === "A" && $(item).parent().attr('id') === 'crushes') {
+   else if (item.tagName === "A" && it.parent().attr('id') === 'crushes') {
       var mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(item);
       mag.click(magAvatarClick);
@@ -158,7 +159,8 @@ chrome.extension.sendRequest({greeting: "settings",
        !(/messages$/.test(location.href)) &&
        !(/submissions[^\/]*$/.test(location.href)) &&
        !(/inbox$/.test(location.href)) &&
-       !(/tumblelog\/[^\/]*\/followers/.test(location.href))) {
+       !(/tumblelog\/[^\/]*\/followers/.test(location.href)) &&
+       !(/\/following/.test(location.href))) {
       $('#facebox .turner_left,#facebox .turner_right')
          .live('click', function(e) {
          var curr = $(this).siblings('div.image:visible:last');
