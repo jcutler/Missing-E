@@ -757,6 +757,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_sidebarTweaks_slimSidebar = getStorage("extensions.MissingE.sidebarTweaks.slimSidebar",0);
       settings.MissingE_sidebarTweaks_followingLink = getStorage("extensions.MissingE.sidebarTweaks.followingLink",0);
       settings.MissingE_magnifier_retries = getStorage("extensions.MissingE.magnifier.retries",defaultRetries);
+      settings.MissingE_magnifier_magnifyAvatars = getStorage("extensions.MissingE.magnifier.magnifyAvatars",0);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("extensions.MissingE.dashLinksToTabs.sidebar",0);
       settings.MissingE_dashLinksToTabs_reblogLinks = getStorage("extensions.MissingE.dashLinksToTabs.reblogLinks",0);
@@ -882,6 +883,9 @@ function handleMessage(message, myWorker) {
          case "followChecker":
             settings.retries = getStorage("extensions.MissingE." + message.component + ".retries",defaultRetries);
             break;
+         case "magnifier":
+            settings.magnifyAvatars = getStorage("extensions.MissingE.magnifier.magnifyAvatars",0);
+            break;
          case "betterReblogs":
             settings.passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
             settings.autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
@@ -983,6 +987,13 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.sidebarTweaks = false;
+
+         if (getStorage("extensions.MissingE.magnifier.enabled",1) == 1) {
+            injectScripts.push(data.url("magnifier/magnifier.js"));
+            activeScripts.magnifier = true;
+         }
+         else
+            activeScripts.magnifier = false;
 
          if (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1) {
             injectScripts.push(data.url("dashboardFixes/dashboardFixes.js"));
@@ -1095,6 +1106,14 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.postCrushes = false;
+
+         if (getStorage("extensions.MissingE.magnifier.enabled",1) == 1) {
+            activeScripts.magnifier = true;
+            injectScripts.unshift(data.url("magnifier/magnifier.js"));
+         }
+         else
+            activeScripts.magnifier = false;
+            
       }
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/new\/photo/.test(message.url)) {
@@ -1140,13 +1159,6 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.betterReblogs = false;
-
-         if (getStorage("extensions.MissingE.magnifier.enabled",1) == 1) {
-            injectScripts.push(data.url("magnifier/magnifier.js"));
-            activeScripts.magnifier = true;
-         }
-         else
-            activeScripts.magnifier = false;
 
          if (getStorage("extensions.MissingE.reblogYourself.enabled",1) == 1 &&
              getStorage("extensions.MissingE.reblogYourself.dashboard",1) == 1) {

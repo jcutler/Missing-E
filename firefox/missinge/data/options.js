@@ -266,6 +266,7 @@ function loadSettings() {
       }
       else if (v == "magnifier") {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
+         loadCheck(frm,'MissingE_magnifier_magnifyAvatars',0);
       }
       else if (v == "bookmarker") {
          loadCheck(frm,'MissingE_bookmarker_addBar',1);
