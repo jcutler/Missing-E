@@ -161,7 +161,8 @@ function doStartup(response) {
          MissingE_timestamps_doStartup();
       }
       if (response.message.magnifier) {
-         MissingE_magnifier_doStartup();
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "magnifier"});
       }
    }
    else {
@@ -188,6 +189,9 @@ function settings_startup(response) {
    else if (response.message.component === "bookmarker") {
       MissingE_bookmarker_doStartup(response.message.format,
                                     response.message.addBar);
+   }
+   else if (response.message.component === "magnifier") {
+      MissingE_magnifier_doStartup(response.message.magnifyAvatars);
    }
    else if (response.message.component === "postingFixes") {
       MissingE_postingFixes_doStartup(response.message.photoReplies,
