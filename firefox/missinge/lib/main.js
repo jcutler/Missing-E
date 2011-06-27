@@ -1277,7 +1277,7 @@ pageMod.PageMod({
 });
 
 function getVersion() {
-   return data.load("version");
+   return data.load("version").replace(/\s/g,'');
 }
 
 function onStart(currVersion, prevVersion) {
