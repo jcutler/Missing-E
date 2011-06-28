@@ -68,7 +68,9 @@ function doStartup(response) {
    }
    if (/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/submissions/
          .test(location.href) ||
-       /http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
+       /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/messages/
+         .test(location.href) ||
+       /http:\/\/www\.tumblr\.com\/inbox/.test(location.href) ||
        /http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) {
       document.domain = "tumblr.com";
    }
