@@ -32,6 +32,7 @@
   MissingE_timestamps_doStartup, MissingE_unfollower_doStartup */
 
 if ((window.top === window &&
+    !(/http:\/\/missinge\.infraware\.ca/.test(location.href)) &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
     /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
@@ -40,6 +41,23 @@ if ((window.top === window &&
             /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
    safari.self.tab.dispatchMessage("start", {isFrame: fr, url: location.href,
                                              bodyId: document.body.id});
+}
+else if (/http:\/\/missinge\.infraware\.ca/.test(location.href)) {
+   var versiondiv = document.getElementById('versioncheck');
+   if (versiondiv) {
+      var ver = versiondiv.getAttribute('version');
+      safari.self.tab.dispatchMessage("version", {v: ver});
+   }
+}
+
+function versionCheck(response) {
+   if (response.name !== "version") { return; }
+   if (response.message.uptodate) {
+      document.getElementById('uptodate').style.display = 'inline-block';
+   }
+   else {
+      document.getElementById('notuptodate').style.display = 'inline-block';
+   }
 }
 
 function doStartup(response) {
@@ -143,7 +161,8 @@ function doStartup(response) {
          MissingE_timestamps_doStartup();
       }
       if (response.message.magnifier) {
-         MissingE_magnifier_doStartup();
+         safari.self.tab.dispatchMessage("settings",
+                                         {component: "magnifier"});
       }
    }
    else {
@@ -159,6 +178,9 @@ function doStartup(response) {
       if (response.message.reblogYourself) {
          MissingE_reblogYourself_post_doStartup();
       }
+      if (response.message.postingFixes) {
+         MissingE_postingFixes_subEdit_doStartup();
+      }
    }
 }
 
@@ -167,6 +189,9 @@ function settings_startup(response) {
    else if (response.message.component === "bookmarker") {
       MissingE_bookmarker_doStartup(response.message.format,
                                     response.message.addBar);
+   }
+   else if (response.message.component === "magnifier") {
+      MissingE_magnifier_doStartup(response.message.magnifyAvatars);
    }
    else if (response.message.component === "postingFixes") {
       MissingE_postingFixes_doStartup(response.message.photoReplies,
@@ -179,7 +204,8 @@ function settings_startup(response) {
       MissingE_askFixes_doStartup(response.message.tagAsker,
                                   response.message.defaultTags,
                                   response.message.buttons,
-                                  response.message.tags);
+                                  response.message.tags,
+                                  response.message.askDash);
    }
    else if (response.message.component === "followChecker") {
       MissingE_followChecker_doStartup(response.message.retries);
@@ -234,3 +260,4 @@ function settings_startup(response) {
 
 safari.self.addEventListener("message", doStartup, false);
 safari.self.addEventListener("message", settings_startup, false);
+safari.self.addEventListener("message", versionCheck, false);

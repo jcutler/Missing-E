@@ -5,8 +5,8 @@
 // @include        http://www.tumblr.com/tumblelog/*
 // @include        http://www.tumblr.com/dashboard*
 // @include        http://www.tumblr.com/inbox*
-// @version        0.0.3
-// @date           2011-06-17
+// @version        0.0.4
+// @date           2011-06-23
 // @creator        Jeremy Cutler
 // ==/UserScript==
 
@@ -20,6 +20,7 @@ document.getElementsByTagName('head')[0].appendChild(st);
 function doSpider() {
    if (document.getElementById('ahh_spider')) { return false; }
    var rcol = document.getElementById('right_column');
+   if (!rcol) { return; }
    var ancs = rcol.getElementsByTagName('a');
    var i, queue;
    for (i=0; i<ancs.length; i++) {

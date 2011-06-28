@@ -30,6 +30,7 @@ if ((window.top === window &&
 
    chrome.extension.sendRequest({greeting: "start", url: location.href,
                                  bodyId: document.body.id}, function(response){
+      var active = JSON.parse(response);
       var i;
       if (/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/submissions/
                .test(location.href) ||
@@ -37,7 +38,6 @@ if ((window.top === window &&
           /http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) {
          document.domain = "tumblr.com";
       }
-      var active = JSON.parse(response);
       var info = "'Missing e' Startup on ";
       info += active.url + "\n";
       for (i in active) {

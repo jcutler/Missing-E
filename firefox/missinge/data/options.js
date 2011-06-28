@@ -249,6 +249,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_askFixes_tags',0);
          loadCheck(frm,'MissingE_askFixes_tagAsker',1);
          frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
+         loadCheck(frm,'MissingE_askFixes_askDash',0);
       }
       else if (v == "sidebarTweaks") {
          loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
@@ -265,6 +266,7 @@ function loadSettings() {
       }
       else if (v == "magnifier") {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
+         loadCheck(frm,'MissingE_magnifier_magnifyAvatars',0);
       }
       else if (v == "bookmarker") {
          loadCheck(frm,'MissingE_bookmarker_addBar',1);
@@ -332,6 +334,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_postingFixes_addUploader',1);
          loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
          loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
+         loadCheck(frm,'MissingE_postingFixes_subEdit',1);
+         frm.MissingE_postingFixes_subEditRetries.value = getStorage('MissingE_postingFixes_subEditRetries',defaultRetries);
       }
       else if (v == "reblogYourself") {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);

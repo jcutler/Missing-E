@@ -139,11 +139,11 @@ background-position:12px -1293px !important;
 }
 
 .right_column_section li .processing {
-background-position:6px -395px;
+background-position:6px -395px !important;
 }
 
 .right_column_section li.selected .processing {
-background-position:-445px -395px;
+background-position:-445px -395px !important;
 }
 
 #MissingE_safeDash li a {

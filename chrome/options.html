@@ -400,6 +400,10 @@ td.even + td.even, td.odd + td.odd {
 text-align:center;
 }
 
+.options_table img {
+vertical-align:bottom;
+}
+
 #experimental_section {
 display:none;
 }
@@ -764,6 +768,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_askFixes_tags',0);
          loadCheck(frm,'MissingE_askFixes_tagAsker',1);
          frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
+         loadCheck(frm,'MissingE_askFixes_askDash',0);
       }
       else if (v == "sidebarTweaks") {
          loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
@@ -780,6 +785,7 @@ function loadSettings() {
       }
       else if (v == "magnifier") {
          frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
+         loadCheck(frm,'MissingE_magnifier_magnifyAvatars',0);
       }
       else if (v == "bookmarker") {
          loadCheck(frm,'MissingE_bookmarker_addBar',1);
@@ -843,6 +849,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_postingFixes_addUploader',1);
          loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
          loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
+         loadCheck(frm,'MissingE_postingFixes_subEdit',1);
+         frm.MissingE_postingFixes_subEditRetries.value = getStorage('MissingE_postingFixes_subEditRetries',defaultRetries);
       }
       else if (v == "reblogYourself") {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);
@@ -1163,9 +1171,11 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <form id="magnifier_options">
 <div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Magnifier</div>
 <div class="post_thumb"><a href="magnifier/screen.jpg" rel="facebox"><img src="magnifier/thumb.jpg" /><br />Screenshot</a></div>
-<p>Add a small <img src="magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.</p><p><em>Magnifier</em> also works on photoset posts!</p>
+<p>Add a small <img src="magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.</p><p><em>Magnifier</em> can also add a <img src="magnifier/magoverlay.png" style="vertical-align:top;" alt="Magnify Avatars Icon" /> icon to Tumblr avatars that, when clicked, allow you to view enlarged avatars!</p>
 <table class="options_table">
-<tr><td colspan="2" class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" type="text" name="MissingE_magnifier_retries" value="4" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr></table>
+<tr><td colspan="2" class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" type="text" name="MissingE_magnifier_retries" value="4" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td colspan="2" class="even">Add magnify buttons to Tumblr avatars (on the dashboard and in follower/following lists)</td><td class="even"><input type="checkbox" name="MissingE_magnifier_magnifyAvatars" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+</table>
 </form>
 </div>
 <div class="clear"></div>
@@ -1289,6 +1299,8 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <tr><td class="odd" colspan="2">Allow inline image uploading for all post types (not just text posts)<br /><ul><li><small>Adds an "<em><strong>+ Upload Photo</strong></em>" option to all posting pages (including the Tumblr <a href="http://www.tumblr.com/goodies" target="_blank">bookmarklet</a>)</small></li><li><small>Much like the built-in "<strong><em>+ Upload Photo</em></strong>" options, these don't always load when Tumblr is suffering from errors.</small></li></ul></td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_addUploader" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Add quick "<em>Queue Post</em>", "<em>Save Draft</em>" and "<em>Save as Private</em>" buttons when posting (see screenshot)</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_quickButtons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Add extra <em>"Post to"</em> menu (for selecting Tumblr blog to post to) nearer to new post publish buttons (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_blogSelect" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td colspan="2" class="even">Add an <em>"Edit"</em> button to your sub-Tumblr's individual post pages</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_subEdit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td class="subopt"></td><td class="odd">Number of retries on failure to check for sub-Tumblr post permissions (default <span class="defRetries">4</span>)</td><td class="odd" style="white-space:nowrap;"><input class="numinput retryinput" type="text" name="MissingE_postingFixes_subEditRetries" value="4" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -1331,6 +1343,7 @@ If you enjoy this extension, please consider <a target="_blank" href="https://ww
 <tr><td colspan="2" class="odd">Allow tags to be added when answering messages</td><td class="odd"><input type="checkbox" name="MissingE_askFixes_tags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="even">Add asker's username as a tag when answering messages</td><td class="even"><input type="checkbox" name="MissingE_askFixes_tagAsker" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Other tags to add to all ask posts (separated by commas)</td><td class="odd"><input type="text" name="MissingE_askFixes_defaultTags" style="width:250px;" value="" onchange="doSetting(this,false);" onblur="doSetting(this,false);" /></td></tr>
+<tr><td colspan="2" class="even">Open <em>Ask</em> boxes from a user menu (<img src="askFixes/usermenu_i.png" alt="User menu icon" />) without leaving the dashboard</td><td class="even"><input type="checkbox" name="MissingE_askFixes_askDash" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 </table>
 </form>
 </div>

@@ -25,6 +25,7 @@
 
 var magimg = safari.extension.baseURI + 'magnifier/magnifier.png';
 var turnimg = safari.extension.baseURI + 'magnifier/turners.png';
+var overlay = safari.extension.baseURI + 'magnifier/magoverlay.png';
 
 function magClick(e) {
    if (e.which === 1) {
@@ -35,6 +36,56 @@ function magClick(e) {
       var src = $(this).attr('src');
       if (src === undefined || src === null || src === "") { return false; }
       $.facebox({ image: src });
+   }
+}
+
+function magAvatarClick(e) {
+   if (e.which === 1) {
+      var src;
+      var li = $(this).closest('li,div.follower,#crushes');
+      if (li.hasClass('notification')) {
+         src = $(this).siblings('img.avatar').attr('src');
+      }
+      else if (li.hasClass('post')) {
+         src = $(this).siblings('.post_avatar').css('background-image');
+         src = src.replace(/^url\(['"]?/,'').replace(/['"]?\)$/,'');
+      }
+      else if (li.hasClass('follower')) {
+         src = $(this).parent().find('img.avatar').attr('src');
+      }
+      else if (li.attr('id') === 'crushes') {
+         src = $(this).parent().css('background-image');
+         src = src.replace(/^url\(['"]?/,'').replace(/['"]?\)$/,'');
+      }
+      if (src) {
+         src = src.replace(/[0-9]+\.([a-zA-Z]*)$/,"512.$1");
+         $.facebox({ image: src });
+      }
+      return false;
+   }
+}
+
+function insertAvatarMagnifier(item) {
+   var it = $(item);
+   if (item.tagName === "LI" && it.hasClass("notification")) {
+      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(it.find('a.avatar_frame'));
+      mag.click(magAvatarClick);
+   }
+   else if (item.tagName === "LI" && it.hasClass("post")) {
+      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(it.find('div.avatar_and_i'));
+      mag.click(magAvatarClick);
+   }
+   else if (item.tagName === "DIV" && it.hasClass("follower")) {
+      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(item);
+      mag.click(magAvatarClick);
+   }
+   else if (item.tagName === "A" && it.parent().attr('id') === 'crushes') {
+      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(item);
+      mag.click(magAvatarClick);
    }
 }
 
@@ -92,7 +143,7 @@ function receiveMagnifier(response) {
    }
 }
 
-function MissingE_magnifier_doStartup() {
+function MissingE_magnifier_doStartup(magnifyAvatars) {
    var turnload = new Image();
    turnload.src = turnimg;
    $('head').append('<style id="MissingE_magnifier_style" type="text/css">' +
@@ -100,12 +151,16 @@ function MissingE_magnifier_doStartup() {
                     'background-image:url("' + magimg + '"); } ' +
                     '#facebox .slideshow .turner_left, ' +
                     '#facebox .slideshow .turner_right { ' +
-                    'background-image:url("' + turnimg + '"); }</style>');
+                    'background-image:url("' + turnimg + '"); } ' +
+                    '.MissingE_magnify_avatar { ' +
+                    'background-image:url("' + overlay + '"); }</style>');
 
    if (!(/drafts$/.test(location.href)) &&
        !(/queue$/.test(location.href)) &&
-      !(/messages$/.test(location.href)) &&
-      !(/submissions[^\/]*$/.test(location.href))) {
+       !(/messages$/.test(location.href)) &&
+       !(/submissions[^\/]*$/.test(location.href)) &&
+       !(/inbox$/.test(location.href)) &&
+       !(/tumblelog\/[^\/]*\/followers/.test(location.href))) {
       safari.self.addEventListener("message", receiveMagnifier, false);
       $('#facebox .turner_left,#facebox .turner_right')
          .live('click', function(e) {
@@ -133,6 +188,15 @@ function MissingE_magnifier_doStartup() {
       });
       document.addEventListener('DOMNodeInserted',function(e) {
          insertMagnifier(e.target);
+      }, false);
+   }
+   if (magnifyAvatars === 1) {
+      $('#posts li, #left_column .follower, #following .follower, #crushes a')
+            .each(function() {
+         insertAvatarMagnifier(this);
+      });
+      document.addEventListener('DOMNodeInserted',function(e) {
+         insertAvatarMagnifier(e.target);
       }, false);
    }
 }

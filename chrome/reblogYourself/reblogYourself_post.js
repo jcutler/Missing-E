@@ -21,23 +21,18 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 var div = document.getElementsByTagName("div")[0];
-var controls = div.getElementsByTagName("a");
+var controls;
+if (div) { controls = div.getElementsByTagName("a"); }
 var noReblog = true;
 
 if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href))) {
    noReblog = false;
    var ctrl = document.getElementById('tumblr_controls');
-   if (ctrl) {
-      var w = ctrl.getAttribute('width');
-      if (!w || (!(/%/.test(w)) && w < 380)) {
-         ctrl.setAttribute('width',380);
-      }
-   }
 }
 else {
    var i;
    for (i=0; i<controls.length; i++) {
-      if (/reblog/.test(controls[i].href)) {
+      if (/\/reblog\//.test(controls[i].href)) {
          noReblog = false;
          break;
       }

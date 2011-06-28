@@ -252,9 +252,49 @@ chrome.extension.sendRequest({greeting: "settings",
                               component: "askFixes"}, function(response) {
    var askFixes_settings = JSON.parse(response);
 
-   if (askFixes_settings.buttons === 1 ||
-       askFixes_settings.tags === 1) {
-      $('head').append('<script type="text/javascript">' +
+   if (askFixes_settings.askDash === 1) {
+      var i;
+      var lang = $('html').attr('lang');
+      var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
+      for (i=0; i<locale[lang]["askPerson"].length; i++) {
+         if (i>0) { askLabel += " "; }
+         if (locale[lang]["askPerson"][i] === "U") {
+            askLabel += '<span class="MissingE_askPerson"></span>';
+         }
+         else {
+            askLabel += locale[lang]["askPerson"][i];
+         }
+      }
+      askLabel += ':';
+      $('body').append('<div id="MissingE_askbox" style="display:none;">' +
+                       '<p>' + askLabel + '</p>' +
+                       '<iframe frameborder="0" scrolling="no" width="100%" ' +
+                       'height="149" /></div>');
+      $('#posts div.user_menu_list a[href$="/ask"]').live('click', function() {
+         var user = $(this).closest('div.user_menu_list').find('a[following]')
+                        .attr('href').match(/[^\/]*$/);
+         var avatar = $(this).closest('li.post')
+                        .find('div.avatar_and_i a.post_avatar')
+                        .css('background-image');
+         avatar = avatar.replace(/64\./,'40.');
+         var url = this.href.match(/(http[s]?:\/\/([^\/]*))/);
+         if (url && url.length > 2) {
+            $('#MissingE_askbox .MissingE_askPerson')
+               .html('<a href="' + url[1] + '">' + user + '</a>');
+            $('#MissingE_askbox .MissingE_askPerson_avatar')
+               .attr('href',url[1]).css('background-image',avatar);
+            $.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
+            $('#facebox .MissingE_askbox_loaded iframe')
+               .attr('src','http://www.tumblr.com/ask_form/' + url[2]);
+            return false;
+         }
+      });
+   }
+   if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?(submissions|messages|inbox)/
+         .test(location.href)) {
+      if (askFixes_settings.buttons === 1 ||
+          askFixes_settings.tags === 1) {
+         $('head').append('<script type="text/javascript">' +
                      'document.addEventListener(\'mouseup\', function(e) {' +
                      'if (e.which !== 1) { return; }' +
                      'var trg = e.target;' +
@@ -273,17 +313,18 @@ chrome.extension.sendRequest({greeting: "settings",
                         'tinyMCE.get(\'ask_answer_field_\' + id).getContent();' +
                      '}},false);' +
                      '</script>');
+      }
+      $('#posts li.post').each(function() {
+         moreAnswerOptions(this, askFixes_settings.tagAsker,
+                           askFixes_settings.defaultTags,
+                           askFixes_settings.buttons,
+                           askFixes_settings.tags);
+      });
+      document.addEventListener('DOMNodeInserted', function(e) {
+         moreAnswerOptions(e.target, askFixes_settings.tagAsker,
+                           askFixes_settings.defaultTags,
+                           askFixes_settings.buttons,
+                           askFixes_settings.tags);
+      }, false);
    }
-   $('#posts li.post').each(function() {
-      moreAnswerOptions(this, askFixes_settings.tagAsker,
-                        askFixes_settings.defaultTags,
-                        askFixes_settings.buttons,
-                        askFixes_settings.tags);
-   });
-   document.addEventListener('DOMNodeInserted', function(e) {
-      moreAnswerOptions(e.target, askFixes_settings.tagAsker,
-                        askFixes_settings.defaultTags,
-                        askFixes_settings.buttons,
-                        askFixes_settings.tags);
-   }, false);
 });

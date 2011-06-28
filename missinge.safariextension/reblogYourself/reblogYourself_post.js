@@ -32,7 +32,7 @@ function MissingE_reblogYourself_post_doStartup() {
    }
    else {
       for (i=0; i<controls.length; i++) {
-         if (/reblog/.test(controls[i].href)) {
+         if (/\/reblog\//.test(controls[i].href)) {
             noReblog = false;
             break;
          }

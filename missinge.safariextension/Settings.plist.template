@@ -302,6 +302,16 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_askFixes_askDash</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashboardFixes_reblogQuoteFit</string>
@@ -492,6 +502,16 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_magnifier_magnifyAvatars</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashLinksToTabs_newPostTabs</string>
@@ -615,6 +635,26 @@
 		<real>0</real>
 		<key>Key</key>
 		<string>MissingE_postingFixes_blogSelect</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_postingFixes_subEdit</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>4</real>
+		<key>Key</key>
+		<string>MissingE_postingFixes_subEditRetries</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

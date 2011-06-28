@@ -35,6 +35,56 @@ function magClick(e) {
    }
 }
 
+function magAvatarClick(e) {
+   if (e.which === 1) {
+      var src;
+      var li = jQuery(this).closest('li,div.follower,#crushes');
+      if (li.hasClass('notification')) {
+         src = jQuery(this).siblings('img.avatar').attr('src');
+      }
+      else if (li.hasClass('post')) {
+         src = jQuery(this).siblings('.post_avatar').css('background-image');
+         src = src.replace(/^url\(['"]?/,'').replace(/['"]?\)$/,'');
+      }
+      else if (li.hasClass('follower')) {
+         src = jQuery(this).parent().find('img.avatar').attr('src');
+      }
+      else if (li.attr('id') === 'crushes') {
+         src = jQuery(this).parent().css('background-image');
+         src = src.replace(/^url\(['"]?/,'').replace(/['"]?\)$/,'');
+      }
+      if (src) {
+         src = src.replace(/[0-9]+\.([a-zA-Z]*)$/,"512.$1");
+         jQuery.facebox({ image: src });
+      }
+      return false;
+   }
+}
+
+function insertAvatarMagnifier(item) {
+   var it = jQuery(item);
+   if (item.tagName === "LI" && it.hasClass("notification")) {
+      var mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(it.find('a.avatar_frame'));
+      mag.click(magAvatarClick);
+   }
+   else if (item.tagName === "LI" && it.hasClass("post")) {
+      var mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(it.find('div.avatar_and_i'));
+      mag.click(magAvatarClick);
+   }
+   else if (item.tagName === "DIV" && it.hasClass("follower")) {
+      var mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(item);
+      mag.click(magAvatarClick);
+   }
+   else if (item.tagName === "A" && it.parent().attr('id') === 'crushes') {
+      var mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(item);
+      mag.click(magAvatarClick);
+   }
+}
+
 function insertMagnifier(item) {
    if (item.tagName === "LI" && jQuery(item).hasClass("post") &&
        jQuery(item).hasClass("photo")) {
@@ -97,6 +147,7 @@ self.on('message', function (message) {
    var extensionURL = message.extensionURL;
    var magimg = extensionURL + 'magnifier/magnifier.png';
    var turnimg = extensionURL + 'magnifier/turners.png';
+   var overlay = extensionURL + 'magnifier/magoverlay.png';
 
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                     extensionURL + 'magnifier/magnifier.css" />');
@@ -107,12 +158,17 @@ self.on('message', function (message) {
                     'background-image:url("' + magimg + '"); } ' +
                     '#facebox .slideshow .turner_left, ' +
                     '#facebox .slideshow .turner_right { ' +
-                    'background-image:url("' + turnimg + '"); }</style>');
+                    'background-image:url("' + turnimg + '"); } ' +
+                    '.MissingE_magnify_avatar { ' +
+                    'background-image:url("' + overlay + '"); }</style>');
 
    if (!(/drafts$/.test(location.href)) &&
        !(/queue$/.test(location.href)) &&
-      !(/messages$/.test(location.href)) &&
-      !(/submissions[^\/]*$/.test(location.href))) {
+       !(/messages$/.test(location.href)) &&
+       !(/submissions[^\/]*$/.test(location.href)) &&
+       !(/inbox$/.test(location.href)) &&
+       !(/tumblelog\/[^\/]*\/followers/.test(location.href)) &&
+       !(/\/following/.test(location.href))) {
       self.on("message", receiveMagnifier);
       jQuery('#facebox .turner_left,#facebox .turner_right')
          .live('click', function(e) {
@@ -140,6 +196,16 @@ self.on('message', function (message) {
       });
       document.addEventListener('DOMNodeInserted',function(e) {
          insertMagnifier(e.target);
+      }, false);
+   }
+
+   if (message.magnifyAvatars === 1) {
+      jQuery('#posts li, #left_column .follower, #following .follower, #crushes a')
+            .each(function() {
+         insertAvatarMagnifier(this);
+      });
+      document.addEventListener('DOMNodeInserted',function(e) {
+         insertAvatarMagnifier(e.target);
       }, false);
    }
 });

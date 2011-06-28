@@ -26,7 +26,43 @@ text-align:center;
 
 #home #logo {
 margin-top:20px;
-margin-bottom:40px;
+margin-bottom:20px;
+}
+
+#versioncheck {
+margin-bottom:20px;
+font-size:11px;
+text-align:center;
+}
+
+#uptodate, #notuptodate {
+font-size:14px;
+font-weight:bold;
+background-color:#44546B;
+color:white;
+display:none;
+border-radius:10px;
+margin:3px;
+}
+
+#notuptodate a {
+color:white;
+text-decoration:none;
+}
+
+#uptodate div, #notuptodate a {
+display:inline-block;
+padding:3px 8px;
+}
+
+#notuptodate:hover {
+background-color:white;
+border:3px solid #44546B;
+margin:0;
+}
+
+#notuptodate:hover a {
+color:#44546B;
 }
 
 #logo #title {

@@ -48,3 +48,47 @@ background-position:-28px 0 !important;
 a.MissingE_magnify + a.like_button {
 margin-left:8px !important;
 }
+
+#posts .notification .avatar_frame .MissingE_magnify_avatar,
+#posts .post .avatar_and_i .MissingE_magnify_avatar,
+.follower .MissingE_magnify_avatar,
+#crushes a .MissingE_magnify_avatar {
+background-repeat:no-repeat;
+display:none;
+width:16px;
+height:17px;
+position:absolute;
+opacity:0.5;
+cursor:pointer;
+}
+
+#posts .notification .avatar_frame .MissingE_magnify_avatar,
+#crushes a .MissingE_magnify_avatar {
+top:1px;
+right:1px;
+}
+
+#posts .post .avatar_and_i .MissingE_magnify_avatar {
+top:7px;
+right:7px;
+}
+
+.follower .MissingE_magnify_avatar {
+left:34px;
+top:32px;
+}
+
+#posts .notification .avatar_frame:hover .MissingE_magnify_avatar,
+#posts .post .avatar_and_i:hover .MissingE_magnify_avatar,
+.follower:hover .MissingE_magnify_avatar,
+#crushes a:hover .MissingE_magnify_avatar {
+display:block;
+}
+
+#posts .notification .avatar_frame .MissingE_magnify_avatar:hover,
+#posts .post .avatar_and_i .MissingE_magnify_avatar:hover,
+#posts .post .avatar_and_i .user_menu_info:hover,
+.follower .MissingE_magnify_avatar:hover,
+#crushes a .MissingE_magnify_avatar:hover {
+opacity:0.9 !important;
+}

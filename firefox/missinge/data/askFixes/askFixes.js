@@ -263,42 +263,85 @@ self.on('message', function (message) {
       }
       return true;
    }
+
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                     message.extensionURL + 'askFixes/askFixes.css" />');
 
-   if (message.buttons === 1 ||
-       message.tags === 1) {
-      jQuery('head').append('<script type="text/javascript">' +
-                     'document.addEventListener(\'mouseup\', function(e) {' +
-                     'if (e.which !== 1) { return; }' +
-                     'var trg = e.target;' +
-                     'while (trg) {' +
-                        'if (/ask_[a-z]+_button/.test(trg.id)) {' +
-                           'break;' +
-                        '}' +
-                        'trg = trg.parentNode;' +
-                     '}' +
-                     'if (!trg || !(/ask_[a-z]+_button/.test(trg.id))) {' +
-                        'return;' +
-                     '}' +
-                     'var id = trg.id.match(/[0-9]*$/);' +
-                     'if (tinyMCE && tinyMCE.get(\'ask_answer_field_\' + id)) {' +
-                        'document.getElementById(\'ask_answer_field_\' + id).value = ' +
-                        'tinyMCE.get(\'ask_answer_field_\' + id).getContent();' +
-                     '}},false);</script>');
+   if (message.askDash === 1) {
+      var i;
+      var lang = jQuery('html').attr('lang');
+      var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
+      for (i=0; i<locale[lang]["askPerson"].length; i++) {
+         if (i>0) { askLabel += " "; }
+         if (locale[lang]["askPerson"][i] === "U") {
+            askLabel += '<span class="MissingE_askPerson"></span>';
+         }
+         else {
+            askLabel += locale[lang]["askPerson"][i];
+         }
+      }
+      askLabel += ':';
+      jQuery('body').append('<div id="MissingE_askbox" style="display:none;">' +
+                       '<p>' + askLabel + '</p>' +
+                       '<iframe frameborder="0" scrolling="no" width="100%" ' +
+                       'height="149" /></div>');
+      jQuery('#posts div.user_menu_list a[href$="/ask"]')
+            .live('click', function() {
+         var user = jQuery(this).closest('div.user_menu_list')
+                        .find('a[following]').attr('href').match(/[^\/]*$/);
+         var avatar = jQuery(this).closest('li.post')
+                        .find('div.avatar_and_i a.post_avatar')
+                        .css('background-image');
+         avatar = avatar.replace(/64\./,'40.');
+         var url = this.href.match(/(http[s]?:\/\/([^\/]*))/);
+         if (url && url.length > 2) {
+            jQuery('#MissingE_askbox .MissingE_askPerson')
+               .html('<a href="' + url[1] + '">' + user + '</a>');
+            jQuery('#MissingE_askbox .MissingE_askPerson_avatar')
+               .attr('href',url[1]).css('background-image',avatar);
+            jQuery.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
+            jQuery('#facebox .MissingE_askbox_loaded iframe')
+               .attr('src','http://www.tumblr.com/ask_form/' + url[2]);
+            return false;
+         }
+      });
    }
-   jQuery('#posts li.post').each(function() {
-      moreAnswerOptions(this, message.tagAsker,
-                        message.defaultTags,
-                        message.buttons,
-                        message.tags);
-   });
-   document.addEventListener('DOMNodeInserted', function(e) {
-      moreAnswerOptions(e.target, message.tagAsker,
-                        message.defaultTags,
-                        message.buttons,
-                        message.tags);
-   }, false);
+   if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?(submissions|messages|inbox)/
+         .test(location.href)) {
+      if (message.buttons === 1 ||
+          message.tags === 1) {
+         jQuery('head').append('<script type="text/javascript">' +
+                        'document.addEventListener(\'mouseup\', function(e) {' +
+                        'if (e.which !== 1) { return; }' +
+                        'var trg = e.target;' +
+                        'while (trg) {' +
+                           'if (/ask_[a-z]+_button/.test(trg.id)) {' +
+                              'break;' +
+                           '}' +
+                           'trg = trg.parentNode;' +
+                        '}' +
+                        'if (!trg || !(/ask_[a-z]+_button/.test(trg.id))) {' +
+                           'return;' +
+                        '}' +
+                        'var id = trg.id.match(/[0-9]*$/);' +
+                        'if (tinyMCE && tinyMCE.get(\'ask_answer_field_\' + id)) {' +
+                           'document.getElementById(\'ask_answer_field_\' + id).value = ' +
+                           'tinyMCE.get(\'ask_answer_field_\' + id).getContent();' +
+                        '}},false);</script>');
+      }
+      jQuery('#posts li.post').each(function() {
+         moreAnswerOptions(this, message.tagAsker,
+                           message.defaultTags,
+                           message.buttons,
+                           message.tags);
+      });
+      document.addEventListener('DOMNodeInserted', function(e) {
+         moreAnswerOptions(e.target, message.tagAsker,
+                           message.defaultTags,
+                           message.buttons,
+                           message.tags);
+      }, false);
+   }
 });
 
 self.postMessage({greeting: "settings", component: "askFixes"});

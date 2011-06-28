@@ -74,3 +74,26 @@ display:block;
 visibility:visible !important;
 display:block;
 }
+
+#facebox .MissingE_askbox_loaded {
+width:500px !important;
+}
+
+#facebox .MissingE_askPerson_avatar {
+display:inline-block;
+background-repeat:no-repeat;
+width:40px;
+height:40px;
+vertical-align:middle;
+margin-right:5px;
+}
+
+#facebox .MissingE_askbox_loaded, #facebox .MissingE_askbox_loaded a {
+font-size:13px;
+font-weight:bold;
+color:#444;
+}
+
+#facebox .MissingE_askbox_loaded p {
+margin:0 0 10px 0 !important;
+}

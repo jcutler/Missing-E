@@ -348,6 +348,51 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
    });
 }
 
+function checkPermission(request, sender, sendResponse, hash, retries) {
+   $.ajax({
+      type: "GET",
+      url: "http://www.tumblr.com/tumblelog/" + request.user,
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      tabId: sender.tab.id,
+      tabHash: hash,
+      error: function(xhr, textStatus) {
+         if (xhr.stats === 404) {
+            sendResponse({allow: false});
+            return;
+         }
+         if (this.tabHash !== tabs[this.tabId]) {
+            return;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               $.ajax(this);
+               return;
+            }
+            else {
+               sendResponse({allow: false});
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         var closed = (this.tabHash !== tabs[this.tabId]);
+         if (!(/<\s*body\s*id="dashboard_index"/.test(data))) {
+            if (closed) {
+               return;
+            }
+            sendResponse({allow: false});
+         }
+         else {
+            if (!closed) {
+               sendResponse({allow: true});
+            }
+         }
+      }
+   });
+}
+
 function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
                 additional) {
    debug("AJAX " + type + " request (" + request.pid + ")");
@@ -563,6 +608,9 @@ chrome.tabs.onRemoved.addListener(function(id, info) {
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
+   else if (request.greeting == "version") {
+      sendResponse({uptodate:(request.v === getStorage("MissingE_version",'0'))});
+   }
    else if (request.greeting == "close-options") {
       closeTab(chrome.extension.getURL('options.html'), sender.tab.id);
    }
@@ -626,6 +674,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       setStorage("MissingE_sidebarTweaks_accountNum", request.accountNum);
       sendResponse();
    }
+   else if (request.greeting == "tumblrPermission") {
+      checkPermission(request, sender, sendResponse, tabs[sender.tab.id],
+                      getStorage("MissingE_postingFixes_subEditRetries",defaultRetries));
+   }
    else if (request.greeting == "settings") {
       var settings = {};
       settings.experimental = getStorage("MissingE_experimentalFeatures_enabled",0);
@@ -639,6 +691,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (settings.defaultTags !== '') {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
+            settings.askDash = getStorage("MissingE_askFixes_askDash",0);
             break;
          case "sidebarTweaks":
             settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
@@ -698,6 +751,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          case "followChecker":
             settings.retries = getStorage("MissingE_" + request.component + "_retries",defaultRetries);
             break;
+         case "magnifier":
+            settings.magnifyAvatars = getStorage("MissingE_magnifier_magnifyAvatars",0);
+            break;
          case "betterReblogs":
             settings.passTags = getStorage("MissingE_betterReblogs_passTags",1);
             settings.autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
@@ -714,12 +770,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "start") {
       addTab(sender.tab.id, sender.tab.url);
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery.min.js"});
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
-      chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
+      if (!(/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.url))) {
+         chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery.min.js"});
+         chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
+         chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
+         chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
+      }
       var activeScripts = {};
       var zindexFix = false;
+      var widenIframe = false;
       if (sender.tab.url == request.url &&
           /http:\/\/www\.tumblr\.com\/mega-editor\//.test(sender.tab.url)) {
          if (getStorage("MissingE_massEditor_enabled",1) == 1) {
@@ -784,7 +843,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
              getStorage("MissingE_followChecker_enabled",1) == 1 ||
-             getStorage("MissingE_magnifier_enabled",1) == 1) {
+             getStorage("MissingE_magnifier_enabled",1) == 1 ||
+             (getStorage("MissingE_askFixes_enabled",1) == 1 &&
+              getStorage("MissingE_askFixes_askDash",0) == 1)) {
             zindexFix = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
@@ -816,6 +877,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.sidebarTweaks = false;
 
+         if (getStorage("MissingE_magnifier_enabled",1) == 1) {
+            activeScripts.magnifier = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "magnifier/magnifier.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "magnifier/magnifier.css"});
+         }
+         else
+            activeScripts.magnifier = false;
+
          if (getStorage("MissingE_dashboardFixes_enabled",1) == 1) {
             activeScripts.dashboardFixes = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/replaceIcons.css"});
@@ -833,6 +902,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.dashboardFixes = false;
+
+         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
+            activeScripts.askFixes = true;
+            chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askFixes.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askFixes.js"});
+         }
+         else {
+            activeScripts.askFixes = false;
+         }
       }
       if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.url)) {
          if (getStorage("MissingE_askFixes_enabled",1) == 1 &&
@@ -854,7 +932,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(sender.tab.url)) ||
          (/http:\/\/www\.tumblr\.com\/share/.test(sender.tab.url)))) {
-
          if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
             activeScripts.postingFixes = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/postingFixes.js"});
@@ -877,6 +954,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          chrome.tabs.insertCSS(sender.tab.id, {file: "common/endlessPages.css", allFrames:true});
          if (getStorage("MissingE_gotoDashPost_enabled",1) == 1) {
             activeScripts.gotoDashPost = true;
+            widenIframe = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "gotoDashPost/gotoDashPost.js", allFrames: true});
          }
          else
@@ -885,6 +963,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
              getStorage("MissingE_reblogYourself_postPage",1) == 1) {
             activeScripts.reblogYourself = true;
+            widenIframe = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "reblogYourself/reblogYourself_post.js", allFrames: true});
          }
          else
@@ -893,10 +972,20 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_betterReblogs_enabled",1) == 1 &&
              getStorage("MissingE_betterReblogs_passTags",1) == 1) {
             activeScripts.betterReblogs = true;
+            widenIframe = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "betterReblogs/betterReblogs_post.js", allFrames: true});
          }
          else
             activeScripts.betterReblogs = false;
+
+         if (getStorage("MissingE_postingFixes_enabled",1) == 1 &&
+             getStorage("MissingE_postingFixes_subEdit",1) == 1) {
+            activeScripts.postingFixes = true;
+            widenIframe = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/subEdit.js", allFrames: true});
+         }
+         else
+            activeScripts.postingFixes = false;
       }
       if (sender.tab.url == request.url &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
@@ -927,6 +1016,17 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.postCrushes = false;
+
+         if (getStorage("MissingE_magnifier_enabled",1) == 1) {
+            activeScripts.magnifier = true;
+            zindexFix = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "magnifier/magnifier.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "magnifier/magnifier.css"});
+         }
+         else
+            activeScripts.magnifier = false;
       }
       if (sender.tab.url == request.url &&
           /http:\/\/www\.tumblr\.com\/new\/photo/.test(sender.tab.url)) {
@@ -936,20 +1036,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.postCrushes = false;
-      }
-      if (sender.tab.url == request.url &&
-          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/
-            .test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/
-            .test(sender.tab.url))) {
-         if (getStorage("MissingE_askFixes_enabled",1) == 1) {
-            activeScripts.askFixes = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askFixes.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askFixes.js"});
-         }
-         else {
-            activeScripts.askFixes = false;
-         }
       }
       if (sender.tab.url == request.url &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
@@ -975,14 +1061,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(sender.tab.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(sender.tab.url))) {
-         if (getStorage("MissingE_magnifier_enabled",1) == 1) {
-            activeScripts.magnifier = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "magnifier/magnifier.js"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "magnifier/magnifier.css"});
-         }
-         else
-            activeScripts.magnifier = false;
-
          if (getStorage("MissingE_betterReblogs_enabled",1) == 1) {
             activeScripts.betterReblogs = true;
             if (getStorage("MissingE_betterReblogs_quickReblog",0) == 1) {
@@ -1002,9 +1080,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.reblogYourself = false;
       }
-
       if (zindexFix) {
          chrome.tabs.executeScript(sender.tab.id, {file: "common/zindexFix.js"});
+      }
+      if (widenIframe) {
+         chrome.tabs.insertCSS(sender.tab.id, {file: "common/widenIframe.css"});
       }
 
       activeScripts.url = request.url;

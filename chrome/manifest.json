@@ -20,6 +20,10 @@
                 "common/addmenu.js",
                 "common/localizations.js"],
          "all_frames": true
+      },
+      {
+         "matches": ["http://missinge.infraware.ca/*"],
+         "js": ["common/versionchk.js"]
       }
    ]
 }

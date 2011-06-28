@@ -25,13 +25,16 @@
 
 var magimg = chrome.extension.getURL('magnifier/magnifier.png');
 var turnimg = chrome.extension.getURL('magnifier/turners.png');
+var overlay = chrome.extension.getURL('magnifier/magoverlay.png');
 var turnload = new Image();
 turnload.src = turnimg;
 $('head').append('<style type="text/css">a.MissingE_magnify { ' +
                   'background-image:url("' + magimg + '"); } ' +
                   '#facebox .slideshow .turner_left, ' +
                   '#facebox .slideshow .turner_right{ ' +
-                  'background-image:url("' + turnimg + '"); }</style>');
+                  'background-image:url("' + turnimg + '"); } ' +
+                  '.MissingE_magnify_avatar {' +
+                  'background-image:url("' + overlay + '"); }</style>');
 
 function magClick(e) {
    if (e.which === 1) {
@@ -42,6 +45,56 @@ function magClick(e) {
       var src = $(this).attr('src');
       if (src === undefined || src === null || src === "") { return false; }
       $.facebox({ image: src });
+   }
+}
+
+function magAvatarClick(e) {
+   if (e.which === 1) {
+      var src;
+      var li = $(this).closest('li,div.follower,#crushes');
+      if (li.hasClass('notification')) {
+         src = $(this).siblings('img.avatar').attr('src');
+      }
+      else if (li.hasClass('post')) {
+         src = $(this).siblings('.post_avatar').css('background-image');
+         src = src.replace(/^url\(['"]?/,'').replace(/['"]?\)$/,'');
+      }
+      else if (li.hasClass('follower')) {
+         src = $(this).parent().find('img.avatar').attr('src');
+      }
+      else if (li.attr('id') === 'crushes') {
+         src = $(this).parent().css('background-image');
+         src = src.replace(/^url\(['"]?/,'').replace(/['"]?\)$/,'');
+      }
+      if (src) {
+         src = src.replace(/[0-9]+\.([a-zA-Z]*)$/,"512.$1");
+         $.facebox({ image: src });
+      }
+      return false;
+   }
+}
+
+function insertAvatarMagnifier(item) {
+   var it = $(item);
+   if (item.tagName === "LI" && it.hasClass("notification")) {
+      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(it.find('a.avatar_frame'));
+      mag.click(magAvatarClick);
+   }
+   else if (item.tagName === "LI" && it.hasClass("post")) {
+      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(it.find('div.avatar_and_i'));
+      mag.click(magAvatarClick);
+   }
+   else if (item.tagName === "DIV" && it.hasClass("follower")) {
+      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(item);
+      mag.click(magAvatarClick);
+   }
+   else if (item.tagName === "A" && it.parent().attr('id') === 'crushes') {
+      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+         .appendTo(item);
+      mag.click(magAvatarClick);
    }
 }
 
@@ -97,35 +150,52 @@ function insertMagnifier(item) {
    }
 }
 
-if (!(/drafts$/.test(location.href)) &&
-    !(/queue$/.test(location.href)) &&
-    !(/messages$/.test(location.href)) &&
-    !(/submissions[^\/]*$/.test(location.href))) {
-   $('#facebox .turner_left,#facebox .turner_right')
-      .live('click', function(e) {
+chrome.extension.sendRequest({greeting: "settings",
+                              component: "magnifier"}, function(response) {
+   var magnifier_settings = JSON.parse(response);
 
-      var curr = $(this).siblings('div.image:visible:last');
-      var next;
-      if ($(this).hasClass('turner_right')) {
-         next = curr.next('div.image');
-         if (next.length === 0) {
-            next = curr.parent().find('div.image:first');
+   if (!(/drafts$/.test(location.href)) &&
+       !(/queue$/.test(location.href)) &&
+       !(/messages$/.test(location.href)) &&
+       !(/submissions[^\/]*$/.test(location.href)) &&
+       !(/inbox$/.test(location.href)) &&
+       !(/tumblelog\/[^\/]*\/followers/.test(location.href)) &&
+       !(/\/following/.test(location.href))) {
+      $('#facebox .turner_left,#facebox .turner_right')
+         .live('click', function(e) {
+         var curr = $(this).siblings('div.image:visible:last');
+         var next;
+         if ($(this).hasClass('turner_right')) {
+            next = curr.next('div.image');
+            if (next.length === 0) {
+               next = curr.parent().find('div.image:first');
+            }
          }
-      }
-      else {
-         next = curr.prev('div.image');
-         if (next.length === 0) {
-            next = curr.parent().find('div.image:last');
+         else {
+            next = curr.prev('div.image');
+            if (next.length === 0) {
+               next = curr.parent().find('div.image:last');
+            }
          }
-      }
-      curr.parent().find('div.image:visible').not(curr).hide();
-      curr.fadeOut('fast');
-      next.fadeIn('slow');
-   });
-   $('#posts li.post[class~="photo"]').each(function(){
-      insertMagnifier(this);
-   });
-   document.addEventListener('DOMNodeInserted',function(e) {
-      insertMagnifier(e.target);
-   }, false);
-}
+         curr.parent().find('div.image:visible').not(curr).hide();
+         curr.fadeOut('fast');
+         next.fadeIn('slow');
+      });
+      $('#posts li.post[class~="photo"]').each(function(){
+         insertMagnifier(this);
+      });
+      document.addEventListener('DOMNodeInserted',function(e) {
+         insertMagnifier(e.target);
+      }, false);
+   }
+
+   if (magnifier_settings.magnifyAvatars === 1) {
+      $('#posts li, #left_column .follower, #following .follower, #crushes a')
+            .each(function() {
+         insertAvatarMagnifier(this);
+      });
+      document.addEventListener('DOMNodeInserted',function(e) {
+         insertAvatarMagnifier(e.target);
+      }, false);
+   }
+});
