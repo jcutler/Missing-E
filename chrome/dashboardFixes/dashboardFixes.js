@@ -422,6 +422,8 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          'Ajax.Responders.register({' +
             'onCreate: function(request) {' +
                'if (/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
+                    '.test(request.url) || ' +
+                    '/\\/tumblelog\\/[^\\/]*\\/[0-9]+\\?lite$/' +
                     '.test(request.url)) {' +
                  'request["timeoutId"] = window.setTimeout(function() {' +
                      'if ((request.transport.readyState >= 1 && ' +
