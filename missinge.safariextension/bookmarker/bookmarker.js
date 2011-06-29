@@ -268,7 +268,8 @@ function doMarks(item) {
             break;
          }
          var prevPost = $(item).prevAll('li.post:not(#new_post)').first();
-         if (post < marks[j][1] &&
+         if (/http:\/\/www\.tumblr\.com\/dashboard/.test(location.href) &&
+             post < marks[j][1] &&
              prevPost.length === 1 &&
              prevPost.attr('id').match(/[0-9]*$/)[0] > marks[j][1]) {
             addBar(marks[j], lang, item);
