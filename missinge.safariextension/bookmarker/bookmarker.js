@@ -417,7 +417,7 @@ function MissingE_bookmarker_doStartup(format) {
       }
       var lang = $('html').attr('lang');
       var list = $('<ul id="MissingE_marklist" ' +
-                   'class="right_column_section">' +
+                   'class="controls_section">' +
                    '<li class="MissingE_marklist_title recessed">' +
                    '<a href="#" onclick="return false;">' +
                    locale[lang]["bookmarksTitle"] + '</a></li></ul>');

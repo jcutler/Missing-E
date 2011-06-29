@@ -15,7 +15,7 @@ function makeSidebar(tumblrAcctNum, retries) {
       }
       if (list.length > 0) {
          bloglist = '<ul id="MissingE_sidebar_menu" ' +
-            'class="right_column_section">';
+            'class="controls_section">';
          for (i=0; i<list.length; i++) {
             var klass = '';
             if (i === tumblrAcctNum) {
@@ -54,7 +54,7 @@ function makeSidebar(tumblrAcctNum, retries) {
          }
       ];
       sidebartxt = '<ul account="' + tumblrAcctNum + '" ' +
-         'class="right_column_section" id="MissingE_sidebar">' +
+         'class="controls_section" id="MissingE_sidebar">' +
          '<li id="MissingE_sidebar_title" class="recessed selected">' +
             '<a href="#" onclick="return false;">' + tumblrText + '</a>' +
             bloglist + '</li>';
@@ -76,7 +76,7 @@ function makeSidebar(tumblrAcctNum, retries) {
       }
       if (beforeguy.length > 0) {
          sidebar = $(sidebartxt)
-            .insertAfter(beforeguy.closest('.right_column_section'));
+            .insertAfter(beforeguy.closest('.controls_section'));
       }
       else if ($('#search_form').length > 0) {
          sidebar = $(sidebartxt).insertBefore('#search_form');
@@ -223,7 +223,7 @@ function MissingE_sidebarTweaks_doStartup(retries, accountNum, hideRadar,
                     '#MissingE_sidebar_title a {' +
                     'background-image:url("' +
                     safari.extension.baseURI + 'sidebarTweaks/picker.png' +
-                    '"); }</style>');
+                    '") !important; }</style>');
 
    if (hideRadar === 1) {
       $('head').append('<style type="text/css">' +

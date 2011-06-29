@@ -426,7 +426,7 @@ self.on('message', function (message) {
 
       var lang = jQuery('html').attr('lang');
       var list = jQuery('<ul id="MissingE_marklist" ' +
-                        'class="right_column_section">' +
+                        'class="controls_section">' +
                         '<li class="MissingE_marklist_title recessed">' +
                         '<a href="#" onclick="return false;">' +
                         locale[lang]["bookmarksTitle"] + '</a></li></ul>');

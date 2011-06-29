@@ -64,7 +64,7 @@ function doNSFW() {
    $('#posts li div.nsfwdiv').removeClass('nsfwoff');
 }
 
-var sdlnk = '<ul class="right_column_section" id="MissingE_safeDash">' +
+var sdlnk = '<ul class="controls_section" id="MissingE_safeDash">' +
             '<li class="' +
             (getStorage('MissingE_safeDash_state',0) === 1 ? 'selected' : '') +
             '"><a href="#" onclick="return false;" id="nsfwctrl">Safe Dash' +

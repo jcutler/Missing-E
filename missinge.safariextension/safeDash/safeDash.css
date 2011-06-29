@@ -25,23 +25,23 @@
 margin-top:0 !important;
 }
 
-#MissingE_safeDash li {
+#right_column #MissingE_safeDash li {
 border-radius:6px !important;
 }
 
-#MissingE_safeDash li a {
+#right_column #MissingE_safeDash li a {
 background-position:12px 0 !important;
 }
 
-#MissingE_safeDash li.selected a {
+#right_column #MissingE_safeDash li.selected a {
 background-position:12px -29px !important;
 }
 
-.MissingE_slim_sidebar #MissingE_safeDash li a {
+#right_column.MissingE_slim_sidebar #MissingE_safeDash li a {
 background-position:9px -4px !important;
 }
 
-.MissingE_slim_sidebar #MissingE_safeDash li.selected a {
+#right_column.MissingE_slim_sidebar #MissingE_safeDash li.selected a {
 background-position:9px -33px !important;
 }
 

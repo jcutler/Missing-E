@@ -282,7 +282,7 @@ self.on('message', function (message) {
       jQuery('#new_post_icons').attr('style','opacity:0 !important;');
    }
 
-   var sdlnk = '<ul class="right_column_section" id="MissingE_safeDash">' +
+   var sdlnk = '<ul class="controls_section" id="MissingE_safeDash">' +
                '<li class="' +
                (getStorage('MissingE_safeDash_state',0) === 1 ?
                 'selected' : '') + '"><a href="#" onclick="return false;" ' +

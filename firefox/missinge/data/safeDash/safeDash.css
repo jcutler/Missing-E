@@ -25,15 +25,15 @@
 margin-top:0 !important;
 }
 
-#MissingE_safeDash li {
+#right_column #MissingE_safeDash li {
 border-radius:6px;
 }
 
-#MissingE_safeDash li a {
+#right_column #MissingE_safeDash li a {
 background-position:12px 1px;
 }
 
-#MissingE_safeDash li.selected a {
+#right_column #MissingE_safeDash li.selected a {
 background-position:12px -28px;
 }
 

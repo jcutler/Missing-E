@@ -274,7 +274,7 @@ function MissingE_safeDash_doStartup() {
       $('#new_post img').css('opacity','0 !important');
    }
 
-   var sdlnk = '<ul class="right_column_section" id="MissingE_safeDash">' +
+   var sdlnk = '<ul class="controls_section" id="MissingE_safeDash">' +
                '<li class="' +
                (getStorage('MissingE_safeDash_state',0) === 1 ?
                'selected' : '') + '"><a href="#" onclick="return false;" ' +

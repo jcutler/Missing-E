@@ -21,38 +21,38 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#MissingE_marklist li.ui-sortable-helper, #MissingE_marklist li.ui-sortable-helper a {
+#right_column #MissingE_marklist li.ui-sortable-helper, #right_column #MissingE_marklist li.ui-sortable-helper a {
 cursor:move !important;
 border-bottom-right-radius:0 !important;
 border-bottom-left-radius:0 !important;
 }
 
-#MissingE_marklist {
+#right_column #MissingE_marklist {
 position:relative;
 }
 
-#MissingE_marklist .MissingE_bookmarker_marklink {
+#right_column #MissingE_marklist .MissingE_bookmarker_marklink {
 padding:3px 13px 3px 26px !important;
 font-size:10px !important;
 background-position:10px 5px !important;
 }
 
-#MissingE_marklist li.MissingE_marklist_title {
+#right_column #MissingE_marklist li.MissingE_marklist_title {
 border-bottom-right-radius:0 !important;
 border-bottom-left-radius:0 !important;
 }
 
-#MissingE_marklist li.MissingE_marklist_title a {
+#right_column #MissingE_marklist li.MissingE_marklist_title a {
 padding-left:8px !important;
 background:transparent !important;
 cursor:default;
 }
 
-#MissingE_marklist .MissingE_unmarker {
+#right_column #MissingE_marklist .MissingE_unmarker {
 display:none !important;
 }
 
-#MissingE_marklist .MissingE_unmarker, #MissingE_marklist #MissingE_bookmark_confirmedit {
+#right_column #MissingE_marklist .MissingE_unmarker, #right_column #MissingE_marklist #MissingE_bookmark_confirmedit {
 padding:3px 1px !important;
 font-size:11px !important;
 background:transparent !important;
@@ -62,17 +62,17 @@ top:0 !important;
 line-height:1 !important;
 }
 
-#MissingE_bookmark_confirmedit {
+#right_column #MissingE_bookmark_confirmedit {
 right:5px !important;
 font-weight:normal;
 cursor:pointer;
 }
 
-#MissingE_marklist li:hover .MissingE_unmarker {
+#right_column #MissingE_marklist li:hover .MissingE_unmarker {
 display:block !important;
 }
 
-#MissingE_marklist .MissingE_unmarker:hover, #MissingE_marklist #MissingE_bookmark_confirmedit:hover {
+#right_column #MissingE_marklist .MissingE_unmarker:hover, #right_column #MissingE_marklist #MissingE_bookmark_confirmedit:hover {
 color:white !important;
 }
 
@@ -95,7 +95,7 @@ a.MissingE_ismarked {
 background-position:-12px 0 !important;
 }
 
-#MissingE_marklist #MissingE_bookmarker_edit {
+#right_column #MissingE_marklist #MissingE_bookmarker_edit {
 font:10px 'Helvetica Neue',Helvetica,Arial,sans-serif !important;
 width:130px;
 border:0;
@@ -106,7 +106,7 @@ border-radius:5px;
 margin:0 2px 0 0;
 }
 
-.MissingE_bookmarker_forceHide, #MissingE_marklist li:hover .MissingE_bookmarker_forceHide {
+#right_column .MissingE_bookmarker_forceHide, #right_column #MissingE_marklist li:hover .MissingE_bookmarker_forceHide {
 display:none !important;
 }
 
