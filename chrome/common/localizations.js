@@ -157,7 +157,7 @@ var locale = {
       bookmarkVerb: "Lesezeichen hinzufügen",
       bookmarkNoun: "Lesezeichen",
       bookmarksTitle: "Lesezeichen",
-      postUnavailable: "Eintrag nicht verfügbar",
+      postUnavailable: "Beitrag nicht verfügbar",
       magnify: "vergrößern",
       postingFixes: {
          submitText: {
