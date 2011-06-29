@@ -5,8 +5,8 @@
 // @include        http://www.tumblr.com/tumblelog/*
 // @include        http://www.tumblr.com/dashboard*
 // @include        http://www.tumblr.com/inbox*
-// @version        0.0.4
-// @date           2011-06-23
+// @version        0.0.5
+// @date           2011-06-29
 // @creator        Jeremy Cutler
 // ==/UserScript==
 
@@ -14,7 +14,7 @@ var spider = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAATCAYAAABLN4eX
 
 var st = document.createElement('style');
 st.setAttribute('type','text/css');
-st.innerHTML = '#aah_spider { background:url("' + spider + '") no-repeat 13px 9px; }';
+st.innerHTML = '#right_column #aah_spider { background:url("' + spider + '") no-repeat 13px 9px; }';
 document.getElementsByTagName('head')[0].appendChild(st);
 
 function doSpider() {
