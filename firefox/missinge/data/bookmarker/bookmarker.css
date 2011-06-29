@@ -138,3 +138,19 @@ position:relative;
 padding:0 10px 0 20px;
 font:bold 11px "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
 }
+
+#posts .MissingE_bookmark_bar .MissingE_bookmark_missing {
+padding-left:5px;
+font-size:smaller;
+vertical-align:1px;
+}
+
+#posts .MissingE_bookmark_bar .MissingE_bookmark_missing_ja {
+font-size:inherit;
+font-weight:normal;
+vertical-align:inherit;
+}
+
+#posts .MissingE_bookmark_bar a {
+color:rgba(255,255,255,0.69);
+}

@@ -69,14 +69,26 @@ function getMarkText(dt, post, name) {
             'onclick="return false;" href="#">x</a></li>';
 }
 
-function addBar(mark, lang) {
+function addBar(mark, lang, altPost) {
+   var post;
+   if (altPost) { post = $(altPost); }
+   else { post = $('#post_' + mark[1]); }
    if ($('#bookmarkbar_' + mark[1]).length === 0) {
-      $('#post_' + mark[1]).before('<div id="bookmarkbar_' + mark[1] + '" ' +
+      post.before('<div id="bookmarkbar_' + mark[1] + '" ' +
             'class="MissingE_bookmark_bar"><div ' +
             'class="MissingE_bookmark_line"></div><div ' +
             'class="MissingE_bookmark_text">' + locale[lang]["bookmarkNoun"] +
             ' - <em id="bookmarkbar_label_' +
-            mark[1] + '">' + mark[2] + '</em></div></div>');
+            mark[1] + '">' + mark[2] + '</em><span ' +
+            'class="MissingE_bookmark_missing ' +
+            'MissingE_bookmark_missing_' + lang + '">' + (altPost ? ' (' +
+            '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
+            'target="_blank">' + locale[lang]["postUnavailable"] + '</a>)' +
+            '</span>' : '') + '</div></div>');
+   }
+   else {
+      $('#bookmarkbar_' + mark[1]).removeData('toremove');
+      $('#bookmarkbar_label_' + mark[1]).html(mark[2]);
    }
 }
 
@@ -115,10 +127,10 @@ function generateList() {
          }
          else {
             $('#bookmark_' + post).removeClass('MissingE_ismarked');
-            $('#bookmarkbar_' + post).remove();
+            $('#bookmarkbar_' + post).data('toremove','remove');
             $('#bookmark_' + marks[idx][1]).addClass('MissingE_ismarked');
             $('#mark_' + marks[idx][1]).remove().data('gone','gone');
-            $('#bookmarkbar_' + marks[idx][1]).remove();
+            $('#bookmarkbar_' + marks[idx][1]).data('toremove','remove');
             addBar(marks[idx], lang);
             $(this).before(getMarkText(marks[idx][0], marks[idx][1],
                                        marks[idx][2]));
@@ -132,6 +144,11 @@ function generateList() {
          marklist.append(getMarkText(marks[idx][0], marks[idx][1],
                                      marks[idx][2]));
       }
+      $('#posts div.MissingE_bookmark_bar').each(function() {
+         if ($(this).data('toremove') === 'remove') {
+            $(this).remove();
+         }
+      });
    }
    else {
       for (i=0; i<marks.length; i++) {
@@ -256,6 +273,12 @@ function doMarks(item) {
             klass += ' MissingE_ismarked';
             addBar(marks[j], lang);
             break;
+         }
+         var prevPost = $(item).prevAll('li.post:not(#new_post)').first();
+         if (post < marks[j][1] &&
+             prevPost.length === 1 &&
+             prevPost.attr('id').match(/[0-9]*$/)[0] > marks[j][1]) {
+            addBar(marks[j], lang, item);
          }
       }
       var node = $('<a class="' + klass + '" id="bookmark_' + post +

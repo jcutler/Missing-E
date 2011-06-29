@@ -58,6 +58,7 @@ var locale = {
       bookmarkVerb: "bookmark",
       bookmarkNoun: "Bookmark",
       bookmarksTitle: "Bookmarks",
+      postUnavailable: "Post Unavailable",
       magnify: "magnify",
       postingFixes: {
          submitText: {
@@ -156,6 +157,7 @@ var locale = {
       bookmarkVerb: "Lesezeichen hinzufügen",
       bookmarkNoun: "Lesezeichen",
       bookmarksTitle: "Lesezeichen",
+      postUnavailable: "Eintrag nicht verfügbar",
       magnify: "vergrößern",
       postingFixes: {
          submitText: {
@@ -254,6 +256,7 @@ var locale = {
       bookmarkVerb: "marquer",
       bookmarkNoun: "Signet",
       bookmarksTitle: "Signets",
+      postUnavailable: "Billet Indisponible",
       magnify: "agrandir",
       postingFixes: {
          submitText: {
@@ -352,6 +355,7 @@ var locale = {
       bookmarkVerb: "segnalibro",
       bookmarkNoun: "Segnalibro",
       bookmarksTitle: "Segnalibri",
+      postUnavailable: "Post Indisponibile",
       magnify: "ingrandire",
       postingFixes: {
          submitText: {
@@ -450,6 +454,7 @@ var locale = {
       bookmarkVerb: "ブックマーク",
       bookmarkNoun: "ブックマーク",
       bookmarksTitle: "ブックマーク",
+      postUnavailable: "できない見つけること投稿",
       magnify: "拡大する",
       postingFixes: {
          submitText: {
@@ -548,6 +553,7 @@ var locale = {
       bookmarkVerb: "kalınan yer imi",
       bookmarkNoun: "Yer imi",
       bookmarksTitle: "Yer imleri",
+      postUnavailable: "Gönderi Kullanılamıyor",
       magnify: "büyüt",
       postingFixes: {
          submitText: {
