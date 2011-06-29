@@ -628,6 +628,29 @@ function startReblogYourself(message, myWorker) {
    }
 }
 
+function versionCompare(v1, v2) {
+   if (!v1 && !v2) { return 0; }
+   else if (!v1) { return -1; }
+   else if (!v2) { return 1; }
+   else {
+      var i;
+      var ver1 = v1.split('.');
+      var ver2 = v2.split('.');
+      var len = ver1.length >= ver2.length ? ver1.length : ver2.length;
+      for (i=0; i<len; i++) {
+         if (i >= ver1.length && ver2[i] !== '0') { return -1; }
+         else if (i >= ver2.length && ver1[i] !== '0') { return 1; }
+         else {
+            ver1[i] = parseInt(ver1[i]);
+            ver2[i] = parseInt(ver2[i]);
+         }
+         if (ver1[i] > ver2[i]) { return 1; }
+         if (ver2[i] > ver1[i]) { return -1; }
+      }
+      return 0;
+   }
+}
+
 function inArray(entry, arr) {
    var i;
    for (i=0; i<arr.length; i++) {
@@ -653,7 +676,8 @@ function handleMessage(message, myWorker) {
    }
    else if (message.greeting == "version") {
       myWorker.postMessage({greeting: "version",
-         uptodate:(message.v === getStorage('extensions.MissingE.version',0))});
+         uptodate:versionCompare(getStorage("MissingE_version",'0'),
+                                 request.v) >= 0});
    }
    else if (message.greeting == "unfollowerIgnore") {
       setStorage('extensions.MissingE.unfollower.ignore', message.list);
