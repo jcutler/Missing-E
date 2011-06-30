@@ -316,19 +316,30 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
       }).change(function() {
          changeQuickReblogAcct($(this));
       });
-      qr.mouseout(function(e){
+      qr.mouseover(function(e){
+         if (!$.contains(qr.get(0), e.relatedTarget) &&
+             !$(e.relatedTarget).hasClass('MissingE_quick_reblog_main')) {
+            qr.removeData('off');
+         }
+      }).mouseout(function(e){
          if (!$.contains(qr.get(0), e.relatedTarget) &&
              !$(e.relatedTarget).hasClass('MissingE_quick_reblog_main')) {
             $(this).css('display','');
             var sel = $('#MissingE_quick_reblog_selector select');
-            if (sel.find('option[value="' + accountName +
-                         '"]').length > 0) {
-               sel.val(accountName);
+            if (qr.hasClass('MissingE_quick_reblog_tags_inputting')) {
+               qr.data('off','off');
             }
             else {
-               sel.val(sel.find('option:first').val());
+               var sel = $('#MissingE_quick_reblog_selector select');
+               if (sel.find('option[value="' + accountName +
+                            '"]').length > 0) {
+                  sel.val(accountName);
+               }
+               else {
+                  sel.val(sel.find('option:first').val());
+               }
+               changeQuickReblogAcct(sel);
             }
-            changeQuickReblogAcct(sel);
          }
       });
       qr.find('#MissingE_quick_reblog_tags input').focus(function() {
@@ -343,6 +354,18 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
       }).blur(function() {
          $(document).unbind('keydown.MissingEqr');
          qr.removeClass('MissingE_quick_reblog_tags_inputting');
+         if (qr.data('off')) {
+            qr.removeData('off');
+            var sel = $('#MissingE_quick_reblog_selector select');
+            if (sel.find('option[value="' + accountName +
+                         '"]').length > 0) {
+               sel.val(accountName);
+            }
+            else {
+               sel.val(sel.find('option:first').val());
+            }
+            changeQuickReblogAcct(sel);
+         }
       });
       $('#posts div.post_controls a[href^="/reblog/"]')
             .live('mouseover',function() {
@@ -399,21 +422,27 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
                            .replace(/\?&/,'?').replace(/&&/,'&')
                            .replace(/[\?&]$/,'') + arg;
          qr.find('#MissingE_quick_reblog_manual').attr('href', newurl);
+         qr.removeData('off');
          qr.css({'top':(pos.top+h-marg)+'px !important',
                left:(pos.left-w)+'px !important',
                'display':'block'});
       }).live('mouseout',function(e) {
          if (!$.contains(qr.get(0), e.relatedTarget)) {
             qr.css('display','');
-            var sel = $('#MissingE_quick_reblog_selector select');
-            if (sel.find('option[value="' + accountName +
-                         '"]').length > 0) {
-               sel.val(accountName);
+            if (qr.hasClass('MissingE_quick_reblog_tags_inputting')) {
+               qr.data('off','off');
             }
             else {
-               sel.val(sel.find('option:first').val());
+               var sel = $('#MissingE_quick_reblog_selector select');
+               if (sel.find('option[value="' + accountName +
+                            '"]').length > 0) {
+                  sel.val(accountName);
+               }
+               else {
+                  sel.val(sel.find('option:first').val());
+               }
+               changeQuickReblogAcct(sel);
             }
-            changeQuickReblogAcct(sel);
          }
       }).live('click',function(e) {
          var me = $(this);
