@@ -25,6 +25,7 @@
 
 var bmi = safari.extension.baseURI + 'bookmarker/sidebar_bookmark.png';
 var mimg = safari.extension.baseURI + 'bookmarker/post_bookmark.png';
+var unmark = safari.extension.baseURI + 'bookmarker/unmarker.png';
 
 var markFormat;
 
@@ -59,7 +60,7 @@ function getMarkText(dt, post, name) {
             '<div class="hide_overflow"><span class="mark_date" timestamp="' +
             dt + '">' + name + '</span></div></a>' +
             '<a id="unmark_' + post + '" class="MissingE_unmarker" ' +
-            'onclick="return false;" href="#">x</a></li>';
+            'onclick="return false;" href="#"></a></li>';
 }
 
 function addBar(mark, lang, altPost) {
@@ -391,7 +392,9 @@ function MissingE_bookmarker_doStartup(format) {
    st.innerHTML = '#MissingE_marklist .MissingE_bookmarker_marklink, ' +
                   '.MissingE_bookmark_text { ' +
                   'background-image:url("' + bmi + '") !important; } ' +
-                  'a.MissingE_mark { background-image:url("' + mimg + '"); }';
+                  'a.MissingE_mark { background-image:url("' + mimg + '"); } ' +
+                  '#right_column #MissingE_marklist .MissingE_unmarker { ' +
+                  'background-image:url("' + unmark + '") !important; }';
    document.getElementsByTagName('head')[0].appendChild(st);
 
    if (document.body.id !== "tinymce" &&

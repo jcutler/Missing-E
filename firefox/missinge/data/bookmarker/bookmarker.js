@@ -56,7 +56,7 @@ function getMarkText(dt, post, name) {
             '<div class="hide_overflow"><span class="mark_date" timestamp="' +
             dt + '">' + name + '</span></div></a>' +
             '<a id="unmark_' + post + '" class="MissingE_unmarker" ' +
-            'onclick="return false;" href="#">x</a></li>';
+            'onclick="return false;" href="#"></a></li>';
 }
 
 function addBar(mark, lang, altPost) {
@@ -391,6 +391,7 @@ self.on('message', function (message) {
    markFormat = message.format;
    var bmi = extensionURL + 'bookmarker/sidebar_bookmark.png';
    var mimg = extensionURL + 'bookmarker/post_bookmark.png';
+   var unmark = extensionURL + 'bookmarker/unmarker.png';
 
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                     extensionURL + 'bookmarker/bookmarker.css" />');
@@ -399,7 +400,9 @@ self.on('message', function (message) {
    st.innerHTML = '#MissingE_marklist .MissingE_bookmarker_marklink, ' +
                   '.MissingE_bookmark_text { ' +
                   'background-image:url("' + bmi + '") !important; } ' +
-                  'a.MissingE_mark { background-image:url("' + mimg + '"); }';
+                  'a.MissingE_mark { background-image:url("' + mimg + '"); } ' +
+                  '#right_column #MissingE_marklist .MissingE_unmarker { ' +
+                  'background-image:url("' + unmark + '") !important; }';
    document.getElementsByTagName('head')[0].appendChild(st);
 
    if (document.body.id !== "tinymce" &&

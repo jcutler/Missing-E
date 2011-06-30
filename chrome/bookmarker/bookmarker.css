@@ -50,19 +50,28 @@ cursor:default;
 
 #right_column #MissingE_marklist .MissingE_unmarker, #right_column #MissingE_marklist #MissingE_bookmark_confirmedit {
 display:none;
-padding:3px 1px !important;
-font-size:11px !important;
-background:transparent !important;
 position:absolute !important;
 right:9px;
 top:0 !important;
-line-height:1 !important;
+}
+
+#right_column #MissingE_marklist .MissingE_unmarker {
+background-repeat:no-repeat;
+padding:0 !important;
+background-position:center center;
+width:8px;
+height:100%;
+opacity:0.69;
 }
 
 #right_column #MissingE_bookmark_confirmedit {
+padding:3px 1px !important;
+font-size:11px !important;
+background:transparent !important;
 right:5px !important;
 font-weight:normal;
 cursor:pointer;
+line-height:1 !important;
 }
 
 #right_column #MissingE_marklist li:hover .MissingE_unmarker {
@@ -71,6 +80,7 @@ display:block;
 
 #right_column #MissingE_marklist .MissingE_unmarker:hover, #right_column #MissingE_marklist #MissingE_bookmark_confirmedit:hover {
 color:white;
+opacity:1;
 }
 
 a.MissingE_mark {

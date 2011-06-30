@@ -25,6 +25,7 @@
 
 var bmi = chrome.extension.getURL('bookmarker/sidebar_bookmark.png');
 var mimg = chrome.extension.getURL('bookmarker/post_bookmark.png');
+var unmark = chrome.extension.getURL('bookmarker/unmarker.png');
 var markFormat;
 
 var st = document.createElement('style');
@@ -32,7 +33,9 @@ st.setAttribute('type','text/css');
 st.innerHTML = '#MissingE_marklist .MissingE_bookmarker_marklink, ' +
                '.MissingE_bookmark_text { ' +
                'background-image:url("' + bmi + '") !important; } ' +
-               'a.MissingE_mark { background-image:url("' + mimg + '"); }';
+               'a.MissingE_mark { background-image:url("' + mimg + '"); } ' +
+               '#right_column #MissingE_marklist .MissingE_unmarker { ' +
+               'background-image:url("' + unmark + '") !important; }';
 document.getElementsByTagName('head')[0].appendChild(st);
 
 function serializeMarks(a) {
@@ -66,7 +69,7 @@ function getMarkText(dt, post, name) {
             '<div class="hide_overflow"><span class="mark_date" timestamp="' +
             dt + '">' + name + '</span></div></a>' +
             '<a id="unmark_' + post + '" class="MissingE_unmarker" ' +
-            'onclick="return false;" href="#">x</a></li>';
+            'onclick="return false;" href="#"></a></li>';
 }
 
 function addBar(mark, lang, altPost) {
