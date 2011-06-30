@@ -56,8 +56,10 @@ function makeSidebar(tumblrAcctNum, retries) {
       sidebartxt = '<ul account="' + tumblrAcctNum + '" ' +
          'class="controls_section" id="MissingE_sidebar">' +
          '<li id="MissingE_sidebar_title" class="recessed selected">' +
-            '<a href="#" onclick="return false;">' + tumblrText + '</a>' +
-            bloglist + '</li>';
+         '<a href="#" onclick="return false;">' + tumblrText + '</a>' +
+         '<a href="http://' + tumblrAcct + '.tumblr.com/" id="' +
+         'MissingE_sidebar_bloglink"></a>' +
+         bloglist + '</li>';
       for (i=0; i<sidebarList.length; i++) {
          sidebartxt += '<li><a href="/tumblelog/' + tumblrAcct +
             (sidebarList[i].klass !== 'posts' ? '/' + sidebarList[i].klass : '') +
@@ -178,7 +180,11 @@ function makeSidebar(tumblrAcctNum, retries) {
             makeSidebar(acct, retries);
             return false;
          });
-         $('#MissingE_sidebar_title').click(function() {
+         $('#MissingE_sidebar_title').click(function(e) {
+            if (e.target.id &&
+                e.target.id === 'MissingE_sidebar_bloglink') {
+               return;
+            }
             var menu = $('#MissingE_sidebar_menu');
             if (menu.length > 0 &&
                 menu.find('li:not(.current_sidebar)').length > 0) {
@@ -223,7 +229,12 @@ function MissingE_sidebarTweaks_doStartup(retries, accountNum, hideRadar,
                     '#MissingE_sidebar_title a {' +
                     'background-image:url("' +
                     safari.extension.baseURI + 'sidebarTweaks/picker.png' +
-                    '") !important; }</style>');
+                    '") !important; } ' +
+                    '#MissingE_sidebar_title #MissingE_sidebar_bloglink {' +
+                    'background-image:url("' +
+                    safari.extension.baseURI + 'sidebarTweaks/to_blog.png' +
+                    '") !important; } ' +
+                    '</style>');
 
    if (hideRadar === 1) {
       $('head').append('<style type="text/css">' +

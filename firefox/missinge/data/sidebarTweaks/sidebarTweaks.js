@@ -56,8 +56,10 @@ function makeSidebar(tumblrAcctNum, retries) {
       sidebartxt = '<ul account="' + tumblrAcctNum + '" ' +
          'class="controls_section" id="MissingE_sidebar">' +
          '<li id="MissingE_sidebar_title" class="recessed selected">' +
-            '<a href="#" onclick="return false;">' + tumblrText + '</a>' +
-            bloglist + '</li>';
+         '<a href="#" onclick="return false;">' + tumblrText + '</a>' +
+         '<a href="http://' + tumblrAcct + '.tumblr.com/" id="' +
+         'MissingE_sidebar_bloglink"></a>' +
+         bloglist + '</li>';
       for (i=0; i<sidebarList.length; i++) {
          sidebartxt += '<li><a href="/tumblelog/' + tumblrAcct +
             (sidebarList[i].klass !== 'posts' ? '/' + sidebarList[i].klass : '') +
@@ -178,7 +180,11 @@ function makeSidebar(tumblrAcctNum, retries) {
             makeSidebar(acct, retries);
             return false;
          });
-         jQuery('#MissingE_sidebar_title').click(function() {
+         jQuery('#MissingE_sidebar_title').click(function(e) {
+            if (e.target.id &&
+                e.target.id === 'MissingE_sidebar_bloglink') {
+               return;
+            }
             var menu = jQuery('#MissingE_sidebar_menu');
             if (menu.length > 0 &&
                 menu.find('li:not(.current_sidebar)').length > 0) {
@@ -229,7 +235,11 @@ self.on('message', function(message) {
                     '#MissingE_sidebar_title a {' +
                     'background-image:url("' +
                     extensionURL + 'sidebarTweaks/picker.png") ' +
-                    '!important; }' +
+                    '!important; } ' +
+                    '#MissingE_sidebar_title #MissingE_sidebar_bloglink {' +
+                    'background-image:url("' +
+                    extensionURL + 'sidebarTweaks/to_blog.png' +
+                    '") !important; } ' +
                     '</style>');
 
    if (message.hideRadar === 1) {

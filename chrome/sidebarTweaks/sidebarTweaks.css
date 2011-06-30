@@ -5,6 +5,28 @@ color:rgba(0,0,0,0.73);
 text-shadow:1px 1px 1px rgba(255,255,255,0.5);
 }
 
+#right_column #MissingE_sidebar_bloglink {
+display:none;
+position:absolute;
+padding:0 !important;
+right:9px;
+top:50%;
+margin-top:-5px;
+height:10px;
+width:10px;
+background-position:0 0!important;
+background-repeat:no-repeat;
+border-radius:0 !important;
+}
+
+#right_column #MissingE_sidebar_title:hover #MissingE_sidebar_bloglink {
+display:block !important;
+}
+
+#right_column #MissingE_sidebar_title #MissingE_sidebar_bloglink:hover {
+background-position:-10px 0 !important;
+}
+
 #right_column .MissingE_sidebar_retry:hover {
 color:rgba(255,255,255,0.69) !important;
 }

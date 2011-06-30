@@ -57,6 +57,8 @@ function makeSidebar(tumblrAcctNum, retries) {
          'class="controls_section" id="MissingE_sidebar">' +
          '<li id="MissingE_sidebar_title" class="recessed selected">' +
             '<a href="#" onclick="return false;">' + tumblrText + '</a>' +
+            '<a href="http://' + tumblrAcct + '.tumblr.com/" id="' +
+            'MissingE_sidebar_bloglink"></a>' +
             bloglist + '</li>';
       for (i=0; i<sidebarList.length; i++) {
          sidebartxt += '<li><a href="/tumblelog/' + tumblrAcct +
@@ -178,7 +180,11 @@ function makeSidebar(tumblrAcctNum, retries) {
             makeSidebar(acct, retries);
             return false;
          });
-         $('#MissingE_sidebar_title').click(function() {
+         $('#MissingE_sidebar_title').click(function(e) {
+            if (e.target.id &&
+                e.target.id === 'MissingE_sidebar_bloglink') {
+               return;
+            }
             var menu = $('#MissingE_sidebar_menu');
             if (menu.length > 0 &&
                 menu.find('li:not(.current_sidebar)').length > 0) {
@@ -225,7 +231,11 @@ chrome.extension.sendRequest({greeting: "settings", component: "sidebarTweaks"},
                     '#MissingE_sidebar_title a {' +
                     'background-image:url("' +
                     chrome.extension.getURL('sidebarTweaks/picker.png') +
-                    '") !important; }' +
+                    '") !important; } ' +
+                    '#MissingE_sidebar_title #MissingE_sidebar_bloglink {' +
+                    'background-image:url("' +
+                    chrome.extension.getURL('sidebarTweaks/to_blog.png') +
+                    '") !important; } ' +
                     '</style>');
 
    if (sidebarTweaks_settings.hideRadar === 1) {
