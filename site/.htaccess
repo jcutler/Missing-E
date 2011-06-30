@@ -1,0 +1,17 @@
+Options +FollowSymLinks +MultiViews
+<Files ~ "^\.ht">
+	Order allow,deny
+	Deny from all
+</Files>
+
+AddType application/octet-stream .safariextz
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteRule ^update(.*)$ infoupdate.php$1
+RewriteRule ask$ http://blog.missinge.infraware.ca/ask
+RewriteRule archive$ http://blog.missinge.infraware.ca/archive
+RewriteCond %{HTTP_HOST} ^git.missinge.infraware.ca$ [NC]
+RewriteRule ^(.*)$ https://github.com/jcutler/Missing-E [R=301,L]
+</IfModule>
+
