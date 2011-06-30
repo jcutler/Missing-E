@@ -29,12 +29,24 @@ position:absolute;
 width:150px !important;
 }
 
+#MissingE_quick_reblog .user_menu_list a .user_menu_list_item {
+padding:5px 8px 5px 8px !important;
+}
+
 #MissingE_quick_reblog:hover {
 display:block;
 }
 
 .MissingE_quick_reblog_tags_inputting {
 display:block !important;
+}
+
+#MissingE_quick_reblog #MissingE_quick_reblog_selector select {
+font:normal 10px Helvetica,sans-serif !important;
+width:98%;
+background-color:#080808;
+color:#FEFEFE !important;
+border:1px solid #666;
 }
 
 #MissingE_quick_reblog #MissingE_quick_reblog_tags input {
