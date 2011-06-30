@@ -673,7 +673,7 @@ function handleRequest(request) {
    else if (request.name == "update") {
       request.target.page.dispatchMessage("update",
          {update:versionCompare(getStorage("MissingE_externalVersion",'0'),
-                                getStorage("MissingE_version",'0')) >= 0,
+                                getStorage("MissingE_version",'0')) > 0,
                     link:getStorage("MissingE_externalVersion_link",'')});
    }
    else if (request.name == "close-options") {

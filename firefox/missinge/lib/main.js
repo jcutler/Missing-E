@@ -682,7 +682,7 @@ function handleMessage(message, myWorker) {
    else if (message.greeting == "update") {
       myWorker.postMessage({greeting: "update",
          update:versionCompare(getStorage("extensions.MissingE.externalVersion",'0'),
-                               getStorage("extensions.MissingE.version",'0')) >= 0,
+                               getStorage("extensions.MissingE.version",'0')) > 0,
          link:getStorage("extensions.MissingE.externalVersion.link",'')});
    }
    else if (message.greeting == "unfollowerIgnore") {
