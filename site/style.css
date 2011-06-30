@@ -9,6 +9,12 @@ color:#44546B;
 font-family:Helvetica,Arial,sans-serif;
 }
 
+ins {
+position:absolute !important;
+top:0;
+right:0;
+}
+
 img {
 border:0;
 }
