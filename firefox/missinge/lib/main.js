@@ -432,7 +432,7 @@ function checkPermission(user, count, myWorker, retries) {
          catch (err) {
             closed = true;
          }
-         if (response.status === 404) {
+         if (response.status < 500) {
             myWorker.postMessage({greeting: "tumblrPermission",
                                   allow: false});
             return;
@@ -676,8 +676,14 @@ function handleMessage(message, myWorker) {
    }
    else if (message.greeting == "version") {
       myWorker.postMessage({greeting: "version",
-         uptodate:versionCompare(getStorage("MissingE_version",'0'),
+         uptodate:versionCompare(getStorage("extensions.MissingE.version",'0'),
                                  request.v) >= 0});
+   }
+   else if (message.greeting == "update") {
+      myWorker.postMessage({greeting: "update",
+         update:versionCompare(getStorage("extensions.MissingE.externalVersion",'0'),
+                               getStorage("extensions.MissingE.version",'0')) >= 0,
+         link:getStorage("extensions.MissingE.externalVersion.link",'')});
    }
    else if (message.greeting == "unfollowerIgnore") {
       setStorage('extensions.MissingE.unfollower.ignore', message.list);
@@ -1304,6 +1310,26 @@ function getVersion() {
    return data.load("version").replace(/\s/g,'');
 }
 
+function getExternalVersion() {
+   Request({
+      url: 'http://missinge.infraware.ca/version',
+      onComplete: function(response) {
+         if (response.status == 200) {
+            var versionInfo = response.text.split(" ");
+            versionInfo[versionInfo.length-1] =
+               versionInfo[versionInfo.length-1].replace(/\s*$/m,'');
+            setStorage('extensions.MissingE.externalVersion', versionInfo[0]);
+            if (versionInfo.length > 1) {
+               setStorage('extensions.MissingE.externalVersion.link', versionInfo[1]);
+            }
+            else {
+               setStorage('extensions.MissingE.externalVersion.link', '');
+            }
+         }
+      }
+   }).get();
+}
+
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
       console.log("Updated Missing e (" +
@@ -1319,6 +1345,7 @@ function onStart(currVersion, prevVersion) {
 var currVersion = getVersion();
 var prevVersion = getStorage('extensions.MissingE.version',null);
 onStart(currVersion, prevVersion);
+getExternalVersion();
 
 setIntegerPrefType('extensions.MissingE.betterReblogs.quickReblogAcctType',0);
 setIntegerPrefType('extensions.MissingE.postCrushes.crushSize',1);

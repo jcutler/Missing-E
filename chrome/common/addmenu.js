@@ -29,7 +29,13 @@ var logout = document.getElementById("logout_button");
 if (bar && logout) {
    var st = document.createElement('style');
    st.setAttribute('type', 'text/css');
-   st.innerHTML = '#header #missinge_button a {' +
+   st.innerHTML = '#header #missinge_update {' +
+                  'display:none; }' +
+                  '#header #missinge_update a {' +
+                  'background-image:url("' +
+                  chrome.extension.getURL('missinge_update.gif') +
+                  '") !important; background-position:center center; }' +
+                  '#header #missinge_button a {' +
                   'background-image:url("' +
                   chrome.extension.getURL('missinge_dash.png') +
                   '") !important; background-position:center center; ' +
@@ -47,6 +53,11 @@ if (bar && logout) {
    tab.innerHTML = '<a href="' + chrome.extension.getURL('options.html') +
                      '" target="_blank" title="Missing e Settings">Missing e</a>';
    bar.insertBefore(tab, logout);
+   var update = document.createElement('div');
+   update.className = "tab iconic";
+   update.id = "missinge_update";
+   update.innerHTML = '<a href="#" target="_blank" title="Missing e Update Available">Update</a>';
+   bar.insertBefore(update, logout);
 }
 
 if (/http:\/\/www\.tumblr\.com\/dashboard\/[0-9]/.test(location.href)) {

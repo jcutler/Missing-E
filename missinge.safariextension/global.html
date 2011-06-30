@@ -391,7 +391,7 @@ function checkPermission(request, retries) {
       tryCount: 0,
       retryLimit: retries,
       error: function(xhr, textStatus) {
-         if (xhr.stats === 404) {
+         if (xhr.status < 500) {
             request.target.page.dispatchMessage("tumblrPermission",
                                                 {allow: false});
             return;
@@ -669,6 +669,12 @@ function handleRequest(request) {
       request.target.page.dispatchMessage("version",
          {uptodate:(versionCompare(getStorage("MissingE_version",'0'),
                                    request.v) >= 0)});
+   }
+   else if (request.name == "update") {
+      request.target.page.dispatchMessage("update",
+         {update:versionCompare(getStorage("MissingE_externalVersion",'0'),
+                                getStorage("MissingE_version",'0')) >= 0,
+                    link:getStorage("MissingE_externalVersion_link",'')});
    }
    else if (request.name == "close-options") {
       closeTab(request.target.url, request.target);
@@ -1167,6 +1173,26 @@ function getVersion() {
    return getStorage("MissingE_version",'');
 }
 
+function getExternalVersion() {
+   $.ajax({
+      type: "GET",
+      url: 'http://missinge.infraware.ca/version',
+      dataType: "text",
+      success: function(data, textStatus, xhr) {
+         var versionInfo = data.split(" ");
+         versionInfo[versionInfo.length-1] =
+            versionInfo[versionInfo.length-1].replace(/\s*$/m,'');
+         setStorage('MissingE_externalVersion', versionInfo[0]);
+         if (versionInfo.length > 1) {
+            setStorage('MissingE_externalVersion_link', versionInfo[1]);
+         }
+         else {
+            setStorage('MissingE_externalVersion_link', '');
+         }
+      }
+   });
+}
+
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
       console.log("Updated Missing e (" +
@@ -1186,6 +1212,7 @@ safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
 var currVersion = getVersion();
 var prevVersion = getStorage('MissingE_installedVersion',null);
 onStart(currVersion, prevVersion);
+getExternalVersion();
 
 moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
 moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');

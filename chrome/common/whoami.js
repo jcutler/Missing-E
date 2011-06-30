@@ -51,4 +51,19 @@ if ((window.top === window &&
       }
       console.log(info);
    });
+
+   chrome.extension.sendRequest({greeting: "update"}, function (response) {
+      var up = document.getElementById('missinge_update');
+      if (up && response.update) {
+         var post = '';
+         if (response.link !== '') {
+            post = 'post/' + response.link;
+         }
+         up.style.display = 'inline-block';
+         up.getElementsByTagName('a')[0].href =
+            'http://missinge.infraware.ca/update?b=chrome&l=' +
+            encodeURI('http://blog.missinge.infraware.ca/' + post);
+         document.getElementById('missinge_button').style.display = 'none';
+      }
+   });
 }

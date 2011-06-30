@@ -41,12 +41,29 @@ if ((window.top === window &&
             /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
    safari.self.tab.dispatchMessage("start", {isFrame: fr, url: location.href,
                                              bodyId: document.body.id});
+   safari.self.tab.dispatchMessage("update");
 }
 else if (/http:\/\/missinge\.infraware\.ca/.test(location.href)) {
    var versiondiv = document.getElementById('versioncheck');
    if (versiondiv) {
       var ver = versiondiv.getAttribute('version');
       safari.self.tab.dispatchMessage("version", {v: ver});
+   }
+}
+
+function updateCheck(response) {
+   if (response.name !== "update") { return; }
+   var up = document.getElementById('missinge_update');
+   if (up && response.message.update) {
+      var post = '';
+      if (response.message.link !== '') {
+         post = 'post/' + response.message.link;
+      }
+      up.style.display = 'inline-block';
+      up.getElementsByTagName('a')[0].href =
+         'http://missinge.infraware.ca/update?b=safari&l=' +
+         encodeURI('http://blog.missinge.infraware.ca/' + post);
+      document.getElementById('missinge_button').style.display = 'none';
    }
 }
 
@@ -260,6 +277,7 @@ function settings_startup(response) {
    }
 }
 
+safari.self.addEventListener("message", updateCheck, false);
 safari.self.addEventListener("message", doStartup, false);
 safari.self.addEventListener("message", settings_startup, false);
 safari.self.addEventListener("message", versionCheck, false);

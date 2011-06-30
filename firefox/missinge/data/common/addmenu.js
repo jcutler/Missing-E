@@ -56,7 +56,13 @@ self.on("message", function (message) {
    if (bar && logout) {
       var st = document.createElement('style');
       st.setAttribute('type','text/css');
-      st.innerHTML = '#header #missinge_button a {' +
+      st.innerHTML = '#header #missinge_update {' +
+                     'display:none; }' +
+                     '#header #missinge_update a {' +
+                     'background-image:url("' +
+                     message.extensionURL + 'missinge_update.gif' +
+                     '") !important; background-position:center center; }' +
+                     '#header #missinge_button a {' +
                      'background-image:url("' +
                      message.extensionURL + 'missinge_dash.png' +
                      '") !important; background-position:center center; ' +
@@ -85,5 +91,10 @@ self.on("message", function (message) {
       }, false);
       tab.appendChild(elnk);
       bar.insertBefore(tab, logout);
+      var update = document.createElement('div');
+      update.className = "tab iconic";
+      update.id = "missinge_update";
+      update.innerHTML = '<a href="#" target="_blank" title="Missing e Update Available">Update</a>';
+      bar.insertBefore(update, logout);
    }
 });

@@ -45,6 +45,22 @@ if (!(/http:\/\/www\.tumblr\.com\/customize/.test(location.href)) &&
 }
 
 self.on('message', function (message) {
+   if (message.greeting !== 'update') { return; }
+   var up = document.getElementById('missinge_update');
+   if (up && message.update) {
+      var post = '';
+      if (message.link !== '') {
+         post = 'post/' + message.link;
+      }
+      up.style.display = 'inline-block';
+      up.getElementsByTagName('a')[0].href =
+         'http://missinge.infraware.ca/update?b=firefox&l=' +
+         encodeURI('http://blog.missinge.infraware.ca/' + post);
+      document.getElementById('missinge_button').style.display = 'none';
+   }
+});
+
+self.on('message', function (message) {
    if (message.greeting !== "startup") {
       return;
    }
@@ -74,4 +90,6 @@ self.on('message', function (message) {
       }
    }
    console.log(info);
+   self.postMessage({greeting: "update"});
 });
+
