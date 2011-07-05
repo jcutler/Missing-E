@@ -53,17 +53,21 @@ if ((window.top === window &&
    });
 
    chrome.extension.sendRequest({greeting: "update"}, function (response) {
-      var up = document.getElementById('missinge_update');
+      var up = document.getElementById('missinge_updatenotice');
       if (up && response.update) {
+         var html = document.getElementsByTagName('html');
+         var lang = 'en';
+         if (html && html[0]) { lang = html[0].getAttribute('lang'); }
+         up.setAttribute('title', locale[lang]["update"]);
          var post = '';
          if (response.link !== '') {
             post = 'post/' + response.link;
          }
-         up.style.display = 'inline-block';
-         up.getElementsByTagName('a')[0].href =
-            'http://missinge.infraware.ca/update?b=chrome&l=' +
-            encodeURI('http://blog.missinge.infraware.ca/' + post);
-         document.getElementById('missinge_button').style.display = 'none';
+         up.onclick = function() {
+            window.open('http://missinge.infraware.ca/update?b=chrome&l=' +
+               encodeURI('http://blog.missinge.infraware.ca/' + post));
+         };
+         up.style.display = 'block';
       }
    });
 }

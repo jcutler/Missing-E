@@ -46,17 +46,18 @@ if (!(/http:\/\/www\.tumblr\.com\/customize/.test(location.href)) &&
 
 self.on('message', function (message) {
    if (message.greeting !== 'update') { return; }
-   var up = document.getElementById('missinge_update');
+   var up = document.getElementById('missinge_updatenotice');
    if (up && message.update) {
+      up.setAttribute('title', message.msg);
       var post = '';
       if (message.link !== '') {
          post = 'post/' + message.link;
       }
-      up.style.display = 'inline-block';
-      up.getElementsByTagName('a')[0].href =
-         'http://missinge.infraware.ca/update?b=firefox&l=' +
-         encodeURI('http://blog.missinge.infraware.ca/' + post);
-      document.getElementById('missinge_button').style.display = 'none';
+      up.onclick = function() {
+         window.open('http://missinge.infraware.ca/update?b=firefox&l=' +
+            encodeURI('http://blog.missinge.infraware.ca/' + post));
+      };
+      up.style.display = 'block';
    }
 });
 
@@ -90,6 +91,11 @@ self.on('message', function (message) {
       }
    }
    console.log(info);
-   self.postMessage({greeting: "update"});
+
+   var html = document.getElementsByTagName('html');
+   var lang;
+   if (html && html[0]) { lang = html[0].getAttribute('lang'); }
+   if (!lang) { lang = 'en'; }
+   self.postMessage({greeting: "update", lang: lang});
 });
 

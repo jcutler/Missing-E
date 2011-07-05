@@ -53,17 +53,21 @@ else if (/http:\/\/missinge\.infraware\.ca/.test(location.href)) {
 
 function updateCheck(response) {
    if (response.name !== "update") { return; }
-   var up = document.getElementById('missinge_update');
+   var up = document.getElementById('missinge_updatenotice');
    if (up && response.message.update) {
+      var html = document.getElementsByTagName('html');
+      var lang = 'en';
+      if (html && html[0]) { lang = html[0].getAttribute('lang'); }
+      up.setAttribute('title', locale[lang]["update"]);
       var post = '';
       if (response.message.link !== '') {
          post = 'post/' + response.message.link;
       }
-      up.style.display = 'inline-block';
-      up.getElementsByTagName('a')[0].href =
-         'http://missinge.infraware.ca/update?b=safari&l=' +
-         encodeURI('http://blog.missinge.infraware.ca/' + post);
-      document.getElementById('missinge_button').style.display = 'none';
+      up.onclick = function() {
+         window.open('http://missinge.infraware.ca/update?b=safari&l=' +
+            encodeURI('http://blog.missinge.infraware.ca/' + post));
+      };
+      up.style.display = 'block';
    }
 }
 

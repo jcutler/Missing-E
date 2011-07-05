@@ -54,6 +54,8 @@ var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var followCheckerTab = null;
 var formKey;
+var locale=JSON.parse(data.load("common/localizations.js")
+                      .replace(/^[^{]*/,''));
 var followYou = [];
 var youFollow = [];
 
@@ -683,7 +685,8 @@ function handleMessage(message, myWorker) {
       myWorker.postMessage({greeting: "update",
          update:versionCompare(getStorage("extensions.MissingE.externalVersion",'0'),
                                getStorage("extensions.MissingE.version",'0')) > 0,
-         link:getStorage("extensions.MissingE.externalVersion.link",'')});
+         link:getStorage("extensions.MissingE.externalVersion.link",''),
+         msg:locale[message.lang]["update"]});
    }
    else if (message.greeting == "unfollowerIgnore") {
       setStorage('extensions.MissingE.unfollower.ignore', message.list);

@@ -29,19 +29,21 @@ var logout = document.getElementById("logout_button");
 if (bar && logout) {
    var st = document.createElement('style');
    st.setAttribute('type', 'text/css');
-   st.innerHTML = '#header #missinge_update {' +
-                  'display:none; }' +
-                  '#header #missinge_update a {' +
-                  'background-image:url("' +
-                  chrome.extension.getURL('missinge_update.gif') +
-                  '") !important; background-position:center center; }' +
-                  '#header #missinge_button a {' +
+   st.innerHTML = '#header #missinge_button a {' +
                   'background-image:url("' +
                   chrome.extension.getURL('missinge_dash.png') +
                   '") !important; background-position:center center; ' +
                   'opacity:0.5; } ' +
                   '#header #missinge_button a:hover {' +
                   'opacity:1; } ' +
+                  '#header #missinge_button #missinge_updatenotice {' +
+                  'font-size:11px !important;line-height:11px !important;' +
+                  'display:none;width:40px;right:auto !important;left:-7px;' +
+                  'padding:2px 2px 4px 2px !important;cursor:pointer; } ' +
+                  '#header #missinge_button #missinge_updatenotice ' +
+                  '.tab_notice_nipple { left:21px !important; } ' +
+                  '#header #missinge_button #missinge_updatenotice:hover ' +
+                  '.tab_notice_value { text-decoration:underline; } ' +
                   '#header #tabs_outter_container {' +
                   'min-width:645px !important;' +
                   'left:auto !important;right:17px !important;' +
@@ -51,13 +53,11 @@ if (bar && logout) {
    tab.className = "tab iconic";
    tab.id = "missinge_button";
    tab.innerHTML = '<a href="' + chrome.extension.getURL('options.html') +
-                     '" target="_blank" title="Missing e Settings">Missing e</a>';
+                     '" target="_blank" title="Missing e Settings">Missing e</a>' +
+                     '<div id="missinge_updatenotice" class="tab_notice">' +
+                     '<span class="tab_notice_value">Update</span>' +
+                     '<span class="tab_notice_nipple"></span></div>';
    bar.insertBefore(tab, logout);
-   var update = document.createElement('div');
-   update.className = "tab iconic";
-   update.id = "missinge_update";
-   update.innerHTML = '<a href="#" target="_blank" title="Missing e Update Available">Update</a>';
-   bar.insertBefore(update, logout);
 }
 
 if (/http:\/\/www\.tumblr\.com\/dashboard\/[0-9]/.test(location.href)) {

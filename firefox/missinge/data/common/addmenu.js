@@ -56,19 +56,22 @@ self.on("message", function (message) {
    if (bar && logout) {
       var st = document.createElement('style');
       st.setAttribute('type','text/css');
-      st.innerHTML = '#header #missinge_update {' +
-                     'display:none; }' +
-                     '#header #missinge_update a {' +
-                     'background-image:url("' +
-                     message.extensionURL + 'missinge_update.gif' +
-                     '") !important; background-position:center center; }' +
-                     '#header #missinge_button a {' +
+      st.innerHTML = '#header #missinge_button a {' +
                      'background-image:url("' +
                      message.extensionURL + 'missinge_dash.png' +
                      '") !important; background-position:center center; ' +
                      'opacity:0.5; } ' +
                      '#header #missinge_button a:hover {' +
                      'opacity:1; } ' +
+                     '#header #missinge_button #missinge_updatenotice {' +
+                     'font-size:11px !important;line-height:11px !important;' +
+                     'display:none;width:40px;right:auto !important;' +
+                     'left:-7px;padding:2px 2px 4px 2px !important;' +
+                     'cursor:pointer; } ' +
+                     '#header #missinge_button #missinge_updatenotice ' +
+                     '.tab_notice_nipple { left:21px !important; } ' +
+                     '#header #missinge_button #missinge_updatenotice:hover ' +
+                     '.tab_notice_value { text-decoration:underline; } ' +
                      '#header #tabs_outter_container {' +
                      'min-width:645px !important;' +
                      'left:auto !important;right:17px !important;' +
@@ -89,12 +92,13 @@ self.on("message", function (message) {
             self.postMessage({greeting: "open", url: "OPTIONS"});
          }
       }, false);
+      var upnote = document.createElement('div');
+      upnote.id = "missinge_updatenotice";
+      upnote.className = "tab_notice";
+      upnote.innerHTML = '<span class="tab_notice_value">Update</span>' +
+                         '<span class="tab_notice_nipple"></span>';
       tab.appendChild(elnk);
+      tab.appendChild(upnote);
       bar.insertBefore(tab, logout);
-      var update = document.createElement('div');
-      update.className = "tab iconic";
-      update.id = "missinge_update";
-      update.innerHTML = '<a href="#" target="_blank" title="Missing e Update Available">Update</a>';
-      bar.insertBefore(update, logout);
    }
 });
