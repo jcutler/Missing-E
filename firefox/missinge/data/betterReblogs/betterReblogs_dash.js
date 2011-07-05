@@ -20,6 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
+var resetTumblr;
 
 function changeQuickReblogAcct(sel) {
    var rm = jQuery('#MissingE_quick_reblog_manual');
@@ -343,27 +344,31 @@ self.on('message', function (message) {
          changeQuickReblogAcct(jQuery(this));
       });
       qr.mouseover(function(e){
-         if (!jQuery.contains(qr.get(0), e.relatedTarget) &&
+         if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
+             !jQuery.contains(qr.get(0), e.relatedTarget) &&
              !jQuery(e.relatedTarget).hasClass('MissingE_quick_reblog_main')) {
             qr.removeData('off');
          }
       }).mouseout(function(e){
-         if (!jQuery.contains(qr.get(0), e.relatedTarget) &&
+         if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
+             !jQuery.contains(qr.get(0), e.relatedTarget) &&
              !jQuery(e.relatedTarget).hasClass('MissingE_quick_reblog_main')) {
             jQuery(this).css('display','');
             if (qr.hasClass('MissingE_quick_reblog_tags_inputting')) {
                qr.data('off','off');
             }
             else {
-               var sel = jQuery('#MissingE_quick_reblog_selector select');
-               if (sel.find('option[value="' + message.accountName +
-                            '"]').length > 0) {
-                  sel.val(message.accountName);
-               }
-               else {
-                  sel.val(sel.find('option:first').val());
-               }
-               changeQuickReblogAcct(sel);
+               resetTumblr = setTimeout(function() {
+                  var sel = jQuery('#MissingE_quick_reblog_selector select');
+                  if (sel.find('option[value="' + message.accountName +
+                               '"]').length > 0) {
+                     sel.val(message.accountName);
+                  }
+                  else {
+                     sel.val(sel.find('option:first').val());
+                  }
+                  changeQuickReblogAcct(sel);
+               }, 1000);
             }
          }
       });
@@ -402,6 +407,7 @@ self.on('message', function (message) {
              reblog.hasClass('MissingE_quick_reblogging_text_successs')) {
             return;
          }
+         clearTimeout(resetTumblr);
          var pos = reblog.offset();
          var h = reblog.outerHeight() - 2;
          var w = (qr.outerWidth()>>1) - (reblog.innerWidth()>>1);
@@ -453,21 +459,24 @@ self.on('message', function (message) {
                            'left:' + w + 'px !important;' +
                            'display:block;');
       }).live('mouseout',function(e) {
-         if (!jQuery.contains(qr.get(0), e.relatedTarget)) {
+         if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
+             !jQuery.contains(qr.get(0), e.relatedTarget)) {
             qr.css('display','');
             if (qr.hasClass('MissingE_quick_reblog_tags_inputting')) {
                qr.data('off','off');
             }
             else {
-               var sel = jQuery('#MissingE_quick_reblog_selector select');
-               if (sel.find('option[value="' + message.accountName +
-                            '"]').length > 0) {
-                  sel.val(message.accountName);
-               }
-               else {
-                  sel.val(sel.find('option:first').val());
-               }
-               changeQuickReblogAcct(sel);
+               resetTumblr = setTimeout(function() {
+                  var sel = jQuery('#MissingE_quick_reblog_selector select');
+                  if (sel.find('option[value="' + message.accountName +
+                               '"]').length > 0) {
+                     sel.val(message.accountName);
+                  }
+                  else {
+                     sel.val(sel.find('option:first').val());
+                  }
+                  changeQuickReblogAcct(sel);
+               }, 1000);
             }
          }
       }).live('click',function(e) {

@@ -20,6 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
+var resetTumblr;
 
 function changeQuickReblogAcct(sel) {
    var rm = $('#MissingE_quick_reblog_manual');
@@ -317,12 +318,14 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
          changeQuickReblogAcct($(this));
       });
       qr.mouseover(function(e){
-         if (!$.contains(qr.get(0), e.relatedTarget) &&
+         if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
+             !$.contains(qr.get(0), e.relatedTarget) &&
              !$(e.relatedTarget).hasClass('MissingE_quick_reblog_main')) {
             qr.removeData('off');
          }
       }).mouseout(function(e){
-         if (!$.contains(qr.get(0), e.relatedTarget) &&
+         if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
+             !$.contains(qr.get(0), e.relatedTarget) &&
              !$(e.relatedTarget).hasClass('MissingE_quick_reblog_main')) {
             $(this).css('display','');
             var sel = $('#MissingE_quick_reblog_selector select');
@@ -330,15 +333,17 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
                qr.data('off','off');
             }
             else {
-               var sel = $('#MissingE_quick_reblog_selector select');
-               if (sel.find('option[value="' + accountName +
-                            '"]').length > 0) {
-                  sel.val(accountName);
-               }
-               else {
-                  sel.val(sel.find('option:first').val());
-               }
-               changeQuickReblogAcct(sel);
+               resetTumblr = setTimeout(function() {
+                  var sel = $('#MissingE_quick_reblog_selector select');
+                  if (sel.find('option[value="' + accountName +
+                               '"]').length > 0) {
+                     sel.val(accountName);
+                  }
+                  else {
+                     sel.val(sel.find('option:first').val());
+                  }
+                  changeQuickReblogAcct(sel);
+               }, 1000);
             }
          }
       });
@@ -377,6 +382,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
              reblog.hasClass('MissingE_quick_reblogging_text_successs')) {
             return;
          }
+         clearTimeout(resetTumblr);
          var pos = reblog.offset();
          var h = reblog.outerHeight() - 2;
          var w = (qr.outerWidth()>>1) - (reblog.innerWidth()>>1);
@@ -427,21 +433,24 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
                left:(pos.left-w)+'px !important',
                'display':'block'});
       }).live('mouseout',function(e) {
-         if (!$.contains(qr.get(0), e.relatedTarget)) {
+         if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
+             !$.contains(qr.get(0), e.relatedTarget)) {
             qr.css('display','');
             if (qr.hasClass('MissingE_quick_reblog_tags_inputting')) {
                qr.data('off','off');
             }
             else {
-               var sel = $('#MissingE_quick_reblog_selector select');
-               if (sel.find('option[value="' + accountName +
-                            '"]').length > 0) {
-                  sel.val(accountName);
-               }
-               else {
-                  sel.val(sel.find('option:first').val());
-               }
-               changeQuickReblogAcct(sel);
+               resetTumblr = setTimeout(function() {
+                  var sel = $('#MissingE_quick_reblog_selector select');
+                  if (sel.find('option[value="' + accountName +
+                               '"]').length > 0) {
+                     sel.val(accountName);
+                  }
+                  else {
+                     sel.val(sel.find('option:first').val());
+                  }
+                  changeQuickReblogAcct(sel);
+               }, 1000);
             }
          }
       }).live('click',function(e) {
