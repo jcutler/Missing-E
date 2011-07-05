@@ -79,22 +79,18 @@ function insertAvatarMagnifier(item) {
    if (item.tagName === "LI" && it.hasClass("notification")) {
       var mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(it.find('a.avatar_frame'));
-      mag.click(magAvatarClick);
    }
    else if (item.tagName === "LI" && it.hasClass("post")) {
       var mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(it.find('div.avatar_and_i'));
-      mag.click(magAvatarClick);
    }
    else if (item.tagName === "DIV" && it.hasClass("follower")) {
       var mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(item);
-      mag.click(magAvatarClick);
    }
    else if (item.tagName === "A" && it.parent().attr('id') === 'crushes') {
       var mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(item);
-      mag.click(magAvatarClick);
    }
 }
 
@@ -190,6 +186,10 @@ chrome.extension.sendRequest({greeting: "settings",
    }
 
    if (magnifier_settings.magnifyAvatars === 1) {
+      $('#posts .MissingE_magnify_avatar, ' +
+        '#left_column .MissingE_magnify_avatar, ' +
+        '#following .MissingE_magnify_avatar, ' +
+        '#crushes .MissingE_magnify_avatar').live('click',magAvatarClick);
       $('#posts li, #left_column .follower, #following .follower, #crushes a')
             .each(function() {
          insertAvatarMagnifier(this);
