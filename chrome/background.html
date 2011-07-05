@@ -407,7 +407,8 @@ function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
    }
    $.ajax({
       type: "GET",
-      url: request.url + "/api/read/json?id=" + request.pid,
+      url: request.url + "/api/read/json",
+      data: {id:request.pid},
       dataType: "text",
       tryCount: 0,
       retryLimit: retries,

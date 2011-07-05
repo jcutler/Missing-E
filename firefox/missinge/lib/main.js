@@ -168,7 +168,7 @@ function openSettings() {
       url: data.url("options.html"),
       onReady: function(tab) {
          tab.attach({
-            contentScriptFile: [data.url("common/jquery-1.6.1.min.js"),
+            contentScriptFile: [data.url("common/jquery-1.5.2.min.js"),
                                 data.url("common/defs.js"),
                                 data.url("common/utils.js"),
                                 data.url("checkbox/jquery.checkbox.min.js"),
@@ -470,7 +470,8 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
       }
    }
    Request({
-      url: url + "/api/read/json?id=" + pid,
+      url: url + "/api/read/json",
+      content: {"id":pid},
       headers: {tryCount: count,
                 retryLimit: retries,
                 targetId: pid},
@@ -704,7 +705,7 @@ function handleMessage(message, myWorker) {
          onReady: function(tab) {
             followCheckerTab = tab;
             tab.attach({
-               contentScriptFile:[data.url("common/jquery-1.6.1.min.js"),
+               contentScriptFile:[data.url("common/jquery-1.5.2.min.js"),
                                   data.url("followChecker/followCheckerTab.js")
                                  ],
                onMessage: function(data) {
@@ -993,7 +994,10 @@ function handleMessage(message, myWorker) {
             activeScripts.dashLinksToTabs = false;
 
          if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
-            injectScripts.push(data.url("common/jquery-ui.min.js"));
+            injectScripts.push(data.url("common/jquery.ui.core.js"));
+            injectScripts.push(data.url("common/jquery.ui.widget.js"));
+            injectScripts.push(data.url("common/jquery.ui.mouse.js"));
+            injectScripts.push(data.url("common/jquery.ui.sortable.js"));
             injectScripts.push(data.url("bookmarker/bookmarker.js"));
             activeScripts.bookmarker = true;
          }
@@ -1217,7 +1221,7 @@ function handleMessage(message, myWorker) {
          injectScripts.unshift(data.url("facebox/facebox.js"));
       }
 
-      injectScripts.unshift(data.url("common/jquery-1.6.1.min.js"));
+      injectScripts.unshift(data.url("common/jquery-1.5.2.min.js"));
       if (zindexFix) {
          injectScripts.push(data.url("common/zindexFix.js"));
       }
