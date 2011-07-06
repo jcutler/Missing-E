@@ -684,7 +684,7 @@ function handleMessage(message, myWorker) {
    else if (message.greeting == "version") {
       myWorker.postMessage({greeting: "version",
          uptodate:versionCompare(getStorage("extensions.MissingE.version",'0'),
-                                 request.v) >= 0});
+                                 message.v) >= 0});
    }
    else if (message.greeting == "update") {
       myWorker.postMessage({greeting: "update",
