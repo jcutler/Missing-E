@@ -72,6 +72,9 @@ self.on('message', function(message) {
             suffix = suffix[1] + suffix[2];
          }
       }
+      else {
+         suffix = '.png';
+      }
       for (i=0; i<document.forms.length; i++) {
          if (/\/(un)?like\//.test(document.forms[i].getAttribute('action'))) {
             like = document.forms[i];

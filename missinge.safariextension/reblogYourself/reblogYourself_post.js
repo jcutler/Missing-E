@@ -83,6 +83,9 @@ function MissingE_reblogYourself_post_doStartup() {
                suffix = suffix[1] + suffix[2];
             }
          }
+         else {
+            suffix = '.png';
+         }
 
          var icon = document.createElement('img');
          icon.style.height='20px';
