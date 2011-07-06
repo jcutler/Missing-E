@@ -58,7 +58,7 @@ function makeSidebar(tumblrAcctNum, retries) {
          '<li id="MissingE_sidebar_title" class="recessed selected">' +
             '<a href="#" onclick="return false;">' + tumblrText + '</a>' +
             '<a href="http://' + tumblrAcct + '.tumblr.com/" id="' +
-            'MissingE_sidebar_bloglink"></a>' +
+            'MissingE_sidebar_bloglink" target="_blank"></a>' +
             bloglist + '</li>';
       for (i=0; i<sidebarList.length; i++) {
          sidebartxt += '<li><a href="/tumblelog/' + tumblrAcct +
