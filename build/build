@@ -54,6 +54,8 @@ if [[ "$SAFARI" -eq "1" ]]; then
    ./uploadSafari.sh $UPLOAD
 fi
 if [[ "$UPLOAD" -eq "" ]]; then
-   echo "Changing site version info"
-   ./changeSiteVersion.sh
+   echo "Changing index version info"
+   ./changeIndexVersion.sh
+   echo "Changing update version info"
+   ./changeUpdateVersion.sh
 fi
