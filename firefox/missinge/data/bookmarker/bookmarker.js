@@ -50,6 +50,9 @@ function parseMarks(s) {
 
 function getMarkText(dt, post, name) {
    var pid = Number(post)+1;
+   dt = escapeHTML(dt);
+   post = escapeHTML(post);
+   name = escapeHTML(name);
    return '<li post="' + post + '" id="mark_' + post + '">' +
             '<a href="/dashboard/1000/' + pid +
             '?lite" post="' + post + '" class="MissingE_bookmarker_marklink">' +
@@ -64,12 +67,14 @@ function addBar(mark, lang, altPost) {
    if (altPost) { post = jQuery(altPost); }
    else { post = jQuery('#post_' + mark[1]); }
    if (jQuery('#bookmarkbar_' + mark[1]).length === 0) {
-      post.before('<div id="bookmarkbar_' + mark[1] + '" ' +
+      var markid = escapeHTML(mark[1]);
+      var marktxt = escapeHTML(mark[2]);
+      post.before('<div id="bookmarkbar_' + markid + '" ' +
             'class="MissingE_bookmark_bar"><div ' +
             'class="MissingE_bookmark_line"></div><div ' +
             'class="MissingE_bookmark_text">' + locale[lang]["bookmarkNoun"] +
             ' - <em id="bookmarkbar_label_' +
-            mark[1] + '">' + mark[2] + '</em><span ' +
+            markid + '">' + marktxt + '</em><span ' +
             'class="MissingE_bookmark_missing ' +
             'MissingE_bookmark_missing_' + lang + '">' + (altPost ? ' (' +
             '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
@@ -78,7 +83,7 @@ function addBar(mark, lang, altPost) {
    }
    else {
       jQuery('#bookmarkbar_' + mark[1]).removeData('toremove');
-      jQuery('#bookmarkbar_label_' + mark[1]).html(mark[2]);
+      jQuery('#bookmarkbar_label_' + mark[1]).html(marktxt);
    }
 }
 
@@ -272,8 +277,9 @@ function doMarks(item) {
             addBar(marks[j], lang, item);
          }
       }
-      var node = jQuery('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + locale[lang]["bookmarkVerb"] + '" ' +
+      var node = jQuery('<a class="' + klass + '" id="bookmark_' +
+                   escapeHTML(post) + '" title="' +
+                   locale[lang]["bookmarkVerb"] + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');

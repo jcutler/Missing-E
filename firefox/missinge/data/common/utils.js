@@ -77,3 +77,8 @@ function getPageHeight() {
    }
    return windowHeight;
 }
+
+function escapeHTML(str) {
+   return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
+            .replace(/>/,'&gt;').replace(/</,'&lt;');
+}

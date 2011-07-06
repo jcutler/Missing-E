@@ -62,8 +62,8 @@ function doReplies(item) {
    if (!key) {
       return false;
    }
-   key = key[1];
-
+   key = escapeHTML(key[1]);
+   id = escapeHTML(id);
    notes.after('<a class="MissingE_experimental_reply" href="#" onclick="' +
                'display_reply_pane([' + id + ', \'' + key + '\']);' +
                'return false;" id="post_control_reply_' + id + '" title="' +

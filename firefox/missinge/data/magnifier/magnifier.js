@@ -104,7 +104,7 @@ function insertMagnifier(item) {
       }
       var mi = jQuery('<a title="' + locale[lang]["loading"] + '" ' +
                  'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
-                 tid + '" href="#" onclick="return false;"></a>');
+                 escapeHTML(tid) + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
       if (bm.length > 0) {
          bm.before(mi);

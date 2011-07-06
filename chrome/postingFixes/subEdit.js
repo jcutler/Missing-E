@@ -67,7 +67,7 @@ if (noEdit) {
       }
    }
    for (i=0; i<document.forms.length; i++) {
-      if (/\/like\//.test(document.forms[i].getAttribute('action'))) {
+      if (/\/(un)?like\//.test(document.forms[i].getAttribute('action'))) {
          like = document.forms[i];
       }
       else if (/\/(un)?follow/.test(document.forms[i].getAttribute('action'))) {

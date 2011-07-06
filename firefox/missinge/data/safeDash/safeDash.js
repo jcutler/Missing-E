@@ -286,7 +286,7 @@ self.on('message', function (message) {
                '<li class="' +
                (getStorage('MissingE_safeDash_state',0) === 1 ?
                 'selected' : '') + '"><a href="#" onclick="return false;" ' +
-               'id="nsfwctrl">SafeDash</a></li></ul>';
+               'id="nsfwctrl">Safe Dash</a></li></ul>';
 
    var afterer = jQuery('#MissingE_marklist');
    if (afterer.length === 0) {

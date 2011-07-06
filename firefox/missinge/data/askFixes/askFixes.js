@@ -161,7 +161,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
       return false;
    }
    var lang = jQuery('html').attr("lang");
-   var id = jQuery(item).attr('id').match(/[0-9]*$/)[0];
+   var id = escapeHTML(jQuery(item).attr('id').match(/[0-9]*$/)[0]);
    if (buttons === 1) {
       var allbtns = "";
       for (var i in locale[lang]["postingFixes"]["submitText"]) {
@@ -287,8 +287,9 @@ self.on('message', function (message) {
                        'height="149" /></div>');
       jQuery('#posts div.user_menu_list a[href$="/ask"]')
             .live('click', function() {
-         var user = jQuery(this).closest('div.user_menu_list')
-                        .find('a[following]').attr('href').match(/[^\/]*$/);
+         var user = escapeHTML(jQuery(this).closest('div.user_menu_list')
+                        .find('a[following]').attr('href').match(/[^\/]*$/)
+                        .join(''));
          var avatar = jQuery(this).closest('li.post')
                         .find('div.avatar_and_i a.post_avatar')
                         .css('background-image');

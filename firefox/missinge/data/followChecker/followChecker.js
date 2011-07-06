@@ -82,9 +82,9 @@ function doFWFinish(followers, followees, show) {
       if (fklass !== '') { fklass = 'class="' + fklass + '"'; }
       if (yklass !== '') { yklass = 'class="' + yklass + '"'; }
       txt += '<tr><td ' + fklass + '><a target="_blank" href="' +
-               fentry[1] + '">' + fentry[0] + '</a></td>';
+               escapeHTML(fentry[1]) + '">' + escapeHTML(fentry[0]) + '</a></td>';
       txt += '<td ' + yklass + '><a target="_blank" href="' +
-               yentry[1] + '">' + yentry[0] + '</a></td></tr>';
+               escapeHTML(yentry[1]) + '">' + escapeHTML(yentry[0]) + '</a></td></tr>';
    }
    for (; i<youfollow.length; i++) {
       klass = '';
@@ -93,7 +93,7 @@ function doFWFinish(followers, followees, show) {
       if (klass !== '') { klass = 'class="' + klass + '"'; }
       yentry = youfollow[i].split(';');
       txt += '<tr><td></td><td ' + klass + '><a target="_blank" href="' +
-               yentry[1] + '">' + yentry[0] + '</a></td></tr>';
+               escapeHTML(yentry[1]) + '">' + escapeHTML(yentry[0]) + '</a></td></tr>';
    }
    for (; i<followyou.length; i++) {
       klass = '';
@@ -101,8 +101,9 @@ function doFWFinish(followers, followees, show) {
       if (i===followyou.length-1) { klass+=' fw-last'; }
       if (klass !== '') { klass = 'class="' + klass + '"'; }
       fentry = followyou[i].split(';');
-      txt += '<tr><td ' + klass + '><a target="_blank" href="' + fentry[1] +
-               '">' + fentry[0] + '</a></td><td></td></tr>';
+      txt += '<tr><td ' + klass + '><a target="_blank" href="' +
+               escapeHTML(fentry[1]) +
+               '">' + escapeHTML(fentry[0]) + '</a></td><td></td></tr>';
    }
    txt += '</tr></tbody></table>';
    jQuery('#MissingE_followwhodisplay .followwholist').html(txt);
@@ -388,7 +389,8 @@ function followChecker_newTab() {
 function addFollowCheckerButton(acct) {
    var fl = jQuery('#right_column').find('a.followers .count');
    var uf = jQuery("#MissingE_unfollowdelta");
-   var notintxt = '<a account="' + acct + '" id="MissingE_followwhonotin" ' +
+   var notintxt = '<a account="' + escapeHTML(acct) +
+                  '" id="MissingE_followwhonotin" ' +
                   'title="Follow Checker" onclick="return false;" href="#">' +
                   '&rho;</a>';
    if (uf.size()>0) {

@@ -441,8 +441,7 @@ function doAjax(request, retries, type, doFunc, additional) {
    }
    $.ajax({
       type: "GET",
-      url: request.message.url + "/api/read/json",
-      data: {id:request.message.pid},
+      url: request.message.url + "/api/read/json?id=" + request.message.pid,
       dataType: "text",
       tryCount: 0,
       retryLimit: retries,

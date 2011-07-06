@@ -54,7 +54,7 @@ self.on('message', function (message) {
           /Request denied/i.test(jQuery('#container').text())) {
          var blog = location.href.match(/[\?&]channel_id=([^&]*)/)[1];
          jQuery('<p>You attempted to reblog using Tumblr username:<br />' +
-                '<strong>' + blog + '</strong></p>' +
+                '<strong>' + escapeHTML(blog) + '</strong></p>' +
                 '<p>This may not be a valid username!<br />' +
            'Please check your <em>Missing e</em> settings.</p>')
             .insertBefore('#container div.sorry p:last');

@@ -42,7 +42,8 @@ function postCrushesFillSettings(message) {
          document.getElementById('post_tags').value = tags;
          for (i=0; i<tagarr.length; i++) {
             if (tagarr[i] !== null && tagarr[i] !== '') {
-               txt += '<div class="token"><span class="tag">' + tagarr[i] +
+               txt += '<div class="token"><span class="tag">' +
+                      escapeHTML(tagarr[i]) +
                       '</span><a title="Remove tag" ' +
                       'onclick="tag_editor_remove_tag($(this).up()); ' +
                       'return false;" href="#">x</a></div>';

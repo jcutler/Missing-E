@@ -72,9 +72,9 @@ function receiveReblog(message) {
                      .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                      .replace(/&/g,'%26');
       edit.after(' <a title="' + reblog_text + '" href="/reblog/' +
-                 message.pid + '/' +
-                message.data + '?redirect_to=' + redir +
-                '" class="' + klass + '">' + txt + '</a>');
+                 escapeHTML(message.pid) + '/' +
+                 escapeHTML(message.data) + '?redirect_to=' + redir +
+                 '" class="' + klass + '">' + txt + '</a>');
    }
    else {
       var reblog_err = locale[lang]["error"];

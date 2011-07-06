@@ -59,6 +59,11 @@ var locale=JSON.parse(data.load("common/localizations.js")
 var followYou = [];
 var youFollow = [];
 
+function escapeHTML(str) {
+   return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
+            .replace(/>/,'&gt;').replace(/</,'&lt;');
+}
+
 function clearFollowChecker() {
    followYou = [];
    youFollow = [];
@@ -434,7 +439,7 @@ function checkPermission(user, count, myWorker, retries) {
          catch (err) {
             closed = true;
          }
-         if (response.status < 500) {
+         if (response.status != 200 && response.status < 500) {
             myWorker.postMessage({greeting: "tumblrPermission",
                                   allow: false});
             return;
@@ -470,8 +475,7 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
       }
    }
    Request({
-      url: url + "/api/read/json",
-      content: {"id":pid},
+      url: url + "/api/read/json?id=" + escapeHTML(pid),
       headers: {tryCount: count,
                 retryLimit: retries,
                 targetId: pid},

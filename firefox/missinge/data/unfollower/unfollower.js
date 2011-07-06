@@ -66,8 +66,8 @@ function doFinish(newlist,show,acct) {
       if (i===unfollows.length-1) { klass += ' tu-lastrow'; }
       if (klass !== '') { klass = ' class="' + klass + '"'; }
       txt += '<tr><td ' + klass + '>';
-      txt += '<a target="_blank" href="http://' + unfollows[i] +
-               '.tumblr.com/">' + unfollows[i] + '</a>';
+      txt += '<a target="_blank" href="http://' + escapeHTML(unfollows[i]) +
+               '.tumblr.com/">' + escapeHTML(unfollows[i]) + '</a>';
       txt += '</td></tr>';
    }
    txt += '</table>';
@@ -132,6 +132,7 @@ function doDisplay(start,show,acct) {
 
 function doChooser(acct) {
    var i;
+   acct = escapeHTML(acct);
    var chtext = '<p style="margin-top:5px;"><strong>' + acct +
             '</strong> is not being tracked!<br />Was this account renamed?</p>' +
             '<form id="unfollower_chooser_form">' +
@@ -142,10 +143,11 @@ function doChooser(acct) {
    for (i=0; i<listed.length; i++) {
       var num = parseNames(localStorage.getItem('MissingE_unfollower_' +
                                                 listed[i])).length;
+      var listitem = escapeHTML(listed[i]);
       var klass = (i%2===1 ? 'greyrow' : '');
       klass += (i===listed.length-1 ? ' uctlast ' : '');
-      chtext += '<tr><td class="uname ' + klass + '">' + listed[i] +
-         ' <em>(' + num + ')</em></td><td user="' + listed[i] + '" class="' +
+      chtext += '<tr><td class="uname ' + klass + '">' + listitem +
+         ' <em>(' + num + ')</em></td><td user="' + listitem + '" class="' +
          klass + '"><button type="button" class="rn_btn" account="' + acct +
          '" value="Rename"><span>Rename</span></button>' +
          '<button type="button" class="del_btn" account="' + acct +
@@ -333,7 +335,8 @@ function addUnfollowerButton(extensionURL, acct, retries) {
             getCountAndDoSilent(acct, extensionURL, retries);
          }
       }
-      var deltxt = '<a account="' + acct + '" id="MissingE_unfollowdelta" ' +
+      var deltxt = '<a account="' + escapeHTML(acct) +
+                     '" id="MissingE_unfollowdelta" ' +
                      'title="Unfollower" onclick="return false;" ' +
                      'href="#">&Delta;</a>';
       var fw = jQuery("#MissingE_followwhonotin");
