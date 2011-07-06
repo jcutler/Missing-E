@@ -31,6 +31,10 @@ function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
        $(node).parents('#new_post').length > 0) {
       return false;
    }
+   if (/\/tumblelog\/[^\/]*\/followers/.test(location.pathname) &&
+       $(node).parent().hasClass('pagination')) {
+      return false;
+   }
    if ($(node).closest('#dashboard_controls').length > 0) { return false; }
    if ($(node).parent().hasClass('post_controls')) {
       if (/^\/reblog\/[0-9]+\//.test($(node).attr('href')) &&
