@@ -4,15 +4,15 @@
 // @namespace      http://userscripts.org/users/113977
 // @include        http://www.tumblr.com/following*
 // @include        http://www.tumblr.com/new/photo*
-// @version        0.1.6
-// @date           2011-05-07
+// @version        0.1.7
+// @date           2011-07-07
 // ==/UserScript==
 
 (function() {
    var scriptUpdater = {
       name : "Tumblr Post Crushes",
       shortname : 'tcp',
-      version : "0.1.6",
+      version : "0.1.7",
       usoID : 95561,
       lastCheck : function() { return (window.localStorage.getItem(this.shortname + '_lastCheck') ? window.localStorage.getItem(this.shortname + '_lastCheck') : 0); },
       now : (new Date()).valueOf(),
