@@ -23,7 +23,7 @@
 
 /*global window, chrome, localStorage */
 
-var missingeServer = 'http://missinge.host22.com';
+var missingeServer = 'http://crush.missinge.infraware.ca';
 
 var crushdiv = document.getElementById("crushes");
 var infodiv = crushdiv.nextSibling;
@@ -101,7 +101,7 @@ innerdiv.addEventListener('click', function() {
 
       localStorage.setItem('tcp_crushTags',crushname.join(','));
       localStorage.setItem('tcp_crushURL', missingeServer +
-                                    '/postcrushes/?' + get);
+                                    '/?' + get);
       window.open('http://www.tumblr.com/new/photo?' +
                   'post%5Bone%5D=&post%5Btwo%5D=' + txt + '&post%5Bthree%5D=');
    });

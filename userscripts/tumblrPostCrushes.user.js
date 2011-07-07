@@ -45,7 +45,7 @@
 
    var tcp_settings;
    var isFF = (navigator.userAgent && navigator.userAgent.indexOf("Firefox") != -1);
-   var missingeServer = 'http://missinge.host22.com';
+   var missingeServer = 'http://crush.missinge.infraware.ca';
 
    function doSettings() {
       if (isFF) {
@@ -216,7 +216,7 @@
 
          window.localStorage.setItem('tcp_crushTags',crushname.join(','));
           
-         window.localStorage.setItem('tcp_crushURL', missingeServer + '/postcrushes/?' + get);
+         window.localStorage.setItem('tcp_crushURL', missingeServer + '/?' + get);
          window.open('http://www.tumblr.com/new/photo?post%5Bone%5D=&post%5Btwo%5D=' + txt + '&post%5Bthree%5D=');
          
       }, true);
