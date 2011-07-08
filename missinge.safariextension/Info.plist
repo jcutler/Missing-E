@@ -11,9 +11,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.6.3</string>
+	<string>1.7.0</string>
 	<key>CFBundleVersion</key>
-	<string>603</string>
+	<string>700</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -47,6 +47,7 @@
 				<string>common/whoami.js</string>
 				<string>common/addmenu.js</string>
 				<string>common/jquery.min.js</string>
+                                <string>common/ajaxEvents.js</string>
 				<string>common/jquery-ui.min.js</string>
 				<string>common/defs.js</string>
 				<string>common/utils.js</string>

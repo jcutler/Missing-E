@@ -1225,6 +1225,7 @@ function handleMessage(message, myWorker) {
          injectScripts.unshift(data.url("facebox/facebox.js"));
       }
 
+      injectScripts.unshift(data.url("common/ajaxEvents.js"));
       injectScripts.unshift(data.url("common/jquery-1.5.2.min.js"));
       if (zindexFix) {
          injectScripts.push(data.url("common/zindexFix.js"));
