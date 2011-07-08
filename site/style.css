@@ -769,3 +769,7 @@ font-size:300%;
 #thankyou #inner #homelnk {
 margin-top:40px;
 }
+
+#plus1description {
+display:none;
+}
