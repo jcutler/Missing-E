@@ -42,11 +42,20 @@ if (location.host === 'www.tumblr.com') {
                else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/tagged\\/[^\\?]+\\?before=[0-9]*/.test(request.url)) { \
                   type = "tagged"; \
                } \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/mega-editor\\/[^\\/]+\\?before_time=[0-9]*/.test(request.url)) { \
+                  type = "mass-editor"; \
+               } \
                else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/dashboard\\/notes\\/[0-9]+\\//.test(request.url)) { \
                   type = "notes"; \
                   newPosts = ["post_" + request.url.match(/notes\\/([0-9]+)/)[1]]; \
                } \
-               if (type !== "notes") { \
+               if (type === "mass-editor") { \
+                  newPosts = request.transport.responseText.match(/<a id="(post_[0-9]+)/g); \
+                  for (i=0; i<newPosts.length; i++) { \
+                     newPosts[i] = newPosts[i].replace(/<a id="/,""); \
+                  } \
+               } \
+               else if (type !== "notes") { \
                   newPosts = request.transport.responseText.match(/<li id="(post_[0-9]+)/g); \
                   for (i=0; i<newPosts.length; i++) { \
                      newPosts[i] = newPosts[i].replace(/<li id="/,""); \

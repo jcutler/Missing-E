@@ -38,16 +38,14 @@ function moveSelectList(s,list) {
       'width':s.width() + 'px'
    });
 }
-function handleAjaxAdd(s,list,fn) {
+function handleAjaxAdd(s,list) {
    if (window.innerHeight < $(document).height()) {
-      document.removeEventListener('DOMNodeInserted',fn,false);
       moveSelectList(s,list);
    }
 }
 
-function handleAjaxRemove(s,list,fn) {
+function handleAjaxRemove(s,list) {
    if (window.innerHeight >= $(document).height()) {
-      document.removeEventListener('DOMNodeRemoved',fn,false);
       moveSelectList(s,list);
    }
 }
@@ -102,11 +100,11 @@ sbtlisttext += generateButton('note', locale[lang]["askPost"], true);
 sbtlisttext += '</div>';
 var sbtlist = $(sbtlisttext).insertAfter(sbt);
 
-document.addEventListener('DOMNodeInserted',function() {
-   handleAjaxAdd(sbt,sbtlist,arguments.callee);
-}, false);
-document.addEventListener('DOMNodeRemoved',function() {
-   handleAjaxRemove(sbt,sbtlist,arguments.callee);
+$(document).bind('MissingEajax',function() {
+   handleAjaxAdd(sbt,sbtlist);
+});
+$(document).bind('MissingEajax',function() {
+   handleAjaxRemove(sbt,sbtlist);
 }, false);
 sbt.click(function() {
    return false;
