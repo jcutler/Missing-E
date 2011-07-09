@@ -320,11 +320,15 @@ chrome.extension.sendRequest({greeting: "settings",
                            askFixes_settings.buttons,
                            askFixes_settings.tags);
       });
-      document.addEventListener('DOMNodeInserted', function(e) {
-         moreAnswerOptions(e.target, askFixes_settings.tagAsker,
-                           askFixes_settings.defaultTags,
-                           askFixes_settings.buttons,
-                           askFixes_settings.tags);
-      }, false);
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === "messages") {
+            $.each(e.originalEvent.data.list, function(i, val) {
+               moreAnswerOptions($('#'+val).get(0), askFixes_settings.tagAsker,
+                                 askFixes_settings.defaultTags,
+                                 askFixes_settings.buttons,
+                                 askFixes_settings.tags);
+            });
+         }
+      });
    }
 });

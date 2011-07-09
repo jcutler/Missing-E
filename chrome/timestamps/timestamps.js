@@ -110,7 +110,10 @@ if (!(/drafts$/.test(location.href)) &&
       }
    });
    $('#posts li.post').each(function(){ loadTimestamp(this); });
-   document.addEventListener('DOMNodeInserted',function(e) {
-      loadTimestamp(e.target);
-   }, false);
+   $(document).bind('MissingEajax',function(e) {
+      if (e.originalEvent.data.type === 'notes') { return; }
+      $.each(e.originalEvent.data.list, function(i,val) {
+         loadTimestamp($('#'+val).get(0));
+      });
+   });
 }

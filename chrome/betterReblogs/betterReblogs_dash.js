@@ -252,9 +252,15 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       $('#posts li.post.regular').each(function() {
          reblogTextFull(this);
       });
-      document.addEventListener('DOMNodeInserted', function(e) {
-         reblogTextFull(e.target);
-      }, false);
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === 'notes') { return; }
+         $.each(e.originalEvent.data.list, function(i, val) {
+            reblogTextFull($('#'+val).get(0));
+         });
+      });
+      $('#posts div.post_controls a').live('MissingEaddReblog', function() {
+         reblogTextFull(this);
+      });
    }
 
    if (reblog_settings.quickReblog === 1) {

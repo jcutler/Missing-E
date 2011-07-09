@@ -325,9 +325,17 @@ function doHide(item) {
    }
 }
 
-document.addEventListener('DOMNodeInserted',function(e){
-   doHide(e.target);
-}, false);
+$(document).bind('MissingEajax',function(e){
+   if (e.originalEvent.data.type === 'notes') { return; }
+   $.each(e.originalEvent.data.list, function(i,val) {
+      doHide($('#'+val).get(0));
+   });
+   $('#posts li.notification').filter(function(){
+      return $('blockquote img:not(.nsfwdone)',this).length !== 0;
+   }).each(function() {
+      doHide(this);
+   });
+});
 
 window.addEventListener('storage', function(e) {
    if (e.key !== 'MissingE_safeDash_state') { return false; }

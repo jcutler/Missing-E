@@ -110,7 +110,7 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
                      '{ background-position:-50px 0; }';
    document.getElementsByTagName('head')[0].appendChild(st);
    if (!addTags()) {
-      document.addEventListener('DOMNodeInserted',function(e){
+      document.addEventListener('MissingEaddReblog',function(e){
          var item = e.target;
          if (item.tagName === 'A' && /reblog/.test(item.href)) {
             addTags(item);

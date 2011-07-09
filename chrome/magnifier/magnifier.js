@@ -180,9 +180,12 @@ chrome.extension.sendRequest({greeting: "settings",
       $('#posts li.post[class~="photo"]').each(function(){
          insertMagnifier(this);
       });
-      document.addEventListener('DOMNodeInserted',function(e) {
-         insertMagnifier(e.target);
-      }, false);
+      $(document).bind('MissingEajax',function(e) {
+         if (e.originalEvent.data.type === 'notes') { return; }
+         $.each(e.originalEvent.data.list, function(i,val) {
+            insertMagnifier($('#'+val).get(0));
+         });
+      });
    }
 
    if (magnifier_settings.magnifyAvatars === 1) {
@@ -194,8 +197,16 @@ chrome.extension.sendRequest({greeting: "settings",
             .each(function() {
          insertAvatarMagnifier(this);
       });
-      document.addEventListener('DOMNodeInserted',function(e) {
-         insertAvatarMagnifier(e.target);
-      }, false);
+      $(document).bind('MissingEajax',function(e) {
+         if (e.originalEvent.data.type === 'notes') { return; }
+         $.each(e.originalEvent.data.list, function(i,val) {
+            insertAvatarMagnifier($('#'+val).get(0));
+         });
+         $('#posts li.notification').filter(function() {
+            return $('div.MissingE_magnify_avatar', this).length === 0;
+         }).each(function(){
+            insertAvatarMagnifier(this);
+         });
+      });
    }
 });

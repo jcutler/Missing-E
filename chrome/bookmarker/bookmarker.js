@@ -411,9 +411,12 @@ chrome.extension.sendRequest({greeting: "settings",
          $("#posts li.post").each(function(i) {
             doMarks(this);
          });
-         document.addEventListener('DOMNodeInserted', function(e) {
-            doMarks(e.target);
-         }, false);
+         $(document).bind('MissingEajax', function(e) {
+            if (e.originalEvent.data.type === 'notes') { return; }
+            $.each(e.originalEvent.data.list, function(i,val) {
+               doMarks($('#'+val).get(0));
+            });
+         });
 
          if (bookmarker_settings.addBar === 0) {
             $('head').append('<style type="text/css">' +

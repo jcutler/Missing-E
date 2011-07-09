@@ -68,9 +68,11 @@ function addReblog(item) {
                         .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                         .replace(/&/g,'%26');
 
-            edit.after(' <a title="' + reblog_text + '" href="/reblog/' + tid +
-                       '/' + response.data + '?redirect_to=' + redir +
-                       '" class="' + klass + '">' + txt + '</a>');
+            var nr = $(' <a title="' + reblog_text + '" href="/reblog/' + tid +
+              '/' + response.data + '?redirect_to=' + redir +
+              '" class="' + klass + '">' + txt + '</a>')
+               .insertAfter(edit).before(' ');
+            nr.trigger('MissingEaddReblog');
          }
          else {
             var reblog_err = locale[lang]["error"];
@@ -103,7 +105,10 @@ if (!(/drafts$/.test(location.href)) &&
       }
    });
    $('#posts li.post').each(function(){addReblog(this);});
-   document.addEventListener('DOMNodeInserted',function(e) {
-      addReblog(e.target);
-   }, false);
+   $(document).bind('MissingEajax',function(e) {
+      if (e.originalEvent.data.type === 'notes') { return; }
+      $.each(e.originalEvent.data.list, function(i,val) {
+         addReblog($('#'+val).get(0));
+      });
+   });
 }
