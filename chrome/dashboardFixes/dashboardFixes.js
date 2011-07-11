@@ -387,7 +387,6 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
                        'background-image:url("' + queuearrs + '");' +
                        '"); }</style>');
       $('body').append('<script type="text/javascript">' +
-                       'var MissingE_queueMoves = {};' +
                        'document.addEventListener("MissingEqueueMove",' +
                                                   'function(e) {' +
                           'update_publish_on_times();' +
