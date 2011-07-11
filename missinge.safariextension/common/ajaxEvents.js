@@ -70,4 +70,4 @@ if (location.host === 'www.tumblr.com') {
       }); \
    }</script>');
 }                     
-$(document).bind('MissingEajax', function(e) { console.log(e.originalEvent.data); });
+//$(document).bind('MissingEajax', function(e) { console.log(e.originalEvent.data); });
