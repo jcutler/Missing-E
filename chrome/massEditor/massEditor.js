@@ -38,17 +38,6 @@ function moveSelectList(s,list) {
       'width':s.width() + 'px'
    });
 }
-function handleAjaxAdd(s,list) {
-   if (window.innerHeight < $(document).height()) {
-      moveSelectList(s,list);
-   }
-}
-
-function handleAjaxRemove(s,list) {
-   if (window.innerHeight >= $(document).height()) {
-      moveSelectList(s,list);
-   }
-}
 
 var lang = 'en';
 var deltext = $('#delete_posts').text().toLowerCase();
@@ -101,11 +90,8 @@ sbtlisttext += '</div>';
 var sbtlist = $(sbtlisttext).insertAfter(sbt);
 
 $(document).bind('MissingEajax',function() {
-   handleAjaxAdd(sbt,sbtlist);
+   moveSelectList(sbt,sbtlist);
 });
-$(document).bind('MissingEajax',function() {
-   handleAjaxRemove(sbt,sbtlist);
-}, false);
 sbt.click(function() {
    return false;
 }).mouseup(function(e) {
