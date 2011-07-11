@@ -70,10 +70,10 @@ if (location.host === 'www.tumblr.com') {
       }); \
    }</script>');
 }
-   
-jQuery(document).bind('MissingEajax', function(e) {
-   var type = e.originalEvent.data.match(/^[^:]*/)[0];
-   var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
-   console.log(type);
-   console.log(list);
-});
+
+//jQuery(document).bind('MissingEajax', function(e) {
+//   var type = e.originalEvent.data.match(/^[^:]*/)[0];
+//   var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+//   console.log(type);
+//   console.log(list);
+//});

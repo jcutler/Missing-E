@@ -122,6 +122,7 @@ function insertMagnifier(item) {
 function receiveMagnifier(message) {
    if (message.greeting !== "magnifier") { return; }
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    if (message.success) {
       jQuery('#magnify_' + message.pid).attr('src',message.data)
          .removeClass('MissingE_magnify_hide')
