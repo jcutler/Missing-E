@@ -9,3 +9,7 @@ XPreview?
 Caching for edit button permission check!!
 
 sortable notes [thefrogman]
+
+Message mass-delete [sea-bear]
+- use Ajax to /delete_posts
+new Ajax.Request('/delete_posts',{method:'post',parameters:{post_ids:'7423964676',form_key:user_form_key},onSuccess:function(){console.log("YAY");},onFailure:function(){console.log("BOO");}})
