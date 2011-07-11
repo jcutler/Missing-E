@@ -204,7 +204,8 @@ function doHide(item) {
          node.parent().css('visibility','hidden');
       }
    }
-   else if (item.tagName === 'OBJECT' &&
+   else if ((item.tagName === 'OBJECT' ||
+             item.tagName === 'IFRAME') &&
             node.parent().hasClass('video_embed') &&
             !node.hasClass('nsfwdone')) {
       node.addClass('nsfwvid').addClass('nsfwdone').parent()
@@ -321,9 +322,24 @@ self.on('message', function (message) {
       }
    });
 
-   document.addEventListener('DOMNodeInserted',function(e){
-      doHide(e.target);
-   }, false);
+
+   jQuery(document).bind('MissingEajax',function(e){
+      var type = e.originalEvent.data.match(/^[^:]*/)[0];
+      var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      if (type === 'notes') {
+         doHide(jQuery('#'+list[0] + ' ol.notes').get(0));
+      }
+      else {
+         jQuery.each(list, function(i,val) {
+            doHide(jQuery('#'+val).get(0));
+         });
+         jQuery('#posts li.notification').filter(function(){
+            return jQuery('blockquote img:not(.nsfwdone)',this).length !== 0;
+         }).each(function() {
+            doHide(this);
+         });
+      }
+   });
 
    window.addEventListener('storage',function(e) {
       if (e.key !== 'MissingE_safeDash_state') { return false; }
@@ -338,6 +354,11 @@ self.on('message', function (message) {
 
    jQuery('#posts li.post, #posts li.notification, ol.notes').each(function(){
       doHide(this);
+   });
+
+   jQuery('#posts a.video_thumbnail').live('click', function(e) {
+      doHide(jQuery(this).parent()
+             .find('div.video_embed object,div.video_embed iframe').get(0));
    });
 });
 

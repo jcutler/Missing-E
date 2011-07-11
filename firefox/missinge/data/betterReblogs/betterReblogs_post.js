@@ -132,7 +132,7 @@ self.on('message', function(message) {
    document.getElementsByTagName('head')[0].appendChild(st);
 
    if (!addTags()) {
-      document.addEventListener('DOMNodeInserted',function(e){
+      document.addEventListener('MissingEaddReblog',function(e){
          var item = e.target;
          if (item.tagName === 'A' && /reblog/.test(item.href)) {
             addTags(item);

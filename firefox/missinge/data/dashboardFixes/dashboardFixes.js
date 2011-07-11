@@ -171,6 +171,9 @@ function addQueueArrows(item) {
       if (qpost.length === 1) {
          qpost.detach();
          qpost.insertBefore('#posts li.queued:first');
+         var evt = document.createEvent("HTMLEvents");
+         evt.initEvent("MissingEqueueMove", true, true);
+         qpost.get(0).dispatchEvent(evt);
       }
    });
 /**** Only implement up arrow for now
@@ -245,15 +248,20 @@ self.on('message', function(message) {
       return false;
    }
    var extensionURL = message.extensionURL;
-   document.addEventListener('DOMNodeInserted', function(e) {
-      var node = jQuery(e.target);
-      if (e.target.tagName === 'LI' && node.hasClass('post')) {
-         if (jQuery('#posts li.post[id="' + node.attr('id') + '"]')
-             .length > 1) {
-            node.remove();
+   $(document).bind('MissingEajax', function(e) {
+      var type = e.originalEvent.data.match(/^[^:]*/)[0];
+      var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      if (type === 'notes') { return; }
+      jQuery.each(list, function (i,val) {
+         var node = jQuery('#'+val);
+         if (node.get(0).tagName === 'LI' && node.hasClass('post')) {
+            if (jQuery('#posts li.post[id="' + node.attr('id') + '"]').length >
+                  1) {
+               node.remove();
+            }
          }
-      }
-   }, false);
+      });
+   });
 
 /*
    jQuery('a.like_button').live('click', function(e) {
@@ -305,9 +313,14 @@ self.on('message', function(message) {
    }
    if (message.expandAll === 1) {
       jQuery('#posts .post').each(function(){ addExpandAllHandler(this); });
-      document.addEventListener('DOMNodeInserted', function(e) {
-         addExpandAllHandler(e.target);
-      }, false);
+      jQuery(document).bind('MissingEajax', function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         if (type === 'notes') { return; }
+         jQuery.each(list, function(i,val) {
+            addExpandAllHandler(jQuery('#'+val).get(0));
+         });
+      });
    }
    if (message.widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
@@ -325,16 +338,22 @@ self.on('message', function(message) {
       jQuery('#content').css('padding-right', (w+20) + 'px');
       jQuery('#left_column').css('min-height',
                                  jQuery('#right_column').height() + 'px');
-      document.addEventListener('DOMNodeInserted', function(e) {
+      jQuery(document).bind('MissingEajax', function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         /*
          if (jQuery(e.target).closest('#right_column').length > 0) {
             jQuery('#left_column').css('min-height',
                                        jQuery('#right_column').height() + 'px');
          }
-         jQuery(e.target).children('div.reply_pane:first')
+         */
+         jQuery.each(list, function(i,val) {
+            jQuery('#'+val).children('div.reply_pane:first')
                .each(function() {
             realignReplyNipple(jQuery(this).find('div.nipple'));
+            });
          });
-      }, false);
+      });
    }
    if (message.postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
@@ -390,9 +409,14 @@ self.on('message', function(message) {
       '});' +
       '</script>');
 
-      document.addEventListener('DOMNodeInserted', function(e) {
-         doReplies(e.target);
-      }, false);
+      $(document).bind('MissingEajax', function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         if (type === 'notes') { return; }
+         jQuery.each(list, function (i, val) {
+            doReplies(jQuery('#'+val).get(0));
+         });
+      });
       jQuery('#posts li.post').each(function() {
          doReplies(this);
       });
@@ -413,35 +437,18 @@ self.on('message', function(message) {
                        'background-image:url("' + queuearrs + '");' +
                        '"); }</style>');
       jQuery('body').append('<script type="text/javascript">' +
-                       'var MissingE_queueMoves = {};' +
-                       'document.addEventListener("DOMNodeInserted",' +
+                       'document.addEventListener("MissingEqueueMove",' +
                                                   'function(e) {' +
-                          'if (e.target.tagName === "LI" && ' +
-                               '/queued/.test(e.target.className) && ' +
-                               'MissingE_queueMoves[e.target.id]) {' +
-                             'delete MissingE_queueMoves[e.target.id];' +
-                             'update_publish_on_times();' +
-                          '}}, false);' +
-                       'document.addEventListener("DOMNodeRemoved",' +
-                                                  'function(e) {' +
-                          'if (e.target.tagName === "LI" && ' +
-                               '/queued/.test(e.target.className)) {' +
-                             'var isdragging=false;' +
-                             'for (i=0; i<Sortable.sortables.posts.draggables' +
-                                    '.length; i++) {' +
-                                'if (Sortable.sortables.posts.draggables[i]' +
-                                       '.dragging) {' +
-                                   'isdragging=true;' +
-                                   'break;' +
-                                '}' +
-                             '}' +
-                             'if (!isdragging) {' +
-                                'MissingE_queueMoves[e.target.id] = true;' +
-                             '}' +
-                          '}}, false);</script>');
-      document.addEventListener('DOMNodeInserted', function(e) {
-         addQueueArrows(e.target);
-      }, false);
+                          'update_publish_on_times();' +
+                       '}, false);</script>');
+      jQuery(document).bind('MissingEajax', function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         if (type === 'notes') { return; }
+         jQuery.each(list, function(i,val) {
+            addQueueArrows(jQuery('#'+val).get(0));
+         });
+      });
       jQuery('#posts li.queued').each(function() {
          addQueueArrows(this);
       });
@@ -450,9 +457,14 @@ self.on('message', function(message) {
    if (message.replaceIcons === 1 &&
        document.body.id !== "tinymce" &&
        document.body.id !== "dashboard_edit_post") {
-      document.addEventListener('DOMNodeInserted', function(e) {
-         doIcons(e.target);
-      }, false);
+      jQuery(document).bind('MissingEajax', function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         if (type === 'notes') { return; }
+         jQuery.each(list, function (i,val) {
+            doIcons(jQuery('#'+val).get(0));
+         });
+      });
 
       jQuery("#posts li.post").each(function(i) {
          if (this.id === "new_post") { return true; }

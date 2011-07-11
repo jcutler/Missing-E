@@ -336,12 +336,18 @@ self.on('message', function (message) {
                            message.buttons,
                            message.tags);
       });
-      document.addEventListener('DOMNodeInserted', function(e) {
-         moreAnswerOptions(e.target, message.tagAsker,
-                           message.defaultTags,
-                           message.buttons,
-                           message.tags);
-      }, false);
+      jQuery(document).bind('MissingEajax', function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         if (type === "messages") {
+            $.each(list, function(i,val) {
+               moreAnswerOptions(jQuery('#'+val).get(0), message.tagAsker,
+                                 message.defaultTags,
+                                 message.buttons,
+                                 message.tags);
+            });
+         }
+      });
    }
 });
 

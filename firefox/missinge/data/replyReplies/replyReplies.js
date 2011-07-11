@@ -381,21 +381,15 @@ function MissingE_replyReplies_doStartup(message) {
                     extensionURL + 'replyReplies/replyReplies.css' +
                     '" />');
 
-   document.addEventListener("DOMNodeInserted", function(e) {
-      var node = jQuery(e.target);
-      var list;
-      if (e.target.tagName === "OL" && node.hasClass("notes")) {
-         list = node.find('li');
-      }
-      else if (e.target.tagName === "LI" && node.parent().hasClass("notes")) {
-         list = node;
-      }
-      else {
+   jQuery(document).bind('MissingEajax', function(e) {
+      var type = e.originalEvent.data.match(/^[^:]*/)[0];
+      var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      if (type !== 'notes') { return; }
+      var node = jQuery('#'+list[0]);
+      if (!node.hasClass('is_mine')) {
          return false;
       }
-      if (!node.closest('li.post').hasClass('is_mine')) {
-         return false;
-      }
+      var list = node.find('ol.notes li');
       list.each(function() {
          var item = jQuery(this);
          var klass = "";
@@ -416,7 +410,7 @@ function MissingE_replyReplies_doStartup(message) {
             item.css('background-image', 'none');
          }
       });
-   }, false);
+   });
 
    jQuery('div.notification_type_icon').live('mousedown', function(e) {
       if (e.shiftKey) { e.preventDefault(); }

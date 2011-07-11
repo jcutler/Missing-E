@@ -104,6 +104,9 @@ self.on('message', function (message) {
             suffix;
          link.appendChild(icon);
          div.insertBefore(link,last);
+         var evt = document.createEvent("HTMLEvents");
+         evt.initEvent("MissingEaddReblog", true, true);
+         link.dispatchEvent(evt);
       }
    }
 });

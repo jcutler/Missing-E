@@ -256,9 +256,15 @@ self.on('message', function (message) {
       jQuery('#posts li.post.regular').each(function() {
          reblogTextFull(this);
       });
-      document.addEventListener('DOMNodeInserted', function(e) {
-         reblogTextFull(e.target);
-      }, false);
+      jQuery(document).bind('MissingEajax', function(e) {
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         jQuery.each(list, function(i,val) {
+            reblogTextFull(jQuery('#'+val).get(0));
+         });
+      });
+      jQuery('#posts div.post_controls a').live('MissingEaddReblog',function() {
+         reblogTextFull(this);
+      });
    }
    if (message.quickReblog === 1) {
       var r,s;

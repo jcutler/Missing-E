@@ -423,9 +423,14 @@ self.on('message', function (message) {
          jQuery("#posts li.post").each(function(i) {
             doMarks(this);
          });
-         document.addEventListener('DOMNodeInserted', function(e) {
-            doMarks(e.target);
-         }, false);
+         jQuery(document).bind('MissingEajax', function(e) {
+            var type = e.originalEvent.data.match(/^[^:]*/)[0];
+            var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+            if (type === 'notes') { return; }
+            jQuery.each(list, function(i,val) {
+               doMarks(jQuery('#'+val).get(0));
+            });
+         });
 
          if (message.addBar === 0) {
             jQuery('head').append('<style type="text/css">' +

@@ -71,10 +71,12 @@ function receiveReblog(message) {
       redir = redir.replace(/http:\/\/www.tumblr.com/,'')
                      .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                      .replace(/&/g,'%26');
-      edit.after(' <a title="' + reblog_text + '" href="/reblog/' +
+      var nr = jQuery('<a title="' + reblog_text + '" href="/reblog/' +
                  escapeHTML(message.pid) + '/' +
                  escapeHTML(message.data) + '?redirect_to=' + redir +
-                 '" class="' + klass + '">' + txt + '</a>');
+                 '" class="' + klass + '">' + txt + '</a>')
+         .insertAfter(edit).before(' ');
+      nr.trigger('MissingEaddReblog');
    }
    else {
       var reblog_err = locale[lang]["error"];
@@ -108,9 +110,14 @@ function MissingE_reblogYourself_dash_doStartup() {
          }
       });
       jQuery('#posts li.post').each(function(){addReblog(this);});
-      document.addEventListener('DOMNodeInserted',function(e) {
-         addReblog(e.target);
-      }, false);
+      jQuery(document).bind('MissingEajax',function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         if (type === 'notes') { return; }
+         jQuery.each(list, function(i,val) {
+            addReblog(jQuery('#'+val).get(0));
+         });
+      });
    }
 }
 

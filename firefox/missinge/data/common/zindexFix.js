@@ -21,6 +21,11 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+function zindexFixFutureEmbed(item) {
+   var val = jQuery(item).val().replace(/wmode="[^"]*"/,'wmode="opaque"');
+   jQuery(item).val(val);
+}
+
 function zindexFixEmbed(em) {
    var node = jQuery(em).clone();
    node.attr('wmode','opaque').addClass('zindexfixed');
@@ -31,9 +36,21 @@ jQuery('#posts li.post embed').each(function() {
    zindexFixEmbed(this);
 });
 
-document.addEventListener('DOMNodeInserted', function(e) {
-   if (e.target.tagName === 'EMBED' &&
-       !jQuery(e.target).hasClass('zindexfixed')) {
-      zindexFixEmbed(e.target);
-   }
-}, false);
+
+jQuery('#posts li.post div.video + input:hidden').each(function() {
+   zindexFixFutureEmbed(this);
+});
+jQuery(document).bind('MissingEajax', function(e) {
+   var type = e.originalEvent.data.match(/^[^:]*/)[0];
+   var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+   if (type === 'notes') { return; }
+   jQuery.each(list, function(i,val) {
+      jQuery('#'+val).find('embed').each(function() {
+         zIndexFixEmbed(this);
+      });
+      jQuery('#'+val).find('div.video + input:hidden').each(function() {
+         zindexFixFutureEmbed(this);
+      });
+   });
+});
+

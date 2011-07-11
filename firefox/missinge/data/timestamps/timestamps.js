@@ -110,9 +110,14 @@ function MissingE_timestamps_doStartup() {
          }
       });
       jQuery('#posts li.post').each(function(){ loadTimestamp(this); });
-      document.addEventListener('DOMNodeInserted',function(e) {
-         loadTimestamp(e.target);
-      }, false);
+      $(document).bind('MissingEajax',function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         if (type === 'notes') { return; }
+         jQuery.each(list, function(i,val) {
+            loadTimestamp(jQuery('#'+val).get(0));
+         });
+      });
    }
 }
 

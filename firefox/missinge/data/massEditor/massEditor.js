@@ -38,19 +38,6 @@ function moveSelectList(s,list) {
       'width':s.width() + 'px'
    });
 }
-function handleAjaxAdd(s,list,fn) {
-   if (window.innerHeight < jQuery(document).height()) {
-      document.removeEventListener('DOMNodeInserted',fn,false);
-      moveSelectList(s,list);
-   }
-}
-
-function handleAjaxRemove(s,list,fn) {
-   if (window.innerHeight >= jQuery(document).height()) {
-      document.removeEventListener('DOMNodeRemoved',fn,false);
-      moveSelectList(s,list);
-   }
-}
 
 self.on('message', function(message) {
    if (message.greeting !== "settings" ||
@@ -108,12 +95,9 @@ self.on('message', function(message) {
    sbtlisttext += '</div>';
    var sbtlist = jQuery(sbtlisttext).insertAfter(sbt);
    
-   document.addEventListener('DOMNodeInserted',function() {
-      handleAjaxAdd(sbt,sbtlist,arguments.callee);
-   }, false);
-   document.addEventListener('DOMNodeRemoved',function() {
-      handleAjaxRemove(sbt,sbtlist,arguments.callee);
-   }, false);
+   jQuery(document).bind('MissingEajax',function() {
+      moveSelectList(sbt,sbtlist);
+   });
    sbt.click(function() {
       return false;
    }).mouseup(function(e) {

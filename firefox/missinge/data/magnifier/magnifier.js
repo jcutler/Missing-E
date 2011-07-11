@@ -190,9 +190,14 @@ self.on('message', function (message) {
       jQuery('#posts li.post[class~="photo"]').each(function(){
          insertMagnifier(this);
       });
-      document.addEventListener('DOMNodeInserted',function(e) {
-         insertMagnifier(e.target);
-      }, false);
+      jQuery(document).bind('MissingEajax',function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         if (type === 'notes') { return; }
+         jQuery.each(list, function(i,val) {
+            insertMagnifier(jQuery('#'+val).get(0));
+         });
+      });
    }
 
    if (message.magnifyAvatars === 1) {
@@ -204,9 +209,19 @@ self.on('message', function (message) {
             .each(function() {
          insertAvatarMagnifier(this);
       });
-      document.addEventListener('DOMNodeInserted',function(e) {
-         insertAvatarMagnifier(e.target);
-      }, false);
+      jQuery(document).bind('MissingEajax',function(e) {
+         var type = e.originalEvent.data.match(/^[^:]*/)[0];
+         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         if (type === 'notes') { return; }
+         jQuery.each(list, function(i,val) {
+            insertAvatarMagnifier(jQuery('#'+val).get(0));
+         });
+         jQuery('#posts li.notification').filter(function() {
+            return jQuery('div.MissingE_magnify_avatar', this).length === 0;
+         }).each(function(){
+            insertAvatarMagnifier(this);
+         });
+      });
    }
 });
 
