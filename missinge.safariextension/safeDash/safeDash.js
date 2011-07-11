@@ -49,7 +49,6 @@ function doHide(item) {
    if (getStorage('MissingE_safeDash_state',0)===0) { safe = false; }
    else { safe = true; }
    var node = $(item);
-   console.log(item);
    if (item.tagName === 'LI') {
       if (node.hasClass('notification')) {
          $('blockquote img:not(.nsfwdone)',node).each(function(){
@@ -210,7 +209,6 @@ function doHide(item) {
              item.tagName === 'IFRAME') &&
             node.parent().hasClass('video_embed') &&
             !node.hasClass('nsfwdone')) {
-      console.log('hi');
       node.addClass('nsfwvid').addClass('nsfwdone').parent()
             .css('background','url("' + lock + '") ' +
                  'no-repeat scroll center center #BFBFBF')
