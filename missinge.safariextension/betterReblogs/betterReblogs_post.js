@@ -125,7 +125,7 @@ function MissingE_betterReblogs_post_doStartup(frameURL) {
       document.getElementsByTagName('head')[0].appendChild(st);
       safari.self.addEventListener("message", receiveTags, false);
       if (!addTags()) {
-         document.addEventListener('DOMNodeInserted',function(e){
+         document.addEventListener('MissingEaddReblog',function(e){
             var item = e.target;
             if (item.tagName === 'A' && /reblog/.test(item.href)) {
                addTags(item);

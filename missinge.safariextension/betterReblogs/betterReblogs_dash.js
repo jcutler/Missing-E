@@ -248,9 +248,14 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
       $('#posts li.post.regular').each(function() {
          reblogTextFull(this);
       });
-      document.addEventListener('DOMNodeInserted', function(e) {
-         reblogTextFull(e.target);
-      }, false);
+      $(document).bind('MissingEajax', function(e) {
+         $.each(e.originalEvent.data.list, function(i, val) {
+            reblogTextFull($('#'+val).get(0));
+         });
+      });
+      $('#posts div.post_controls a').live('MissingEaddReblog', function() {
+         reblogTextFull(this);
+      });
    }
    if (quickReblog === 1) {
       var idx;

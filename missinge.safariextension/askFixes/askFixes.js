@@ -312,9 +312,14 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, buttons, tags, askDa
       $('#posts li.post').each(function() {
          moreAnswerOptions(this, tagAsker, defaultTags, buttons, tags);
       });
-      document.addEventListener('DOMNodeInserted', function(e) {
-         moreAnswerOptions(e.target, tagAsker, defaultTags, buttons, tags);
-      }, false);
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === "messages") {
+            $.each(e.originalEvent.data.list, function(i, val) {
+               moreAnswerOptions($('#'+val).get(0), tagAsker, defaultTags,
+                                 buttons, tags);
+            });
+         }
+      });
    }
 }
 

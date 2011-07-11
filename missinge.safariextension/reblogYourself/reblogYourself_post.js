@@ -99,6 +99,9 @@ function MissingE_reblogYourself_post_doStartup() {
             suffix;
          link.appendChild(icon);
          div.insertBefore(link,last);
+         var evt = document.createEvent("HTMLEvents");
+         evt.initEvent("MissingEaddReblog", true, true);
+         link.dispatchEvent(evt);
       }
    }
 }

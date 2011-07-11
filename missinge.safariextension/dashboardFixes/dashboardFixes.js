@@ -170,6 +170,9 @@ function addQueueArrows(item) {
       if (qpost.length === 1) {
          qpost.detach();
          qpost.insertBefore('#posts li.queued:first');
+         var evt = document.createEvent("HTMLEvents");
+         evt.initEvent("MissingEqueueMove", true, true);
+         qpost.get(0).dispatchEvent(evt);
       }
    });
 /**** Only implement up arrow for now
@@ -246,14 +249,18 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                                            expandAll, maxBig, maxBigSize) {
    if (window.top !== window) { return false; }
 
-   document.addEventListener('DOMNodeInserted', function(e) {
-      var node = $(e.target);
-      if (e.target.tagName === 'LI' && node.hasClass('post')) {
-         if ($('#posts li.post[id="' + node.attr('id') + '"]').length > 1) {
-            node.remove();
+
+   $(document).bind('MissingEajax', function(e) {
+      if (e.originalEvent.data.type === 'notes') { return; }
+      $.each(e.originalEvent.data.list, function (i,val) {
+         var node = $('#'+val);
+         if (node.get(0).tagName === 'LI' && node.hasClass('post')) {
+            if ($('#posts li.post[id="' + node.attr('id') + '"]').length > 1) {
+               node.remove();
+            }
          }
-      }
-   }, false);
+      });
+   });
 
 /*
    $('a.like_button').live('click', function(e) {
@@ -305,9 +312,12 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
    }
    if (expandAll === 1) {
       $('#posts .post').each(function(){ addExpandAllHandler(this); });
-      document.addEventListener('DOMNodeInserted', function(e) {
-         addExpandAllHandler(e.target);
-      }, false);
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === 'notes') { return; }
+         $.each(e.originalEvent.data.list, function(i,val) {
+            addExpandAllHandler($('#'+val).get(0));
+         });
+      });
    }
    if (widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
@@ -324,16 +334,21 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                          (w+40) + 'px; }</style>');
       $('#content').css('padding-right', (w+20) + 'px');
       $('#left_column').css('min-height', $('#right_column').height() + 'px');
-      document.addEventListener('DOMNodeInserted', function(e) {
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === 'notes') { return; }
+         /*
          if ($(e.target).closest('#right_column').length > 0) {
             $('#left_column').css('min-height', $('#right_column').height() +
                                   'px');
          }
-         $(e.target).children('div.reply_pane:first')
-               .each(function() {
-            realignReplyNipple($(this).find('div.nipple'));
+         */
+         $.each(e.originalEvent.data.list, function(i,val) {
+            $('#'+val).children('div.reply_pane:first')
+                  .each(function() {
+               realignReplyNipple($(this).find('div.nipple'));
+            });
          });
-      }, false);
+      });
    }
    if (postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
@@ -389,9 +404,12 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       '});' +
       '</script>');
 
-      document.addEventListener('DOMNodeInserted', function(e) {
-         doReplies(e.target);
-      }, false);
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === 'notes') { return; }
+         $.each(e.originalEvent.data.list, function (i, val) {
+            doReplies($('#'+val).get(0));
+         });
+      });
       $('#posts li.post').each(function() {
          doReplies(this);
       });
@@ -414,35 +432,16 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                        'background-image:url("' + queuearrs + '");' +
                        '"); }</style>');
       $('body').append('<script type="text/javascript">' +
-                       'var MissingE_queueMoves = {};' +
-                       'document.addEventListener("DOMNodeInserted",' +
+                       'document.addEventListener("MissingEqueueMove",' +
                                                   'function(e) {' +
-                          'if (e.target.tagName === "LI" && ' +
-                               '/queued/.test(e.target.className) && ' +
-                               'MissingE_queueMoves[e.target.id]) {' +
-                             'delete MissingE_queueMoves[e.target.id];' +
-                             'update_publish_on_times();' +
-                          '}}, false);' +
-                       'document.addEventListener("DOMNodeRemoved",' +
-                                                  'function(e) {' +
-                          'if (e.target.tagName === "LI" && ' +
-                               '/queued/.test(e.target.className)) {' +
-                             'var isdragging=false;' +
-                             'for (i=0; i<Sortable.sortables.posts.draggables' +
-                                    '.length; i++) {' +
-                                'if (Sortable.sortables.posts.draggables[i]' +
-                                       '.dragging) {' +
-                                   'isdragging=true;' +
-                                   'break;' +
-                                '}' +
-                             '}' +
-                             'if (!isdragging) {' +
-                                'MissingE_queueMoves[e.target.id] = true;' +
-                             '}' +
-                          '}}, false);</script>');
-      document.addEventListener('DOMNodeInserted', function(e) {
-         addQueueArrows(e.target);
-      }, false);
+                          'update_publish_on_times();' +
+                       '}, false);</script>'); 
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === 'notes') { return; }
+         $.each(e.originalEvent.data.list, function(i,val) {
+            addQueueArrows($('#'+val).get(0));
+         });
+      });
       $('#posts li.queued').each(function() {
          addQueueArrows(this);
       });
@@ -451,9 +450,12 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
    if (replaceIcons === 1 &&
        document.body.id !== "tinymce" &&
        document.body.id !== "dashboard_edit_post") {
-      document.addEventListener('DOMNodeInserted', function(e) {
-         doIcons(e.target);
-      }, false);
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === 'notes') { return; }
+         $.each(e.originalEvent.data.list, function (i,val) {
+            doIcons($('#'+val).get(0));
+         });
+      });
 
       $("#posts li.post").each(function(i) {
          doIcons(this);
