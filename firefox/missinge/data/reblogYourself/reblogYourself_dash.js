@@ -51,6 +51,7 @@ function addReblog(item) {
 function receiveReblog(message) {
    if (message.greeting !== "reblogYourself") { return; }
    var lang = jQuery('html').attr("lang");
+   if (!lang) { lang = 'en'; }
    var edit, klass, txt;
    var reblog_text = locale[lang]["reblog"];
    if (message.success) {
