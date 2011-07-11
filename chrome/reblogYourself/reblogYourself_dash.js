@@ -68,7 +68,7 @@ function addReblog(item) {
                         .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                         .replace(/&/g,'%26');
 
-            var nr = $(' <a title="' + reblog_text + '" href="/reblog/' + tid +
+            var nr = $('<a title="' + reblog_text + '" href="/reblog/' + tid +
               '/' + response.data + '?redirect_to=' + redir +
               '" class="' + klass + '">' + txt + '</a>')
                .insertAfter(edit).before(' ');

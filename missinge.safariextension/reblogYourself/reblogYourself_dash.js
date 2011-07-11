@@ -72,7 +72,7 @@ function receiveReblog(response) {
       redir = redir.replace(/http:\/\/www.tumblr.com/,'')
                      .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                      .replace(/&/g,'%26');
-      var nr = $(' <a title="' + reblog_text + '" href="/reblog/' +
+      var nr = $('<a title="' + reblog_text + '" href="/reblog/' +
         response.message.pid + '/' + response.message.data + '?redirect_to=' + redir +
         '" class="' + klass + '">' + txt + '</a>')
          .insertAfter(edit).before(' ');
