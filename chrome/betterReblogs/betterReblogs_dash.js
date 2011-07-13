@@ -468,6 +468,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          if (selector.length > 0) {
             account = selector.val();
          }
+         e.preventDefault();
          doReblog(this,reblog_settings.replaceIcons,account);
          return false;
       });

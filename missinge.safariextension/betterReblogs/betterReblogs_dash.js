@@ -471,6 +471,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
          if (selector.length > 0) {
             account = selector.val();
          }
+         e.preventDefault();
          doReblog(this,replaceIcons,account);
          return false;
       });

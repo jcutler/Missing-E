@@ -43,8 +43,9 @@ function doNSFW() {
    jQuery('#posts li div.nsfwdiv').removeClass('nsfwoff');
 }
 
-function doHide(item) {
+function doHide(item, retry) {
    var safe;
+   if (!retry) { retry = 0; }
    if (getStorage('MissingE_safeDash_state',0)===0) { safe = false; }
    else { safe = true; }
    var node = jQuery(item);
@@ -78,6 +79,13 @@ function doHide(item) {
          });
       }
       else if (node.hasClass('post') && node.attr('id') !== 'new_post') {
+         var pid = node.attr('id').match(/[0-9]*$/)[0];
+         var vid = node.find('#video_player_' + pid);
+         if (vid.length > 0 && vid.find('embed').length === 0) {
+            if (retry < 4) {
+               setTimeout(function(){doHide(node.get(0), retry+1);},500);
+            }
+         }
          jQuery('img:not(.nsfwdone),embed.video_player:not(.nsfwdone),' +
            'embed.photoset:not(.nsfwdone)',node).each(function(){
             var klass = "";
@@ -359,6 +367,10 @@ self.on('message', function (message) {
    jQuery('#posts a.video_thumbnail').live('click', function(e) {
       doHide(jQuery(this).parent()
              .find('div.video_embed object,div.video_embed iframe').get(0));
+   });
+
+   jQuery('#posts .nsfwphotoset').live('click', function(e) {
+      doHide(jQuery(this).next().find('embed').get(0));
    });
 });
 

@@ -498,6 +498,7 @@ self.on('message', function (message) {
          if (selector.length > 0) {
             account = selector.val();
          }
+         e.preventDefault();
          doReblog(this,message.replaceIcons,account);
          return false;
       });
