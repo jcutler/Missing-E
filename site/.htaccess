@@ -5,6 +5,7 @@ Options +FollowSymLinks +MultiViews
 </Files>
 
 AddType application/octet-stream .safariextz
+AddType application/x-xpinstall .xpi
 
 <IfModule mod_rewrite.c>
 RewriteRule ask$ http://blog.missinge.infraware.ca/ask
