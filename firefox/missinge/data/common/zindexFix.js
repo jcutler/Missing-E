@@ -40,9 +40,9 @@ jQuery('#posts li.post embed').each(function() {
 jQuery('#posts li.post div.video + input:hidden').each(function() {
    zindexFixFutureEmbed(this);
 });
-jQuery(document).bind('MissingEajax', function(e) {
-   var type = e.originalEvent.data.match(/^[^:]*/)[0];
-   var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+document.addEventListener('MissingEajax', function(e) {
+   var type = e.data.match(/^[^:]*/)[0];
+   var list = e.data.match(/(post_[0-9]+)/g);
    if (type === 'notes') { return; }
    jQuery.each(list, function(i,val) {
       jQuery('#'+val).find('embed').each(function() {
@@ -52,5 +52,5 @@ jQuery(document).bind('MissingEajax', function(e) {
          zindexFixFutureEmbed(this);
       });
    });
-});
+}, false);
 

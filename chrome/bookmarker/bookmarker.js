@@ -264,7 +264,6 @@ function doMarks(item) {
            $('#user_menu_' + post).length === 0)) {
          return false;
       }
-      var lang = $('html').attr('lang');
       var ctrl = $(item).find('div.post_controls:not(.bookmarkAdded)');
       var j;
       var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));

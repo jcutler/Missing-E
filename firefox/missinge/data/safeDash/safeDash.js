@@ -331,9 +331,9 @@ self.on('message', function (message) {
    });
 
 
-   jQuery(document).bind('MissingEajax',function(e){
-      var type = e.originalEvent.data.match(/^[^:]*/)[0];
-      var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+   document.addEventListener('MissingEajax',function(e){
+      var type = e.data.match(/^[^:]*/)[0];
+      var list = e.data.match(/(post_[0-9]+)/g);
       if (type === 'notes') {
          doHide(jQuery('#'+list[0] + ' ol.notes').get(0));
       }
@@ -347,7 +347,7 @@ self.on('message', function (message) {
             doHide(this);
          });
       }
-   });
+   }, false);
 
    window.addEventListener('storage',function(e) {
       if (e.key !== 'MissingE_safeDash_state') { return false; }

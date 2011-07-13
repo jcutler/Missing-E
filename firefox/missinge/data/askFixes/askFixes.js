@@ -160,7 +160,8 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
    if (answer.length === 0) {
       return false;
    }
-   var lang = jQuery('html').attr("lang");
+   var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    var id = escapeHTML(jQuery(item).attr('id').match(/[0-9]*$/)[0]);
    if (buttons === 1) {
       var allbtns = "";
@@ -270,6 +271,7 @@ self.on('message', function (message) {
    if (message.askDash === 1) {
       var i;
       var lang = jQuery('html').attr('lang');
+      if (!lang) { lang = 'en'; }
       var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
       for (i=0; i<locale[lang]["askPerson"].length; i++) {
          if (i>0) { askLabel += " "; }
@@ -336,18 +338,18 @@ self.on('message', function (message) {
                            message.buttons,
                            message.tags);
       });
-      jQuery(document).bind('MissingEajax', function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax', function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          if (type === "messages") {
-            $.each(list, function(i,val) {
+            jQuery.each(list, function(i,val) {
                moreAnswerOptions(jQuery('#'+val).get(0), message.tagAsker,
                                  message.defaultTags,
                                  message.buttons,
                                  message.tags);
             });
          }
-      });
+      }, false);
    }
 });
 

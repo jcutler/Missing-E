@@ -31,6 +31,7 @@ function makeSidebar(tumblrAcctNum, retries) {
       }
    
       var lang = jQuery('html').attr('lang');
+      if (!lang) { lang = 'en'; }
       var sidebarList = [
          {
          label: locale[lang]["sidebar"]["posts"],

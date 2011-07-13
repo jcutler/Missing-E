@@ -50,7 +50,7 @@ function addReblog(item) {
 
 function receiveReblog(message) {
    if (message.greeting !== "reblogYourself") { return; }
-   var lang = jQuery('html').attr("lang");
+   var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
    var edit, klass, txt;
    var reblog_text = locale[lang]["reblog"];
@@ -111,14 +111,14 @@ function MissingE_reblogYourself_dash_doStartup() {
          }
       });
       jQuery('#posts li.post').each(function(){addReblog(this);});
-      jQuery(document).bind('MissingEajax',function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax',function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          if (type === 'notes') { return; }
          jQuery.each(list, function(i,val) {
             addReblog(jQuery('#'+val).get(0));
          });
-      });
+      }, false);
    }
 }
 

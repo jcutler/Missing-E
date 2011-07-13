@@ -68,6 +68,8 @@ function replyRepliesSettings(message) {
          });
       }
    }
+   var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    for (i=arr.length-1; i>=0; i--) {
       var st, en, nm, add;
       jQuery(arr[i]).toggleClass("MissingE_rt",false);
@@ -128,7 +130,6 @@ function replyRepliesSettings(message) {
       newcode = newcode.replace(/\s*$/,"");
 
       if (jQuery(arr[i]).parent().hasClass('note')) {
-         var lang = jQuery('html').attr('lang');
          var a,b,z,img,user,qt,reblnk,x;
          var main = jQuery(arr[i]).closest('li.post');
          var ans = jQuery(arr[i]).parent();
@@ -381,9 +382,9 @@ function MissingE_replyReplies_doStartup(message) {
                     extensionURL + 'replyReplies/replyReplies.css' +
                     '" />');
 
-   jQuery(document).bind('MissingEajax', function(e) {
-      var type = e.originalEvent.data.match(/^[^:]*/)[0];
-      var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+   document.addEventListener('MissingEajax', function(e) {
+      var type = e.data.match(/^[^:]*/)[0];
+      var list = e.data.match(/(post_[0-9]+)/g);
       if (type !== 'notes') { return; }
       var node = jQuery('#'+list[0]);
       if (!node.hasClass('is_mine')) {
@@ -410,7 +411,7 @@ function MissingE_replyReplies_doStartup(message) {
             item.css('background-image', 'none');
          }
       });
-   });
+   }, false);
 
    jQuery('div.notification_type_icon').live('mousedown', function(e) {
       if (e.shiftKey) { e.preventDefault(); }

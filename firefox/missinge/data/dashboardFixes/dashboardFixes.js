@@ -26,6 +26,7 @@ function addPostLinks() {
    var plwrap = '<li class="short_new_post post new_post" id="new_post"></li>';
    var pltxt = '<div class="short_post_labels">';
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    for (i in locale[lang]["postTypeNames"]) {
       pltxt += '<div class="short_label">' +
                '<a href="/new/' + i + '" class="new_post_label">' +
@@ -51,6 +52,7 @@ function doReplies(item) {
       return;
    }
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    var id = node.attr('id').match(/[0-9]*$/)[0];
    var notes = jQuery('#show_notes_link_' + id);
    if (notes.length === 0) {
@@ -82,6 +84,7 @@ function doIcons(item) {
    }
 
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    jQuery(item).find('div.post_controls')
       .addClass('MissingE_post_control_group');
    jQuery(item).find('div.post_controls a').each(function() {
@@ -247,10 +250,13 @@ self.on('message', function(message) {
        message.component !== "dashboardFixes") {
       return false;
    }
+   jQuery(document).bind('MissingEajax', function(e) {
+      console.log('MissingEajax');
+   });
    var extensionURL = message.extensionURL;
-   $(document).bind('MissingEajax', function(e) {
-      var type = e.originalEvent.data.match(/^[^:]*/)[0];
-      var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+   document.addEventListener('MissingEajax', function(e) {
+      var type = e.data.match(/^[^:]*/)[0];
+      var list = e.data.match(/(post_[0-9]+)/g);
       if (type === 'notes') { return; }
       jQuery.each(list, function (i,val) {
          var node = jQuery('#'+val);
@@ -261,7 +267,7 @@ self.on('message', function(message) {
             }
          }
       });
-   });
+   }, false);
 
 /*
    jQuery('a.like_button').live('click', function(e) {
@@ -313,14 +319,14 @@ self.on('message', function(message) {
    }
    if (message.expandAll === 1) {
       jQuery('#posts .post').each(function(){ addExpandAllHandler(this); });
-      jQuery(document).bind('MissingEajax', function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax', function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          if (type === 'notes') { return; }
          jQuery.each(list, function(i,val) {
             addExpandAllHandler(jQuery('#'+val).get(0));
          });
-      });
+      }, false);
    }
    if (message.widescreen === 1 &&
        !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
@@ -338,9 +344,9 @@ self.on('message', function(message) {
       jQuery('#content').css('padding-right', (w+20) + 'px');
       jQuery('#left_column').css('min-height',
                                  jQuery('#right_column').height() + 'px');
-      jQuery(document).bind('MissingEajax', function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax', function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          /*
          if (jQuery(e.target).closest('#right_column').length > 0) {
             jQuery('#left_column').css('min-height',
@@ -353,7 +359,7 @@ self.on('message', function(message) {
             realignReplyNipple(jQuery(this).find('div.nipple'));
             });
          });
-      });
+      }, false);
    }
    if (message.postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
@@ -409,14 +415,14 @@ self.on('message', function(message) {
       '});' +
       '</script>');
 
-      $(document).bind('MissingEajax', function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax', function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          if (type === 'notes') { return; }
          jQuery.each(list, function (i, val) {
             doReplies(jQuery('#'+val).get(0));
          });
-      });
+      }, false);
       jQuery('#posts li.post').each(function() {
          doReplies(this);
       });
@@ -441,14 +447,14 @@ self.on('message', function(message) {
                                                   'function(e) {' +
                           'update_publish_on_times();' +
                        '}, false);</script>');
-      jQuery(document).bind('MissingEajax', function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax', function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          if (type === 'notes') { return; }
          jQuery.each(list, function(i,val) {
             addQueueArrows(jQuery('#'+val).get(0));
          });
-      });
+      }, false);
       jQuery('#posts li.queued').each(function() {
          addQueueArrows(this);
       });
@@ -457,14 +463,14 @@ self.on('message', function(message) {
    if (message.replaceIcons === 1 &&
        document.body.id !== "tinymce" &&
        document.body.id !== "dashboard_edit_post") {
-      jQuery(document).bind('MissingEajax', function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax', function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          if (type === 'notes') { return; }
          jQuery.each(list, function (i,val) {
             doIcons(jQuery('#'+val).get(0));
          });
-      });
+      }, false);
 
       jQuery("#posts li.post").each(function(i) {
          if (this.id === "new_post") { return true; }

@@ -95,9 +95,9 @@ self.on('message', function(message) {
    sbtlisttext += '</div>';
    var sbtlist = jQuery(sbtlisttext).insertAfter(sbt);
    
-   jQuery(document).bind('MissingEajax',function() {
+   document.addEventListener('MissingEajax',function() {
       moveSelectList(sbt,sbtlist);
-   });
+   }, false);
    sbt.click(function() {
       return false;
    }).mouseup(function(e) {

@@ -214,6 +214,7 @@ self.on('message', function (message) {
    }
    var extensionURL = message.extensionURL;
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    if (message.passTags === 1) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
       if (message.quickReblog === 1) {
@@ -256,12 +257,12 @@ self.on('message', function (message) {
       jQuery('#posts li.post.regular').each(function() {
          reblogTextFull(this);
       });
-      jQuery(document).bind('MissingEajax', function(e) {
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax', function(e) {
+         var list = e.data.match(/(post_[0-9]+)/g);
          jQuery.each(list, function(i,val) {
             reblogTextFull(jQuery('#'+val).get(0));
          });
-      });
+      }, false);
       jQuery('#posts div.post_controls a').live('MissingEaddReblog',function() {
          reblogTextFull(this);
       });

@@ -90,6 +90,7 @@ function addBar(mark, lang, altPost) {
 function generateList() {
    var i;
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
    var marklist = jQuery('#MissingE_marklist');
    if (marks.length === 0) {
@@ -249,6 +250,7 @@ function markClick(e) {
 function doMarks(item) {
    if (item.tagName === 'LI' && jQuery(item).hasClass('post')) {
       var lang = jQuery('html').attr('lang');
+      if (!lang) { lang = 'en'; }
       var post = jQuery(item).attr('id').match(/[0-9]*$/)[0];
       if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href) &&
           (jQuery('#user_menu_' + post + ' a[following]')
@@ -256,7 +258,6 @@ function doMarks(item) {
            jQuery('#user_menu_' + post).length === 0)) {
          return false;
       }
-      var lang = jQuery('html').attr('lang');
       var ctrl = jQuery(item).find('div.post_controls:not(.bookmarkAdded)');
       var j;
       var marks = parseMarks(getStorage("MissingE_bookmarker_marks",""));
@@ -423,14 +424,14 @@ self.on('message', function (message) {
          jQuery("#posts li.post").each(function(i) {
             doMarks(this);
          });
-         jQuery(document).bind('MissingEajax', function(e) {
-            var type = e.originalEvent.data.match(/^[^:]*/)[0];
-            var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+         document.addEventListener('MissingEajax', function(e) {
+            var type = e.data.match(/^[^:]*/)[0];
+            var list = e.data.match(/(post_[0-9]+)/g);
             if (type === 'notes') { return; }
             jQuery.each(list, function(i,val) {
                doMarks(jQuery('#'+val).get(0));
             });
-         });
+         }, false);
 
          if (message.addBar === 0) {
             jQuery('head').append('<style type="text/css">' +

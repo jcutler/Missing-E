@@ -254,7 +254,7 @@ function doFWGet(followers, followees, show, extensionURL, retries, acct) {
          error: function(xhr, textStatus) {
             this.tryCount++;
             if (!failed && this.tryCount <= this.retryLimit &&
-                $('#facebox').css('display') === 'block') {
+                jQuery('#facebox').css('display') === 'block') {
                jQuery.ajax(this);
                return;
             }
@@ -278,7 +278,7 @@ function doFWGet(followers, followees, show, extensionURL, retries, acct) {
             if (!(/id="dashboard_followers"/.test(data))) {
                this.tryCount++;
                if (!failed && this.tryCount <= this.retryLimit &&
-                   $('#facebox').css('display') === 'block') {
+                   jQuery('#facebox').css('display') === 'block') {
                   jQuery.ajax(this);
                   return;
                }
@@ -318,7 +318,7 @@ function doFWGet(followers, followees, show, extensionURL, retries, acct) {
          error: function(xhr, textStatus) {
             this.tryCount++;
             if (!failed && this.tryCount <= this.retryLimit &&
-                $('#facebox').css('display') === 'block') {
+                jQuery('#facebox').css('display') === 'block') {
                jQuery.ajax(this);
                return;
             }
@@ -342,7 +342,7 @@ function doFWGet(followers, followees, show, extensionURL, retries, acct) {
             if (!(/id="dashboard_following"/.test(data))) {
                this.tryCount++;
                if (!failed && this.tryCount <= this.retryLimit &&
-                   $('#facebox').css('display') === 'block') {
+                   jQuery('#facebox').css('display') === 'block') {
                   jQuery.ajax(this);
                   return;
                }
@@ -376,7 +376,7 @@ function doFWGet(followers, followees, show, extensionURL, retries, acct) {
 
 function followChecker_newTab() {
    if (!formKey) {
-      formKey = $('#form_key').val();
+      formKey = jQuery('#form_key').val();
    }
    if (formKey && (followyou.length > 0 || youfollow.length > 0)) {
       self.postMessage({greeting:"followChecker",
@@ -439,7 +439,7 @@ function tfc_init(extensionURL, retries) {
          error: function(xhr, textStatus) {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-               $.ajax(this);
+               jQuery.ajax(this);
                return;
             }
             else {
@@ -463,7 +463,7 @@ function tfc_init(extensionURL, retries) {
                      .test(data))) {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
-                  $.ajax(this);
+                  jQuery.ajax(this);
                   return;
                }
                else {

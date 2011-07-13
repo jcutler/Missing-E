@@ -85,6 +85,7 @@ function insertMagnifier(item) {
    if (item.tagName === "LI" && jQuery(item).hasClass("post") &&
        jQuery(item).hasClass("photo")) {
       var lang = jQuery('html').attr('lang');
+      if (!lang) { lang = 'en'; }
       var ctrl = jQuery(item).find('div.post_controls');
       var bm = ctrl.find('a.MissingE_mark');
       var heart = ctrl.find('a.like_button');
@@ -191,14 +192,14 @@ self.on('message', function (message) {
       jQuery('#posts li.post[class~="photo"]').each(function(){
          insertMagnifier(this);
       });
-      jQuery(document).bind('MissingEajax',function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax',function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          if (type === 'notes') { return; }
          jQuery.each(list, function(i,val) {
             insertMagnifier(jQuery('#'+val).get(0));
          });
-      });
+      }, false);
    }
 
    if (message.magnifyAvatars === 1) {
@@ -210,9 +211,9 @@ self.on('message', function (message) {
             .each(function() {
          insertAvatarMagnifier(this);
       });
-      jQuery(document).bind('MissingEajax',function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax',function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          if (type === 'notes') { return; }
          jQuery.each(list, function(i,val) {
             insertAvatarMagnifier(jQuery('#'+val).get(0));
@@ -222,7 +223,7 @@ self.on('message', function (message) {
          }).each(function(){
             insertAvatarMagnifier(this);
          });
-      });
+      }, false);
    }
 });
 

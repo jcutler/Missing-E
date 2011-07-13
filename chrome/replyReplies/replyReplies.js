@@ -111,6 +111,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             });
          }
       }
+      var lang = $('html').attr('lang');
       for (i=arr.length-1; i>=0; i--) {
          var st, en, nm, add;
          $(arr[i]).toggleClass("MissingE_rt",false);
@@ -171,7 +172,6 @@ $('div.notification_type_icon').live('mousedown', function(e) {
          newcode = newcode.replace(/\s*$/,'');
 
          if ($(arr[i]).parent().hasClass('note')) {
-            var lang = $('html').attr('lang');
             var a,b,z,img,user,qt,reblnk,x;
             var main = $(arr[i]).closest('li.post');
             var ans = $(arr[i]).parent();

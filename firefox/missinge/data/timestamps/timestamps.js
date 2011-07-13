@@ -25,6 +25,7 @@
 
 function loadTimestamp(item) {
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; console.log('oops');}
    if (item.tagName === "LI" && jQuery(item).hasClass("post")
        && jQuery(item).attr("id") !== "new_post") {
       var div = jQuery(item).find("div.post_info");
@@ -110,14 +111,14 @@ function MissingE_timestamps_doStartup() {
          }
       });
       jQuery('#posts li.post').each(function(){ loadTimestamp(this); });
-      $(document).bind('MissingEajax',function(e) {
-         var type = e.originalEvent.data.match(/^[^:]*/)[0];
-         var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+      document.addEventListener('MissingEajax',function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
          if (type === 'notes') { return; }
          jQuery.each(list, function(i,val) {
             loadTimestamp(jQuery('#'+val).get(0));
          });
-      });
+      }, false);
    }
 }
 
