@@ -97,3 +97,19 @@ color:#444;
 #facebox .MissingE_askbox_loaded p {
 margin:0 0 10px 0 !important;
 }
+
+#posts li.MissingEmdSelected {
+opacity:0.7;
+}
+
+#right_column #MissingEmassDeleter a.select_all {
+background-position:8px 7px;
+}
+
+#right_column #MissingEmassDeleter a.deselect_all {
+background-position:8px -30px;
+}
+
+#right_column #MissingEmassDeleter a.delete_selected {
+background-position:8px -65px;
+}

@@ -20,6 +20,11 @@
  * You should have received a copy of the GNU General Public License
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
+function setupMassDeletePost(item) {
+   $('<input type="checkbox" val="0" id="' + item.id + '_select" ' +
+     'class="MissingEmassDeleteSelect" style="vertical-align:top;" />')
+         .appendTo($(item).find('div.post_controls'));
+}
 
 function failAnswer(id,type) {
    $('#post_control_loader_' + id).hide();
@@ -328,6 +333,43 @@ chrome.extension.sendRequest({greeting: "settings",
                                  askFixes_settings.buttons,
                                  askFixes_settings.tags);
             });
+         }
+      });
+   }
+   if (true || askFixes_settings.multiDelete === 1) {
+      var beforeguy = $('#MissingE_sidebar');
+      if (beforeguy.length === 0) {
+         beforeguy = $('#search_form');
+      }
+      $('head').append('<style type="text/css">' +
+                       '#right_column #MissingEmassDeleter a { ' +
+                       'background-image:url("' +
+                       chrome.extension.getURL("askFixes/massDelete.png") +
+                       '") !important; }</style>');
+      $('<ul class="controls_section" id="MissingEmassDeleter">' +
+        '<li><a href="#" class="select_all">' +
+        '<div class="hide_overflow">Select All</div></a></li>' +
+        '<li><a href="#" class="deselect_all">' +
+        '<div class="hide_overflow">Unselect All</div></a></li>' +
+        '<li><a href="#" class="delete_selected">' +
+        '<div class="hide_overflow">Delete Selected</div></a></li></ul>')
+            .insertBefore($('#MissingE_sidebar,#search_form').first());
+      $('#posts li.post').each(function() {
+         setupMassDeletePost(this);
+      });
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === "messages") {
+            $.each(e.originalEvent.data.list, function(i, val) {
+               setupMassDeletePost($('#'+val).get(0));
+            });
+         }
+      });
+      $('input.MissingEmassDeleteSelect').change(function() {
+         if (this.checked) {
+            $(this).closest('li.post').addClass('MissingEmdSelected');
+         }
+         else {
+            $(this).closest('li.post').removeClass('MissingEmdSelected');
          }
       });
    }
