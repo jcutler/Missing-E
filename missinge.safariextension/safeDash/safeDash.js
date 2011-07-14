@@ -80,8 +80,8 @@ function doHide(item, retry) {
          });
       }
       else if (node.hasClass('post') && node.attr('id') !== 'new_post') {
-         $('img:not(.nsfwdone),embed.video_player:not(.nsfwdone),' +
-           'embed.photoset:not(.nsfwdone)',node).each(function(){
+         $('img:not(.nsfwdone),embed.video_player:not(.nsfwdone)',node)
+               .each(function(){
             var pid = node.attr('id').match(/[0-9]*$/)[0];
             var vid = node.find('#video_player_' + pid);
             if (vid.length > 0 && vid.find('embed').length === 0) {
@@ -102,15 +102,6 @@ function doHide(item, retry) {
                me.css('opacity','1').addClass('nsfwdone');
                return;
             }
-            if (/photoset_preview_overlay.png/.test(me.attr('src'))) {
-               me.parent().addClass('nsfwphotoset');
-               me.addClass('nsfw_overlay').addClass('nsfwdone')
-                     .css('opacity','1');
-               if (safe) {
-                  me.css('opacity','0');
-               }
-               return;
-            }
             if (!me.hasClass('video_player') &&
                 me.get(0).readyState === 'uninitialized') {
                me.bind('readystatechange.MissingE_sd', function() {
@@ -118,7 +109,7 @@ function doHide(item, retry) {
                });
                return;
             }
-            else if (me.hasClass('video_player') || me.hasClass('photoset')) {
+            else if (me.hasClass('video_player')) {
                me.addClass('nsfwvid').addClass('nsfwdone').parent()
                   .addClass('nsfwed').parent().addClass('nsfwembed')
                   .css('background','url("' + lock + '") no-repeat scroll ' +
@@ -167,19 +158,6 @@ function doHide(item, retry) {
             }
             else {
                var extra = '';
-               if (/^photoset_/.test(me.parent().next().attr('id'))) {
-                  var pos = me.position();
-                  extra = 'position:absolute;top:' + pos.top + 'px;left:' +
-                     pos.left + 'px;';
-                  if (pos.top === 0) {
-                     if (pos.left === 0) { klass += ' nsfwphotoset4'; }
-                     else { klass += ' nsfwphotoset1'; }
-                  }
-                  else {
-                     if (pos.left === 0) { klass += ' nsfwphotoset3'; }
-                     else { klass += ' nsfwphotoset2'; }
-                  }
-               }
                if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/
                      .test(me.attr('src')))) {
                   if (!me.hasClass('inline_image')) {
@@ -199,7 +177,7 @@ function doHide(item, retry) {
       }
    }
    else if (item.tagName === 'EMBED' &&
-            (node.hasClass('video_player') || node.hasClass('photoset')) &&
+            node.hasClass('video_player') &&
             !node.hasClass('nsfwdone')) {
       node.addClass('nsfwvid').addClass('nsfwdone').parent()
             .addClass('nsfwed').parent().addClass('nsfwembed')
@@ -356,9 +334,5 @@ function MissingE_safeDash_doStartup() {
    $('#posts a.video_thumbnail').live('click', function(e) {
       doHide($(this).parent()
              .find('div.video_embed object,div.video_embed iframe').get(0));
-   });
-
-   $('#posts .nsfwphotoset').live('click', function(e) {
-      doHide($(this).next().find('embed').get(0));
    });
 }
