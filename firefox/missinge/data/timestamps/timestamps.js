@@ -25,7 +25,7 @@
 
 function loadTimestamp(item) {
    var lang = jQuery('html').attr('lang');
-   if (!lang) { lang = 'en'; console.log('oops');}
+   if (!lang) { lang = 'en'; }
    if (item.tagName === "LI" && jQuery(item).hasClass("post")
        && jQuery(item).attr("id") !== "new_post") {
       var div = jQuery(item).find("div.post_info");

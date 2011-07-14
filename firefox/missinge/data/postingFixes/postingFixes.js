@@ -196,17 +196,20 @@ self.on('message', function(message) {
                              'is_preview=false;</script>');
          }
          if (this.id === 'MissingE_publishPost') {
-            jQuery('#post_state').val('0').get(0).onchange();
+            jQuery('#post_state').val('0');
          }
          else if (this.id === 'MissingE_draftPost') {
-            jQuery('#post_state').val('1').get(0).onchange();
+            jQuery('#post_state').val('1');
          }
          else if (this.id === 'MissingE_queuePost') {
-            jQuery('#post_state').val('2').get(0).onchange();
+            jQuery('#post_state').val('2');
          }
          else if (this.id === 'MissingE_privatePost') {
-            jQuery('#post_state').val('private').get(0).onchange();
+            jQuery('#post_state').val('private');
          }
+         var evt = document.createEvent("HTMLEvents");
+         evt.initEvent('change',false,true);
+         jQuery('#post_state').get(0).dispatchEvent(evt);
       });
       showHideButtons(newbtns, jQuery('#post_state').val());
       if (isShare) {

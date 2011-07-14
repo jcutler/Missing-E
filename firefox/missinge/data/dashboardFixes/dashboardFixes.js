@@ -250,9 +250,6 @@ self.on('message', function(message) {
        message.component !== "dashboardFixes") {
       return false;
    }
-   jQuery(document).bind('MissingEajax', function(e) {
-      console.log('MissingEajax');
-   });
    var extensionURL = message.extensionURL;
    document.addEventListener('MissingEajax', function(e) {
       var type = e.data.match(/^[^:]*/)[0];
