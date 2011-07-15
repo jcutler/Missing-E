@@ -658,11 +658,11 @@ var locale = {
    "textTitle": "Metin'le Cevapla"
   },
   "massDelete": {
-   "selectAll": "Tümünü seç",
-   "deselectAll": "Işaretini kaldırın tüm",
-   "deleteSelected": "Seçili programı silmek",
+   "selectAll": "Hepsini Seç",
+   "deselectAll": "Seçimi Kaldır",
+   "deleteSelected": "Seçilenleri Sil",
    "message": "Seçilmiş # mesajları silmek istediğiniz emin misiniz?",
-   "error": "Bazı mesajlar silinemedi.Lütfen daha sonra tekrar deneyin."
+   "error": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin."
   }
  }
 }
