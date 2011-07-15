@@ -23,6 +23,7 @@
 <html>
 <head>
 <script type="text/javascript" src="common/jquery.min.js"></script>
+<script type="text/javascript" src="common/localizations.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
 <script type="text/javascript" src="common/utils.js"></script>
 <script>
@@ -63,6 +64,7 @@ var followCheckerTab = null;
 var formKey;
 var followYou = [];
 var youFollow = [];
+var lang = 'en';
 
 function clearFollowChecker() {
    followYou = [];
@@ -130,7 +132,7 @@ function doTimestamp(stamp, id, request) {
    var ts = stamp["unix-timestamp"];
    var d = new Date(ts*1000);
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
-   ins = getFormattedDate(d, ins);
+   ins = getFormattedDate(d, ins, lang);
    request.target.page.dispatchMessage("timestamp",{pid: id, success: true, data: ins});
 }
 
@@ -537,6 +539,7 @@ function requestTags(request) {
 }
 
 function requestTimestamp(request) {
+   if (request.message.lang) { lang = request.message.lang; }
    if (request.target.page === undefined) {
       debug("Stop timestamp request: Tab closed or changed.");
       dequeueAjax();

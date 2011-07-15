@@ -43,11 +43,15 @@ function zeroPad(num, len) {
    return ret;
 }
 
-function getFormattedDate(d, format) {
+function getFormattedDate(d, format, lang) {
    var ret = format;
+   if (!lang || !locale[lang]) { lang = 'en'; }
    ret = ret.replace(/%Y/g,d.getFullYear())
             .replace(/%y/g,(d.getFullYear()%100))
-            .replace(/%M/g,months[d.getMonth()])
+            .replace(/%M/g,locale[lang]["monthsShort"][d.getMonth()])
+            .replace(/%B/g,locale[lang]["monthsLong"][d.getMonth()])
+            .replace(/%w/g,locale[lang]["daysShort"][d.getDay()])
+            .replace(/%W/g,locale[lang]["daysLong"][d.getDay()])
             .replace(/%m/g,zeroPad(d.getMonth()+1,2))
             .replace(/%n/g,(d.getMonth()+1))
             .replace(/%D/g,zeroPad(d.getDate(),2))
@@ -64,8 +68,8 @@ function getFormattedDate(d, format) {
    return ret;
 }
 
-function getBookmarkerFormat(d, user, format) {
-   var ret = getFormattedDate(d, format);
+function getBookmarkerFormat(d, user, format, lang) {
+   var ret = getFormattedDate(d, format, lang);
    return ret.replace(/%u/g,user);
 }
 

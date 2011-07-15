@@ -70,7 +70,8 @@ function loadTimestamp(item) {
          }
       }
       if (tid === undefined || tid === null || tid === "") { return; }
-      safari.self.tab.dispatchMessage("timestamp", {pid: tid, url: addr});
+      safari.self.tab.dispatchMessage("timestamp", {pid: tid, url: addr,
+                                                    lang: lang});
    }
 }
 
