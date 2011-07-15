@@ -298,10 +298,10 @@ var locale = {
    "textTitle": "Text Antwort"
   },
   "massDelete": {
-   "selectAll": "Alle wählen",
+   "selectAll": "Alle auswählen",
    "deselectAll": "Alle abwählen",
-   "deleteSelected": "Auswahl löschen",
-   "message": "Sind Sie sicher, dass Sie die # ausgewählten Nachrichten zu löschen?",
+   "deleteSelected": "Auswählte löschen",
+   "message": "Sind Sie sicher, dass Sie die # ausgewählten Nachrichten löschen wollen?",
    "error": "Einige Nachrichten können nicht gelöscht werden. Bitte versuchen Sie es später erneut."
   }
  },
@@ -937,7 +937,7 @@ var locale = {
    "selectAll": "Hepsini Seç",
    "deselectAll": "Seçimi Kaldır",
    "deleteSelected": "Seçilenleri Sil",
-   "message": "Seçilmiş # mesajları silmek istediğiniz emin misiniz?",
+   "message": "Seçili olan bu # mesaj silinsin mi?",
    "error": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin."
   }
  }

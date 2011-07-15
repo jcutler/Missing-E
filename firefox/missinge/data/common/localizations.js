@@ -1,5 +1,51 @@
 var locale = {
  "en": {
+  "daysLong": [
+   "Sunday",
+   "Monday",
+   "Tuesday",
+   "Wednesday",
+   "Thursday",
+   "Friday",
+   "Saturday"
+  ],
+  "daysShort": [
+   "Sun",
+   "Mon",
+   "Tue",
+   "Wed",
+   "Thu",
+   "Fri",
+   "Sat"
+  ],
+  "monthsLong": [
+   "January",
+   "February",
+   "March",
+   "April",
+   "May",
+   "June",
+   "July",
+   "August",
+   "September",
+   "October",
+   "November",
+   "December"
+  ],
+  "monthsShort": [
+   "Jan",
+   "Feb",
+   "Mar",
+   "Apr",
+   "May",
+   "Jun",
+   "Jul",
+   "Aug",
+   "Sep",
+   "Oct",
+   "Nov",
+   "Dec"
+  ],
   "update": "Update Missing e",
   "sidebar": {
    "posts": "Posts",
@@ -107,6 +153,52 @@ var locale = {
   }
  },
  "de": {
+  "daysLong": [
+   "Sonntag",
+   "Montag",
+   "Dienstag",
+   "Mittwoch",
+   "Donnerstag",
+   "Freitag",
+   "Samstag"
+  ],
+  "daysShort": [
+   "So",
+   "Mo",
+   "Di",
+   "Mi",
+   "Do",
+   "Fr",
+   "Sa"
+  ],
+  "monthsLong": [
+   "Januar",
+   "Februar",
+   "März",
+   "April",
+   "Mai",
+   "Juni",
+   "Juli",
+   "August",
+   "September",
+   "Oktober",
+   "November",
+   "Dezember"
+  ],
+  "monthsShort": [
+   "Jan",
+   "Feb",
+   "Mär",
+   "Apr",
+   "Mai",
+   "Jun",
+   "Jul",
+   "Aug",
+   "Sep",
+   "Okt",
+   "Nov",
+   "Dez"
+  ],
   "update": "Aktualisieren von Missing e",
   "sidebar": {
    "posts": "Einträge",
@@ -206,14 +298,60 @@ var locale = {
    "textTitle": "Text Antwort"
   },
   "massDelete": {
-   "selectAll": "Alle wählen",
+   "selectAll": "Alle auswählen",
    "deselectAll": "Alle abwählen",
-   "deleteSelected": "Auswahl löschen",
-   "message": "Sind Sie sicher, dass Sie die # ausgewählten Nachrichten zu löschen?",
+   "deleteSelected": "Auswählte löschen",
+   "message": "Sind Sie sicher, dass Sie die # ausgewählten Nachrichten löschen wollen?",
    "error": "Einige Nachrichten können nicht gelöscht werden. Bitte versuchen Sie es später erneut."
   }
  },
  "fr": {
+   "daysLong": [
+   "Dimanche",
+   "Lundi",
+   "Mardi",
+   "Mercredi",
+   "Jeudi",
+   "Vendredi",
+   "Samedi"
+  ],
+  "daysShort": [
+   "Dim",
+   "Lun",
+   "Mar",
+   "Mer",
+   "Jeu",
+   "Ven",
+   "Sam"
+  ],
+  "monthsLong": [
+   "Janvier",
+   "Février",
+   "Mars",
+   "Avril",
+   "Mai",
+   "Juin",
+   "Juillet",
+   "Août",
+   "Septembre",
+   "Octobre",
+   "Novembre",
+   "Décembre"
+  ],
+  "monthsShort": [
+   "Janv",
+   "Févr",
+   "Mars",
+   "Avr",
+   "Mai",
+   "Juin",
+   "Juil",
+   "Août",
+   "Sept",
+   "Oct",
+   "Nov",
+   "Déc"
+  ],
   "update": "Mettre à jour Missing e",
   "sidebar": {
    "posts": "Billets",
@@ -321,6 +459,52 @@ var locale = {
   }
  },
  "it": {
+  "daysLong": [
+   "Domenica",
+   "Lunedi",
+   "Martedì",
+   "Mercoledì",
+   "Giovedi",
+   "Venerdì",
+   "Sabato"
+  ],
+  "daysShort": [
+   "Dom",
+   "Lun",
+   "Mar",
+   "Mer",
+   "Gio",
+   "Ven",
+   "Sab"
+  ],
+  "monthsLong": [
+   "Gennaio",
+   "Febbraio",
+   "Marzo",
+   "Aprile",
+   "Maggio",
+   "Giugno",
+   "Luglio",
+   "Agosto",
+   "Settembre",
+   "Ottobre",
+   "Novembre",
+   "Dicembre"
+  ],
+  "monthsShort": [
+   "Gen",
+   "Feb",
+   "Mar",
+   "Apr",
+   "Mag",
+   "Giu",
+   "Lug",
+   "Ago",
+   "Set",
+   "Ott",
+   "Nov",
+   "Dic"
+  ],
   "update": "Aggiornamento di Missing e",
   "sidebar": {
    "posts": "Post",
@@ -428,6 +612,52 @@ var locale = {
   }
  },
  "ja": {
+  "daysLong": [
+   "日",
+   "月",
+   "火",
+   "水",
+   "木",
+   "金",
+   "土"
+  ],
+  "daysShort": [
+   "日",
+   "月",
+   "火",
+   "水",
+   "木",
+   "金",
+   "土"
+  ],
+  "monthsLong": [
+   "1月",
+   "2月",
+   "3月",
+   "4月",
+   "5月",
+   "6月",
+   "7月",
+   "8月",
+   "9月",
+   "10月",
+   "11月",
+   "12月"
+  ],
+  "monthsShort": [
+   "1月",
+   "2月",
+   "3月",
+   "4月",
+   "5月",
+   "6月",
+   "7月",
+   "8月",
+   "9月",
+   "10月",
+   "11月",
+   "12月"
+  ],
   "update": "Missing e を更新する",
   "sidebar": {
    "posts": "総合投稿数",
@@ -535,6 +765,52 @@ var locale = {
   }
  },
  "tr": {
+  "daysLong": [
+   "Pazar",
+   "Pazartesi",
+   "Salı",
+   "Çarşamba",
+   "Perşembe",
+   "Cuma",
+   "Cumartesi"
+  ],
+  "daysShort": [
+   "Paz",
+   "Pzt",
+   "Sal",
+   "Çar",
+   "Per",
+   "Cum",
+   "Cmt"
+  ],
+  "monthsLong": [
+   "Ocak",
+   "Şubat",
+   "Mart",
+   "Nisan",
+   "Mayıs",
+   "Haziran",
+   "Temmuz",
+   "Ağustos",
+   "Eylül",
+   "Ekim",
+   "Kasım",
+   "Aralık"
+  ],
+  "monthsShort": [
+   "Oca",
+   "Şub",
+   "Mar",
+   "Nis",
+   "May",
+   "Haz",
+   "Tem",
+   "Ağu",
+   "Eyl",
+   "Eki",
+   "Kas",
+   "Ara"
+  ],
   "update": "Missing e'u Güncelleme",
   "sidebar": {
    "posts": "Gönderiler",
@@ -658,11 +934,11 @@ var locale = {
    "textTitle": "Metin'le Cevapla"
   },
   "massDelete": {
-   "selectAll": "Tümünü seç",
-   "deselectAll": "Işaretini kaldırın tüm",
-   "deleteSelected": "Seçili programı silmek",
-   "message": "Seçilmiş # mesajları silmek istediğiniz emin misiniz?",
-   "error": "Bazı mesajlar silinemedi.Lütfen daha sonra tekrar deneyin."
+   "selectAll": "Hepsini Seç",
+   "deselectAll": "Seçimi Kaldır",
+   "deleteSelected": "Seçilenleri Sil",
+   "message": "Seçili olan bu # mesaj silinsin mi?",
+   "error": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin."
   }
  }
 }
