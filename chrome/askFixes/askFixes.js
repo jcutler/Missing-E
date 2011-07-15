@@ -22,8 +22,41 @@
  */
 function setupMassDeletePost(item) {
    $('<input type="checkbox" val="0" id="' + item.id + '_select" ' +
-     'class="MissingEmassDeleteSelect" style="vertical-align:top;" />')
+     'class="MissingEmassDeleteSelect" />')
          .appendTo($(item).find('div.post_controls'));
+}
+
+function deleteMessages(key) {
+   var posts = [];
+   var count = 0;
+   var set = $('#posts li.MissingEmdSelected');
+   if (set.length < 1) { return; }
+   var exemplar = set.eq(0).data('blog');
+   console.log('deleting: ' + exemplar);
+   var remset = set.filter(function(i) {
+      if (count >= 100) { return false; }
+      if ($(this).data('blog') === exemplar) {
+         count++;
+         return true;
+      }
+      else { return false; }
+   }).each(function(i) {
+      if (i >= 100) { return false; }
+      posts.push(this.id.match(/[0-9]+$/)[0]);
+   });
+   $.ajax({
+      type: "POST",
+      url: '/delete_posts',
+      data: {"post_ids": posts.join(','),
+             "form_key": key},
+      error: function(xhr, textStatus) {
+         alert("Some messages could not be deleted.\nPlease try again later.");
+      },
+      success: function(data, textStatus) {
+         remset.removeClass('MissingEmdSelected').remove();
+         deleteMessages(key);
+      }
+   });
 }
 
 function failAnswer(id,type) {
@@ -335,42 +368,86 @@ chrome.extension.sendRequest({greeting: "settings",
             });
          }
       });
-   }
-   if (true || askFixes_settings.multiDelete === 1) {
-      var beforeguy = $('#MissingE_sidebar');
-      if (beforeguy.length === 0) {
-         beforeguy = $('#search_form');
-      }
-      $('head').append('<style type="text/css">' +
-                       '#right_column #MissingEmassDeleter a { ' +
-                       'background-image:url("' +
-                       chrome.extension.getURL("askFixes/massDelete.png") +
-                       '") !important; }</style>');
-      $('<ul class="controls_section" id="MissingEmassDeleter">' +
-        '<li><a href="#" class="select_all">' +
-        '<div class="hide_overflow">Select All</div></a></li>' +
-        '<li><a href="#" class="deselect_all">' +
-        '<div class="hide_overflow">Unselect All</div></a></li>' +
-        '<li><a href="#" class="delete_selected">' +
-        '<div class="hide_overflow">Delete Selected</div></a></li></ul>')
-            .insertBefore($('#MissingE_sidebar,#search_form').first());
-      $('#posts li.post').each(function() {
-         setupMassDeletePost(this);
-      });
-      $(document).bind('MissingEajax', function(e) {
-         if (e.originalEvent.data.type === "messages") {
-            $.each(e.originalEvent.data.list, function(i, val) {
-               setupMassDeletePost($('#'+val).get(0));
-            });
-         }
-      });
-      $('input.MissingEmassDeleteSelect').change(function() {
-         if (this.checked) {
-            $(this).closest('li.post').addClass('MissingEmdSelected');
+      if (true || askFixes_settings.multiDelete === 1) {
+         var afterguy = $('#right_column a.settings');
+         var beforeguy;
+         if (afterguy.length > 0) {
+            beforeguy = afterguy.closest('ul').next();
          }
          else {
-            $(this).closest('li.post').removeClass('MissingEmdSelected');
+            beforeguy = $('#MissingE_sidebar');
+            if (beforeguy.length === 0) {
+               beforeguy = $('#search_form');
+            }
          }
-      });
+         $('head').append('<style type="text/css">' +
+                          '#right_column #MissingEmassDeleter a { ' +
+                          'background-image:url("' +
+                          chrome.extension.getURL("askFixes/massDelete.png") +
+                          '") !important; }</style>');
+         $('<ul class="controls_section" id="MissingEmassDeleter">' +
+           '<li><a href="#" class="select_all">' +
+           '<div class="hide_overflow">Select All</div></a></li>' +
+           '<li><a href="#" class="deselect_all">' +
+           '<div class="hide_overflow">Unselect All</div></a></li>' +
+           '<li><a href="#" class="delete_selected">' +
+           '<div class="hide_overflow">Delete Selected</div></a></li></ul>')
+               .insertBefore(beforeguy);
+         $('#posts li.post').each(function() {
+            setupMassDeletePost(this);
+         });
+         $(document).bind('MissingEajax', function(e) {
+            if (e.originalEvent.data.type === "messages") {
+               $.each(e.originalEvent.data.list, function(i, val) {
+                  setupMassDeletePost($('#'+val).get(0));
+               });
+            }
+         });
+         $('#MissingEmassDeleter a').click(function() {
+            var btn = $(this);
+            if (btn.hasClass('select_all')) {
+               $('#posts input.MissingEmassDeleteSelect').each(function(i) {
+                  if (i >= 100) { return false; }
+                  this.checked = true;
+                  $(this).trigger('change');
+               });
+            }
+            else if (btn.hasClass('deselect_all')) {
+               $('#posts input.MissingEmassDeleteSelect').each(function() {
+                  this.checked = false;
+                  $(this).closest('li.post').removeClass('MissingEmdSelected');
+               });
+            }
+            else if (btn.hasClass('delete_selected')) {
+               var key = $('#posts input[name="form_key"]:first').val();
+               var count = $('#posts li.MissingEmdSelected').length;
+               var sure = confirm("Are you sure you want to delete the selected messages? (" + count + ")");
+               if (sure) {
+                  deleteMessages(key);
+               }
+            }
+            return false;
+         });
+         $('input.MissingEmassDeleteSelect').change(function() {
+            var item = $(this).closest('li.post');
+            if (this.checked) {
+               item.addClass('MissingEmdSelected');
+               if (!item.data('blog')) {
+                  if (item.find('div.post_controls a').length <= 1) {
+                     item.data('blog','private');
+                  }
+                  else {
+                     var blog = item.find('a.permalink').attr('href');
+                     blog = blog.replace(/^[^\/]*\/\//,'').replace(/\/.*/,'');
+                     item.data('blog',blog);
+                  }
+               }
+            }
+            else {
+               item.removeClass('MissingEmdSelected');
+            }
+            console.log(item.data('blog'));
+         });
+      }
    }
 });
