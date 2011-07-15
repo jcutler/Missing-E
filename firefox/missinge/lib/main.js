@@ -775,6 +775,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_askFixes_tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
       settings.MissingE_askFixes_askDash = getStorage("extensions.MissingE.askFixes.askDash",0);
+      settings.MissingE_askFixes_massDelete = getStorage("extensions.MissingE.askFixes.massDelete",1);
       settings.MissingE_bookmarker_format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
       settings.MissingE_bookmarker_addBar = getStorage("extensions.MissingE.bookmarker.addBar",1);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
@@ -859,6 +860,7 @@ function handleMessage(message, myWorker) {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
             settings.askDash = getStorage("extensions.MissingE.askFixes.askDash",0);
+            settings.massDelete = getStorage("extensions.MissingE.askFixes.massDelete",1);
             break;
          case "sidebarTweaks":
             settings.retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);

@@ -250,6 +250,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_askFixes_tagAsker',1);
          frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
          loadCheck(frm,'MissingE_askFixes_askDash',0);
+         loadCheck(frm,'MissingE_askFixes_massDelete',1);
       }
       else if (v == "sidebarTweaks") {
          loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);

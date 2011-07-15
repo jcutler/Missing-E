@@ -97,3 +97,29 @@ color:#444;
 #facebox .MissingE_askbox_loaded p {
 margin:0 0 10px 0 !important;
 }
+
+#posts li.MissingEmdSelected {
+opacity:0.7;
+}
+
+#right_column #MissingEmassDeleter li .select_all {
+background-position:12px 11px;
+}
+
+#right_column #MissingEmassDeleter li .deselect_all {
+background-position:12px -26px;
+}
+
+#right_column #MissingEmassDeleter li .delete_selected {
+background-position:12px -61px;
+}
+
+#posts li.post input.MissingEmassDeleteSelect {
+vertical-align:-1px;
+margin-left:8px;
+opacity:0.5;
+}
+
+#posts li.post input.MissingEmassDeleteSelect:hover {
+opacity:1;
+}

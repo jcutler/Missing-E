@@ -32,7 +32,6 @@ function deleteMessages(key) {
    var set = $('#posts li.MissingEmdSelected');
    if (set.length < 1) { return; }
    var exemplar = set.eq(0).data('blog');
-   console.log('deleting: ' + exemplar);
    var remset = set.filter(function(i) {
       if (count >= 100) { return false; }
       if ($(this).data('blog') === exemplar) {
@@ -360,7 +359,6 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, buttons, tags,
          }
       });
       if (massDelete === 1) {
-         console.log('hi');
          var afterguy = $('#right_column a.settings');
          var beforeguy;
          if (afterguy.length > 0) {
@@ -438,7 +436,6 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, buttons, tags,
             else {
                item.removeClass('MissingEmdSelected');
             }
-            console.log(item.data('blog'));
          });
       }
    }

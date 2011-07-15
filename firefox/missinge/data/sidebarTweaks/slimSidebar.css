@@ -146,6 +146,18 @@ background-position:6px -395px !important;
 background-position:-445px -395px !important;
 }
 
+#MissingEmassDeleter li .select_all {
+background-position:8px 7px !important;
+}
+
+#MissingEmassDeleter li .deselect_all {
+background-position:8px -30px !important;
+}
+
+#MissingEmassDeleter li .delete_selected {
+background-position:8px -65px !important;
+}
+
 #MissingE_safeDash li a {
 background-position:9px -4px !important;
 }
