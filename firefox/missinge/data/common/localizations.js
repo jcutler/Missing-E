@@ -97,6 +97,13 @@ var locale = {
    "photoTitle": "Photo Reply",
    "text": "as <strong>text</strong>",
    "textTitle": "Text Reply"
+  },
+  "massDelete": {
+   "selectAll": "Select All",
+   "deselectAll": "Deselect All",
+   "deleteSelected": "Delete Selected",
+   "message": "Are you sure you want to delete the # selected messages?",
+   "error": "Some messages could not be deleted. Please try again later."
   }
  },
  "de": {
@@ -197,6 +204,13 @@ var locale = {
    "photoTitle": "Foto Antwort",
    "text": "als <strong>Text</strong>",
    "textTitle": "Text Antwort"
+  },
+  "massDelete": {
+   "selectAll": "Alle wählen",
+   "deselectAll": "Alle abwählen",
+   "deleteSelected": "Auswahl löschen",
+   "message": "Sind Sie sicher, dass Sie die # ausgewählten Nachrichten zu löschen?",
+   "error": "Einige Nachrichten können nicht gelöscht werden. Bitte versuchen Sie es später erneut."
   }
  },
  "fr": {
@@ -297,6 +311,13 @@ var locale = {
    "photoTitle": "Photo Réponse",
    "text": "<strong>texte</strong>",
    "textTitle": "Texte Réponse"
+  },
+  "massDelete": {
+   "selectAll": "Tout sélectionner",
+   "deselectAll": "Tout désélectionner",
+   "deleteSelected": "Supprimer la sélection",
+   "message": "Etes-vous sûr de vouloir supprimer les # messages sélectionnés?",
+   "error": "Certains messages n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard."
   }
  },
  "it": {
@@ -397,6 +418,13 @@ var locale = {
    "photoTitle": "Rispondi con una foto",
    "text": "come <strong>testo</strong>",
    "textTitle": "Rispondi con un testo"
+  },
+  "massDelete": {
+   "selectAll": "Seleziona tutto",
+   "deselectAll": "Deseleziona tutto",
+   "deleteSelected": "Elimina selezionati",
+   "message": "Sei sicuro di voler eliminare i # messaggi selezionati?",
+   "error": "Alcuni messaggi non può essere cancellato. Riprova più tardi."
   }
  },
  "ja": {
@@ -497,6 +525,13 @@ var locale = {
    "photoTitle": "画像返信",
    "text": "<strong>テキスト</strong>",
    "textTitle": "テキスト返信"
+  },
+  "massDelete": {
+   "selectAll": "すべて選択",
+   "deselectAll": "すべて選択解除",
+   "deleteSelected": "選択した項目を削除",
+   "message": "あなたは # 選択したメッセージを削除してもよろしいですか？",
+   "error": "一部のメッセージが削除できませんでした。後でもう一度やり直してください。"
   }
  },
  "tr": {
@@ -621,6 +656,13 @@ var locale = {
    "photoTitle": "Fotoğraf'la Cevapla",
    "text": "<strong>metin</strong> olarak",
    "textTitle": "Metin'le Cevapla"
+  },
+  "massDelete": {
+   "selectAll": "Tümünü seç",
+   "deselectAll": "Işaretini kaldırın tüm",
+   "deleteSelected": "Seçili programı silmek",
+   "message": "Seçilmiş # mesajları silmek istediğiniz emin misiniz?",
+   "error": "Bazı mesajlar silinemedi.Lütfen daha sonra tekrar deneyin."
   }
  }
 }
