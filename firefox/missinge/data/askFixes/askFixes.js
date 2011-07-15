@@ -26,7 +26,7 @@ function setupMassDeletePost(item) {
          .appendTo(jQuery(item).find('div.post_controls'));
 }
 
-function deleteMessages(key) {
+function deleteMessages(key, lang) {
    var posts = [];
    var count = 0;
    var set = jQuery('#posts li.MissingEmdSelected');
@@ -49,11 +49,11 @@ function deleteMessages(key) {
       data: {"post_ids": posts.join(','),
              "form_key": key},
       error: function(xhr, textStatus) {
-         alert("Some messages could not be deleted.\nPlease try again later.");
+         alert(locale[lang]["massDelete"]["error"]);
       },
       success: function(data, textStatus) {
          remset.removeClass('MissingEmdSelected').remove();
-         deleteMessages(key);
+         deleteMessages(key, lang);
       }
    });
 }
@@ -388,6 +388,8 @@ self.on('message', function (message) {
          }
       }, false);
       if (message.massDelete === 1) {
+         var lang = jQuery('html').attr('lang');
+         if (!lang) { lang = 'en'; }
          var afterguy = jQuery('#right_column a.settings');
          var beforeguy;
          if (afterguy.length > 0) {
@@ -406,11 +408,14 @@ self.on('message', function (message) {
                           '") !important; }</style>');
          jQuery('<ul class="controls_section" id="MissingEmassDeleter">' +
            '<li><a href="#" class="select_all">' +
-           '<div class="hide_overflow">Select All</div></a></li>' +
+           '<div class="hide_overflow">' +
+           locale[lang]["massDelete"]["selectAll"] + '</div></a></li>' +
            '<li><a href="#" class="deselect_all">' +
-           '<div class="hide_overflow">Unselect All</div></a></li>' +
+           '<div class="hide_overflow">' +
+           locale[lang]["massDelete"]["deselectAll"] + '</div></a></li>' +
            '<li><a href="#" class="delete_selected">' +
-           '<div class="hide_overflow">Delete Selected</div></a></li></ul>')
+           '<div class="hide_overflow">' +
+           locale[lang]["massDelete"]["deleteSelected"] + '</div></a></li></ul>')
                .insertBefore(beforeguy);
          jQuery('#posts li.post').each(function() {
             setupMassDeletePost(this);
@@ -428,7 +433,6 @@ self.on('message', function (message) {
             var btn = jQuery(this);
             if (btn.hasClass('select_all')) {
                jQuery('#posts input.MissingEmassDeleteSelect').each(function(i){
-                  if (i >= 100) { return false; }
                   this.checked = true;
                   jQuery(this).trigger('change');
                });
@@ -442,9 +446,9 @@ self.on('message', function (message) {
             else if (btn.hasClass('delete_selected')) {
                var key = jQuery('#posts input[name="form_key"]:first').val();
                var count = jQuery('#posts li.MissingEmdSelected').length;
-               var sure = confirm("Are you sure you want to delete the selected messages? (" + count + ")");
+               var sure = confirm(locale[lang]["massDelete"]["message"].replace('#',count));
                if (sure) {
-                  deleteMessages(key);
+                  deleteMessages(key, lang);
                }
             }
             return false;
