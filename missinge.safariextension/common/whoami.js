@@ -228,7 +228,8 @@ function settings_startup(response) {
                                   response.message.defaultTags,
                                   response.message.buttons,
                                   response.message.tags,
-                                  response.message.askDash);
+                                  response.message.askDash,
+                                  response.message.massDelete);
    }
    else if (response.message.component === "followChecker") {
       MissingE_followChecker_doStartup(response.message.retries);

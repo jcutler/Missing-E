@@ -146,14 +146,6 @@ background-position:6px -395px !important;
 background-position:-445px -395px !important;
 }
 
-#MissingE_safeDash li a {
-background-position:9px -4px !important;
-}
-
-#MissingE_safeDash li.selected a {
-background-position:9px -33px !important;
-}
-
 #content #search_query {
 padding:4px 40px 4px 9px !important;
 background-position:192px -545px !important;

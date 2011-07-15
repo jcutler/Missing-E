@@ -748,6 +748,7 @@ function handleRequest(request) {
       settings.MissingE_askFixes_tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
       settings.MissingE_askFixes_askDash = getStorage("MissingE_askFixes_askDash",0);
+      settings.MissingE_askFixes_massDelete = getStorage("MissingE_askFixes_massDelete",1);
       settings.MissingE_bookmarker_format = getStorage("MissingE_bookmarker_format",defaultFormat);
       settings.MissingE_bookmarker_addBar = getStorage("MissingE_bookmarker_addBar",1);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
@@ -830,6 +831,7 @@ function handleRequest(request) {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
             settings.askDash = getStorage("MissingE_askFixes_askDash",0);
+            settings.massDelete = getStorage("MissingE_askFixes_massDelete",1);
             break;
          case "sidebarTweaks":
             settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);

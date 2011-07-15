@@ -102,3 +102,41 @@ color:#444;
 #facebox .MissingE_askbox_loaded p {
 margin:0 0 10px 0 !important;
 }
+
+#posts li.MissingEmdSelected {
+opacity:0.7;
+}
+
+#right_column #MissingEmassDeleter li .select_all {
+background-position:12px 11px !important;
+}
+
+#right_column #MissingEmassDeleter li .deselect_all {
+background-position:12px -26px !important;
+}
+
+#right_column #MissingEmassDeleter li .delete_selected {
+background-position:12px -61px !important;
+}
+
+#right_column.MissingE_slim_sidebar #MissingEmassDeleter li .select_all {
+background-position:8px 7px !important;
+}
+
+#right_column.MissingE_slim_sidebar #MissingEmassDeleter li .deselect_all {
+background-position:8px -30px !important;
+}
+
+#right_column.MissingE_slim_sidebar #MissingEmassDeleter li .delete_selected {
+background-position:8px -65px !important;
+}
+
+#posts li.post input.MissingEmassDeleteSelect {
+vertical-align:top;
+margin-left:8px;
+opacity:0.5;
+}
+
+#posts li.post input.MissingEmassDeleteSelect:hover {
+opacity:1;
+}
