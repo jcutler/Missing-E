@@ -362,6 +362,9 @@ function replyRepliesSettings(message) {
                   .replace(/<\/?div[^>]*>/g,'');
    }
    reply_setValue(code);
+   if (message.defaultTags !== '') {
+      tags = message.defaultTags.concat(tags);
+   }
    tags_setValue(tags);
 
    var urlPref = location.href.match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);

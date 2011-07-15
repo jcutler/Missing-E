@@ -821,6 +821,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_replyReplies_showAvatars = getStorage("extensions.MissingE.replyReplies.showAvatars",1);
       settings.MissingE_replyReplies_smallAvatars = getStorage("extensions.MissingE.replyReplies.smallAvatars",1);
       settings.MissingE_replyReplies_addTags = getStorage("extensions.MissingE.replyReplies.addTags",1);
+      settings.MissingE_replyReplies_defaultTags = getStorage("extensions.MissingE.replyReplies.defaultTags",'');
       settings.MissingE_replyReplies_newTab = getStorage("extensions.MissingE.replyReplies.newTab",1);
       settings.MissingE_unfollower_retries = getStorage("extensions.MissingE.unfollower.retries",defaultRetries);
       settings.MissingE_unfollower_ignore = getStorage("extensions.MissingE.unfollower.ignore",'');
@@ -898,6 +899,10 @@ function handleMessage(message, myWorker) {
             settings.showAvatars = getStorage("extensions.MissingE.replyReplies.showAvatars",1);
             settings.smallAvatars = getStorage("extensions.MissingE.replyReplies.smallAvatars",1);
             settings.addTags = getStorage("extensions.MissingE.replyReplies.addTags",1);
+            settings.defaultTags = getStorage("extensions.MissingE.replyReplies.defaultTags",'');
+            if (settings.defaultTags !== '') {
+               settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
+            }
             settings.newTab = getStorage("extensions.MissingE.replyReplies.newTab",1);
             break;
          case "postCrushes_fill":

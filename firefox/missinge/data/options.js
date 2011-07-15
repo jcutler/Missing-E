@@ -197,7 +197,8 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
             setStorage(obj.name, num);
          }
       }
-      else if (obj.name === 'MissingE_askFixes_defaultTags') {
+      else if (obj.name === 'MissingE_askFixes_defaultTags' ||
+               obj.name === 'MissingE_replyReplies_defaultTags') {
          var val = trim(obj.value);
          val = val.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,', ')
                   .replace(/,\s*$/,'').replace(/^\s*/,'').replace(/\s*$/,'');
@@ -297,6 +298,7 @@ function loadSettings() {
             document.getElementById("MissingE_replyReplies_smallAvatars_large").checked = true;
          loadCheck(frm,'MissingE_replyReplies_showAvatars',1);
          loadCheck(frm,'MissingE_replyReplies_addTags',1);
+         frm.MissingE_replyReplies_defaultTags.value = getStorage('MissingE_replyReplies_defaultTags','');
          loadCheck(frm,'MissingE_replyReplies_newTab',1);
       }
       else if (v == "dashboardFixes") {

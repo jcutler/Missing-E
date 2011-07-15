@@ -126,7 +126,8 @@ function MissingE_replyReplies_fill_doStartup() {
          document.getElementById('post_tags').value = tags.join(",");
          for (i=0; i<tags.length; i++) {
             if (tags[i] !== undefined && tags[i] !== null && tags[i] !== '') {
-               txt += '<div class="token"><span class="tag">' + tags[i] +
+               txt += '<div class="token"><span class="tag">' +
+                        escapeHTML(tags[i]) +
                         '</span><a title="Remove tag" ' +
                         'onclick="tag_editor_remove_tag($(this).up()); ' +
                         'return false;" href="#">x</a></div>';

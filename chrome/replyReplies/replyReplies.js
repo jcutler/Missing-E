@@ -393,6 +393,9 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       }
 
       reply_setValue(code);
+      if (replyReplies_settings.defaultTags !== '') {
+         tags = replyReplies_settings.defaultTags.concat(tags);
+      }
       tags_setValue(tags);
 
       var urlPref = location.href.match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
