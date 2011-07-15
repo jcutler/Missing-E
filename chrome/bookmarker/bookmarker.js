@@ -400,10 +400,10 @@ chrome.extension.sendRequest({greeting: "settings",
    markFormat = bookmarker_settings.format;
    if (document.body.id !== "tinymce" &&
        document.body.id !== "dashboard_edit_post") {
-      if (!(/drafts$/.test(location.href)) &&
-          !(/queue$/.test(location.href)) &&
-          !(/messages$/.test(location.href)) &&
-          !(/inbox$/.test(location.href)) &&
+      if (!(/drafts[^\/]*$/.test(location.href)) &&
+          !(/queue[^\/]*$/.test(location.href)) &&
+          !(/messages[^\/]*$/.test(location.href)) &&
+          !(/inbox[^\/]*$/.test(location.href)) &&
           !(/submissions[^\/]*$/.test(location.href)) &&
           !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
           !(/queue\/after\/[^\/]*$/.test(location.href))) {
