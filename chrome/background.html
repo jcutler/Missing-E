@@ -721,7 +721,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
             settings.askDash = getStorage("MissingE_askFixes_askDash",0);
-            settings.multiDelete = getStorage("MissingE_askFixes_multiDelete",1);
+            settings.massDelete = getStorage("MissingE_askFixes_massDelete",1);
             break;
          case "sidebarTweaks":
             settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);

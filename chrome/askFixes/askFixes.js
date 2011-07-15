@@ -367,7 +367,7 @@ chrome.extension.sendRequest({greeting: "settings",
             });
          }
       });
-      if (askFixes_settings.multiDelete === 1) {
+      if (askFixes_settings.massDelete === 1) {
          var afterguy = $('#right_column a.settings');
          var beforeguy;
          if (afterguy.length > 0) {

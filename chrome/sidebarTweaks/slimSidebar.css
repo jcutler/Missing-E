@@ -146,23 +146,23 @@ background-position:6px -395px !important;
 background-position:-445px -395px !important;
 }
 
-#right_column #MissingEmassDeleter li .select_all {
+#MissingEmassDeleter li .select_all {
 background-position:8px 7px !important;
 }
 
-#right_column #MissingEmassDeleter li .deselect_all {
+#MissingEmassDeleter li .deselect_all {
 background-position:8px -30px !important;
 }
 
-#right_column #MissingEmassDeleter li .delete_selected {
+#MissingEmassDeleter li .delete_selected {
 background-position:8px -65px !important;
 }
 
-#right_column #MissingE_safeDash li a {
+#MissingE_safeDash li a {
 background-position:9px -4px !important;
 }
 
-#right_column #MissingE_safeDash li.selected a {
+#MissingE_safeDash li.selected a {
 background-position:9px -33px !important;
 }
 
