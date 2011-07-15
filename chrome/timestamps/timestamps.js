@@ -70,8 +70,8 @@ function loadTimestamp(item) {
       }
 
       if (tid === undefined || tid === null || tid === "") { return; }
-      chrome.extension.sendRequest({greeting: "timestamp", pid: tid, url: addr},
-                                   function(response) {
+      chrome.extension.sendRequest({greeting: "timestamp", pid: tid, url: addr,
+                                    lang: lang}, function(response) {
          if (response.success) {
             info = $('#post_' + response.pid)
                            .find('span.MissingE_timestamp');

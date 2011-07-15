@@ -177,8 +177,9 @@ function removeMark(post) {
 }
 
 function addMark(post,user,custom) {
+   var lang = $('html').attr('lang');
    var d = new Date();
-   var ds = getBookmarkerFormat(d, user, markFormat);
+   var ds = getBookmarkerFormat(d, user, markFormat, lang);
 
    if (custom) {
       var ans = "";
