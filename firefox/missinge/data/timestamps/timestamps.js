@@ -71,7 +71,8 @@ function loadTimestamp(item) {
          }
       }
       if (tid === undefined || tid === null || tid === "") { return; }
-      self.postMessage({greeting: "timestamp", pid: tid, url: addr});
+      self.postMessage({greeting: "timestamp", pid: tid, url: addr,
+                        lang: lang});
    }
 }
 

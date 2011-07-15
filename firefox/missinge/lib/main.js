@@ -58,6 +58,7 @@ var locale=JSON.parse(data.load("common/localizations.js")
                       .replace(/^[^{]*/,''));
 var followYou = [];
 var youFollow = [];
+var lang = 'en';
 
 function escapeHTML(str) {
    return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
@@ -175,6 +176,7 @@ function openSettings() {
          tab.attach({
             contentScriptFile: [data.url("common/jquery-1.5.2.min.js"),
                                 data.url("common/defs.js"),
+                                data.url("common/localizations.js"),
                                 data.url("common/utils.js"),
                                 data.url("checkbox/jquery.checkbox.min.js"),
                                 data.url("facebox/facebox.js"),
@@ -207,11 +209,15 @@ function zeroPad(num, len) {
    return ret;
 }
 
-function getFormattedDate(d, format) {
+function getFormattedDate(d, format, lang) {
    var ret = format;
+   if (!lang || !locale[lang]) { lang = 'en'; }
    ret = ret.replace(/%Y/g,d.getFullYear())
             .replace(/%y/g,(d.getFullYear()%100))
-            .replace(/%M/g,months[d.getMonth()])
+            .replace(/%M/g,locale[lang]["monthsShort"][d.getMonth()])
+            .replace(/%B/g,locale[lang]["monthsLong"][d.getMonth()])
+            .replace(/%w/g,locale[lang]["daysShort"][d.getDay()])
+            .replace(/%W/g,locale[lang]["daysLong"][d.getDay()])
             .replace(/%m/g,zeroPad(d.getMonth()+1,2))
             .replace(/%n/g,(d.getMonth()+1))
             .replace(/%D/g,zeroPad(d.getDate(),2))
@@ -246,7 +252,7 @@ function doTimestamp(stamp, id, theWorker) {
    var ts = stamp["unix-timestamp"];
    var d = new Date(ts*1000);
    var ins = getStorage("extensions.MissingE.timestamps.format",defaultFormat);
-   ins = getFormattedDate(d, ins);
+   ins = getFormattedDate(d, ins, lang);
    theWorker.postMessage({greeting: "timestamp", pid: id, success: true, data: ins});
 }
 
@@ -586,6 +592,7 @@ function startTimestamp(message, myWorker) {
       dequeueAjax();
       return;
    }
+   if (message.lang) { lang = message.lang; }
    if (cacheServe("timestamp", message.pid, myWorker, doTimestamp, false)) {
       return true;
    }

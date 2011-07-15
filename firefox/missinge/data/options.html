@@ -752,7 +752,26 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <table class="options_table">
 <tr><td colspan="2" class="odd">Show simple labels above bookmarked posts</td><td class="odd"><input type="checkbox" name="MissingE_bookmarker_addBar" value="0" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Default bookmark label<br />
-<table class="subnotes"><tr><td class="label">%u</td><td class="desc">Poster's username</td></tr><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
+<table class="subnotes">
+<tr><td class="label">%u</td><td class="desc">Poster's username</td></tr>
+<tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr>
+<tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr>
+<tr><td class="label">%B</td><td class="desc">Full month name (January, February, ...)</td></tr>
+<tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr>
+<tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr>
+<tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr>
+<tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr>
+<tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr>
+<tr><td class="label">%W</td><td class="desc">Full day of the week (Sunday, Monday, ...)</td></tr>
+<tr><td class="label">%w</td><td class="desc">Short day of the week (Sun, Mon, ...)</td></tr>
+<tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr>
+<tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr>
+<tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr>
+<tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr>
+<tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr>
+<tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr>
+<tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr>
+<tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
 </td><td colspan="2" class="even" style="vertical-align:top;"><input type="text" name="MissingE_bookmarker_format" style="width:200px;" value="%Y-%m-%D %H:%i" class="simple_setting setting_format" /><div class="stamp_label">Sample:</div><div class="stamp_sample" id="MissingE_bookmarker_format_sample"></div></td></tr>
 </table>
 </form>
@@ -824,7 +843,25 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <table class="options_table">
 <tr><td colspan="2" class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput setting_retry" size="1" type="text" name="MissingE_timestamps_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
 <tr><td colspan="2" class="even">Timestamp format<br />
-<table class="subnotes"><tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr><tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr><tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr><tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr><tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr><tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr><tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr><tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr><tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr><tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr><tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr><tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr><tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr><tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr><tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
+<table class="subnotes">
+<tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr>
+<tr><td class="label">%y</td><td class="desc">Two digit year (i.e. 11)</td></tr>
+<tr><td class="label">%B</td><td class="desc">Full month name (January, February, ...)</td></tr>
+<tr><td class="label">%M</td><td class="desc">Short month name (Jan, Feb, ...)</td></tr>
+<tr><td class="label">%m</td><td class="desc">Numeric month, two digits with leading zeros (01-12)</td></tr>
+<tr><td class="label">%n</td><td class="desc">Numeric month (1-12)</td></tr>
+<tr><td class="label">%D</td><td class="desc">Day of the month, two digits with leading zeros (01-31)</td></tr>
+<tr><td class="label">%d</td><td class="desc">Day of the month (1-31)</td></tr>
+<tr><td class="label">%W</td><td class="desc">Full day of the week (Sunday, Monday, ...)</td></tr>
+<tr><td class="label">%w</td><td class="desc">Short day of the week (Sun, Mon, ...)</td></tr>
+<tr><td class="label">%G</td><td class="desc">Hour, 12-hour format with leading zeros (01-12)</td></tr>
+<tr><td class="label">%g</td><td class="desc">Hour, 12-hour format (1-12)</td></tr>
+<tr><td class="label">%H</td><td class="desc">Hour, 24-hour format with leading zeros (00-23)</td></tr>
+<tr><td class="label">%h</td><td class="desc">Hour, 24-hour format (0-23)</td></tr>
+<tr><td class="label">%i</td><td class="desc">Minutes with leading zeros (00-59)</td></tr>
+<tr><td class="label">%s</td><td class="desc">Seconds with leading zeros (00-59)</td></tr>
+<tr><td class="label">%A</td><td class="desc">Uppercase Ante meridiem and Post meridiem (AM/PM)</td></tr>
+<tr><td class="label">%a</td><td class="desc">Lowercase Ante meridiem and Post meridiem (am/pm)</td></tr></table>
 </td><td colspan="2" class="even" style="vertical-align:top;"><input type="text" name="MissingE_timestamps_format" style="width:200px;" value="%Y-%m-%D %H:%i" class="simple_setting setting_format" /><div class="stamp_label">Sample:</div><div class="stamp_sample" id="MissingE_timestamps_format_sample"></div></td></tr></table>
 </form>
 </div>
