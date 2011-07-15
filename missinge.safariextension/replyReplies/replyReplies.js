@@ -30,6 +30,30 @@ function tags_setValue(ar) {
    localStorage.setItem('trr_ReplyTags',ar.join(","));
 }
 
+function addNoteReply(item) {
+   if (item.hasClass('MissingE_reply')) {
+      return true;
+   }
+   var klass = "";
+   if (item.hasClass('like')) { klass = "like"; }
+   else if (item.hasClass('reblog')) { klass = "reblog"; }
+   else if (item.hasClass('answer')) { klass = "answer"; }
+   else if (item.hasClass('reply')) { klass = "reply"; }
+   else if (item.hasClass('photo')) { klass = "reply"; }
+
+   item.addClass('MissingE_reply');
+   if (klass === "" ||
+       (klass === "reblog" && item.find('a.tumblelog').length === 0) ||
+       (klass !== "reblog" && item.find('span.action a').length === 0)) {
+      return true;
+   }
+   else {
+      item.append('<div class="notification_type_icon ' +
+                  klass + '_icon"></div>');
+      item.css('background-image', 'none');
+   }
+}
+
 function replyRepliesSettings(response) {
    var arr;
    if (response.name !== "settings" ||
@@ -382,24 +406,13 @@ function MissingE_replyReplies_doStartup() {
       }
       var list = node.find('ol.notes li');
       list.each(function() {
-         var item = $(this);
-         var klass = "";
-         if (item.hasClass('like')) { klass = "like"; }
-         else if (item.hasClass('reblog')) { klass = "reblog"; }
-         else if (item.hasClass('answer')) { klass = "answer"; }
-         else if (item.hasClass('reply')) { klass = "reply"; }
-         else if (item.hasClass('photo')) { klass = "reply"; }
+         addNoteReply($(this));
+      });
+   });
 
-         if (klass === "" ||
-             (klass === "reblog" && item.find('a.tumblelog').length === 0) ||
-             (klass !== "reblog" && item.find('span.action a').length === 0)) {
-            return true;
-         }
-         else {
-            item.append('<div class="notification_type_icon ' +
-                        klass + '_icon"></div>');
-            item.css('background-image', 'none');
-         }
+   $('#posts li.is_mine ol.notes').live('mouseover', function() {
+      $(this).find('li:not(.MissingE_reply)').each(function() {
+         addNoteReply($(this));
       });
    });
 
