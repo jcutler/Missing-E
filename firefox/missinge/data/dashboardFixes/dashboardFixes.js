@@ -266,11 +266,9 @@ self.on('message', function(message) {
       });
    }, false);
 
-/*
-   jQuery('a.like_button').live('click', function(e) {
+   jQuery('#posts a.like_button').live('click', function(e) {
       e.preventDefault();
    });
-*/
 
    var css = document.createElement("style");
    css.setAttribute("type","text/css");

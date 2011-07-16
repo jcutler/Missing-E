@@ -259,11 +259,9 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
       });
    });
 
-/*
-   $('a.like_button').live('click', function(e) {
+   $('#posts a.like_button').live('click', function(e) {
       e.preventDefault();
    });
-*/
 
    if (dashboardFixes_settings.maxBig === 1) {
       var maxSize = dashboardFixes_settings.maxBigSize;
