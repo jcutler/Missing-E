@@ -443,6 +443,7 @@ self.on('message', function (message) {
       }
 
       var lang = jQuery('html').attr('lang');
+      if (!lang) { lang = 'en'; }
       var list = jQuery('<ul id="MissingE_marklist" ' +
                         'class="controls_section">' +
                         '<li class="MissingE_marklist_title recessed">' +

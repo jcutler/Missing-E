@@ -61,25 +61,8 @@ self.on('message', function (message) {
       }
       return false;
    }
-   var reblogTagsText = {
-      reblog: {
-         en: "Reblog Tags",
-         de: "mit den Tags rebloggen",
-         fr: "Rebloguer Tags",
-         it: "Reblogga i Tag",
-         ja: "タグをリブログ",
-         tr: "Yeniden blogla etiketler"
-         },
-      remove: {
-         en: "Remove tag",
-         de: "Tag entfernen",
-         fr: "Supprimer le tag",
-         it: "Rimuovi tag",
-         ja: "タグを除去する",
-         tr: "Etiketi kaldır"
-         }
-   };
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    var tags = getReblogTags();
 
    if (document.body.id === 'dashboard_edit_post') {
@@ -104,7 +87,7 @@ self.on('message', function (message) {
                func += '\'' + tags[i].replace(/'/g,'\\\'') + '\',';
                fill += tags[i] + ',';
                txt += '<div class="token"><span class="tag">' + tags[i] +
-                        '</span><a title="' + reblogTagsText.remove[lang] +
+                        '</span><a title="' + locale[lang]["removeTag"] +
                         '" onclick="tag_editor_remove_tag($(this).up()); ' +
                         'return false;" href="#">x</a></div>';
             }
@@ -151,7 +134,7 @@ self.on('message', function (message) {
                               '<a class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
                               'onclick="' + func + '">' +
-                              reblogTagsText.reblog[lang] + '</a></div>')
+                              locale[lang]["reblogTags"] + '</a></div>')
                .prependTo(set_tags).outerHeight();
             var label = jQuery('#post_tags_label');
             if (label.length > 0) {

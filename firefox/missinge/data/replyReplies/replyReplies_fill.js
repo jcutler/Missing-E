@@ -95,8 +95,10 @@ function MissingE_replyReplies_fill_doStartup() {
       else {
          nowtype = 'photo';
       }
+      var lang = jQuery('html').attr('lang');
+      if (!lang) { lang = 'en'; }
       jQuery('#left_column h1:first')
-         .html(getAsLinks(jQuery('html').attr('lang'), nowtype));
+         .html(getAsLinks(lang, nowtype));
       jQuery('#as_switch').click(function() {
          reply_setValue(reply);
          tags_setValue(tags);

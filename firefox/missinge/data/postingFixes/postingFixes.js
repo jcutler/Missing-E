@@ -78,6 +78,7 @@ self.on('message', function(message) {
    }
    var extensionURL = message.extensionURL;
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
 
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                          extensionURL + 'postingFixes/postingFixes.css" />');

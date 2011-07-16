@@ -288,10 +288,10 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
 chrome.extension.sendRequest({greeting: "settings",
                               component: "askFixes"}, function(response) {
    var askFixes_settings = JSON.parse(response);
+   var lang = $('html').attr('lang');
 
    if (askFixes_settings.askDash === 1) {
       var i;
-      var lang = $('html').attr('lang');
       var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
       for (i=0; i<locale[lang]["askPerson"].length; i++) {
          if (i>0) { askLabel += " "; }
@@ -368,7 +368,6 @@ chrome.extension.sendRequest({greeting: "settings",
          }
       });
       if (askFixes_settings.massDelete === 1) {
-         var lang = $('html').attr('lang');
          var afterguy = $('#right_column a.settings');
          var beforeguy;
          if (afterguy.length > 0) {

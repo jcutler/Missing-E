@@ -117,6 +117,8 @@ var locale = {
    "uploadImagesText": "Upload images instead",
    "clearTagsText": "Clear Tags"
   },
+  "reblogTags": "Reblog Tags",
+  "removeTag": "Remove tag",
   "loading": "Loading...",
   "error": "An error occured. Click to reload.",
   "posts": {
@@ -270,6 +272,8 @@ var locale = {
    "uploadImagesText": "Stattdessen, lade fotos hoch",
    "clearTagsText": "Tags entfernen"
   },
+  "reblogTags": "mit den Tags rebloggen",
+  "removeTag": "Tag entfernen",
   "loading": "wird geladen...",
   "error": "Ein Fehler ist aufgetreten. Klicken Sie, erneut zu versuchen.",
   "posts": {
@@ -423,6 +427,8 @@ var locale = {
    "uploadImagesText": "Ajouter les photos à la place",
    "clearTagsText": "Supprimer Tags"
   },
+  "reblogTags": "Rebloguer Tags",
+  "removeTag": "Supprimer le tag",
   "loading": "Pas prêt...",
   "error": "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
   "posts": {
@@ -576,6 +582,8 @@ var locale = {
    "uploadImagesText": "Oppure carica foto",
    "clearTagsText": "Cancella i Tag"
   },
+  "reblogTags": "Reblogga i Tag",
+  "removeTag": "Rimuovi tag",
   "loading": "In caricamento...",
   "error": "Si è verificato un errore. Clicca per provare di nuovo.",
   "posts": {
@@ -729,6 +737,8 @@ var locale = {
    "uploadImagesText": "画像をアップロード",
    "clearTagsText": "タグをクリア"
   },
+  "reblogTags": "タグをリブログ",
+  "removeTag": "タグを除去する",
   "loading": "読込中...",
   "error": "エラーが発生しました。 クリックしてもう一度やり直してください。",
   "posts": {
@@ -882,6 +892,8 @@ var locale = {
    "uploadImagesText": "Bunun yerine başka fotograf yükle",
    "clearTagsText": "Etiketleri sil"
   },
+  "reblogTags": "Yeniden blogla etiketler",
+  "removeTag": "Etiketi kaldır",
   "loading": "Yüklüyor",
   "error": "Bir hata oluştu! Lütfen yeniden deneyin.",
   "posts": {

@@ -287,9 +287,9 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
 
 function MissingE_askFixes_doStartup(tagAsker, defaultTags, buttons, tags,
                                      askDash, massDelete) {
+   var lang = $('html').attr('lang');
    if (askDash === 1) {
       var i;
-      var lang = $('html').attr('lang');
       var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
       for (i=0; i<locale[lang]["askPerson"].length; i++) {
          if (i>0) { askLabel += " "; }
@@ -359,7 +359,6 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, buttons, tags,
          }
       });
       if (massDelete === 1) {
-         var lang = $('html').attr('lang');
          var afterguy = $('#right_column a.settings');
          var beforeguy;
          if (afterguy.length > 0) {

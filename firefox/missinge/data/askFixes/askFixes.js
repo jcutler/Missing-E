@@ -305,10 +305,10 @@ self.on('message', function (message) {
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                     message.extensionURL + 'askFixes/askFixes.css" />');
 
+   var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    if (message.askDash === 1) {
       var i;
-      var lang = jQuery('html').attr('lang');
-      if (!lang) { lang = 'en'; }
       var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
       for (i=0; i<locale[lang]["askPerson"].length; i++) {
          if (i>0) { askLabel += " "; }
@@ -388,8 +388,6 @@ self.on('message', function (message) {
          }
       }, false);
       if (message.massDelete === 1) {
-         var lang = jQuery('html').attr('lang');
-         if (!lang) { lang = 'en'; }
          var afterguy = jQuery('#right_column a.settings');
          var beforeguy;
          if (afterguy.length > 0) {

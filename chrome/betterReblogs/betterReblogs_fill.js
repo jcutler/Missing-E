@@ -56,24 +56,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       }
       return false;
    }
-   var reblogTagsText = {
-      reblog: {
-         en: "Reblog Tags",
-         de: "mit den Tags rebloggen",
-         fr: "Rebloguer Tags",
-         it: "Reblogga i Tag",
-         ja: "タグをリブログ",
-         tr: "Yeniden blogla etiketler"
-         },
-      remove: {
-         en: "Remove tag",
-         de: "Tag entfernen",
-         fr: "Supprimer le tag",
-         it: "Rimuovi tag",
-         ja: "タグを除去する",
-         tr: "Etiketi kaldır"
-         }
-   };
    var betterReblogs_settings = JSON.parse(response);
    var lang = $('html').attr('lang');
    var tags = getReblogTags();
@@ -101,7 +83,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                func += '\'' + tags[i].replace(/'/g,'\\\'') + '\',';
                fill += tags[i] + ',';
                txt += '<div class="token"><span class="tag">' + tags[i] +
-                        '</span><a title="' + reblogTagsText.remove[lang] +
+                        '</span><a title="' + locale[lang]["removeTag"] +
                         '" onclick="tag_editor_remove_tag($(this).up()); ' +
                         'return false;" href="#">x</a></div>';
             }
@@ -148,7 +130,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                               '<a class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
                               'onclick="' + func + '">' +
-                              reblogTagsText.reblog[lang] + '</a></div>')
+                              locale[lang]["reblogTags"] + '</a></div>')
                .prependTo(set_tags).outerHeight();
             var label = $('#post_tags_label');
             if (label.length > 0) {

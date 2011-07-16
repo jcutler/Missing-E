@@ -44,6 +44,7 @@ function setReblogTagsPlainText(tags) {
 
 function startReblog(id,replaceIcons) {
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    var a = jQuery('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    a.attr('oldtxt',a.attr('title'));
    jQuery('#MissingE_quick_reblog').css('display','none');
@@ -59,6 +60,7 @@ function startReblog(id,replaceIcons) {
 
 function failReblog(id,replaceIcons) {
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    var a = jQuery('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    if (replaceIcons === 1) {
       a.removeClass('MissingE_quick_reblogging_icon');
@@ -73,6 +75,7 @@ function failReblog(id,replaceIcons) {
 
 function finishReblog(id,replaceIcons) {
    var lang = jQuery('html').attr('lang');
+   if (!lang) { lang = 'en'; }
    var a = jQuery('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
    if (replaceIcons === 1) {
       a.removeClass('MissingE_quick_reblogging_icon')
