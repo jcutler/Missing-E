@@ -390,7 +390,6 @@ self.on('message', function (message) {
                '<div id="MissingE_quick_reblog_tags">' +
                '<input type="text" /><br />' + locale[lang]["tagsText"] +
                '</div></div></span>';
-      console.log(txt);
       var qr = jQuery(txt).appendTo('body');
       qr.find('#MissingE_quick_reblog_selector select').click(function(e) {
          e.stopPropagation();
