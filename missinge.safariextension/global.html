@@ -807,6 +807,7 @@ function handleRequest(request) {
       settings.MissingE_betterReblogs_quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("MissingE_betterReblogs_quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'');
+      settings.MissingE_betterReblogs_quickReblogForceTwitter = getStorage("MissingE_betterReblogs_quickReblogForceTwitter","default");
       settings.MissingE_betterReblogs_fullText = getStorage("MissingE_betterReblogs_fullText",0);
       settings.MissingE_version = getStorage("MissingE_version",'');
       request.target.page.dispatchMessage("all-settings",settings);
@@ -913,6 +914,7 @@ function handleRequest(request) {
             if (getStorage("MissingE_betterReblogs_quickReblogAcctType",0) == 1) {
                settings.accountName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'0');
             }
+            settings.quickReblogForceTwitter = getStorage("MissingE_betterReblogs_quickReblogForceTwitter","default");
             settings.replaceIcons = (getStorage("MissingE_dashboardFixes_enabled",1) == 1 && getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getStorage("MissingE_betterReblogs_fullText",0);
             break;

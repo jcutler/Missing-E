@@ -60,7 +60,7 @@ jQuery(document).ready(function (){
       toggle(this);
    });
 
-   jQuery('input.simple_setting').bind("change", function() {
+   jQuery('.simple_setting').bind("change", function() {
       doSetting(this, false);
    });
 
@@ -172,7 +172,10 @@ function doKeyUp(e, obj, isNumber, defaultValue, min, max) {
 }
 
 function doSetting(obj, isNumber, defaultValue, min, max) {
-   if (obj.type == "checkbox") {
+   if (obj.tagName.toLowerCase() == "select") {
+      setStorage(obj.name, jQuery(obj).val());
+   }
+   else if (obj.type == "checkbox") {
       setStorage(obj.name, (obj.checked ? 1 : 0));
    }
    else if (obj.type == "radio") {
@@ -329,6 +332,7 @@ function loadSettings() {
             qran = '';
          }
          frm.MissingE_betterReblogs_quickReblogAcctName.value = qran;
+         jQuery(frm.MissingE_betterReblogs_quickReblogForceTwitter).val(getStorage('MissingE_betterReblogs_quickReblogForceTwitter','default'));
          loadCheck(frm,'MissingE_betterReblogs_fullText',0);
       }
       else if (v == "postingFixes") {

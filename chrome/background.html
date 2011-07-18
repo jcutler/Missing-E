@@ -798,6 +798,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (getStorage("MissingE_betterReblogs_quickReblogAcctType",0) == 1) {
                settings.accountName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'0');
             }
+            settings.quickReblogForceTwitter = getStorage("MissingE_betterReblogs_quickReblogForceTwitter","default");
             settings.replaceIcons = (getStorage("MissingE_dashboardFixes_enabled",1) == 1 && getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getStorage("MissingE_betterReblogs_fullText",0);
             break;

@@ -708,7 +708,9 @@ function doKeyUp(obj, isNumber, defaultValue, min, max) {
 }
 
 function doSetting(obj, isNumber, defaultValue, min, max) {
-   if (obj.type == "checkbox")
+   if (obj.tagName.toLowerCase() == "select")
+      setStorage(obj.name, $(obj).val());
+   else if (obj.type == "checkbox")
       setStorage(obj.name, (obj.checked ? 1 : 0));
    else if (obj.type == "radio")
       setStorage(obj.name, (obj.value));
@@ -861,6 +863,7 @@ function loadSettings() {
          }
          frm.MissingE_betterReblogs_quickReblogAcctName.value = qran;
          loadCheck(frm,'MissingE_betterReblogs_fullText',0);
+         $(frm.MissingE_betterReblogs_quickReblogForceTwitter).val(getStorage('MissingE_betterReblogs_quickReblogForceTwitter','default'));
       }
       else if (v == "postingFixes") {
          loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
@@ -1317,7 +1320,13 @@ $('#facebox button').live('click', function() {
 <td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" onchange="doSetting(this,false);" /> Main Blog<br />
 <input id="MissingE_betterReblogs_quickReblogAcctType_Secondary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="1" onchange="doSetting(this,false);" /> Specify Blog:
 <div style="text-align:right;padding-top:4px;"><input type="text" name="MissingE_betterReblogs_quickReblogAcctName" style="width:90%;margin-bottom:0;" maxlength="128" onchange="doSetting(this,false);" onkeyup="doKeyUp(this,false);" /><br /><small><em>Account Name</em></small></div></td></tr>
-<tr><td colspan="2" class="even">Always reblog long text posts as text</td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_fullText" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td class="subopt"></td><td class="even">Force quick (1-click) reblogging to send/not send posts to Twitter<br /><small><em>By default, quick reblogging will enable the </em>"Send to Twitter"<em> based on your Tumblr settings.<br />You can manually check/uncheck the </em>"Send to Twitter"<em> box for any quick reblog post</em></small></td>
+<td class="even"><select name="MissingE_betterReblogs_quickReblogForceTwitter" onchange="doSetting(this,false);">
+<option value="default">Do not force</option>
+<option value="on">Send to Twitter</option>
+<option value="off">Do not send to Twitter</option>
+</select></td></tr>
+<tr><td colspan="2" class="odd">Always reblog long text posts as text</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_fullText" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 </table>
 </form>
 </div>

@@ -60,7 +60,7 @@ function getTwitterDefaults() {
    });
 }
 
-function changeQuickReblogAcct(sel) {
+function changeQuickReblogAcct(sel, twitter) {
    var rm = $('#MissingE_quick_reblog_manual');
    var curhref = rm.attr('href');
    if (/channel_id=/.test(curhref)) {
@@ -70,7 +70,7 @@ function changeQuickReblogAcct(sel) {
    else {
       rm.attr('href',curhref + '&channel_id=' + sel.val());
    }
-   if (checked[sel.val()]) {
+   if (checked[sel.val()] || twitter === "on") {
       $('#MissingE_quick_reblog_twitter input').get(0).checked = true;
    }
    else {
@@ -248,7 +248,8 @@ function doReblog(item,replaceIcons,accountName) {
 
 function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
                                                replaceIcons, accountName,
-                                               fullText) {
+                                               fullText,
+                                               quickReblogForceTwitter) {
    var lang = $('html').attr('lang');
    if (passTags === 1) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
@@ -327,14 +328,16 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
                  '<div class="user_menu_list_item">' +
                  locale[lang]["reblogOptions"][idx].text + '</div></a>';
       }
-      txt +=  '<a href="#" onclick="return false;">' +
+      txt +=  '<a href="#" onclick="return false;" ' +
+               'class="MissingE_quick_reblog_field">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_twitter">' +
                '<input type="checkbox" /> ' + locale[lang]["twitterText"] +
                '</div></div></a>';
       var list = $('#user_channels li');
       if (list.length > 0) {
-         txt +=  '<a href="#" onclick="return false;">' +
+         txt +=  '<a href="#" onclick="return false;" ' +
+                  'class="MissingE_quick_reblog_field">' +
                   '<div class="user_menu_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_selector">' +
                   '<select>';
@@ -354,7 +357,8 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
          });
          txt +=  '</select><br />Tumblr</div></div></a>';
       }
-      txt += '<a href="#" onclick="return false;">' +
+      txt += '<a href="#" onclick="return false;" ' +
+               'class="MissingE_quick_reblog_field">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_tags">' +
                '<input type="text" /><br />' + locale[lang]["tagsText"] +
@@ -364,7 +368,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
          e.stopPropagation();
          return false;
       }).change(function() {
-         changeQuickReblogAcct($(this));
+         changeQuickReblogAcct($(this), quickReblogForceTwitter);
       });
       qr.mouseover(function(e){
          if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
@@ -418,7 +422,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
             else {
                sel.val(sel.find('option:first').val());
             }
-            changeQuickReblogAcct(sel);
+            sel.trigger('change');
          }
       });
       $('#posts div.post_controls a[href^="/reblog/"]')
@@ -526,6 +530,11 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
       qr.find('a').click(function(e){
          if (e.target.tagName === 'INPUT' ||
              e.target.tagName === 'SELECT') { return false; }
+         var trg = $(e.target);
+         if (trg.hasClass('MissingE_quick_reblog_field') ||
+             trg.closest('a').hasClass('MissingE_quick_reblog_field')) {
+            return false;
+         }
          var selector = $('#MissingE_quick_reblog_selector select');
          var account = accountName;
          if (selector.length > 0) {
@@ -534,7 +543,12 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
          doReblog(this,replaceIcons,account);
       });
 
-      getTwitterDefaults();
+      if (quickReblogForceTwitter == "default") {
+         getTwitterDefaults();
+      }
+      else if (quickReblogForceTwitter == "on") {
+         $('#MissingE_quick_reblog_selector select').trigger('change');
+      }
    }
 }
 

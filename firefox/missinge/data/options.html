@@ -897,7 +897,13 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" class="simple_setting" /> Main Blog<br />
 <input id="MissingE_betterReblogs_quickReblogAcctType_Secondary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="1" class="simple_setting" /> Specify Blog:
 <div style="text-align:right;padding-top:4px;"><input type="text" name="MissingE_betterReblogs_quickReblogAcctName" style="width:90%;margin-bottom:0;" maxlength="128" class="setting_text simple_setting" /><br /><small><em>Account Name</em></small></div></td></tr>
-<tr><td colspan="2" class="even">Always reblog long text posts as text</td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_fullText" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td class="subopt"></td><td class="even">Force quick (1-click) reblogging to send/not send posts to Twitter<br /><small><em>By default, quick reblogging will enable the </em>"Send to Twitter"<em> based on your Tumblr settings.<br />You can manually check/uncheck the </em>"Send to Twitter"<em> box for any quick reblog post</em></small></td>
+<td class="even"><select name="MissingE_betterReblogs_quickReblogForceTwitter" class="simple_setting">
+<option value="default">Do not force</option>
+<option value="on">Send to Twitter</option>
+<option value="off">Do not send to Twitter</option>
+</select></td></tr>
+<tr><td colspan="2" class="odd">Always reblog long text posts as text</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_fullText" value="0" checked="checked" class="simple_setting" /></td></tr>
 </table>
 </form>
 </div>

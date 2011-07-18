@@ -80,3 +80,7 @@ background-color:black !important;
 opacity:0.9;
 padding-bottom:6px !important;
 }
+
+span.MissingE_quick_reblog_field div {
+cursor:default;
+}

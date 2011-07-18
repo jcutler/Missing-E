@@ -274,7 +274,8 @@ function settings_startup(response) {
                                         response.message.quickReblog,
                                         response.message.replaceIcons,
                                         response.message.accountName,
-                                        response.message.fullText);
+                                        response.message.fullText,
+                                        response.message.quickReblogForceTwitter);
       }
       else if (response.message.subcomponent === "fill") {
          MissingE_betterReblogs_fill_doStartup(response.message.autoFillTags);

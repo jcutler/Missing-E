@@ -838,6 +838,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
+      settings.MissingE_betterReblogs_quickReblogForceTwitter = getStorage("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
       settings.MissingE_betterReblogs_fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
       settings.MissingE_version = getStorage("extensions.MissingE.version",'');
       myWorker.postMessage(settings);
@@ -946,6 +947,7 @@ function handleMessage(message, myWorker) {
             if (getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0) == 1) {
                settings.accountName = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctName",'0');
             }
+            settings.quickReblogForceTwitter = getStorage("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
             settings.replaceIcons = (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                                        getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
