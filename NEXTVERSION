@@ -2,4 +2,5 @@
 Mass message deletion [sea-bear]
 preset auto tag for reply replies [nathan--drake]
 Month names, day of week names [shunomellow]
-Quick reblogging defaults for send to twitter checkbox
+Quick reblogging load defaults for send to twitter checkbox
+   - also add option to force always on or always off
