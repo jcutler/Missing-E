@@ -616,7 +616,7 @@ var locale = {
    "deselectAll": "Deseleziona tutto",
    "deleteSelected": "Elimina selezionati",
    "message": "Sei sicuro di voler eliminare i # messaggi selezionati?",
-   "error": "Alcuni messaggi non può essere cancellato. Riprova più tardi."
+   "error": "Alcuni messaggi non sono stati eliminati. Riprova più tardi."
   }
  },
  "ja": {
