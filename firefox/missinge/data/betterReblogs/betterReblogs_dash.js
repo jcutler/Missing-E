@@ -21,6 +21,44 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 var resetTumblr;
+var checked = {};
+
+function getTwitterDefaults() {
+   var options = jQuery('#MissingE_quick_reblog_selector option');
+   options.each(function() {
+      jQuery.ajax({
+         type: "GET",
+         url: "http://www.tumblr.com/tumblelog/" + this.value + "/settings",
+         dataType: "html",
+         tryCount: 0,
+         retryLimit: 4,
+         blog: this.value,
+         error: function(xhr, textStatus) {
+            if (xhr.status < 500) {
+               return;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+            }
+         },
+         success: function(data, textStatus) {
+            var tumblr = this.blog;
+            var select = jQuery('#MissingE_quick_reblog_selector select');
+            var cb = data.match(/<input[^>]*name="channel\[twitter_send_posts\]"[^>]*>/);
+            if (cb && cb.length > 0) {
+               checked[tumblr] = /checked="checked"/.test(cb[0]);
+            }
+            if (select.val() === tumblr) {
+               select.trigger('change');
+            }
+         }
+      });
+   });
+}
 
 function changeQuickReblogAcct(sel) {
    var rm = jQuery('#MissingE_quick_reblog_manual');
@@ -31,6 +69,12 @@ function changeQuickReblogAcct(sel) {
    }
    else {
       rm.attr('href',curhref + '&channel_id=' + sel.val());
+   }
+   if (checked[sel.val()]) {
+      jQuery('#MissingE_quick_reblog_twitter input').get(0).checked = true;
+   }
+   else {
+      jQuery('#MissingE_quick_reblog_twitter input').get(0).checked = false;
    }
 }
 
@@ -377,7 +421,7 @@ self.on('message', function (message) {
                   else {
                      sel.val(sel.find('option:first').val());
                   }
-                  changeQuickReblogAcct(sel);
+                  sel.trigger('change');
                }, 1000);
             }
          }
@@ -485,7 +529,7 @@ self.on('message', function (message) {
                   else {
                      sel.val(sel.find('option:first').val());
                   }
-                  changeQuickReblogAcct(sel);
+                  sel.trigger('change');
                }, 1000);
             }
          }
@@ -523,6 +567,8 @@ self.on('message', function (message) {
          }
          doReblog(this,message.replaceIcons,account);
       });
+
+      getTwitterDefaults();
    }
 });
 

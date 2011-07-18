@@ -21,6 +21,44 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 var resetTumblr;
+var checked = {};
+
+function getTwitterDefaults() {
+   var options = $('#MissingE_quick_reblog_selector option');
+   options.each(function() {
+      $.ajax({
+         type: "GET",
+         url: "http://www.tumblr.com/tumblelog/" + this.value + "/settings",
+         dataType: "html",
+         tryCount: 0,
+         retryLimit: 4,
+         blog: this.value,
+         error: function(xhr, textStatus) {
+            if (xhr.status < 500) {
+               return;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  $.ajax(this);
+                  return;
+               }
+            }
+         },
+         success: function(data, textStatus) {
+            var tumblr = this.blog;
+            var select = $('#MissingE_quick_reblog_selector select');
+            var cb = data.match(/<input[^>]*name="channel\[twitter_send_posts\]"[^>]*>/);
+            if (cb && cb.length > 0) {
+               checked[tumblr] = /checked="checked"/.test(cb[0]);
+            }
+            if (select.val() === tumblr) {
+               select.trigger('change');
+            }
+         }
+      });
+   });
+}
 
 function changeQuickReblogAcct(sel) {
    var rm = $('#MissingE_quick_reblog_manual');
@@ -31,6 +69,12 @@ function changeQuickReblogAcct(sel) {
    }
    else {
       rm.attr('href',curhref + '&channel_id=' + sel.val());
+   }
+   if (checked[sel.val()]) {
+      $('#MissingE_quick_reblog_twitter input').get(0).checked = true;
+   }
+   else {
+      $('#MissingE_quick_reblog_twitter input').get(0).checked = false;
    }
 }
 
@@ -347,7 +391,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
                   else {
                      sel.val(sel.find('option:first').val());
                   }
-                  changeQuickReblogAcct(sel);
+                  sel.trigger('change');
                }, 1000);
             }
          }
@@ -419,7 +463,6 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
          var postId = reblog.closest('li.post').attr('id').match(/[0-9]*$/)[0];
          if (qr.find('div.user_menu_list').attr('id') !== 'list_for_'+postId) {
             qr.find('#MissingE_quick_reblog_tags input').val(tagarr.join(', '));
-            qr.find('#MissingE_quick_reblog_twitter input').attr('checked', false);
             qr.find('div.user_menu_list').attr('id','list_for_' + postId);
          }
          var arg = '';
@@ -454,7 +497,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
                   else {
                      sel.val(sel.find('option:first').val());
                   }
-                  changeQuickReblogAcct(sel);
+                  sel.trigger('change');
                }, 1000);
             }
          }
@@ -490,6 +533,8 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
          }
          doReblog(this,replaceIcons,account);
       });
+
+      getTwitterDefaults();
    }
 }
 
