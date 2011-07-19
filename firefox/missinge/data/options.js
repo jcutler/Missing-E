@@ -249,8 +249,7 @@ function loadSettings() {
       }
       if (v == "askFixes") {
          loadCheck(frm,'MissingE_askFixes_scroll',1);
-         loadCheck(frm,'MissingE_askFixes_buttons',0);
-         loadCheck(frm,'MissingE_askFixes_tags',0);
+         loadCheck(frm,'MissingE_askFixes_betterAnswers',0);
          loadCheck(frm,'MissingE_askFixes_tagAsker',1);
          frm.MissingE_askFixes_defaultTags.value = getStorage('MissingE_askFixes_defaultTags','');
          loadCheck(frm,'MissingE_askFixes_askDash',0);

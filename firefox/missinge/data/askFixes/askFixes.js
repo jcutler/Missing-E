@@ -189,7 +189,7 @@ function doManualAnswering(e,id,type) {
    return false;
 }
 
-function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
+function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
    if (item.tagName !== 'LI' || !jQuery(item).hasClass('post')) {
       return false;
    }
@@ -200,7 +200,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
    var id = escapeHTML(jQuery(item).attr('id').match(/[0-9]*$/)[0]);
-   if (buttons === 1) {
+   if (betterAnswers === 1) {
       var allbtns = "";
       for (var i in locale[lang]["postingFixes"]["submitText"]) {
          if (i === 'publish') { continue; }
@@ -236,7 +236,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
          doManualAnswering(e, id, 'private');
       });
    }
-   else if (tags === 1) {
+   else if (betterAnswers === 1) {
       var pbtn = jQuery('#ask_publish_button_' + id);
       var npbtn = jQuery('<button class="chrome blue" ' +
                     'id="ask_publish_button_also_' +
@@ -252,7 +252,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
       });
    }
 
-   if (buttons === 1 || tags === 1) {
+   if (betterAnswers === 1) {
       var x;
       var startTags = jQuery(item).find('div.post_info').text().match(/[0-9A-Za-z\-\_]+/);
       if (tagAsker === 1) {
@@ -273,7 +273,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
          startTags = '';
       }
       var adding = '<div class="MissingE_askFixes_group">';
-      if (tags === 1) {
+      if (betterAnswers === 1) {
          adding += '<div>' + locale[lang]["tagsText"] + ': <input ' +
                      'type="text" class="MissingE_askFixes_tags" value="' +
                      startTags + '"/></div>';
@@ -348,8 +348,7 @@ self.on('message', function (message) {
    }
    if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?(submissions|messages|inbox)/
          .test(location.href)) {
-      if (message.buttons === 1 ||
-          message.tags === 1) {
+      if (message.betterAnswers === 1) {
          jQuery('head').append('<script type="text/javascript">' +
                         'document.addEventListener(\'mouseup\', function(e) {' +
                         'if (e.which !== 1) { return; }' +
@@ -372,8 +371,7 @@ self.on('message', function (message) {
       jQuery('#posts li.post').each(function() {
          moreAnswerOptions(this, message.tagAsker,
                            message.defaultTags,
-                           message.buttons,
-                           message.tags);
+                           message.betterAnswers);
       });
       document.addEventListener('MissingEajax', function(e) {
          var type = e.data.match(/^[^:]*/)[0];
@@ -382,8 +380,7 @@ self.on('message', function (message) {
             jQuery.each(list, function(i,val) {
                moreAnswerOptions(jQuery('#'+val).get(0), message.tagAsker,
                                  message.defaultTags,
-                                 message.buttons,
-                                 message.tags);
+                                 message.betterAnswers);
             });
          }
       }, false);

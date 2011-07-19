@@ -264,17 +264,7 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_askFixes_buttons</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>0</real>
-		<key>Key</key>
-		<string>MissingE_askFixes_tags</string>
+		<string>MissingE_askFixes_betterAnswers</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

@@ -189,7 +189,7 @@ function doManualAnswering(e,id,type) {
    return false;
 }
 
-function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
+function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
    if (item.tagName !== 'LI' || !$(item).hasClass('post')) {
       return false;
    }
@@ -200,7 +200,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
    var lang = $('html').attr("lang");
    var id = $(item).attr('id').match(/[0-9]*$/)[0];
 
-   if (buttons === 1) {
+   if (betterAnswers === 1) {
       var allbtns = "";
       for (var i in locale[lang]["postingFixes"]["submitText"]) {
          if (i === 'publish') { continue; }
@@ -236,7 +236,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
          doManualAnswering(e, id, 'private');
       });
    }
-   else if (tags === 1) {
+   else if (betterAnswers === 1) {
       var pbtn = $('#ask_publish_button_' + id);
       var npbtn = $('<button class="chrome blue" id="ask_publish_button_also_' +
                     id + '" name="publish" type="submit" ' +
@@ -251,7 +251,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
       });
    }
 
-   if (buttons === 1 || tags === 1) {
+   if (betterAnswers === 1 || betterAnswers === 1) {
       var x;
       var startTags = $(item).find('div.post_info').text().match(/[0-9A-Za-z\-\_]+/);
       if (tagAsker === 1) {
@@ -272,7 +272,7 @@ function moreAnswerOptions(item, tagAsker, defTags, buttons, tags) {
          startTags = '';
       }
       var adding = '<div class="MissingE_askFixes_group">';
-      if (tags === 1) {
+      if (betterAnswers === 1) {
          adding += '<div>' + locale[lang]["tagsText"] + ': <input ' +
                      'type="text" class="MissingE_askFixes_tags" value="' +
                      startTags + '"/></div>';
@@ -329,8 +329,7 @@ chrome.extension.sendRequest({greeting: "settings",
    }
    if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?(submissions|messages|inbox)/
          .test(location.href)) {
-      if (askFixes_settings.buttons === 1 ||
-          askFixes_settings.tags === 1) {
+      if (askFixes_settings.betterAnswers === 1) {
          $('head').append('<script type="text/javascript">' +
                      'document.addEventListener(\'mouseup\', function(e) {' +
                      'if (e.which !== 1) { return; }' +
@@ -354,16 +353,14 @@ chrome.extension.sendRequest({greeting: "settings",
       $('#posts li.post').each(function() {
          moreAnswerOptions(this, askFixes_settings.tagAsker,
                            askFixes_settings.defaultTags,
-                           askFixes_settings.buttons,
-                           askFixes_settings.tags);
+                           askFixes_settings.betterAnswers);
       });
       $(document).bind('MissingEajax', function(e) {
          if (e.originalEvent.data.type === "messages") {
             $.each(e.originalEvent.data.list, function(i, val) {
                moreAnswerOptions($('#'+val).get(0), askFixes_settings.tagAsker,
                                  askFixes_settings.defaultTags,
-                                 askFixes_settings.buttons,
-                                 askFixes_settings.tags);
+                                 askFixes_settings.betterAnswers);
             });
          }
       });

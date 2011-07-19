@@ -226,8 +226,7 @@ function settings_startup(response) {
    else if (response.message.component === "askFixes") {
       MissingE_askFixes_doStartup(response.message.tagAsker,
                                   response.message.defaultTags,
-                                  response.message.buttons,
-                                  response.message.tags,
+                                  response.message.betterAnswers,
                                   response.message.askDash,
                                   response.message.massDelete);
    }

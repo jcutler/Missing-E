@@ -129,6 +129,22 @@ var months = ["Jan",
               "Nov",
               "Dec"];
 
+function collapseSettings(toPref, oldA, oldB) {
+   if ((ps.isSet(oldA) || ps.isSet(oldB)) &&
+       !ps.isSet(toPref)) {
+      console.log('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
+      if (ps.get(oldA,0) === 1 || ps.get(oldB,0) === 1) {
+         ps.set(toPref,1);
+      }
+      ps.reset(oldA);
+      ps.reset(oldB);
+   }
+   else if (ps.isSet(oldA) || ps.isSet(oldB)) {
+      ps.reset(oldA);
+      ps.reset(oldB);
+   }
+}
+
 function moveSetting(oldpref,newpref) {
    if (ps.isSet(oldpref) && !ps.isSet(newpref)) {
       console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
@@ -777,8 +793,7 @@ function handleMessage(message, myWorker) {
             getStorage("extensions.MissingE." + componentList[i] + ".enabled", 1);
       }
       settings.MissingE_askFixes_scroll = getStorage("extensions.MissingE.askFixes.scroll",1);
-      settings.MissingE_askFixes_buttons = getStorage("extensions.MissingE.askFixes.buttons",0);
-      settings.MissingE_askFixes_tags = getStorage("extensions.MissingE.askFixes.tags",0);
+      settings.MissingE_askFixes_betterAnswers = getStorage("extensions.MissingE.askFixes.betterAnswers",0);
       settings.MissingE_askFixes_tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
       settings.MissingE_askFixes_askDash = getStorage("extensions.MissingE.askFixes.askDash",0);
@@ -861,8 +876,7 @@ function handleMessage(message, myWorker) {
       switch(message.component) {
          case "askFixes":
             settings.scroll = getStorage("extensions.MissingE.askFixes.scroll",1);
-            settings.buttons = getStorage("extensions.MissingE.askFixes.buttons",0);
-            settings.tags = getStorage("extensions.MissingE.askFixes.tags",0);
+            settings.betterAnswers = getStorage("extensions.MissingE.askFixes.betterAnswers",0);
             settings.tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
             settings.defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
             if (settings.defaultTags !== '') {
@@ -1381,5 +1395,6 @@ setIntegerPrefType('extensions.MissingE.replyReplies.smallAvatars',1);
 
 moveSetting('extensions.MissingE.dashboardFixes.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
 moveSetting('extensions.MissingE.dashboardFixes.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
+collapseSettings('extensions.MissingE.askFixes.betterAnswers','extensions.MissingE.askFixes.buttons','extensions.MissingE.askFixes.tags');
 
 console.log("Missing e is running.");

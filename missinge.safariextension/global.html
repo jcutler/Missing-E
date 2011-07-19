@@ -746,8 +746,7 @@ function handleRequest(request) {
          settings["MissingE_" + componentList[i] + "_enabled"] = getStorage("MissingE_" + componentList[i] + "_enabled", 1);
       }
       settings.MissingE_askFixes_scroll = getStorage("MissingE_askFixes_scroll",1);
-      settings.MissingE_askFixes_buttons = getStorage("MissingE_askFixes_buttons",0);
-      settings.MissingE_askFixes_tags = getStorage("MissingE_askFixes_tags",0);
+      settings.MissingE_askFixes_betterAnswers = getStorage("MissingE_askFixes_betterAnswers",0);
       settings.MissingE_askFixes_tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
       settings.MissingE_askFixes_defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
       settings.MissingE_askFixes_askDash = getStorage("MissingE_askFixes_askDash",0);
@@ -828,8 +827,7 @@ function handleRequest(request) {
       switch(request.message.component) {
          case "askFixes":
             settings.scroll = getStorage("MissingE_askFixes_scroll",1);
-            settings.buttons = getStorage("MissingE_askFixes_buttons",0);
-            settings.tags = getStorage("MissingE_askFixes_tags",0);
+            settings.betterAnswers = getStorage("MissingE_askFixes_betterAnswers",0);
             settings.tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
             settings.defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
             if (settings.defaultTags !== '') {
@@ -1172,6 +1170,23 @@ function handleRequest(request) {
    }
 }
 
+function collapseSettings(toPref, oldA, oldB) {
+   var prefA = safari.extension.settings.getItem(oldA);
+   var prefB = safari.extension.settings.getItem(oldB);
+   var newPref = 0;
+   if (prefA || prefB) {
+      console.log('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
+   }
+   if (prefA === 1 || prefB === 1) {
+      newPref = 1;
+   }
+   if (prefA !== undefined || prefB !== undefined) {
+      safari.extension.settings[toPref] = newPref;
+      safari.extension.settings.removeItem(oldA);
+      safari.extension.settings.removeItem(oldB);
+   }
+}
+
 function moveSetting(oldpref, newpref) {
    var pref;
    if ((pref = safari.extension.settings.getItem(oldpref))) {
@@ -1228,6 +1243,7 @@ getExternalVersion();
 
 moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
 moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
+collapseSettings('MissingE_askFixes_betterAnswers','MissingE_askFixes_buttons','MissingE_askFixes_tags');
 </script>
 </head>
 </html>

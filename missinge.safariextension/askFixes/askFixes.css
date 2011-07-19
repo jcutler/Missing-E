@@ -140,3 +140,11 @@ opacity:0.5;
 #posts li.post input.MissingEmassDeleteSelect:hover {
 opacity:1;
 }
+
+.MissingE_askFixes_buttons .ask_publish_button, .MissingE_askFixes_buttons .ask_queue_button, .MissingE_askFixes_buttons .ask_draft_button {
+display:none !important;
+}
+
+.MissingE_askFixes_buttons .private_answer_button {
+display:inline-block !important;
+}

@@ -715,8 +715,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       switch(request.component) {
          case "askFixes":
             settings.scroll = getStorage("MissingE_askFixes_scroll",1);
-            settings.buttons = getStorage("MissingE_askFixes_buttons",0);
-            settings.tags = getStorage("MissingE_askFixes_tags",0);
+            settings.betterAnswers = getStorage("MissingE_askFixes_betterAnswers",0);
             settings.tagAsker = getStorage("MissingE_askFixes_tagAsker",1);
             settings.defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
             if (settings.defaultTags !== '') {
@@ -1130,6 +1129,23 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
 });
 
+function collapseSettings(toPref, oldA, oldB) {
+   var prefA = localStorage[oldA];
+   var prefB = localStorage[oldB];
+   var newPref;
+   if (prefA || prefB) {
+      console.log('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
+   }
+   if (prefA === "1" || prefB === "1") {
+      newPref = "1";
+   }
+   if (prefA || prefB) {
+      localStorage[toPref] = newPref;
+      localStorage.removeItem(oldA);
+      localStorage.removeItem(oldB);
+   }
+}
+
 function moveSetting(oldpref, newpref) {
    var pref;
    if ((pref = localStorage[oldpref])) {
@@ -1188,6 +1204,7 @@ getExternalVersion();
 
 moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
 moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
+collapseSettings('MissingE_askFixes_betterAnswers','MissingE_askFixes_buttons','MissingE_askFixes_tags');
 
 var fivedays = 432000000;
 var now = (new Date()).valueOf();
