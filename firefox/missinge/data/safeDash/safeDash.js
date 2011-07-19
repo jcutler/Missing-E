@@ -259,6 +259,7 @@ self.on('message', function (message) {
    jQuery('head').prepend('<style type="text/css">' +
                '#posts .post img, .notification blockquote img, ' +
                '.video_thumbnail .nsfwdiv + div { opacity:' + opA + '; } ' +
+               '#posts #new_post img { opacity:1; } ' +
                '.nsfwdiv { background:#BFBFBF url("' + lock + '") no-repeat ' +
                'scroll center center !important; } #right_column ' +
                '#MissingE_safeDash li a {' +
