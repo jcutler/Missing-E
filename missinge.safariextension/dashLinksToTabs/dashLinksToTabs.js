@@ -59,6 +59,7 @@ function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
       return false;
    }
    if (node === null || node === this) { return false; }
+   if (!$(node).attr('href')) { return false; }
    if (/^#/.test($(node).attr('href'))) { return false; }
    var urlhash = $(node).attr('href').match(/^([^#]*)#/);
    var prehash = $(node).attr('href');
