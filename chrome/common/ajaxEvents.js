@@ -21,6 +21,17 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+function checkAjaxReady(data) {
+   if (data.list.length === 0 || $('#'+data.list[0]).length > 0) {
+      var evt = document.createEvent("MessageEvent");
+      evt.initMessageEvent("MissingEajax", true, true, {"type":data.type, "list":data.list}, "http://www.tumblr.com", 0, window);
+      document.dispatchEvent(evt);
+   }
+   else {
+      setTimeout(function(){checkAjaxReady(data);},500);
+   }
+}
+
 if (location.host === 'www.tumblr.com') {
    $('head').append('<script type="text/javascript">\
       Ajax.Responders.register({ \
@@ -62,11 +73,15 @@ if (location.host === 'www.tumblr.com') {
                   } \
                } \
                var evt = document.createEvent("MessageEvent"); \
-               evt.initMessageEvent("MissingEajax", true, true, {"type":type, "list":newPosts}, "http://www.tumblr.com", 0, window); \
+               evt.initMessageEvent("MissingEajaxInsert", true, true, {"type":type, "list":newPosts}, "http://www.tumblr.com", 0, window); \
                document.dispatchEvent(evt); \
             } \
          } \
       });</script>');
 }
+
+$(document).bind('MissingEajaxInsert', function(e) {
+   checkAjaxReady(e.originalEvent.data);
+});
 
 //$(document).bind('MissingEajax', function(e) { console.log(e.originalEvent.data); });

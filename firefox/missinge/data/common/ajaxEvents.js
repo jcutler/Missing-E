@@ -21,6 +21,18 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+function checkAjaxReady(data) {
+   console.log(data.list[0]);
+   if (data.list.length === 0 || jQuery('#'+data.list[0]).length > 0) {
+      var evt = document.createEvent("MessageEvent");
+      evt.initMessageEvent("MissingEajax", true, true, data.type + ":" + data.list.join(","), "http://www.tumblr.com", 0, window);
+      document.dispatchEvent(evt);
+   }
+   else {
+      setTimeout(function(){checkAjaxReady(data);},500);
+   }
+}
+
 if (location.host === 'www.tumblr.com') {
    jQuery('head').append('<script type="text/javascript">\
    if (typeof Ajax !== "undefined") { \
@@ -63,13 +75,19 @@ if (location.host === 'www.tumblr.com') {
                   } \
                } \
                var evt = document.createEvent("MessageEvent"); \
-               evt.initMessageEvent("MissingEajax", true, true, type + ":" + newPosts.join(","), "http://www.tumblr.com", 0, window); \
+               evt.initMessageEvent("MissingEajaxInsert", true, true, type + ":" + newPosts.join(","), "http://www.tumblr.com", 0, window); \
                document.dispatchEvent(evt); \
             } \
          } \
       }); \
    }</script>');
 }
+
+document.addEventListener('MissingEajaxInsert', function(e) {
+   var type = e.data.match(/^[^:]*/)[0];
+   var list = e.data.match(/(post_[0-9]+)/g);
+   checkAjaxReady({"type":type,"list":list});
+}, false);
 
 //jQuery(document).bind('MissingEajax', function(e) {
 //   var type = e.originalEvent.data.match(/^[^:]*/)[0];
