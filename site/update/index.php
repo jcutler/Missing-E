@@ -30,7 +30,7 @@ jQuery(document).ready(function($) {
 <div id="logo"><a name="top"></a><a href="/"><img src="/images/missinge.png" alt="Missing e" /></a></div>
 <div id="map"><a href="/">GET</a><a href="/about">ABOUT</a><a href="/features">FEATURES</a><a href="/faq">FAQ</a><a href="http://blog.missinge.infraware.ca">BLOG</a></div><div id="content">
 <div class="clear"></div>
-<h1><em>Missing e</em> has been updated</h1>
+<h1>There's a new version of <em>Missing e</em>!</h1>
 <h2 style="text-align:center;background-color:transparent;"><a href="<?=urldecode($_GET["l"]);?>">Read about it here</a></h2>
 <p class="question">How do I update 'Missing e' to the newest version?</p>
 <div class="response">
