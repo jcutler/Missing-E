@@ -441,14 +441,16 @@ self.on('message', function (message) {
             else if (btn.hasClass('delete_selected')) {
                var key = jQuery('#posts input[name="form_key"]:first').val();
                var count = jQuery('#posts li.MissingEmdSelected').length;
-               var sure = confirm(locale[lang]["massDelete"]["message"].replace('#',count));
-               if (sure) {
-                  deleteMessages(key, lang);
+               if (count > 0) {
+                  var sure = confirm(locale[lang]["massDelete"]["message"].replace('#',count));
+                  if (sure) {
+                     deleteMessages(key, lang);
+                  }
                }
             }
             return false;
          });
-         jQuery('input.MissingEmassDeleteSelect').change(function() {
+         jQuery('input.MissingEmassDeleteSelect').live('change', function() {
             var item = jQuery(this).closest('li.post');
             if (this.checked) {
                item.addClass('MissingEmdSelected');

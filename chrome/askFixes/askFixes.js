@@ -419,14 +419,16 @@ chrome.extension.sendRequest({greeting: "settings",
             else if (btn.hasClass('delete_selected')) {
                var key = $('#posts input[name="form_key"]:first').val();
                var count = $('#posts li.MissingEmdSelected').length;
-               var sure = confirm(locale[lang]["massDelete"]["message"].replace('#',count));
-               if (sure) {
-                  deleteMessages(key, lang);
+               if (count > 0) {
+                  var sure = confirm(locale[lang]["massDelete"]["message"].replace('#',count));
+                  if (sure) {
+                     deleteMessages(key, lang);
+                  }
                }
             }
             return false;
          });
-         $('input.MissingEmassDeleteSelect').change(function() {
+         $('input.MissingEmassDeleteSelect').live('change', function() {
             var item = $(this).closest('li.post');
             if (this.checked) {
                item.addClass('MissingEmdSelected');
