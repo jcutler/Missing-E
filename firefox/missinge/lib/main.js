@@ -55,7 +55,8 @@ var tenSeconds = 10000;
 var followCheckerTab = null;
 var formKey;
 var locale=JSON.parse(data.load("common/localizations.js")
-                      .replace(/^[^{]*/,''));
+                      .replace(/^[^{]*/,'')
+                      .replace(/;\s*$/,''));
 var followYou = [];
 var youFollow = [];
 var lang = 'en';
