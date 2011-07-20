@@ -21,15 +21,32 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global window, safari, MissingE_bookmarker_doStartup,
-  MissingE_dashboardFixes_doStartup, MissingE_dashLinksToTabs_doStartup,
-  MissingE_followChecker_doStartup, MissingE_gotoDashPost_doStartup,
-  MissingE_magnifier_doStartup, MissingE_postCrushes_doStartup,
-  MissingE_postCrushes_fill_doStartup, MissingE_postingFixes_doStartup,
+/*global doZindexFix,locale,
+  MissingE_askFixes_doStartup,
+  MissingE_askFixes_scroll_doStartup,
+  MissingE_betterReblogs_dash_doStartup,
+  MissingE_betterReblogs_fill_doStartup,
+  MissingE_betterReblogs_post_doStartup,
+  MissingE_bookmarker_doStartup,
+  MissingE_dashboardFixes_doStartup,
+  MissingE_dashLinksToTabs_doStartup,
+  MissingE_followChecker_doStartup,
+  MissingE_gotoDashPost_doStartup,
+  MissingE_magnifier_doStartup,
+  MissingE_massEditor_doStartup,
+  MissingE_postCrushes_doStartup,
+  MissingE_postCrushes_fill_doStartup,
+  MissingE_postingFixes_doStartup,
+  MissingE_postingFixes_subEdit_doStartup,
   MissingE_reblogYourself_dash_doStartup,
-  MissingE_reblogYourself_post_doStartup, MissingE_replyReplies_doStartup,
-  MissingE_replyReplies_fill_doStartup, MissingE_safeDash_doStartup,
-  MissingE_timestamps_doStartup, MissingE_unfollower_doStartup */
+  MissingE_reblogYourself_post_doStartup,
+  MissingE_replyReplies_doStartup,
+  MissingE_replyReplies_fill_doStartup,
+  MissingE_safeDash_doStartup,
+  MissingE_sidebarTweaks_doStartup,
+  MissingE_timestamps_doStartup,
+  MissingE_unfollower_doStartup,
+  safari */ 
 
 if ((window.top === window &&
     !(/http:\/\/missinge\.infraware\.ca/.test(location.href)) &&
@@ -58,7 +75,7 @@ function updateCheck(response) {
       var html = document.getElementsByTagName('html');
       var lang = 'en';
       if (html && html[0]) { lang = html[0].getAttribute('lang'); }
-      up.setAttribute('title', locale[lang]["update"]);
+      up.setAttribute('title', locale[lang].update);
       var post = '';
       if (response.message.link !== '') {
          post = 'post/' + response.message.link;
@@ -99,7 +116,8 @@ function doStartup(response) {
    info += response.message.url + "\n";
    for (i in response.message) {
       if (response.message.hasOwnProperty(i)) {
-         if (i !== 'url' && i !== 'isFrame' && !(/_fill$/.test(i)) && i !== 'zindexFix') {
+         if (i !== 'url' && i !== 'isFrame' && !(/_fill$/.test(i)) &&
+             i !== 'zindexFix') {
             info += i + ": " + (response.message[i] ? "active" : "inactive") +
                      "\n";
          }
@@ -270,11 +288,11 @@ function settings_startup(response) {
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {
          MissingE_betterReblogs_dash_doStartup(response.message.passTags,
-                                        response.message.quickReblog,
-                                        response.message.replaceIcons,
-                                        response.message.accountName,
-                                        response.message.fullText,
-                                        response.message.quickReblogForceTwitter);
+                                     response.message.quickReblog,
+                                     response.message.replaceIcons,
+                                     response.message.accountName,
+                                     response.message.fullText,
+                                     response.message.quickReblogForceTwitter);
       }
       else if (response.message.subcomponent === "fill") {
          MissingE_betterReblogs_fill_doStartup(response.message.autoFillTags);

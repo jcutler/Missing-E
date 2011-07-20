@@ -53,10 +53,10 @@ if (bar && logout) {
    tab.className = "tab iconic";
    tab.id = "missinge_button";
    tab.innerHTML = '<a href="' + safari.extension.baseURI + 'options.html' +
-                   '" target="_blank" title="Missing e Settings">Missing e</a>' +
-                   '<div id="missinge_updatenotice" class="tab_notice">' +
-                     '<span class="tab_notice_value">Update</span>' +
-                     '<span class="tab_notice_nipple"></span></div>';
+                   '" target="_blank" title="Missing e Settings">Missing e' +
+                   '</a><div id="missinge_updatenotice" class="tab_notice">' +
+                   '<span class="tab_notice_value">Update</span>' +
+                   '<span class="tab_notice_nipple"></span></div>';
    bar.insertBefore(tab, logout);
 }
 

@@ -21,10 +21,14 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global jQuery */
+
 function checkAjaxReady(data, tries) {
    if (data.list.length === 0 || jQuery('#'+data.list[0]).length > 0) {
       var evt = document.createEvent("MessageEvent");
-      evt.initMessageEvent("MissingEajax", true, true, data.type + ":" + data.list.join(","), "http://www.tumblr.com", 0, window);
+      evt.initMessageEvent("MissingEajax", true, true,
+                           data.type + ":" + data.list.join(","),
+                           "http://www.tumblr.com", 0, window);
       document.dispatchEvent(evt);
    }
    else if (tries < 10) {

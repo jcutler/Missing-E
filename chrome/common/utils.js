@@ -21,20 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global self */
-
-var months = ["Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec"];
+/*global locale,self */
 
 function zeroPad(num, len) {
    var ret = "";
@@ -48,10 +35,10 @@ function getFormattedDate(d, format, lang) {
    if (!lang || !locale[lang]) { lang = 'en'; }
    ret = ret.replace(/%Y/g,d.getFullYear())
             .replace(/%y/g,(d.getFullYear()%100))
-            .replace(/%M/g,locale[lang]["monthsShort"][d.getMonth()])
-            .replace(/%B/g,locale[lang]["monthsLong"][d.getMonth()])
-            .replace(/%w/g,locale[lang]["daysShort"][d.getDay()])
-            .replace(/%W/g,locale[lang]["daysLong"][d.getDay()])
+            .replace(/%M/g,locale[lang].monthsShort[d.getMonth()])
+            .replace(/%B/g,locale[lang].monthsLong[d.getMonth()])
+            .replace(/%w/g,locale[lang].daysShort[d.getDay()])
+            .replace(/%W/g,locale[lang].daysLong[d.getDay()])
             .replace(/%m/g,zeroPad(d.getMonth()+1,2))
             .replace(/%n/g,(d.getMonth()+1))
             .replace(/%D/g,zeroPad(d.getDate(),2))

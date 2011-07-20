@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global chrome */
+
 var versiondiv = document.getElementById('versioncheck');
 if (versiondiv) {
    var ver = versiondiv.getAttribute('version');

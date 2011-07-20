@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global jQuery */
+
 function zindexFixFutureEmbed(item) {
    var val = jQuery(item).val().replace(/wmode="[^"]*"/,'wmode="opaque"');
    jQuery(item).val(val);
@@ -46,7 +48,7 @@ document.addEventListener('MissingEajax', function(e) {
    if (type === 'notes') { return; }
    jQuery.each(list, function(i,val) {
       jQuery('#'+val).find('embed').each(function() {
-         zIndexFixEmbed(this);
+         zindexFixEmbed(this);
       });
       jQuery('#'+val).find('div.video + input:hidden').each(function() {
          zindexFixFutureEmbed(this);

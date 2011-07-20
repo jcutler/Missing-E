@@ -21,15 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global window, safari, MissingE_bookmarker_doStartup,
-  MissingE_dashboardFixes_doStartup, MissingE_dashLinksToTabs_doStartup,
-  MissingE_followChecker_doStartup, MissingE_gotoDashPost_doStartup,
-  MissingE_magnifier_doStartup, MissingE_postCrushes_doStartup,
-  MissingE_postCrushes_fill_doStartup, MissingE_postingFixes_doStartup,
-  MissingE_reblogYourself_dash_doStartup,
-  MissingE_reblogYourself_post_doStartup, MissingE_replyReplies_doStartup,
-  MissingE_replyReplies_fill_doStartup, MissingE_safeDash_doStartup,
-  MissingE_timestamps_doStartup, MissingE_unfollower_doStartup */
+/*global locale,self */ 
 
 var MissingE_startup;
 

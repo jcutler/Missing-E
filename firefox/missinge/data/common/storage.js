@@ -21,8 +21,6 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global localStorage */
-
 function getStorage(key, defVal) {
    var retval = localStorage[key];
    if (retval === undefined || retval === null || retval === "") {
