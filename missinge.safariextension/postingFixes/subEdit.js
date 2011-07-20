@@ -21,10 +21,12 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome, $ */
+/*global locale,safari */
+
 var like, suffix='', lang='en';
 
 function MissingE_postingFixes_subEdit_doStartup() {
+   var i;
    var div = document.getElementsByTagName("div")[0];
    var controls;
    if (div) { controls = div.getElementsByTagName("a"); }
@@ -34,7 +36,6 @@ function MissingE_postingFixes_subEdit_doStartup() {
       noEdit = false;
    }
    else {
-      var i;
       for (i=0; i<controls.length; i++) {
          if (/\/edit\//.test(controls[i].href)) {
             noEdit = false;
@@ -43,7 +44,6 @@ function MissingE_postingFixes_subEdit_doStartup() {
       }
    }
    if (noEdit) {
-      var i;
       var follow;
       var acct;
       var dashimg = null;
@@ -73,7 +73,8 @@ function MissingE_postingFixes_subEdit_doStartup() {
          if (/\/(un)?like\//.test(document.forms[i].getAttribute('action'))) {
             like = document.forms[i];
          }
-         else if (/\/(un)?follow/.test(document.forms[i].getAttribute('action'))) {
+         else if (/\/(un)?follow/.test(document.forms[i]
+                                       .getAttribute('action'))) {
             follow = document.forms[i];
          }
       }
@@ -94,9 +95,10 @@ function receivePermission(response) {
       if (url !== '') { href += "?redirect_to=" + url; }
       edit.href = href;
       edit.setAttribute('target','_top');
-      edit.innerHTML = '<img src="http://assets.tumblr.com/images/iframe_edit_alpha' +
-         suffix + '" alt="' + locale[lang]["edit"] + '" ' +
-         'style="display:block;float:left;" />';
+      edit.innerHTML = '<img src="http://assets.tumblr.com/images/' +
+         'iframe_edit_alpha' + suffix + '" alt="' +
+         locale[lang].dashFixesText.edit +
+         '" style="display:block;float:left;" />';
       like.parentNode.insertBefore(edit, like.nextSibling);
    }
 }

@@ -21,8 +21,10 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome, $ */
+/*global locale,self */
+
 self.on('message', function(message) {
+   var i;
    if (message.greeting !== "settings" ||
        message.component !== "postingFixes" ||
        message.subcomponent !== "post") {
@@ -37,7 +39,6 @@ self.on('message', function(message) {
       noEdit = false;
    }
    else {
-      var i;
       for (i=0; i<controls.length; i++) {
          if (/\/edit\//.test(controls[i].href)) {
             noEdit = false;
@@ -47,7 +48,6 @@ self.on('message', function(message) {
    }
    
    if (noEdit) {
-      var i;
       var follow, like;
       var acct;
       var dashimg = null;
@@ -79,7 +79,8 @@ self.on('message', function(message) {
          if (/\/(un)?like\//.test(document.forms[i].getAttribute('action'))) {
             like = document.forms[i];
          }
-         else if (/\/(un)?follow/.test(document.forms[i].getAttribute('action'))) {
+         else if (/\/(un)?follow/.test(document.forms[i]
+                                       .getAttribute('action'))) {
             follow = document.forms[i];
          }
       }
@@ -95,9 +96,10 @@ self.on('message', function(message) {
                if (url !== '') { href += "?redirect_to=" + url; }
                edit.href = href;
                edit.setAttribute('target','_top');
-               edit.innerHTML = '<img src="http://assets.tumblr.com/images/iframe_edit_alpha' +
-                  suffix + '" alt="' + locale[lang]["edit"] + '" ' +
-                  'style="display:block;float:left;" />';
+               edit.innerHTML = '<img src="http://assets.tumblr.com/images/' +
+                  'iframe_edit_alpha' + suffix + '" alt="' +
+                  locale[lang].dashFixesText.edit +
+                  '" style="display:block;float:left;" />';
                like.parentNode.insertBefore(edit, like.nextSibling);
             }
          });

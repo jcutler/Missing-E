@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $ */
+/*global escapeHTML,jQuery,locale,self */
 
 function addAskUploader(obj) {
    if (obj.tagName === 'LI' && jQuery(obj).hasClass('post')) {
@@ -79,12 +79,12 @@ self.on('message', function(message) {
    var extensionURL = message.extensionURL;
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
-
+   var i,tag;
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                          extensionURL + 'postingFixes/postingFixes.css" />');
 
    if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href)) {
-      var i, txt="";
+      var txt="";
       var ctags;
       var posttags = document.getElementById('post_tags');
       if (posttags) {
@@ -108,7 +108,7 @@ self.on('message', function(message) {
      '<a class="clear_tags" style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">' + locale[lang]["postingFixes"]["clearTagsText"] +
+     'return false;">' + locale[lang].postingFixes.clearTagsText +
      '</a></div>')
          .appendTo(set_tags);
 
@@ -147,17 +147,16 @@ self.on('message', function(message) {
       var btn;
       var bottom;
       var isShare;
-
       if (jQuery('body').attr('id') === 'bookmarklet_index') {
          isShare = true;
          btn = jQuery('#post_controls input[type="submit"]');
-         var bottom = jQuery('#post_controls').outerHeight()/2 +
+         bottom = jQuery('#post_controls').outerHeight()/2 +
             jQuery('#post_controls')
                .find('input[type="submit"]').outerHeight()/2;
          bottom = Math.round(bottom);
          if (jQuery('#post_state').val() === '0') {
             jQuery('#post_controls input[type="submit"]')
-               .val(locale[lang]["postingFixes"]["submitText"].publish);
+               .val(locale[lang].postingFixes.submitText.publish);
          }
       }
       else {
@@ -174,14 +173,14 @@ self.on('message', function(message) {
          doOnClick = 'document.getElementById(\'the_submit_btn\').click();' +
                      doOnClick;
       }
-      for (var i in locale[lang]["postingFixes"]["submitText"]) {
-         var klass = "";
-         var div = "";
-         allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
-                     'type="submit" class="positive" ' +
-                     'onclick="' + doOnClick + '"><span>' +
-                     locale[lang]["postingFixes"]["submitText"][i] +
-                     '</span></button></div>';
+      for (i in locale[lang].postingFixes.submitText) {
+         if (locale[lang].postingFixes.submitText.hasOwnProperty(i)) {
+            allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
+                        'type="submit" class="positive" ' +
+                        'onclick="' + doOnClick + '"><span>' +
+                        locale[lang].postingFixes.submitText[i] +
+                        '</span></button></div>';
+         }
       }
       var newbtns = jQuery('<div id="MissingE_postMenu">' + allbtns + '</div>')
                      .insertAfter(btn);
@@ -214,7 +213,8 @@ self.on('message', function(message) {
       });
       showHideButtons(newbtns, jQuery('#post_state').val());
       if (isShare) {
-         changeButtonText(jQuery('#post_state').val(), locale[lang]["postingFixes"]["submitText"]);
+         changeButtonText(jQuery('#post_state').val(),
+                          locale[lang].postingFixes.submitText);
       }
    }
 
@@ -234,7 +234,7 @@ self.on('message', function(message) {
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           locale[lang]["uploadImagesText"] + '</a>';
+                           locale[lang].postingFixes.uploadImagesText + '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
       }
@@ -270,7 +270,7 @@ self.on('message', function(message) {
       }
 
       var textarea = h2.nextAll('textarea:first').attr('id');
-      var tag = '<img src=\\"X\\" />';
+      tag = '<img src=\\"X\\" />';
       if (h2.parent().find('div.editor_note:contains("markdown")')
                         .length !== 0) {
          tag = '![](X)';
@@ -304,7 +304,7 @@ self.on('message', function(message) {
    }
    else if (message.addUploader === 1 &&
             /http:\/\/www\.tumblr\.com\/share/.test(location.href)) {
-      var tag = '<img src=\\"X\\" />';
+      tag = '<img src=\\"X\\" />';
       jQuery('textarea').each(function() {
          if ((this.name !== "post[two]" &&
              this.name !== "post[three]") ||

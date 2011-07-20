@@ -21,7 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome, $ */
+/*global chrome,locale */
+
 var div = document.getElementsByTagName("div")[0];
 var controls;
 if (div) { controls = div.getElementsByTagName("a"); }
@@ -89,9 +90,10 @@ if (noEdit) {
             if (url !== '') { href += "?redirect_to=" + url; }
             edit.href = href;
             edit.setAttribute('target','_top');
-            edit.innerHTML = '<img src="http://assets.tumblr.com/images/iframe_edit_alpha' +
-               suffix + '" alt="' + locale[lang]["edit"] + '" ' +
-               'style="display:block;float:left;" />';
+            edit.innerHTML = '<img src="http://assets.tumblr.com/images/' +
+               'iframe_edit_alpha' + suffix + '" alt="' +
+               locale[lang].dashFixesText.edit +
+               '" style="display:block;float:left;" />';
             like.parentNode.insertBefore(edit, like.nextSibling);
          }
       });

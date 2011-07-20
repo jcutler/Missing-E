@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $ */
+/*global $,locale,safari */
 
 function addAskUploader(obj) {
    if (obj.tagName === 'LI' && $(obj).hasClass('post')) {
@@ -79,9 +79,9 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                                          addUploader, quickButtons,
                                          blogSelect) {
    var lang = $('html').attr('lang');
-
+   var i,tag;
    if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href)) {
-      var i, txt="";
+      var txt="";
       var ctags;
       var posttags = document.getElementById('post_tags');
       if (posttags) {
@@ -104,7 +104,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
      'style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">' + locale[lang]["postingFixes"]["clearTagsText"] +
+     'return false;">' + locale[lang].postingFixes.clearTagsText +
      '</a></div>')
          .appendTo(set_tags);
 
@@ -142,16 +142,15 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       var btn;
       var bottom;
       var isShare;
-
       if ($('body').attr('id') === 'bookmarklet_index') {
          isShare = true;
          btn = $('#post_controls input[type="submit"]');
-         var bottom = $('#post_controls').outerHeight()/2 +
+         bottom = $('#post_controls').outerHeight()/2 +
             $('#post_controls').find('input[type="submit"]').outerHeight()/2;
          bottom = Math.round(bottom);
          if ($('#post_state').val() === '0') {
             $('#post_controls input[type="submit"]')
-               .val(locale[lang]["postingFixes"]["submitText"].publish);
+               .val(locale[lang].postingFixes.submitText.publish);
          }
       }
       else {
@@ -160,14 +159,14 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       }
 
       var allbtns = "";
-      for (var i in locale[lang]["postingFixes"]["submitText"]) {
-         var klass = "";
-         var div = "";
-         allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
-                     'type="submit" class="positive" ' +
-                     'onclick="return true;"><span>' +
-                     locale[lang]["postingFixes"]["submitText"][i] +
-                     '</span></button></div>';
+      for (i in locale[lang].postingFixes.submitText) {
+         if (locale[lang].postingFixes.submitText.hasOwnProperty(i)) {
+            allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
+                        'type="submit" class="positive" ' +
+                        'onclick="return true;"><span>' +
+                        locale[lang].postingFixes.submitText[i] +
+                        '</span></button></div>';
+         }
       }
       var newbtns = $('<div id="MissingE_postMenu">' + allbtns + '</div>')
                      .insertAfter(btn);
@@ -201,7 +200,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       $(document).ready(function() {
          showHideButtons(newbtns, $('#post_state').val());
          if (isShare) {
-            changeButtonText($('#post_state').val(), locale[lang]["postingFixes"]["submitText"]);
+            changeButtonText($('#post_state').val(),
+                             locale[lang].postingFixes.submitText);
          }
       });
    }
@@ -222,7 +222,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           locale[lang]["postingFixes"]["uploadImagesText"] +
+                           locale[lang].postingFixes.uploadImagesText +
                            '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
@@ -259,7 +259,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       }
 
       var textarea = h2.nextAll('textarea:first').attr('id');
-      var tag = '<img src=\\"X\\" />';
+      tag = '<img src=\\"X\\" />';
       if (h2.parent().find('div.editor_note:contains("markdown")')
                         .length !== 0) {
          tag = '![](X)';
@@ -293,7 +293,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
    }
    else if (addUploader === 1 &&
             /http:\/\/www\.tumblr\.com\/share/.test(location.href)) {
-      var tag = '<img src=\\"X\\" />';
+      tag = '<img src=\\"X\\" />';
       $('textarea').each(function() {
          if ((this.name !== "post[two]" &&
              this.name !== "post[three]") ||
