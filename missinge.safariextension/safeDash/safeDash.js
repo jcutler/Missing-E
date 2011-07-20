@@ -163,6 +163,12 @@ function doHide(item, retry) {
                   if (!me.hasClass('inline_image')) {
                      extra += 'min-height:' + h + 'px;min-width:' + w + 'px;';
                   }
+                  if (me.parent().hasClass('photoset_photo')) {
+                     var mt = me.attr('style').match(/margin-top:\s*([^;]*)/);
+                     if (mt && mt.length > 1) {
+                        extra += 'margin-top:' + mt[1] + ' !important;';
+                     }
+                  }
                }
                s = '<div class="nsfwdiv ' + klass + '" style="' + extra +
                      '" />';
