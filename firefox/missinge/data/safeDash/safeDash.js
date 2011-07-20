@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, $, getStorage, setStorage, window */
+/*global getStorage,jQuery,self,setStorage */
 
 var lock, lockicon;
 
@@ -349,7 +349,7 @@ self.on('message', function (message) {
       doHide(this);
    });
 
-   jQuery('#posts a.video_thumbnail').live('click', function(e) {
+   jQuery('#posts a.video_thumbnail').live('click', function() {
       doHide(jQuery(this).parent()
              .find('div.video_embed object,div.video_embed iframe').get(0));
    });

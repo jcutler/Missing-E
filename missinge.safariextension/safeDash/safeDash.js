@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, $, getStorage, setStorage, window */
+/*global $,getStorage,safari,setStorage */
 
 var lock = safari.extension.baseURI + 'safeDash/lock.png';
 var lockicon = safari.extension.baseURI + 'safeDash/lockicon.png';
@@ -338,7 +338,7 @@ function MissingE_safeDash_doStartup() {
       doHide(this);
    });
 
-   $('#posts a.video_thumbnail').live('click', function(e) {
+   $('#posts a.video_thumbnail').live('click', function() {
       doHide($(this).parent()
              .find('div.video_embed object,div.video_embed iframe').get(0));
    });

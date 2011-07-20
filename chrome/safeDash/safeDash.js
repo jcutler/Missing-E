@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome, $, getStorage, setStorage, window */
+/*global $,chrome,getStorage,setStorage */
 
 var lock = chrome.extension.getURL('safeDash/lock.png');
 var lockicon = chrome.extension.getURL('safeDash/lockicon.png');
@@ -345,7 +345,7 @@ $('#posts li.post, #posts li.notification, ol.notes').each(function(){
    doHide(this);
 });
 
-$('#posts a.video_thumbnail').live('click', function(e) {
+$('#posts a.video_thumbnail').live('click', function() {
    doHide($(this).parent()
           .find('div.video_embed object,div.video_embed iframe').get(0));
 });
