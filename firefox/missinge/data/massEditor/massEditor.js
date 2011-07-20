@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global jQuery,locale,self */
+
 function generateButton(type,text,islast) {
    return '<div id="MissingE_selecttype_' + type + '" class="header_button' +
       (islast ? ' last_header_button' : '') + '">' +
@@ -46,9 +48,10 @@ self.on('message', function(message) {
    }
    var lang = 'en';
    var deltext = jQuery('#delete_posts').text().toLowerCase();
-   for (var o in locale) {
+   var o;
+   for (o in locale) {
       if (locale.hasOwnProperty(o) &&
-          locale[o]["dashFixesText"]["del"] == deltext) {
+          locale[o].dashFixesText.del === deltext) {
          lang = o;
          break;
       }
@@ -56,22 +59,22 @@ self.on('message', function(message) {
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                    message.extensionURL + 'massEditor/massEditor.css" />'); 
    jQuery('head').append('<style type="text/css">' +
-                   '#MissingE_selecttype_btn.force_border .chrome_button, ' +
-                   '#MissingE_selecttype_btn.force_border .chrome_button_left, ' +
-                   '#MissingE_selecttype_btn.force_border .chrome_button_right, ' +
-                   '#MissingE_selecttype_list .chrome_button, ' +
-                   '#MissingE_selecttype_list .chrome_button_left, ' +
-                   '#MissingE_selecttype_list .chrome_button_right { ' +
-                   'background-image:url("' +
-                   message.extensionURL + 'massEditor/border.png' +
-                   '"); }</style>');
+                '#MissingE_selecttype_btn.force_border .chrome_button, ' +
+                '#MissingE_selecttype_btn.force_border .chrome_button_left, ' +
+                '#MissingE_selecttype_btn.force_border .chrome_button_right, ' +
+                '#MissingE_selecttype_list .chrome_button, ' +
+                '#MissingE_selecttype_list .chrome_button_left, ' +
+                '#MissingE_selecttype_list .chrome_button_right { ' +
+                'background-image:url("' +
+                message.extensionURL + 'massEditor/border.png' +
+                '"); }</style>');
    
    jQuery('#nav .header_button:last')
       .after('<div id="MissingE_selecttype_btn" class="header_button">' +
               '<button id="MissingE_selecttype" type="button" ' +
               'class="chrome big_dark"><div class="chrome_button">' +
               '<div class="chrome_button_left"></div>' +
-              locale[lang]["select"] + ' ' +
+              locale[lang].select + ' ' +
               '<img src="http://assets.tumblr.com/images/archive_header_' +
               'button_arrow.png" width="9" height="6" ' +
               'style="vertical-align:2px; margin:0 0 0 3px;" />' +
@@ -84,14 +87,14 @@ self.on('message', function(message) {
               '<button id="MissingE_select" type="button" ' +
               'class="chrome big_dark"><div class="chrome_button">' +
               '<div class="chrome_button_left"></div>' +
-              locale[lang]["first100"] + '<div ' +
+              locale[lang].first100 + '<div ' +
               'class="chrome_button_right"></div></div></button></div>';
-   for (i in locale[lang]["postTypeNames"]) {
-      if (locale[lang]["postTypeNames"].hasOwnProperty(i)) {
-         sbtlisttext += generateButton(i,locale[lang]["postTypeNames"][i]);
+   for (i in locale[lang].postTypeNames) {
+      if (locale[lang].postTypeNames.hasOwnProperty(i)) {
+         sbtlisttext += generateButton(i,locale[lang].postTypeNames[i]);
       }
    }
-   sbtlisttext += generateButton('note', locale[lang]["askPost"], true);
+   sbtlisttext += generateButton('note', locale[lang].askPost, true);
    sbtlisttext += '</div>';
    var sbtlist = jQuery(sbtlisttext).insertAfter(sbt);
    
@@ -116,7 +119,8 @@ self.on('message', function(message) {
    jQuery(window).resize(function() {
       moveSelectList(sbt,sbtlist);
    });
-   jQuery(':not(*[id="MissingE_selecttype_btn"],*[id="MissingE_selecttype_btn"] *)').click(function(e) {
+   jQuery(':not(*[id="MissingE_selecttype_btn"],' +
+          '*[id="MissingE_selecttype_btn"] *)').click(function(e) {
       if (sbtlist.is(':visible')) {
          sbtlist.hide();
          sbt.removeClass('force_border');
