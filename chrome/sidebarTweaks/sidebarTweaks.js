@@ -1,8 +1,32 @@
+/*
+ * 'Missing e' Extension
+ *
+ * Copyright 2011, Jeremy Cutler
+ * Released under the GPL version 3 licence.
+ * SEE: GPL-LICENSE.txt
+ *
+ * This file is part of 'Missing e'.
+ *
+ * 'Missing e' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * 'Missing e' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*global $,chrome,locale */
+
 function makeSidebar(tumblrAcctNum, retries) {
    var tumblrAcct = '';
    var tumblrText = '';
    var sidebartxt = '';
-   var sidebarPosts = $('#right_column a.posts');
    if ($('#right_column a.posts').length === 0) {
       var i;
       var list = [];
@@ -24,8 +48,8 @@ function makeSidebar(tumblrAcctNum, retries) {
                klass = 'class="current_sidebar"';
             }
             bloglist += '<li ' + klass + '><a tumblr="' + list[i][0] +
-               '" href="#" onclick="return false;"><div class="hide_overflow">' +
-               list[i][1] + '</div></a></li>';
+               '" href="#" onclick="return false;">' +
+               '<div class="hide_overflow">' + list[i][1] + '</div></a></li>';
          }
          bloglist += '</ul>';
       }
@@ -33,23 +57,23 @@ function makeSidebar(tumblrAcctNum, retries) {
       var lang = $('html').attr('lang');
       var sidebarList = [
          {
-         label: locale[lang]["sidebar"]["posts"],
+         label: locale[lang].sidebar.posts,
          klass: "posts"
          },
          {
-         label: locale[lang]["sidebar"]["followers"],
+         label: locale[lang].sidebar.followers,
          klass: "followers"
          },
          {
-         label: locale[lang]["sidebar"]["messages"],
+         label: locale[lang].sidebar.messages,
          klass: "messages"
          },
          {
-         label: locale[lang]["sidebar"]["drafts"],
+         label: locale[lang].sidebar.drafts,
          klass: "drafts"
          },
          {
-         label: locale[lang]["sidebar"]["queue"],
+         label: locale[lang].sidebar.queue,
          klass: "queue"
          }
       ];
@@ -62,13 +86,14 @@ function makeSidebar(tumblrAcctNum, retries) {
             bloglist + '</li>';
       for (i=0; i<sidebarList.length; i++) {
          sidebartxt += '<li><a href="/tumblelog/' + tumblrAcct +
-            (sidebarList[i].klass !== 'posts' ? '/' + sidebarList[i].klass : '') +
-            '" class="' + sidebarList[i].klass + '"><div class="hide_overflow">' +
-            sidebarList[i].label + '</div></a></li>';
+            (sidebarList[i].klass !== 'posts' ? '/'+sidebarList[i].klass : '') +
+            '" class="' + sidebarList[i].klass + '">' +
+            '<div class="hide_overflow">' + sidebarList[i].label +
+            '</div></a></li>';
       }
       sidebartxt += '<li class="recessed"><a href="/mega-editor/' + tumblrAcct +
          '" class="mass_editor"><div class="hide_overflow">' +
-         locale[lang]["sidebar"]["massEditor"] + '</div><div class="gradient">' +
+         locale[lang].sidebar.massEditor + '</div><div class="gradient">' +
          '</div></a></li></ul>';
    
       var sidebar;
@@ -94,7 +119,7 @@ function makeSidebar(tumblrAcctNum, retries) {
             retryLimit: retries,
             error: function(xhr, textStatus) {
                var msb = $('#MissingE_sidebar');
-               if (msb.attr('account') != this.tumblrAcctNum) {
+               if (msb.attr('account') !== this.tumblrAcctNum) {
                   return;
                }
                this.tryCount++;
@@ -110,7 +135,7 @@ function makeSidebar(tumblrAcctNum, retries) {
             },
             success: function(data, textStatus) {
                var msb = $('#MissingE_sidebar');
-               if (msb.attr('account') != this.tumblrAcctNum) {
+               if (msb.attr('account') !== this.tumblrAcctNum) {
                   return;
                }
                if (!(/id="dashboard_index"/.test(data))) {
@@ -196,7 +221,8 @@ function makeSidebar(tumblrAcctNum, retries) {
                else {
                   $('#MissingE_sidebar').addClass('hiddenish');
                   if ($('#overlay_for_active_menu').length === 0) {
-                     $('body').prepend('<div id="overlay_for_active_menu"></div>');
+                     $('body').prepend('<div id="overlay_for_active_menu">' +
+                                       '</div>');
                   }
                   $('#overlay_for_active_menu').show();
                   menu.show();
