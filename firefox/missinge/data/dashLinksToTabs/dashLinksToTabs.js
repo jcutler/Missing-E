@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $ */
+/*global jQuery,self */
 
 function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
    var node = e.target;
@@ -96,7 +96,7 @@ self.on('message', function(message) {
       }, false);
    }
    if (message.sidebar === 1) {
-      jQuery('#inbox_button a').bind('click', function(e) {
+      jQuery('#inbox_button a').bind('click', function() {
          jQuery(this).attr('target','_blank');
          return true;
       });

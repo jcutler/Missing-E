@@ -92,7 +92,7 @@ function MissingE_dashLinksToTabs_doStartup(newPostTabs, sidebar, reblogLinks,
       }, false);
    }
    if (sidebar === 1) {
-      $('#inbox_button a').bind('click', function(e) {
+      $('#inbox_button a').bind('click', function() {
          $(this).attr('target','_blank');
          return true;
       });

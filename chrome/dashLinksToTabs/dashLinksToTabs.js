@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome, $ */
+/*global $,chrome */
 
 function dashLinksToTabs_click(e, dashLinksToTabs_settings) {
    var node = e.target;
@@ -95,7 +95,7 @@ chrome.extension.sendRequest({greeting: "settings",
       }, false);
    }
    if (dashLinksToTabs_settings.sidebar === 1) {
-      $('#inbox_button a').bind('click', function(e) {
+      $('#inbox_button a').bind('click', function() {
          $(this).attr('target','_blank');
          return true;
       });
