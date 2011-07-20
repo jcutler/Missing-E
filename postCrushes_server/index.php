@@ -13,7 +13,10 @@ else {
 
 for ($i=0; $i<9; $i++) {
    $prefix = "";
-   if (preg_match('/^http/',$_GET["img" . $i]) == 0) {
+   if (preg_match('/^images\/default_avatar/',$_GET["img" . $i]) != 0) {
+      $prefix = "http://www.tumblr.com/";
+   }
+   else if (preg_match('/^http/',$_GET["img" . $i]) == 0) {
       $prefix = "http://media.tumblr.com/";
    }
    $crushes[] = $prefix . preg_replace('/[0-9]*\.(png|jpg|gif|jpeg)$/i',"$avSize.$1",$_GET["img" . $i]);
