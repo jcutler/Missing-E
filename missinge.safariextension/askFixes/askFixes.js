@@ -64,8 +64,8 @@ function deleteMessages(key, lang) {
 function failAnswer(id,type) {
    $('#post_control_loader_' + id).hide();
    $('#ask_publish_button_also_' + id).removeAttr('disabled');
-   $('#ask_queue_button_' + id).removeAttr('disabled');
-   $('#ask_draft_button_' + id).removeAttr('disabled');
+   $('#ask_queue_button_also' + id).removeAttr('disabled');
+   $('#ask_draft_button_also' + id).removeAttr('disabled');
    $('#ask_private_button_' + id).removeAttr('disabled');
    $('#ask_cancel_button_' + id).removeAttr('disabled');
    $('#private_answer_button_' + id).removeAttr('disabled');
@@ -90,8 +90,8 @@ function doManualAnswering(e,id,type) {
    if (type) {
       $('#post_control_loader_' + id).show();
       $('#ask_publish_button_also_' + id).attr('disabled','disabled');
-      $('#ask_queue_button_' + id).attr('disabled','disabled');
-      $('#ask_draft_button_' + id).attr('disabled','disabled');
+      $('#ask_queue_button_also' + id).attr('disabled','disabled');
+      $('#ask_draft_button_also' + id).attr('disabled','disabled');
       $('#ask_private_button_' + id).attr('disabled','disabled');
       $('#ask_cancel_button_' + id).attr('disabled','disabled');
       $('#private_answer_button_' + id).attr('disabled','disabled');
@@ -233,27 +233,14 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
       $('#ask_publish_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'publish');
       });
-      $('#ask_queue_button_' + id).click(function(e) {
+      $('#ask_queue_button_also' + id).click(function(e) {
          doManualAnswering(e, id, 'queue');
       });
-      $('#ask_draft_button_' + id).click(function(e) {
+      $('#ask_draft_button_also' + id).click(function(e) {
          doManualAnswering(e, id, 'draft');
       });
       $('#ask_private_button_' + id).click(function(e) {
          doManualAnswering(e, id, 'private');
-      });
-
-      var pbtn = $('#ask_publish_button_' + id);
-      var npbtn = $('<button class="chrome blue" id="ask_publish_button_also_' +
-                    id + '" name="publish" type="submit" ' +
-                    'onclick="return false;"><div class="chrome_button"><div ' +
-                    'class="chrome_button_left"></div>' +
-                    pbtn.text() + '<div class="chrome_button_right"></div>' +
-                    '</div></button>');
-      pbtn.after(npbtn);
-      pbtn.hide();
-      npbtn.click(function(e) {
-         doManualAnswering(e, id, 'publish');
       });
 
       var x;
