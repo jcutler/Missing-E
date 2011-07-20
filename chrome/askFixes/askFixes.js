@@ -20,6 +20,9 @@
  * You should have received a copy of the GNU General Public License
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
+
+/*global $,chrome,locale */
+
 function setupMassDeletePost(item) {
    $('<input type="checkbox" val="0" id="' + item.id + '_select" ' +
      'class="MissingEmassDeleteSelect" />')
@@ -32,7 +35,7 @@ function deleteMessages(key, lang) {
    var set = $('#posts li.MissingEmdSelected');
    if (set.length < 1) { return; }
    var exemplar = set.eq(0).data('blog');
-   var remset = set.filter(function(i) {
+   var remset = set.filter(function() {
       if (count >= 100) { return false; }
       if ($(this).data('blog') === exemplar) {
          count++;
@@ -49,7 +52,7 @@ function deleteMessages(key, lang) {
       data: {"post_ids": posts.join(','),
              "form_key": key},
       error: function(xhr, textStatus) {
-         alert(locale[lang]["massDelete"]["error"]);
+         alert(locale[lang].massDelete.error);
       },
       success: function(data, textStatus) {
          remset.removeClass('MissingEmdSelected').remove();
@@ -73,7 +76,7 @@ function failAnswer(id,type) {
 function finishAnswer(id,type) {
    $('#post_control_loader_' + id).hide();
    if (type) {
-      $('#post_' + id).fadeOut(function(){$(this).remove()});
+      $('#post_' + id).fadeOut(function(){$(this).remove();});
    }
 }
 
@@ -99,8 +102,8 @@ function doManualAnswering(e,id,type) {
                 ' input.MissingE_askFixes_tags');
    if (tags.length > 0) {
       tags = tags.val();
-      tags = tags.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',').replace(/,$/,'')
-               .replace(/^\s*/,'').replace(/\s*$/,'');
+      tags = tags.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',')
+               .replace(/,$/,'').replace(/^\s*/,'').replace(/\s*$/,'');
    }
    else {
       tags = '';
@@ -129,7 +132,7 @@ function doManualAnswering(e,id,type) {
             failAnswer(this.postId,this.buttonType);
             return;
          }
-         html = data.substr(frm);
+         var html = data.substr(frm);
          while (!(/^<form [^>]*id="edit_post"/.test(html))) {
             html = html.substr(1);
             frm = html.indexOf('<form');
@@ -143,16 +146,17 @@ function doManualAnswering(e,id,type) {
          var inputs = html.match(/<input[^>]*>/g);
          var textareas = html.match(/<textarea[^>]*>[^<]*<\/textarea>/g);
          var params = {};
+         var name;
          for (i=0; i<inputs.length; i++) {
             var inp = $(inputs[i]);
-            var name = inp.attr('name');
+            name = inp.attr('name');
             if (name) {
                params[name] = inp.val();
             }
          }
          for (i=0; i<textareas.length; i++) {
             var ta = $(textareas[i]);
-            var name = ta.attr('name');
+            name = ta.attr('name');
             if (name) {
                params[name] = ta.text();
             }
@@ -190,6 +194,7 @@ function doManualAnswering(e,id,type) {
 }
 
 function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
+   var i;
    if (item.tagName !== 'LI' || !$(item).hasClass('post')) {
       return false;
    }
@@ -202,13 +207,15 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
 
    if (betterAnswers === 1) {
       var allbtns = "";
-      for (var i in locale[lang]["postingFixes"]["submitText"]) {
-         if (i === 'publish') { continue; }
-         allbtns += '<button class="chrome" id="ask_' + i + '_button_' + id +
-            '" onclick="return false;"><div class="chrome_button">' +
-            '<div class="chrome_button_left"></div>' +
-            locale[lang]["postingFixes"]["submitText"][i] +
-            '<div class="chrome_button_right"></div></div></button><br />';
+      for (i in locale[lang].postingFixes.submitText) {
+         if (locale[lang].postingFixes.submitText.hasOwnProperty(i)) {
+            if (i === 'publish') { continue; }
+            allbtns += '<button class="chrome" id="ask_' + i + '_button_' + id +
+               '" onclick="return false;"><div class="chrome_button">' +
+               '<div class="chrome_button_left"></div>' +
+               locale[lang].postingFixes.submitText[i] +
+               '<div class="chrome_button_right"></div></div></button><br />';
+         }
       }
       allbtns = allbtns.replace(/<br \/>$/,'');
       var btn = $('#ask_publish_button_' + id);
@@ -235,8 +242,7 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
       $('#ask_private_button_' + id).click(function(e) {
          doManualAnswering(e, id, 'private');
       });
-   }
-   else if (betterAnswers === 1) {
+
       var pbtn = $('#ask_publish_button_' + id);
       var npbtn = $('<button class="chrome blue" id="ask_publish_button_also_' +
                     id + '" name="publish" type="submit" ' +
@@ -249,11 +255,10 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
       npbtn.click(function(e) {
          doManualAnswering(e, id, 'publish');
       });
-   }
 
-   if (betterAnswers === 1 || betterAnswers === 1) {
       var x;
-      var startTags = $(item).find('div.post_info').text().match(/[0-9A-Za-z\-\_]+/);
+      var startTags = $(item).find('div.post_info').text()
+         .match(/[0-9A-Za-z\-\_]+/);
       if (tagAsker === 1) {
          startTags = [startTags[0]];
       }
@@ -272,12 +277,10 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
          startTags = '';
       }
       var adding = '<div class="MissingE_askFixes_group">';
-      if (betterAnswers === 1) {
-         adding += '<div>' + locale[lang]["tagsText"] + ': <input ' +
-                     'type="text" class="MissingE_askFixes_tags" value="' +
-                     startTags + '"/></div>';
-      }
-      adding += '<div>' + locale[lang]["twitterText"] + ': <input ' +
+      adding += '<div>' + locale[lang].tagsText + ': <input ' +
+                  'type="text" class="MissingE_askFixes_tags" value="' +
+                  startTags + '"/></div>';
+      adding += '<div>' + locale[lang].twitterText + ': <input ' +
                   'type="checkbox" class="MissingE_askFixes_twitter" />' +
                   '</div></div>';
       answer.find('div:first').css('padding-top','10px')
@@ -293,13 +296,13 @@ chrome.extension.sendRequest({greeting: "settings",
    if (askFixes_settings.askDash === 1) {
       var i;
       var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
-      for (i=0; i<locale[lang]["askPerson"].length; i++) {
+      for (i=0; i<locale[lang].askPerson.length; i++) {
          if (i>0) { askLabel += " "; }
-         if (locale[lang]["askPerson"][i] === "U") {
+         if (locale[lang].askPerson[i] === "U") {
             askLabel += '<span class="MissingE_askPerson"></span>';
          }
          else {
-            askLabel += locale[lang]["askPerson"][i];
+            askLabel += locale[lang].askPerson[i];
          }
       }
       askLabel += ':';
@@ -331,24 +334,23 @@ chrome.extension.sendRequest({greeting: "settings",
          .test(location.href)) {
       if (askFixes_settings.betterAnswers === 1) {
          $('head').append('<script type="text/javascript">' +
-                     'document.addEventListener(\'mouseup\', function(e) {' +
-                     'if (e.which !== 1) { return; }' +
-                     'var trg = e.target;' +
-                     'while (trg) {' +
-                        'if (/ask_[a-z]+_button/.test(trg.id)) {' +
-                           'break;' +
-                        '}' +
-                        'trg = trg.parentNode;' +
-                     '}' +
-                     'if (!trg || !(/ask_[a-z]+_button/.test(trg.id))) {' +
-                        'return;' +
-                     '}' +
-                     'var id = trg.id.match(/[0-9]*$/);' +
-                     'if (tinyMCE && tinyMCE.get(\'ask_answer_field_\' + id)) {' +
-                        'document.getElementById(\'ask_answer_field_\' + id).value = ' +
-                        'tinyMCE.get(\'ask_answer_field_\' + id).getContent();' +
-                     '}},false);' +
-                     '</script>');
+            'document.addEventListener(\'mouseup\', function(e) {' +
+            'if (e.which !== 1) { return; }' +
+            'var trg = e.target;' +
+            'while (trg) {' +
+               'if (/ask_[a-z]+_button/.test(trg.id)) {' +
+                  'break;' +
+               '}' +
+               'trg = trg.parentNode;' +
+            '}' +
+            'if (!trg || !(/ask_[a-z]+_button/.test(trg.id))) {' +
+               'return;' +
+            '}' +
+            'var id = trg.id.match(/[0-9]*$/);' +
+            'if (tinyMCE && tinyMCE.get(\'ask_answer_field_\' + id)) {' +
+               'document.getElementById(\'ask_answer_field_\' + id).value = ' +
+               'tinyMCE.get(\'ask_answer_field_\' + id).getContent();' +
+            '}},false);</script>');
       }
       $('#posts li.post').each(function() {
          moreAnswerOptions(this, askFixes_settings.tagAsker,
@@ -384,13 +386,13 @@ chrome.extension.sendRequest({greeting: "settings",
          $('<ul class="controls_section" id="MissingEmassDeleter">' +
            '<li><a href="#" class="select_all">' +
            '<div class="hide_overflow">' +
-           locale[lang]["massDelete"]["selectAll"] + '</div></a></li>' +
+           locale[lang].massDelete.selectAll + '</div></a></li>' +
            '<li><a href="#" class="deselect_all">' +
            '<div class="hide_overflow">' +
-           locale[lang]["massDelete"]["deselectAll"] + '</div></a></li>' +
+           locale[lang].massDelete.deselectAll + '</div></a></li>' +
            '<li><a href="#" class="delete_selected">' +
            '<div class="hide_overflow">' +
-           locale[lang]["massDelete"]["deleteSelected"] + '</div></a></li></ul>')
+           locale[lang].massDelete.deleteSelected + '</div></a></li></ul>')
                .insertBefore(beforeguy);
          $('#posts li.post').each(function() {
             setupMassDeletePost(this);
@@ -405,7 +407,7 @@ chrome.extension.sendRequest({greeting: "settings",
          $('#MissingEmassDeleter a').click(function() {
             var btn = $(this);
             if (btn.hasClass('select_all')) {
-               $('#posts input.MissingEmassDeleteSelect').each(function(i) {
+               $('#posts input.MissingEmassDeleteSelect').each(function() {
                   this.checked = true;
                   $(this).trigger('change');
                });
@@ -420,7 +422,8 @@ chrome.extension.sendRequest({greeting: "settings",
                var key = $('#posts input[name="form_key"]:first').val();
                var count = $('#posts li.MissingEmdSelected').length;
                if (count > 0) {
-                  var sure = confirm(locale[lang]["massDelete"]["message"].replace('#',count));
+                  var sure = confirm(locale[lang].massDelete.message
+                                     .replace('#',count));
                   if (sure) {
                      deleteMessages(key, lang);
                   }
