@@ -11,5 +11,7 @@ Caching for edit button permission check!!
 sortable notes [thefrogman]
 
 Check Mass Delete localizations:
-- it
 - ja
+
+Add intermediate AJAX handler
+- see: https://github.com/jcutler/Missing-E/issues/24
