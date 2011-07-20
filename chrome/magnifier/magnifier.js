@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome, $ */
+/*global $,chrome,locale */
 
 var magimg = chrome.extension.getURL('magnifier/magnifier.png');
 var turnimg = chrome.extension.getURL('magnifier/turners.png');
@@ -76,20 +76,21 @@ function magAvatarClick(e) {
 
 function insertAvatarMagnifier(item) {
    var it = $(item);
+   var mag;
    if (item.tagName === "LI" && it.hasClass("notification")) {
-      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+      mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(it.find('a.avatar_frame'));
    }
    else if (item.tagName === "LI" && it.hasClass("post")) {
-      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+      mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(it.find('div.avatar_and_i'));
    }
    else if (item.tagName === "DIV" && it.hasClass("follower")) {
-      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+      mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(item);
    }
    else if (item.tagName === "A" && it.parent().attr('id') === 'crushes') {
-      var mag = $('<div class="MissingE_magnify_avatar"></div>')
+      mag = $('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(item);
    }
 }
@@ -115,7 +116,7 @@ function insertMagnifier(item) {
             addr = 'http://' + addr + '.tumblr.com';
          }
       }
-      var mi = $('<a title="' + locale[lang]["loading"] + '" ' +
+      var mi = $('<a title="' + locale[lang].loading + '" ' +
                  'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
                  tid + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
@@ -134,13 +135,13 @@ function insertMagnifier(item) {
          if (response.success) {
             $('#magnify_' + response.pid).attr('src',response.data)
                .removeClass('MissingE_magnify_hide')
-               .attr('title', locale[lang]["magnify"]);
+               .attr('title', locale[lang].magnify);
          }
          else {
             $('#magnify_' + response.pid).attr('src','')
                .addClass('MissingE_magnify_err')
                .removeClass('MissingE_magnify_hide')
-               .attr('title', locale[lang]["error"]);
+               .attr('title', locale[lang].error);
          }
       });
    }
@@ -158,7 +159,7 @@ chrome.extension.sendRequest({greeting: "settings",
        !(/tumblelog\/[^\/]*\/followers/.test(location.href)) &&
        !(/\/following/.test(location.href))) {
       $('#facebox .turner_left,#facebox .turner_right')
-         .live('click', function(e) {
+            .live('click', function() {
          var curr = $(this).siblings('div.image:visible:last');
          var next;
          if ($(this).hasClass('turner_right')) {

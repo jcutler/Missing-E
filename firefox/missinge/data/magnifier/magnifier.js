@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, $ */
+/*global escapeHTML,jQuery,locale,self */
 
 function magClick(e) {
    if (e.which === 1) {
@@ -63,20 +63,21 @@ function magAvatarClick(e) {
 
 function insertAvatarMagnifier(item) {
    var it = jQuery(item);
+   var mag;
    if (item.tagName === "LI" && it.hasClass("notification")) {
-      var mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
+      mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(it.find('a.avatar_frame'));
    }
    else if (item.tagName === "LI" && it.hasClass("post")) {
-      var mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
+      mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(it.find('div.avatar_and_i'));
    }
    else if (item.tagName === "DIV" && it.hasClass("follower")) {
-      var mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
+      mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(item);
    }
    else if (item.tagName === "A" && it.parent().attr('id') === 'crushes') {
-      var mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
+      mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(item);
    }
 }
@@ -103,7 +104,7 @@ function insertMagnifier(item) {
             addr = 'http://' + addr + '.tumblr.com';
          }
       }
-      var mi = jQuery('<a title="' + locale[lang]["loading"] + '" ' +
+      var mi = jQuery('<a title="' + locale[lang].loading + '" ' +
                  'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
                  escapeHTML(tid) + '" href="#" onclick="return false;"></a>');
       mi.click(magClick);
@@ -127,13 +128,13 @@ function receiveMagnifier(message) {
    if (message.success) {
       jQuery('#magnify_' + message.pid).attr('src',message.data)
          .removeClass('MissingE_magnify_hide')
-         .attr('title', locale[lang]["magnify"]);
+         .attr('title', locale[lang].magnify);
    }
    else {
       jQuery('#magnify_' + message.pid).attr('src','')
          .addClass('MissingE_magnify_err')
          .removeClass('MissingE_magnify_hide')
-         .attr('title', locale[lang]["error"]);
+         .attr('title', locale[lang].error);
    }
 }
 
@@ -151,7 +152,8 @@ self.on('message', function (message) {
                     extensionURL + 'magnifier/magnifier.css" />');
    var turnload = new Image();
    turnload.src = turnimg;
-   jQuery('head').append('<style id="MissingE_magnifier_style" type="text/css">' +
+   jQuery('head').append('<style id="MissingE_magnifier_style" ' +
+                    'type="text/css">' +
                     'a.MissingE_magnify { ' +
                     'background-image:url("' + magimg + '"); } ' +
                     '#facebox .slideshow .turner_left, ' +
@@ -169,8 +171,7 @@ self.on('message', function (message) {
        !(/\/following/.test(location.href))) {
       self.on("message", receiveMagnifier);
       jQuery('#facebox .turner_left,#facebox .turner_right')
-         .live('click', function(e) {
-
+            .live('click', function() {
          var curr = jQuery(this).siblings('div.image:visible:last');
          var next;
          if (jQuery(this).hasClass('turner_right')) {
@@ -207,7 +208,7 @@ self.on('message', function (message) {
         '#left_column .MissingE_magnify_avatar, ' +
         '#following .MissingE_magnify_avatar, ' +
         '#crushes .MissingE_magnify_avatar').live('click',magAvatarClick);
-      jQuery('#posts li, #left_column .follower, #following .follower, #crushes a')
+      jQuery('#posts li,#left_column .follower,#following .follower,#crushes a')
             .each(function() {
          insertAvatarMagnifier(this);
       });
