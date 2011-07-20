@@ -207,11 +207,15 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
 
    if (betterAnswers === 1) {
       var allbtns = "";
+      var suffix;
       for (i in locale[lang].postingFixes.submitText) {
          if (locale[lang].postingFixes.submitText.hasOwnProperty(i)) {
             if (i === 'publish') { continue; }
             if (i === 'queue' || i === 'draft') {
                suffix = 'also_';
+            }
+            else {
+               suffix = '';
             }
             allbtns += '<button class="chrome" id="ask_' + i + '_button_' +
                suffix + id + '" onclick="return false;">' +

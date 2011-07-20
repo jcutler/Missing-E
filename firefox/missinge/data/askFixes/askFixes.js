@@ -64,8 +64,8 @@ function deleteMessages(key, lang) {
 function failAnswer(id,type) {
    jQuery('#post_control_loader_' + id).hide();
    jQuery('#ask_publish_button_also_' + id).removeAttr('disabled');
-   jQuery('#ask_queue_button_also' + id).removeAttr('disabled');
-   jQuery('#ask_draft_button_also' + id).removeAttr('disabled');
+   jQuery('#ask_queue_button_also_' + id).removeAttr('disabled');
+   jQuery('#ask_draft_button_also_' + id).removeAttr('disabled');
    jQuery('#ask_private_button_' + id).removeAttr('disabled');
    jQuery('#ask_cancel_button_' + id).removeAttr('disabled');
    jQuery('#private_answer_button_' + id).removeAttr('disabled');
@@ -90,8 +90,8 @@ function doManualAnswering(e,id,type) {
    if (type) {
       jQuery('#post_control_loader_' + id).show();
       jQuery('#ask_publish_button_also_' + id).attr('disabled','disabled');
-      jQuery('#ask_queue_button_also' + id).attr('disabled','disabled');
-      jQuery('#ask_draft_button_also' + id).attr('disabled','disabled');
+      jQuery('#ask_queue_button_also_' + id).attr('disabled','disabled');
+      jQuery('#ask_draft_button_also_' + id).attr('disabled','disabled');
       jQuery('#ask_private_button_' + id).attr('disabled','disabled');
       jQuery('#ask_cancel_button_' + id).attr('disabled','disabled');
       jQuery('#private_answer_button_' + id).attr('disabled','disabled');
@@ -207,12 +207,15 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
    var id = escapeHTML(jQuery(item).attr('id').match(/[0-9]*$/)[0]);
    if (betterAnswers === 1) {
       var allbtns = "";
+      var suffix;
       for (i in locale[lang].postingFixes.submitText) {
          if (locale[lang].postingFixes.submitText.hasOwnProperty(i)) {
-            var suffix = '';
             if (i === 'publish') { continue; }
             if (i === 'queue' || i === 'draft') {
                suffix = 'also_';
+            }
+            else {
+               suffix = '';
             }
             allbtns += '<button class="chrome" id="ask_' + i + '_button_' +
                suffix + id + '" onclick="return false;">' +
@@ -238,10 +241,10 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
       jQuery('#ask_publish_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'publish');
       });
-      jQuery('#ask_queue_button_also' + id).click(function(e) {
+      jQuery('#ask_queue_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'queue');
       });
-      jQuery('#ask_draft_button_also' + id).click(function(e) {
+      jQuery('#ask_draft_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'draft');
       });
       jQuery('#ask_private_button_' + id).click(function(e) {

@@ -64,8 +64,8 @@ function deleteMessages(key, lang) {
 function failAnswer(id,type) {
    $('#post_control_loader_' + id).hide();
    $('#ask_publish_button_also_' + id).removeAttr('disabled');
-   $('#ask_queue_button_also' + id).removeAttr('disabled');
-   $('#ask_draft_button_also' + id).removeAttr('disabled');
+   $('#ask_queue_button_also_' + id).removeAttr('disabled');
+   $('#ask_draft_button_also_' + id).removeAttr('disabled');
    $('#ask_private_button_' + id).removeAttr('disabled');
    $('#ask_cancel_button_' + id).removeAttr('disabled');
    $('#private_answer_button_' + id).removeAttr('disabled');
@@ -90,8 +90,8 @@ function doManualAnswering(e,id,type) {
    if (type) {
       $('#post_control_loader_' + id).show();
       $('#ask_publish_button_also_' + id).attr('disabled','disabled');
-      $('#ask_queue_button_also' + id).attr('disabled','disabled');
-      $('#ask_draft_button_also' + id).attr('disabled','disabled');
+      $('#ask_queue_button_also_' + id).attr('disabled','disabled');
+      $('#ask_draft_button_also_' + id).attr('disabled','disabled');
       $('#ask_private_button_' + id).attr('disabled','disabled');
       $('#ask_cancel_button_' + id).attr('disabled','disabled');
       $('#private_answer_button_' + id).attr('disabled','disabled');
@@ -207,11 +207,15 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
 
    if (betterAnswers === 1) {
       var allbtns = "";
+      var suffix;
       for (i in locale[lang].postingFixes.submitText) {
          if (locale[lang].postingFixes.submitText.hasOwnProperty(i)) {
             if (i === 'publish') { continue; }
             if (i === 'queue' || i === 'draft') {
                suffix = 'also_';
+            }
+            else {
+               suffix = '';
             }
             allbtns += '<button class="chrome" id="ask_' + i + '_button_' +
                suffix + id + '" onclick="return false;">' +
@@ -237,10 +241,10 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
       $('#ask_publish_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'publish');
       });
-      $('#ask_queue_button_also' + id).click(function(e) {
+      $('#ask_queue_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'queue');
       });
-      $('#ask_draft_button_also' + id).click(function(e) {
+      $('#ask_draft_button_also_' + id).click(function(e) {
          doManualAnswering(e, id, 'draft');
       });
       $('#ask_private_button_' + id).click(function(e) {
