@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome, $, localStorage, window */
+/*global $,chrome,locale */
 
 function reply_setValue(st) {
    localStorage.setItem('trr_ReplyText',st);
@@ -92,7 +92,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
    chrome.extension.sendRequest({greeting: "settings",
                                  component: "replyReplies"},
                                  function(response) {
-      var i, n;
+      var i, n, img;
       var redir = "";
       var replyReplies_settings = JSON.parse(response);
       var thecode = [];
@@ -132,7 +132,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
          var oldcode = $(arr[i]).parent().html();
          var link = $(arr[i]).parent().find('img.avatar');
          var newcode = "";
-         var img = "<a href=\"" + link.parent().attr("href") + "\">" +
+         img = "<a href=\"" + link.parent().attr("href") + "\">" +
                      "<img style=\"width:" + size + "px;height:" + size +
                      "px;border-width:0;margin-right:3px;\" src=\"" +
                      link.attr("src")
@@ -185,7 +185,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
          newcode = newcode.replace(/\s*$/,'');
 
          if ($(arr[i]).parent().hasClass('note')) {
-            var a,b,z,img,user,qt,reblnk,x;
+            var a,b,z,user,qt,reblnk,x;
             var main = $(arr[i]).closest('li.post');
             var ans = $(arr[i]).parent();
             var type, chk, anstype;
@@ -290,41 +290,41 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             else {
                newcode = '';
             }
-            for (x=0; x<locale[lang]["notifications"][anstype].length; x++) {
+            for (x=0; x<locale[lang].notifications[anstype].length; x++) {
                if (anstype === 'reblog' &&
-                   x === locale[lang]["notifications"].reblogIndex &&
+                   x === locale[lang].notifications.reblogIndex &&
                    reblnk !== "") {
                   newcode += ' <a href="' + reblnk + '">' +
-                     locale[lang]["notifications"][anstype][x] + '</a>';
+                     locale[lang].notifications[anstype][x] + '</a>';
                }
-               else if (locale[lang]["notifications"][anstype][x] === "U") {
+               else if (locale[lang].notifications[anstype][x] === "U") {
                   if (newcode !== '' && newcode !== img) {
                      newcode += ' ';
                   }
                   newcode += '<strong>' + user;
                }
-               else if (locale[lang]["notifications"][anstype][x] === "U,") {
+               else if (locale[lang].notifications[anstype][x] === "U,") {
                   if (newcode !== '' && newcode !== img) {
                      newcode += ' ';
                   }
                   newcode += '<strong>' + user + ',';
                }
-               else if (locale[lang]["notifications"][anstype][x] === "P") {
+               else if (locale[lang].notifications[anstype][x] === "P") {
                   var y;
-                  var postType = locale[lang]["posts"][type];
+                  var postType = locale[lang].posts[type];
                   if (!(postType instanceof Array)) {
                      if (anstype === "reply") {
-                        postType = postType["reply"];
+                        postType = postType.reply;
                      }
                      else {
-                        postType = postType["normal"];
+                        postType = postType.normal;
                      }
                   }
                   for (y=0; y<postType.length; y++) {
                      newcode += ' ';
                      if (y === 0 && lang === 'it' &&
                          (anstype === "answer" || anstype === "reply")) {
-                        if (locale[lang]["posts"][type][0] === 'il') {
+                        if (locale[lang].posts[type][0] === 'il') {
                            newcode += 'al';
                         }
                         else {
@@ -341,7 +341,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                   }
                }
                else {
-                  newcode += ' ' + locale[lang]["notifications"][anstype][x];
+                  newcode += ' ' + locale[lang].notifications[anstype][x];
                }
             }
             if (posttxt === '') {
@@ -359,7 +359,8 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             else if (anstxt !== '') {
                newcode += '<blockquote>' + anstxt + '</blockquote>';
             }
-            newcode = newcode.replace(/<span[^>]*>/g,'').replace(/<\/span>/g,'');
+            newcode = newcode.replace(/<span[^>]*>/g,'')
+               .replace(/<\/span>/g,'');
          }
          else {
             newcode = newcode.replace(/src="http:\/\/media\.tumblr\.com\/avatar_([a-zA-Z0-9]+)_40\.([a-z]+)"/g, "src=\"http://media.tumblr.com/avatar_$1_" + size + ".$2\"");
@@ -398,7 +399,8 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       }
       tags_setValue(tags);
 
-      var urlPref = location.href.match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
+      var urlPref = location.href
+         .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
       if (urlPref && urlPref.length >= 2) {
          urlPref = '/tumblelog/' + urlPref[1];
       }

@@ -21,7 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, $, localStorage, window */
+/*global jQuery,locale,self */
+
 function reply_setValue(st) {
    localStorage.setItem('trr_ReplyText',st);
 }
@@ -60,7 +61,7 @@ function replyRepliesSettings(message) {
        message.component !== "replyReplies") {
       return;
    }
-   var i, n;
+   var i, n, img;
    var redir = "";
    var newTab = message.newTab;
    var showAvatars = message.showAvatars;
@@ -101,7 +102,7 @@ function replyRepliesSettings(message) {
       var oldcode = jQuery(arr[i]).parent().html();
       var link = jQuery(arr[i]).parent().find('img.avatar');
       var newcode = "";
-      var img = "<a href=\"" + link.parent().attr("href") + "\">" +
+      img = "<a href=\"" + link.parent().attr("href") + "\">" +
                   "<img style=\"width:" + size + "px;height:" + size +
                   "px;border-width:0;margin-right:3px;\" src=\"" +
                   link.attr("src")
@@ -154,7 +155,7 @@ function replyRepliesSettings(message) {
       newcode = newcode.replace(/\s*$/,"");
 
       if (jQuery(arr[i]).parent().hasClass('note')) {
-         var a,b,z,img,user,qt,reblnk,x;
+         var a,b,z,user,qt,reblnk,x;
          var main = jQuery(arr[i]).closest('li.post');
          var ans = jQuery(arr[i]).parent();
          var type, chk, anstype;
@@ -260,41 +261,41 @@ function replyRepliesSettings(message) {
          else {
             newcode = '';
          }
-         for (x=0; x<locale[lang]["notifications"][anstype].length; x++) {
+         for (x=0; x<locale[lang].notifications[anstype].length; x++) {
             if (anstype === 'reblog' &&
-                x === locale[lang]["notifications"].reblogIndex &&
+                x === locale[lang].notifications.reblogIndex &&
                 reblnk !== "") {
                newcode += ' <a href="' + reblnk + '">' +
-                  locale[lang]["notifications"][anstype][x] + '</a>';
+                  locale[lang].notifications[anstype][x] + '</a>';
             }
-            else if (locale[lang]["notifications"][anstype][x] === "U") {
+            else if (locale[lang].notifications[anstype][x] === "U") {
                if (newcode !== '' && newcode !== img) {
                   newcode += ' ';
                }
                newcode += '<strong>' + user;
             }
-            else if (locale[lang]["notifications"][anstype][x] === "U,") {
+            else if (locale[lang].notifications[anstype][x] === "U,") {
                if (newcode !== '' && newcode !== img) {
                   newcode += ' ';
                }
                newcode += '<strong>' + user + ',';
             }
-            else if (locale[lang]["notifications"][anstype][x] === "P") {
+            else if (locale[lang].notifications[anstype][x] === "P") {
                var y;
-               var postType = locale[lang]["posts"][type];
+               var postType = locale[lang].posts[type];
                if (!(postType instanceof Array)) {
                   if (anstype === "reply") {
-                     postType = postType["reply"];
+                     postType = postType.reply;
                   }
                   else {
-                     postType = postType["normal"];
+                     postType = postType.normal;
                   }
                }
                for (y=0; y<postType.length; y++) {
                   newcode += ' ';
                   if (y === 0 && lang === 'it' &&
                       (anstype === "answer" || anstype === "reply")) {
-                     if (locale[lang]["posts"][type][0] === 'il') {
+                     if (locale[lang].posts[type][0] === 'il') {
                         newcode += 'al';
                      }
                      else {
@@ -311,7 +312,7 @@ function replyRepliesSettings(message) {
                }
             }
             else {
-               newcode += ' ' + locale[lang]["notifications"][anstype][x];
+               newcode += ' ' + locale[lang].notifications[anstype][x];
             }
          }
          if (posttxt === '') {
@@ -367,7 +368,8 @@ function replyRepliesSettings(message) {
    }
    tags_setValue(tags);
 
-   var urlPref = location.href.match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
+   var urlPref = location.href
+      .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
    if (urlPref && urlPref.length >= 2) {
       urlPref = '/tumblelog/' + urlPref[1];
    }
@@ -417,7 +419,7 @@ function MissingE_replyReplies_doStartup(message) {
       if (!node.hasClass('is_mine')) {
          return false;
       }
-      var list = node.find('ol.notes li');
+      list = node.find('ol.notes li');
       list.each(function() {
          addNoteReply(jQuery(this));
       });

@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global localStorage, $ */
+/*global $,escapeHTML,locale */
 
 function reply_getValue() {
    var retval = localStorage.getItem("trr_ReplyText");
@@ -60,7 +60,8 @@ function tags_setValue(ar) {
 }
 
 function getAsLinks(lang, type) {
-   var urlPref = location.href.match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
+   var urlPref = location.href
+      .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
    if (urlPref && urlPref.length >= 2) {
       urlPref = '/tumblelog/' + urlPref[1];
    }
@@ -68,18 +69,19 @@ function getAsLinks(lang, type) {
       urlPref = '';
    }
    var othertype = (type==='text' ? 'photo' : 'text');
-   return locale[lang]["replyType"][type+"Title"] + "\n" +
+   return locale[lang].replyType[type+"Title"] + "\n" +
       '<span class="as_links"><a href="#" id="the_as_link" ' +
       'onclick="Element.hide(this);Element.show(\'the_as_links\');' +
-      'return false;" style="font-weight:bold;" >' + locale[lang]["replyType"]["as"] +
+      'return false;" style="font-weight:bold;" >' + locale[lang].replyType.as +
       '</a><span id="the_as_links" style="display:none;"><a id="as_switch" ' +
       'href="' + urlPref + '/new/' + othertype + '">' +
-      locale[lang]["replyType"][othertype] + '</a>' +
+      locale[lang].replyType[othertype] + '</a>' +
       '<a href="#" onclick="Element.hide(\'the_as_links\');' +
       'Element.show(\'the_as_link\');return false;">x</a></span></span>';
 }
 
-if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?new\/(text|photo)/.test(location.href) &&
+if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?new\/(text|photo)/
+      .test(location.href) &&
     document.body.id === 'dashboard_edit_post' &&
     reply_getValue().length > 0) {
    var i;
