@@ -119,7 +119,7 @@ function makeSidebar(tumblrAcctNum, retries) {
             retryLimit: retries,
             error: function(xhr, textStatus) {
                var msb = $('#MissingE_sidebar');
-               if (msb.attr('account') !== this.tumblrAcctNum) {
+               if (msb.attr('account') != this.tumblrAcctNum) {
                   return;
                }
                this.tryCount++;
@@ -135,7 +135,7 @@ function makeSidebar(tumblrAcctNum, retries) {
             },
             success: function(data, textStatus) {
                var msb = $('#MissingE_sidebar');
-               if (msb.attr('account') !== this.tumblrAcctNum) {
+               if (msb.attr('account') != this.tumblrAcctNum) {
                   return;
                }
                if (!(/id="dashboard_index"/.test(data))) {
