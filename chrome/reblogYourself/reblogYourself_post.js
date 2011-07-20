@@ -20,6 +20,9 @@
  * You should have received a copy of the GNU General Public License
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
+
+/*global locale */
+
 var div = document.getElementsByTagName("div")[0];
 var controls;
 if (div) { controls = div.getElementsByTagName("a"); }
@@ -94,7 +97,7 @@ if (noReblog) {
       icon.style.display='block';
       icon.style.cssFloat='left';
       icon.style.cursor='pointer';
-      icon.alt=locale[lang]["reblog"];
+      icon.alt=locale[lang].reblog;
       icon.src = 'http://assets.tumblr.com/images/iframe_reblog_alpha' +
          suffix;
       link.appendChild(icon);

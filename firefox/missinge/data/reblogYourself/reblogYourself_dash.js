@@ -21,7 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, $ */
+/*global escapeHTML,jQuery,locale,self */
+
 function addReblog(item) {
    if (item.tagName === "LI" && jQuery(item).hasClass('post') &&
        !jQuery(item).hasClass('new_post') && !jQuery(item).hasClass('note')) {
@@ -53,7 +54,7 @@ function receiveReblog(message) {
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
    var edit, klass, txt;
-   var reblog_text = locale[lang]["reblog"];
+   var reblog_text = locale[lang].reblog;
    if (message.success) {
       klass = (message.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
@@ -80,7 +81,7 @@ function receiveReblog(message) {
       nr.trigger('MissingEaddReblog');
    }
    else {
-      var reblog_err = locale[lang]["error"];
+      var reblog_err = locale[lang].error;
       edit = jQuery('#post_'+message.pid)
          .find('div.post_controls a[href^="/edit"]');
       if (edit.length === 0) {

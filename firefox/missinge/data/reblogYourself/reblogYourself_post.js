@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global locale,self */
+
 self.on('message', function (message) {
    if (message.greeting !== "settings" ||
        message.component !== "reblogYourself" ||
@@ -45,7 +47,7 @@ self.on('message', function (message) {
    }
 
    if (noReblog) {
-      var url, redir, i;
+      var url, redir;
       var loc = location.href;
       var last = controls[controls.length-1];
       var gdp = document.getElementById('MissingE_gotoDashPost_link');
@@ -99,7 +101,7 @@ self.on('message', function (message) {
          icon.style.display='block';
          icon.style.cssFloat='left';
          icon.style.cursor='pointer';
-         icon.alt=locale[lang]["reblog"];
+         icon.alt=locale[lang].reblog;
          icon.src = 'http://assets.tumblr.com/images/iframe_reblog_alpha' +
             suffix;
          link.appendChild(icon);

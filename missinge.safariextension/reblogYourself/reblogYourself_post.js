@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global locale */
+
 function MissingE_reblogYourself_post_doStartup() {
    var div = document.getElementsByTagName("div")[0];
    var controls = div.getElementsByTagName("a");
@@ -40,7 +42,7 @@ function MissingE_reblogYourself_post_doStartup() {
    }
 
    if (noReblog) {
-      var url, redir, i;
+      var url, redir;
       var loc = location.href;
       var last = controls[controls.length-1];
       var gdp = document.getElementById('MissingE_gotoDashPost_link');
@@ -94,7 +96,7 @@ function MissingE_reblogYourself_post_doStartup() {
          icon.style.display='block';
          icon.style.cssFloat='left';
          icon.style.cursor='pointer';
-         icon.alt=locale[lang]["reblog"];
+         icon.alt=locale[lang].reblog;
          icon.src = 'http://assets.tumblr.com/images/iframe_reblog_alpha' +
             suffix;
          link.appendChild(icon);
