@@ -953,4 +953,4 @@ var locale = {
    "error": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin."
   }
  }
-}
+};
