@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global localStorage, $, window, safari, getPageHeight */
+/*global escapeHTML,getPageHeight,jQuery,self */
 
 var text;
 var done;
@@ -43,8 +43,9 @@ function serializeNames(arr) {
 function doFinish(newlist,show,acct) {
    var unfollows = [];
    var c, i;
-   var currlist = parseNames(localStorage.getItem('MissingE_unfollower_' + acct));
-   localStorage.setItem('MissingE_unfollower_' + acct,serializeNames(newlist));
+   var currlist = parseNames(localStorage
+                             .getItem('MissingE_unfollower_' + acct));
+   localStorage.setItem('MissingE_unfollower_' + acct, serializeNames(newlist));
    if (!show) { return true; }
    var n=0;
    var a = currlist;
@@ -134,7 +135,8 @@ function doChooser(acct) {
    var i;
    acct = escapeHTML(acct);
    var chtext = '<p style="margin-top:5px;"><strong>' + acct +
-            '</strong> is not being tracked!<br />Was this account renamed?</p>' +
+            '</strong> is not being tracked!<br />' +
+            'Was this account renamed?</p>' +
             '<form id="unfollower_chooser_form">' +
             '<table id="unfollower_chooser_table" border="0">' +
             '<tr><th colspan="2"><em>Active Tracked Accounts</em>' +
@@ -217,7 +219,8 @@ function doGet(num, show, extensionURL, retries, acct) {
                         '<a href="http://theoatmeal.com/">The Oatmeal</a>' +
                         '</em></div>');
                if (jQuery('#facebox').css('display') === 'block') {
-                  jQuery.facebox({ div: '#MissingE_unfollowdisplay' }, 'unfollowrbox');
+                  jQuery.facebox({ div: '#MissingE_unfollowdisplay' },
+                                 'unfollowrbox');
                }
             }
          },
@@ -351,22 +354,26 @@ function addUnfollowerButton(extensionURL, acct, retries) {
 
 function tu_init(extensionURL, retries, addSidebar) {
    jQuery('#unfollower_chooser_form button').live('click', function() {
+      var old, r, followerLists, idx, followers;
       var acct = jQuery(this).attr('account');
       switch(this.className) {
-         case 'rn_btn': {
-            var old = jQuery(this).parent().attr('user');
-            var followerLists = parseNames(localStorage
-                                           .getItem('MissingE_unfollower_lists'));
-            var idx = jQuery.inArray(old,followerLists);
+         case 'rn_btn':
+            old = jQuery(this).parent().attr('user');
+            followerLists = parseNames(localStorage
+                                       .getItem('MissingE_unfollower_lists'));
+            idx = jQuery.inArray(old,followerLists);
             if (idx >= 0) {
-               var r = confirm('Replace "' + old + '" account with "' + acct + '"?');
+               r = confirm('Replace "' + old + '" account with "' + acct +
+                           '"?');
                if (r) {
                   followerLists[idx] = acct;
                   localStorage.setItem('MissingE_unfollower_lists',
                                        serializeNames(followerLists));
-                  var followers = localStorage.getItem('MissingE_unfollower_' + old);
+                  followers = localStorage
+                                 .getItem('MissingE_unfollower_' + old);
                   localStorage.removeItem('MissingE_unfollower_' + old);
-                  localStorage.setItem('MissingE_unfollower_' + acct, followers);
+                  localStorage.setItem('MissingE_unfollower_' + acct,
+                                       followers);
                   jQuery.facebox.close();
                }
             }
@@ -374,28 +381,27 @@ function tu_init(extensionURL, retries, addSidebar) {
                jQuery.facebox.close();
             }
             break;
-         }
-         case 'del_btn': {
-            var old = jQuery(this).parent().attr('user');
-            var r = confirm('Delete data for "' + old + '"?');
+         case 'del_btn':
+            old = jQuery(this).parent().attr('user');
+            r = confirm('Delete data for "' + old + '"?');
             if (r) {
-               var followerLists = parseNames(localStorage
-                                              .getItem('MissingE_unfollower_lists'));
-               var idx = jQuery.inArray(old,followerLists);
+               followerLists = parseNames(localStorage
+                                       .getItem('MissingE_unfollower_lists'));
+               idx = jQuery.inArray(old,followerLists);
                if (idx >= 0) {
                   followerLists.splice(idx,1);
                   localStorage.setItem('MissingE_unfollower_lists',
                                        serializeNames(followerLists));
                   localStorage.removeItem('MissingE_unfollower_' + old);
-                  jQuery(this).parent().children('button').css('visibility','hidden');
+                  jQuery(this).parent().children('button')
+                     .css('visibility','hidden');
                   jQuery(this).parent().prev().empty();
                }
             }
             break;
-         }
-         case 'new_btn': {
-            var followerLists = parseNames(localStorage
-                                           .getItem('MissingE_unfollower_lists'));
+         case 'new_btn':
+            followerLists = parseNames(localStorage
+                                       .getItem('MissingE_unfollower_lists'));
             followerLists.push(acct);
             localStorage.setItem('MissingE_unfollower_lists',
                                  serializeNames(followerLists));
@@ -411,8 +417,7 @@ function tu_init(extensionURL, retries, addSidebar) {
             }
             jQuery.facebox.close();
             break;
-         }
-         case 'ignore_btn': {
+         case 'ignore_btn':
             var ignores = parseNames(ignoreList);
             ignores.push(acct);
             localStorage.removeItem('MissingE_unfollower_' + acct);
@@ -421,11 +426,11 @@ function tu_init(extensionURL, retries, addSidebar) {
             jQuery('#MissingE_unfollowdelta').remove();
             jQuery.facebox.close();
             break;
-         }
       }
    });
 
-   jQuery("body").append('<div id="MissingE_unfollowdisplay" style="display:none;">' +
+   jQuery("body").append('<div id="MissingE_unfollowdisplay" ' +
+                    'style="display:none;">' +
                     '<div style="font:bold 24px Georgia,serif;' +
                     'color:#1f354c;">unfollower</div>' +
                     '<div class="unfollowerlist" style="height:' +
@@ -436,7 +441,8 @@ function tu_init(extensionURL, retries, addSidebar) {
 
    var acct = location.href.match(/\/tumblelog\/([^\/]*)/);
    if (addSidebar === 0 && (!acct || acct.length <= 1)) {
-      acct = jQuery('#user_channels li.tab:first a').attr('href').match(/\/tumblelog\/([^\/]*)/);
+      acct = jQuery('#user_channels li.tab:first a').attr('href')
+               .match(/\/tumblelog\/([^\/]*)/);
    }
    if (acct && acct.length > 1) {
       addUnfollowerButton(extensionURL, acct[1], retries);
@@ -446,7 +452,7 @@ function tu_init(extensionURL, retries, addSidebar) {
    });
    jQuery('#MissingE_unfollowdelta').live('click', function() {
       var account = jQuery(this).attr('account');
-      followers = jQuery(this).parent().text()
+      var followers = jQuery(this).parent().text()
                         .match(/^([0-9][0-9,\.]*)/);
       if (followers === undefined || followers === null ||
           followers.length < 2) {
