@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global localStorage, safari */
+/*global safari */
 
 var missingeServer = 'http://crush.missinge.infraware.ca';
 

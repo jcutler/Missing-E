@@ -21,17 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, localStorage */
-
-function MissingE_postCrushes_fill_doStartup() {
-   var url = window.localStorage.getItem("tcp_crushURL");
-   if (document.body.id === 'dashboard_edit_post' &&
-       url !== undefined && url !== null && url !== "") {
-      safari.self.addEventListener('message', postCrushesFillSettings, false);
-      safari.self.tab.dispatchMessage("settings",
-                                      {component: "postCrushes_fill"});
-   }
-}
+/*global safari */
 
 function postCrushesFillSettings(response) {
    var tagarr, i;
@@ -74,5 +64,15 @@ function postCrushesFillSettings(response) {
       document.getElementById('photo_src').value = url;
       document.getElementById('photo_upload').style.display = "none";
       document.getElementById('photo_url').style.display = "block";
+   }
+}
+
+function MissingE_postCrushes_fill_doStartup() {
+   var url = window.localStorage.getItem("tcp_crushURL");
+   if (document.body.id === 'dashboard_edit_post' &&
+       url !== undefined && url !== null && url !== "") {
+      safari.self.addEventListener('message', postCrushesFillSettings, false);
+      safari.self.tab.dispatchMessage("settings",
+                                      {component: "postCrushes_fill"});
    }
 }

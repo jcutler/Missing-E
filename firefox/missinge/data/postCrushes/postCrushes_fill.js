@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, localStorage */
+/*global escapeHTML,self */
 
 function postCrushesFillSettings(message) {
    var tagarr, i;

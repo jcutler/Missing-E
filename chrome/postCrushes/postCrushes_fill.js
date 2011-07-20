@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome, localStorage */
+/*global chrome */
 
 if (document.body.id === 'dashboard_edit_post') {
    chrome.extension.sendRequest({greeting: "settings",
