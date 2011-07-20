@@ -90,9 +90,9 @@ function doManualAnswering(e,id,type) {
    if (type) {
       $('#post_control_loader_' + id).show();
       $('#ask_publish_button_also_' + id).attr('disabled','disabled');
-      $('#ask_queue_button_' + id).attr('disabled','disabled');
+      $('#ask_queue_button_also_' + id).attr('disabled','disabled');
       $('#ask_draft_button_also_' + id).attr('disabled','disabled');
-      $('#ask_private_button_also_' + id).attr('disabled','disabled');
+      $('#ask_private_button_' + id).attr('disabled','disabled');
       $('#ask_cancel_button_' + id).attr('disabled','disabled');
       $('#private_answer_button_' + id).attr('disabled','disabled');
       $('#ask_answer_form_' + id + ' .MissingE_postMenu input')
@@ -210,8 +210,12 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
       for (i in locale[lang].postingFixes.submitText) {
          if (locale[lang].postingFixes.submitText.hasOwnProperty(i)) {
             if (i === 'publish') { continue; }
-            allbtns += '<button class="chrome" id="ask_' + i + '_button_' + id +
-               '" onclick="return false;"><div class="chrome_button">' +
+            if (i === 'queue' || i === 'draft') {
+               suffix = 'also_';
+            }
+            allbtns += '<button class="chrome" id="ask_' + i + '_button_' +
+               suffix + id + '" onclick="return false;">' +
+               '<div class="chrome_button">' +
                '<div class="chrome_button_left"></div>' +
                locale[lang].postingFixes.submitText[i] +
                '<div class="chrome_button_right"></div></div></button><br />';
