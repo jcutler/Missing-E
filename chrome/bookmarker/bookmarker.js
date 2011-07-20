@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global window, $, chrome, getStorage, setStorage, getFormattedDate */
+/*global $,chrome,getBookmarkerFormat,getStorage,locale,setStorage */
 
 var bmi = chrome.extension.getURL('bookmarker/sidebar_bookmark.png');
 var mimg = chrome.extension.getURL('bookmarker/post_bookmark.png');
@@ -80,13 +80,13 @@ function addBar(mark, lang, altPost) {
       post.before('<div id="bookmarkbar_' + mark[1] + '" ' +
             'class="MissingE_bookmark_bar"><div ' +
             'class="MissingE_bookmark_line"></div><div ' +
-            'class="MissingE_bookmark_text">' + locale[lang]["bookmarkNoun"] +
+            'class="MissingE_bookmark_text">' + locale[lang].bookmarkNoun +
             ' - <em id="bookmarkbar_label_' +
             mark[1] + '">' + mark[2] + '</em><span ' +
             'class="MissingE_bookmark_missing ' +
             'MissingE_bookmark_missing_' + lang + '">' + (altPost ? ' (' +
             '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
-            'target="_blank">' + locale[lang]["postUnavailable"] + '</a>)' +
+            'target="_blank">' + locale[lang].postUnavailable + '</a>)' +
             '</span>' : '') + '</div></div>');
    }
    else {
@@ -111,11 +111,10 @@ function generateList() {
    var markitems = marklist.find('li[post]');
    if (markitems.length > 0) {
       var idx = 0;
-      markitems.each(function(i) {
-         if ($(this).data('gone') == 'gone') {
+      markitems.each(function() {
+         if ($(this).data('gone') === 'gone') {
             return;
          }
-         var cd = $(this).find('span.mark_date').attr("timestamp");
          var post = $(this).attr('post').match(/[0-9]*$/)[0];
          if (idx >= marks.length) {
             $('#bookmark_' + post)
@@ -123,7 +122,7 @@ function generateList() {
             $('#bookmarkbar_' + post).remove();
             $(this).remove();
          }
-         else if (post == marks[idx][1]) {
+         else if (post === marks[idx][1]) {
             $('#bookmarkbar_label_' + post).text(marks[idx][2]);
             $(this).find('span.mark_date').text(marks[idx][2]);
             idx++;
@@ -206,23 +205,24 @@ function addMark(post,user,custom) {
 
 function markClick(e) {
    if (e.which === 1) {
+      var post, pid, oldPos, scrollTo;
       if ($(this).hasClass("MissingE_ismarked")) {
-         var post = $(this).closest('li.post');
-         var pid = this.id.match(/[0-9]*$/)[0];
+         post = $(this).closest('li.post');
+         pid = this.id.match(/[0-9]*$/)[0];
          var moveWin = $('#bookmarkbar_' + pid).offset().top -
                         $(window).scrollTop() <= 34;
-         var oldPos = post.offset().top;
+         oldPos = post.offset().top;
          $(this).removeClass("MissingE_ismarked");
          removeMark(this.id.match(/[0-9]*$/)[0]);
          if (moveWin) {
-            var scrollTo = $(window).scrollTop() + post.offset().top -
+            scrollTo = $(window).scrollTop() + post.offset().top -
                            oldPos;
             $(window).scrollTop(scrollTo);
          }
       }
       else {
          var user = '';
-         var post = $(this).closest('li.post');
+         post = $(this).closest('li.post');
          if (post.hasClass('is_mine')) {
             user = 'you';
          }
@@ -240,12 +240,12 @@ function markClick(e) {
                }
             }
          }
-         var pid = this.id.match(/[0-9]*$/)[0];
-         var oldPos = post.offset().top;
+         pid = this.id.match(/[0-9]*$/)[0];
+         oldPos = post.offset().top;
          if (addMark(pid,user,e.shiftKey)) {
             if ($('#bookmarkbar_' + pid).offset().top -
                   $(window).scrollTop() <= 34) {
-               var scrollTo = $(window).scrollTop() + post.offset().top -
+               scrollTo = $(window).scrollTop() + post.offset().top -
                               oldPos;
                $(window).scrollTop(scrollTo);
             }
@@ -286,7 +286,7 @@ function doMarks(item) {
          }
       }
       var node = $('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + locale[lang]["bookmarkVerb"] + '" ' +
+                   '" title="' + locale[lang].bookmarkVerb + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -352,7 +352,7 @@ $('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
       var check = $('<a id="MissingE_bookmark_confirmedit" ' +
                     'onclick="return false;" style="display:inline;" ' +
                     'href="#"></a>').html('&#10004;').insertAfter(this);
-      check.click(function(e) { inp.get(0).blur(); }); 
+      check.click(function() { inp.get(0).blur(); });
       inp.get(0).focus();
       title.hide();
       $(this).siblings('.MissingE_unmarker')
@@ -408,7 +408,7 @@ chrome.extension.sendRequest({greeting: "settings",
           !(/submissions[^\/]*$/.test(location.href)) &&
           !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
           !(/queue\/after\/[^\/]*$/.test(location.href))) {
-         $("#posts li.post").each(function(i) {
+         $("#posts li.post").each(function() {
             doMarks(this);
          });
          $(document).bind('MissingEajax', function(e) {
@@ -430,7 +430,7 @@ chrome.extension.sendRequest({greeting: "settings",
                    'class="controls_section">' +
                    '<li class="MissingE_marklist_title recessed">' +
                    '<a href="#" onclick="return false;">' +
-                   locale[lang]["bookmarksTitle"] + '</a></li></ul>');
+                   locale[lang].bookmarksTitle + '</a></li></ul>');
       $(function() {
          $('#MissingE_marklist').sortable({
             items: "li[post]",
@@ -439,7 +439,8 @@ chrome.extension.sendRequest({greeting: "settings",
             opacity:0.6,
             revert:true,
             start:function(e,ui){
-               $(this).data('position',$('#MissingE_marklist li[post]').index(ui.item));
+               $(this).data('position',$('#MissingE_marklist li[post]')
+                            .index(ui.item));
             },
             update:function(e,ui){
                var oldp = $(this).data('position');

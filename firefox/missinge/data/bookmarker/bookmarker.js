@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global window, $, safari, getStorage, setStorage, getFormattedDate */
+/*global escapeHTML,getBookmarkerFormat,getStorage,jQuery,locale,self,setStorage */
 
 var markFormat;
 
@@ -72,18 +72,18 @@ function addBar(mark, lang, altPost) {
       post.before('<div id="bookmarkbar_' + markid + '" ' +
             'class="MissingE_bookmark_bar"><div ' +
             'class="MissingE_bookmark_line"></div><div ' +
-            'class="MissingE_bookmark_text">' + locale[lang]["bookmarkNoun"] +
+            'class="MissingE_bookmark_text">' + locale[lang].bookmarkNoun +
             ' - <em id="bookmarkbar_label_' +
             markid + '">' + marktxt + '</em><span ' +
             'class="MissingE_bookmark_missing ' +
             'MissingE_bookmark_missing_' + lang + '">' + (altPost ? ' (' +
             '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
-            'target="_blank">' + locale[lang]["postUnavailable"] + '</a>)' +
+            'target="_blank">' + locale[lang].postUnavailable + '</a>)' +
             '</span>' : '') + '</div></div>');
    }
    else {
       jQuery('#bookmarkbar_' + mark[1]).removeData('toremove');
-      jQuery('#bookmarkbar_label_' + mark[1]).html(marktxt);
+      jQuery('#bookmarkbar_label_' + mark[1]).html(mark[2]);
    }
 }
 
@@ -104,11 +104,10 @@ function generateList() {
    var markitems = marklist.find('li[post]');
    if (markitems.length > 0) {
       var idx = 0;
-      markitems.each(function(i) {
-        if (jQuery(this).attr('gone') == 'gone') {
+      markitems.each(function() {
+        if (jQuery(this).attr('gone') === 'gone') {
             return;
          }
-         var cd = jQuery(this).find('span.mark_date').attr("timestamp");
          var post = jQuery(this).attr('post').match(/[0-9]*$/)[0];
          if (idx >= marks.length) {
             jQuery('#bookmark_' + post)
@@ -116,7 +115,7 @@ function generateList() {
             jQuery('#bookmarkbar_' + post).remove();
             jQuery(this).remove();
          }
-         else if (post == marks[idx][1]) {
+         else if (post === marks[idx][1]) {
             jQuery('#bookmarkbar_label_' + post).text(marks[idx][2]);
             jQuery(this).find('span.mark_date').text(marks[idx][2]);
             idx++;
@@ -170,7 +169,7 @@ function removeMark(post) {
 }
 
 function addMark(post,user,custom) {
-   var lang = $('html').attr('lang');
+   var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
    var d = new Date();
    var ds = getBookmarkerFormat(d, user, markFormat, lang);
@@ -200,23 +199,24 @@ function addMark(post,user,custom) {
 
 function markClick(e) {
    if (e.which === 1) {
+      var post, pid, oldPos, scrollTo;
       if (jQuery(this).hasClass("MissingE_ismarked")) {
-         var post = jQuery(this).closest('li.post');
-         var pid = this.id.match(/[0-9]*$/)[0];
+         post = jQuery(this).closest('li.post');
+         pid = this.id.match(/[0-9]*$/)[0];
          var moveWin = jQuery('#bookmarkbar_' + pid).offset().top -
                         jQuery(window).scrollTop() <= 34;
-         var oldPos = post.offset().top;
+         oldPos = post.offset().top;
          jQuery(this).removeClass("MissingE_ismarked");
          removeMark(this.id.match(/[0-9]*$/)[0]);
          if (moveWin) {
-            var scrollTo = jQuery(window).scrollTop() + post.offset().top -
+            scrollTo = jQuery(window).scrollTop() + post.offset().top -
                            oldPos;
             jQuery(window).scrollTop(scrollTo);
          }
       }
       else {
          var user = '';
-         var post = jQuery(this).closest('li.post');
+         post = jQuery(this).closest('li.post');
          if (post.hasClass('is_mine')) {
             user = 'you';
          }
@@ -234,12 +234,12 @@ function markClick(e) {
                }
             }
          }
-         var pid = this.id.match(/[0-9]*$/)[0];
-         var oldPos = post.offset().top;
+         pid = this.id.match(/[0-9]*$/)[0];
+         oldPos = post.offset().top;
          if (addMark(pid,user,e.shiftKey)) {
             if (jQuery('#bookmarkbar_' + pid).offset().top -
                   jQuery(window).scrollTop() <= 34) {
-               var scrollTo = jQuery(window).scrollTop() + post.offset().top -
+               scrollTo = jQuery(window).scrollTop() + post.offset().top -
                               oldPos;
                jQuery(window).scrollTop(scrollTo);
             }
@@ -282,7 +282,7 @@ function doMarks(item) {
       }
       var node = jQuery('<a class="' + klass + '" id="bookmark_' +
                    escapeHTML(post) + '" title="' +
-                   locale[lang]["bookmarkVerb"] + '" ' +
+                   locale[lang].bookmarkVerb + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -324,7 +324,8 @@ function handleEdit(type, evt) {
       }
    }
    if (end) {
-      par.removeData('editmode').find('span.mark_date').css('visibility','visible');
+      par.removeData('editmode').find('span.mark_date')
+         .css('visibility','visible');
       par.find('.MissingE_unmarker')
            .removeClass('MissingE_bookmarker_forceHide');
       jQuery(evt.target).remove();
@@ -349,7 +350,7 @@ jQuery('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
       var check = jQuery('<a id="MissingE_bookmark_confirmedit" ' +
                     'onclick="return false;" style="display:inline;" ' +
                     'href="#"></a>').html('&#10004;').insertAfter(this);
-      check.click(function(e) { inp.get(0).blur(); });
+      check.click(function() { inp.get(0).blur(); });
       inp.get(0).focus();
       title.css('visibility','hidden');
       jQuery(this).siblings('.MissingE_unmarker')
@@ -423,7 +424,7 @@ self.on('message', function (message) {
           !(/submissions[^\/]*$/.test(location.href)) &&
           !(/drafts\/after\/[^\/]*$/.test(location.href)) &&
           !(/queue\/after\/[^\/]*$/.test(location.href))) {
-         jQuery("#posts li.post").each(function(i) {
+         jQuery("#posts li.post").each(function() {
             doMarks(this);
          });
          document.addEventListener('MissingEajax', function(e) {
@@ -448,7 +449,7 @@ self.on('message', function (message) {
                         'class="controls_section">' +
                         '<li class="MissingE_marklist_title recessed">' +
                         '<a href="#" onclick="return false;">' +
-                        locale[lang]["bookmarksTitle"] + '</a></li></ul>');
+                        locale[lang].bookmarksTitle + '</a></li></ul>');
       jQuery(function() {
          jQuery('#MissingE_marklist').sortable({
             items:"li[post]",
@@ -458,7 +459,8 @@ self.on('message', function (message) {
             revert:true,
             start:function(e,ui){
                jQuery(this).data('position',
-                                 jQuery('#MissingE_marklist li[post]').index(ui.item));
+                                 jQuery('#MissingE_marklist li[post]')
+                                    .index(ui.item));
             },
             update:function(e,ui){
                var oldp = jQuery(this).data('position');
