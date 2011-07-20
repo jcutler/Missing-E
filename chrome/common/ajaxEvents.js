@@ -21,14 +21,14 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-function checkAjaxReady(data) {
+function checkAjaxReady(data, tries) {
    if (data.list.length === 0 || $('#'+data.list[0]).length > 0) {
       var evt = document.createEvent("MessageEvent");
       evt.initMessageEvent("MissingEajax", true, true, {"type":data.type, "list":data.list}, "http://www.tumblr.com", 0, window);
       document.dispatchEvent(evt);
    }
-   else {
-      setTimeout(function(){checkAjaxReady(data);},500);
+   else if (tries < 10) {
+      setTimeout(function(){checkAjaxReady(data,tries+1);},500);
    }
 }
 
@@ -81,7 +81,7 @@ if (location.host === 'www.tumblr.com') {
 }
 
 $(document).bind('MissingEajaxInsert', function(e) {
-   checkAjaxReady(e.originalEvent.data);
+   checkAjaxReady(e.originalEvent.data, 0);
 });
 
 //$(document).bind('MissingEajax', function(e) { console.log(e.originalEvent.data); });
