@@ -21,9 +21,10 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari */
+/*global self */
 
 self.on('message', function(message) {
+   var i,j;
    if (message.greeting !== "settings" ||
        message.component !== "gotoDashPost") {
       return;
@@ -38,7 +39,6 @@ self.on('message', function(message) {
       noGoto = false;
    }
    else {
-      var i;
       for (i=0; noGoto && i<controls.length; i++) {
          var imgs = controls[i].getElementsByTagName('img');
          for (j=0; j<imgs.length; j++) {
@@ -52,7 +52,6 @@ self.on('message', function(message) {
 
    if (noGoto) {
       var last = controls[controls.length-1];
-      var i;
       var following = false;
       var you = true;
       for (i=0; i<document.forms.length; i++) {

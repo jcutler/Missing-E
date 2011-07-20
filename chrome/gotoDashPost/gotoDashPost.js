@@ -33,7 +33,7 @@ if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) ||
    noGoto = false;
 }
 else {
-   var i;
+   var i,j;
    for (i=0; noGoto && i<controls.length; i++) {
       var imgs = controls[i].getElementsByTagName('img');
       for (j=0; j<imgs.length; j++) {

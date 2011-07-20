@@ -24,6 +24,7 @@
 /*global safari */
 
 function MissingE_gotoDashPost_doStartup() {
+   var i,j;
    var noGoto = true;
    var div = document.getElementsByTagName("div")[0];
    var controls = div.getElementsByTagName("a");
@@ -33,7 +34,6 @@ function MissingE_gotoDashPost_doStartup() {
       noGoto = false;
    }
    else {
-      var i;
       for (i=0; noGoto && i<controls.length; i++) {
          var imgs = controls[i].getElementsByTagName('img');
          for (j=0; j<imgs.length; j++) {
@@ -48,7 +48,6 @@ function MissingE_gotoDashPost_doStartup() {
 
    if (noGoto) {
       var last = controls[controls.length-1];
-      var i;
       var following = false;
       var you = true;
       for (i=0; i<document.forms.length; i++) {
