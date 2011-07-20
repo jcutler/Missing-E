@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $, chrome */
+/*global $,chrome,locale */
 
 function loadTimestamp(item) {
    var lang = $('html').attr('lang');
@@ -33,7 +33,7 @@ function loadTimestamp(item) {
          $(item).find(".post_controls:first")
                .after('<div class="post_info">' +
                       '<span class="MissingE_timestamp" ' +
-                      'style="font-weight:normal;">' + locale[lang]["loading"] +
+                      'style="font-weight:normal;">' + locale[lang].loading +
                       '</span></div>');
       }
       else {
@@ -41,10 +41,10 @@ function loadTimestamp(item) {
          if (spn.length === 0) {
             div.append('<br><span class="MissingE_timestamp" ' +
                        'style="font-weight:normal;">' +
-                       locale[lang]["loading"] + '</span>');
+                       locale[lang].loading + '</span>');
          }
          else {
-            spn.text(locale[lang]["loading"]);
+            spn.text(locale[lang].loading);
          }
       }
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
