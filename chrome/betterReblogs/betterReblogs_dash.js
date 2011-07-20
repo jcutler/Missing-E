@@ -20,6 +20,9 @@
  * You should have received a copy of the GNU General Public License
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
+
+/*global $,chrome,locale */
+
 var resetTumblr;
 var checked = {};
 
@@ -95,9 +98,10 @@ function startReblog(id,replaceIcons) {
       a.addClass('MissingE_quick_reblogging_icon');
    }
    else {
-      a.addClass('MissingE_quick_reblogging_text').text(locale[lang]["reblogging"]);
+      a.addClass('MissingE_quick_reblogging_text')
+         .text(locale[lang].reblogging);
    }
-   a.attr('title', locale[lang]["reblogging"]);
+   a.attr('title', locale[lang].reblogging);
 }
 
 function failReblog(id,replaceIcons) {
@@ -111,7 +115,7 @@ function failReblog(id,replaceIcons) {
    }
    a.attr('title',a.attr('oldtxt'));
    a.removeAttr('oldtxt');
-   alert(locale[lang]["reblogFailed"]);
+   alert(locale[lang].reblogFailed);
 }
 
 function finishReblog(id,replaceIcons) {
@@ -123,9 +127,9 @@ function finishReblog(id,replaceIcons) {
    }
    else {
       a.addClass('MissingE_quick_reblogging_text_success')
-         .text(locale[lang]["rebloggedText"]);
+         .text(locale[lang].rebloggedText);
    }
-   a.attr('title', locale[lang]["rebloggedText"]);
+   a.attr('title', locale[lang].rebloggedText);
    a.removeAttr('oldtxt');
 }
 
@@ -153,14 +157,14 @@ function reblogTextFull(item) {
 
 function doReblog(item,replaceIcons,accountName) {
    var reblogMode = {
-                        normal:  '0',
-                        draft:   '1',
-                        queue:   '2',
-                        private: 'private'
+      "normal":  '0',
+      "draft":   '1',
+      "queue":   '2',
+      "private": 'private'
    };
    var type,url,postId;
    if ($(item).parent().hasClass('post_controls')) {
-      type = 'normal'
+      type = 'normal';
       url = $(item).attr('href');
       postId = $(item).closest('li.post').attr('id').match(/[0-9]*$/)[0];
    }
@@ -196,7 +200,7 @@ function doReblog(item,replaceIcons,accountName) {
             failReblog(this.postId,this.replaceIcons);
             return;
          }
-         html = data.substr(frm);
+         var html = data.substr(frm);
          while (!(/^<form [^>]*id="edit_post"/.test(html))) {
             html = html.substr(1);
             frm = html.indexOf('<form');
@@ -210,14 +214,15 @@ function doReblog(item,replaceIcons,accountName) {
          var inputs = html.match(/<input[^>]*>/g);
          var textareas = html.match(/<textarea[^>]*>[^<]*<\/textarea>/g);
          var params = {};
+         var name;
          for (i=0; i<inputs.length; i++) {
-            var name = inputs[i].match(/name="([^"]*)"/);
+            name = inputs[i].match(/name="([^"]*)"/);
             if (name) {
                params[name[1]] = $(inputs[i]).val();
             }
          }
          for (i=0; i<textareas.length; i++) {
-            var name = textareas[i].match(/name="([^"]*)"/);
+            name = textareas[i].match(/name="([^"]*)"/);
             if (name && !(/id="custom_tweet"/.test(textareas[i]))) {
                params[name[1]] = $(textareas[i]).text();
             }
@@ -259,9 +264,10 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          selector = '#MissingE_quick_reblog_manual';
       }
       $(selector).live('mousedown', function(e) {
+         var tags;
          if (e.which !== 1 && e.which !== 2) { return; }
          if (this.id === 'MissingE_quick_reblog_manual') {
-            var tags = $('#MissingE_quick_reblog_tags input').val();
+            tags = $('#MissingE_quick_reblog_tags input').val();
             tags = tags.replace(/\s*,\s*/g,',').replace(/,$/,'')
                      .replace(/^\s*/,'');
             if (tags !== '') {
@@ -269,29 +275,29 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
             }
          }
          else {
-         var tags = $(this).closest('li.post').find('span.tags a');
-         var tagarr = [];
-         if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href)) {
-            var i;
-            var str = location.href.match(/[^\/\?]*(?:$|\?)/)[0];
-            str = str.replace(/\?/,'').replace(/\+/,' ');
-            var entities = str.match(/%[0-9a-fA-F]{2}/g);
-            if (entities !== undefined && entities !== null) {
-               for (i=0; i<entities.length; i++) {
-                  var repl = String.fromCharCode(parseInt(entities[i].replace(/%/,''),16));
-                  str = str.replace(entities[i],repl);
+            tags = $(this).closest('li.post').find('span.tags a');
+            var tagarr = [];
+            if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href)) {
+               var i;
+               var str = location.href.match(/[^\/\?]*(?:$|\?)/)[0];
+               str = str.replace(/\?/,'').replace(/\+/,' ');
+               var entities = str.match(/%[0-9a-fA-F]{2}/g);
+               if (entities !== undefined && entities !== null) {
+                  for (i=0; i<entities.length; i++) {
+                     var repl = String.fromCharCode(parseInt(entities[i]
+                                                      .replace(/%/,''),16));
+                     str = str.replace(entities[i],repl);
+                  }
                }
+               tagarr.push(str);
             }
-            tagarr.push(str);
-         }
-         tags.each(function() {
-            tagarr.push($(this).text().replace(/^#/,''));
-         });
-         setReblogTags(tagarr);
+            tags.each(function() {
+               tagarr.push($(this).text().replace(/^#/,''));
+            });
+            setReblogTags(tagarr);
          }
       });
    }
-
    if (reblog_settings.fullText === 1) {
       $('#posts li.post.regular').each(function() {
          reblogTextFull(this);
@@ -306,38 +312,37 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          reblogTextFull(this);
       });
    }
-
    if (reblog_settings.quickReblog === 1) {
       var idx;
       $('head').append('<style type="text/css">' +
-                       '.MissingE_quick_reblogging_icon {' +
-                          'background-image:url("' +
-                          chrome.extension.getURL('betterReblogs/reblog_animated.gif') +
-                          '") !important; }' +
-                       '.MissingE_quick_reblogging_success {' +
-                          'background-image:url("' +
-                          chrome.extension.getURL('betterReblogs/reblog_success.png') +
-                          '") !important; }</style>');
+         '.MissingE_quick_reblogging_icon {' +
+            'background-image:url("' +
+            chrome.extension.getURL('betterReblogs/reblog_animated.gif') +
+            '") !important; }' +
+         '.MissingE_quick_reblogging_success {' +
+            'background-image:url("' +
+            chrome.extension.getURL('betterReblogs/reblog_success.png') +
+            '") !important; }</style>');
       var txt = '<div class="user_menu" id="MissingE_quick_reblog">' +
                  '<div class="user_menu_nipple"></div>' +
                  '<div class="user_menu_list">';
-      for (idx=0; idx<locale[lang]["reblogOptions"].length; idx++) {
+      for (idx=0; idx<locale[lang].reblogOptions.length; idx++) {
          var doonclick = 'onclick="return false;"';
-         if (locale[lang]["reblogOptions"][idx].item === 'manual') {
+         if (locale[lang].reblogOptions[idx].item === 'manual') {
             doonclick = '';
          }
          txt += '<a class="MissingE_quick_reblog_button" ' +
                  'id="MissingE_quick_reblog_' +
-                 locale[lang]["reblogOptions"][idx].item +
+                 locale[lang].reblogOptions[idx].item +
                  '" href="#" ' + doonclick + '>' +
                  '<div class="user_menu_list_item">' +
-                 locale[lang]["reblogOptions"][idx].text + '</div></a>';
+                 locale[lang].reblogOptions[idx].text + '</div></a>';
       }
       txt +=  '<a href="#" onclick="return false;" ' +
                'class="MissingE_quick_reblog_field">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_twitter">' +
-               '<input type="checkbox" /> ' + locale[lang]["twitterText"] +
+               '<input type="checkbox" /> ' + locale[lang].twitterText +
                '</div></div></a>';
       var list = $('#user_channels li');
       if (list.length > 0) {
@@ -366,14 +371,15 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                'class="MissingE_quick_reblog_field">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_tags">' +
-               '<input type="text" /><br />' + locale[lang]["tagsText"] +
+               '<input type="text" /><br />' + locale[lang].tagsText +
                '</div></div></a>';
       var qr = $(txt).appendTo('body');
       qr.find('#MissingE_quick_reblog_selector select').click(function(e) {
          e.stopPropagation();
          return false;
       }).change(function() {
-         changeQuickReblogAcct($(this), reblog_settings.quickReblogForceTwitter);
+         changeQuickReblogAcct($(this),
+                               reblog_settings.quickReblogForceTwitter);
       });
       qr.mouseover(function(e){
          if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
@@ -447,7 +453,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                var entities = str.match(/%[0-9a-fA-F]{2}/g);
                if (entities !== undefined && entities !== null) {
                   for (i=0; i<entities.length; i++) {
-                     var repl = String.fromCharCode(parseInt(entities[i].replace(/%/,''),16));
+                     var repl = String.fromCharCode(parseInt(entities[i]
+                                                      .replace(/%/,''),16));
                      str = str.replace(entities[i],repl);
                   }
                }
@@ -539,10 +546,10 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          doReblog(this,reblog_settings.replaceIcons,account);
       });
 
-      if (reblog_settings.quickReblogForceTwitter == "default") {
+      if (reblog_settings.quickReblogForceTwitter === "default") {
          getTwitterDefaults();
       }
-      else if (reblog_settings.quickReblogForceTwitter == "on") {
+      else if (reblog_settings.quickReblogForceTwitter === "on") {
          $('#MissingE_quick_reblog_selector select').trigger('change');
       }
    }

@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global $,locale,safari */
+
 function setReblogTags(tags) {
    localStorage.setItem('tbr_ReblogTags',tags.join(','));
 }
@@ -81,13 +83,14 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
                func += '\'' + tags[i].replace(/'/g,'\\\'') + '\',';
                fill += tags[i] + ',';
                txt += '<div class="token"><span class="tag">' + tags[i] +
-                        '</span><a title="' + locale[lang]["removeTag"] +
+                        '</span><a title="' + locale[lang].removeTag +
                         '" onclick="tag_editor_remove_tag($(this).up()); ' +
                         'return false;" href="#">x</a></div>';
             }
          }
          fill = fill.replace(/,$/,'');
          func = func.replace(/,$/,'') + '];';
+         var label;
          if (func !== 'var tags=[];') {
             func += 'var posttags=document.getElementById(\'post_tags\');' +
                     'var currtags=posttags.value.split(\',\');' +
@@ -128,9 +131,9 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
                               '<a class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
                               'onclick="' + func + '">' +
-                              locale[lang]["reblogTags"] + '</a></div>')
+                              locale[lang].reblogTags + '</a></div>')
                .prependTo(set_tags).outerHeight();
-            var label = $('#post_tags_label');
+            label = $('#post_tags_label');
             if (label.length > 0) {
                var newHeight = parseInt(label.css('top').match(/[0-9]*/)[0]);
                if (!isNaN(newHeight)) {
@@ -142,7 +145,7 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
          if (autoFillTags === 1 && txt !== '') {
             document.getElementById('post_tags').value = fill;
             document.getElementById('tokens').innerHTML = txt;
-            var label = document.getElementById('post_tags_label');
+            label = document.getElementById('post_tags_label');
             if (label) {
                label.parentNode.removeChild(label);
             }

@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global safari */
+
 function setReblogTags(tags) {
    localStorage.setItem('tbr_ReblogTags',tags.join(','));
 }
