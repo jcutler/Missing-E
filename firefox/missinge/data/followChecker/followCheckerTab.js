@@ -21,12 +21,14 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global jQuery,self */
+
 function fill(message) {
+   var i;
    if (message.greeting !== "followChecker_fill") {
       return false;
    }
    else if (message.success) {
-      var i;
       jQuery('#error').css('display','none');
       jQuery('a.unfollow_button,a.follow_button').live('click', function() {
          var id = this.id.replace(/(un)?follow_button_/,'');
@@ -56,22 +58,24 @@ function fill(message) {
             error: function(jqXHR, textStatus, errorThrown) {
                jQuery('#' + this.action + '_loading_' + this.tumblrId).hide();
                jQuery('#' + this.action + '_button_' + this.tumblrId).show();
-               alert("Sorry, Tumblr seems to be having technical trouble.\n\nPlease try again later.");
+               alert("Sorry, Tumblr seems to be having technical trouble." +
+                     "\n\nPlease try again later.");
             }
          });
          return false;
       });
       jQuery('#followYou_count').text(message.followYou.length);
       var txt = '';
+      var entry;
       for (i=0; i<message.followYou.length; i++) {
-         var entry = message.followYou[i].split(';');
-         if (!entry[2] || entry[2] == '') {
+         entry = message.followYou[i].split(';');
+         if (!entry[2] || entry[2] === '') {
             entry[2] = 'http://assets.tumblr.com/images/default_avatar_30.gif';
          }
          else {
             entry[2] = 'http://media.tumblr.com/avatar_' + entry[2];
          }
-         txt += '<div class="follower' + ((i%2==1) ? ' alt' : '') + '">' +
+         txt += '<div class="follower' + ((i%2===1) ? ' alt' : '') + '">' +
                '<a href="' + entry[1] + '" target="_blank">' +
                '<img class="avatar" alt="' + entry[0] + '" src="' +
                entry[2] + '" />' +
@@ -85,16 +89,16 @@ function fill(message) {
       }
       jQuery('#followers .section').html(txt);
       jQuery('#youFollow_count').text(message.youFollow.length);
-      var txt = '';
+      txt = '';
       for (i=0; i<message.youFollow.length; i++) {
-         var entry = message.youFollow[i].split(';');
-         if (!entry[2] || entry[2] == '') {
+         entry = message.youFollow[i].split(';');
+         if (!entry[2] || entry[2] === '') {
             entry[2] = 'http://assets.tumblr.com/images/default_avatar_30.gif';
          }
          else {
             entry[2] = 'http://media.tumblr.com/avatar_' + entry[2];
          }
-         txt += '<div class="followee' + ((i%2==1) ? '' : ' alt') + '">' +
+         txt += '<div class="followee' + ((i%2===1) ? '' : ' alt') + '">' +
                '<a href="' + entry[1] + '" target="_blank">' +
                '<img class="avatar" alt="' + entry[0] + '" src="' +
                entry[2] + '" />' +

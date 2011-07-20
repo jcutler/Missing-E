@@ -175,22 +175,24 @@ chrome.extension.sendRequest({greeting: "followChecker_fill"},
             error: function(jqXHR, textStatus, errorThrown) {
                $('#' + this.action + '_loading_' + this.tumblrId).hide();
                $('#' + this.action + '_button_' + this.tumblrId).show();
-               alert("Sorry, Tumblr seems to be having technical trouble.\n\nPlease try again later.");
+               alert("Sorry, Tumblr seems to be having technical trouble." +
+                     "\n\nPlease try again later.");
             }
          });
          return false;
       });
       $('#followYou_count').text(response.followYou.length);
       var txt = '';
+      var entry;
       for (i=0; i<response.followYou.length; i++) {
-         var entry = response.followYou[i].split(';');
-         if (!entry[2] || entry[2] == '') {
+         entry = response.followYou[i].split(';');
+         if (!entry[2] || entry[2] === '') {
             entry[2] = 'http://assets.tumblr.com/images/default_avatar_30.gif';
          }
          else {
             entry[2] = 'http://media.tumblr.com/avatar_' + entry[2];
          }
-         txt += '<div class="follower' + ((i%2==1) ? ' alt' : '') + '">' +
+         txt += '<div class="follower' + ((i%2===1) ? ' alt' : '') + '">' +
                '<a href="' + entry[1] + '" target="_blank">' +
                '<img class="avatar" alt="' + entry[0] + '" src="' +
                entry[2] + '" />' +
@@ -204,16 +206,16 @@ chrome.extension.sendRequest({greeting: "followChecker_fill"},
       }
       $('#followers .section').html(txt);
       $('#youFollow_count').text(response.youFollow.length);
-      var txt = '';
+      txt = '';
       for (i=0; i<response.youFollow.length; i++) {
-         var entry = response.youFollow[i].split(';');
-         if (!entry[2] || entry[2] == '') {
+         entry = response.youFollow[i].split(';');
+         if (!entry[2] || entry[2] === '') {
             entry[2] = 'http://assets.tumblr.com/images/default_avatar_30.gif';
          }
          else {
             entry[2] = 'http://media.tumblr.com/avatar_' + entry[2];
          }
-         txt += '<div class="followee' + ((i%2==1) ? '' : ' alt') + '">' +
+         txt += '<div class="followee' + ((i%2===1) ? '' : ' alt') + '">' +
                '<a href="' + entry[1] + '" target="_blank">' +
                '<img class="avatar" alt="' + entry[0] + '" src="' +
                entry[2] + '" />' +

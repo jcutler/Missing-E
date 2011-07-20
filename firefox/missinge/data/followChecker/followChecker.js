@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $, window, safari, getPageHeight */
+/*global escapeHTML,getPageHeight,jQuery,self */
 
 var followertext;
 var followeetext;
@@ -82,9 +82,11 @@ function doFWFinish(followers, followees, show) {
       if (fklass !== '') { fklass = 'class="' + fklass + '"'; }
       if (yklass !== '') { yklass = 'class="' + yklass + '"'; }
       txt += '<tr><td ' + fklass + '><a target="_blank" href="' +
-               escapeHTML(fentry[1]) + '">' + escapeHTML(fentry[0]) + '</a></td>';
+               escapeHTML(fentry[1]) + '">' + escapeHTML(fentry[0]) +
+               '</a></td>';
       txt += '<td ' + yklass + '><a target="_blank" href="' +
-               escapeHTML(yentry[1]) + '">' + escapeHTML(yentry[0]) + '</a></td></tr>';
+               escapeHTML(yentry[1]) + '">' + escapeHTML(yentry[0]) +
+               '</a></td></tr>';
    }
    for (; i<youfollow.length; i++) {
       klass = '';
@@ -93,7 +95,8 @@ function doFWFinish(followers, followees, show) {
       if (klass !== '') { klass = 'class="' + klass + '"'; }
       yentry = youfollow[i].split(';');
       txt += '<tr><td></td><td ' + klass + '><a target="_blank" href="' +
-               escapeHTML(yentry[1]) + '">' + escapeHTML(yentry[0]) + '</a></td></tr>';
+               escapeHTML(yentry[1]) + '">' + escapeHTML(yentry[0]) +
+               '</a></td></tr>';
    }
    for (; i<followyou.length; i++) {
       klass = '';
@@ -122,7 +125,7 @@ function doFWFinish(followers, followees, show) {
 
 function doFWDisplay(followerstart,followeestart,show) {
    var fin = true;
-   var i,j,raw;
+   var i,j,raw,fkm;
    i=0;
    j=0;
    for (i=followerstart; i<followerdone.length; i++) {
@@ -138,29 +141,27 @@ function doFWDisplay(followerstart,followeestart,show) {
       }
    }
    if (fin) {
+      var fentryname, fentryurl, fentryava, imgm, avre;
       followerdone = [];
       followeedone = [];
       var followernames = [];
       for (i=0; i<followertext.length; i++) {
          if (show && !formKey) {
-            var fkm = followertext[i]
-                        .match(/onclick="follow\(\s*'([^']*)',/);
+            fkm = followertext[i].match(/onclick="follow\(\s*'([^']*)',/);
             if (fkm && fkm.length > 1) {
                formKey = fkm[1];
             }
          }
-         raw = followertext[i]
-                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*"><div class="hide_overflow">[0-9a-zA-Z\-\_]+<\/div><\/a>/mg);
+         raw = followertext[i].match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*"><div class="hide_overflow">[0-9a-zA-Z\-\_]+<\/div><\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }
          for (j=0; j<raw.length; j++) {
-            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]*)<\/div><\/a>/)[1];
-            var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
-            var avre = new RegExp('a href="' + fentryurl +
-                                  '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
-            var imgm = avre.exec(followertext[i]);
-            var fentryava = '';
+            fentryname = raw[j].match(/>([0-9A-Za-z\-\_]*)<\/div><\/a>/)[1];
+            fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
+            avre = new RegExp('a href="' + fentryurl + '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
+            imgm = avre.exec(followertext[i]);
+            fentryava = '';
             if (imgm && imgm.length > 1) {
                fentryava = imgm[imgm.length-1];
             }
@@ -178,24 +179,21 @@ function doFWDisplay(followerstart,followeestart,show) {
       var followeenames = [];
       for (i=0; i<followeetext.length; i++) {
          if (show && !formKey) {
-            var fkm = followeetext[i]
-                        .match(/onclick="follow\(\s*'([^']*)',/);
+            fkm = followeetext[i].match(/onclick="follow\(\s*'([^']*)',/);
             if (fkm && fkm.length > 1) {
                formKey = fkm[1];
             }
          }
-         raw = followeetext[i]
-                     .match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
+         raw = followeetext[i].match(/<div class="name">\s*<a href="http:[\/0-9A-Za-z\-\_\.]*">[0-9a-zA-Z\-\_]+<\/a>/mg);
          if (raw === undefined || raw === null || raw.length === 0) {
             continue;
          }
          for (j=0; j<raw.length; j++) {
-            var fentryname = raw[j].match(/>([0-9A-Za-z\-\_]+)<\/a>/)[1];
-            var fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
-            var avre = new RegExp('a href="' + fentryurl +
-                                  '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
-            var imgm = avre.exec(followeetext[i]);
-            var fentryava = '';
+            fentryname = raw[j].match(/>([0-9A-Za-z\-\_]+)<\/a>/)[1];
+            fentryurl = raw[j].match(/a href="(http:[\/0-9A-Za-z\-\_\.]*)"/)[1];
+            avre = new RegExp('a href="' + fentryurl + '">\s*<img class="avatar"([\n\r]|.)*?src="http:\/\/[^\/]*\/avatar\_([^_]*_30\....)','m');
+            imgm = avre.exec(followeetext[i]);
+            fentryava = '';
             if (imgm && imgm.length > 1) {
                fentryava = imgm[imgm.length-1];
             }
@@ -402,8 +400,8 @@ function addFollowCheckerButton(acct) {
 }
 
 function tfc_init(extensionURL, retries) {
-   jQuery("body").append('<div id="MissingE_followwhodisplay" style="display:none;">' +
-                    '<div style="' +
+   jQuery("body").append('<div id="MissingE_followwhodisplay" ' +
+                    'style="display:none;"><div style="' +
                     'font:bold 24px Georgia,serif;color:#1f354c;">' +
                     'follow checker <a class="MissingE_followChecker_newTab"' +
                     ' href="#" onclick="return false;" ' +
