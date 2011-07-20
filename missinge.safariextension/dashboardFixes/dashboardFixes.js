@@ -21,16 +21,19 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, $ */
+/*global $,locale,safari */
 
 function addPostLinks() {
+   var i;
    var plwrap = '<li class="short_new_post post new_post" id="new_post"></li>';
    var pltxt = '<div class="short_post_labels">';
    var lang = $('html').attr('lang');
-   for (i in locale[lang]["postTypeNames"]) {
-      pltxt += '<div class="short_label">' +
-               '<a href="/new/' + i + '" class="new_post_label">' +
-               locale[lang]["postTypeNames"][i] + '</a></div>';
+   for (i in locale[lang].postTypeNames) {
+      if (locale[lang].postTypeNames.hasOwnProperty(i)) {
+         pltxt += '<div class="short_label">' +
+                  '<a href="/new/' + i + '" class="new_post_label">' +
+                  locale[lang].postTypeNames[i] + '</a></div>';
+      }
    }
    pltxt += '<div class="clear"></div></div>';
 
@@ -70,9 +73,9 @@ function doReplies(item) {
    notes.after('<a class="MissingE_experimental_reply" href="#" onclick="' +
                'display_reply_pane([' + id + ', \'' + key + '\']);' +
                'return false;" id="post_control_reply_' + id + '" title="' +
-               locale[lang]["dashFixesText"]['reply'] + ' [' +
-               locale[lang]["dashFixesText"]['experimental'] + ']">[' +
-               locale[lang]["dashFixesText"]['reply'] + ']</small></a>');
+               locale[lang].dashFixesText.reply + ' [' +
+               locale[lang].dashFixesText.experimental + ']">[' +
+               locale[lang].dashFixesText.reply + ']</small></a>');
 
    notes.after('<span class="MissingE_post_control ' +
                'MissingE_experimental_reply_wait" id="reply_fail_' + id +
@@ -88,42 +91,41 @@ function doIcons(item) {
    $(item).find('div.post_controls').addClass('MissingE_post_control_group');
    $(item).find('div.post_controls a').each(function() {
       var a = $(this);
-      var txt = a.text();
       var klass = "MissingE_post_control ";
       if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/delete_post_/.test(a.attr('onclick')) ||
           /^post_delete_/.test(a.attr('id')))) {
-         a.attr('title',locale[lang]["dashFixesText"]["del"])
+         a.attr('title',locale[lang].dashFixesText.del)
             .addClass(klass + "MissingE_delete_control").text('');
       }
       else if (/queue_post_/.test(a.attr('onclick'))) {
-         a.attr('title',locale[lang]["dashFixesText"]["queue"])
+         a.attr('title',locale[lang].dashFixesText.queue)
             .addClass(klass + "MissingE_queue_control").text('');
       }
       else if (/^\/edit/.test(a.attr('href'))) {
-         a.attr('title',locale[lang]["dashFixesText"]["edit"])
+         a.attr('title',locale[lang].dashFixesText.edit)
             .addClass(klass + "MissingE_edit_control").text('');
       }
       else if (/^\/reblog/.test(a.attr('href'))) {
-         a.attr('title',locale[lang]["dashFixesText"]['reblog'])
+         a.attr('title',locale[lang].dashFixesText.reblog)
             .addClass(klass + "MissingE_reblog_control").text('');
       }
       else if (/^post_control_reply_/.test(a.attr('id'))) {
-         var replyTitle = locale[lang]["dashFixesText"]['reply'];
+         var replyTitle = locale[lang].dashFixesText.reply;
          if (a.hasClass("MissingE_experimental_reply")) {
             klass += "MissingE_experimental_reply_control ";
-            replyTitle += " [" + locale[lang]["dashFixesText"]['experimental'] + "]";
+            replyTitle += " [" + locale[lang].dashFixesText.experimental + "]";
          }
          a.attr('title',replyTitle)
             .addClass(klass + "MissingE_reply_control").text('');
       }
       else if (/^show_notes_/.test(a.attr('id')) &&
-               a.children().length == 0) {
-         a.attr('title',locale[lang]["dashFixesText"]['notes'])
+               a.children().length === 0) {
+         a.attr('title',locale[lang].dashFixesText.notes)
             .addClass(klass + "MissingE_notes_control").text('');
       }
       else if (a.hasClass('reblog_count')) {
-         a.attr('title',locale[lang]["dashFixesText"]['notes'])
+         a.attr('title',locale[lang].dashFixesText.notes)
             .addClass('MissingE_notes_control_container')
             .find('span').each(function() {
             $(this).html($(this).html().replace(/[^0-9]*([0-9,\.]+)[^0-9]*/,
@@ -289,7 +291,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
    }
    if (maxBig === 1) {
       var maxSize = maxBigSize;
-      var i, bigcount = 1;
+      var bigcount = 1;
       var testpost = $('<li style="display:none;" class="regular">' +
                        '<div class="post_content"><p><big></big></p></div>' +
                        '</li>').insertAfter('#posts li.post:first');
@@ -351,18 +353,20 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
    if (postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
        $('#new_post').length === 0) {
-      var style = document.createElement("link");
-      style.setAttribute('rel','stylesheet');
-      style.setAttribute('type','text/css');
-      style.href = safari.extension.baseURI + "dashboardFixes/postLinks.css";
-      head.appendChild(style);
+      var linksStyle = document.createElement("link");
+      linksStyle.setAttribute('rel','stylesheet');
+      linksStyle.setAttribute('type','text/css');
+      linksStyle.href = safari.extension.baseURI +
+         "dashboardFixes/postLinks.css";
+      head.appendChild(linksStyle);
       addPostLinks();
    }
 
    var replaceStyle = document.createElement("link");
    replaceStyle.setAttribute('rel','stylesheet');
    replaceStyle.setAttribute('type','text/css');
-   replaceStyle.href = safari.extension.baseURI + "dashboardFixes/replaceIcons.css";
+   replaceStyle.href = safari.extension.baseURI +
+      "dashboardFixes/replaceIcons.css";
    head.appendChild(replaceStyle);
    var icons = safari.extension.baseURI +
                'dashboardFixes/icon_replacements.png';
@@ -455,7 +459,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
          });
       });
 
-      $("#posts li.post").each(function(i) {
+      $("#posts li.post").each(function() {
          doIcons(this);
       });
    }

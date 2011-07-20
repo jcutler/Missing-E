@@ -21,22 +21,26 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global safari, $ */
+/*global escapeHTML,jQuery,locale,self */
+
 function addPostLinks() {
+   var i;
    var plwrap = '<li class="short_new_post post new_post" id="new_post"></li>';
    var pltxt = '<div class="short_post_labels">';
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
-   for (i in locale[lang]["postTypeNames"]) {
-      pltxt += '<div class="short_label">' +
-               '<a href="/new/' + i + '" class="new_post_label">' +
-               locale[lang]["postTypeNames"][i] + '</a></div>';
+   for (i in locale[lang].postTypeNames) {
+      if (locale[lang].postTypeNames.hasOwnProperty(i)) {
+         pltxt += '<div class="short_label">' +
+                  '<a href="/new/' + i + '" class="new_post_label">' +
+                  locale[lang].postTypeNames[i] + '</a></div>';
+      }
    }
    pltxt += '<div class="clear"></div></div>';
 
    var npl = jQuery(plwrap).prependTo('#posts');
    npl.html(pltxt);
-   var bg;
+   var bg, bgc;
    bg = npl.css('background-image');
    bgc = npl.css('background-color');
    npl.css('cssText', 'background:' +
@@ -69,9 +73,9 @@ function doReplies(item) {
    notes.after('<a class="MissingE_experimental_reply" href="#" onclick="' +
                'display_reply_pane([' + id + ', \'' + key + '\']);' +
                'return false;" id="post_control_reply_' + id + '" title="' +
-               locale[lang]["dashFixesText"]['reply'] + ' [' +
-               locale[lang]["dashFixesText"]['experimental'] + ']">[' +
-               locale[lang]["dashFixesText"]['reply'] + ']</small></a>');
+               locale[lang].dashFixesText.reply + ' [' +
+               locale[lang].dashFixesText.experimental + ']">[' +
+               locale[lang].dashFixesText.reply + ']</small></a>');
 
    notes.after('<span class="MissingE_post_control ' +
                'MissingE_experimental_reply_wait" id="reply_fail_' + id +
@@ -89,44 +93,43 @@ function doIcons(item) {
       .addClass('MissingE_post_control_group');
    jQuery(item).find('div.post_controls a').each(function() {
       var a = jQuery(this);
-      var txt = a.text();
       var klass = "MissingE_post_control ";
       if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/^delete_post_/.test(a.prev().attr('id')) ||
           /^post_delete_/.test(a.attr('id')) ||
-          (new RegExp(locale[lang]["dashFixesText"]["del"], "i").test(a.text())))) {
-         a.attr('title',locale[lang]["dashFixesText"]["del"])
+          (new RegExp(locale[lang].dashFixesText.del, "i").test(a.text())))) {
+         a.attr('title',locale[lang].dashFixesText.del)
             .addClass(klass + "MissingE_delete_control").text('');
       }
-      else if ((new RegExp(locale[lang]["dashFixesText"]["queue"],
+      else if ((new RegExp(locale[lang].dashFixesText.queue,
                            "i")).test(a.text())) {
-         a.attr('title',locale[lang]["dashFixesText"]["queue"])
+         a.attr('title',locale[lang].dashFixesText.queue)
             .addClass(klass + "MissingE_queue_control").text('');
       }
       else if (/^\/edit/.test(a.attr('href'))) {
-         a.attr('title',locale[lang]["dashFixesText"]["edit"])
+         a.attr('title',locale[lang].dashFixesText.edit)
             .addClass(klass + "MissingE_edit_control").text('');
       }
       else if (/^\/reblog/.test(a.attr('href'))) {
-         a.attr('title',locale[lang]["dashFixesText"]['reblog'])
+         a.attr('title',locale[lang].dashFixesText.reblog)
             .addClass(klass + "MissingE_reblog_control").text('');
       }
       else if (/^post_control_reply_/.test(a.attr('id'))) {
-         var replyTitle = locale[lang]["dashFixesText"]['reply'];
+         var replyTitle = locale[lang].dashFixesText.reply;
          if (a.hasClass("MissingE_experimental_reply")) {
             klass += "MissingE_experimental_reply_control ";
-            replyTitle += " [" + locale[lang]["dashFixesText"]['experimental'] + "]";
+            replyTitle += " [" + locale[lang].dashFixesText.experimental + "]";
          }
          a.attr('title',replyTitle)
             .addClass(klass + "MissingE_reply_control").text('');
       }
       else if (/^show_notes_/.test(a.attr('id')) &&
-               a.children().length == 0) {
-         a.attr('title',locale[lang]["dashFixesText"]['notes'])
+               a.children().length === 0) {
+         a.attr('title',locale[lang].dashFixesText.notes)
             .addClass(klass + "MissingE_notes_control").text('');
       }
       else if (a.hasClass('reblog_count')) {
-         a.attr('title',locale[lang]["dashFixesText"]['notes'])
+         a.attr('title',locale[lang].dashFixesText.notes)
             .addClass('MissingE_notes_control_container')
             .find('span').each(function() {
             jQuery(this).html(jQuery(this).html()
@@ -207,7 +210,8 @@ function addExpandAllHandler(item) {
                .each(function() {
             if (this === me) { return; }
             var x = this;
-            var imgsrc = jQuery(this).attr('onclick').match(/this,'([^']*)'/)[1];
+            var imgsrc = jQuery(this).attr('onclick')
+                  .match(/this,'([^']*)'/)[1];
             if (!jQuery(this).hasClass('enlarged')) {
                jQuery(this).attr('original_src',this.src);
                jQuery(this).addClass('enlarged');
@@ -228,7 +232,8 @@ function addExpandAllHandler(item) {
          }
       }
       else {
-         jQuery(this).closest('.post').find('.exp_inline_image').each(function() {
+         jQuery(this).closest('.post').find('.exp_inline_image')
+               .each(function() {
             jQuery(this).removeClass('exp_inline_image');
             if (!jQuery(this).hasClass('inline_external_image')) {
                jQuery(this).addClass('inline_image');
@@ -293,7 +298,7 @@ self.on('message', function(message) {
    }
    if (message.maxBig === 1) {
       var maxSize = message.maxBigSize;
-      var i, bigcount = 1;
+      var bigcount = 1;
       var testpost = jQuery('<li style="display:none;" class="regular">' +
                        '<div class="post_content"><p><big></big></p></div>' +
                        '</li>').insertAfter('#posts li.post:first');
@@ -359,11 +364,11 @@ self.on('message', function(message) {
    if (message.postLinks === 1 &&
        /http:\/\/www\.tumblr\.com\/dashboard\//.test(location.href) &&
        jQuery('#new_post').length === 0) {
-      var style = document.createElement("link");
-      style.setAttribute('rel','stylesheet');
-      style.setAttribute('type','text/css');
-      style.href = extensionURL + "dashboardFixes/postLinks.css";
-      head.appendChild(style);
+      var linksStyle = document.createElement("link");
+      linksStyle.setAttribute('rel','stylesheet');
+      linksStyle.setAttribute('type','text/css');
+      linksStyle.href = extensionURL + "dashboardFixes/postLinks.css";
+      head.appendChild(linksStyle);
       addPostLinks();
    }
 
@@ -467,7 +472,7 @@ self.on('message', function(message) {
          });
       }, false);
 
-      jQuery("#posts li.post").each(function(i) {
+      jQuery("#posts li.post").each(function() {
          if (this.id === "new_post") { return true; }
          doIcons(this);
       });
