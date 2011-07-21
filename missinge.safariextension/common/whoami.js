@@ -81,8 +81,7 @@ function updateCheck(response) {
          post = 'post/' + response.message.link;
       }
       up.onclick = function() {
-         window.open('http://missinge.infraware.ca/update?b=safari&l=' +
-            encodeURI('http://blog.missinge.infraware.ca/' + post));
+         window.open('http://missinge.infraware.ca/update?b=safari');
       };
       up.style.display = 'block';
    }

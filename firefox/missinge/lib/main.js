@@ -714,7 +714,6 @@ function handleMessage(message, myWorker) {
       myWorker.postMessage({greeting: "update",
          update:versionCompare(getStorage("extensions.MissingE.externalVersion",'0'),
                                getStorage("extensions.MissingE.version",'0')) > 0,
-         link:getStorage("extensions.MissingE.externalVersion.link",''),
          msg:locale[message.lang]["update"]});
    }
    else if (message.greeting == "unfollowerIgnore") {

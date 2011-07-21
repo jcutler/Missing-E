@@ -64,8 +64,7 @@ if ((window.top === window &&
             post = 'post/' + response.link;
          }
          up.onclick = function() {
-            window.open('http://missinge.infraware.ca/update?b=chrome&l=' +
-               encodeURI('http://blog.missinge.infraware.ca/' + post));
+            window.open('http://missinge.infraware.ca/update?b=chrome');
          };
          up.style.display = 'block';
       }

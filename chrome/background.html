@@ -638,9 +638,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                                             request.v) >= 0});
    }
    else if (request.greeting == "update") {
-      sendResponse({update:versionCompare(getStorage("MissingE_externalVersion",'0'),
-                                          getStorage("MissingE_version",'0')) > 0,
-                    link:getStorage("MissingE_externalVersion_link",'')});
+      sendResponse({update:
+         versionCompare(getStorage("MissingE_externalVersion",'0'),
+                        getStorage("MissingE_version",'0')) > 0});
    }
    else if (request.greeting == "close-options") {
       closeTab(chrome.extension.getURL('options.html'), sender.tab.id);
