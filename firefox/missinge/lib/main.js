@@ -63,7 +63,7 @@ var locale=JSON.parse(data.load("common/localizations.js")
 var followYou = [];
 var youFollow = [];
 var lang = 'en';
-var debugMode = true;//false;
+var debugMode = false;
 
 function escapeHTML(str) {
    return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
