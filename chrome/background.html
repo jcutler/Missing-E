@@ -40,7 +40,7 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var debugMode = false;
+var debugMode = true;//false;
 var tabs = {};
 var followCheckerTab = -1;
 var formKey;
@@ -67,8 +67,12 @@ cacheClear = setInterval(function() {
 }, fiveMinutes);
 clearQueues = setInterval(function() {
    if (activeAjax == 0) {
-      wakeAll();
-      dequeueAjax();
+      if (numSleeping !== 0) {
+         debug(numSleeping + " still sleeping");
+      }
+      if (waitQueue.length > 0) {
+         debug(waitQueue.length + " still queued");
+      }
    }
 }, tenSeconds);
 
@@ -185,17 +189,6 @@ function cacheServe(type, id, sendResponse, fn, midFlight) {
    }
 }
 
-function wakeAll() {
-   var call;
-   for (var i in onHold) {
-      call = onHold[i];
-      delete onHold[i];
-      numSleeping --;
-      debug("Waking " + call.type + " request (" + call.request.pid + "). " + numSleeping + " still asleep");
-      runItem(call);
-   }
-}
-
 function runItem(call) {
    if (call.type === "magnifier") {
       requestMagnifier(call.request, call.sender, call.sendResponse, call.hash);
@@ -225,25 +218,31 @@ function wakeById(id) {
 }
 
 function isRequested(details) {
-   return false;
-   /* Not working
    var bucket;
-   if ((bucket = activeRequests[details.request.pid])) {
+   if (!details.request.sleepCount) {
+      details.request.sleepCount = 0;
+   }
+   if ((bucket = activeRequests[details.request.pid]) &&
+       details.request.sleepCount < 5) {
       onHold[details.type + details.request.pid] = details;
       bucket.push(details);
       numSleeping++;
-      debug("Sleeping " + details.type + " request (" + details.request.pid + "). " + numSleeping + " asleep");
+      details.request.sleepCount++;
+      debug("Sleeping " + details.type + " request (" + details.request.pid +
+            ") [" + details.request.sleepCount + "]. " + numSleeping +
+            " asleep");
       return true;
    }
    else {
       return false;
    }
-   */
 }
 
 function startAjax(id) {
    activeAjax++;
-   activeRequests[id] = [];
+   if (!activeRequests.hasOwnProperty(id)) {
+      activeRequests[id] = [];
+   }
 }
 
 function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
@@ -492,7 +491,7 @@ function requestTags(request, sender, sendResponse, hash) {
    else if (cacheServe("tags", request.pid, sendResponse, doTags, false)) {
       return true;
    }
-   else if (isRequested({type: "tags", request: request, sender: sender, sendResponse: sendResponse})) {
+   else if (isRequested({type: "tags", request: request, sender: sender, sendResponse: sendResponse, hash: hash})) {
       return true;
    }
    else if (activeAjax >= maxActiveAjax) {
@@ -514,7 +513,7 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
    else if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, false)) {
       return true;
    }
-   else if (isRequested({type: "reblogYourself", request: request, sender: sender, sendResponse: sendResponse})) {
+   else if (isRequested({type: "reblogYourself", request: request, sender: sender, sendResponse: sendResponse, hash: hash})) {
       return true;
    }
    else if (activeAjax >= maxActiveAjax) {
@@ -542,7 +541,7 @@ function requestTimestamp(request, sender, sendResponse, hash) {
    else if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, false)) {
       return true;
    }
-   else if (isRequested({type: "timestamp", request: request, sender: sender, sendResponse: sendResponse})) {
+   else if (isRequested({type: "timestamp", request: request, sender: sender, sendResponse: sendResponse, hash: hash})) {
       return true;
    }
    else if (activeAjax >= maxActiveAjax) {
@@ -570,7 +569,7 @@ function requestMagnifier(request, sender, sendResponse, hash) {
    else if (cacheServe("magnifier", request.pid, sendResponse, doMagnifier, false)) {
       return true;
    }
-   else if (isRequested({type: "magnifier", request: request, sender: sender, sendResponse: sendResponse})) {
+   else if (isRequested({type: "magnifier", request: request, sender: sender, sendResponse: sendResponse, hash: hash})) {
       return true;
    }
    else if (activeAjax >= maxActiveAjax) {

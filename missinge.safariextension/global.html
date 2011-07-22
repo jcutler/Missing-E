@@ -47,11 +47,9 @@ var componentList = ["dashboardFixes",
 
 var maxActiveAjax = 15;
 var activeAjax = 0;
-/*
 var activeRequests = {};
 var onHold = {};
 var numSleeping = 0;
-*/
 var waitQueue = [];
 var cache = {};
 var cacheElements = 0;
@@ -59,7 +57,7 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var debugMode = false;
+var debugMode = true; //false;
 var followCheckerTab = null;
 var formKey;
 var followYou = [];
@@ -101,10 +99,12 @@ cacheClear = setInterval(function() {
 }, fiveMinutes);
 clearQueues = setInterval(function() {
    if (activeAjax == 0) {
-      /* Not working
-      wakeAll();
-      */
-      dequeueAjax();
+      if (numSleeping !== 0) {
+         debug(numSleeping + " still sleeping");
+      }
+      if (waitQueue.length > 0) {
+         debug(waitQueue.length + " still queued");
+      }
    }
 }, tenSeconds);
 
@@ -187,10 +187,8 @@ function runItem(call) {
 function dequeueAjax(id) {
    if (id) {
       activeAjax--;
-      /* Not working
       wakeById(id);
       delete activeRequests[id];
-      */
    }
    while (activeAjax < maxActiveAjax) {
       var call = waitQueue.shift();
@@ -235,18 +233,6 @@ function cacheServe(type, id, request, fn, midFlight) {
    }
 }
 
-/* Not working
-function wakeAll() {
-   var call;
-   for (var i in onHold) {
-      call = onHold[i];
-      delete onHold[i];
-      numSleeping --;
-      debug("Waking " + call.type + " request (" + call.request.pid + "). " + numSleeping + " still asleep");
-      runItem(call);
-   }
-}
-
 function wakeById(id) {
    var i,j;
    for (i=0; activeRequests[id] && i<activeRequests[id].length; i++) {
@@ -254,35 +240,38 @@ function wakeById(id) {
       if ((call = activeRequests[id][i])) {
          delete onHold[call.type + call.request.message.pid];
          numSleeping--;
-         debug("Selectively waking " + call.type + " request (" + call.request.pid + "). " + numSleeping + " still asleep");
+         debug("Selectively waking " + call.type + " request (" + call.request.message.pid + "). " + numSleeping + " still asleep");
          runItem(call);
       }
    }
 }
-*/
 
 function isRequested(details) {
-   return false;
-   /* Not working
    var bucket;
-   if ((bucket = activeRequests[details.request.message.pid])) {
+   if (!details.request.sleepCount) {
+      details.request.sleepCount = 0;
+   }
+   if ((bucket = activeRequests[details.request.message.pid]) &&
+       details.request.sleepCount < 5) {
       onHold[details.type + details.request.message.pid] = details;
       bucket.push(details);
       numSleeping++;
-      debug("Sleeping " + details.type + " request (" + details.request.pid + "). " + numSleeping + " asleep");
+      details.request.sleepCount++;
+      debug("Sleeping " + details.type + " request (" +
+            details.request.message.pid + ") [" + details.request.sleepCount +
+            "]. " + numSleeping + " asleep");
       return true;
    }
    else {
       return false;
    }
-   */
 }
 
 function startAjax(id) {
    activeAjax++;
-   /* Not working
-   activeRequests[id] = [];
-   */
+   if (!activeRequests.hasOwnProperty(id)) {
+      activeRequests[id] = [];
+   }
 }
 
 function doAskAjax(request, retries, type, doFunc) {

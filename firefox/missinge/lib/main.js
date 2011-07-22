@@ -45,7 +45,10 @@ var minFontSize = 14;
 var maxFontSize = 128;
 
 var activeAjax = 0;
+var activeRequests = {};
 var waitQueue = [];
+var onHold = {};
+var numSleeping = 0;
 var cache = {};
 var cacheElements = 0;
 var cacheClear;
@@ -60,6 +63,7 @@ var locale=JSON.parse(data.load("common/localizations.js")
 var followYou = [];
 var youFollow = [];
 var lang = 'en';
+var debugMode = true;//false;
 
 function escapeHTML(str) {
    return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
@@ -95,9 +99,20 @@ cacheClear = timer.setInterval(function() {
 }, fiveMinutes);
 clearQueues = timer.setInterval(function() {
    if (activeAjax == 0) {
-      dequeueAjax();
+      if (numSleeping !== 0) {
+         debug(numSleeping + " still sleeping");
+      }
+      if (waitQueue.length > 0) {
+         debug(waitQueue.length + " still queued");
+      }
    }
 }, tenSeconds);
+
+function debug(msg) {
+   if (debugMode) {
+      console.debug(msg);
+   }
+}
 
 var componentList = ["dashboardFixes",
                      "bookmarker",
@@ -302,30 +317,19 @@ function doMagnifier(stamp, id, theWorker) {
 
 function queueAjax(details) {
    waitQueue.push(details);
-}
-
-function runItem(call) {
-   if (call.type === "magnifier") {
-      startMagnifier(call.message, call.worker);
-   }
-   else if (call.type === "reblogYourself") {
-      startReblogYourself(call.message, call.worker);
-   }
-   else if (call.type === "timestamp") {
-      startTimestamp(call.message, call.worker);
-   }
-   else if (call.type === "tags") {
-      startTags(call.message, call.worker);
-   }
+   debug("Queueing " + details.type + " request. " + (waitQueue.length) + " in queue");
 }
 
 function dequeueAjax(id) {
    if (id) {
       activeAjax--;
+      wakeById(id);
+      delete activeRequests[id];
    }
    while (activeAjax < maxActiveAjax) {
       var call = waitQueue.shift();
       if (!call) { return false; }
+      debug("Dequeueing " + call.type + " request. " + (waitQueue.length) + " in queue");
       runItem(call);
    }
 }
@@ -349,6 +353,7 @@ function saveCache(id, entry) {
 function cacheServe(type, id, theWorker, fn, midFlight) {
    var entry;
    if ((entry = cache[id])) {
+      debug(type + " request(" + id + ") served from cache.");
       if (midFlight) {
          dequeueAjax(id);
       }
@@ -363,8 +368,60 @@ function cacheServe(type, id, theWorker, fn, midFlight) {
    }
 }
 
+function runItem(call) {
+   if (call.type === "magnifier") {
+      startMagnifier(call.message, call.worker);
+   }
+   else if (call.type === "reblogYourself") {
+      startReblogYourself(call.message, call.worker);
+   }
+   else if (call.type === "timestamp") {
+      startTimestamp(call.message, call.worker);
+   }
+   else if (call.type === "tags") {
+      startTags(call.message, call.worker);
+   }
+}
+
+function wakeById(id) {
+   var i,j;
+   for (i=0; activeRequests[id] && i<activeRequests[id].length; i++) {
+      var call;
+      if ((call = activeRequests[id][i])) {
+         delete onHold[call.type + call.message.pid];
+         numSleeping--;
+         debug("Selectively waking " + call.type + " request (" + call.message.pid + "). " + numSleeping + " still asleep");
+         runItem(call);
+      }
+   }
+}
+
+function isRequested(details) {
+   var bucket;
+   if (!details.message.sleepCount) {
+      details.message.sleepCount = 0;
+   }
+   if ((bucket = activeRequests[details.message.pid]) &&
+       details.message.sleepCount < 5) {
+      onHold[details.type + details.message.pid] = details;
+      bucket.push(details);
+      numSleeping++;
+      details.message.sleepCount++;
+      debug("Sleeping " + details.type + " request (" + details.message.pid +
+            ") [" + details.message.sleepCount + "]. " + numSleeping +
+            " asleep");
+      return true;
+   }
+   else {
+      return false;
+   }
+}
+
 function startAjax(id) {
    activeAjax++;
+   if (!activeRequests.hasOwnProperty(id)) {
+      activeRequests[id] = [];
+   }
 }
 
 function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
@@ -383,7 +440,7 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
             closed = true;
          }
          if (response.status === 404) {
-            console.debug(type + " request (" + this.headers.targetId + ") not found");
+            debug(type + " request (" + this.headers.targetId + ") not found");
             dequeueAjax(this.headers.targetId);
             myWorker.postMessage(failMsg);
             return;
@@ -391,7 +448,7 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
          if (response.status != 200 ||
              !(/<input[^>]*name="post\[date\]"[^>]*>/.test(response.text))) {
             if (closed) {
-               console.debug("Stop " + type + " request: Tab closed or changed.");
+               debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
                return;
             }
@@ -401,11 +458,13 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
             }
             else {
                if (this.headers.tryCount <= this.headers.retryLimit) {
+                  debug("Retry " + type + " request (" + this.headers.targetId + ")");
                   doAskAjax('http://www.tumblr.com/edit/',
                          this.headers.targetId, (this.headers.tryCount + 1),
                          myWorker, this.headers.retryLimit, type, doFunc);
                }
                else {
+                  debug(type + " request (" + this.headers.targetId + ") failed");
                   dequeueAjax(this.headers.targetId);
                   myWorker.postMessage(failMsg);
                }
@@ -427,8 +486,7 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
                }
             }
             if (failed) {
-               console.debug(type + " request (" + this.headers.targetId +
-                             ") failed");
+               debug(type + " request (" + this.headers.targetId + ") failed");
                dequeueAjax(this.headers.targetId);
                myWorker.postMessage(failMsg);
                return;
@@ -511,7 +569,7 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
             closed = true;
          }
          if (response.status === 404) {
-            console.debug(type + " request (" + this.headers.targetId + ") not found");
+            debug(type + " request (" + this.headers.targetId + ") not found");
             dequeueAjax(this.headers.targetId);
             myWorker.postMessage(failMsg);
             return;
@@ -519,7 +577,7 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
          if (response.status != 200 ||
              !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
             if (closed) {
-               console.debug("Stop " + type + " request: Tab closed or changed.");
+               debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
                return;
             }
@@ -529,12 +587,14 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
             }
             else {
                if (this.headers.tryCount <= this.headers.retryLimit) {
+                  debug("Retry " + type + " request (" + this.headers.targetId + ")");
                   doAjax(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''),
                          this.headers.targetId, (this.headers.tryCount + 1),
                          myWorker, this.headers.retryLimit, type, doFunc,
                          additional);
                }
                else {
+                  debug("Retry " + type + " request (" + this.headers.targetId + ")");
                   dequeueAjax(this.headers.targetId);
                   myWorker.postMessage(failMsg);
                }
@@ -559,17 +619,21 @@ function startTags(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      console.debug("Stop tags request: Tab closed or changed.");
+      debug("Stop tags request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
    if (cacheServe("tags", message.pid, myWorker, doTags, false)) {
       return true;
    }
+   else if (isRequested({type: "tags", message: message, worker: myWorker})) {
+      return true;
+   }
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "tags", message: message, worker: myWorker});
    }
    else {
+      debug("AJAX tags request (" + message.pid + ")");
       startAjax(message.pid);
       doAjax(message.url, message.pid, 0, myWorker,
              getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries),
@@ -582,17 +646,21 @@ function startMagnifier(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      console.debug("Stop magnifier request: Tab closed or changed.");
+      debug("Stop magnifier request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
    if (cacheServe("magnifier", message.pid, myWorker, doMagnifier, false)) {
       return true;
    }
+   else if (isRequested({type: "magnifier", message: message, worker: myWorker})) {
+      return true;
+   }
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "magnifier", message: message, worker: myWorker});
    }
    else {
+      debug("AJAX magnifier request (" + message.pid + ")");
       startAjax(message.pid);
       doAjax(message.url, message.pid, 0, myWorker,
              getStorage("extensions.MissingE.magnifier.retries",defaultRetries),
@@ -605,7 +673,7 @@ function startTimestamp(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      console.debug("Stop timestamp request: Tab closed or changed.");
+      debug("Stop timestamp request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -613,16 +681,21 @@ function startTimestamp(message, myWorker) {
    if (cacheServe("timestamp", message.pid, myWorker, doTimestamp, false)) {
       return true;
    }
+   else if (isRequested({type: "timestamp", message: message, worker: myWorker})) {
+      return true;
+   }
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "timestamp", message: message, worker: myWorker});
    }
    else if (message.url === 'http://www.tumblr.com/edit/') {
+      debug("AJAX timestamp request (" + message.pid + ")");
       startAjax(message.pid);
       doAskAjax(message.url, message.pid, 0, myWorker,
                 getStorage("extensions.MissingE.timestamps.retries",defaultRetries),
                 "timestamp", doTimestamp);
    }
    else {
+      debug("AJAX timestamp request (" + message.pid + ")");
       startAjax(message.pid);
       doAjax(message.url, message.pid, 0, myWorker,
              getStorage("extensions.MissingE.timestamps.retries",defaultRetries),
@@ -635,7 +708,7 @@ function startReblogYourself(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      console.debug("Stop reblogYourself request: Tab closed or changed.");
+      debug("Stop reblogYourself request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -643,10 +716,14 @@ function startReblogYourself(message, myWorker) {
                   false)) {
       return true;
    }
+   else if (isRequested({type: "reblogYourself", message: message, worker: myWorker})) {
+      return true;
+   }
    else if (activeAjax >= maxActiveAjax) {
       queueAjax({type: "reblogYourself", message: message, worker: myWorker});
    }
    else {
+      debug("AJAX reblogYourself request (" + message.pid + ")");
       startAjax(message.pid);
       doAjax(message.url, message.pid, 0, myWorker,
              getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries),
