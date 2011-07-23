@@ -4,6 +4,8 @@
 <dict>
 	<key>Author</key>
 	<string>Jeremy Cutler</string>
+	<key>Builder Version</key>
+	<string>534.50</string>
 	<key>CFBundleDisplayName</key>
 	<string>Missing e</string>
 	<key>CFBundleIdentifier</key>
@@ -47,7 +49,7 @@
 				<string>common/whoami.js</string>
 				<string>common/addmenu.js</string>
 				<string>common/jquery.min.js</string>
-                                <string>common/ajaxEvents.js</string>
+				<string>common/ajaxEvents.js</string>
 				<string>common/jquery-ui.min.js</string>
 				<string>common/defs.js</string>
 				<string>common/utils.js</string>

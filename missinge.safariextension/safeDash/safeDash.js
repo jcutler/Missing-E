@@ -323,6 +323,10 @@ function MissingE_safeDash_doStartup() {
       }
    });
 
+   $('#posts li.post ol.notes').live('mouseover', function() {
+      doHide(this);
+   });
+
    window.addEventListener('storage',function(e) {
       if (e.key !== 'MissingE_safeDash_state') { return false; }
       var state = getStorage('MissingE_safeDash_state',0);

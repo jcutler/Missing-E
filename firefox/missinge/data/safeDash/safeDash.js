@@ -315,7 +315,6 @@ self.on('message', function (message) {
       }
    });
 
-
    document.addEventListener('MissingEajax',function(e){
       var type = e.data.match(/^[^:]*/)[0];
       var list = e.data.match(/(post_[0-9]+)/g);
@@ -333,6 +332,10 @@ self.on('message', function (message) {
          });
       }
    }, false);
+
+   jQuery('#posts li.post ol.notes').live('mouseover', function() {
+      doHide(this);
+   });
 
    window.addEventListener('storage',function(e) {
       if (e.key !== 'MissingE_safeDash_state') { return false; }
