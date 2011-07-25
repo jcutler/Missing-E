@@ -264,8 +264,8 @@ function MissingE_sidebarTweaks_doStartup(retries, accountNum, hideRadar,
 
    if (hideRadar === 1) {
       $('head').append('<style type="text/css">' +
-                       '#right_column div.radar { display:none; }' +
-                       '</style>');
+                       '#right_column div.radar, #right_column div.promo { ' +
+                       'display:none; }</style>');
    }
    if (followingLink === 1) {
       $('#right_column a.following').attr('href','/following');
