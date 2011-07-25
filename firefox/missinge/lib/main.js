@@ -1461,6 +1461,7 @@ function onStart(currVersion, prevVersion) {
    }
    else if (!prevVersion) {
       console.log("Installed Missing e " + currVersion);
+      openSettings();
    }
    setStorage('extensions.MissingE.version',currVersion);
 }

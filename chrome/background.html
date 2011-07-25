@@ -1193,6 +1193,7 @@ function onStart(currVersion, prevVersion) {
    else if (!prevVersion) {
       console.log("Installed Missing e " + currVersion);
       setStorage('MissingE_compatCheck',0);
+      chrome.tabs.create({url:chrome.extension.getURL("options.html")});
    }
    setStorage('MissingE_version',currVersion);
 }
