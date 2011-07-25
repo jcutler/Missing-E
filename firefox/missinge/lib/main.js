@@ -1178,6 +1178,10 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(message.url)) ||
          (/http:\/\/www\.tumblr\.com\/share/.test(message.url)))) {
          if (getStorage("extensions.MissingE.postingFixes.enabled",1) == 1) {
+            injectScripts.push(data.url("common/jquery.ui.core.js"));
+            injectScripts.push(data.url("common/jquery.ui.widget.js"));
+            injectScripts.push(data.url("common/jquery.ui.mouse.js"));
+            injectScripts.push(data.url("common/jquery.ui.resizable.js"));
             injectScripts.push(data.url("postingFixes/postingFixes.js"));
             activeScripts.postingFixes = true;
          }

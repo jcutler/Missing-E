@@ -61,3 +61,31 @@ border:1px solid #DDD !important;
 border-top:1px solid #CCC !important;
 border-bottom:1px solid #CCC !important;
 }
+
+.ui-resizable {
+position:relative;
+padding-bottom:12px !important;
+background-color:#FFF !important;
+}
+
+.ui-icon-gripsmall-diagonal-se {
+position:absolute;
+bottom:0;
+right:0;
+background-position:right bottom !important;
+height:10px;
+width:12px !important;
+background-color:transparent !important;
+background-repeat:no-repeat !important;
+}
+
+.ui-resizable .resize_overlay {
+background-color:transparent !important;
+width:100% !important;
+height:100%;
+z-index:1000;
+display:none;
+position:absolute;
+top:0;
+left:0;
+}

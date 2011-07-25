@@ -23,6 +23,34 @@
 
 /*global escapeHTML,jQuery,locale,self */
 
+function resizeTinyMCE(post,extensionURL) {
+   jQuery('head').append('<style type="text/css">' +
+      '.ui-icon-gripsmall-diagonal-se {' +
+         'background-image:url("' +
+            extensionURL  + "postingFixes/handle.png" +
+         '") !important;' +
+      '}</style>');
+   var fr = jQuery("#" + post + "_ifr");
+   var h = fr.outerHeight();
+   fr.css('height','100%');
+   fr.parent().css('height',h+'px');
+   jQuery(function() {
+      fr.parent().resizable({
+         handles:'se',
+         minHeight:h,
+         create:function(e, ui) {
+            jQuery(this).prepend('<div class="resize_overlay"></div>');
+         },
+         start:function() {
+            jQuery(this).find('.resize_overlay').show();
+         },
+         stop:function() {
+            jQuery(this).find('.resize_overlay').hide();
+         }
+      });
+   });
+}
+
 function addAskUploader(obj) {
    if (obj.tagName === 'LI' && jQuery(obj).hasClass('post')) {
       var aid = obj.id.match(/[0-9]+$/)[0];
@@ -406,6 +434,26 @@ self.on('message', function(message) {
                            '}' +
                        '}' +
                        '</script>');
+   }
+
+   if (jQuery('#post_two_ifr,#post_three_ifr').length === 0) {
+      jQuery('head').append('<script type="text/javascript">' +
+         'tinyMCE.onAddEditor.add(function(mgr,ed){' +
+            'ed.onPostRender.add(function(ed) {' +
+               'var evt = document.createEvent("MessageEvent");' +
+               'evt.initMessageEvent("MissingE_tinyMCE", true, true, ed.id, ' +
+                                     '"http://www.tumblr.com", 0, window);' +
+               'document.dispatchEvent(evt);' +
+            '});' +
+         '});</script>');
+      document.addEventListener('MissingE_tinyMCE', function(e) {
+         resizeTinyMCE(e.data,extensionURL);
+      }, false);
+   }
+   else {
+      var id = jQuery('#post_two_ifr,#post_three_ifr').get(0).id
+                  .replace(/_ifr/,'');
+      resizeTinyMCE(id,extensionURL);
    }
 });
 

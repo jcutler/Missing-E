@@ -23,6 +23,34 @@
 
 /*global $,locale,safari */
 
+function resizeTinyMCE(post) {
+   $('head').append('<style type="text/css">' +
+      '.ui-icon-gripsmall-diagonal-se {' +
+         'background-image:url("' +
+            safari.extension.baseURI  + "postingFixes/handle.png" +
+         '") !important;' +
+      '}</style>');
+   var fr = $("#" + post + "_ifr");
+   var h = fr.outerHeight();
+   fr.css('height','100%');
+   fr.parent().css('height',h+'px');
+   $(function() {
+      fr.parent().resizable({
+         handles:'se',
+         minHeight:h,
+         create:function(e, ui) {
+            $(this).prepend('<div class="resize_overlay"></div>');
+         },
+         start:function() {
+            $(this).find('.resize_overlay').show();
+         },
+         stop:function() {
+            $(this).find('.resize_overlay').hide();
+         }
+      });
+   });
+}
+
 function addAskUploader(obj) {
    if (obj.tagName === 'LI' && $(obj).hasClass('post')) {
       if ($(obj).find('div.post_controls a[id^="ask_answer_link"]')
@@ -394,6 +422,25 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                            '}' +
                        '}' +
                        '</script>');
+   }
+
+   if ($('#post_two_ifr,#post_three_ifr').length === 0) {
+      $('head').append('<script type="text/javascript">' +
+         'tinyMCE.onAddEditor.add(function(mgr,ed){' +
+            'ed.onPostRender.add(function(ed) {' +
+               'var evt = document.createEvent("MessageEvent");' +
+               'evt.initMessageEvent("MissingE_tinyMCE", true, true, ed.id, ' +
+                                     '"http://www.tumblr.com", 0, window);' +
+               'document.dispatchEvent(evt);' +
+            '});' +
+         '});</script>');
+      $(document).bind('MissingE_tinyMCE', function(e) {
+         resizeTinyMCE(e.originalEvent.data);
+      });
+   }
+   else {
+      var id = $('#post_two_ifr,#post_three_ifr').get(0).id.replace(/_ifr/,'');
+      resizeTinyMCE(id);
    }
 }
 

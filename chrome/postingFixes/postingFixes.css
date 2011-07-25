@@ -80,7 +80,7 @@ background-repeat:no-repeat !important;
 
 .ui-resizable .resize_overlay {
 background-color:transparent !important;
-width:100%;
+width:100% !important;
 height:100%;
 z-index:1000;
 display:none;
