@@ -43,13 +43,14 @@ function makeSidebar(tumblrAcctNum, retries) {
          for (i=0; i<list.length; i++) {
             var klass = '';
             if (i === tumblrAcctNum) {
-               tumblrAcct = list[i][0];
-               tumblrText = list[i][1];
+               tumblrAcct = escapeHTML(list[i][0]);
+               tumblrText = escapeHTML(list[i][1]);
                klass = 'class="current_sidebar"';
             }
-            bloglist += '<li ' + klass + '><a tumblr="' + list[i][0] +
-               '" href="#" onclick="return false;">' +
-               '<div class="hide_overflow">' + list[i][1] + '</div></a></li>';
+            bloglist += '<li ' + klass + '><a tumblr="' +
+               escapeHTML(list[i][0]) + '" href="#" onclick="return false;">' +
+               '<div class="hide_overflow">' + escapeHTML(list[i][1]) +
+               '</div></a></li>';
          }
          bloglist += '</ul>';
       }

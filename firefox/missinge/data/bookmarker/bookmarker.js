@@ -83,7 +83,7 @@ function addBar(mark, lang, altPost) {
    }
    else {
       jQuery('#bookmarkbar_' + mark[1]).removeData('toremove');
-      jQuery('#bookmarkbar_label_' + mark[1]).html(mark[2]);
+      jQuery('#bookmarkbar_label_' + mark[1]).html(escapeHTML(mark[2]));
    }
 }
 
@@ -319,7 +319,7 @@ function handleEdit(type, evt) {
          }
          marks[i][2] = newval;
          setStorage("MissingE_bookmarker_marks",serializeMarks(marks));
-         par.find('span.mark_date').html(newval);
+         par.find('span.mark_date').text(newval);
          jQuery('#bookmarkbar_label_' + post).text(newval);
       }
    }

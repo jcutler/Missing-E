@@ -333,12 +333,12 @@ self.on('message', function (message) {
          var url = this.href.match(/(http[s]?:\/\/([^\/]*))/);
          if (url && url.length > 2) {
             jQuery('#MissingE_askbox .MissingE_askPerson')
-               .html('<a href="' + url[1] + '">' + user + '</a>');
+               .html('<a href="' + encodeURI(url[1]) + '">' + user + '</a>');
             jQuery('#MissingE_askbox .MissingE_askPerson_avatar')
-               .attr('href',url[1]).css('background-image',avatar);
+               .attr('href',encodeURI(url[1])).css('background-image',avatar);
             jQuery.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
             jQuery('#facebox .MissingE_askbox_loaded iframe')
-               .attr('src','http://www.tumblr.com/ask_form/' + url[2]);
+               .attr('src','http://www.tumblr.com/ask_form/' + encodeURI(url[2]));
             return false;
          }
       });

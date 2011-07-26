@@ -60,7 +60,7 @@ self.on('message', function(message) {
       var suffix = '';
       var lang = 'en';
       if (dashimg) {
-         suffix = dashimg.src.match(/alpha([^\.]*)(.*)/);
+         suffix = dashimg.src.match(/alpha([^\.]*)([^\?]*)/);
          if (suffix !== null && suffix.length > 2) {
             lang = suffix[1].match(/[a-z]+/);
             if (lang === null || lang.length === 0) {
@@ -97,7 +97,7 @@ self.on('message', function(message) {
                edit.href = href;
                edit.setAttribute('target','_top');
                edit.innerHTML = '<img src="http://assets.tumblr.com/images/' +
-                  'iframe_edit_alpha' + suffix + '" alt="' +
+                  'iframe_edit_alpha' + encodeURI(suffix) + '" alt="' +
                   locale[lang].dashFixesText.edit +
                   '" style="display:block;float:left;" />';
                like.parentNode.insertBefore(edit, like.nextSibling);

@@ -55,7 +55,7 @@ if (noEdit) {
    var suffix = '';
    var lang = 'en';
    if (dashimg) {
-      suffix = dashimg.src.match(/alpha([^\.]*)(.*)/);
+      suffix = dashimg.src.match(/alpha([^\.]*)([^\?]*)/);
       if (suffix !== null && suffix.length > 2) {
          lang = suffix[1].match(/[a-z]+/);
          if (lang === null || lang.length === 0) {

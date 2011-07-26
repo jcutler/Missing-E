@@ -88,8 +88,9 @@ self.on('message', function (message) {
             if (tags[i] !== undefined && tags[i] !== null && tags[i] !== '') {
                func += '\'' + tags[i].replace(/'/g,'\\\'') + '\',';
                fill += tags[i] + ',';
-               txt += '<div class="token"><span class="tag">' + tags[i] +
-                        '</span><a title="' + locale[lang].removeTag +
+               txt += '<div class="token"><span class="tag">' +
+                        escapeHTML(tags[i]) + '</span><a title="' +
+                        locale[lang].removeTag +
                         '" onclick="tag_editor_remove_tag($(this).up()); ' +
                         'return false;" href="#">x</a></div>';
             }
