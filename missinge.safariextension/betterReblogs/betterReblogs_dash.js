@@ -434,6 +434,10 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
             }
             sel.trigger('change');
          }
+      }).keydown(function(e) {
+         if (e.which === 74 || e.which === 75) {
+            e.stopPropagation();
+         }
       });
       $('#posts div.post_controls a[href^="/reblog/"]')
             .live('mouseover',function() {

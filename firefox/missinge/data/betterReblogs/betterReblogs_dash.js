@@ -457,6 +457,10 @@ self.on('message', function (message) {
             }
             sel.trigger('change');
          }
+      }).keydown(function(e) {
+         if (e.which === 74 || e.which === 75) {
+            e.stopPropagation();
+         }
       });
       jQuery('#posts div.post_controls a[href^="/reblog/"]')
             .live('mouseover',function(e) {
