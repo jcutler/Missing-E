@@ -45,6 +45,7 @@ var componentList = ["dashboardFixes",
                      "massEditor",
                      "sidebarTweaks"];
 
+var apiKey = 'HIDf1EQIINTKHR0uuebSOlArYA5mnsdgrrA5E1RMopz3uNFLx1';
 var maxActiveAjax = 15;
 var activeAjax = 0;
 var activeRequests = {};
@@ -115,11 +116,11 @@ function debug(msg) {
 }
 
 function doTags(stamp, id, request) {
-   var tags = stamp["tags"];
+   var tags = stamp.tags;
    if (!tags) {
       tags = [];
    }
-   if (stamp["type"] === "regular" &&
+   if (stamp.type === "text" &&
        getStorage("MissingE_betterReblogs_fullText",0) === 1) {
       fullText = true;
    }
@@ -129,7 +130,7 @@ function doTags(stamp, id, request) {
 }
 
 function doTimestamp(stamp, id, request) {
-   var ts = stamp["unix-timestamp"];
+   var ts = stamp.timestamp;
    var d = new Date(ts*1000);
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
    ins = getFormattedDate(d, ins, lang);
@@ -137,7 +138,7 @@ function doTimestamp(stamp, id, request) {
 }
 
 function doReblogDash(stamp, id, request) {
-   var key = stamp["reblog-key"];
+   var key = stamp.reblog_key;
    var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
                       getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
    request.target.page.dispatchMessage("reblogYourself",{pid: id, success: true, data: key, icons: replaceIcons});
@@ -145,11 +146,11 @@ function doReblogDash(stamp, id, request) {
 
 function doMagnifier(stamp, id, request) {
    var url;
-   if (stamp.photos.length > 0) {
+   if (stamp.photos.length > 1) {
       url = new Array();
       for (i=0; i<stamp.photos.length; i++) {
-         url.push(stamp.photos[i]["photo-url-1280"]);
-         var cap = stamp.photos[i]["caption"];
+         url.push(stamp.photos[i].alt_sizes[0].url);
+         var cap = stamp.photos[i].caption;
          if (cap == undefined || cap == null)
             url.push("");
          else
@@ -158,7 +159,7 @@ function doMagnifier(stamp, id, request) {
       url = JSON.stringify(url);
    }
    else {
-      url = stamp["photo-url-1280"];
+      url = stamp.photos[0].alt_sizes[0].url;
    }
    request.target.page.dispatchMessage("magnifier", {pid: id, success: true, data: url});
 }
@@ -201,18 +202,21 @@ function dequeueAjax(id) {
 
 function saveCache(id, entry) {
    cacheElements++;
+   var newentry = {};
    for (var i in entry) {
-      if (i !== "photos" &&
-          i !== "photo-url-1280" &&
-          i !== "unix-timestamp" &&
-          i !== "reblog-key" &&
-          i !== "url" &&
-          i !== "tags" &&
-          i !== "type") {
-         delete entry[i];
+      if (entry.hasOwnProperty(i)) {
+         if (i == "photos" ||
+             i == "timestamp" ||
+             i == "reblog_key" ||
+             i == "post_url" ||
+             i == "tags" ||
+             i == "type" ||
+             i == "blog_name") {
+            newentry[i] = entry[i];
+         }
       }
    }
-   cache[id] = entry;
+   cache[id] = newentry;
 }
 
 function cacheServe(type, id, request, fn, midFlight) {
@@ -363,7 +367,7 @@ function doAskAjax(request, retries, type, doFunc) {
                              (m[6]=='pm' && m[4] !== '12' ? parseInt(m[4])+12 : m[4]) +
                              ':' + m[5] + ':00 GMT');
             var stamp = Math.round(d.getTime()/1000);
-            var info = {"unix-timestamp":stamp};
+            var info = {"timestamp":stamp};
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (!closed) {
@@ -432,7 +436,9 @@ function doAjax(request, retries, type, doFunc, additional) {
    }
    $.ajax({
       type: "GET",
-      url: request.message.url + "/api/read/json?id=" + request.message.pid,
+      url: "http://api.tumblr.com/v2/blog/" +
+            request.message.url.replace(/^https?:\/\//,'') +
+            "/posts?api_key=" + apiKey + "&id=" + request.message.pid,
       dataType: "text",
       tryCount: 0,
       retryLimit: retries,
@@ -467,7 +473,9 @@ function doAjax(request, retries, type, doFunc, additional) {
          }
       },
       success: function(data, textStatus) {
-         if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+         if (!(/^\s*var\s+tumblr_api_read/.test(data)) &&
+             !(/^\s*{\s*['"]meta['"]\s*:\s*{[^}]*['"]status['"]\s*:\s*200,/
+                .test(data))) {
             if (request.target.page === undefined) {
                debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.targetId);
@@ -493,7 +501,7 @@ function doAjax(request, retries, type, doFunc, additional) {
          else {
             var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
             var stamp = JSON.parse(txt);
-            var info = stamp["posts"][0];
+            var info = stamp.response.posts[0];
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (request.target.page !== undefined) {

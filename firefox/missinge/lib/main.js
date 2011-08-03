@@ -32,6 +32,7 @@ var Request = require("request").Request;
 var timer = require("timer");
 var widget;
 
+var apiKey = 'HIDf1EQIINTKHR0uuebSOlArYA5mnsdgrrA5E1RMopz3uNFLx1';
 var defaultTimeout = 15;
 var minTimeout = 5;
 var maxTimeout = 120;
@@ -267,11 +268,11 @@ function getFormattedDate(d, format, lang) {
 }
 
 function doTags(stamp, id, theWorker) {
-   var tags = stamp["tags"];
+   var tags = stamp.tags;
    if (!tags) {
       tags = [];
    }
-   if (stamp["type"] === "regular" &&
+   if (stamp.type === "text" &&
        getStorage("extensions.MissingE.betterReblogs.fullText",0) === 1) {
       fullText = true;
    }
@@ -281,7 +282,7 @@ function doTags(stamp, id, theWorker) {
 }
 
 function doTimestamp(stamp, id, theWorker) {
-   var ts = stamp["unix-timestamp"];
+   var ts = stamp.timestamp;
    var d = new Date(ts*1000);
    var ins = getStorage("extensions.MissingE.timestamps.format",defaultFormat);
    ins = getFormattedDate(d, ins, lang);
@@ -289,7 +290,7 @@ function doTimestamp(stamp, id, theWorker) {
 }
 
 function doReblogDash(stamp, id, theWorker) {
-   var key = stamp["reblog-key"];
+   var key = stamp.reblog_key;
    var replaceIcons = getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                       getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
    theWorker.postMessage({greeting: "reblogYourself", pid: id, success: true, data: key, icons: replaceIcons});
@@ -297,11 +298,11 @@ function doReblogDash(stamp, id, theWorker) {
 
 function doMagnifier(stamp, id, theWorker) {
    var url;
-   if (stamp.photos.length > 0) {
+   if (stamp.photos.length > 1) {
       url = new Array();
       for (i=0; i<stamp.photos.length; i++) {
-         url.push(stamp.photos[i]["photo-url-1280"]);
-         var cap = stamp.photos[i]["caption"];
+         url.push(stamp.photos[i].alt_sizes[0].url);
+         var cap = stamp.photos[i].caption;
          if (cap == undefined || cap == null)
             url.push("");
          else
@@ -310,7 +311,7 @@ function doMagnifier(stamp, id, theWorker) {
       url = JSON.stringify(url);
    }
    else {
-      url = stamp["photo-url-1280"];
+      url = stamp.photos[0].alt_sizes[0].url;
    }
    theWorker.postMessage({greeting: "magnifier", pid: id, success: true, data: url});
 }
@@ -336,18 +337,21 @@ function dequeueAjax(id) {
 
 function saveCache(id, entry) {
    cacheElements++;
+   var newentry = {};
    for (var i in entry) {
-      if (i !== "photos" &&
-          i !== "photo-url-1280" &&
-          i !== "unix-timestamp" &&
-          i !== "reblog-key" &&
-          i !== "url" &&
-          i !== "tags" &&
-          i !== "type") {
-         delete entry[i];
+      if (entry.hasOwnProperty(i)) {
+         if (i == "photos" ||
+             i == "timestamp" ||
+             i == "reblog_key" ||
+             i == "post_url" ||
+             i == "tags" ||
+             i == "type" ||
+             i == "blog_name") {
+            newentry[i] = entry[i];
+         }
       }
    }
-   cache[id] = entry;
+   cache[id] = newentry;
 }
 
 function cacheServe(type, id, theWorker, fn, midFlight) {
@@ -496,7 +500,7 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
                              (m[6]=='pm' && m[4] !== '12' ? parseInt(m[4])+12 : m[4]) +
                              ':' + m[5] + ':00 GMT');
             var stamp = Math.round(d.getTime()/1000);
-            var info = {"unix-timestamp":stamp};
+            var info = {"timestamp":stamp};
             saveCache(this.headers.targetId, info);
             dequeueAjax(this.headers.targetId);
             if (!closed) {
@@ -556,7 +560,9 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
       }
    }
    Request({
-      url: url + "/api/read/json?id=" + escapeHTML(pid),
+      url: "http://api.tumblr.com/v2/blog/" + 
+            url.replace(/^https?:\/\//,'') + "/posts?api_key=" + apiKey +
+            "&id=" + escapeHTML(pid),
       headers: {tryCount: count,
                 retryLimit: retries,
                 targetId: pid},
@@ -575,7 +581,9 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
             return;
          }
          if (response.status != 200 ||
-             !(/^\s*var\s+tumblr_api_read/.test(response.text))) {
+             !(/^\s*var\s+tumblr_api_read/.test(response.text)) &&
+             !(/^\s*{\s*['"]meta['"]\s*:\s*{[^}]*['"]status['"]\s*:\s*200,/
+                .test(response.text))) {
             if (closed) {
                debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
@@ -603,7 +611,7 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
          else {
             var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
             var stamp = JSON.parse(txt);
-            var info = stamp["posts"][0];
+            var info = stamp.response.posts[0];
             saveCache(this.headers.targetId, info);
             dequeueAjax(this.headers.targetId);
             if (!closed) {

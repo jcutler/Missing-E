@@ -28,6 +28,7 @@
 <script type="text/javascript" src="common/storage.js"></script>
 <script type="text/javascript" src="common/localizations.js"></script>
 <script>
+var apiKey = 'HIDf1EQIINTKHR0uuebSOlArYA5mnsdgrrA5E1RMopz3uNFLx1';
 var maxActiveAjax = 15;
 var activeAjax = 0;
 var activeRequests = {};
@@ -83,11 +84,11 @@ function debug(msg) {
 }
 
 function doTags(stamp, id, sendResponse) {
-   var tags = stamp["tags"];
+   var tags = stamp.tags;
    if (!tags) {
       tags = [];
    }
-   if (stamp["type"] === "regular" &&
+   if (stamp.type === "text" &&
        getStorage("MissingE_betterReblogs_fullText",0) === 1) {
       fullText = true;
    }
@@ -96,12 +97,14 @@ function doTags(stamp, id, sendResponse) {
 }
 
 function doTimestamp(stamp, id, sendResponse) {
-   var ts = stamp["unix-timestamp"];
+   var ts = stamp.timestamp;
    var d = new Date(ts*1000);
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
    ins = getFormattedDate(d, ins, lang);
-   if (stamp["url"]) {
-      ins = ins.replace(/%X/g,'<a href="' + stamp["url"].match(/http:\/\/[^\/]*/)[0] + '/api/read/json?id='+id + '">' + id + '</a>');
+   if (stamp.blog_name) {
+      ins = ins.replace(/%X/g,'<a href="http://api.tumblr.com/v2/blog/' +
+                        stamp.blog_name + '.tumblr.com/posts?api_key=' +
+                        apiKey + '&id=' + id + '">' + id + '</a>');
    }
    else {
       ins = ins.replace(/%X/g,id);
@@ -110,7 +113,7 @@ function doTimestamp(stamp, id, sendResponse) {
 }
 
 function doReblogDash(stamp, id, sendResponse) {
-   var key = stamp["reblog-key"];
+   var key = stamp.reblog_key;
    var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
                       getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
    sendResponse({pid: id, success: true, data: key, icons: replaceIcons});
@@ -118,11 +121,11 @@ function doReblogDash(stamp, id, sendResponse) {
 
 function doMagnifier(stamp, id, sendResponse) {
    var url;
-   if (stamp.photos.length > 0) {
+   if (stamp.photos.length > 1) {
       url = new Array();
       for (i=0; i<stamp.photos.length; i++) {
-         url.push(stamp.photos[i]["photo-url-1280"]);
-         var cap = stamp.photos[i]["caption"];
+         url.push(stamp.photos[i].alt_sizes[0].url);
+         var cap = stamp.photos[i].caption;
          if (cap == undefined || cap == null)
             url.push("");
          else
@@ -131,7 +134,7 @@ function doMagnifier(stamp, id, sendResponse) {
       url = JSON.stringify(url);
    }
    else {
-      url = stamp["photo-url-1280"];
+      url = stamp.photos[0].alt_sizes[0].url;
    }
    sendResponse({pid: id, success: true, data: url});
 }
@@ -157,18 +160,21 @@ function dequeueAjax(id) {
 
 function saveCache(id, entry) {
    cacheElements++;
+   var newentry = {};
    for (var i in entry) {
-      if (i !== "photos" &&
-          i !== "photo-url-1280" &&
-          i !== "unix-timestamp" &&
-          i !== "reblog-key" &&
-          i !== "url" &&
-          i !== "tags" &&
-          i !== "type") {
-         delete entry[i];
+      if (entry.hasOwnProperty(i)) {
+         if (i == "photos" ||
+             i == "timestamp" ||
+             i == "reblog_key" ||
+             i == "post_url" ||
+             i == "tags" ||
+             i == "type" ||
+             i == "blog_name") {
+            newentry[i] = entry[i];
+         }
       }
    }
-   cache[id] = entry;
+   cache[id] = newentry;
 }
 
 function cacheServe(type, id, sendResponse, fn, midFlight) {
@@ -337,7 +343,7 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
                              (m[6]=='pm' && m[4] !== '12' ? parseInt(m[4])+12 : m[4]) +
                              ':' + m[5] + ':00 GMT');
             var stamp = Math.round(d.getTime()/1000);
-            var info = {"unix-timestamp":stamp};
+            var info = {"timestamp":stamp};
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (!closed) {
@@ -407,7 +413,9 @@ function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
    }
    $.ajax({
       type: "GET",
-      url: request.url + "/api/read/json?id=" + request.pid,
+      url: "http://api.tumblr.com/v2/blog/" +
+            request.url.replace(/^https?:\/\//,'') + "/posts?api_key=" +
+            apiKey + "&id=" + request.pid,
       dataType: "text",
       tryCount: 0,
       retryLimit: retries,
@@ -445,7 +453,9 @@ function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
       },
       success: function(data, textStatus) {
          var closed = (this.tabHash !== tabs[this.tabId]);
-         if (!(/^\s*var\s+tumblr_api_read/.test(data))) {
+         if (!(/^\s*var\s+tumblr_api_read/.test(data)) &&
+             !(/^\s*{\s*['"]meta['"]\s*:\s*{[^}]*['"]status['"]\s*:\s*200,/
+                .test(data))) {
             if (closed) {
                debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.targetId);
@@ -471,7 +481,7 @@ function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
          else {
             var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
             var stamp = JSON.parse(txt);
-            var info = stamp["posts"][0];
+            var info = stamp.response.posts[0];
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (!closed) {
