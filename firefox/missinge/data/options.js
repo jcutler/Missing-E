@@ -259,7 +259,6 @@ function loadSettings() {
          loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
          loadCheck(frm,'MissingE_sidebarTweaks_slimSidebar',0);
          loadCheck(frm,'MissingE_sidebarTweaks_followingLink',0);
-         loadCheck(frm,'MissingE_sidebarTweaks_hideRadar',0);
          frm.MissingE_sidebarTweaks_retries.value = getStorage('MissingE_sidebarTweaks_retries',defaultRetries);
       }
       else if (v == "dashLinksToTabs") {

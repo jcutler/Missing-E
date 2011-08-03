@@ -726,7 +726,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          case "sidebarTweaks":
             settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
             settings.accountNum = getStorage("MissingE_sidebarTweaks_accountNum",0);
-            settings.hideRadar = getStorage("MissingE_sidebarTweaks_hideRadar",0);
             settings.slimSidebar = getStorage("MissingE_sidebarTweaks_slimSidebar",0);
             settings.followingLink = getStorage("MissingE_sidebarTweaks_followingLink",0);
             settings.addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);

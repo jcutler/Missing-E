@@ -264,11 +264,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "sidebarTweaks"},
                     '") !important; } ' +
                     '</style>');
 
-   if (sidebarTweaks_settings.hideRadar === 1) {
-      $('head').append('<style type="text/css">' +
-                       '#right_column div.radar, #right_column div.promo { ' +
-                       'display:none; }</style>');
-   }
    if (sidebarTweaks_settings.followingLink === 1) {
       $('#right_column a.following').attr('href','/following');
    }

@@ -271,11 +271,6 @@ self.on('message', function(message) {
                     '") !important; } ' +
                     '</style>');
 
-   if (message.hideRadar === 1) {
-      jQuery('head').append('<style type="text/css">' +
-                       '#right_column div.radar, #right_column div.promo { ' +
-                       'display:none; }</style>');
-   }
    if (message.followingLink === 1) {
       jQuery('#right_column a.following').attr('href','/following');
    }

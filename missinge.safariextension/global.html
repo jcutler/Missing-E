@@ -755,7 +755,6 @@ function handleRequest(request) {
       settings.MissingE_dashboardFixes_maxBigSize = getStorage("MissingE_dashboardFixes_maxBigSize",defaultMaxBig);
       settings.MissingE_sidebarTweaks_retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);
-      settings.MissingE_sidebarTweaks_hideRadar = getStorage("MissingE_sidebarTweaks_hideRadar",0);
       settings.MissingE_sidebarTweaks_slimSidebar = getStorage("MissingE_sidebarTweaks_slimSidebar",0);
       settings.MissingE_sidebarTweaks_followingLink = getStorage("MissingE_sidebarTweaks_followingLink",0);
       settings.MissingE_magnifier_retries = getStorage("MissingE_magnifier_retries",defaultRetries);
@@ -827,7 +826,6 @@ function handleRequest(request) {
          case "sidebarTweaks":
             settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
             settings.accountNum = getStorage("MissingE_sidebarTweaks_accountNum",0);
-            settings.hideRadar = getStorage("MissingE_sidebarTweaks_hideRadar",0);
             settings.slimSidebar = getStorage("MissingE_sidebarTweaks_slimSidebar",0);
             settings.followingLink = getStorage("MissingE_sidebarTweaks_followingLink",0);
             settings.addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);

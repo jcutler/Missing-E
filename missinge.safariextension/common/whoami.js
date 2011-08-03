@@ -264,7 +264,6 @@ function settings_startup(response) {
    else if (response.message.component === "sidebarTweaks") {
       MissingE_sidebarTweaks_doStartup(response.message.retries,
                                        response.message.accountNum,
-                                       response.message.hideRadar,
                                        response.message.slimSidebar,
                                        response.message.followingLink,
                                        response.message.addSidebar);

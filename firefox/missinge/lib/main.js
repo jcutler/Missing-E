@@ -891,7 +891,6 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_maxBigSize = getStorage("extensions.MissingE.dashboardFixes.maxBigSize",defaultMaxBig);
       settings.MissingE_sidebarTweaks_retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
-      settings.MissingE_sidebarTweaks_hideRadar = getStorage("extensions.MissingE.sidebarTweaks.hideRadar",0);
       settings.MissingE_sidebarTweaks_slimSidebar = getStorage("extensions.MissingE.sidebarTweaks.slimSidebar",0);
       settings.MissingE_sidebarTweaks_followingLink = getStorage("extensions.MissingE.sidebarTweaks.followingLink",0);
       settings.MissingE_magnifier_retries = getStorage("extensions.MissingE.magnifier.retries",defaultRetries);
@@ -965,7 +964,6 @@ function handleMessage(message, myWorker) {
          case "sidebarTweaks":
             settings.retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
             settings.accountNum = getStorage("extensions.MissingE.sidebarTweaks.accountNum",0);
-            settings.hideRadar = getStorage("extensions.MissingE.sidebarTweaks.hideRadar",0);
             settings.slimSidebar = getStorage("extensions.MissingE.sidebarTweaks.slimSidebar",0);
             settings.followingLink = getStorage("extensions.MissingE.sidebarTweaks.followingLink",0);
             settings.addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
