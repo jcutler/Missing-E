@@ -160,7 +160,18 @@ function doHide(item, retry) {
                var extra = '';
                if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/
                      .test(me.attr('src')))) {
-                  if (!me.hasClass('inline_image')) {
+                  var row = me.closest('div');
+                  if (row.length > 0 && row.hasClass("photoset_row")) {
+                     var rh = row.innerHeight();
+                     if (rh && rh > 0) {
+                        extra += 'height:' + rh + 'px;';
+                     }
+                     else {
+                        extra += 'min-height:' + h + 'px;';
+                     }
+                     extra += 'width:' + w + 'px;';
+                  }
+                  else if (!me.hasClass('inline_image')) {
                      extra += 'min-height:' + h + 'px;min-width:' + w + 'px;';
                   }
                   if (me.parent().hasClass('photoset_photo')) {
