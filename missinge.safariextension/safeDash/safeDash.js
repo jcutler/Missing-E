@@ -177,7 +177,7 @@ function doHide(item, retry) {
                   if (me.parent().hasClass('photoset_photo')) {
                      var mt = me.attr('style').match(/margin-top:\s*([^;]*)/);
                      if (mt && mt.length > 1) {
-                        extra += 'margin-top:' + mt[1] + ' !important;';
+                        extra += 'margin-top:' + mt[1];
                      }
                   }
                }
