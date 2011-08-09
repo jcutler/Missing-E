@@ -28,11 +28,6 @@ jQuery(document).ready(function (){
       loadingImage : 'facebox/loading.gif',
       closeImage   : 'facebox/closelabel.png'
    });
-   jQuery('#MissingE_dashboardFixes_maxBigSize_sample').click(function() {
-      var size = jQuery(this).closest('td').find('input').val();
-      jQuery('#sample_size p').css('font-size', size + 'px');
-      jQuery.facebox({ div: '#sample_size' });
-   });
    self.postMessage({greeting: "all-settings"});
    self.on('message', function(message) {
       if (message.greeting !== "all-settings") { return false; }
@@ -313,8 +308,6 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
-         loadCheck(frm,'MissingE_dashboardFixes_maxBig',0);
-         frm.MissingE_dashboardFixes_maxBigSize.value = getStorage('MissingE_dashboardFixes_maxBigSize',defaultMaxBig);
       }
       else if (v == "betterReblogs") {
          loadCheck(frm,'MissingE_betterReblogs_passTags',1);

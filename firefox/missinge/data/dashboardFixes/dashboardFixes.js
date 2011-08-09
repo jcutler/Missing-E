@@ -297,27 +297,6 @@ self.on('message', function(message) {
    if (data !== '') {
       head.appendChild(css);
    }
-   if (message.maxBig === 1) {
-      var maxSize = message.maxBigSize;
-      var bigcount = 1;
-      var testpost = jQuery('<li style="display:none;" class="regular">' +
-                       '<div class="post_content"><p><big></big></p></div>' +
-                       '</li>').insertAfter('#posts li.post:first');
-      var normal = parseInt(testpost.find('p').css('font-size'));
-      var big = testpost.find('big');
-      if (normal > maxSize) { maxSize = normal; }
-      while (parseInt(big.css('font-size')) < maxSize) {
-         big = jQuery('<big></big>').appendTo(big);
-         bigcount++;
-      }
-      testpost.remove();
-      var selector = '#posts div.post_content big ';
-      for (; bigcount > 1; bigcount--) {
-         selector += '> big ';
-      }
-      jQuery('head').append('<style type="text/css">' +
-                       selector + '{ font-size:' + maxSize + 'px; }</style>');
-   }
    if (message.expandAll === 1) {
       jQuery('#posts .post').each(function(){ addExpandAllHandler(this); });
       document.addEventListener('MissingEajax', function(e) {

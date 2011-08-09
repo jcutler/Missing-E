@@ -753,8 +753,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
             settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
-            settings.maxBig = getStorage("MissingE_dashboardFixes_maxBig",0);
-            settings.maxBigSize = getStorage("MissingE_dashboardFixes_maxBigSize",defaultMaxBig);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
