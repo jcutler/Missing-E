@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="tumblr,missinge,missing,e,feature,features,blog,blogging" />
-<meta name="description" content="Missing e - The browser extension for Tumblr!"/>
+<meta name="description" content="Missing e - The unofficial browser extension for Tumblr!"/>
 <meta name="author" content="Jeremy Cutler" />
 <meta name="robots" content="FOLLOW,INDEX" />
 <title>FAQ - Missing e - The browser extension for Tumblr!</title>
@@ -32,6 +32,10 @@ jQuery(document).ready(function($) {
 <div class="clear"></div>
 <h1>FREQUENTLY ASKED QUESTIONS</h1>
 <p style="margin:20px;font-size:80%;text-align:center;">If you previously installed any of <a href="http://tumblr.com/xod147ip11">Cutlerish's Tumblr Userscripts</a> and are experiencing problems with 'Missing e', <strong>make sure you uninstall them</strong> (<a href="http://blog.missinge.infraware.ca/post/3862050335/uninstall-userscripts">instructions here</a>)!</p>
+<h2>General</h2>
+<ul>
+<li><a href="#nottumblr">Is the 'Missing e' browser extension affiliated with or endorsed by Tumblr.com?</a></li>
+</ul>
 <h2>Your Security</h2>
 <ul>
 <li><a href="#permissions">The Chrome Web Store (or other download page) has a lot of warnings about what 'Missing e' could do on my computer. Is it safe to install?</a></li>
@@ -67,7 +71,6 @@ jQuery(document).ready(function($) {
 <h2>Dashboard Fixes</h2>
 <ul>
 <li><a href="#scroll">What are the <em>endless scroll</em> "prevent stalling" and "timeout" options for?</a></li>
-<li><a href="#maxbig">What is the "enforce maximum font size" option for?</a></li>
 </ul>
 <h2>Dash Links to Tabs</h2>
 <ul>
@@ -141,6 +144,10 @@ jQuery(document).ready(function($) {
 <li><a href="#unfollower-delta">Why is Unfollower represented by a '&Delta;' (delta)?</a></li>
 </ul>
 <h2 id="answers">Answers</h2>
+<a name="nottumblr"></a><p class="question">Is the 'Missing e' browser extension affiliated with or endorsed by Tumblr.com?</p>
+<div class="response">
+<p>No, the 'Missing e' browser extension/add-on is not affiliated with Tumblr.com in any way. Its features are intended to improve the ease of use of that site, but it is neither approved nor endorsed by Tumblr, itself. That being said, as an unofficial extension for Tumblr, 'Missing e' is proud to do what it can to enhance your enjoyment of the microblogging experience.</p>
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="permissions"></a><p class="question">The Chrome Web Store (or other download page) has a lot of warnings about what 'Missing e' could do on my computer. Is it safe to install?</p>
 <div class="response">
 <p>Browser extensions need to ask for certain permissions from your browser in order for many features to work. Please read <a href="http://blog.missinge.infraware.ca/post/6005505122/permissions">this post on Tumblr</a> for an explanation of the permissions 'Missing e' uses and why.</p>
@@ -294,10 +301,6 @@ jQuery(document).ready(function($) {
 <li>The "<strong>endless scroll</strong>" feature will sometimes also receive this error page when it tries to load the next page, <em>only it doesn't know what to do with it</em> and <em><strong>won't even try again!</strong></em></li>
 </ul>
 <p><em>Dashboard Fixes</em> will resolve this situation by forcing the next page load to restart or display the "Try again" button.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="maxbig"></a><p class="question">What is the "enforce maximum font size" option for?</p>
-<div class="response"><p>Some Tumblr users insert something called HTML <strong>&lt;big&gt;</strong> tags in their posts in order to make some of the text appear larger. By adding more and more of these tags, they can make the text quite big. Sometimes, this can be <big><big>distracting</big></big>.</p>
-<p>The "enforce maximum font size" option in the <em>Dashboard Fixes</em> feature allows you to force text within posts you see on the dashboard to never exceed a particular size (specified in pixels). <em>Dashboard Fixes</em> will reduce larger fonts to your preference, without making them smaller than the default font size for dashboard posts.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="newtabs"></a><p class="question">I don't want 'Missing e' to open up all these new tabs. How do I stop it?</p>
 <div class="response"><p>In the settings (which you can access <a href="#settings">like this</a>), under the <em>Dashboard Features</em> tab, in the <em>Dash Links to Tabs</em> section, you can change this behaviour.</p>
