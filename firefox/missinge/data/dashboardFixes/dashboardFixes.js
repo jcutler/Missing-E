@@ -292,7 +292,7 @@ self.on('message', function(message) {
                "overflow:hidden !important; } " +
                "span.tags { white-space:normal !important; } " +
                "span.with_blingy_tag a.blingy { " +
-               "display:inline-block !important; }";
+               "display:inline-block !important; height:auto !important; }";
    }
    css.innerHTML = data;
    head = document.getElementsByTagName("head")[0];

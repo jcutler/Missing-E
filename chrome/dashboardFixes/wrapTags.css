@@ -36,5 +36,6 @@ white-space:normal !important;
 }
 
 span.with_blingy_tag a.blingy {
+height:auto !important;
 display:inline-block !important;
 }
