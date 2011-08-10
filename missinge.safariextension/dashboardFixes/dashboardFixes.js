@@ -277,8 +277,10 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                "{ margin-left:0 !important; padding-left:10px !important; } ";
    }
    if (wrapTags === 1) {
-      data += "#posts .post .footer_links.with_tags span[style], " +
-              "#posts .post .footer_links.with_tags span.tags " +
+      data += "#posts .post .footer_links.with_tags { " +
+               "overflow:visible !important; } " +
+               "#posts .post .footer_links.with_tags span[style], " +
+               "#posts .post .footer_links.with_tags span.tags " +
                "{ display:inline !important; overflow:visible !important; " +
                "white-space:normal !important; } " +
                "#posts .post .footer_links.with_tags .source_url " +

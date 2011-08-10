@@ -285,7 +285,9 @@ self.on('message', function(message) {
                "{ margin-left:0 !important; padding-left:10px !important; } ";
    }
    if (message.wrapTags === 1) {
-      data += "#posts .post .footer_links.with_tags span { " +
+      data += "#posts .post .footer_links.with_tags { " +
+               "overflow:visible !important; } " + 
+               "#posts .post .footer_links.with_tags span { " +
                "display:inline !important; overflow:visible !important; } " +
                "#posts .post .footer_links.with_tags .source_url { " +
                "display:inline-block !important; " +

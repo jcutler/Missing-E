@@ -21,6 +21,10 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#posts .post .footer_links.with_tags {
+overflow:visible !important;
+}
+
 #posts .post .footer_links.with_tags span {
 display:inline !important;
 overflow:visible !important;
