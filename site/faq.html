@@ -78,14 +78,6 @@ jQuery(document).ready(function($) {
 <li><a href="#controltabs"><em>Reblog</em> and <em>edit</em> buttons on dashboard posts don't open in new tabs anymore. How can I get this back?</a></li>
 <li><a href="#safaritabs">When I click on a link in with the Safari browser, it opens in a new window instead of a tab. How can I change that behaviour?</a></li>
 </ul>
-<h2>Follow Checker</h2>
-<ul>
-<li><a href="#followchecker-how">How do I use Follow Checker? Where is it?</a></li>
-<li><a href="#followchecker-fail">Why does Follow Checker fail to load?</a></li>
-<li><a href="#followchecker-issues">Why is Follow Checker reporting that I am not following someone that I actually am?</a></li>
-<li><a href="#followchecker-issues">Why is Follow Checker reporting that someone is not following me even though I know they are?</a></li>
-<li><a href="#followchecker-rho">Why is Follow Checker represented by a '&rho;' (rho)?</a></li>
-</ul>
 <h2>Goto Dash Post</h2>
 <ul>
 <li><a href="#goto-issue">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</a></li></ul>
@@ -132,16 +124,6 @@ jQuery(document).ready(function($) {
 <li><a href="#timestamps-format">How do I change the way the date and time is shown in timestamps?</a></li>
 <li><a href="#timestamps-wrongtime">Why are some posts shown with the incorrect time?</a></li>
 <li><a href="#timestamps-load">Why do timestamps sometimes fail to load?</a></li>
-</ul>
-<h2>Unfollower</h2>
-<ul>
-<li><a href="#unfollower-how">How do I use Unfollower? Where is it?</a></li>
-<li><a href="#unfollower-ignore">Why doesn't the Unfollower '&Delta;' show up for one of my Tumblr accounts?</a></li>
-<li><a href="#unfollower-ignore">How can I make Unfollower track accounts I have previously told it to ignore?</a></li>
-<li><a href="#unfollower-fail">Why does Unfollower fail to load?</a></li>
-<li><a href="#unfollower-issues">Why does Unfollower report that someone has unfollowed that I know has not?</a></li>
-<li><a href="#unfollower-issues">Why does Unfollower report that nobody has unfollowed me even though my follower count has dropped?</a></li>
-<li><a href="#unfollower-delta">Why is Unfollower represented by a '&Delta;' (delta)?</a></li>
 </ul>
 <h2 id="answers">Answers</h2>
 <a name="nottumblr"></a><p class="question">Is the 'Missing e' browser extension affiliated with or endorsed by Tumblr.com?</p>
@@ -323,22 +305,6 @@ jQuery(document).ready(function($) {
 <img src="images/examples/safari_tabs.png" alt="Safari tabs preferences" />
 <div class="caption">Safari preferences - open pages in tabs</div></div>
 <div class="totop"><a href="#">Top</a></div></div>
-<a name="followchecker-how"></a><p class="question">How do I use Follow Checker? Where is it?</p>
-<div class="response">
-<p>You can use <em>Follow Checker</em> by clicking on the <strong>&rho;</strong> (Greek letter rho) symbol beside your follower count in the sidebar on your tumblelog page (ie. <em>http://www.tumblr.com/tumblelog/<strong>yourusername</strong></em>). The <strong>&rho;</strong> is hidden until you place your mouse on or next to your follower count.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="followchecker-fail"></a><p class="question">Why does Follow Checker fail to load?</p>
-<div class="response">
-<p><em>Follow Checker</em> must load every single one of your follower AND following pages behind the scenes. This can take a while, especially if you follow or are followed by a lot of tumblr accounts. During times when Tumblr is very busy or error-prone, one or more of these pages may fail to load. <em>Follow Checker</em> will retry a few times before giving up and returning an error screen.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="followchecker-issues"></a><p class="question">Why is Follow Checker reporting that I am not following someone that I actually am?</p><p class="question">Why is Follow Checker reporting that someone is not following me even though I know they are?</p>
-<div class="response">
-<p>Unfortunately, Tumblr often does not show all of your followers or accounts you follow on the follower/following pages. Some may be missing from one or both of these lists.</p><p><em>Follow Checker</em> presents information purely for entertainment purposes. Before you take any rash actions based on information you get from it, you would be wise to double-check whether or not you follow someone or they follow you.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="followchecker-rho"></a><p class="question">Why is Follow Checker represented by a '&rho;' (rho)?</p>
-<div class="response">
-<p>The <a href="http://www.wikipedia.org/wiki/Rho">Greek letter <strong>&rho;</strong> (rho)</a> is used in statistics to represent the coefficient of correlation between two or more random variables. It is used in <em>Follow Checker</em> to refer to the relationship of tumblrs you follow to tumblrs that follow you.</p>
-<div class="totop"><a href="#">Top</a></div></div>
 <a name="goto-issue"></a><p class="question">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</p>
 <div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p><p>This is an issue with Tumblr's dashboard and is <em>not</em> caused by 'Missing e'.</p>
 <div class="totop"><a href="#">Top</a></div></div>
@@ -416,37 +382,6 @@ jQuery(document).ready(function($) {
 <a name="timestamps-load"></a><p class="question">Why do timestamps sometimes fail to load?</p>
 <div class="response">
 <p><em>Timestamps</em> uses the Tumblr API to get the time of a post. During periods when Tumblr is very busy or error-prone, the API may not work correctly. <em>Timestamps</em> will retry a few times before giving up and displaying: <em><strong>Timestamp loading failed. <span style="text-decoration:underline;">Retry</span></strong></em>.</p><p>You can click on '<strong>Retry</strong>' to tell <em>Timestamps</em> to try again.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="unfollower-how"></a><p class="question">How do I use Unfollower? Where is it?</p>
-<div class="response">
-<p>You can use <em>Unfollower</em> by clicking on the <strong>&Delta;</strong> (Greek letter delta) symbol beside your follower count in the sidebar on your tumblelog page (ie. <em>http://www.tumblr.com/tumblelog/<strong>yourusername</strong></em>). The <strong>&Delta;</strong> is hidden until you place your mouse on or next to your follower count.</p>
-<p>Note that <em>Unfollower</em> cannot tell the difference between Tumblr accounts that have unfollowed you, been deleted, or <strong>been renamed</strong>. You should also note that <em>Unfollower</em> will only show the difference since the last time you used <em>Unfollower</em> (or since you installed 'Missing e', if you have not used it). Any Tumblr accounts that have followed you and then unfollowed (or deleted or renamed) during that time cannot be shown.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="unfollower-ignore"></a><p class="question">Why doesn't the Unfollower '&Delta;' show up for one of my Tumblr accounts?</p>
-<p class="question">How can I make Unfollower track accounts I have previously told it to ignore?</p>
-<div class="response">
-<p><em>Unfollower</em> is capable of tracking multiple accounts. Whenever <em>Unfollower</em> encounters a Tumblr account it has not started tracking (a new account or a renamed account, for example), this popup box appears:</p>
-<div class="example"><img src="images/examples/multiunfollower_newtrack.png" alt="Unfollower encounters new account" /><div class="caption"><em>Unfollower</em> encounters a new or renamed Tumblr account</div></div>
-<ul><li>If the untracked account (<strong>missing-e-testing</strong> in the example above) was renamed from one of the existing tracked accounts (for example, you renamed <strong>cutlerish</strong> to <strong>missing-e-testing</strong>), click on the <em>"Rename"</em> button beside the old account name to transfer all <em>Unfollower</em> data to the new account name.</li>
-<li>If the untracked account is a new account <em>Unfollower</em> is encountering for the first time, click the <em>"New Account"</em> button and <em>Unfollower</em> will track the new account.</li>
-<li>If the account is untracked, and you do not want <em>Unfollower</em> to keep track of it, click the <em>"Ignore"</em> button and no new data will be stored.</li>
-</ul>
-<p>If you <em>ignore</em> a Tumblr account, the <em>Unfollower</em> '&Delta;' (delta) symbol will not appear on that account's sidebar. If you later change your mind, you can remove accounts from the ignore list. To do so, go to the settings page (<a href="#settings">find out how</a>) and under the <em>Social Features</em> tab, in the <em>Unfollower</em> section, click on the button labelled <em>"Ignore List..."</em>.</p>
-<div class="example"><img src="images/examples/multiunfollower_ignorelist.png" alt="Unfollower ignore list" /><div class="caption">List of Tumblr accounts ignored by <em>Unfollower</em></div></div>
-<p>In the popup box that appears, a list of the currently ignored accounts is shown. To cause <em>Unfollower</em> to stop ignoring an account, simply click the <em>"Remove"</em> button beside the account name. From this popup box, you can also manually add accounts to ignore by clicking on the <em>"Add Ignore..."</em> button and typing in the account name of the Tumblr account you wish <em>Unfollower</em> to ignore.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="unfollower-fail"></a><p class="question">Why does Unfollower fail to load?</p>
-<div class="response">
-<p><em>Unfollower</em> must load every single one of your follower pages behind the scenes. This can take a while, especially if you are followed by a lot of tumblr accounts. During times when Tumblr is very busy or error-prone, one or more of these pages may fail to load. <em>Unfollower</em> will retry a few times before giving up and returning an error screen.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="unfollower-issues"></a><p class="question">Why does Unfollower report that someone has unfollowed that I know has not?</p><p class="question">Why does Unfollower report that nobody has unfollowed me even though my follower count has dropped?</p>
-<div class="response">
-<p>First of all, <em>Unfollower</em> displays all tumblr accounts that have either unfollowed you, been deactivated or have changed usernames. It cannot determine the difference in these situations. In addition, <em>Unfollower</em> can only show you who has unfollowed since you last checked (or since you first opened Tumblr after installing 'Missing e' if you haven't checked yet). If somebody follows you and unfollows you in the meantime, <em>Unfollower</em> will be not be able to report that to you.</p><p>Also, Tumblr, unfortunately, often does not show all of your followers on the follower pages. Some may be missing from the list <em>Unfollower</em> receives from Tumblr.</p><p><em>Unfollower</em> presents information purely for entertainment purposes. Before you take any rash actions based on information you get from it, you would be wise to double-check whether or not someone still follows you.</p>
-<p>It is also worth nothing that your list of followers is stored in your browser using something called <a href="http://en.wikipedia.org/wiki/Web_Storage">DOM Local Storage</a>. It is possible that this data will be lost if you clear browser data, such as cookies. Please read <a href="http://blog.missinge.infraware.ca/post/6631718204/clear-browsing-data">this post</a> for more information.</p>
-<div class="totop"><a href="#">Top</a></div></div>
-<a name="unfollower-delta"></a><p class="question">Why is Unfollower represented by a '&Delta;' (delta)?</p>
-<div class="response">
-<p>The <a href="http://www.wikipedia.org/wiki/Delta_(letter)" target="_blank">Greek letter &Delta; (delta)</a> is used in many fields of science and engineering to represent change.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="experimental-reblogReplies"></a><p class="question">Why is the <span>"Allow replies to reblogs"</span> setting experimental?</p>
 <div class="response">

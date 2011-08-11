@@ -43,7 +43,6 @@ var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
 var tabs = {};
-var followCheckerTab = -1;
 var formKey;
 var followYou = [];
 var youFollow = [];
@@ -632,15 +631,6 @@ function closeTab(url, currentId) {
    });
 }
 
-chrome.tabs.onRemoved.addListener(function(id, info) {
-   if (id === followCheckerTab) {
-      followYou = [];
-      youFollow = [];
-      formKey = null;
-      followCheckerTab = -1;
-   }
-});
-
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
    else if (request.greeting == "version") {
@@ -654,50 +644,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "close-options") {
       closeTab(chrome.extension.getURL('options.html'), sender.tab.id);
-   }
-   else if (request.greeting == "close-followChecker") {
-      closeTab(chrome.extension.getURL('followChecker/followChecker.html'));
-   }
-   else if (request.greeting == "unfollowerIgnore") {
-      localStorage.setItem('MissingE_unfollower_ignore', request.list);
-   }
-   else if (request.greeting == "followChecker") {
-      followYou = request.followYou;
-      youFollow = request.youFollow;
-      formKey = request.formKey;
-      closeTab(chrome.extension.getURL('followChecker/followChecker.html'));
-      chrome.tabs.create({windowId: sender.tab.windowId,
-                           index: (sender.tab.index+1),
-                           url: chrome.extension.getURL('followChecker/followChecker.html')},
-                         function(newtab) {
-         followCheckerTab = newtab.id;
-      });
-   }
-   else if (request.greeting == "followChecker_fill") {
-      if (sender.tab.id == followCheckerTab &&
-          formKey) {
-         sendResponse({success:true, formKey: formKey,
-                       followYou: followYou, youFollow: youFollow});
-      }
-      else {
-         sendResponse({success:false});
-      }
-   }
-   else if (request.greeting == "unfollow") {
-      var idx = $.inArray(request.tumblrId + ';' +
-                          request.tumblrURL + ';' +
-                          request.tumblrImg, youFollow);
-      if (idx != -1) {
-         youFollow.splice(idx,1);
-      }
-   }
-   else if (request.greeting == "follow") {
-      var idx = $.inArray(request.tumblrId + ';' +
-                          request.tumblrURL + ';' +
-                          request.tumblrImg, followYou);
-      if (idx != -1) {
-         followYou.splice(idx,1);
-      }
    }
    else if (request.greeting == "magnifier") {
       requestMagnifier(request, sender, sendResponse, tabs[sender.tab.id]);
@@ -783,15 +729,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.addUploader = getStorage("MissingE_postingFixes_addUploader",1);
             settings.quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
             settings.blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
-            break;
-         case "unfollower":
-            settings.addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);
-            if (getStorage("MissingE_sidebarTweaks_enabled",1) == 0) {
-               settings.addSidebar = 0;
-            }
-            settings.ignore = getStorage("MissingE_unfollower_ignore",'');
-         case "followChecker":
-            settings.retries = getStorage("MissingE_" + request.component + "_retries",defaultRetries);
             break;
          case "magnifier":
             settings.magnifyAvatars = getStorage("MissingE_magnifier_magnifyAvatars",0);
@@ -885,31 +822,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.bookmarker = false;
 
-         if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
-             getStorage("MissingE_followChecker_enabled",1) == 1 ||
-             getStorage("MissingE_magnifier_enabled",1) == 1 ||
+         if (getStorage("MissingE_magnifier_enabled",1) == 1 ||
              (getStorage("MissingE_askFixes_enabled",1) == 1 &&
               getStorage("MissingE_askFixes_askDash",0) == 1)) {
             zindexFix = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
          }
-
-         if (getStorage("MissingE_unfollower_enabled",1) == 1) {
-            activeScripts.unfollower = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "unfollower/unfollower.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "unfollower/unfollower.js"});
-         }
-         else
-            activeScripts.unfollower = false;
-
-         if (getStorage("MissingE_followChecker_enabled",1) == 1) {
-            activeScripts.followChecker = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "followChecker/followChecker.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "followChecker/followChecker.js"});
-         }
-         else
-            activeScripts.followChecker = false;
 
          if (getStorage("MissingE_sidebarTweaks_enabled",1) == 1) {
             activeScripts.sidebarTweaks = true;
