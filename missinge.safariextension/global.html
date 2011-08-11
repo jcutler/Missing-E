@@ -405,7 +405,7 @@ function doReblogYourselfAjax(request, retries, additional) {
          }
       },
       success: function(data, textStatus) {
-         var ifr = data.match(/<\s*iframe[^>]*>/);
+         var ifr = data.match(/<\s*iframe[^>]*id="tumblr_controls"[^>]*>/);
          if (!ifr || ifr.length === 0) {
             if (request.target.page === undefined) {
                debug("Stop reblogYourself request: Tab closed or changed.");

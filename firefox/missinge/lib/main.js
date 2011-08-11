@@ -506,7 +506,7 @@ function doReblogYourselfAjax(url, pid, count, myWorker, retries, additional) {
                 retryLimit: retries,
                 targetId: pid},
       onComplete: function(response) {
-         var ifr = response.text.match(/<\s*iframe[^>]*>/);
+         var ifr = response.text.match(/<\s*iframe[^>]*id="tumblr_controls"[^>]*>/);
          var closed = false;
          try {
             var tab = myWorker.tab;
@@ -520,8 +520,7 @@ function doReblogYourselfAjax(url, pid, count, myWorker, retries, additional) {
             myWorker.postMessage(failMsg);
             return;
          }
-         if (response.status != 200 ||
-             !(/<\s*iframe[^>]*>/.test(response.text))) {
+         if (response.status != 200 || !ifr || ifr.length === 0) {
             if (closed) {
                debug("Stop reblogYourself request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);

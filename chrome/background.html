@@ -388,7 +388,7 @@ function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
       },
       success: function(data, textStatus) {
          var closed = (this.tabHash !== tabs[this.tabId]);
-         var ifr = data.match(/<\s*iframe[^>]*>/);
+         var ifr = data.match(/<\s*iframe[^>]*id="tumblr_controls"[^>]*>/);
          if (!ifr || ifr.length === 0) {
             if (closed) {
                debug("Stop reblogYourself request: Tab closed or changed.");
