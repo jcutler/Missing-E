@@ -164,6 +164,12 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
             document.getElementById('post_tags').value = "";
             document.getElementById('tokens').innerHTML = "";
          }
+         else {
+            $('head').append('<script type="text/javascript">' +
+                             'function MissingE_reblogTags() { ' +
+                             func + ' }' + "\n" + 'MissingE_reblogTags();' +
+                             '</script>');
+         }
       }
       clearReblogTags();
    }

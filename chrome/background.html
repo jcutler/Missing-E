@@ -323,10 +323,12 @@ function checkPermission(request, sender, sendResponse, hash, retries, tryCount)
          else {
             tryCount++;
             if (tryCount <= retries) {
-               console.log("retry");
                checkPermission(request, sender, sendResponse, hash, retries,
                                tryCount);
                return;
+            }
+            else {
+               sendResponse({allow:false});
             }
          }
       }
