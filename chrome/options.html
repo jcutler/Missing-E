@@ -844,10 +844,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
       }
       else if (v == "betterReblogs") {
-         loadCheck(frm,'MissingE_betterReblogs_passTags',1);
-         loadCheck(frm,'MissingE_betterReblogs_autoFillTags',1);
+         loadCheck(frm,'MissingE_betterReblogs_noPassTags',1);
          loadCheck(frm,'MissingE_betterReblogs_quickReblog',0);
-         frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
          if (getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
             document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;
          else
@@ -1238,9 +1236,7 @@ function doshow(component) {
 <div class="post_thumb"><a href="betterReblogs/screen.png" rel="facebox"><img src="betterReblogs/thumb.png" /><br />Screenshot</a></div>
 <p>Additional features to make reblogging easier and more productive!</p>
 <table class="options_table">
-<tr><td colspan="2" class="odd">Keep original post tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_passTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"><td class="even">Automatically add original tags to reblog post<br /><small><em>With this setting off, you can still click on the </em>"Reblog Tags"<em> button to add the tags manually</em></small></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_autoFillTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Do not automatically keep original post tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_noPassTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Quick (1-click) reblogging <em>(see screenshot)</em></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_quickReblog" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Default Tumblr blog to use with quick reblogging<br /><small>You must have posting privileges on the account you select.</small></td>
 <td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" onchange="doSetting(this,false);" /> Main Blog<br />

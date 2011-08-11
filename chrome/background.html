@@ -82,19 +82,6 @@ function debug(msg) {
    }
 }
 
-function doTags(stamp, id, sendResponse) {
-   var tags = stamp.tags;
-   if (!tags) {
-      tags = [];
-   }
-   if (stamp.type === "text" &&
-       getStorage("MissingE_betterReblogs_fullText",0) === 1) {
-      fullText = true;
-   }
-   else { fullText = false; }
-   sendResponse({success: true, data: tags, fullText: fullText});
-}
-
 function doTimestamp(stamp, id, sendResponse) {
    var ts = stamp.timestamp;
    var d = new Date(ts*1000);
@@ -476,28 +463,6 @@ function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
    });
 }
 
-function requestTags(request, sender, sendResponse, hash) {
-   if (hash !== tabs[sender.tab.id]) {
-      debug("Stop tags request: Tab closed or changed.");
-      dequeueAjax();
-      return;
-   }
-   else if (cacheServe("tags", request.pid, sendResponse, doTags, false)) {
-      return true;
-   }
-   else if (isRequested({type: "tags", request: request, sender: sender, sendResponse: sendResponse, hash: hash})) {
-      return true;
-   }
-   else if (activeAjax >= maxActiveAjax) {
-      queueAjax({type: "tags", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
-   }
-   else {
-      doAjax(request, sender, sendResponse, hash,
-             getStorage("MissingE_betterReblogs_retries",defaultRetries),
-             "tags", doTags);
-   }
-}
-
 function requestReblogYourself(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop reblogYourself request: Tab closed or changed.");
@@ -640,9 +605,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "timestamp") {
       requestTimestamp(request, sender, sendResponse, tabs[sender.tab.id]);
    }
-   else if (request.greeting == "tags") {
-      requestTags(request, sender, sendResponse, tabs[sender.tab.id]);
-   }
    else if (request.greeting == "sidebarTweaks") {
       setStorage("MissingE_sidebarTweaks_accountNum", request.accountNum);
       sendResponse();
@@ -720,8 +682,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.magnifyAvatars = getStorage("MissingE_magnifier_magnifyAvatars",0);
             break;
          case "betterReblogs":
-            settings.passTags = getStorage("MissingE_betterReblogs_passTags",1);
-            settings.autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
+            settings.noPassTags = getStorage("MissingE_betterReblogs_noPassTags",0);
             settings.quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
             settings.accountName = '0';
             if (getStorage("MissingE_betterReblogs_quickReblogAcctType",0) == 1) {
@@ -919,15 +880,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.reblogYourself = false;
 
-         if (getStorage("MissingE_betterReblogs_enabled",1) == 1 &&
-             getStorage("MissingE_betterReblogs_passTags",1) == 1) {
-            activeScripts.betterReblogs = true;
-            widenIframe = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "betterReblogs/betterReblogs_post.js", allFrames: true});
-         }
-         else
-            activeScripts.betterReblogs = false;
-
          if (getStorage("MissingE_postingFixes_enabled",1) == 1 &&
              getStorage("MissingE_postingFixes_subEdit",1) == 1) {
             activeScripts.postingFixes = true;
@@ -1068,6 +1020,15 @@ function moveSetting(oldpref, newpref) {
    }
 }
 
+function invertSetting(oldpref, newpref) {
+   var pref;
+   if ((pref = localStorage[oldpref])) {
+      console.log('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
+      localStorage[newpref] = (pref === "1" || pref === 1 ? "0" : "1");
+      localStorage.removeItem(oldpref);
+   }
+}
+
 function getVersion() {
    var xhr = new XMLHttpRequest();
    xhr.open('GET', chrome.extension.getURL('manifest.json'), false);
@@ -1119,6 +1080,7 @@ getExternalVersion();
 moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
 moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
 collapseSettings('MissingE_askFixes_betterAnswers','MissingE_askFixes_buttons','MissingE_askFixes_tags');
+invertSetting('MissingE_betterReblogs_passTags','MissingE_betterReblogs_noPassTags');
 
 var fivedays = 432000000;
 var now = (new Date()).valueOf();
@@ -1134,14 +1096,11 @@ if (now >= parseInt(getStorage("MissingE_compatCheck",0)) + fivedays) {
                case "Tumblr post - Upload Photo for all posts":
                case "Tumblr Bookmarker":
                case "Tumblr Dash Links To Tabs":
-               case "Tumblr Follow Checkr":
                case "Tumblr Goto Dash Post":
                case "Tumblr Post Crushes":
                case "Tumblr Reblog Yourself":
                case "Tumblr Reply Replies":
                case "Tumblr SafeDash":
-               case "Tumblr Timestamps":
-               case "Tumblr Unfollowr":
                //case "Tumblr Sidebr":
                   repl.push(arr[i].name);
                   ids.push(arr[i].id);

@@ -59,8 +59,14 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       return false;
    }
    var betterReblogs_settings = JSON.parse(response);
+   var addHeight = 0;
    var lang = $('html').attr('lang');
    var tags = getReblogTags();
+   if (tags.length == 0) {
+      setReblogTagsPlainText(document.getElementById('edit_post')
+                              .post_tags.value);
+   }
+   tags = getReblogTags();
 
    if (document.body.id === 'dashboard_edit_post') {
       $('#the_as_links a[href!="#"]').click(function() {
@@ -78,19 +84,12 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
        getReblogTags().length > 0) {
       var i;
       if (tags.length > 0) {
-         var txt = "", fill = "";
          var func = "var tags=[";
          for (i=0; i<tags.length; i++) {
             if (tags[i] !== undefined && tags[i] !== null && tags[i] !== ''){
                func += '\'' + tags[i].replace(/'/g,'\\\'') + '\',';
-               fill += tags[i] + ',';
-               txt += '<div class="token"><span class="tag">' + tags[i] +
-                        '</span><a title="' + locale[lang].removeTag +
-                        '" onclick="tag_editor_remove_tag($(this).up()); ' +
-                        'return false;" href="#">x</a></div>';
             }
          }
-         fill = fill.replace(/,$/,'');
          func = func.replace(/,$/,'') + '];';
          var label;
          if (func !== 'var tags=[];') {
@@ -129,7 +128,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                     '}return false;';
 
             var set_tags = $('#set_tags');
-            var addHeight = $('<div style="text-align:left">' +
+            addHeight = $('<div style="text-align:left">' +
                               '<a class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
                               'onclick="' + func + '">' +
@@ -144,13 +143,18 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                }
             }
          }
-         if (betterReblogs_settings.autoFillTags === 1 && txt !== '') {
-            document.getElementById('post_tags').value = fill;
-            document.getElementById('tokens').innerHTML = txt;
-            label = document.getElementById('post_tags_label');
-            if (label) {
-               label.parentNode.removeChild(label);
+         if (betterReblogs_settings.noPassTags === 1) {
+            var label = $('<label for="post_tags" class="inline_input_label" '+
+              'id="post_tags_label" ' +
+              'style="left:8px;right:auto;text-align:left">tags</label>')
+                  .prependTo('#set_tags');
+            var labelHeight = parseInt(label.css('top').match(/[0-9]*/)[0]);
+            if (!isNaN(labelHeight)) {
+               labelHeight += addHeight;
+               label.css('top',labelHeight+'px');
             }
+            document.getElementById('post_tags').value = "";
+            document.getElementById('tokens').innerHTML = "";
          }
       }
       clearReblogTags();
