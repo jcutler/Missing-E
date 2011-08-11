@@ -422,7 +422,7 @@ function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
                   doReblogDash(info, this.targetId, sendResponse);
                }
             }
-            else {
+            else if (!closed) {
                debug("reblogYourself request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
