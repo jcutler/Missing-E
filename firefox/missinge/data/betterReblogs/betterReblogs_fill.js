@@ -2,14 +2,14 @@
  * 'Missing e' Extension
  *
  * Copyright 2011, Jeremy Cutler
- * Released under the GPL version 3 licence.
+ * Released under the GPL version 2 licence.
  * SEE: GPL-LICENSE.txt
  *
  * This file is part of 'Missing e'.
  *
  * 'Missing e' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
  * 'Missing e' is distributed in the hope that it will be useful,
@@ -67,7 +67,6 @@ self.on('message', function (message) {
        jQuery('#edit_post').hasClass('link_post')) {
       var src = "src=" + encodeURIComponent($('#post_two').val());
       if (document.referrer.indexOf(src) >= 0) {
-         console.log(location.origin);
          location.href = "http://" + location.host + jQuery('#the_as_links a[href*="/text"]').attr("href");
          return;
       }

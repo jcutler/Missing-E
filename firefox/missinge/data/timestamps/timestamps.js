@@ -2,14 +2,14 @@
  * 'Missing e' Extension
  *
  * Copyright 2011, Jeremy Cutler
- * Released under the GPL version 3 licence.
+ * Released under the GPL version 2 licence.
  * SEE: GPL-LICENSE.txt
  *
  * This file is part of 'Missing e'.
  *
  * 'Missing e' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
  * 'Missing e' is distributed in the hope that it will be useful,
@@ -57,20 +57,8 @@ function loadTimestamp(item) {
             .test(location.pathname)) {
          addr = 'http://www.tumblr.com/edit/';
       }
-      else if (perm.length > 0) {
-         addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
-      }
-      else {
-         if (jQuery(item).find('span.private_label').length > 0) {
-            addr = location.href
-                  .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/)[1];
-            addr = 'http://' + addr + '.tumblr.com';
-         }
-         else {
-            jQuery(item).find('span.MissingE_timestamp').remove();
-         }
-      }
-      if (tid === undefined || tid === null || tid === "") { return; }
+      if (tid === undefined || tid === null || tid === "" ||
+          addr === undefined) { return; }
       self.postMessage({greeting: "timestamp", pid: tid, url: addr,
                         lang: lang});
    }

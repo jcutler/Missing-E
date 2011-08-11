@@ -2,14 +2,14 @@
  * 'Missing e' Extension
  *
  * Copyright 2011, Jeremy Cutler
- * Released under the GPL version 3 licence.
+ * Released under the GPL version 2 licence.
  * SEE: GPL-LICENSE.txt
  *
  * This file is part of 'Missing e'.
  *
  * 'Missing e' is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
+ * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
  * 'Missing e' is distributed in the hope that it will be useful,
@@ -32,7 +32,6 @@ var Request = require("request").Request;
 var timer = require("timer");
 var widget;
 
-var apiKey = 'HIDf1EQIINTKHR0uuebSOlArYA5mnsdgrrA5E1RMopz3uNFLx1';
 var defaultTimeout = 15;
 var minTimeout = 5;
 var maxTimeout = 120;
@@ -492,6 +491,81 @@ function checkPermission(user, count, myWorker, retries) {
    }).get();
 }
 
+function doReblogYourselfAjax(url, pid, count, myWorker, retries, additional) {
+   var failMsg = {greeting:"reblogYourself", success:false};
+   if (additional) {
+      for (i in additional) {
+         if (additional.hasOwnProperty(i)) {
+            failMsg[i] = additional[i];
+         }
+      }
+   }
+   Request({
+      url: url,
+      headers: {tryCount: count,
+                retryLimit: retries,
+                targetId: pid},
+      onComplete: function(response) {
+         var ifr = response.text.match(/<\s*iframe[^>]*>/);
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
+         if (response.status === 404) {
+            debug("reblogYourself request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         if (response.status != 200 ||
+             !(/<\s*iframe[^>]*>/.test(response.text))) {
+            if (closed) {
+               debug("Stop reblogYourself request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
+            if (cacheServe("reblogYourself", this.headers.targetId, myWorker,
+                           doReblogDash, true)) {
+               return true;
+            }
+            else {
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  debug("Retry reblogYourself request (" + this.headers.targetId + ")");
+                  doReblogYourselfAjax(this.url,
+                         this.headers.targetId, (this.headers.tryCount + 1),
+                         myWorker, this.headers.retryLimit, additional);
+               }
+               else {
+                  debug("reblogYourself request (" + this.headers.targetId + ") failed");
+                  dequeueAjax(this.headers.targetId);
+                  myWorker.postMessage(failMsg);
+               }
+            }
+         }
+         else {
+            var rk = ifr[0].match(/rk=([^&]*)/);
+            if (rk && rk.length > 1) {
+               var info = {"reblog_key":rk[1]};
+               saveCache(this.headers.targetId, info);
+               dequeueAjax(this.headers.targetId);
+               if (!closed) {
+                  doReblogDash(info, this.headers.targetId, myWorker);
+               }
+            }
+            else if (!closed) {
+               debug("reblogYourself request (" + this.headers.targetId + ") failed");
+               dequeueAjax(this.headers.targetId);
+               myWorker.postMessage(failMsg);
+            }
+         }
+      }
+   }).get();
+}
+
+/*
 function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
    var failMsg = {greeting:type, success:false};
    if (additional) {
@@ -563,6 +637,7 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
       }
    }).get();
 }
+*/
 
 function startMagnifier(message, myWorker) {
    try {
@@ -648,9 +723,8 @@ function startReblogYourself(message, myWorker) {
    else {
       debug("AJAX reblogYourself request (" + message.pid + ")");
       startAjax(message.pid);
-      doAjax(message.url, message.pid, 0, myWorker,
+      doReblogYourselfAjax(message.url, message.pid, 0, myWorker,
              getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries),
-             "reblogYourself", doReblogDash,
              {
                pid:message.pid,
                icons:getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 && 
@@ -1107,15 +1181,8 @@ function handleMessage(message, myWorker) {
             activeScripts.postCrushes = false;
       }
       if (!message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/.test(message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/.test(message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(message.url))) {
+          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(message.url) ||
+           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/.test(message.url))) {
          if (getStorage("extensions.MissingE.timestamps.enabled",1) == 1) {
             injectScripts.push(data.url("timestamps/timestamps.js"));
             activeScripts.timestamps = true;
@@ -1212,7 +1279,6 @@ pageMod.PageMod({
    include: ["http://www.tumblr.com/dashboard/iframe*"],
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("common/localizations.js"),
-                       data.url("betterReblogs/betterReblogs_post.js"),
                        data.url("gotoDashPost/gotoDashPost.js"),
                        data.url("reblogYourself/reblogYourself_post.js"),
                        data.url("postingFixes/subEdit.js")],
@@ -1223,11 +1289,7 @@ pageMod.PageMod({
             answer = !(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(this.tab.url)) &&
                !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(this.tab.url)) &&
                !(/http:\/\/www\.tumblr\.com\/new\//.test(this.tab.url)) &&
-               ((data.component === 'betterReblogs' &&
-                 data.subcomponent === 'post' &&
-                 getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1 &&
-                 getStorage("extensions.MissingE.betterReblogs.passTags",1) == 1) ||
-                (data.component === 'gotoDashPost' &&
+               ((data.component === 'gotoDashPost' &&
                  getStorage("extensions.MissingE.gotoDashPost.enabled",1) == 1) ||
                 (data.component === 'reblogYourself' &&
                  data.subcomponent === 'post' &&
