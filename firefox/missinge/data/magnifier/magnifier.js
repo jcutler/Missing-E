@@ -90,34 +90,53 @@ function insertMagnifier(item) {
       var ctrl = jQuery(item).find('div.post_controls');
       var bm = ctrl.find('a.MissingE_mark');
       var heart = ctrl.find('a.like_button');
+      var count = 1;
+      var caps;
       var tid = jQuery(item).attr("id").match(/[0-9]*$/)[0];
-      var addr;
-      var perm = jQuery(item).find("a.permalink:first");
-      ctrl.find('a.MissingE_magnify').remove();
-      if (perm.length > 0) {
-         addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
+      var str, img;
+      var set = $('#photoset_' + tid);
+
+      if (set.length > 0) {
+         var imgs = set.find('img');
+         count = imgs.length;
+         caps = [];
+         imgs.each(function(i) {
+            var thecap = $(this).attr('alt');
+            if (!thecap) { thecap = ""; }
+            caps.push(thecap);
+         });
+         img = imgs.first();
       }
       else {
-         if (jQuery(item).find('span.private_label').length > 0) {
-            addr = location.href
-               .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/)[1];
-            addr = 'http://' + addr + '.tumblr.com';
+         img = $(item).find('div.post_content img:first');
+      }
+      if (img.length > 0) {
+         str = img.attr("src").match(/\/(tumblr_[^_]*)/);
+         if (str && str.length > 1) {
+            str = str[1].substr(0,str[1].length-2);
+         }
+         else {
+            str = null;
          }
       }
-      var mi = jQuery('<a title="' + locale[lang].loading + '" ' +
-                 'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
-                 escapeHTML(tid) + '" href="#" onclick="return false;"></a>');
-      mi.click(magClick);
-      if (bm.length > 0) {
-         bm.before(mi);
+      if (str) {
+         var mi = jQuery('<a title="' + locale[lang].loading + '" ' +
+                    'class="MissingE_magnify MissingE_magnify_hide" ' +
+                    'id="magnify_' + escapeHTML(tid) + '" href="#" ' +
+                    'onclick="return false;"></a>');
+         mi.click(magClick);
+         if (bm.length > 0) {
+            bm.before(mi);
+         }
+         else if (heart.length > 0) {
+            heart.before(mi);
+         }
+         else {
+            ctrl.append(mi);
+         }
+         self.postMessage({greeting: "magnifier", pid: tid, code: str,
+                           num: count, captions: caps});
       }
-      else if (heart.length > 0) {
-         heart.before(mi);
-      }
-      else {
-         ctrl.append(mi);
-      }
-      self.postMessage({greeting: "magnifier", pid: tid, url: addr});
    }
 }
 

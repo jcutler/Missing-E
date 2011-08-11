@@ -111,7 +111,8 @@ self.on('message', function(message) {
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                          extensionURL + 'postingFixes/postingFixes.css" />');
 
-   if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href)) {
+   if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href) ||
+       /http:\/\/www\.tumblr\.com\/reblog\//.test(location.href)) {
       var txt="";
       var ctags;
       var posttags = document.getElementById('post_tags');
@@ -438,6 +439,7 @@ self.on('message', function(message) {
 
    if (jQuery('#post_two_ifr,#post_three_ifr').length === 0) {
       jQuery('head').append('<script type="text/javascript">' +
+         'if (tinyMCE) { ' +
          'tinyMCE.onAddEditor.add(function(mgr,ed){' +
             'ed.onPostRender.add(function(ed) {' +
                'var evt = document.createEvent("MessageEvent");' +
@@ -445,7 +447,7 @@ self.on('message', function(message) {
                                      '"http://www.tumblr.com", 0, window);' +
                'document.dispatchEvent(evt);' +
             '});' +
-         '});</script>');
+         '});}</script>');
       document.addEventListener('MissingE_tinyMCE', function(e) {
          resizeTinyMCE(e.data,extensionURL);
       }, false);

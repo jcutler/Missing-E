@@ -903,9 +903,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_thumb"><a href="betterReblogs/screen.png" rel="facebox"><img src="betterReblogs/thumb.png" /><br />Screenshot</a></div>
 <p>Additional features to make reblogging easier and more productive!</p>
 <table class="options_table">
-<tr><td colspan="2" class="odd">Keep original post tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_passTags" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="subopt"></td><td class="even">Automatically add original tags to reblog post<br /><small><em>With this setting off, you can still click on the </em>"Reblog Tags"<em> button to add the tags manually</em></small></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_autoFillTags" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Do not automatically keep original post tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_noPassTags" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Quick (1-click) reblogging <em>(see screenshot)</em></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_quickReblog" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Default Tumblr blog to use with quick reblogging<br /><small>You must have posting privileges on the account you select.</small></td>
 <td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" class="simple_setting" /> Main Blog<br />
@@ -1003,26 +1001,6 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 <div class="clear"></div>
 <div><div class="post_avatar" style="background-image:url('icons/askFixes_avatar.png');"></div><span class="arrow"></span></div></li>
-<li id="followChecker_section" class="post not_mine regular">
-<div class="post_content">
-<form id="followChecker_options">
-<div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Follow Checker</div>
-<div class="post_thumb"><a href="followChecker/screen.png" rel="facebox"><img src="followChecker/thumb.png" /><br />Screenshot</a></div>
-<p>Find out who you follow on Tumblr that doesn't follow you back and who follows you that you don't follow back with <em>Follow Checker</em>.</p>
-<p><strong>Limitations:</strong></p>
-<ul><li>When Tumblr is suffering from errors, <em>Follow Checker</em> may not be able to load all of your follower/followee pages and will return an error. Wait a little while and try again.</li>
-<li>Because of some limitations with the way Tumblr presents your follower/following lists, some people may appear to not be following/followed who actually are. You should always double-check!</li></ul>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Number of retries on failure to load follower/followee lists (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" name="MissingE_followChecker_retries" class="setting_retry numinput" size="1" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/followChecker_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
 <li id="postCrushes_section" class="post not_mine regular">
 <div class="post_content">
 <form id="postCrushes_options">
@@ -1063,27 +1041,6 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="clear"></div>
 <div>
 <div class="post_avatar" style="background-image:url('icons/replyReplies_avatar.png');"></div>
-<span class="arrow"></span>
-</div>
-</li>
-<li id="unfollower_section" class="post not_mine regular">
-<div class="post_content">
-<form id="unfollower_options">
-<div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Unfollower</div>
-<div class="post_thumb"><a href="unfollower/screen.png" rel="facebox"><img src="unfollower/thumb.png" /><br />Screenshot</a></div>
-<p>Find out who has unfollowed you on Tumblr (since the last time you checked) with <em>Unfollower</em>.</p>
-<p><strong>Limitations:</strong></p>
-<ul><li><em>Unfollower</em> is unable to differentiate between unfollows, deleted accounts and <strong><em>username changes</em></strong>.</li><li><em>Unfollower</em> compares the followers had either at the first time you installed or the last time you checked your unfollowers. If someone has followed you and then unfollowed you since the last time you checked, they won't show up.</li>
-<li>When Tumblr is suffering from errors, <em>Unfollower</em> may not be able to load all of your follower pages and will return an error. Wait a little while and try again.</li><li>Because of some limitations with the way Tumblr presents your followers list, some people may appear to have unfollowed who actually haven't. You should always double-check.</li></ul>
-<table class="options_table">
-<tr><td colspan="2" class="odd">Edit your list of accounts <em>Unfollower</em> will ignore</td><td class="odd"><button type="button" id="unfollower_ignore_btn"><span>Ignore List...</span></button></td></tr>
-<tr><td colspan="2" class="even">Number of retries on failure to load follower list (default <span class="defRetries">4</span>)</td><td class="even"><input type="text" name="MissingE_unfollower_retries" class="setting_retry numinput" size="1" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
-</table>
-</form>
-</div>
-<div class="clear"></div>
-<div>
-<div class="post_avatar" style="background-image:url('icons/unfollower_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>

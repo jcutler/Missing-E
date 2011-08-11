@@ -56,13 +56,9 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var followCheckerTab = null;
-var formKey;
 var locale=JSON.parse(data.load("common/localizations.js")
                       .replace(/^[^{]*/,'')
                       .replace(/;\s*$/,''));
-var followYou = [];
-var youFollow = [];
 var lang = 'en';
 var debugMode = false;
 
@@ -71,32 +67,9 @@ function escapeHTML(str) {
             .replace(/>/,'&gt;').replace(/</,'&lt;');
 }
 
-function clearFollowChecker() {
-   followYou = [];
-   youFollow = [];
-   formKey = null;
-   followCheckerTab = null;
-}
-
 cacheClear = timer.setInterval(function() {
-   var followCheckerClosed = true;
    cache = {};
    cacheElements = 0;
-   try {
-      if (followCheckerTab &&
-          followCheckerTab.url) {
-         followCheckerClosed = false;
-      }
-      else {
-         followCheckerClosed = true;
-      }
-   }
-   catch(e) {
-      followCheckerClosed = true;
-   }
-   if (followCheckerClosed) {
-      clearFollowChecker();
-   }
 }, fiveMinutes);
 clearQueues = timer.setInterval(function() {
    if (activeAjax == 0) {
@@ -126,10 +99,8 @@ var componentList = ["dashboardFixes",
                      "postingFixes",
                      "reblogYourself",
                      "askFixes",
-                     "followChecker",
                      "postCrushes",
                      "replyReplies",
-                     "unfollower",
                      "massEditor",
                      "sidebarTweaks"];
 
@@ -166,6 +137,17 @@ function moveSetting(oldpref,newpref) {
    if (ps.isSet(oldpref) && !ps.isSet(newpref)) {
       console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
       ps.set(newpref,ps.get(oldpref,0));
+      ps.reset(oldpref);
+   }
+   else if (ps.isSet(oldpref)) {
+      ps.reset(oldpref);
+   }
+}
+
+function invertSetting(oldpref,newpref) {
+   if (ps.isSet(oldpref) && !ps.isSet(newpref)) {
+      console.log('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
+      ps.set(newpref,1-ps.get(oldpref,0));
       ps.reset(oldpref);
    }
    else if (ps.isSet(oldpref)) {
@@ -267,20 +249,6 @@ function getFormattedDate(d, format, lang) {
    return ret;
 }
 
-function doTags(stamp, id, theWorker) {
-   var tags = stamp.tags;
-   if (!tags) {
-      tags = [];
-   }
-   if (stamp.type === "text" &&
-       getStorage("extensions.MissingE.betterReblogs.fullText",0) === 1) {
-      fullText = true;
-   }
-   else { fullText = false; }
-   theWorker.postMessage({greeting: "tags", success: true, data: tags,
-      fullText: fullText, extensionURL: data.url("")});
-}
-
 function doTimestamp(stamp, id, theWorker) {
    var ts = stamp.timestamp;
    var d = new Date(ts*1000);
@@ -294,26 +262,6 @@ function doReblogDash(stamp, id, theWorker) {
    var replaceIcons = getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                       getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
    theWorker.postMessage({greeting: "reblogYourself", pid: id, success: true, data: key, icons: replaceIcons});
-}
-
-function doMagnifier(stamp, id, theWorker) {
-   var url;
-   if (stamp.photos.length > 1) {
-      url = new Array();
-      for (i=0; i<stamp.photos.length; i++) {
-         url.push(stamp.photos[i].alt_sizes[0].url);
-         var cap = stamp.photos[i].caption;
-         if (cap == undefined || cap == null)
-            url.push("");
-         else
-            url.push(cap);
-      }
-      url = JSON.stringify(url);
-   }
-   else {
-      url = stamp.photos[0].alt_sizes[0].url;
-   }
-   theWorker.postMessage({greeting: "magnifier", pid: id, success: true, data: url});
 }
 
 function queueAjax(details) {
@@ -373,17 +321,11 @@ function cacheServe(type, id, theWorker, fn, midFlight) {
 }
 
 function runItem(call) {
-   if (call.type === "magnifier") {
-      startMagnifier(call.message, call.worker);
-   }
-   else if (call.type === "reblogYourself") {
+   if (call.type === "reblogYourself") {
       startReblogYourself(call.message, call.worker);
    }
    else if (call.type === "timestamp") {
       startTimestamp(call.message, call.worker);
-   }
-   else if (call.type === "tags") {
-      startTags(call.message, call.worker);
    }
 }
 
@@ -622,58 +564,31 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
    }).get();
 }
 
-function startTags(message, myWorker) {
-   try {
-      var tab = myWorker.tab;
-   }
-   catch (err) {
-      debug("Stop tags request: Tab closed or changed.");
-      dequeueAjax();
-      return;
-   }
-   if (cacheServe("tags", message.pid, myWorker, doTags, false)) {
-      return true;
-   }
-   else if (isRequested({type: "tags", message: message, worker: myWorker})) {
-      return true;
-   }
-   else if (activeAjax >= maxActiveAjax) {
-      queueAjax({type: "tags", message: message, worker: myWorker});
-   }
-   else {
-      debug("AJAX tags request (" + message.pid + ")");
-      startAjax(message.pid);
-      doAjax(message.url, message.pid, 0, myWorker,
-             getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries),
-             "tags", doTags, {extensionURL:data.url("")});
-   }
-}
-
 function startMagnifier(message, myWorker) {
    try {
       var tab = myWorker.tab;
    }
    catch (err) {
       debug("Stop magnifier request: Tab closed or changed.");
-      dequeueAjax();
       return;
    }
-   if (cacheServe("magnifier", message.pid, myWorker, doMagnifier, false)) {
-      return true;
-   }
-   else if (isRequested({type: "magnifier", message: message, worker: myWorker})) {
-      return true;
-   }
-   else if (activeAjax >= maxActiveAjax) {
-      queueAjax({type: "magnifier", message: message, worker: myWorker});
+   debug("AJAX magnifier request (" + message.pid + ")");
+   var i,url;
+   if (message.num > 1) {
+      url = [];
+      for (i=0; i<message.num; i++) {
+         url.push("http://www.tumblr.com/photo/1280/" + message.pid + "/" +
+                  (i+1) + "/" + message.code);
+         url.push(message.captions[i]);
+      }
+      url = JSON.stringify(url);
    }
    else {
-      debug("AJAX magnifier request (" + message.pid + ")");
-      startAjax(message.pid);
-      doAjax(message.url, message.pid, 0, myWorker,
-             getStorage("extensions.MissingE.magnifier.retries",defaultRetries),
-             "magnifier", doMagnifier, {pid: message.pid});
+      url = "http://www.tumblr.com/photo/1280/" + message.pid + "/1/" +
+         message.code;
    }
+   myWorker.postMessage({greeting: "magnifier", pid: message.pid, success: true,
+                         data: url});
 }
 
 function startTimestamp(message, myWorker) {
@@ -801,58 +716,6 @@ function handleMessage(message, myWorker) {
                                getStorage("extensions.MissingE.version",'0')) > 0,
          msg:locale[message.lang]["update"]});
    }
-   else if (message.greeting == "unfollowerIgnore") {
-      setStorage('extensions.MissingE.unfollower.ignore', message.list);
-   }
-   else if (message.greeting == "close-followChecker") {
-      closeTab(data.url("followChecker/followChecker.html"));
-   }
-   else if (message.greeting == "followChecker") {
-      closeTab(data.url("followChecker/followChecker.html"));
-      followYou = message.followYou;
-      youFollow = message.youFollow;
-      formKey = message.formKey;
-      tabs.open({
-         url: data.url("followChecker/followChecker.html"),
-         onReady: function(tab) {
-            followCheckerTab = tab;
-            tab.attach({
-               contentScriptFile:[data.url("common/jquery-1.5.2.min.js"),
-                                  data.url("followChecker/followCheckerTab.js")
-                                 ],
-               onMessage: function(data) {
-                  handleMessage(data, this);
-               }
-            });
-         }
-      });
-   }
-   else if (message.greeting == "followChecker_fill") {
-      if (myWorker.tab == followCheckerTab &&
-          formKey) {
-         myWorker.postMessage({greeting: "followChecker_fill",
-                              success:true, formKey:formKey,
-                              followYou:followYou, youFollow:youFollow});
-      }
-      else {
-         myWorker.postMessage({greeting: "followChecker_fill",
-                              success:false});
-      }
-   }
-   else if (message.greeting == "unfollow") {
-      var idx = inArray(message.tumblrId + ';' + message.tumblrURL + ';' +
-                        message.tumblrImg, youFollow);
-      if (idx != -1) {
-         youFollow.splice(idx,1);
-      }
-   }
-   else if (message.greeting == "follow") {
-      var idx = inArray(message.tumblrId + ';' + message.tumblrURL + ';' +
-                        message.tumblrImg, followYou);
-      if (idx != -1) {
-         followYou.splice(idx,1);
-      }
-   }
    else if (message.greeting == "reblogYourself") {
       startReblogYourself(message, myWorker);
    }
@@ -917,7 +780,6 @@ function handleMessage(message, myWorker) {
       settings.MissingE_reblogYourself_postPage = getStorage("extensions.MissingE.reblogYourself.postPage",1);
       settings.MissingE_reblogYourself_dashboard = getStorage("extensions.MissingE.reblogYourself.dashboard",1);
       settings.MissingE_reblogYourself_retries = getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries);
-      settings.MissingE_followChecker_retries = getStorage("extensions.MissingE.followChecker.retries",defaultRetries);
       settings.MissingE_postCrushes_prefix = getStorage("extensions.MissingE.postCrushes.prefix","Tumblr Crushes:");
       settings.MissingE_postCrushes_crushSize = getStorage("extensions.MissingE.postCrushes.crushSize",1);
       settings.MissingE_postCrushes_addTags = getStorage("extensions.MissingE.postCrushes.addTags",1);
@@ -927,11 +789,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_replyReplies_addTags = getStorage("extensions.MissingE.replyReplies.addTags",1);
       settings.MissingE_replyReplies_defaultTags = getStorage("extensions.MissingE.replyReplies.defaultTags",'');
       settings.MissingE_replyReplies_newTab = getStorage("extensions.MissingE.replyReplies.newTab",1);
-      settings.MissingE_unfollower_retries = getStorage("extensions.MissingE.unfollower.retries",defaultRetries);
-      settings.MissingE_unfollower_ignore = getStorage("extensions.MissingE.unfollower.ignore",'');
-      settings.MissingE_betterReblogs_passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
-      settings.MissingE_betterReblogs_retries = getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries);
-      settings.MissingE_betterReblogs_autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
+      settings.MissingE_betterReblogs_noPassTags = getStorage("extensions.MissingE.betterReblogs.noPassTags",0);
       settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
@@ -1020,21 +878,11 @@ function handleMessage(message, myWorker) {
             settings.quickButtons = getStorage("extensions.MissingE.postingFixes.quickButtons",1);
             settings.blogSelect = getStorage("extensions.MissingE.postingFixes.blogSelect",0);
             break;
-         case "unfollower":
-            settings.addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
-            if (getStorage("extensions.MissingE.sidebarTweaks.enabled",1) == 0) {
-               settings.addSidebar = 0;
-            }
-            settings.ignore = getStorage("extensions.MissingE.unfollower.ignore",'');
-         case "followChecker":
-            settings.retries = getStorage("extensions.MissingE." + message.component + ".retries",defaultRetries);
-            break;
          case "magnifier":
             settings.magnifyAvatars = getStorage("extensions.MissingE.magnifier.magnifyAvatars",0);
             break;
          case "betterReblogs":
-            settings.passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
-            settings.autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
+            settings.noPassTags = getStorage("extensions.MissingE.betterReblogs.noPassTags",0);
             settings.quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
             settings.accountName = '0';
             if (getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0) == 1) {
@@ -1116,20 +964,6 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.bookmarker = false;
-
-         if (getStorage("extensions.MissingE.unfollower.enabled",1) == 1) {
-            injectScripts.push(data.url("unfollower/unfollower.js"));
-            activeScripts.unfollower = true;
-         }
-         else
-            activeScripts.unfollower = false;
-
-         if (getStorage("extensions.MissingE.followChecker.enabled",1) == 1) {
-            injectScripts.push(data.url("followChecker/followChecker.js"));
-            activeScripts.followChecker = true;
-         }
-         else
-            activeScripts.followChecker = false;
 
          if (getStorage("extensions.MissingE.sidebarTweaks.enabled",1) == 1) {
             injectScripts.push(data.url("sidebarTweaks/sidebarTweaks.js"));
@@ -1214,13 +1048,6 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.reblogYourself = false;
-
-         if (getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1 &&
-             getStorage("extensions.MissingE.betterReblogs.passTags",1) == 1) {
-            activeScripts.betterReblogs = true;
-         }
-         else
-            activeScripts.betterReblogs = false;
 
          if (getStorage("extensions.MissingE.postingFixes.enabled",1) == 1 &&
              getStorage("extensions.MissingE.postingFixes.subEdit",1)) {
@@ -1328,9 +1155,7 @@ function handleMessage(message, myWorker) {
          injectScripts.push(data.url("common/widenIframe.js"));
       }
 
-      if (activeScripts.unfollower ||
-          activeScripts.followChecker ||
-          activeScripts.magnifier ||
+      if (activeScripts.magnifier ||
           (activeScripts.askFixes &&
            getStorage("extensions.MissingE.askFixes.askDash",0) == 1)) {
          zindexFix = true;
@@ -1480,5 +1305,6 @@ setIntegerPrefType('extensions.MissingE.replyReplies.smallAvatars',1);
 moveSetting('extensions.MissingE.dashboardFixes.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
 moveSetting('extensions.MissingE.dashboardFixes.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
 collapseSettings('extensions.MissingE.askFixes.betterAnswers','extensions.MissingE.askFixes.buttons','extensions.MissingE.askFixes.tags');
+invertSetting('extensions.MissingE.betterReblogs.passTags','extensions.MissingE.betterReblogs.noPassTags');
 
 console.log("Missing e is running.");

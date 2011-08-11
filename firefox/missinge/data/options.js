@@ -126,10 +126,8 @@ var componentList = ["dashboardFixes",
                      "postingFixes",
                      "reblogYourself",
                      "askFixes",
-                     "followChecker",
                      "postCrushes",
                      "replyReplies",
-                     "unfollower",
                      "massEditor",
                      "sidebarTweaks"];
 
@@ -310,10 +308,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
       }
       else if (v == "betterReblogs") {
-         loadCheck(frm,'MissingE_betterReblogs_passTags',1);
-         loadCheck(frm,'MissingE_betterReblogs_autoFillTags',1);
+         loadCheck(frm,'MissingE_betterReblogs_noPassTags',0);
          loadCheck(frm,'MissingE_betterReblogs_quickReblog',0);
-         frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
          if (getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
             document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;
          else
@@ -339,12 +335,6 @@ function loadSettings() {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);
          loadCheck(frm,'MissingE_reblogYourself_dashboard',1);
          frm.MissingE_reblogYourself_retries.value = getStorage('MissingE_reblogYourself_retries',defaultRetries);
-      }
-      else if (v == "unfollower") {
-         frm.MissingE_unfollower_retries.value = getStorage('MissingE_unfollower_retries',defaultRetries);
-      }
-      else if (v == "followChecker") {
-         frm.MissingE_followChecker_retries.value = getStorage('MissingE_followChecker_retries',defaultRetries);
       }
    }
 }
@@ -430,63 +420,3 @@ function doshow(component) {
       document.getElementById('social_posts').style.display = 'none';
    }
 }
-
-jQuery('#unfollower_ignore_btn').live('click', function() {
-   if (jQuery('#ignoreDiv').length === 0) {
-      jQuery('body').append('<div id="ignoreDiv"></div>');
-   }
-   var i;
-   var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
-   var igtext = '<p>Tumblr accounts ignored by ' +
-               '<strong>Unfollower</strong>:</p>' +
-               '<table border="0">';
-   for (i=0; i<list.length; i++) {
-      var klass = (i%2==1 ? 'class="greyrow"' : '');
-      igtext += '<tr><td ' + klass + '>' + list[i] + '</td>' +
-                  '<td ' + klass + '><button type="button" acct="' +
-                  list[i] + '" class="remignore"><span>Remove</span>' +
-                  '</button></td></tr>';
-   }
-   igtext += '<tr><td class="bottomrow" colspan="2"><button type="button" ' +
-               'class="addignore"><span>Add Ignore...</span></button>' +
-               '</td></tr></table>';
-   jQuery('#ignoreDiv').html(igtext);
-   jQuery.facebox({ div: '#ignoreDiv' }, 'ignorelist');
-});
-
-jQuery('#facebox button').live('click', function() {
-   if (this.className === 'remignore') {
-      var acct = jQuery(this).attr('acct');
-      var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
-      var idx = jQuery.inArray(acct, list);
-      if (idx >= 0) {
-         list.splice(idx,1);
-         setStorage('MissingE_unfollower_ignore',serializeNames(list));
-      }
-      jQuery(this).closest('tr').remove();
-      jQuery('#facebox table tr:even td').removeClass('greyrow');
-      jQuery('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
-   }
-   else if (this.className === 'addignore') {
-      var acct = prompt("Enter a Tumblr username for Unfollower to ignore",'');
-      if (acct) { acct = trim(acct.toLowerCase()); }
-      if (acct && acct !== '' && !(/[^0-9a-zA-Z\-]/.test(acct))) {
-         var list = parseNames(getStorage('MissingE_unfollower_ignore',''));
-         if (jQuery.inArray(acct,list) !== -1) {
-            return;
-         }
-         list.push(acct);
-         list.sort();
-         var idx = jQuery.inArray(acct,list);
-         setStorage('MissingE_unfollower_ignore',serializeNames(list));
-         if (idx >= 0) {
-            jQuery('#facebox table tr:eq(' + idx + ')')
-              .before('<tr><td>' + acct + '</td><td><button type="button" ' +
-                      'acct="' + acct + '" class="remignore"><span>Remove' +
-                      '</span></button></td></tr>');
-            jQuery('#facebox table tr:even td').removeClass('greyrow');
-            jQuery('#facebox table tr:odd td:not(.bottomrow)').addClass('greyrow');
-         }
-      }
-   }
-});

@@ -63,13 +63,27 @@ self.on('message', function (message) {
       }
       return false;
    }
+   if (message.fullText === 1 &&
+       jQuery('#edit_post').hasClass('link_post')) {
+      var src = "src=" + encodeURIComponent($('#post_two').val());
+      if (document.referrer.indexOf(src) >= 0) {
+         console.log(location.origin);
+         location.href = "http://" + location.host + jQuery('#the_as_links a[href*="/text"]').attr("href");
+         return;
+      }
+   }
+   var addHeight = 0;
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
    var tags = getReblogTags();
+   if (tags.length == 0) {
+      setReblogTagsPlainText(document.getElementById('post_tags').value);
+   }
+   tags = getReblogTags();
 
    if (document.body.id === 'dashboard_edit_post') {
       jQuery('#the_as_links a[href!="#"]').click(function() {
-         var pt = document.getElementById('edit_post').post_tags.value;
+         var pt = document.getElementById('post_tags').value;
          if (pt !== '') {
             setReblogTagsPlainText(pt);
          }
@@ -82,20 +96,12 @@ self.on('message', function (message) {
        getReblogTags().length > 0) {
       var i;
       if (tags.length > 0) {
-         var txt = "", fill = "";
          var func = "var tags=[";
          for (i=0; i<tags.length; i++) {
             if (tags[i] !== undefined && tags[i] !== null && tags[i] !== '') {
                func += '\'' + tags[i].replace(/'/g,'\\\'') + '\',';
-               fill += tags[i] + ',';
-               txt += '<div class="token"><span class="tag">' +
-                        escapeHTML(tags[i]) + '</span><a title="' +
-                        locale[lang].removeTag +
-                        '" onclick="tag_editor_remove_tag($(this).up()); ' +
-                        'return false;" href="#">x</a></div>';
             }
          }
-         fill = fill.replace(/,$/,'');
          func = func.replace(/,$/,'') + '];';
          var label;
          if (func !== 'var tags=[];') {
@@ -134,7 +140,7 @@ self.on('message', function (message) {
                     '}return false;';
 
             var set_tags = jQuery('#set_tags');
-            var addHeight = jQuery('<div style="text-align:left">' +
+            addHeight = jQuery('<div style="text-align:left">' +
                               '<a class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
                               'onclick="' + func + '">' +
@@ -149,13 +155,24 @@ self.on('message', function (message) {
                }
             }
          }
-         if (message.autoFillTags === 1 && txt !== '') {
-            document.getElementById('post_tags').value = fill;
-            document.getElementById('tokens').innerHTML = txt;
-            label = document.getElementById('post_tags_label');
-            if (label) {
-               label.parentNode.removeChild(label);
+         if (message.noPassTags === 1) {
+            var label = jQuery('<label for="post_tags" ' +
+              'class="inline_input_label" id="post_tags_label" ' +
+              'style="left:8px;right:auto;text-align:left">tags</label>')
+                  .prependTo('#set_tags');
+            var labelHeight = parseInt(label.css('top').match(/[0-9]*/)[0]);
+            if (!isNaN(labelHeight)) {
+               labelHeight += addHeight;
+               label.css('top',labelHeight+'px');
             }
+            document.getElementById('post_tags').value = "";
+            document.getElementById('tokens').innerHTML = "";
+         }
+         else {
+            jQuery('head').append('<script type="text/javascript">' +
+                             'function MissingE_reblogTags() { ' +
+                             func + ' }' + "\n" + 'MissingE_reblogTags();' +
+                             '</script>');
          }
       }
       clearReblogTags();
