@@ -59,6 +59,14 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       return false;
    }
    var betterReblogs_settings = JSON.parse(response);
+   if (betterReblogs_settings.fullText === 1 &&
+       $('#edit_post').hasClass('link_post')) {
+      var src = "src=" + encodeURIComponent($('#post_two').val());
+      if (document.referrer.indexOf(src) >= 0) {
+         location.href = $('#the_as_links a[href*="/text"]').attr("href");
+         return;
+      }
+   }
    var addHeight = 0;
    var lang = $('html').attr('lang');
    var tags = getReblogTags();
