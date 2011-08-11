@@ -28,7 +28,6 @@
 <script type="text/javascript" src="common/storage.js"></script>
 <script type="text/javascript" src="common/localizations.js"></script>
 <script>
-var apiKey = 'HIDf1EQIINTKHR0uuebSOlArYA5mnsdgrrA5E1RMopz3uNFLx1';
 var maxActiveAjax = 15;
 var activeAjax = 0;
 var activeRequests = {};
@@ -87,16 +86,7 @@ function doTimestamp(stamp, id, sendResponse) {
    var d = new Date(ts*1000);
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
    ins = getFormattedDate(d, ins, lang);
-   if (stamp.blog_name) {
-      ins = ins.replace(/%X/g,'<a href="http://api.tumblr.com/v2/blog/' +
-                        stamp.blog_name + '.tumblr.com/posts?api_key=' +
-                        apiKey + '&id=' + id + '">' + id + '</a> ' +
-                        '<a href="http://' + stamp.blog_name + '.tumblr.com/' +
-                        'api/read/json?id=' + id + '"><small>OLD</small></a>');
-   }
-   else {
-      ins = ins.replace(/%X/g,id);
-   }
+   ins = ins.replace(/%X/g,id);
    sendResponse({pid: id, success: true, data: ins});
 }
 
