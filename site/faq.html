@@ -97,8 +97,6 @@ jQuery(document).ready(function($) {
 <ul>
 <li><a href="#uploader-load">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</a></li>
 </ul>
-<h2>Reblog Yourself</h2>
-<ul>
 <li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del> (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</a></li>
 </ul>
 <h2>Reply Replies</h2>
@@ -324,7 +322,7 @@ jQuery(document).ready(function($) {
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="reblog-load"></a><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>  (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</p>
 <div class="response">
-<p>In order to add a reblog link to your posts on the dashboard, <em>Reblog Yourself</em> has to make a call to the Tumblr API. During times when Tumblr is very busy or error-prone, the API may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <strong><del>reblog</del></strong>.</p><p>You can click on the <strong><del>reblog</del></strong> text to tell <em>Reblog Yourself</em> to try again. If it shows up without the strikethrough (ie. '<strong>reblog</strong>'), then the link works!</p><p>You should note that the reblog button added to individual post pages (not on the dashboard) is more or less unaffected by Tumblr API problems.</p>
+<p>In order to add a reblog link to your posts on the dashboard, <em>Reblog Yourself</em> has to read that post's <strong>permalink</strong> page. During times when Tumblr is very busy or error-prone, this may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <strong><del>reblog</del></strong>.</p><p>You can click on the <strong><del>reblog</del></strong> text to tell <em>Reblog Yourself</em> to try again. If it shows up without the strikethrough (ie. '<strong>reblog</strong>'), then the link works!</p><p>You should note that the reblog button added to individual post pages (not on the dashboard) is more or less unaffected by Tumblr server problems.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="replies-how"></a><p class="question">How do I reply to a reply (or other notification)?</p>
 <div class="response">
