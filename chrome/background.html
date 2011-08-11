@@ -196,10 +196,7 @@ function cacheServe(type, id, sendResponse, fn, midFlight) {
 }
 
 function runItem(call) {
-   if (call.type === "magnifier") {
-      requestMagnifier(call.request, call.sender, call.sendResponse, call.hash);
-   }
-   else if (call.type === "reblogYourself") {
+   if (call.type === "reblogYourself") {
       requestReblogYourself(call.request, call.sender, call.sendResponse, call.hash);
    }
    else if (call.type === "timestamp") {
@@ -576,20 +573,22 @@ function requestMagnifier(request, sender, sendResponse, hash) {
       dequeueAjax();
       return;
    }
-   else if (cacheServe("magnifier", request.pid, sendResponse, doMagnifier, false)) {
-      return true;
-   }
-   else if (isRequested({type: "magnifier", request: request, sender: sender, sendResponse: sendResponse, hash: hash})) {
-      return true;
-   }
-   else if (activeAjax >= maxActiveAjax) {
-      queueAjax({type: "magnifier", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
-   }
    else {
-      doAjax(request, sender, sendResponse, hash,
-             getStorage("MissingE_magnifier_retries",defaultRetries),
-             "magnifier", doMagnifier,
-             {pid: request.pid});
+      var i,url;
+      if (request.num > 1) {
+         url = [];
+         for (i=0; i<request.num; i++) {
+            url.push("http://www.tumblr.com/photo/1280/" + request.pid + "/" +
+                     (i+1) + "/" + request.code);
+            url.push(request.captions[i]);
+         }
+         url = JSON.stringify(url);
+      }
+      else {
+         url = "http://www.tumblr.com/photo/1280/" + request.pid + "/1/" +
+            request.code;
+      }
+      sendResponse({pid: request.pid, success: true, data: url});
    }
 }
 

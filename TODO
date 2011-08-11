@@ -36,3 +36,33 @@ rk = null;
 console.log(rk);
 });
 
+
+magnifier sample code:
+      var img = $(item).find('div.post_content img.image:first').attr("src");
+      var iumatch = img.match(/\/(tumblr_[^_]*)/);
+      if (iumatch && iumatch.length > 1) {
+         iurl = iumatch[1].substr(0,iumatch[1].length-2);
+         /*
+         $.ajax({
+            url:'http://www.tumblr.com/photo/1280/' + tid + '/1/' + iurl,
+            type:'HEAD',
+            error: function() {
+               console.log("NO 1280!");
+            },
+            success: function(data) {
+               console.log("1280");
+               console.log(data.length);
+            }
+         });
+         */
+         xmlhttp = new XMLHttpRequest();
+
+         //if photoset, use 1,2,3, etc after tid
+         xmlhttp.open("HEAD", 'http://www.tumblr.com/photo/1280/' + tid + '/1/' + iurl, true);
+         xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4) {
+               console.log(xmlhttp.getAllResponseHeaders());
+            }
+         }
+         xmlhttp.send(null);
+      }

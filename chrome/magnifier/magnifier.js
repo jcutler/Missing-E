@@ -102,48 +102,66 @@ function insertMagnifier(item) {
       var ctrl = $(item).find('div.post_controls');
       var bm = ctrl.find('a.MissingE_mark');
       var heart = ctrl.find('a.like_button');
+      var count = 1;
+      var caps;
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
-      var addr;
-      var perm = $(item).find("a.permalink:first");
-      ctrl.find('a.MissingE_magnify').remove();
-      if (perm.length > 0) {
-         addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
+      var str, img;
+      var set = $('#photoset_' + tid);
+
+      if (set.length > 0) {
+         var imgs = set.find('img');
+         count = imgs.length;
+         caps = [];
+         imgs.each(function(i) {
+            var thecap = $(this).attr('alt');
+            if (!thecap) { thecap = ""; }
+            caps.push(thecap);
+         });
+         img = imgs.first();
       }
       else {
-         if ($(item).find('span.private_label').length > 0) {
-            addr = location.href
-               .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/)[1];
-            addr = 'http://' + addr + '.tumblr.com';
-         }
+         img = $(item).find('div.post_content img:first');
       }
-      var mi = $('<a title="' + locale[lang].loading + '" ' +
-                 'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
-                 tid + '" href="#" onclick="return false;"></a>');
-      mi.click(magClick);
-      if (bm.length > 0) {
-         bm.before(mi);
-      }
-      else if (heart.length > 0) {
-         heart.before(mi);
-      }
-      else {
-         ctrl.append(mi);
-      }
-      chrome.extension.sendRequest({greeting: "magnifier", pid: tid, url: addr},
-                                   function(response) {
-         var lang = $('html').attr('lang');
-         if (response.success) {
-            $('#magnify_' + response.pid).attr('src',response.data)
-               .removeClass('MissingE_magnify_hide')
-               .attr('title', locale[lang].magnify);
+      if (img.length > 0) {
+         str = img.attr("src").match(/\/(tumblr_[^_]*)/);
+         if (str && str.length > 1) {
+            str = str[1].substr(0,str[1].length-2);
          }
          else {
-            $('#magnify_' + response.pid).attr('src','')
-               .addClass('MissingE_magnify_err')
-               .removeClass('MissingE_magnify_hide')
-               .attr('title', locale[lang].error);
+            str = null;
          }
-      });
+      }
+      if (str) {
+         var mi = $('<a title="' + locale[lang].loading + '" ' +
+                    'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
+                    tid + '" href="#" onclick="return false;"></a>');
+         mi.click(magClick);
+         if (bm.length > 0) {
+            bm.before(mi);
+         }
+         else if (heart.length > 0) {
+            heart.before(mi);
+         }
+         else {
+            ctrl.append(mi);
+         }
+         chrome.extension.sendRequest({greeting: "magnifier", pid: tid,
+                                       code: str, num: count, captions: caps},
+                                      function(response) {
+            var lang = $('html').attr('lang');
+            if (response.success) {
+               $('#magnify_' + response.pid).attr('src',response.data)
+                  .removeClass('MissingE_magnify_hide')
+                  .attr('title', locale[lang].magnify);
+            }
+            else {
+               $('#magnify_' + response.pid).attr('src','')
+                  .addClass('MissingE_magnify_err')
+                  .removeClass('MissingE_magnify_hide')
+                  .attr('title', locale[lang].error);
+            }
+         });
+      }
    }
 }
 
