@@ -19,3 +19,7 @@ Add intermediate AJAX handler
 Mass delete queue/draft posts [mangtimang]
 
 http://groups.google.com/group/tumblr-api/browse_thread/thread/8c04530fc010b3e4#
+
+TO TEST (in Safari/FF):
+reblog tag in quick reblog
+no pass tags in edit and reblog modes
