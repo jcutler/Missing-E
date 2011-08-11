@@ -42,9 +42,6 @@ var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
 var tabs = {};
-var formKey;
-var followYou = [];
-var youFollow = [];
 var lang = 'en';
 
 function addTab(id, url) {
@@ -95,26 +92,6 @@ function doReblogDash(stamp, id, sendResponse) {
    var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
                       getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
    sendResponse({pid: id, success: true, data: key, icons: replaceIcons});
-}
-
-function doMagnifier(stamp, id, sendResponse) {
-   var url;
-   if (stamp.photos.length > 1) {
-      url = new Array();
-      for (i=0; i<stamp.photos.length; i++) {
-         url.push(stamp.photos[i].alt_sizes[0].url);
-         var cap = stamp.photos[i].caption;
-         if (cap == undefined || cap == null)
-            url.push("");
-         else
-            url.push(cap);
-      }
-      url = JSON.stringify(url);
-   }
-   else {
-      url = stamp.photos[0].alt_sizes[0].url;
-   }
-   sendResponse({pid: id, success: true, data: url});
 }
 
 function queueAjax(details) {
