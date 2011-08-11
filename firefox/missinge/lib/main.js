@@ -1096,7 +1096,9 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.postingFixes = false;
-
+      }
+      if (!message.isFrame &&
+         /http:\/\/www\.tumblr\.com\/reblog\//.test(message.url)) {
          if (getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1) {
             injectScripts.push(data.url("betterReblogs/betterReblogs_fill.js"));
             activeScripts.betterReblogs = true;

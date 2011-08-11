@@ -967,7 +967,9 @@ function handleRequest(request) {
          }
          else
             activeScripts.postingFixes = false;
-
+      }
+      if (!request.message.isFrame &&
+          /http:\/\/www\.tumblr\.com\/reblog\//.test(request.message.url)) {
          if (getStorage("MissingE_betterReblogs_enabled",1) == 1) {
             activeScripts.betterReblogs = true;
             activeScripts.betterReblogs_fill = true;
