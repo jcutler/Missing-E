@@ -138,8 +138,7 @@ function MissingE_betterReblogs_fill_doStartup(noPassTags, fullText) {
 
             var set_tags = $('#set_tags');
             addHeight = $('<div style="text-align:left">' +
-                              '<a id="MissingE_reblog_tags" ' +
-                              'class="reblog_tags" style="color:#666;' +
+                              '<a class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
                               'onclick="' + func + '">' +
                               locale[lang].reblogTags + '</a></div>')
