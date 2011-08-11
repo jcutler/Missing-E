@@ -463,6 +463,7 @@ function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
    });
 }
 
+/*
 function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
                 additional) {
    debug("AJAX " + type + " request (" + request.pid + ")");
@@ -555,6 +556,7 @@ function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
       }
    });
 }
+*/
 
 function requestReblogYourself(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
@@ -1032,14 +1034,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.postCrushes = false;
       }
       if (sender.tab.url == request.url &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(sender.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/.test(sender.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(sender.tab.url))) {
+          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(sender.tab.url) ||
+           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/.test(sender.tab.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "timestamps/timestamps.js"});

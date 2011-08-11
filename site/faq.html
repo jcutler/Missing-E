@@ -368,11 +368,11 @@ jQuery(document).ready(function($) {
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="timestamps-wrongtime"></a><p class="question">Why are some posts shown with the incorrect time?</p>
 <div class="response">
-<p><em>Timestamps</em> uses the Tumblr API to get the time of a post. Unfortunately, Tumblr is known to sometimes report the time of a post incorrectly, often several hours after it was actually posted. For posts where Tumblr is incorrect, <em>Timestamps</em> will also be incorrect.</p>
+<p><em>Timestamps</em> uses the time of a post presented in the Tumblr <strong>permalink</strong> page. Unfortunately, Tumblr is known to sometimes report the time of a post incorrectly, often several hours after it was actually posted. For posts where Tumblr is incorrect, <em>Timestamps</em> will also be incorrect.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="timestamps-load"></a><p class="question">Why do timestamps sometimes fail to load?</p>
 <div class="response">
-<p><em>Timestamps</em> uses the Tumblr API to get the time of a post. During periods when Tumblr is very busy or error-prone, the API may not work correctly. <em>Timestamps</em> will retry a few times before giving up and displaying: <em><strong>Timestamp loading failed. <span style="text-decoration:underline;">Retry</span></strong></em>.</p><p>You can click on '<strong>Retry</strong>' to tell <em>Timestamps</em> to try again.</p>
+<p>In order to add the date and/or time to ask messages in your inbox, <em>Timestamps</em> has to read that post's <strong>permalink</strong> page. During times when Tumblr is very busy or error-prone, this may not work correctly. <em>Timestamps</em> will retry a few times (specified in your settings) before giving up and displaying: <em><strong>Timestamp loading failed. <span style="text-decoration:underline;">Retry</span></strong></em>.</p><p>You can click on '<strong>Retry</strong>' to tell <em>Timestamps</em> to try again.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="experimental-reblogReplies"></a><p class="question">Why is the <span>"Allow replies to reblogs"</span> setting experimental?</p>
 <div class="response">

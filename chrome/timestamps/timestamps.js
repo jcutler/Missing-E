@@ -55,19 +55,6 @@ function loadTimestamp(item) {
             .test(location.pathname)) {
          addr = 'http://www.tumblr.com/edit/';
       }
-      else if (perm.length > 0) {
-         addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
-      }
-      else {
-         if ($(item).find('span.private_label').length > 0) {
-            addr = location.href
-                  .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/)[1];
-            addr = 'http://' + addr + '.tumblr.com';
-         }
-         else {
-            $(item).find('span.MissingE_timestamp').remove();
-         }
-      }
 
       if (tid === undefined || tid === null || tid === "") { return; }
       chrome.extension.sendRequest({greeting: "timestamp", pid: tid, url: addr,
