@@ -194,16 +194,6 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_followChecker_enabled</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>1</real>
-		<key>Key</key>
 		<string>MissingE_postCrushes_enabled</string>
 		<key>Title</key>
 		<string></string>
@@ -215,16 +205,6 @@
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_replyReplies_enabled</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>1</real>
-		<key>Key</key>
-		<string>MissingE_unfollower_enabled</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -662,16 +642,6 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>4</real>
-		<key>Key</key>
-		<string>MissingE_followChecker_retries</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
 		<string>Tumblr Crushes:</string>
 		<key>Key</key>
 		<string>MissingE_postCrushes_prefix</string>
@@ -755,26 +725,6 @@
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_replyReplies_newTab</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>4</real>
-		<key>Key</key>
-		<string>MissingE_unfollower_retries</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<string></string>
-		<key>Key</key>
-		<string>MissingE_unfollower_ignore</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

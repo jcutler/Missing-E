@@ -254,12 +254,12 @@ function doReblog(item,replaceIcons,accountName) {
    });
 }
 
-function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
+function MissingE_betterReblogs_dash_doStartup(noPassTags, quickReblog,
                                                replaceIcons, accountName,
                                                fullText,
                                                quickReblogForceTwitter) {
    var lang = $('html').attr('lang');
-   if (passTags === 1) {
+   if (noPassTags === 0) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
       if (quickReblog === 1) {
          selector = '#MissingE_quick_reblog_manual';
@@ -456,7 +456,7 @@ function MissingE_betterReblogs_dash_doStartup(passTags, quickReblog,
          var marg = parseInt($('body').css('margin-top'));
          if (isNaN(marg)) { marg = 0; }
          var tagarr = [];
-         if (passTags === 1) {
+         if (noPassTags === 0) {
             var tags = reblog.closest('li.post').find('span.tags a');
             if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href)) {
                var i;

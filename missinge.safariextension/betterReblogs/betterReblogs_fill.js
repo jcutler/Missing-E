@@ -45,7 +45,7 @@ function getReblogTags() {
    }
 }
 
-function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
+function MissingE_betterReblogs_fill_doStartup(noPassTags, fullText) {
    if (document.body.id !== 'dashboard_edit_post') {
       if (/[\?&]channel_id=/.test(location.href) &&
           /Request denied/i.test($('#container').text())) {
@@ -57,8 +57,25 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
       }
       return false;
    }
+   if (fullText === 1 &&
+       $('#edit_post').hasClass('link_post')) {
+      var src = encodeURIComponent($('#post_two').val());
+      console.log(src);
+      if (document.referrer.indexOf("src="+src) >= 0 ||
+          (document.referrer === "" &&
+           location.href.indexOf("redirect_to="+src) >= 0)) {
+         location.href = $('#the_as_links a[href*="/text"]').attr("href");
+         return;
+      }
+   }
+   var addHeight = 0;
    var lang = $('html').attr('lang');
    var tags = getReblogTags();
+   if (tags.length == 0) {
+      setReblogTagsPlainText(document.getElementById('edit_post').post_tags
+                             .value);
+   }
+   tags = getReblogTags();
 
    if (document.body.id === 'dashboard_edit_post') {
       $('#the_as_links a[href!="#"]').click(function() {
@@ -76,19 +93,12 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
        getReblogTags().length > 0) {
       var i;
       if (tags.length > 0) {
-         var txt = "", fill = "";
          var func = "var tags=[";
          for (i=0; i<tags.length; i++) {
             if (tags[i] !== undefined && tags[i] !== null && tags[i] !== ''){
                func += '\'' + tags[i].replace(/'/g,'\\\'') + '\',';
-               fill += tags[i] + ',';
-               txt += '<div class="token"><span class="tag">' + tags[i] +
-                        '</span><a title="' + locale[lang].removeTag +
-                        '" onclick="tag_editor_remove_tag($(this).up()); ' +
-                        'return false;" href="#">x</a></div>';
             }
          }
-         fill = fill.replace(/,$/,'');
          func = func.replace(/,$/,'') + '];';
          var label;
          if (func !== 'var tags=[];') {
@@ -127,8 +137,9 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
                     '}return false;';
 
             var set_tags = $('#set_tags');
-            var addHeight = $('<div style="text-align:left">' +
-                              '<a class="reblog_tags" style="color:#666;' +
+            addHeight = $('<div style="text-align:left">' +
+                              '<a id="MissingE_reblog_tags" ' +
+                              'class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
                               'onclick="' + func + '">' +
                               locale[lang].reblogTags + '</a></div>')
@@ -142,13 +153,24 @@ function MissingE_betterReblogs_fill_doStartup(autoFillTags) {
                }
             }
          }
-         if (autoFillTags === 1 && txt !== '') {
-            document.getElementById('post_tags').value = fill;
-            document.getElementById('tokens').innerHTML = txt;
-            label = document.getElementById('post_tags_label');
-            if (label) {
-               label.parentNode.removeChild(label);
+         if (noPassTags === 1) {
+            var label = $('<label for="post_tags" class="inline_input_label" '+
+              'id="post_tags_label" ' +
+              'style="left:8px;right:auto;text-align:left">tags</label>')
+                  .prependTo('#set_tags');
+            var labelHeight = parseInt(label.css('top').match(/[0-9]*/)[0]);
+            if (!isNaN(labelHeight)) {
+               labelHeight += addHeight;
+               label.css('top',labelHeight+'px');
             }
+            document.getElementById('post_tags').value = "";
+            document.getElementById('tokens').innerHTML = "";
+         }
+         else {
+            $('head').append('<script type="text/javascript">' +
+                             'function MissingE_reblogTags() { ' +
+                             func + ' }' + "\n" + 'MissingE_reblogTags();' +
+                             '</script>');
          }
       }
       clearReblogTags();

@@ -59,10 +59,8 @@
 				<string>askFixes/askFixes.js</string>
 				<string>betterReblogs/betterReblogs_dash.js</string>
 				<string>betterReblogs/betterReblogs_fill.js</string>
-				<string>betterReblogs/betterReblogs_post.js</string>
 				<string>bookmarker/bookmarker.js</string>
 				<string>dashLinksToTabs/dashLinksToTabs.js</string>
-				<string>followChecker/followChecker.js</string>
 				<string>gotoDashPost/gotoDashPost.js</string>
 				<string>magnifier/magnifier.js</string>
 				<string>postCrushes/postCrushes.js</string>
@@ -76,7 +74,6 @@
 				<string>replyReplies/replyReplies_fill.js</string>
 				<string>safeDash/safeDash.js</string>
 				<string>timestamps/timestamps.js</string>
-				<string>unfollower/unfollower.js</string>
 				<string>massEditor/massEditor.js</string>
 				<string>postingFixes/subEdit.js</string>
 				<string>common/zindexFix.js</string>
@@ -89,9 +86,7 @@
 			<string>betterReblogs/quickReblog.css</string>
 			<string>bookmarker/bookmarker.css</string>
 			<string>magnifier/magnifier.css</string>
-			<string>followChecker/followChecker.css</string>
 			<string>safeDash/safeDash.css</string>
-			<string>unfollower/unfollower.css</string>
 			<string>postingFixes/postingFixes.css</string>
 			<string>massEditor/massEditor.css</string>
 			<string>sidebarTweaks/sidebarTweaks.css</string>

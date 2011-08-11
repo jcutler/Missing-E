@@ -38,10 +38,8 @@ var componentList = ["dashboardFixes",
                      "postingFixes",
                      "reblogYourself",
                      "askFixes",
-                     "followChecker",
                      "postCrushes",
                      "replyReplies",
-                     "unfollower",
                      "massEditor",
                      "sidebarTweaks"];
 
@@ -59,18 +57,7 @@ var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
-var followCheckerTab = null;
-var formKey;
-var followYou = [];
-var youFollow = [];
 var lang = 'en';
-
-function clearFollowChecker() {
-   followYou = [];
-   youFollow = [];
-   formKey = null;
-   followCheckerTab = null;
-}
 
 function getStorage(key, defVal) {
    var retval = safari.extension.settings[key];
@@ -94,9 +81,6 @@ function setStorage(key, val) {
 cacheClear = setInterval(function() {
    cache = {};
    cacheElements = 0;
-   if (followCheckerTab && !followCheckerTab.page) {
-      clearFollowChecker();
-   }
 }, fiveMinutes);
 clearQueues = setInterval(function() {
    if (activeAjax == 0) {
@@ -115,20 +99,6 @@ function debug(msg) {
    }
 }
 
-function doTags(stamp, id, request) {
-   var tags = stamp.tags;
-   if (!tags) {
-      tags = [];
-   }
-   if (stamp.type === "text" &&
-       getStorage("MissingE_betterReblogs_fullText",0) === 1) {
-      fullText = true;
-   }
-   else { fullText = false; }
-   request.target.page.dispatchMessage("tags",{success: true, data: tags,
-                                               fullText: fullText});
-}
-
 function doTimestamp(stamp, id, request) {
    var ts = stamp.timestamp;
    var d = new Date(ts*1000);
@@ -144,26 +114,6 @@ function doReblogDash(stamp, id, request) {
    request.target.page.dispatchMessage("reblogYourself",{pid: id, success: true, data: key, icons: replaceIcons});
 }
 
-function doMagnifier(stamp, id, request) {
-   var url;
-   if (stamp.photos.length > 1) {
-      url = new Array();
-      for (i=0; i<stamp.photos.length; i++) {
-         url.push(stamp.photos[i].alt_sizes[0].url);
-         var cap = stamp.photos[i].caption;
-         if (cap == undefined || cap == null)
-            url.push("");
-         else
-            url.push(cap);
-      }
-      url = JSON.stringify(url);
-   }
-   else {
-      url = stamp.photos[0].alt_sizes[0].url;
-   }
-   request.target.page.dispatchMessage("magnifier", {pid: id, success: true, data: url});
-}
-
 function queueAjax(details) {
    waitQueue.push(details);
    debug("Queueing " + details.type + " request. " + (waitQueue.length) +
@@ -171,17 +121,11 @@ function queueAjax(details) {
 }
 
 function runItem(call) {
-   if (call.type === "magnifier") {
-      requestMagnifier(call.request);
-   }
-   else if (call.type === "reblogYourself") {
+   if (call.type === "reblogYourself") {
       requestReblogYourself(call.request);
    }
    else if (call.type === "timestamp") {
       requestTimestamp(call.request);
-   }
-   else if (call.type === "tags") {
-      requestTags(call.request);
    }
 }
 
@@ -378,49 +322,40 @@ function doAskAjax(request, retries, type, doFunc) {
    });
 }
 
-function checkPermission(request, retries) {
-   $.ajax({
-      type: "GET",
-      url: "http://www.tumblr.com/tumblelog/" + request.message.user,
-      dataType: "html",
-      tryCount: 0,
-      retryLimit: retries,
-      error: function(xhr, textStatus) {
-         if (xhr.status < 500) {
+function checkPermission(request, retries, tryCount) {
+   var ajax = new XMLHttpRequest();
+   ajax.open("HEAD", "http://www.tumblr.com/tumblelog/" +
+             request.message.user, true);
+   if (!tryCount) { tryCount = 0; }
+   ajax.onreadystatechange = function() {
+      if (request.target.page === undefined) {
+         return;
+      }
+      else if (this.readyState == 4) {
+         console.log(this);
+         if (this.status == 200) {
             request.target.page.dispatchMessage("tumblrPermission",
-                                                {allow: false});
-            return;
+                                                {allow: true});
          }
-         if (request.target.page === undefined) {
-            return;
+         else if (this.status < 500) {
+            request.target.page.dispatchMessage("tumblrPermission",
+                                                {allow:false});
          }
          else {
-            this.tryCount++;
-            if (this.tryCount <= this.retryLimit) {
-               $.ajax(this);
+            tryCount++;
+            if (tryCount <= retries) {
+               checkPermission(request, sender, sendResponse, hash, retries,
+                               tryCount);
                return;
             }
             else {
                request.target.page.dispatchMessage("tumblrPermission",
-                                                   {allow: false});
-            }
-         }
-      },
-      success: function(data, textStatus) {
-         if (!(/<\s*body\s*id="dashboard_index"/.test(data))) {
-            if (request.target.page !== undefined) {
-               request.target.page.dispatchMessage("tumblrPermission",
-                                                   {allow: false});
-            }
-         }
-         else {
-            if (request.target.page !== undefined) {
-               request.target.page.dispatchMessage("tumblrPermission",
-                                                   {allow: true});
+                                                   {allow:false});
             }
          }
       }
-   });
+   };
+   ajax.send();
 }
 
 function doAjax(request, retries, type, doFunc, additional) {
@@ -512,29 +447,6 @@ function doAjax(request, retries, type, doFunc, additional) {
    });
 }
 
-function requestTags(request) {
-   if (request.target.page === undefined) {
-      debug("Stop tags request: Tab closed or changed.");
-      dequeueAjax();
-      return;
-   }
-   else if (cacheServe("tags", request, request.message.pid, doTags,
-                  false)) {
-      return true;
-   }
-   else if (isRequested({type: "tags", request: request})) {
-      return true;
-   }
-   else if (activeAjax >= maxActiveAjax) {
-      queueAjax({type: "tags", request: request});
-   }
-   else {
-      doAjax(request,
-             getStorage("MissingE_betterReblogs_retries",defaultRetries),
-             "tags", doTags);
-   }
-}
-
 function requestTimestamp(request) {
    if (request.message.lang) { lang = request.message.lang; }
    if (request.target.page === undefined) {
@@ -599,21 +511,25 @@ function requestMagnifier(request) {
       dequeueAjax();
       return;
    }
-   else if (cacheServe("magnifier", request.message.pid, request, doMagnifier,
-                  false)) {
-      return true;
-   }
-   else if (isRequested({type: "magnifier", request: request})) {
-      return true;
-   }
-   else if (activeAjax >= maxActiveAjax) {
-      queueAjax({type: "magnifier", request: request});
-   }
    else {
-      doAjax(request,
-             getStorage("MissingE_magnifier_retries",defaultRetries),
-             "magnifier", doMagnifier,
-             {pid: request.pid});
+      var i,url;
+      if (request.message.num > 1) {
+         url = [];
+         for (i=0; i<request.message.num; i++) {
+            url.push("http://www.tumblr.com/photo/1280/" +
+                     request.message.pid + "/" + (i+1) + "/" +
+                     request.message.code);
+            url.push(request.message.captions[i]);
+         }
+         url = JSON.stringify(url);
+      }
+      else {
+         url = "http://www.tumblr.com/photo/1280/" + request.message.pid +
+            "/1/" + request.message.code;
+      }
+      request.target.page.dispatchMessage("magnifier", {pid: request.message.pid,
+                                                        success: true,
+                                                        data: url});
    }
 }
 
@@ -678,48 +594,6 @@ function handleRequest(request) {
    else if (request.name == "close-options") {
       closeTab(request.target.url, request.target);
    }
-   else if (request.name == "unfollowerIgnore") {
-      setStorage('MissingE_unfollower_ignore', request.message.list);
-   }
-   else if (request.name == "close-followChecker") {
-      closeTab(safari.extension.baseURI + "followChecker/followChecker.html");
-   }
-   else if (request.name == "followChecker") {
-      closeTab(safari.extension.baseURI + "followChecker/followChecker.html");
-      followYou = request.message.followYou;
-      youFollow = request.message.youFollow;
-      formKey = request.message.formKey;
-      followCheckerTab = request.target.browserWindow.openTab();
-      followCheckerTab.url = safari.extension.baseURI + "followChecker/followChecker.html";
-   }
-   else if (request.name == "followChecker_fill") {
-      if (request.target == followCheckerTab &&
-          formKey) {
-         request.target.page.dispatchMessage("followChecker_fill",
-                                             {success:true, formKey:formKey,
-                                              followYou:followYou, youFollow:youFollow});
-      }
-      else {
-         request.target.page.dispatchMessage("followChecker_fill",
-                                             {success:false});
-      }
-   }
-   else if (request.name == "unfollow") {
-      var idx = $.inArray(request.message.tumblrId + ';' +
-                          request.message.tumblrURL + ';' +
-                          request.message.tumblrImg, youFollow);
-      if (idx != -1) {
-         youFollow.splice(idx,1);
-      }
-   }
-   else if (request.name == "follow") {
-      var idx = $.inArray(request.message.tumblrId + ';' +
-                          request.message.tumblrURL + ';' +
-                          request.message.tumblrImg, followYou);
-      if (idx != -1) {
-         followYou.splice(idx,1);
-      }
-   }
    else if (request.name == "magnifier") {
       requestMagnifier(request);
    }
@@ -781,7 +655,6 @@ function handleRequest(request) {
       settings.MissingE_reblogYourself_postPage = getStorage("MissingE_reblogYourself_postPage",1);
       settings.MissingE_reblogYourself_dashboard = getStorage("MissingE_reblogYourself_dashboard",1);
       settings.MissingE_reblogYourself_retries = getStorage("MissingE_reblogYourself_retries",defaultRetries);
-      settings.MissingE_followChecker_retries = getStorage("MissingE_followChecker_retries",defaultRetries);
       settings.MissingE_postCrushes_prefix = getStorage("MissingE_postCrushes_prefix","Tumblr Crushes:");
       settings.MissingE_postCrushes_crushSize = getStorage("MissingE_postCrushes_crushSize",1);
       settings.MissingE_postCrushes_addTags = getStorage("MissingE_postCrushes_addTags",1);
@@ -791,11 +664,7 @@ function handleRequest(request) {
       settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
       settings.MissingE_replyReplies_defaultTags = getStorage("MissingE_replyReplies_defaultTags",'');
       settings.MissingE_replyReplies_newTab = getStorage("MissingE_replyReplies_newTab",1);
-      settings.MissingE_unfollower_retries = getStorage("MissingE_unfollower_retries",defaultRetries);
-      settings.MissingE_unfollower_ignore = getStorage("MissingE_unfollower_ignore",'');
-      settings.MissingE_betterReblogs_passTags = getStorage("MissingE_betterReblogs_passTags",1);
-      settings.MissingE_betterReblogs_retries = getStorage("MissingE_betterReblogs_retries",defaultRetries);
-      settings.MissingE_betterReblogs_autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
+      settings.MissingE_betterReblogs_noPassTags = getStorage("MissingE_betterReblogs_passTags",0);
       settings.MissingE_betterReblogs_quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("MissingE_betterReblogs_quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'');
@@ -882,21 +751,11 @@ function handleRequest(request) {
             settings.quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
             settings.blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
             break;
-         case "unfollower":
-            settings.addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);
-            if (getStorage("MissingE_sidebarTweaks_enabled",1) == 0) {
-               settings.addSidebar = 0;
-            }
-            settings.ignore = getStorage("MissingE_unfollower_ignore",'');
-         case "followChecker":
-            settings.retries = getStorage("MissingE_" + request.component + "_retries",defaultRetries);
-            break;
          case "magnifier":
             settings.magnifyAvatars = getStorage("MissingE_magnifier_magnifyAvatars",0);
             break;
          case "betterReblogs":
-            settings.passTags = getStorage("MissingE_betterReblogs_passTags",1);
-            settings.autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
+            settings.noPassTags = getStorage("MissingE_betterReblogs_noPassTags",0);
             settings.quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
             settings.accountName = '0';
             if (getStorage("MissingE_betterReblogs_quickReblogAcctType",0) == 1) {
@@ -965,23 +824,9 @@ function handleRequest(request) {
          else
             activeScripts.bookmarker = false;
 
-         if (getStorage("MissingE_unfollower_enabled",1) == 1 ||
-             getStorage("MissingE_followChecker_enabled",1) == 1 ||
-             getStorage("MissingE_magnifier_enabled",1) == 1) {
+         if (getStorage("MissingE_magnifier_enabled",1) == 1) {
             activeScripts.zindexFix = true;
          }
-
-         if (getStorage("MissingE_unfollower_enabled",1) == 1) {
-            activeScripts.unfollower = true;
-         }
-         else
-            activeScripts.unfollower = false;
-
-         if (getStorage("MissingE_followChecker_enabled",1) == 1) {
-            activeScripts.followChecker = true;
-         }
-         else
-            activeScripts.followChecker = false;
 
          if (getStorage("MissingE_sidebarTweaks_enabled",1) == 1) {
             activeScripts.sidebarTweaks = true;
@@ -1055,13 +900,6 @@ function handleRequest(request) {
          }
          else
             activeScripts.reblogYourself = false;
-
-         if (getStorage("MissingE_betterReblogs_enabled",1) == 1 &&
-             getStorage("MissingE_betterReblogs_passTags",1) == 1) {
-            activeScripts.betterReblogs = true;
-         }
-         else
-            activeScripts.betterReblogs = false;
 
          if (getStorage("MissingE_postingFixes_enabled",1) == 1 &&
              getStorage("MissingE_postingFixes_subEdit",1) == 1) {
@@ -1186,6 +1024,15 @@ function moveSetting(oldpref, newpref) {
    }
 }
 
+function invertSetting(oldpref, newpref) {
+   var pref;
+   if ((pref = safari.extension.settings.getItem(oldpref))) {
+      console.log('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
+      safari.extension.settings[newpref] = (pref === 1 ? 0 : 1);
+      safari.extension.settings.removeItem(oldpref);
+   }
+}
+
 function getVersion() {
    return getStorage("MissingE_version",'');
 }
@@ -1236,6 +1083,7 @@ getExternalVersion();
 moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
 moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
 collapseSettings('MissingE_askFixes_betterAnswers','MissingE_askFixes_buttons','MissingE_askFixes_tags');
+invertSetting('MissingE_betterReblogs_passTags','MissingE_betterReblogs_noPassTags');
 </script>
 </head>
 </html>

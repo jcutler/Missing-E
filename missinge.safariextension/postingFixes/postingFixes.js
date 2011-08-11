@@ -108,7 +108,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                                          blogSelect) {
    var lang = $('html').attr('lang');
    var i,tag;
-   if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href)) {
+   if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href) ||
+       /http:\/\/www\.tumblr\.com\/reblog\//.test(location.href)) {
       var txt="";
       var ctags;
       var posttags = document.getElementById('post_tags');
@@ -426,6 +427,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
 
    if ($('#post_two_ifr,#post_three_ifr').length === 0) {
       $('head').append('<script type="text/javascript">' +
+         'if (tinyMCE) { ' +
          'tinyMCE.onAddEditor.add(function(mgr,ed){' +
             'ed.onPostRender.add(function(ed) {' +
                'var evt = document.createEvent("MessageEvent");' +
@@ -433,7 +435,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                                      '"http://www.tumblr.com", 0, window);' +
                'document.dispatchEvent(evt);' +
             '});' +
-         '});</script>');
+         '});}</script>');
       $(document).bind('MissingE_tinyMCE', function(e) {
          resizeTinyMCE(e.originalEvent.data);
       });

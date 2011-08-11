@@ -26,11 +26,9 @@
   MissingE_askFixes_scroll_doStartup,
   MissingE_betterReblogs_dash_doStartup,
   MissingE_betterReblogs_fill_doStartup,
-  MissingE_betterReblogs_post_doStartup,
   MissingE_bookmarker_doStartup,
   MissingE_dashboardFixes_doStartup,
   MissingE_dashLinksToTabs_doStartup,
-  MissingE_followChecker_doStartup,
   MissingE_gotoDashPost_doStartup,
   MissingE_magnifier_doStartup,
   MissingE_massEditor_doStartup,
@@ -45,7 +43,6 @@
   MissingE_safeDash_doStartup,
   MissingE_sidebarTweaks_doStartup,
   MissingE_timestamps_doStartup,
-  MissingE_unfollower_doStartup,
   safari */ 
 
 if ((window.top === window &&
@@ -167,14 +164,6 @@ function doStartup(response) {
             MissingE_replyReplies_doStartup();
          }
       }
-      if (response.message.followChecker) {
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "followChecker"});
-      }
-      if (response.message.unfollower) {
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "unfollower"});
-      }
       if (response.message.postingFixes) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "postingFixes"});
@@ -206,9 +195,6 @@ function doStartup(response) {
       }
    }
    else {
-      if (response.message.betterReblogs) {
-         MissingE_betterReblogs_post_doStartup(response.message.url);
-      }
       if (response.message.askFixes) {
          MissingE_askFixes_scroll_doStartup();
       }
@@ -247,14 +233,6 @@ function settings_startup(response) {
                                   response.message.askDash,
                                   response.message.massDelete);
    }
-   else if (response.message.component === "followChecker") {
-      MissingE_followChecker_doStartup(response.message.retries);
-   }
-   else if (response.message.component === "unfollower") {
-      MissingE_unfollower_doStartup(response.message.retries,
-                                    response.message.ignore,
-                                    response.message.addSidebar);
-   }
    else if (response.message.component === "dashLinksToTabs") {
       MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs,
                                          response.message.sidebar,
@@ -283,7 +261,7 @@ function settings_startup(response) {
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {
-         MissingE_betterReblogs_dash_doStartup(response.message.passTags,
+         MissingE_betterReblogs_dash_doStartup(response.message.noPassTags,
                                      response.message.quickReblog,
                                      response.message.replaceIcons,
                                      response.message.accountName,
@@ -291,7 +269,8 @@ function settings_startup(response) {
                                      response.message.quickReblogForceTwitter);
       }
       else if (response.message.subcomponent === "fill") {
-         MissingE_betterReblogs_fill_doStartup(response.message.autoFillTags);
+         MissingE_betterReblogs_fill_doStartup(response.message.noPassTags,
+                                               response.message.fullText);
       }
    }
 }
