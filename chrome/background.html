@@ -369,7 +369,7 @@ function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
             dequeueAjax(this.targetId);
             return;
          }
-         if (cacheServe("reblogYourself", request.pid, sendResponse, doFunc, true)) {
+         if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, true)) {
             return true;
          }
          else {
@@ -395,7 +395,7 @@ function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
                dequeueAjax(this.targetId);
                return;
             }
-            if (cacheServe("reblogYourself", request.pid, sendResponse, doFunc, true)) {
+            if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, true)) {
                return true;
             }
             else {
@@ -585,7 +585,6 @@ function requestTimestamp(request, sender, sendResponse, hash) {
 function requestMagnifier(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop magnifier request: Tab closed or changed.");
-      dequeueAjax();
       return;
    }
    else {
