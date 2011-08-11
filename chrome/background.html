@@ -190,9 +190,6 @@ function runItem(call) {
    else if (call.type === "timestamp") {
       requestTimestamp(call.request, call.sender, call.sendResponse, call.hash);
    }
-   else if (call.type === "tags") {
-      requestTags(call.request, call.sender, call.sendResponse, call.hash);
-   }
 }
 
 function wakeById(id) {
@@ -370,6 +367,102 @@ function checkPermission(request, sender, sendResponse, hash, retries, tryCount)
    ajax.send();
 }
 
+function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
+                              additional) {
+   debug("AJAX reblogYourself request (" + request.pid + ")");
+   startAjax(request.pid);
+   var failMsg = {success:false};
+   if (additional) {
+      for (i in additional) {
+         if (additional.hasOwnProperty(i)) {
+            failMsg[i] = additional[i];
+         }
+      }
+   }
+   $.ajax({
+      type: "GET",
+      url: request.url,
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.pid,
+      tabId: sender.tab.id,
+      tabHash: hash,
+      error: function(xhr, textStatus) {
+         if (xhr.status === 404) {
+            debug("reblogYourself request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            sendResponse(failMsg);
+            return;
+         }
+         if (this.tabHash !== tabs[this.tabId]) {
+            debug("Stop reblogYourself request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         if (cacheServe("reblogYourself", request.pid, sendResponse, doFunc, true)) {
+            return true;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry reblogYourself request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug("reblogYourself request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               sendResponse(failMsg);
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         var closed = (this.tabHash !== tabs[this.tabId]);
+         var ifr = data.match(/<\s*iframe[^>]*>/);
+         if (!ifr || ifr.length === 0) {
+            if (closed) {
+               debug("Stop reblogYourself request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (cacheServe("reblogYourself", request.pid, sendResponse, doFunc, true)) {
+               return true;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry reblogYourself request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug("reblogYourself request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  sendResponse(failMsg);
+               }
+            }
+         }
+         else {
+            var rk = ifr[0].match(/rk=([^&]*)/);
+            if (rk && rk.length > 1) {
+               var info = {"reblog_key":rk[1]};
+               saveCache(this.targetId, info);
+               dequeueAjax(this.targetId);
+               if (!closed) {
+                  doReblogDash(info, this.targetId, sendResponse);
+               }
+            }
+            else {
+               debug("reblogYourself request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               sendResponse(failMsg);
+            }
+         }
+      }
+   });
+}
+
 function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
                 additional) {
    debug("AJAX " + type + " request (" + request.pid + ")");
@@ -479,9 +572,8 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
       queueAjax({type: "reblogYourself", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
    }
    else {
-      doAjax(request, sender, sendResponse, hash,
+      doReblogYourselfAjax(request, sender, sendResponse, hash,
              getStorage("MissingE_reblogYourself_retries",defaultRetries),
-             "reblogYourself", doReblogDash,
              {
                pid:request.pid,
                icons:getStorage("MissingE_dashboardFixes_enabled",1) == 1 && 

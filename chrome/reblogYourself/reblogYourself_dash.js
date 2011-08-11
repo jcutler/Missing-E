@@ -43,10 +43,10 @@ function addReblog(item) {
       if (perm.length === 0) {
          return;
       }
-      var addr = perm.attr("href").match(/http:\/\/[^\/]*/)[0];
 
       chrome.extension.sendRequest({greeting: "reblogYourself", pid: tid,
-                                    url: addr}, function(response) {
+                                    url: perm.attr("href")},
+                                   function(response) {
          var edit, txt, klass;
          var lang = $('html').attr("lang");
          var reblog_text = locale[lang].reblog;
