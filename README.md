@@ -8,7 +8,7 @@
 ***
 
 Jeremy Cutler ([cutlerish.tumblr.com](cutlerish.tumblr.com))  
-Released under the [GPL Version 3 License](http://www.gnu.org/licenses/gpl-3.0.html)
+Released under the [GPL Version 2 License](http://www.gnu.org/licenses/gpl-2.0.html)
 
 If you enjoy this extension, please consider [donating](http://www.pledgie.com/campaigns/14406) to support future development.  
 <a href="http://www.pledgie.com/campaigns/14406">![](http://missinge.infraware.ca/images/pledgie.png)</a>
