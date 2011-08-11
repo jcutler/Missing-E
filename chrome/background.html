@@ -352,49 +352,35 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
    });
 }
 
-function checkPermission(request, sender, sendResponse, hash, retries) {
-   $.ajax({
-      type: "GET",
-      url: "http://www.tumblr.com/tumblelog/" + request.user,
-      dataType: "html",
-      tryCount: 0,
-      retryLimit: retries,
-      tabId: sender.tab.id,
-      tabHash: hash,
-      error: function(xhr, textStatus) {
-         if (xhr.status < 500) {
-            sendResponse({allow: false});
-            return;
+function checkPermission(request, sender, sendResponse, hash, retries, tryCount) {
+   var ajax = new XMLHttpRequest();
+   ajax.open("HEAD", "http://www.tumblr.com/tumblelog/" + request.user, true);
+   ajax.tabHash = hash;
+   ajax.tabId = sender.tab.id;
+   if (!tryCount) { tryCount = 0; }
+   ajax.onreadystatechange = function() {
+      if (this.tabHash !== tabs[this.tabId]) {
+         return;
+      }
+      else if (this.readyState == 4) {
+         if (this.status == 200) {
+            sendResponse({allow: true});
          }
-         if (this.tabHash !== tabs[this.tabId]) {
-            return;
-         }
-         else {
-            this.tryCount++;
-            if (this.tryCount <= this.retryLimit) {
-               $.ajax(this);
-               return;
-            }
-            else {
-               sendResponse({allow: false});
-            }
-         }
-      },
-      success: function(data, textStatus) {
-         var closed = (this.tabHash !== tabs[this.tabId]);
-         if (!(/<\s*body\s*id="dashboard_index"/.test(data))) {
-            if (closed) {
-               return;
-            }
-            sendResponse({allow: false});
+         else if (this.status < 500) {
+            sendResponse({allow:false});
          }
          else {
-            if (!closed) {
-               sendResponse({allow: true});
+            tryCount++;
+            if (tryCount <= retries) {
+               console.log("retry");
+               checkPermission(request, sender, sendResponse, hash, retries,
+                               tryCount);
+               return;
             }
          }
       }
-   });
+   };
+   ajax.send();
 }
 
 function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
