@@ -56,7 +56,8 @@ function loadTimestamp(item) {
          addr = 'http://www.tumblr.com/edit/';
       }
 
-      if (tid === undefined || tid === null || tid === "") { return; }
+      if (tid === undefined || tid === null || tid === "" ||
+          addr === undefined) { return; }
       chrome.extension.sendRequest({greeting: "timestamp", pid: tid, url: addr,
                                     lang: lang}, function(response) {
          if (response.success) {
