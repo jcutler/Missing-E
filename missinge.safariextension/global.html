@@ -2,14 +2,14 @@
  - 'Missing e' Extension
  -
  - Copyright 2011, Jeremy Cutler
- - Released under the GPL version 3 licence.
+ - Released under the GPL version 2 licence.
  - SEE: GPL-LICENSE.txt
  -
  - This file is part of 'Missing e'.
  -
  - 'Missing e' is free software: you can redistribute it and/or modify
  - it under the terms of the GNU General Public License as published by
- - the Free Software Foundation, either version 3 of the License, or
+ - the Free Software Foundation, either version 2 of the License, or
  - (at your option) any later version.
  -
  - 'Missing e' is distributed in the hope that it will be useful,
@@ -43,7 +43,6 @@ var componentList = ["dashboardFixes",
                      "massEditor",
                      "sidebarTweaks"];
 
-var apiKey = 'HIDf1EQIINTKHR0uuebSOlArYA5mnsdgrrA5E1RMopz3uNFLx1';
 var maxActiveAjax = 15;
 var activeAjax = 0;
 var activeRequests = {};
@@ -358,6 +357,99 @@ function checkPermission(request, retries, tryCount) {
    ajax.send();
 }
 
+function doReblogYourselfAjax(request, retries, additional) {
+   debug("AJAX reblogYourself request (" + request.message.pid + ")");
+   startAjax(request.message.pid);
+   var failMsg = {success:false};
+   if (additional) {
+      for (i in additional) {
+         if (additional.hasOwnProperty(i)) {
+            failMsg[i] = additional[i];
+         }
+      }
+   }
+   $.ajax({
+      type: "GET",
+      url: request.message.url,
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.message.pid,
+      error: function(xhr, textStatus) {
+         if (xhr.status === 404) {
+            debug("reblogYourself request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            request.target.page.dispatchMessage("reblogYourself",failMsg);
+            return;
+         }
+         if (request.target.page === undefined) {
+            debug("Stop reblogYourself request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         if (cacheServe("reblogYourself", request.message.pid, doReblogDash, true)) {
+            return true;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry reblogYourself request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug("reblogYourself request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               request.target.page.dispatchMessage("reblogYourself",failMsg);
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         var ifr = data.match(/<\s*iframe[^>]*>/);
+         if (!ifr || ifr.length === 0) {
+            if (request.target.page === undefined) {
+               debug("Stop reblogYourself request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (cacheServe("reblogYourself", request.message.pid, doReblogDash, true)) {
+               return true;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry reblogYourself request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug("reblogYourself request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  request.target.page.dispatchMessage("reblogYourself",failMsg);
+               }
+            }
+         }
+         else {
+            var rk = ifr[0].match(/rk=([^&]*)/);
+            if (rk && rk.length > 1) {
+               var info = {"reblog_key":rk[1]};
+               saveCache(this.targetId, info);
+               dequeueAjax(this.targetId);
+               if (request.target.page !== undefined) {
+                  doReblogDash(info, this.targetId, request);
+               }
+            }
+            else if (request.target.page !== undefined) {
+               debug("reblogYourself request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               request.target.page.dispatchMessage("reblogYourself",failMsg);
+            }
+         }
+      }
+   });
+}
+
+/*
 function doAjax(request, retries, type, doFunc, additional) {
    debug("AJAX " + type + " request (" + request.message.pid + ")");
    startAjax(request.message.pid);
@@ -446,6 +538,7 @@ function doAjax(request, retries, type, doFunc, additional) {
       }
    });
 }
+*/
 
 function requestTimestamp(request) {
    if (request.message.lang) { lang = request.message.lang; }
@@ -494,9 +587,8 @@ function requestReblogYourself(request) {
       queueAjax({type: "reblogYourself", request: request});
    }
    else {
-      doAjax(request,
+      doReblogYourselfAjax(request,
              getStorage("MissingE_reblogYourself_retries",defaultRetries),
-             "reblogYourself", doReblogDash,
              {
                pid:request.pid,
                icons:getStorage("MissingE_dashboardFixes_enabled",1) == 1 && 
@@ -508,7 +600,6 @@ function requestReblogYourself(request) {
 function requestMagnifier(request) {
    if (request.target.page === undefined) {
       debug("Stop magnifier request: Tab closed or changed.");
-      dequeueAjax();
       return;
    }
    else {
@@ -953,14 +1044,8 @@ function handleRequest(request) {
             activeScripts.postCrushes = false;
       }
       if (!request.message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(request.message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/.test(request.message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(request.message.url))) {
+          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(request.message.url) ||
+           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/.test(request.message.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
          }

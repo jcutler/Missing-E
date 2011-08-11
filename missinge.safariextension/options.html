@@ -3,14 +3,14 @@
  - 'Missing e' Extension
  -
  - Copyright 2011, Jeremy Cutler
- - Released under the GPL version 3 licence.
+ - Released under the GPL version 2 licence.
  - SEE: GPL-LICENSE.txt
  -
  - This file is part of 'Missing e'.
  -
  - 'Missing e' is free software: you can redistribute it and/or modify
  - it under the terms of the GNU General Public License as published by
- - the Free Software Foundation, either version 3 of the License, or
+ - the Free Software Foundation, either version 2 of the License, or
  - (at your option) any later version.
  -
  - 'Missing e' is distributed in the hope that it will be useful,
@@ -1044,7 +1044,7 @@ function doshow(component) {
 <p class="smaller"><a href="http://blog.missinge.infraware.ca/tagged/settings+series">Learn about <strong>Missing e</strong>'s settings.</a></p>
 <p class="smaller">Follow <a href="http://blog.missinge.infraware.ca/" target="_blank"><strong>Missing e</strong>'s Tumblr</a> to get news and information about this extension.</p></div></div>
 <p class="first">If you enjoy this extension, please consider <a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8">donating</a> to support future development<br />
-<a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8"><img src="images/pledgie.png" border="0" alt="Support development by donating to Missing e! [PayPal]"></a></p><p>Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br />Released under the <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GPL Version 3 License</a></p>
+<a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8"><img src="images/pledgie.png" border="0" alt="Support development by donating to Missing e! [PayPal]"></a></p><p>Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br />Released under the <a href="http://www.gnu.org/licenses/gpl-2.0.html" target="_blank">GPL Version 2 License</a></p><p class="first"><small><em>Missing e</em> is not endorsed or certified by Tumblr, Inc. nor is it affiliated with Tumblr in any way. All of the Tumblr logos and trademarks displayed in this extension are the property of Tumblr, Inc.</small></p>
 </div>
 <div class="clear"></div>
 <div>
@@ -1197,7 +1197,7 @@ function doshow(component) {
 <div class="post_content">
 <form id="timestamps_options">
 <div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Timestamps</div>
-<p><em>Timestamps</em> will add the date and time of a post on your dashboard.</p><p><strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.</p>
+<p><em>Timestamps</em> will add the date and time of an <em>ask</em>, <em>private message</em> or <em>submission</em> in your inbox, messages and submissions pages.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" size="1" type="text" name="MissingE_timestamps_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Timestamp format<br />
