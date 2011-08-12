@@ -755,7 +755,7 @@ function handleRequest(request) {
       settings.MissingE_replyReplies_addTags = getStorage("MissingE_replyReplies_addTags",1);
       settings.MissingE_replyReplies_defaultTags = getStorage("MissingE_replyReplies_defaultTags",'');
       settings.MissingE_replyReplies_newTab = getStorage("MissingE_replyReplies_newTab",1);
-      settings.MissingE_betterReblogs_noPassTags = getStorage("MissingE_betterReblogs_passTags",0);
+      settings.MissingE_betterReblogs_noPassTags = getStorage("MissingE_betterReblogs_noPassTags",0);
       settings.MissingE_betterReblogs_quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("MissingE_betterReblogs_quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'');
@@ -1089,6 +1089,7 @@ function collapseSettings(toPref, oldA, oldB) {
    var prefA = safari.extension.settings.getItem(oldA);
    var prefB = safari.extension.settings.getItem(oldB);
    var newPref = 0;
+
    if (prefA || prefB) {
       console.log('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
    }
@@ -1096,7 +1097,9 @@ function collapseSettings(toPref, oldA, oldB) {
       newPref = 1;
    }
    if (prefA !== undefined || prefB !== undefined) {
-      safari.extension.settings[toPref] = newPref;
+      if (safari.extension.settings.getItem(toPref) === null) {
+         safari.extension.settings[toPref] = newPref;
+      }
       safari.extension.settings.removeItem(oldA);
       safari.extension.settings.removeItem(oldB);
    }
@@ -1106,7 +1109,9 @@ function moveSetting(oldpref, newpref) {
    var pref;
    if ((pref = safari.extension.settings.getItem(oldpref))) {
       console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
-      safari.extension.settings[newpref] = pref;
+      if (safari.extension.settings.getItem(newpref) === null) {
+         safari.extension.settings[newpref] = pref;
+      }
       safari.extension.settings.removeItem(oldpref);
    }
 }
@@ -1115,7 +1120,9 @@ function invertSetting(oldpref, newpref) {
    var pref;
    if ((pref = safari.extension.settings.getItem(oldpref))) {
       console.log('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
-      safari.extension.settings[newpref] = (pref === 1 ? 0 : 1);
+      if (safari.extension.settings.getItem(newPref) === null) {
+         safari.extension.settings[newpref] = (pref === 1 ? 0 : 1);
+      }
       safari.extension.settings.removeItem(oldpref);
    }
 }

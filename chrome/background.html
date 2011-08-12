@@ -1063,7 +1063,9 @@ function collapseSettings(toPref, oldA, oldB) {
       newPref = "1";
    }
    if (prefA || prefB) {
-      localStorage[toPref] = newPref;
+      if (localStorage.getItem(toPref) === null) {
+         localStorage[toPref] = newPref;
+      }
       localStorage.removeItem(oldA);
       localStorage.removeItem(oldB);
    }
@@ -1073,7 +1075,9 @@ function moveSetting(oldpref, newpref) {
    var pref;
    if ((pref = localStorage[oldpref])) {
       console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
-      localStorage[newpref] = pref;
+      if (localStorage.getItem(newpref) === null) {
+         localStorage[newpref] = pref;
+      }
       localStorage.removeItem(oldpref);
    }
 }
@@ -1082,7 +1086,9 @@ function invertSetting(oldpref, newpref) {
    var pref;
    if ((pref = localStorage[oldpref])) {
       console.log('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
-      localStorage[newpref] = (pref === "1" || pref === 1 ? "0" : "1");
+      if (localStorage.getItem(newpref) === null) {
+         localStorage[newpref] = (pref === "1" || pref === 1 ? "0" : "1");
+      }
       localStorage.removeItem(oldpref);
    }
 }
