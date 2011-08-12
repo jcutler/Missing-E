@@ -104,6 +104,17 @@ border-radius:10px;
 color:white;
 }
 
+#eula {
+font-size:smaller;
+font-style:italic;
+text-align:center;
+margin:20px 0 0 0;
+}
+
+#eula a {
+font-weight:bold;
+}
+
 #get #homelink {
 text-align:center;
 margin:50px 0 20px;

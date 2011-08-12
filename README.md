@@ -10,5 +10,7 @@
 Jeremy Cutler ([cutlerish.tumblr.com](cutlerish.tumblr.com))  
 Released under the [GPL Version 2 License](http://www.gnu.org/licenses/gpl-2.0.html)
 
+_By downloading and using this extension, you agree to the terms and conditions set forth in the [**Missing e End User License Agreement**](http://missinge.infraware.ca/EULA.txt)_
+
 If you enjoy this extension, please consider [donating](http://www.pledgie.com/campaigns/14406) to support future development.  
 <a href="http://www.pledgie.com/campaigns/14406">![](http://missinge.infraware.ca/images/pledgie.png)</a>
