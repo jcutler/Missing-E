@@ -35,6 +35,10 @@ margin-top:20px;
 margin-bottom:20px;
 }
 
+#logo .ul {
+text-decoration:underline;
+}
+
 #versioncheck {
 margin-bottom:20px;
 font-size:11px;
@@ -505,7 +509,7 @@ font-size:12px;
 
 #inclusions {
 text-align:center;
-margin-top:40px;
+margin-top:30px;
 }
 
 #inclusions img {
@@ -515,6 +519,10 @@ margin:0 10px;
 
 #about #content p, #faq #content p {
 text-indent:16px;
+}
+
+#about #content p {
+text-align:center;
 }
 
 #faq #content p.singleline {
