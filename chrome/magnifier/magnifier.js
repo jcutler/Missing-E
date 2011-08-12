@@ -124,6 +124,9 @@ function insertMagnifier(item) {
       }
       if (img.length > 0) {
          str = img.attr("src").match(/\/(tumblr_[^_]*)/);
+         if (!str || str.length < 1) {
+            str = img.attr("src").match(/media\.tumblr\.com\/([^_]*)/);
+         }
          if (str && str.length > 1) {
             str = str[1].substr(0,str[1].length-2);
          }
