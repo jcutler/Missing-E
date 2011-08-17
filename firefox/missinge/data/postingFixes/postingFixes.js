@@ -306,16 +306,33 @@ self.on('message', function(message) {
       }
       h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
          .css({"float":"left","margin-top":"0"})
-         .after('<div style="float:right;padding-top:3px;">' +
-                '<iframe src="/upload/image?from_assets" ' +
+         .after('<div style="float:right;padding-top:3px;"><iframe ' +
+                'src="/upload" ' +
                 'id="regular_form_inline_image_iframe" width="130" ' +
                 'height="16" border="0" scrolling="no" ' +
                 'allowtransparency="true" frameborder="0" ' +
                 'style="background-color:transparent; overflow:hidden;">' +
                 '</iframe></div><div class="clear"></div>');
+      var upfrm = jQuery("#regular_form_inline_image_iframe").get(0);
+      upfrm.onload=function(){
+         console.log(upfrm.contentWindow.location);
+         var doc = upfrm.contentWindow.document;
+         doc.open();
+         doc.write('<html><head><style type="text/css">* { ' +
+                     'margin:0;padding:0; }</style>' +
+                     '<script type="text/javascript">' +
+                     'function catch_uploaded_photo(src) { ' +
+                        'parent.catch_uploaded_photo(src); ' +
+                     '}</script></head><body>' +
+                     '<iframe src="http://www.tumblr.com/upload/image" ' +
+                     'width="130" height="16" border="0" scrolling="no" ' +
+                     'allowtransparency="true" frameborder="0" ' +
+                     'style="background-color:transparent;overflow:hidden;">' +
+                     '</iframe></body></html>');
+         doc.close();
+      };
       if (textarea && textarea !== "") {
          jQuery('head').append('<script type="text/javascript">' +
-                          'document.domain = "tumblr.com";' +
                           'function catch_uploaded_photo(src) {' +
                               'if (tinyMCE && (ed = tinyMCE.get("' +
                                        textarea + '"))) {' +
