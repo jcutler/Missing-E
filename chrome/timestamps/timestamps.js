@@ -25,6 +25,11 @@
 
 function loadTimestamp(item) {
    var lang = $('html').attr('lang');
+   if (!/^\/(inbox|messages|submissions)/.test(location.pathname) &&
+       !/^\/tumblelog\/[^\/]*\/(messages|submissions)/
+         .test(location.pathname)) {
+      return false;
+   }
    var info;
    if (item.tagName === "LI" && $(item).hasClass("post") &&
        $(item).attr("id") !== "new_post") {
@@ -53,13 +58,21 @@ function loadTimestamp(item) {
       if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
           /^\/tumblelog\/[^\/]*\/(messages|submissions)/
             .test(location.pathname)) {
+         type = 'ask';
          addr = 'http://www.tumblr.com/edit/';
+         stamp = '';
+      }
+      else if (perm.length > 0) {
+         type = 'other';
+         addr = "";
+         stamp = perm.attr('title').replace(/^.* \- /,'');
       }
 
       if (tid === undefined || tid === null || tid === "" ||
-          addr === undefined) { return; }
+          addr === undefined || stamp === undefined || stamp === null) { return; }
       chrome.extension.sendRequest({greeting: "timestamp", pid: tid, url: addr,
-                                    lang: lang}, function(response) {
+                                    lang: lang, stamp: stamp, type: type},
+                                   function(response) {
          if (response.success) {
             info = $('#post_' + response.pid)
                            .find('span.MissingE_timestamp');
