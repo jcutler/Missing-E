@@ -672,6 +672,10 @@ function handleRequest(request) {
    if (request.name == "open") {
       request.target.browserWindow.openTab().url = request.message;
    }
+   else if (request.name == "uploadImage") {
+      request.target.page.dispatchMessage("uploadImage",
+                                          {src: request.message.src});
+   }
    else if (request.name == "version") {
       request.target.page.dispatchMessage("version",
          {uptodate:(versionCompare(getStorage("MissingE_version",'0'),

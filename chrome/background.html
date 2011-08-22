@@ -650,6 +650,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       sendResponse({uptodate:versionCompare(getStorage("MissingE_version",'0'),
                                             request.v) >= 0});
    }
+   else if (request.greeting == "uploadImage") {
+      chrome.tabs.sendRequest(sender.tab.id, {greeting: "uploadImage",
+                                              src: request.src});
+   }
    else if (request.greeting == "update") {
       sendResponse({update:
          versionCompare(getStorage("MissingE_externalVersion",'0'),

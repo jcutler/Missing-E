@@ -315,7 +315,6 @@ self.on('message', function(message) {
                 '</iframe></div><div class="clear"></div>');
       var upfrm = jQuery("#regular_form_inline_image_iframe").get(0);
       upfrm.onload=function(){
-         console.log(upfrm.contentWindow.location);
          var doc = upfrm.contentWindow.document;
          doc.open();
          doc.write('<html><head><style type="text/css">* { ' +
