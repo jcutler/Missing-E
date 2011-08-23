@@ -154,6 +154,161 @@ var locale = {
    "error": "Some messages could not be deleted. Please try again later."
   }
  },
+ "es": {
+  "daysLong": [
+   "Domingo",
+   "Lunes",
+   "Martes",
+   "Miércoles",
+   "Jueves",
+   "Viernes",
+   "Sábado"
+  ],
+  "daysShort": [
+   "Dom",
+   "Lun",
+   "Mar",
+   "Mié",
+   "Jue",
+   "Vie",
+   "Sáb"
+  ],
+  "monthsLong": [
+   "Enero",
+   "Febrero",
+   "Marzo",
+   "Abril",
+   "Mayo",
+   "Junio",
+   "Julio",
+   "Agosto",
+   "Septiembre",
+   "Octubre",
+   "Noviembre",
+   "Diciembre"
+  ],
+  "monthsShort": [
+   "Ene",
+   "Feb",
+   "Mar",
+   "Abr",
+   "May",
+   "Jun",
+   "Jul",
+   "Ago",
+   "Sep",
+   "Oct",
+   "Nov",
+   "Dic"
+  ],
+  "update": "Actualización de Missing e",
+  "sidebar": {
+   "posts": "Publicaciones",
+   "followers": "Seguidores",
+   "messages": "Mensajes",
+   "drafts": "Borradores",
+   "queue": "En cola",
+   "massEditor": "Editar varias publicaciones"
+  },
+  "reblog": "rebloguear",
+  "reblogging": "reblogueando...",
+  "reblogFailed": "Rebloguear el fracaso!!",
+  "rebloggedText": "reblogueado",
+  "reblogOptions": [
+   {
+    "item": "draft",
+    "text": "Guardar borrador"
+   },
+   {
+    "item": "queue",
+    "text": "Añadir a la cola"
+   },
+   {
+    "item": "private",
+    "text": "Privado"
+   },
+   {
+    "item": "manual",
+    "text": "Rebloguear manualmente"
+   }
+  ],
+  "tagsText": "Etiquetas",
+  "twitterText": "Enviar a Twitter",
+  "askPost": "Preguntar",
+  "askPerson": ["Preguntar", "U"],
+  "select": "Seleccionar",
+  "first100": "Primeros 100",
+  "postTypeNames": {
+   "text": "Texto",
+   "photo": "Foto",
+   "quote": "Cita",
+   "link": "Enlace",
+   "chat": "Chat",
+   "audio": "Audio",
+   "video": "Vídeo"
+  },
+  "dashFixesText": {
+   "edit": "editar",
+   "del": "borrar",
+   "reblog": "rebloguear",
+   "reply": "responder",
+   "notes": "notas",
+   "queue": "cola",
+   "experimental": "EXPERIMENTAL",
+   "exp": "X"
+  },
+  "bookmarkVerb": "marcar",
+  "bookmarkNoun": "Marcador",
+  "bookmarksTitle": "Marcadores",
+  "postUnavailable": "Publicación no está disponible",
+  "magnify": "agrandar",
+  "postingFixes": {
+   "submitText": {
+    "publish": "Crear publicación",
+    "queue": "Poner publicación en cola",
+    "draft": "Guardar borrador",
+    "private": "Salvar privado"
+   },
+   "uploadImagesText": "Agregar fotos en vez",
+   "clearTagsText": "Quitar etiquetas"
+  },
+  "reblogTags": "Rebloguear etiquetas",
+  "removeTag": "Eliminar etiqueta",
+  "loading": "De carga...",
+  "error": "Ha producido un error. Haga clic aquí para intentarlo de nuevo.",
+  "posts": {
+   "text": ["tu", "publicación"],
+   "photo": ["tu", "foto"],
+   "photoset": ["tu", "set de fotos"],
+   "quote": ["your", "cita"],
+   "link": ["your", "enlace"],
+   "conversation": ["tu", "chat"],
+   "audio": ["tu", "publicación de audio"],
+   "video": ["tu", "vídeo"],
+   "question": ["tu", "pregunta"]
+  },
+  "notifications": {
+   "like": ["A", "U", "le gusta", "P"],
+   "reblog": ["U", "ha reblogueado", "P"],
+   "reblogIndex": 1,
+   "answer": ["U", "ha contestado a", "P"],
+   "reply": ["U", "ha contestado a", "P"]
+  },
+  "replyType": {
+   "as": "como ...",
+   "photo": "como <strong>una foto</strong>",
+   "photoTitle": "Foto Respuesta",
+   "text": "como <strong>texto</strong>",
+   "textTitle": "Texto Respuesta"
+  },
+  "massDelete": {
+   "selectAll": "Seleccionar Todos",
+   "deselectAll": "Deseleccionar Todos",
+   "deleteSelected": "Eliminar Seleccionados",
+   "message": "¿Está seguro que desea eliminar los # mensajes seleccionados?",
+   "error": "Algunos mensajes no se pudo eliminar. Por favor, inténtelo de nuevo más tarde."
+  }
+ },
  "de": {
   "daysLong": [
    "Sonntag",
