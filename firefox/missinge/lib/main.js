@@ -249,18 +249,28 @@ function getFormattedDate(d, format, lang) {
 }
 
 function doTimestamp(stamp, id, theWorker) {
+   if (!stamp.timestamp) {
+      debug("Cache entry does not have timestamp");
+      return false;
+   }
    var ts = stamp.timestamp;
    var d = new Date(ts*1000);
    var ins = getStorage("extensions.MissingE.timestamps.format",defaultFormat);
    ins = getFormattedDate(d, ins, lang);
    theWorker.postMessage({greeting: "timestamp", pid: id, success: true, data: ins});
+   return true;
 }
 
 function doReblogDash(stamp, id, theWorker) {
+   if (!stamp.reblog_key) {
+      debug("Cache entry does not have reblog key.");
+      return false;
+   }
    var key = stamp.reblog_key;
    var replaceIcons = getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                       getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
    theWorker.postMessage({greeting: "reblogYourself", pid: id, success: true, data: key, icons: replaceIcons});
+   return true;
 }
 
 function queueAjax(details) {
@@ -283,8 +293,17 @@ function dequeueAjax(id) {
 }
 
 function saveCache(id, entry) {
-   cacheElements++;
-   var newentry = {};
+   var theEntry;
+   var isNew = true;
+   if ((theEntry = cache[id])) {
+      debug("Saving " + id + " to cache (HIT)");
+      isNew = false;
+   }
+   else {
+      debug("Saving " + id + " to cache (MISS)");
+      cacheElements++;
+      theEntry = {};
+   }
    for (var i in entry) {
       if (entry.hasOwnProperty(i)) {
          if (i == "photos" ||
@@ -294,24 +313,26 @@ function saveCache(id, entry) {
              i == "tags" ||
              i == "type" ||
              i == "blog_name") {
-            newentry[i] = entry[i];
+            theEntry[i] = entry[i];
          }
       }
    }
-   cache[id] = newentry;
+   if (isNew) {
+      cache[id] = theEntry;
+   }
 }
 
-function cacheServe(type, id, theWorker, fn, midFlight) {
+function cacheServe(type, id, theWorker, fn, midFlight, notAjax) {
    var entry;
    if ((entry = cache[id])) {
-      debug(type + " request(" + id + ") served from cache.");
-      if (midFlight) {
+      debug(type + " request(" + id + ") has cache entry.");
+      if (midFlight && !notAjax) {
          dequeueAjax(id);
       }
-      else {
+      else if (!notAjax) {
          dequeueAjax();
       }
-      fn(entry, id, theWorker);
+      return fn(entry, id, theWorker);
       return true;
    }
    else {
@@ -646,7 +667,7 @@ function startMagnifier(message, myWorker) {
       debug("Stop magnifier request: Tab closed or changed.");
       return;
    }
-   debug("AJAX magnifier request (" + message.pid + ")");
+   debug("Buidling magnifier request (" + message.pid + ")");
    var i,url;
    if (message.num > 1) {
       url = [];
@@ -765,6 +786,63 @@ function inArray(entry, arr) {
    return -1;
 }
 
+function isEDTfromUTC(dt) {
+   var start = new Date("03/01/" + dt.getUTCFullYear() + " 07:00:00 UTC");
+   var day = start.getDay();
+   start.setUTCDate(start.getUTCDate()+14-day);
+   var end = new Date("11/01/" + dt.getUTCFullYear() + " 06:00:00 UTC");
+   day = end.getDay();
+   end.setUTCDate(end.getUTCDate()+7-day);
+   return (dt>=start && dt<end);
+}
+
+function isEDT(year,month,day,hours) {
+   var start = new Date("03/01/" + year + " 07:00:00 UTC");
+   var day = start.getDay();
+   start.setUTCDate(start.getUTCDate()+14-day);
+   var end = new Date("11/01/" + year + " 06:00:00 UTC");
+   day = end.getDay();
+   end.setUTCDate(end.getUTCDate()+7-day);
+   if (month>start.getUTCMonth()+1 && month<end.getUTCMonth()+1) {
+      return true;
+   }
+   else if (month === start.getUTCMonth()+1) {
+      if (day > start.getUTCDate()) {
+         return true;
+      }
+      else if (day < start.getUTCDate()) {
+         return false;
+      }
+      else {
+         if (hours >= 2) {
+            return true;
+         }
+         else {
+            return false;
+         }
+      }
+   }
+   else if (month === end.getUTCMonth()+1) {
+      if (day < end.getUTCDate()) {
+         return true;
+      }
+      else if (day > end.getUTCDate()) {
+         return false;
+      }
+      else {
+         if (hours >= 2) {
+            return false;
+         }
+         else {
+            return true;
+         }
+      }
+   }
+   else {
+      return false;
+   }
+}
+
 function handleMessage(message, myWorker) {
    var i;
    if (message.greeting === "addMenu") {
@@ -796,7 +874,185 @@ function handleMessage(message, myWorker) {
       startMagnifier(message, myWorker);
    }
    else if (message.greeting == "timestamp") {
-      startTimestamp(message, myWorker);
+      if (message.type == "ask") {
+         startTimestamp(message, myWorker);
+      }
+      else if (cacheServe("timestamp", message.pid, myWorker, doTimestamp, false, true)) {
+         return true;
+      }
+      else {
+         debug("Building timestamp (" + message.pid + ")");
+         var dt = {};
+         var today = new Date();
+         if (isEDTfromUTC(today)) {
+            today.setUTCHours(today.getUTCHours()-4);
+         }
+         else {
+            today.setUTCHours(today.getUTCHours()-5);
+         }
+         dt.day = today.getUTCDay();
+         stamp = message.stamp.replace(/,/,'').split(" ");
+         for (i=0; i<stamp.length; i++) {
+            if (/[0-9][0-9][0-9][0-9]$/.test(stamp[i])) {
+               dt.year = parseInt(stamp[i]);
+            }
+            else if (/[0-9][0-9]*:[0-9][0-9]$/.test(stamp[i])) {
+               var tmp = stamp[i].match(/([0-9]*):([0-9]*)/);
+               dt.hours = parseInt(tmp[1]);
+               dt.minutes = parseInt(tmp[2].replace(/^0/,''));
+            }
+            else if (/[0-9][0-9]*:[0-9][0-9](am|AM|pm|PM)/.test(stamp[i])) {
+               var tmp = stamp[i].match(/([0-9]*):([0-9]*)/);
+               if (/pm$/i.test(stamp[i])) {
+                  dt.hours = parseInt(tmp[1])+12;
+                  if (dt.hours === 24) { dt.hours = 12; }
+               }
+               else {
+                  dt.hours = parseInt(tmp[1]);
+                  if (dt.hours === 12) { dt.hours = 0; }
+               }
+               dt.minutes = parseInt(tmp[2].replace(/^0/,''));
+            }
+            else if (/[0-9][0-9]*\/[0-9][0-9]*\/[0-9][0-9]*/.test(stamp[i])) {
+               var tmp = stamp[i].match(/([0-9]*)\/([0-9]*)\/([0-9]*)/);
+               dt.date = parseInt(tmp[1]);
+               dt.month = parseInt(tmp[2]);
+               dt.year = parseInt(tmp[3]);
+            }
+            else if (/[0-9][0-9]*(st|nd|rd|th)$/.test(stamp[i])) {
+               var tmp = stamp[i].match(/([0-9]*)/);
+               dt.date = parseInt(tmp[1]);
+            }
+            else if (/^[A-Za-z]+$/.test(stamp[i])) {
+               if (/^jan(uary)?$/i.test(stamp[i])) {
+                  dt.month = 1;
+               }
+               else if (/^feb(ruary)?$/i.test(stamp[i])) {
+                  dt.month = 2;
+               }
+               else if (/^mar(ch)?$/i.test(stamp[i])) {
+                  dt.month = 3;
+               }
+               else if (/^apr(il)?$/i.test(stamp[i])) {
+                  dt.month = 4;
+               }
+               else if (/^may$/i.test(stamp[i])) {
+                  dt.month = 5;
+               }
+               else if (/^jun(e)?$/i.test(stamp[i])) {
+                  dt.month = 6;
+               }
+               else if (/^jul(y)?$/i.test(stamp[i])) {
+                  dt.month = 7;
+               }
+               else if (/^aug(ust)?$/i.test(stamp[i])) {
+                  dt.month = 8;
+               }
+               else if (/^sep(t|tember)?$/i.test(stamp[i])) {
+                  dt.month = 9;
+               }
+               else if (/^oct(ober)?$/i.test(stamp[i])) {
+                  dt.month = 10;
+               }
+               else if (/^nov(ember)?$/i.test(stamp[i])) {
+                  dt.month = 11;
+               }
+               else if (/^dec(ember)?$/i.test(stamp[i])) {
+                  dt.month = 12;
+               }
+               else if (/^sun(day)?$/i.test(stamp[i])) {
+                  dt.date = -dt.day; 
+               }
+               else if (/^mon(day)?$/i.test(stamp[i])) {
+                  dt.date = (1-dt.day-7)%7;
+               }
+               else if (/^tue(s|sday)?$/i.test(stamp[i])) {
+                  dt.date = (2-dt.day-7)%7;
+               }
+               else if (/^wed(nesday)?$/i.test(stamp[i])) {
+                  dt.date = (3-dt.day-7)%7;
+               }
+               else if (/^thu(r|rs|rsday)?$/i.test(stamp[i])) {
+                  dt.date = (4-dt.day-7)%7;
+               }
+               else if (/^fri(day)?$/i.test(stamp[i])) {
+                  dt.date = (5-dt.day-7)%7;
+               }
+               else if (/^sat(urday)?$/i.test(stamp[i])) {
+                  dt.date = (6-dt.day-7)%7;
+               }
+            }
+         }
+         if (dt.year) {
+            var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
+            var d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
+                            dt.hours + ":" + dt.minutes + ":00 " + tz);
+            var ts = Math.round(d.getTime()/1000);
+            var info = {"timestamp":ts};
+            saveCache(message.pid,info);
+            doTimestamp(info, message.pid, myWorker);
+         }
+         if (!dt.year) {
+            if (dt.month) {
+               var dq = new Date(dt.month + "/" + dt.date + "/" + today.getUTCFullYear() + " " +
+                                dt.hours + ":" + dt.minutes + ":00 UTC");
+               if (dq > today + 86400000) {
+                  dt.year = today.getUTCFullYear() - 1;
+               }
+               else {
+                  dt.year = today.getUTCFullYear();
+               }
+               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
+               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
+                              dt.hours + ":" + dt.minutes + ":00 " + tz);
+               var ts = Math.round(d.getTime()/1000);
+               var info = {"timestamp":ts};
+               saveCache(message.pid,info);
+               doTimestamp(info, message.pid, myWorker);
+            }
+            else if (dt.date < 0) {
+               var dq = new Date(today.month + "/" + today.date + "/" + today.getUTCFullYear() + " " +
+                                dt.hours + ":" + dt.minutes + ":00 UTC");
+               if (dq > today + 2764800000) {
+                  dt.year = today.getUTCFullYear() - 1;
+                  today.setUTCFullYear(dt.year);
+               }
+               else {
+                  dt.year = today.getUTCFullYear();
+               }
+               if (dq > today + 86400000) {
+                  dt.month = today.getUTCMonth();
+                  today.setUTCMonth(today.getUTCMonth()-1);
+               }
+               else {
+                  dt.month = today.getUTCMonth()+1;
+               }
+               today = new Date(today.valueOf()+86400000*dt.date);
+               dt.date = today.getUTCDate();
+               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
+               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
+                              dt.hours + ":" + dt.minutes + ":00 " + tz);
+               var ts = Math.round(d.getTime()/1000);
+               var info = {"timestamp":ts};
+               saveCache(message.pid,info);
+               doTimestamp(info, message.pid, myWorker);
+            }
+            else if (!dt.date) {
+               dt.year = today.getUTCFullYear();
+               dt.month = today.getUTCMonth()+1;
+               dt.date = today.getUTCDate();
+               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
+               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
+                              dt.hours + ":" + dt.minutes + ":00 " + tz);
+               var ts = Math.round(d.getTime()/1000);
+               var info = {"timestamp":ts};
+               saveCache(message.pid,info);
+               doTimestamp(info, message.pid, myWorker);
+            }
+         }
+         //console.log(message.stamp);
+         //console.log(dt);
+      }
    }
    else if (message.greeting == "tags") {
       startTags(message, myWorker);
@@ -1199,6 +1455,13 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(message.url))) {
+         if (getStorage("extensions.MissingE.timestamps.enabled",1) == 1) {
+            injectScripts.push(data.url("timestamps/timestamps.js"));
+            activeScripts.timestamps = true;
+         }
+         else
+            activeScripts.timestamps = false;
+
          if (getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1) {
             if (getStorage("extensions.MissingE.betterReblogs.quickReblog",0) == 1) {
                zindexFix = true;

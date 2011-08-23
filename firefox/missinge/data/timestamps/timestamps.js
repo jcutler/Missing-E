@@ -26,8 +26,35 @@
 function loadTimestamp(item) {
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
-   if (item.tagName === "LI" && jQuery(item).hasClass("post")
-       && jQuery(item).attr("id") !== "new_post") {
+   /* Comment this section to enable timestamps */
+   if (!/^\/(inbox|messages|submissions)/.test(location.pathname) &&
+       !/^\/tumblelog\/[^\/]*\/(messages|submissions)/
+         .test(location.pathname)) {
+      return false;
+   }
+   /* */
+   if (item.tagName === "LI" && jQuery(item).hasClass("post") &&
+       jQuery(item).attr("id") !== "new_post" &&
+       jQuery(item).find('.private_label').length === 0) {
+      var tid = jQuery(item).attr("id").match(/[0-9]*$/)[0];
+      var perm = jQuery(item).find("a.permalink:first");
+      var addr, type, stamp;
+      if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
+          /^\/tumblelog\/[^\/]*\/(messages|submissions)/
+            .test(location.pathname)) {
+         type = 'ask';
+         addr = 'http://www.tumblr.com/edit/';
+         stamp = '';
+      }
+      else if (perm.length > 0) {
+         type = 'other';
+         addr = '';
+         stamp = perm.attr('title').replace(/^.* \- /,'');
+      }
+      if (tid === undefined || tid === null || tid === "" ||
+          addr === undefined || stamp === undefined || stamp === null) {
+         return;
+      }
       var div = jQuery(item).find("div.post_info");
       if (div.length === 0) {
          jQuery(item).find(".post_controls:first")
@@ -49,18 +76,8 @@ function loadTimestamp(item) {
             spn.text(locale[lang].loading);
          }
       }
-      var tid = jQuery(item).attr("id").match(/[0-9]*$/)[0];
-      var perm = jQuery(item).find("a.permalink:first");
-      var addr;
-      if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
-          /^\/tumblelog\/[^\/]*\/(messages|submissions)/
-            .test(location.pathname)) {
-         addr = 'http://www.tumblr.com/edit/';
-      }
-      if (tid === undefined || tid === null || tid === "" ||
-          addr === undefined) { return; }
       self.postMessage({greeting: "timestamp", pid: tid, url: addr,
-                        lang: lang});
+                        lang: lang, stamp: stamp, type: type});
    }
 }
 

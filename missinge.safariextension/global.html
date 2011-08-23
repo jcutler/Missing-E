@@ -99,18 +99,28 @@ function debug(msg) {
 }
 
 function doTimestamp(stamp, id, request) {
+   if (!stamp.timestamp) {
+      debug("Cache entry does not have timestamp");
+      return false;
+   }
    var ts = stamp.timestamp;
    var d = new Date(ts*1000);
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
    ins = getFormattedDate(d, ins, lang);
    request.target.page.dispatchMessage("timestamp",{pid: id, success: true, data: ins});
+   return true;
 }
 
 function doReblogDash(stamp, id, request) {
+   if (!stamp.reblog_key) {
+      debug("Cache entry does not have reblog key.");
+      return false;
+   }
    var key = stamp.reblog_key;
    var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
                       getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
    request.target.page.dispatchMessage("reblogYourself",{pid: id, success: true, data: key, icons: replaceIcons});
+   return true;
 }
 
 function queueAjax(details) {
@@ -144,8 +154,17 @@ function dequeueAjax(id) {
 }
 
 function saveCache(id, entry) {
-   cacheElements++;
-   var newentry = {};
+   var theEntry;
+   var isNew = true;
+   if ((theEntry = cache[id])) {
+      debug("Saving " + id + " to cache (HIT)");
+      isNew = false;
+   }
+   else {
+      debug("Saving " + id + " to cache (MISS)");
+      cacheElements++;
+      theEntry = {};
+   }
    for (var i in entry) {
       if (entry.hasOwnProperty(i)) {
          if (i == "photos" ||
@@ -155,25 +174,26 @@ function saveCache(id, entry) {
              i == "tags" ||
              i == "type" ||
              i == "blog_name") {
-            newentry[i] = entry[i];
+            theEntry[i] = entry[i];
          }
       }
    }
-   cache[id] = newentry;
+   if (isNew) {
+      cache[id] = theEntry;
+   }
 }
 
 function cacheServe(type, id, request, fn, midFlight, notAjax) {
    var entry;
    if ((entry = cache[id])) {
-      debug(type + " request (" + id + ") served from cache.");
+      debug(type + " request (" + id + ") has cache entry.");
       if (midFlight && !notAjax) {
          dequeueAjax(id);
       }
       else if (!notAjax) {
          dequeueAjax();
       }
-      fn(entry, id, request);
-      return true;
+      return fn(entry, id, request);
    }
    else {
       return false;
@@ -603,6 +623,7 @@ function requestMagnifier(request) {
       return;
    }
    else {
+      debug("Building magnifier request (" + request.message.pid + ")");
       var i,url;
       if (request.message.num > 1) {
          url = [];
@@ -756,6 +777,7 @@ function handleRequest(request) {
          return true;
       }
       else {
+         debug("Building timestamp (" + request.message.pid + ")");
          var dt = {};
          var today = new Date();
          if (isEDTfromUTC(today)) {
@@ -863,6 +885,7 @@ function handleRequest(request) {
                             dt.hours + ":" + dt.minutes + ":00 " + tz);
             var ts = Math.round(d.getTime()/1000);
             var info = {"timestamp":ts};
+            saveCache(request.message.pid,info);
             doTimestamp(info, request.message.pid, request);
          }
          if (!dt.year) {
@@ -880,6 +903,7 @@ function handleRequest(request) {
                               dt.hours + ":" + dt.minutes + ":00 " + tz);
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
+               saveCache(request.message.pid,info);
                doTimestamp(info, request.message.pid, request);
             }
             else if (dt.date < 0) {
