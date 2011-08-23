@@ -756,9 +756,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                var tmp = stamp[i].match(/([0-9]*):([0-9]*)/);
                if (/pm$/i.test(stamp[i])) {
                   dt.hours = parseInt(tmp[1])+12;
+                  if (dt.hours === 24) { dt.hours = 12; }
                }
                else {
                   dt.hours = parseInt(tmp[1]);
+                  if (dt.hours === 12) { dt.hours = 0; }
                }
                dt.minutes = parseInt(tmp[2].replace(/^0/,''));
             }
