@@ -38,7 +38,7 @@ function loadTimestamp(item) {
        $(item).find('.private_label').length === 0) {
       var tid = $(item).attr("id").match(/[0-9]*$/)[0];
       var perm = $(item).find("a.permalink:first");
-      var addr;
+      var addr, type, stamp;
       if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
           /^\/tumblelog\/[^\/]*\/(messages|submissions)/
             .test(location.pathname)) {

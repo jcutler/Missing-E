@@ -725,7 +725,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       if (request.type == "ask") {
          requestTimestamp(request, sender, sendResponse, tabs[sender.tab.id]);
       }
-      else if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, false, false)) {
+      else if (cacheServe("timestamp", request.pid, sendResponse, doTimestamp, false, true)) {
          return true;
       }
       else {
