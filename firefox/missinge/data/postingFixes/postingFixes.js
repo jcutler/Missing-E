@@ -304,10 +304,23 @@ self.on('message', function(message) {
                         .length !== 0) {
          tag = '![](X)';
       }
+      var isRTE = true;
+      jQuery('form script').each(function() {
+         if (/render_editor\(/.test(jQuery(this).html())) {
+            if (/render_editor\([^\)]*'rich'/.test(jQuery(this).html())) {
+               isRTE = true;
+               return false;
+            }
+            else {
+               isRTE = false;
+               return false;
+            }
+         }
+      });
+      var iframesuffix = isRTE ? "?from_assets" : "";
       h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
          .css({"float":"left","margin-top":"0"})
-         .after('<div style="float:right;padding-top:3px;"><iframe ' +
-                'src="/upload" ' +
+         .after('<div style="float:right;padding-top:3px;"><iframe src="/upload" ' +
                 'id="regular_form_inline_image_iframe" width="130" ' +
                 'height="16" border="0" scrolling="no" ' +
                 'allowtransparency="true" frameborder="0" ' +
@@ -323,7 +336,7 @@ self.on('message', function(message) {
                      'function catch_uploaded_photo(src) { ' +
                         'parent.catch_uploaded_photo(src); ' +
                      '}</script></head><body>' +
-                     '<iframe src="http://www.tumblr.com/upload/image" ' +
+                     '<iframe src="http://www.tumblr.com/upload/image' + iframesuffix + '" ' +
                      'width="130" height="16" border="0" scrolling="no" ' +
                      'allowtransparency="true" frameborder="0" ' +
                      'style="background-color:transparent;overflow:hidden;">' +

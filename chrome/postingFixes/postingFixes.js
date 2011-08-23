@@ -293,39 +293,30 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                         .length !== 0) {
          tag = '![](X)';
       }
+      var isRTE = true;
+      $('form script').each(function() {
+         if (/render_editor\(/.test($(this).html())) {
+            if (/render_editor\([^\)]*'rich'/.test($(this).html())) {
+               isRTE = true;
+               return false;
+            }
+            else {
+               isRTE = false;
+               return false;
+            }
+         }
+      });
+      var iframeurl = isRTE ? "postingFixes/upload_rte.html" : "postingFixes/upload.html";
       h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
          .css({"float":"left","margin-top":"0"})
          .after('<div style="float:right;padding-top:3px;"><iframe ' +
-                'src="http://www.tumblr.com/upload/image" ' +
+                'src="' + chrome.extension.getURL(iframeurl) + '" ' +
+                'src="http://www.tumblr.com/upload/image?from_assets" ' +
                 'id="regular_form_inline_image_iframe" width="130" ' +
                 'height="16" border="0" scrolling="no" ' +
                 'allowtransparency="true" frameborder="0" ' +
                 'style="background-color:transparent; overflow:hidden;">' +
                 '</iframe></div><div class="clear"></div>');
-      var upfrm = $("#regular_form_inline_image_iframe").get(0);
-      upfrm.addEventListener("load",function upfrmLoad() {
-         this.removeEventListener("load",upfrmLoad,false);
-         var doc = (upfrm.contentWindow) ? upfrm.contentWindow.document : (upfrm.contentDocument.document) ? upfrm.contentDocument.document : upfrm.contentDocument;
-         doc.open();
-         doc.write('<html><head><style type="text/css">* { ' +
-                     'margin:0;padding:0; }</style>' +
-                     '<script type="text/javascript">' +
-                     'function catch_uploaded_photo(src) { ' +
-                        'var evt = document.createEvent("MessageEvent");' +
-                        'evt.initMessageEvent("MissingE_uploadImage", true, true, src, ' +
-                                              '"http://www.tumblr.com", 0, window);' +
-                        'document.dispatchEvent(evt);' +
-                     '}</script></head><body>' +
-                     '<iframe src="http://www.tumblr.com/upload/image" ' +
-                     'width="130" height="16" border="0" scrolling="no" ' +
-                     'allowtransparency="true" frameborder="0" ' +
-                     'style="background-color:transparent;overflow:hidden;">' +
-                     '</iframe></body></html>');
-         doc.close();
-         doc.addEventListener("MissingE_uploadImage", function(e) {
-            chrome.extension.sendRequest({greeting:"uploadImage", src:e.data});
-         }, false);
-      }, false);
       if (textarea && textarea !== "") {
          $('head').append('<script type="text/javascript">' +
                           'function catch_uploaded_photo(src) {' +
@@ -342,13 +333,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                           '}' +
                           '</script>');
       }
-      chrome.extension.onRequest.addListener(function(request, sender) {
-         if (request.greeting !== "uploadImage") { return; }
-         var s = $('<script type="text/javascript">' +
-                   'catch_uploaded_photo("' + request.src + '");' +
-                   '</script>').appendTo('head');
-         s.remove();
-      });
    }
    else if (postingFixes_settings.addUploader === 1 &&
             /http:\/\/www\.tumblr\.com\/share/.test(location.href)) {

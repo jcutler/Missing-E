@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <meta http-equiv="x-dns-prefetch-control" content="off"/>
+      <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+      <script type="text/javascript" src="../common/jquery.min.js"></script>
+      <script type="text/javascript">
+      $.ajax({
+         url:"http://www.tumblr.com/upload/image",
+         dataType:"html",
+         retries:4,
+         tryCount:0,
+         success:function(data) {
+            var key = data.match(/<input[^>]*name="form_key"[^>]*value="([^"]*)"[^>]*>/);
+            if (!key || key.length < 2) {
+               if (this.tryCount < this.retries) {
+                  this.tryCount++;
+                  $.ajax(this);
+               }
+            }
+            else {
+               $('#form_key').val(key[1]);
+               $('#upload_image_form').show();
+            }
+         },
+         error:function() {
+            if (this.tryCount < this.retries) {
+               this.tryCount++;
+               $.ajax(this);
+            }
+         }
+      });
+      </script>
+   </head>
+   <body style="background-color:transparent; margin:0px; padding:0px; overflow:hidden;" onload="image1 = new Image();image1.src = 'http://assets.tumblr.com/images/bookmarklet_loader.gif';">
+      <form style="display:none;" method="post" enctype="multipart/form-data" id="upload_image_form" action="http://www.tumblr.com/upload/image?from_assets">
+         <input type="hidden" id="form_key" name="form_key" value=""/>
+         <div id="controls">
+            <input type="hidden" name="domain" value="data"/>
+            <div style="font:normal 11px 'Lucida Grande',Verdana; color:#aaa;
+                        text-decoration:none; cursor:pointer; position:absolute;
+                        right:0px; top:0px; height:16px; line-height:16px;">+ Upload photo</div>
+         </div>
+         <div style="position:absolute; right:0px; top:0px; width:100px; height:24px;
+                     filter:alpha(opacity=0); -moz-opacity:0; opacity:0; overflow:hidden;">
+            <input type="file" id="image" name="image" style="cursor:pointer; height:24px; position:absolute;right:0px; top:0px;"
+                     onchange="document.getElementById('upload_image_form').submit();
+                               document.getElementById('controls').style.display = 'none';
+                               document.getElementById('loader').style.display = 'inline';"/>
+         </div>
+         <img src="http://assets.tumblr.com/images/bookmarklet_loader.gif" id="loader" style="display:none; width:16px;
+                   height:16px; position:absolute; top:0px; right:0px;"/>
+      </form>
+   </body>
+</html>
