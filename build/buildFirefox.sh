@@ -68,6 +68,10 @@ s/\s*"jid0-0pgffacvvhubiefykrvvc5w6liu-at-jetpack-api-utils-lib":\s*\[\s*\n\s*"r
 mv harness-options.new.6 harness-options.json
 rm -f harness-options.new.*
 
+sed -e 's/<em:maxVersion>[^<]*/<em:maxVersion>8.0a2/' install.rdf > install.new
+
+mv install.new install.rdf
+
 "$SEVZ" a missinge.zip *
 
 mv missinge.zip $BUILDDIR/missinge.xpi
