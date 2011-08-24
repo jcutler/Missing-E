@@ -212,7 +212,7 @@ var locale = {
   },
   "reblog": "rebloguear",
   "reblogging": "reblogueando...",
-  "reblogFailed": "Rebloguear el fracaso!!",
+  "reblogFailed": "¡El reblog falló!",
   "rebloggedText": "reblogueado",
   "reblogOptions": [
    {
@@ -235,7 +235,7 @@ var locale = {
   "tagsText": "Etiquetas",
   "twitterText": "Enviar a Twitter",
   "askPost": "Preguntar",
-  "askPerson": ["Preguntar", "U"],
+  "askPerson": ["Preguntar a", "U"],
   "select": "Seleccionar",
   "first100": "Primeros 100",
   "postTypeNames": {
@@ -260,28 +260,28 @@ var locale = {
   "bookmarkVerb": "marcar",
   "bookmarkNoun": "Marcador",
   "bookmarksTitle": "Marcadores",
-  "postUnavailable": "Publicación no está disponible",
+  "postUnavailable": "Publicación no disponible",
   "magnify": "agrandar",
   "postingFixes": {
    "submitText": {
     "publish": "Crear publicación",
     "queue": "Poner publicación en cola",
     "draft": "Guardar borrador",
-    "private": "Salvar privado"
+    "private": "Guardar como Privado"
    },
-   "uploadImagesText": "Agregar fotos en vez",
+   "uploadImagesText": "Subir fotos en su lugar",
    "clearTagsText": "Quitar etiquetas"
   },
   "reblogTags": "Rebloguear etiquetas",
   "removeTag": "Eliminar etiqueta",
-  "loading": "De carga...",
-  "error": "Ha producido un error. Haga clic aquí para intentarlo de nuevo.",
+  "loading": "Cargando...",
+  "error": "Se ha producido un error. Haga clic aquí para intentarlo de nuevo.",
   "posts": {
    "text": ["tu", "publicación"],
    "photo": ["tu", "foto"],
    "photoset": ["tu", "set de fotos"],
-   "quote": ["your", "cita"],
-   "link": ["your", "enlace"],
+   "quote": ["tu", "cita"],
+   "link": ["tu", "enlace"],
    "conversation": ["tu", "chat"],
    "audio": ["tu", "publicación de audio"],
    "video": ["tu", "vídeo"],
@@ -292,21 +292,21 @@ var locale = {
    "reblog": ["U", "ha reblogueado", "P"],
    "reblogIndex": 1,
    "answer": ["U", "ha contestado a", "P"],
-   "reply": ["U", "ha contestado a", "P"]
+   "reply": ["U", "ha respondido a", "P"]
   },
   "replyType": {
    "as": "como ...",
    "photo": "como <strong>una foto</strong>",
-   "photoTitle": "Foto Respuesta",
+   "photoTitle": "Respuesta en Foto",
    "text": "como <strong>texto</strong>",
-   "textTitle": "Texto Respuesta"
+   "textTitle": "Respuesta en Texto"
   },
   "massDelete": {
    "selectAll": "Seleccionar Todos",
    "deselectAll": "Deseleccionar Todos",
    "deleteSelected": "Eliminar Seleccionados",
    "message": "¿Está seguro que desea eliminar los # mensajes seleccionados?",
-   "error": "Algunos mensajes no se pudo eliminar. Por favor, inténtelo de nuevo más tarde."
+   "error": "Algunos mensajes no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde."
   }
  },
  "de": {
