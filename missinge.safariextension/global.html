@@ -1000,6 +1000,8 @@ function handleRequest(request) {
       settings.MissingE_postingFixes_blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
       settings.MissingE_postingFixes_subEdit = getStorage("MissingE_postingFixes_subEdit",1);
       settings.MissingE_postingFixes_subEditRetries = getStorage("MissingE_postingFixes_subEditRetries",defaultRetries);
+      settings.MissingE_postingFixes_tagQueuedPosts = getStorage("MissingE_postingFixes_tagQueuedPosts",0);
+      settings.MissingE_postingFixes_queueTags = getStorage("MissingE_postingFixes_queueTags",'');
       settings.MissingE_reblogYourself_postPage = getStorage("MissingE_reblogYourself_postPage",1);
       settings.MissingE_reblogYourself_dashboard = getStorage("MissingE_reblogYourself_dashboard",1);
       settings.MissingE_reblogYourself_retries = getStorage("MissingE_reblogYourself_retries",defaultRetries);
@@ -1099,6 +1101,11 @@ function handleRequest(request) {
             settings.addUploader = getStorage("MissingE_postingFixes_addUploader",1);
             settings.quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
             settings.blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
+            settings.tagQueuedPosts = getStorage("MissingE_postingFixes_tagQueuedPosts",0);
+            settings.queueTags = getStorage("MissingE_postingFixes_queueTags",'');
+            if (settings.queueTags !== '') {
+               settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
+            }
             break;
          case "magnifier":
             settings.magnifyAvatars = getStorage("MissingE_magnifier_magnifyAvatars",0);
@@ -1218,7 +1225,8 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/inbox/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(request.message.url)) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/drafts/.test(request.message.url)) ||
          (/http:\/\/www\.tumblr\.com\/share/.test(request.message.url)))) {
          if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
             activeScripts.postingFixes = true;

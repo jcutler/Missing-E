@@ -224,7 +224,9 @@ function settings_startup(response) {
                                       response.message.uploaderToggle,
                                       response.message.addUploader,
                                       response.message.quickButtons,
-                                      response.message.blogSelect);
+                                      response.message.blogSelect,
+                                      response.message.tagQueuedPosts,
+                                      response.message.queueTags);
    }
    else if (response.message.component === "askFixes") {
       MissingE_askFixes_doStartup(response.message.tagAsker,

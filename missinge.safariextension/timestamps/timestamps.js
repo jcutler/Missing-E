@@ -25,13 +25,13 @@
 
 function loadTimestamp(item) {
    var lang = $('html').attr('lang');
-   /* Comment this section to enable timestamps */
+   /* Comment this section to enable timestamps
    if (!/^\/(inbox|messages|submissions)/.test(location.pathname) &&
        !/^\/tumblelog\/[^\/]*\/(messages|submissions)/
          .test(location.pathname)) {
       return false;
    }
-   /* */
+   */
    if (item.tagName === "LI" && $(item).hasClass("post") &&
        $(item).attr("id") !== "new_post" &&
        $(item).find('.private_label').length === 0) {

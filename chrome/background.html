@@ -996,6 +996,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.addUploader = getStorage("MissingE_postingFixes_addUploader",1);
             settings.quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
             settings.blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
+            settings.tagQueuedPosts = getStorage("MissingE_postingFixes_tagQueuedPosts",0);
+            settings.queueTags = getStorage("MissingE_postingFixes_queueTags",'');
+            if (settings.queueTags !== '') {
+               settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
+            }
             break;
          case "magnifier":
             settings.magnifyAvatars = getStorage("MissingE_magnifier_magnifyAvatars",0);
@@ -1159,7 +1164,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(sender.tab.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(sender.tab.url)) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(sender.tab.url) ||
+          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/drafts/.test(sender.tab.url)) ||
          (/http:\/\/www\.tumblr\.com\/share/.test(sender.tab.url)))) {
          if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
             activeScripts.postingFixes = true;

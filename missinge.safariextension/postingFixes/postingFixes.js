@@ -105,7 +105,8 @@ function showHideButtons(newbtns, val) {
 
 function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                                          addUploader, quickButtons,
-                                         blogSelect) {
+                                         blogSelect, tagQueuedPosts,
+                                         queueTags) {
    var lang = $('html').attr('lang');
    var i,tag;
    if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href) ||
@@ -128,14 +129,13 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       document.getElementById('tokens').innerHTML = txt;
    }
 
-   var set_tags = $('#set_tags');
-   $('<div style="text-align:right;"><a class="clear_tags" ' +
+   $('#set_tags').append('<div style="text-align:right;">' +
+     '<a class="clear_tags" ' +
      'style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
      'return false;">' + locale[lang].postingFixes.clearTagsText +
-     '</a></div>')
-         .appendTo(set_tags);
+     '</a></div>');
 
    $('#photo_src').keyup(function(){
       if (/^http:\/\/https?:\/\//.test(this.value)) {
@@ -143,6 +143,72 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       }
    });
 
+   if (tagQueuedPosts === 1) {
+      var queueTags = queueTags === '' ? [] : queueTags;
+      $('#posts div.post_controls a').live('click',function(){
+         if (!$(this).hasClass('MissingE_queue_control') &&
+             !(new RegExp(locale[lang].dashFixesText.queue,"i")).test($(this).text())) {
+            return;
+         }
+         var id = $(this).closest('li.post').attr('id').match(/[0-9]+$/)[0];
+         var key = $('#form_key').val();
+         $.ajax({
+            type: "POST",
+            url: "http://www.tumblr.com/add_tags_to_posts",
+            data: {"post_ids": id,
+                   "tags": queueTags.join(","),
+                   "form_key": key}
+         });
+      });
+      $('#posts div.MissingE_postMenu button').live('mouseup', function() {
+         if (/ask_queue_button_also_[0-9]+$/.test(this.id)) {
+            var id = this.id.match(/[0-9]+$/)[0];
+            var tags = $('#ask_answer_form_' + id +
+                         ' input.MissingE_askFixes_tags');
+            if (tags.length === 0) {
+               tags = $('<input type="hidden" class="MissingE_askFixes_tags" ' +
+                        'value="" />').appendTo('#ask_answer_form_' + id)
+            }
+            if (tags.length === 0) { return; }
+            tagstr = tags.val();
+
+            taglist = tagstr.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',')
+                     .replace(/,$/,'').replace(/^\s*/,'').replace(/\s*$/,'')
+                     .split(",");
+            var addTags = [];
+            for (i=0; i<queueTags.length; i++) {
+               if ($.inArray(queueTags[i],taglist) === -1) {
+                  addTags.push(queueTags[i]);
+               }
+            }
+            if (addTags.length > 0) {
+               if (!(/^\s*$/.test(tagstr))) {
+                  addTags.unshift("");
+               }
+               tags.val(tagstr+addTags.join(", "));
+            }
+         }
+      });
+      $('#edit_post').submit(function() {
+         var fields = $(this).serializeArray();
+         if (/2/.test($(this["post[state]"]).val())) {
+            var tags = $(this["post[tags]"]).val().split(",");
+            var addTags = [];
+            for (i=0; i<queueTags.length; i++) {
+               if ($.inArray(queueTags[i],tags) === -1) {
+                  addTags.push(queueTags[i]);
+               }
+            }
+            var tagsInput = $(this).find('#post_tags');
+            if (addTags.length > 0 && tagsInput.length > 0) {
+               if (tagsInput.val() !== '') {
+                  addTags.unshift("");
+               }
+               tagsInput.val(tagsInput.val()+addTags.join(","));
+            }
+         }
+      });
+   }
    if (blogSelect === 1 &&
        $('select#channel_id').length > 0) {
       var extrachan = $('<select id="extra_channel"></select>')
@@ -259,6 +325,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
    }
 
    if (addUploader === 1 &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/drafts/
+            .test(location.href)) &&
        !(/\/new\/text/.test(location.href)) &&
        !(/\/new\/chat/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/messages/.test(location.href)) &&

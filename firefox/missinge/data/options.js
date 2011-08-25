@@ -194,10 +194,12 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
          }
       }
       else if (obj.name === 'MissingE_askFixes_defaultTags' ||
-               obj.name === 'MissingE_replyReplies_defaultTags') {
+               obj.name === 'MissingE_replyReplies_defaultTags' ||
+               obj.name === 'MissingE_postingFixes_queueTags') {
          var val = trim(obj.value);
-         val = val.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,', ')
-                  .replace(/,\s*$/,'').replace(/^\s*/,'').replace(/\s*$/,'');
+         val = val.replace(/^\s*,/,'').replace(/,(\s*,)*/g,',')
+                  .replace(/\s*,\s*/g,', ').replace(/,\s*$/,'')
+                  .replace(/^\s*/,'').replace(/\s*$/,'');
          obj.value = val;
          setStorage(obj.name, obj.value);
       }
@@ -331,6 +333,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
          loadCheck(frm,'MissingE_postingFixes_subEdit',1);
          frm.MissingE_postingFixes_subEditRetries.value = getStorage('MissingE_postingFixes_subEditRetries',defaultRetries);
+         loadCheck(frm,'MissingE_postingFixes_tagQueuedPosts',0);
+         frm.MissingE_postingFixes_queueTags.value = getStorage('MissingE_postingFixes_queueTags','');
       }
       else if (v == "reblogYourself") {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);

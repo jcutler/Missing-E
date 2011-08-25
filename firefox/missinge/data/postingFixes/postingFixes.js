@@ -132,14 +132,12 @@ self.on('message', function(message) {
       document.getElementById('tokens').innerHTML = txt;
    }
 
-   var set_tags = jQuery('#set_tags');
-   jQuery('<div style="text-align:right;">' +
+   jQuery('#set_tags').append('<div style="text-align:right;">' +
      '<a class="clear_tags" style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
      'return false;">' + locale[lang].postingFixes.clearTagsText +
-     '</a></div>')
-         .appendTo(set_tags);
+     '</a></div>');
 
    jQuery('#photo_src').keyup(function(){
       if (/^http:\/\/https?:\/\//.test(this.value)) {
@@ -147,6 +145,72 @@ self.on('message', function(message) {
       }
    });
 
+   if (message.tagQueuedPosts === 1) {
+      var queueTags = message.queueTags === '' ? [] : message.queueTags;
+      jQuery('#posts div.post_controls a').live('click',function(){
+         if (!jQuery(this).hasClass('MissingE_queue_control') &&
+             !(new RegExp(locale[lang].dashFixesText.queue,"i")).test(jQuery(this).text())) {
+            return;
+         }
+         var id = jQuery(this).closest('li.post').attr('id').match(/[0-9]+$/)[0];
+         var key = jQuery('#form_key').val();
+         jQuery.ajax({
+            type: "POST",
+            url: "http://www.tumblr.com/add_tags_to_posts",
+            data: {"post_ids": id,
+                   "tags": queueTags.join(","),
+                   "form_key": key}
+         });
+      });
+      jQuery('#posts div.MissingE_postMenu button').live('mouseup', function() {
+         if (/ask_queue_button_also_[0-9]+$/.test(this.id)) {
+            var id = this.id.match(/[0-9]+$/)[0];
+            var tags = jQuery('#ask_answer_form_' + id +
+                         ' input.MissingE_askFixes_tags');
+            if (tags.length === 0) {
+               tags = jQuery('<input type="hidden" class="MissingE_askFixes_tags" ' +
+                        'value="" />').appendTo('#ask_answer_form_' + id)
+            }
+            if (tags.length === 0) { return; }
+            tagstr = tags.val();
+
+            taglist = tagstr.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',')
+                     .replace(/,$/,'').replace(/^\s*/,'').replace(/\s*$/,'')
+                     .split(",");
+            var addTags = [];
+            for (i=0; i<queueTags.length; i++) {
+               if (jQuery.inArray(queueTags[i],taglist) === -1) {
+                  addTags.push(queueTags[i]);
+               }
+            }
+            if (addTags.length > 0) {
+               if (!(/^\s*$/.test(tagstr))) {
+                  addTags.unshift("");
+               }
+               tags.val(tagstr+addTags.join(", "));
+            }
+         }
+      });
+      jQuery('#edit_post').submit(function() {
+         var fields = jQuery(this).serializeArray();
+         if (/2/.test(jQuery(this["post[state]"]).val())) {
+            var tags = jQuery(this["post[tags]"]).val().split(",");
+            var addTags = [];
+            for (i=0; i<queueTags.length; i++) {
+               if (jQuery.inArray(queueTags[i],tags) === -1) {
+                  addTags.push(queueTags[i]);
+               }
+            }
+            var tagsInput = jQuery(this).find('#post_tags');
+            if (addTags.length > 0 && tagsInput.length > 0) {
+               if (tagsInput.val() !== '') {
+                  addTags.unshift("");
+               }
+               tagsInput.val(tagsInput.val()+addTags.join(","));
+            }
+         }
+      });
+   }
    if (message.blogSelect === 1 &&
        jQuery('select#channel_id').length > 0) {
       var extrachan = jQuery('<select id="extra_channel"></select>')
@@ -270,6 +334,8 @@ self.on('message', function(message) {
    }
 
    if (message.addUploader === 1 &&
+       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/drafts/
+            .test(location.href)) &&
        !(/\/new\/text/.test(location.href)) &&
        !(/\/new\/chat/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/messages/.test(location.href)) &&
