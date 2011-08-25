@@ -23,6 +23,40 @@
 
 /*global escapeHTML,jQuery,locale,self */
 
+function setupMassDeletePost(item) {
+   jQuery('<input type="checkbox" val="0" id="' + item.id + '_select" ' +
+     'class="MissingEmassDeleteSelect" />')
+         .appendTo(jQuery(item).find('div.post_controls'));
+}
+
+function deletePosts(key, lang) {
+   var posts = [];
+   var count = 0;
+   var set = jQuery('#posts li.MissingEmdSelected');
+   if (set.length < 1) { return; }
+   var remset = set.filter(function() {
+      if (count >= 100) { return false; }
+      count++;
+      return true;
+   }).each(function(i) {
+      if (i >= 100) { return false; }
+      posts.push(this.id.match(/[0-9]+$/)[0]);
+   });
+   jQuery.ajax({
+      type: "POST",
+      url: '/delete_posts',
+      data: {"post_ids": posts.join(','),
+             "form_key": key},
+      error: function(xhr, textStatus) {
+         alert(locale[lang].massDelete.postsError);
+      },
+      success: function(data, textStatus) {
+         remset.removeClass('MissingEmdSelected').remove();
+         deletePosts(key, lang);
+      }
+   });
+}
+
 function addPostLinks() {
    var i;
    var plwrap = '<li class="short_new_post post new_post" id="new_post"></li>';
@@ -257,6 +291,7 @@ self.on('message', function(message) {
       return false;
    }
    var extensionURL = message.extensionURL;
+   var lang = jQuery('html').attr('lang');
    document.addEventListener('MissingEajax', function(e) {
       var type = e.data.match(/^[^:]*/)[0];
       var list = e.data.match(/(post_[0-9]+)/g);
@@ -501,6 +536,85 @@ self.on('message', function(message) {
             '}' +
          '});' +
          '</script>');
+   }
+   if (message.massDelete === 1 &&
+       /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/
+         .test(location.href)) {
+      var afterguy = jQuery('#right_column a.settings');
+      var beforeguy;
+      if (afterguy.length > 0) {
+         beforeguy = afterguy.closest('ul').next();
+      }
+      else {
+         beforeguy = jQuery('#right_column a.posts').closest('ul');
+         if (beforeguy.length === 0) {
+            beforeguy = jQuery('#search_form');
+         }
+      }
+      jQuery('head').append('<style type="text/css">' +
+                       '#right_column #MissingEmassDeleter a { ' +
+                       'background-image:url("' +
+                       message.extensionURL + "dashboardFixes/massDelete.png" +
+                       '") !important; }</style>');
+      jQuery('<ul class="controls_section" id="MissingEmassDeleter">' +
+        '<li><a href="#" class="select_all">' +
+        '<div class="hide_overflow">' +
+        locale[lang].massDelete.selectAll + '</div></a></li>' +
+        '<li><a href="#" class="deselect_all">' +
+        '<div class="hide_overflow">' +
+        locale[lang].massDelete.deselectAll + '</div></a></li>' +
+        '<li><a href="#" class="delete_selected">' +
+        '<div class="hide_overflow">' +
+        locale[lang].massDelete.deleteSelected + '</div></a></li></ul>')
+            .insertBefore(beforeguy);
+      jQuery('#posts li.post').each(function() {
+         setupMassDeletePost(this);
+      });
+      document.addEventListener('MissingEajax', function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
+         if (type === "notes") { return false; }
+         jQuery.each(list, function(i, val) {
+            setupMassDeletePost(jQuery('#'+val).get(0));
+         });
+      }, false);
+      jQuery('#MissingEmassDeleter a').click(function() {
+         var btn = jQuery(this);
+         if (btn.hasClass('select_all')) {
+            jQuery('#posts input.MissingEmassDeleteSelect').each(function(){
+               this.checked = true;
+               jQuery(this).trigger('change');
+            });
+         }
+         else if (btn.hasClass('deselect_all')) {
+            jQuery('#posts input.MissingEmassDeleteSelect').each(function() {
+               this.checked = false;
+               jQuery(this).closest('li.post')
+                  .removeClass('MissingEmdSelected');
+            });
+         }
+         else if (btn.hasClass('delete_selected')) {
+            var key = jQuery('#posts input[name="form_key"]:first').val();
+            var count = jQuery('#posts li.MissingEmdSelected').length;
+            if (count > 0) {
+               var sure = confirm(locale[lang].massDelete.postsConfirm
+                                  .replace('#',count));
+               if (sure) {
+                  deletePosts(key, lang);
+               }
+            }
+         }
+         return false;
+      });
+      jQuery('input.MissingEmassDeleteSelect').live('change', function() {
+         var item = jQuery(this).closest('li.post');
+         if (this.checked) {
+            item.addClass('MissingEmdSelected');
+         }
+         else {
+            item.removeClass('MissingEmdSelected');
+         }
+      });
    }
 });
 

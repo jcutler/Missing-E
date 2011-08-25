@@ -1087,6 +1087,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
       settings.MissingE_dashboardFixes_queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
       settings.MissingE_dashboardFixes_expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
+      settings.MissingE_dashboardFixes_massDelete = getStorage("extensions.MissingE.dashboardFixes.massDelete",1);
       settings.MissingE_sidebarTweaks_retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
       settings.MissingE_sidebarTweaks_slimSidebar = getStorage("extensions.MissingE.sidebarTweaks.slimSidebar",0);
@@ -1176,6 +1177,7 @@ function handleMessage(message, myWorker) {
             settings.widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
             settings.queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
             settings.expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
+            settings.massDelete = getStorage("extensions.MissingE.dashboardFixes.massDelete",1);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);

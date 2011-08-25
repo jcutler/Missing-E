@@ -306,6 +306,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
+         loadCheck(frm,'MissingE_dashboardFixes_massDelete',1);
       }
       else if (v == "betterReblogs") {
          loadCheck(frm,'MissingE_betterReblogs_noPassTags',0);

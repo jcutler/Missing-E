@@ -23,6 +23,40 @@
 
 /*global $,locale,safari */
 
+function setupMassDeletePost(item) {
+   $('<input type="checkbox" val="0" id="' + item.id + '_select" ' +
+     'class="MissingEmassDeleteSelect" />')
+         .appendTo($(item).find('div.post_controls'));
+}
+
+function deletePosts(key, lang) {
+   var posts = [];
+   var count = 0;
+   var set = $('#posts li.MissingEmdSelected');
+   if (set.length < 1) { return; }
+   var remset = set.filter(function() {
+      if (count >= 100) { return false; }
+      count++;
+      return true;
+   }).each(function(i) {
+      if (i >= 100) { return false; }
+      posts.push(this.id.match(/[0-9]+$/)[0]);
+   });
+   $.ajax({
+      type: "POST",
+      url: '/delete_posts',
+      data: {"post_ids": posts.join(','),
+             "form_key": key},
+      error: function(xhr, textStatus) {
+         alert(locale[lang].massDelete.postsError);
+      },
+      success: function(data, textStatus) {
+         remset.removeClass('MissingEmdSelected').remove();
+         deletePosts(key, lang);
+      }
+   });
+}
+
 function addPostLinks() {
    var i;
    var plwrap = '<li class="short_new_post post new_post" id="new_post"></li>';
@@ -248,9 +282,9 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                                            timeoutAJAX, timeoutLength,
                                            postLinks, reblogReplies,
                                            widescreen, queueArrows,
-                                           expandAll) {
+                                           expandAll, massDelete) {
    if (window.top !== window) { return false; }
-
+   var lang = $('html').attr('lang');
 
    $(document).bind('MissingEajax', function(e) {
       if (e.originalEvent.data.type === 'notes') { return; }
@@ -488,5 +522,81 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
             '}' +
          '});' +
          '</script>');
+   }
+   if (massDelete === 1 &&
+       /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/
+         .test(location.href)) {
+      var afterguy = $('#right_column a.settings');
+      var beforeguy;
+      if (afterguy.length > 0) {
+         beforeguy = afterguy.closest('ul').next();
+      }
+      else {
+         beforeguy = $('#right_column a.posts').closest('ul');
+         if (beforeguy.length === 0) {
+            beforeguy = $('#search_form');
+         }
+      }
+      $('head').append('<style type="text/css">' +
+                       '#right_column #MissingEmassDeleter a { ' +
+                       'background-image:url("' +
+                       safari.extension.baseURI + "dashboardFixes/massDelete.png" +
+                       '") !important; }</style>');
+      $('<ul class="controls_section" id="MissingEmassDeleter">' +
+        '<li><a href="#" class="select_all">' +
+        '<div class="hide_overflow">' +
+        locale[lang].massDelete.selectAll + '</div></a></li>' +
+        '<li><a href="#" class="deselect_all">' +
+        '<div class="hide_overflow">' +
+        locale[lang].massDelete.deselectAll + '</div></a></li>' +
+        '<li><a href="#" class="delete_selected">' +
+        '<div class="hide_overflow">' +
+        locale[lang].massDelete.deleteSelected + '</div></a></li></ul>')
+            .insertBefore(beforeguy);
+      $('#posts li.post').each(function() {
+         setupMassDeletePost(this);
+      });
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type === "notes") { return; }
+         $.each(e.originalEvent.data.list, function(i, val) {
+            setupMassDeletePost($('#'+val).get(0));
+         });
+      });
+      $('#MissingEmassDeleter a').click(function() {
+         var btn = $(this);
+         if (btn.hasClass('select_all')) {
+            $('#posts input.MissingEmassDeleteSelect').each(function() {
+               this.checked = true;
+               $(this).trigger('change');
+            });
+         }
+         else if (btn.hasClass('deselect_all')) {
+            $('#posts input.MissingEmassDeleteSelect').each(function() {
+               this.checked = false;
+               $(this).closest('li.post').removeClass('MissingEmdSelected');
+            });
+         }
+         else if (btn.hasClass('delete_selected')) {
+            var key = $('#posts input[name="form_key"]:first').val();
+            var count = $('#posts li.MissingEmdSelected').length;
+            if (count > 0) {
+               var sure = confirm(locale[lang].massDelete.postsConfirm
+                                  .replace('#',count));
+               if (sure) {
+                  deletePosts(key, lang);
+               }
+            }
+         }
+         return false;
+      });
+      $('input.MissingEmassDeleteSelect').live('change', function() {
+         var item = $(this).closest('li.post');
+         if (this.checked) {
+            item.addClass('MissingEmdSelected');
+         }
+         else {
+            item.removeClass('MissingEmdSelected');
+         }
+      });
    }
 }

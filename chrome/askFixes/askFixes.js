@@ -52,7 +52,7 @@ function deleteMessages(key, lang) {
       data: {"post_ids": posts.join(','),
              "form_key": key},
       error: function(xhr, textStatus) {
-         alert(locale[lang].massDelete.error);
+         alert(locale[lang].massDelete.messagesError);
       },
       success: function(data, textStatus) {
          remset.removeClass('MissingEmdSelected').remove();
@@ -422,7 +422,7 @@ chrome.extension.sendRequest({greeting: "settings",
                var key = $('#posts input[name="form_key"]:first').val();
                var count = $('#posts li.MissingEmdSelected').length;
                if (count > 0) {
-                  var sure = confirm(locale[lang].massDelete.message
+                  var sure = confirm(locale[lang].massDelete.messagesConfirm
                                      .replace('#',count));
                   if (sure) {
                      deleteMessages(key, lang);

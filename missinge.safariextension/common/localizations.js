@@ -150,8 +150,10 @@ var locale = {
    "selectAll": "Select All",
    "deselectAll": "Deselect All",
    "deleteSelected": "Delete Selected",
-   "message": "Are you sure you want to delete the # selected messages?",
-   "error": "Some messages could not be deleted. Please try again later."
+   "messagesConfirm": "Are you sure you want to delete the # selected messages?",
+   "messagesError": "Some messages could not be deleted. Please try again later.",
+   "postsConfirm": "Are you sure you want to delete the # selected posts?",
+   "postsError": "Some posts could not be deleted. Please try again later."
   }
  },
  "es": {
@@ -305,8 +307,10 @@ var locale = {
    "selectAll": "Seleccionar Todos",
    "deselectAll": "Deseleccionar Todos",
    "deleteSelected": "Eliminar Seleccionados",
-   "message": "¿Está seguro que desea eliminar los # mensajes seleccionados?",
-   "error": "Algunos mensajes no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde."
+   "messagesConfirm": "¿Está seguro que desea eliminar los # mensajes seleccionados?",
+   "messagesError": "Algunos mensajes no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde.",
+   "postsConfirm": "¿Está seguro que desea eliminar los # publicaciones seleccionados?",
+   "postsError": "Algunos publicaciones no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde."
   }
  },
  "de": {
@@ -460,8 +464,10 @@ var locale = {
    "selectAll": "Alle auswählen",
    "deselectAll": "Alle abwählen",
    "deleteSelected": "Auswählte löschen",
-   "message": "Sind Sie sicher, dass Sie die # ausgewählten Nachrichten löschen wollen?",
-   "error": "Einige Nachrichten können nicht gelöscht werden. Bitte versuchen Sie es später erneut."
+   "messagesConfirm": "Sind Sie sicher, dass Sie die # ausgewählten Nachrichten löschen wollen?",
+   "messagesError": "Einige Nachrichten können nicht gelöscht werden. Bitte versuchen Sie es später erneut.",
+   "postsConfirm": "Sind Sie sicher, dass Sie die # ausgewählten Einträge löschen wollen?",
+   "postsError": "Einige Einträge können nicht gelöscht werden. Bitte versuchen Sie es später erneut."
   }
  },
  "fr": {
@@ -615,8 +621,10 @@ var locale = {
    "selectAll": "Tout sélectionner",
    "deselectAll": "Tout désélectionner",
    "deleteSelected": "Supprimer la sélection",
-   "message": "Etes-vous sûr de vouloir supprimer les # messages sélectionnés?",
-   "error": "Certains messages n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard."
+   "messagesConfirm": "Etes-vous sûr de vouloir supprimer les # messages sélectionnés?",
+   "messagesError": "Certains messages n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard.",
+   "postsConfirm": "Etes-vous sûr de vouloir supprimer les # billets sélectionnés?",
+   "postsError": "Certains billets n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard."
   }
  },
  "it": {
@@ -770,8 +778,10 @@ var locale = {
    "selectAll": "Seleziona tutto",
    "deselectAll": "Deseleziona tutto",
    "deleteSelected": "Elimina selezionati",
-   "message": "Sei sicuro di voler eliminare i # messaggi selezionati?",
-   "error": "Alcuni messaggi non sono stati eliminati. Riprova più tardi."
+   "messagesConfirm": "Sei sicuro di voler eliminare i # messaggi selezionati?",
+   "messagesError": "Alcuni messaggi non sono stati eliminati. Riprova più tardi.",
+   "postsConfirm": "Sei sicuro di voler eliminare i # posti selezionati?",
+   "postsError": "Alcuni posti non sono stati eliminati. Riprova più tardi."
   }
  },
  "ja": {
@@ -925,8 +935,10 @@ var locale = {
    "selectAll": "すべて選択",
    "deselectAll": "すべて選択解除",
    "deleteSelected": "選択した項目を削除",
-   "message": "あなたは # 選択したメッセージを削除してもよろしいですか？",
-   "error": "一部のメッセージが削除できませんでした。後でもう一度やり直してください。"
+   "messagesConfirm": "あなたは # 選択したメッセージを削除してもよろしいですか？",
+   "messagesError": "一部のメッセージが削除できませんでした。後でもう一度やり直してください。",
+   "postsConfirm": "あなたは # 選択した投稿を削除してもよろしいですか？",
+   "postsError": "一部の投稿が削除できませんでした。後でもう一度やり直してください。"
   }
  },
  "tr": {
@@ -1104,8 +1116,10 @@ var locale = {
    "selectAll": "Hepsini Seç",
    "deselectAll": "Seçimi Kaldır",
    "deleteSelected": "Seçilenleri Sil",
-   "message": "Seçili olan bu # mesaj silinsin mi?",
-   "error": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin."
+   "messagesConfirm": "Seçili olan bu # mesajlar silinsin mi?",
+   "messagesError": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin.",
+   "postsConfirm": "Seçili olan bu # gönderiler silinsin mi?",
+   "postsError": "Üzgünüz bazı gönderiler şu anda silinemiyor. Lütfen daha sonra yeniden deneyin."
   }
  }
 };
