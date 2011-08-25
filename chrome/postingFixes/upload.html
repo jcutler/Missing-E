@@ -6,29 +6,10 @@
       <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
       <script type="text/javascript" src="../common/jquery.min.js"></script>
       <script type="text/javascript">
-      $.ajax({
-         url:"http://www.tumblr.com/upload/image",
-         dataType:"html",
-         retries:4,
-         tryCount:0,
-         success:function(data) {
-            var key = data.match(/<input[^>]*name="form_key"[^>]*value="([^"]*)"[^>]*>/);
-            if (!key || key.length < 2) {
-               if (this.tryCount < this.retries) {
-                  this.tryCount++;
-                  $.ajax(this);
-               }
-            }
-            else {
-               $('#form_key').val(key[1]);
-               $('#upload_image_form').show();
-            }
-         },
-         error:function() {
-            if (this.tryCount < this.retries) {
-               this.tryCount++;
-               $.ajax(this);
-            }
+      chrome.extension.sendRequest({greeting: "uploader"}, function(response) {
+         if (response.success) {
+            $('#form_key').val(response.data);
+            $('#upload_image_form').show();
          }
       });
       </script>

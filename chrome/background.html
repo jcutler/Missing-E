@@ -731,6 +731,38 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       sendResponse({uptodate:versionCompare(getStorage("MissingE_version",'0'),
                                             request.v) >= 0});
    }
+   else if (request.greeting == "uploader") {
+      $.ajax({
+         url:"http://www.tumblr.com/upload/image",
+         dataType:"html",
+         retries:4,
+         tryCount:0,
+         success:function(data) {
+            var key = data.match(/<input[^>]*name="form_key"[^>]*value="([^"]*)"[^>]*>/);
+            if (!key || key.length < 2) {
+               if (this.tryCount < this.retries) {
+                  this.tryCount++;
+                  $.ajax(this);
+               }
+               else {
+                  sendResponse({success: false});
+               }
+            }
+            else {
+               sendResponse({success: true, data: key[1]});
+            }
+         },
+         error:function() {
+            if (this.tryCount < this.retries) {
+               this.tryCount++;
+               $.ajax(this);
+            }
+            else {
+               sendResponse({success: false});
+            }
+         }
+      });
+   }
    else if (request.greeting == "update") {
       sendResponse({update:
          versionCompare(getStorage("MissingE_externalVersion",'0'),
