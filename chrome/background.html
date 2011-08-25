@@ -1327,7 +1327,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(sender.tab.url)) &&
           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(sender.tab.url))) {
-         if (getStorage("Missinge_timestamps_enabled",1) == 1) {
+         if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "timestamps/timestamps.js"});
          }
