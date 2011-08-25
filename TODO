@@ -12,11 +12,3 @@ sortable notes [thefrogman]
 
 Check Mass Delete localizations:
 - ja
-
-Add intermediate AJAX handler
-- see: https://github.com/jcutler/Missing-E/issues/24
-
-Mass delete queue/draft posts [mangtimang]
-
-Fix inbox Timestamps (Safari) and check (Firefox)
-New timestamps thing?
