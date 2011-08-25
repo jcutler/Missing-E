@@ -85,6 +85,9 @@ function doTimestamp(stamp, id, sendResponse) {
    }
    var ts = stamp.timestamp;
    var d = new Date(ts*1000);
+   if (isNaN(d)) {
+      sendResponse({pid: id, success: false});
+   }
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
    ins = getFormattedDate(d, ins, lang);
    ins = ins.replace(/%X/g,id);
@@ -750,6 +753,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          return true;
       }
       else {
+         var sentStamp = false;
          debug("Building timestamp (" + request.pid + ")");
          var dt = {};
          var today = new Date();
@@ -859,6 +863,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             var ts = Math.round(d.getTime()/1000);
             var info = {"timestamp":ts};
             saveCache(request.pid,info);
+            sentStamp = true;
             doTimestamp(info, request.pid, sendResponse);
          }
          if (!dt.year) {
@@ -877,6 +882,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(request.pid,info);
+               sentStamp = true;
                doTimestamp(info, request.pid, sendResponse);
             }
             else if (dt.date < 0) {
@@ -904,6 +910,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(request.pid,info);
+               sentStamp = true;
                doTimestamp(info, request.pid, sendResponse);
             }
             else if (!dt.date) {
@@ -916,11 +923,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(request.pid,info);
+               sentStamp = true;
                doTimestamp(info, request.pid, sendResponse);
             }
          }
          //console.log(request.stamp);
          //console.log(dt);
+         if (!sentStamp) {
+            sendResponse({pid: id, success: false});
+         }
       }
    }
    else if (request.greeting == "sidebarTweaks") {

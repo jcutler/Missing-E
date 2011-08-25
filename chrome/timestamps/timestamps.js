@@ -89,11 +89,16 @@ function loadTimestamp(item) {
                extraHTML = ' (<a href="' + addr + '/api/read/json?id=' +
                            response.pid + '">' + response.pid + '</a>)';
             }
+            var failHTML = 'Timestamp loading failed.';
+            if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
+                /^\/tumblelog\/[^\/]*\/(messages|submissions)/
+                  .test(location.pathname)) {
+               failHTML += ' <a class="MissingE_timestamp_retry" href="#" ' +
+                           'onclick="return false;">Retry</a>';
+            }
             info = $('#post_' + response.pid)
                            .find('span.MissingE_timestamp');
-            info.html('Timestamp loading failed. ' +
-                      '<a class="MissingE_timestamp_retry" href="#" ' +
-                      'onclick="return false;">Retry</a>' + extraHTML);
+            info.html(failHTML + extraHTML);
          }
       });
    }

@@ -255,6 +255,9 @@ function doTimestamp(stamp, id, theWorker) {
    }
    var ts = stamp.timestamp;
    var d = new Date(ts*1000);
+   if (isNaN(d)) {
+      theWorker.postMessage({greeting: "timestamp", pid: id, success: false});
+   }
    var ins = getStorage("extensions.MissingE.timestamps.format",defaultFormat);
    ins = getFormattedDate(d, ins, lang);
    theWorker.postMessage({greeting: "timestamp", pid: id, success: true, data: ins});
@@ -881,6 +884,7 @@ function handleMessage(message, myWorker) {
          return true;
       }
       else {
+         var sentStamp = false;
          debug("Building timestamp (" + message.pid + ")");
          var dt = {};
          var today = new Date();
@@ -990,6 +994,7 @@ function handleMessage(message, myWorker) {
             var ts = Math.round(d.getTime()/1000);
             var info = {"timestamp":ts};
             saveCache(message.pid,info);
+            sentStamp = true;
             doTimestamp(info, message.pid, myWorker);
          }
          if (!dt.year) {
@@ -1008,6 +1013,7 @@ function handleMessage(message, myWorker) {
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(message.pid,info);
+               sentStamp = true;
                doTimestamp(info, message.pid, myWorker);
             }
             else if (dt.date < 0) {
@@ -1035,6 +1041,7 @@ function handleMessage(message, myWorker) {
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(message.pid,info);
+               sentStamp = true;
                doTimestamp(info, message.pid, myWorker);
             }
             else if (!dt.date) {
@@ -1047,11 +1054,16 @@ function handleMessage(message, myWorker) {
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(message.pid,info);
+               sentStamp = true;
                doTimestamp(info, message.pid, myWorker);
             }
          }
          //console.log(message.stamp);
          //console.log(dt);
+         if (!sentStamp) {
+            theWorker.postMessage({greeting: "timestamp", pid: id,
+                                   success: false});
+         }
       }
    }
    else if (message.greeting == "tags") {

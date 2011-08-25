@@ -105,6 +105,9 @@ function doTimestamp(stamp, id, request) {
    }
    var ts = stamp.timestamp;
    var d = new Date(ts*1000);
+   if (isNaN(d)) {
+      request.target.page.dispatchMessage("timestamp",{pid: id, success: false});
+   }
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
    ins = getFormattedDate(d, ins, lang);
    request.target.page.dispatchMessage("timestamp",{pid: id, success: true, data: ins});
@@ -777,6 +780,7 @@ function handleRequest(request) {
          return true;
       }
       else {
+         var sentStamp = false;
          debug("Building timestamp (" + request.message.pid + ")");
          var dt = {};
          var today = new Date();
@@ -886,6 +890,7 @@ function handleRequest(request) {
             var ts = Math.round(d.getTime()/1000);
             var info = {"timestamp":ts};
             saveCache(request.message.pid,info);
+            sentStamp = true;
             doTimestamp(info, request.message.pid, request);
          }
          if (!dt.year) {
@@ -904,6 +909,7 @@ function handleRequest(request) {
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(request.message.pid,info);
+               sentStamp = true;
                doTimestamp(info, request.message.pid, request);
             }
             else if (dt.date < 0) {
@@ -931,6 +937,7 @@ function handleRequest(request) {
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(request.message.pid,info);
+               sentStamp = true;
                doTimestamp(info, request.message.pid, request);
             }
             else if (!dt.date) {
@@ -943,8 +950,13 @@ function handleRequest(request) {
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(request.message.pid,info);
+               sentStamp = true;
                doTimestamp(info, request.message.pid, request);
             }
+         }
+         if (!sentStamp) {
+            request.target.page.dispatchMessage("timestamp",
+                                                {pid: id, success: false});
          }
          //console.log(request.message.stamp);
          //console.log(dt);

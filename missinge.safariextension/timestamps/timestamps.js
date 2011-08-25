@@ -92,9 +92,14 @@ function receiveTimestamp(response) {
    else {
       info = $('#post_' + response.message.pid)
                      .find('span.MissingE_timestamp');
-      info.html('Timestamp loading failed. ' +
-                '<a class="MissingE_timestamp_retry" href="#" ' +
-                'onclick="return false;">Retry</a>');
+      var failHTML = 'Timestamp loading failed.';
+      if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
+          /^\/tumblelog\/[^\/]*\/(messages|submissions)/
+            .test(location.pathname)) {
+         failHTML += ' <a class="MissingE_timestamp_retry" href="#" ' +
+                     'onclick="return false;">Retry</a>';
+      }
+      info.html(failHTML);
    }
 }
 
