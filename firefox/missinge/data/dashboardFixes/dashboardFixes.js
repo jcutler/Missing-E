@@ -168,12 +168,10 @@ function doIcons(item) {
             .find('span').each(function() {
             // doesn't need to be sanitizied, pulled straight from existing DOM
             jQuery(this).html(jQuery(this).html()
-                              .replace(/[^0-9]*([0-9,\.]+)[^0-9]*/,
-                                                '<span class="notes_txt">' +
-                                                "$1" + '</span> ' +
-                                                '<span class="' + klass +
-                                                ' MissingE_notes_control">' +
-                                                '&nbsp;</span>'));
+               .replace(/[^0-9]*([0-9]+([,\.\s][0-9]+)*)[^0-9]*/,
+                        '<span class="notes_txt">' + "$1" + '</span> ' +
+                        '<span class="' + klass + ' MissingE_notes_control">' +
+                        '&nbsp;</span>'));
          });
       }
    });

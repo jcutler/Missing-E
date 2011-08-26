@@ -165,12 +165,11 @@ function doIcons(item) {
          a.attr('title',locale[lang].dashFixesText.notes)
             .addClass('MissingE_notes_control_container')
             .find('span').each(function() {
-            $(this).html($(this).html().replace(/[^0-9]*([0-9,\.]+)[^0-9]*/,
-                                                '<span class="notes_txt">' +
-                                                "$1" + '</span> ' +
-                                                '<span class="' + klass +
-                                                ' MissingE_notes_control">' +
-                                                '&nbsp;</span>'));
+            $(this).html($(this).html()
+               .replace(/[^0-9]*([0-9]+([,\.\s][0-9]+)*)[^0-9]*/,
+                        '<span class="notes_txt">' + "$1" + '</span> ' +
+                        '<span class="' + klass + ' MissingE_notes_control">' +
+                        '&nbsp;</span>'));
          });
       }
    });
