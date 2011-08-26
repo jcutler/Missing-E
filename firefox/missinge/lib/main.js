@@ -61,6 +61,21 @@ var locale=JSON.parse(data.load("common/localizations.js")
 var lang = 'en';
 var debugMode = false;
 
+function getVersion() {
+   return data.load("version").replace(/\s/g,'');
+}
+
+function getStorage(key, defVal) {
+   return ps.get(key, defVal);
+}
+
+function setStorage(key, val) {
+   ps.set(key, val);
+}
+
+var currVersion = getVersion();
+var prevVersion = getStorage('extensions.MissingE.version',null);
+
 function escapeHTML(str) {
    return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
             .replace(/>/,'&gt;').replace(/</,'&lt;');
@@ -163,14 +178,6 @@ function setIntegerPrefType(pref,defVal) {
       ps.reset(pref);
       ps.set(pref, val);
    }
-}
-
-function getStorage(key, defVal) {
-   return ps.get(key, defVal);
-}
-
-function setStorage(key, val) {
-   ps.set(key, val);
 }
 
 function closeTab(url) {
@@ -1242,6 +1249,11 @@ function handleMessage(message, myWorker) {
             settings.replaceIcons = (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                                        getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
+            settings.tagQueuedPosts = (getStorage("extensions.MissingE.postingFixes.enabled",1) == 1 && getStorage("extensions.MissingE.postingFixes.tagQueuedPosts",0) == 1) ? 1 : 0;
+            settings.queueTags = getStorage("extensions.MissingE.postingFixes.queueTags",'');
+            if (settings.queueTags !== '') {
+               settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
+            }
             break;
       }
       myWorker.postMessage(settings);
@@ -1253,6 +1265,7 @@ function handleMessage(message, myWorker) {
                            data.url("common/utils.js"),
                            data.url("common/localizations.js")];
       activeScripts.extensionURL = data.url("");
+      activeScripts.version = currVersion;
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/mega-editor\//.test(message.url)) {
             if (getStorage("extensions.MissingE.massEditor.enabled",1) == 1) {
@@ -1604,10 +1617,6 @@ pageMod.PageMod({
    }
 });
 
-function getVersion() {
-   return data.load("version").replace(/\s/g,'');
-}
-
 function getExternalVersion() {
    Request({
       url: 'http://missinge.infraware.ca/version',
@@ -1641,8 +1650,6 @@ function onStart(currVersion, prevVersion) {
    setStorage('extensions.MissingE.version',currVersion);
 }
 
-var currVersion = getVersion();
-var prevVersion = getStorage('extensions.MissingE.version',null);
 onStart(currVersion, prevVersion);
 getExternalVersion();
 

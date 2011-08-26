@@ -44,6 +44,17 @@ var debugMode = false;
 var tabs = {};
 var lang = 'en';
 
+function getVersion() {
+   var xhr = new XMLHttpRequest();
+   xhr.open('GET', chrome.extension.getURL('manifest.json'), false);
+   xhr.send(null);
+   var manifest = JSON.parse(xhr.responseText);
+   return manifest.version;
+}
+
+var currVersion = getVersion();
+var prevVersion = getStorage('MissingE_version',null);
+
 function addTab(id, url) {
    var d = (new Date()).valueOf();
    tabs[id] = d;
@@ -1058,6 +1069,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.quickReblogForceTwitter = getStorage("MissingE_betterReblogs_quickReblogForceTwitter","default");
             settings.replaceIcons = (getStorage("MissingE_dashboardFixes_enabled",1) == 1 && getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getStorage("MissingE_betterReblogs_fullText",0);
+            settings.tagQueuedPosts = (getStorage("MissingE_postingFixes_enabled",1) == 1 && getStorage("MissingE_postingFixes_tagQueuedPosts",0) == 1) ? 1: 0;
+            settings.queueTags = getStorage("MissingE_postingFixes_queueTags",'');
+            if (settings.queueTags !== '') {
+               settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
+            }
             break;
       }
       sendResponse(JSON.stringify(settings));
@@ -1072,6 +1088,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
       }
       var activeScripts = {};
+      activeScripts.version = currVersion;
       var zindexFix = false;
       var widenIframe = false;
       if (sender.tab.url == request.url &&
@@ -1406,14 +1423,6 @@ function invertSetting(oldpref, newpref) {
    }
 }
 
-function getVersion() {
-   var xhr = new XMLHttpRequest();
-   xhr.open('GET', chrome.extension.getURL('manifest.json'), false);
-   xhr.send(null);
-   var manifest = JSON.parse(xhr.responseText);
-   return manifest.version;
-}
-
 function getExternalVersion() {
    $.ajax({
       type: "GET",
@@ -1449,8 +1458,6 @@ function onStart(currVersion, prevVersion) {
    setStorage('MissingE_version',currVersion);
 }
 
-var currVersion = getVersion();
-var prevVersion = getStorage('MissingE_version',null);
 onStart(currVersion, prevVersion);
 getExternalVersion();
 

@@ -40,7 +40,7 @@ if ((window.top === window &&
           /http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) {
          document.domain = "tumblr.com";
       }
-      var info = "'Missing e' Startup on ";
+      var info = "'Missing e' (v" + active.version + ") Startup on ";
       info += active.url + "\n";
       for (i in active) {
          if (active.hasOwnProperty(i)) {

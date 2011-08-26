@@ -174,8 +174,9 @@ self.on('message', function(message) {
             if (tags.length === 0) { return; }
             tagstr = tags.val();
 
-            taglist = tagstr.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',')
-                     .replace(/,$/,'').replace(/^\s*/,'').replace(/\s*$/,'')
+            taglist = tagstr.replace(/^\s*,/,'').replace(/,(\s*,)*/g,',')
+                     .replace(/\s*,\s*/g,',').replace(/,$/,'')
+                     .replace(/^\s*/,'').replace(/\s*$/,'')
                      .split(",");
             var addTags = [];
             for (i=0; i<queueTags.length; i++) {

@@ -108,7 +108,7 @@ function doStartup(response) {
        /http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) {
       document.domain = "tumblr.com";
    }
-   var info = "'Missing e' Startup on ";
+   var info = "'Missing e' (v" + response.message.version + ") Startup on ";
    info += response.message.url + "\n";
    for (i in response.message) {
       if (response.message.hasOwnProperty(i)) {
@@ -269,7 +269,9 @@ function settings_startup(response) {
                                      response.message.replaceIcons,
                                      response.message.accountName,
                                      response.message.fullText,
-                                     response.message.quickReblogForceTwitter);
+                                     response.message.quickReblogForceTwitter,
+                                     response.message.tagQueuedPosts,
+                                     response.message.queueTags);
       }
       else if (response.message.subcomponent === "fill") {
          MissingE_betterReblogs_fill_doStartup(response.message.noPassTags,

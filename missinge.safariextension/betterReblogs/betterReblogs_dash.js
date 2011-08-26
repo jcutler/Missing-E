@@ -155,7 +155,8 @@ function reblogTextFull(item) {
    }
 }
 
-function doReblog(item,replaceIcons,accountName) {
+function doReblog(item,replaceIcons,accountName,queueTags) {
+   var i;
    var reblogMode = {
       "normal":  '0',
       "draft":   '1',
@@ -177,9 +178,19 @@ function doReblog(item,replaceIcons,accountName) {
    url = location.protocol + '//' + location.host + url;
    url = url.replace(/\?redirect_to=.*$/,'');
    var tags = $('#MissingE_quick_reblog_tags input').val();
-   tags = tags.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',').replace(/,$/,'')
+   tags = tags.replace(/^\s*,/,'').replace(/,(\s*,)*/g,',')
+            .replace(/\s*,\s*/g,',').replace(/,$/,'')
             .replace(/^\s*/,'').replace(/\s*$/,'');
    var mode = reblogMode[type];
+   if (queueTags && queueTags !== "" && type === "queue") {
+      var taglist = tags.split(',');
+      for (i=0; i<queueTags.length; i++) {
+         if ($.inArray(queueTags[i],taglist) === -1) {
+            taglist.push(queueTags[i]);
+         }
+      }
+      tags = taglist.join(",");
+   }
    var twitter = $('#MissingE_quick_reblog_twitter input').is(':checked');
    startReblog(postId,replaceIcons);
    $.ajax({
@@ -257,8 +268,12 @@ function doReblog(item,replaceIcons,accountName) {
 function MissingE_betterReblogs_dash_doStartup(noPassTags, quickReblog,
                                                replaceIcons, accountName,
                                                fullText,
-                                               quickReblogForceTwitter) {
+                                               quickReblogForceTwitter,
+                                               tagQueuedPosts, queueTags) {
    var lang = $('html').attr('lang');
+   if (tagQueuedPosts !== 1) {
+      queueTags = "";
+   }
    if (noPassTags === 0) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
       if (quickReblog === 1) {
@@ -535,7 +550,7 @@ function MissingE_betterReblogs_dash_doStartup(noPassTags, quickReblog,
             account = selector.val();
          }
          e.preventDefault();
-         doReblog(this,replaceIcons,account);
+         doReblog(this,replaceIcons,account,queueTags);
          return false;
       });
 
@@ -556,7 +571,7 @@ function MissingE_betterReblogs_dash_doStartup(noPassTags, quickReblog,
          if (selector.length > 0) {
             account = selector.val();
          }
-         doReblog(this,replaceIcons,account);
+         doReblog(this,replaceIcons,account,queueTags);
       });
 
       if (quickReblogForceTwitter === "default") {

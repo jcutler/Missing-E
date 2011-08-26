@@ -67,7 +67,7 @@ self.on('message', function (message) {
        /http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) {
       document.domain = "tumblr.com";
    }
-   var info = "'Missing e' Startup on ";
+   var info = "'Missing e' (v" + message.version + ") Startup on ";
    info += message.url + "\n";
    for (i in message) {
       if (message.hasOwnProperty(i)) {

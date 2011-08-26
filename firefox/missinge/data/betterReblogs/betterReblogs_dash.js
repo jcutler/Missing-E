@@ -158,7 +158,8 @@ function reblogTextFull(item) {
    }
 }
 
-function doReblog(item,replaceIcons,accountName) {
+function doReblog(item,replaceIcons,accountName,queueTags) {
+   var i;
    var reblogMode = {
       "normal":  '0',
       "draft":   '1',
@@ -180,9 +181,19 @@ function doReblog(item,replaceIcons,accountName) {
    url = location.protocol + '//' + location.host + url;
    url = url.replace(/\?redirect_to=.*$/,'');
    var tags = jQuery('#MissingE_quick_reblog_tags input').val();
-   tags = tags.replace(/,(\s*,)*/g,',').replace(/\s*,\s*/g,',').replace(/,$/,'')
+   tags = tags.replace(/^\s*,/,'').replace(/,(\s*,)*/g,',')
+            .replace(/\s*,\s*/g,',').replace(/,$/,'')
             .replace(/^\s*/,'').replace(/\s*$/,'');
    var mode = reblogMode[type];
+   if (queueTags && queueTags !== "" && type === "queue") {
+      var taglist = tags.split(',');
+      for (i=0; i<queueTags.length; i++) {
+         if (jQuery.inArray(queueTags[i],taglist) === -1) {
+            taglist.push(queueTags[i]);
+         }
+      }
+      tags = taglist.join(",");
+   }
    var twitter = jQuery('#MissingE_quick_reblog_twitter input').is(':checked');
    startReblog(postId,replaceIcons);
    jQuery.ajax({
@@ -266,6 +277,11 @@ self.on('message', function (message) {
    var extensionURL = message.extensionURL;
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
+   var queueTags = "";
+   if (message.tagQueuedPosts === 1) {
+      queueTags = message.queueTags;
+   }
+
    if (message.noPassTags === 0) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
       if (message.quickReblog === 1) {
@@ -560,7 +576,7 @@ self.on('message', function (message) {
             account = selector.val();
          }
          e.preventDefault();
-         doReblog(this,message.replaceIcons,account);
+         doReblog(this,message.replaceIcons,account,queueTags);
          return false;
       });
 
@@ -581,7 +597,7 @@ self.on('message', function (message) {
          if (selector.length > 0) {
             account = selector.val();
          }
-         doReblog(this,message.replaceIcons,account);
+         doReblog(this,message.replaceIcons,account,queueTags);
       });
 
       if (message.quickReblogForceTwitter === "default") {

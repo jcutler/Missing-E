@@ -73,6 +73,13 @@ function getStorage(key, defVal) {
    }
 }
 
+function getVersion() {
+   return getStorage("MissingE_version",'');
+}
+
+var currVersion = getVersion();
+var prevVersion = getStorage('MissingE_installedVersion',null);
+
 function setStorage(key, val) {
    safari.extension.settings[key] = val;
 }
@@ -1132,12 +1139,18 @@ function handleRequest(request) {
             settings.quickReblogForceTwitter = getStorage("MissingE_betterReblogs_quickReblogForceTwitter","default");
             settings.replaceIcons = (getStorage("MissingE_dashboardFixes_enabled",1) == 1 && getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getStorage("MissingE_betterReblogs_fullText",0);
+            settings.tagQueuedPosts = (getStorage("MissingE_postingFixes_enabled",1) == 1 && getStorage("MissingE_postingFixes_tagQueuedPosts",0) == 1) ? 1: 0;
+            settings.queueTags = getStorage("MissingE_postingFixes_queueTags",'');
+            if (settings.queueTags !== '') {
+               settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
+            }
             break;
       }
       request.target.page.dispatchMessage("settings",settings);
    }
    else if (request.name == "start") {
       var activeScripts = {url: request.message.url};
+      activeScripts.version = currVersion;
       if (!request.message.isFrame &&
           /http:\/\/www\.tumblr\.com\/mega-editor\//.test(request.message.url)) {
          if (getStorage("MissingE_massEditor_enabled",1) == 1) {
@@ -1411,10 +1424,6 @@ function invertSetting(oldpref, newpref) {
    }
 }
 
-function getVersion() {
-   return getStorage("MissingE_version",'');
-}
-
 function getExternalVersion() {
    $.ajax({
       type: "GET",
@@ -1453,8 +1462,6 @@ safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
                                              "common/widenIframe.css",
                                              "http://*");
 
-var currVersion = getVersion();
-var prevVersion = getStorage('MissingE_installedVersion',null);
 onStart(currVersion, prevVersion);
 getExternalVersion();
 
