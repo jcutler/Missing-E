@@ -31,8 +31,8 @@ function makeSidebar(tumblrAcctNum, retries) {
       var i;
       var list = [];
       var bloglist = '';
-      $('#user_channels li').each(function() {
-         list.push([this.id.match(/tab-(.*)/)[1], $(this).text()]);
+      $('#all_blogs_menu li[id]').each(function() {
+         list.push([this.id.match(/menuitem-(.*)/)[1], $(this).text()]);
       });
       if (tumblrAcctNum >= list.length) {
          tumblrAcctNum = 0;
@@ -152,12 +152,13 @@ function makeSidebar(tumblrAcctNum, retries) {
                }
                msb.find('span.count').remove();
                var len = data.length;
-               var postIdx = data.indexOf('<!-- Posts -->');
-               var followerIdx = data.indexOf('<!-- Followers -->');
-               var msgsIdx = data.indexOf('<!-- Messages -->');
-               var draftIdx = data.indexOf('<!-- Drafts -->');
-               var queueIdx = data.indexOf('<!-- Queue -->');
-               var endIdx = data.indexOf('<!-- Launch Mass Post editor -->');
+               var beginIdx = data.indexOf('<div id="right_column');
+               var postIdx = data.indexOf('<!-- Posts -->', beginIdx);
+               var followerIdx = data.indexOf('<!-- Followers -->', beginIdx);
+               var msgsIdx = data.indexOf('<!-- Messages -->', beginIdx);
+               var draftIdx = data.indexOf('<!-- Drafts -->', beginIdx);
+               var queueIdx = data.indexOf('<!-- Queue -->', beginIdx);
+               var endIdx = data.indexOf('<!-- Launch Mass Post editor -->', beginIdx);
                if (followerIdx === -1) { followerIdx = len; }
                if (msgsIdx === -1) { msgsIdx = len; }
                var postNum = data.substring(postIdx, followerIdx)
