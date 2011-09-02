@@ -345,7 +345,12 @@ jQuery('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
                        'type="text" size="10" value="' + ds +
                         '" id="MissingE_bookmarker_edit">');
       inp.blur(function(e) { handleEdit('focusout',e); })
-            .keyup(function(e) { handleEdit('keyup',e); });
+            .keyup(function(e) { handleEdit('keyup',e); })
+            .keydown(function(e) {
+               if (e.which === 74 || e.which === 75) {
+                  e.stopPropagation();
+               }
+            });
       title.closest('li').append(inp);
       var check = jQuery('<a id="MissingE_bookmark_confirmedit" ' +
                     'onclick="return false;" style="display:inline;" ' +
