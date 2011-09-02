@@ -14,3 +14,10 @@ RewriteCond %{HTTP_HOST} ^git.missinge.infraware.ca$ [NC]
 RewriteRule ^(.*)$ https://github.com/jcutler/Missing-E [R=301,L]
 </IfModule>
 
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf|txt)$">
+Header set Cache-control "max-age=604800"
+</FilesMatch>
+
+<FilesMatch "version$">
+Header set Cache-Control "no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0"
+</FilesMatch>
