@@ -187,6 +187,7 @@ function realignReplyNipple(nip) {
    $(nip).css({left:'auto', right:right+'px'});
 }
 
+/*
 function addQueueArrows(item) {
    if (item.tagName !== 'LI' ||
        !$(item).hasClass('post') ||
@@ -213,6 +214,7 @@ function addQueueArrows(item) {
          qpost.get(0).dispatchEvent(evt);
       }
    });
+*/
 /**** Only implement up arrow for now
    $('<a href="#" onclick="return false;" ' +
                 'class="MissingE_queuearrow_control ' +
@@ -225,7 +227,9 @@ function addQueueArrows(item) {
       }
    });
 ****/
+/*
 }
+*/
 
 function addExpandAllHandler(item) {
    var post = $(item);
@@ -394,6 +398,11 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
        (/http:\/\/www\.tumblr\.com\/queue/.test(location.href) ||
         /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/queue/
             .test(location.href))) {
+      $('head').append('<style type="text/css">' +
+                       '#posts li.queued div.post_controls .sort_handlebar, ' +
+                       '#posts li.queued div.post_controls .move_to_top { ' +
+                       'display:inline !important; }</style>');
+/*
       var queuearrs = chrome.extension
                         .getURL('dashboardFixes/queue_arrows.png');
       $('head').append('<style type="text/css">' +
@@ -414,6 +423,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
       $('#posts li.queued').each(function() {
          addQueueArrows(this);
       });
+*/
    }
 
    if (dashboardFixes_settings.replaceIcons === 1 &&
@@ -431,6 +441,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          doIcons(this);
       });
    }
+/*
    if (dashboardFixes_settings.timeoutAJAX === 1) {
       var timeout = dashboardFixes_settings.timeoutLength * 1000;
       $('head').append('<script type="text/javascript">' +
@@ -472,6 +483,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          '});' +
          '</script>');
    }
+*/
    if (dashboardFixes_settings.massDelete === 1 &&
        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/
          .test(location.href)) {

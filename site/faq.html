@@ -65,8 +65,8 @@ jQuery(document).ready(function($) {
 <li><a href="#featurecontrol">I don't want to use one of the features. How can I turn it off?</a></li>
 <li><a href="#featurecontrol">How can I customize the way 'Missing e' works?</a></li>
 <li><a href="#settings">How can I see or change my settings for 'Missing e'?</a></li></ul>
-<h2>Ask Fixes</h2>
-<ul><li><a href="#askfixes-on">How do I add tags when I answer a message (ask)?</a></li></ul>
+<h2>Ask Tweaks</h2>
+<ul><li><a href="#asktweaks-on">How do I add tags when I answer a message (ask)?</a></li></ul>
 <h2>Better Reblogs</h2>
 <ul><li><a href="#no-reblog-tags">I don't want my reblogs to include tags from the original post. How can I turn that feature off?</a></li>
 <li><a href="#quick-reblog-on">How do I turn on quick (1-click) reblogging?</a></li>
@@ -81,10 +81,12 @@ jQuery(document).ready(function($) {
 <li><a href="#rename-bookmark">How do I change the name of a bookmark to something more useful?</a></li>
 <li><a href="#clear-bookmarks">My bookmarks disappeared! What happened?</a></li>
 </ul>
-<h2>Dashboard Fixes</h2>
+<!--
+<h2>Dashboard Tweaks</h2>
 <ul>
 <li><a href="#scroll">What are the <em>endless scroll</em> "prevent stalling" and "timeout" options for?</a></li>
 </ul>
+-->
 <h2>Dash Links to Tabs</h2>
 <ul>
 <li><a href="#newtabs">I don't want 'Missing e' to open up all these new tabs. How do I stop it?</a></li>
@@ -107,7 +109,7 @@ jQuery(document).ready(function($) {
 <li><a href="#masseditor-100">Why can I only select the first 100 posts in the Mass Editor?</a></li>
 <li><a href="#masseditor-100">Why can't I select more posts? I can select some, but the select buttons stop working!</a></li>
 </ul>
-<h2>Posting Fixes</h2>
+<h2>Posting Tweaks</h2>
 <ul>
 <li><a href="#uploader-load">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</a></li>
 <li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del> (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</a></li>
@@ -218,8 +220,8 @@ jQuery(document).ready(function($) {
 <li>Click on the '<big><strong>e</strong></big>' at the top of any Tumblr dashboard page.</li></ul>
 <p><em>For a visual example of how to get to the settings page, see the related <a href="http://blog.missinge.infraware.ca/post/3876407352/settings-page">Tumblr post.</a></em></p>
 <div class="totop"><a href="#">Top</a></div></div>
-<a name="askfixes-on"></a><p class="question">How do I add tags when I answer a message (ask)?</p>
-<div class="response"><p>Tagging of messages (asks) when you answer them, part of the <em>Ask Fixes</em> feature is <strong>disabled by default</strong> when you first 'Install Missing e' or update to version 1.2.1+. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Social Features</em> tab, in the <em>Ask Fixes</em> section.</p>
+<a name="asktweaks-on"></a><p class="question">How do I add tags when I answer a message (ask)?</p>
+<div class="response"><p>Tagging of messages (asks) when you answer them, part of the <em>Ask Tweaks</em> feature is <strong>disabled by default</strong> when you first 'Install Missing e' or update to version 1.2.1+. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Social Features</em> tab, in the <em>Ask Tweaks</em> section.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="no-reblog-tags"></a><p class="question">I don't want my reblogs to include tags from the original post. How can I turn that feature off?</p>
 <div class="response"><p>With the <em>Better Reblogs</em> feature, you can decide to choose whether or not to automatically add tags from the original post when reblogging. You can change this behaviour in the settings (which you can access <a href="http://missinge.infraware.ca/faq#settings">like this</a>), under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
@@ -268,6 +270,7 @@ jQuery(document).ready(function($) {
 <p>Bookmarks (and your list of followers for the <em>Unfollower</em> feature) are stored in your browser using something called <a href="http://en.wikipedia.org/wiki/Web_Storage">DOM Local Storage</a>. It is possible that this data will be lost if you clear browser data, such as cookies.</p>
 <p>Please read <a href="http://blog.missinge.infraware.ca/post/6631718204/clear-browsing-data">this post</a> for more information.</p>
 <div class="totop"><a href="#">Top</a></div></div>
+<!--
 <a name="scroll"></a><p class="question">What are the <em>endless scroll</em> "prevent stalling" and "timeout" options for?</p>
 <div class="response">
 <p>The Tumblr dashboard has an "<strong>endless scroll</strong>" feature that automatically loads the next page of posts for you when you get to the bottom of the dashboard.</p>
@@ -280,10 +283,10 @@ jQuery(document).ready(function($) {
 <img src="images/examples/scroll_failed.png" alt="Endless Scroll failed" />
 <div class="caption">"<strong>Endless Scroll</strong>" fails</div>
 </div>
-<p>There are two shortcomings with the "<strong>endless scroll</strong>" feature that <em>Dashboard Fixes</em> can improve:</p>
+<p>There are two shortcomings with the "<strong>endless scroll</strong>" feature that <em>Dashboard Tweaks</em> can improve:</p>
 <p class="singleline"><strong>1. There is no timeout</strong></p>
 <ul><li>If a load stalls for a long time, Tumblr's "<strong>endless scroll</strong>" feature will just keep waiting, possibly indefinitely.</li></ul>
-<p>The 'Missing e' <em>Dashboard Fixes</em> feature will force loads that are taking too long to stop, allowing you to try again. In the settings (which you can access <a href="#settings">like this</a>) you can specify how long you want that timeout to be. After waiting one timeout length, it will force "<strong>endless scroll</strong>" to try again. After another timeout length, it will give up and display the "Try again" button.</p>
+<p>The 'Missing e' <em>Dashboard Tweaks</em> feature will force loads that are taking too long to stop, allowing you to try again. In the settings (which you can access <a href="#settings">like this</a>) you can specify how long you want that timeout to be. After waiting one timeout length, it will force "<strong>endless scroll</strong>" to try again. After another timeout length, it will give up and display the "Try again" button.</p>
 <p>For example, if the timeout is set to 15 seconds, Tumblr will try to load the next page once, give up after 15 seconds, try again, give up again after 15 seconds and then display the "Try again" button.</p>
 <p>Don't set the timeout to <em>too short a length</em>, or it may cause loads that would have succeeded to stop early!</p>
 <div class="example">
@@ -295,8 +298,9 @@ jQuery(document).ready(function($) {
 <li>When Tumblr's servers are overloaded, they sometimes display an error page instead of content.</li>
 <li>The "<strong>endless scroll</strong>" feature will sometimes also receive this error page when it tries to load the next page, <em>only it doesn't know what to do with it</em> and <em><strong>won't even try again!</strong></em></li>
 </ul>
-<p><em>Dashboard Fixes</em> will resolve this situation by forcing the next page load to restart or display the "Try again" button.</p>
+<p><em>Dashboard Tweaks</em> will resolve this situation by forcing the next page load to restart or display the "Try again" button.</p>
 <div class="totop"><a href="#">Top</a></div></div>
+-->
 <a name="newtabs"></a><p class="question">I don't want 'Missing e' to open up all these new tabs. How do I stop it?</p>
 <div class="response"><p>In the settings (which you can access <a href="#settings">like this</a>), under the <em>Dashboard Features</em> tab, in the <em>Dash Links to Tabs</em> section, you can change this behaviour.</p>
 <p><strong>You can:</strong></p>
@@ -340,7 +344,7 @@ jQuery(document).ready(function($) {
 <div class="response"><p>The Tumblr Mass editor is limited to editing tags or deleting only 100 posts at a time. This is a limitation of Tumblr, not 'Missing e'.</p><div class="totop"><a href="#">Top</a></div></div>
 <a name="uploader-load"></a><p class="question">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</p>
 <div class="response">
-<p>Much like the '+ Upload Photo' button that Tumblr places on new text post pages by default, <em>Posting Fixes</em> must load an additional Tumblr page in the background before adding the button. During times when Tumblr is very busy or error-prone, this page may not load.</p><p>Try reloading the post page to try again.</p>
+<p>Much like the '+ Upload Photo' button that Tumblr places on new text post pages by default, <em>Posting Tweaks</em> must load an additional Tumblr page in the background before adding the button. During times when Tumblr is very busy or error-prone, this page may not load.</p><p>Try reloading the post page to try again.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="reblog-load"></a><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>  (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</p>
 <div class="response">
@@ -379,8 +383,8 @@ jQuery(document).ready(function($) {
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="sidebar-fail"></a><p class="question">Why do my sidebar Post/Follower/Message counts sometimes show up like this: <span><strong>&#x21bb;</strong></span>?</p>
 <div class="response">
-<p>During times when tumblr is very busy or error-prone, <em>Sidebar Fixes</em> may not be able to get your post, follower, messages, draft and queue counts. It will retry a number of times before giving up.</p>
-<p>When <em>Sidebar Fixes</em> cannot get the information from Tumblr, it will replace the numbers in the Tumblelog sidebar with: <strong>&#x21bb;</strong>. You can click on that symbol to make <em>Sidebar Fixes</em> try again.</p>
+<p>During times when tumblr is very busy or error-prone, <em>Sidebar Tweaks</em> may not be able to get your post, follower, messages, draft and queue counts. It will retry a number of times before giving up.</p>
+<p>When <em>Sidebar Tweaks</em> cannot get the information from Tumblr, it will replace the numbers in the Tumblelog sidebar with: <strong>&#x21bb;</strong>. You can click on that symbol to make <em>Sidebar Tweaks</em> try again.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="timestamps-format"></a><p class="question">How do I change the timestamp to the 12-hour format instead of 24-hour?</p>
 <p class="question">How do I change the way the date and time is shown in timestamps?</p>

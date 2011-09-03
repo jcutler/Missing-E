@@ -837,8 +837,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_reblogQuoteFit',1);
          loadCheck(frm,'MissingE_dashboardFixes_wrapTags',1);
          loadCheck(frm,'MissingE_dashboardFixes_replaceIcons',1);
-         loadCheck(frm,'MissingE_dashboardFixes_timeoutAJAX',1);
-         frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
+         //loadCheck(frm,'MissingE_dashboardFixes_timeoutAJAX',1);
+         //frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
          loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
          loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
@@ -1051,18 +1051,20 @@ function doshow(component) {
 <li id="dashboardFixes_section" class="post not_mine regular">
 <div class="post_content">
 <form id="dashboardFixes_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dashboard Fixes</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dashboard Tweaks</div>
 <div class="post_thumb"><a href="dashboardFixes/screen.png" rel="facebox"><img src="dashboardFixes/thumb.png" /><br />Screenshot</a></div>
-<p>A few convenient interface fixes for Tumblr dashboard pages.</p>
+<p>A few convenient interface tweaks for Tumblr dashboard pages.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Wrap tags for posts in the dashboard onto multiple lines</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<!--
 <tr><td colspan="2" class="odd">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="numinput timeoutinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" onchange="doSetting(this,true,defaultTimeout,minTimeout,maxTimeout);" onkeyup="doKeyUp(this,true,defaultTimeout,minTimeout,maxTimeout);" />&nbsp;<span class="resetter" onclick="resetTimeout(this)">Reset</span></td></tr>
+-->
 <tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even">Add a move to top of queue button in queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
+<tr><td colspan="2" class="even">Always display Tumblr's move to top of queue button on queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Expand/Minimize <strong>all</strong> thumbnail images in a dashboard post, together</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_expandAll" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Enable mass draft/queue post deletion</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_massDelete" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="odd experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" onchange="doSetting(this,false);" /></td></tr>
@@ -1080,7 +1082,7 @@ function doshow(component) {
 <form id="sidebarTweaks_options">
 <div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Sidebar Tweaks</div>
 <div class="post_thumb"><a href="sidebarTweaks/screen.png" rel="facebox"><img src="sidebarTweaks/thumb.png" /><br />Screenshot</a></div>
-<p>Some useful interface fixes for the Tumblr dashboard sidebar.</p>
+<p>Some useful interface tweaks for the Tumblr dashboard sidebar.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Add Tumblelog sidebar to <em>all</em> dashboard pages (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_sidebarTweaks_addSidebar" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="even">Number of retries on failure to load sidebar counts (default <span class="defRetries">4</span>)</td><td class="even" style="white-space:nowrap;"><input class="numinput retryinput" type="text" name="MissingE_sidebarTweaks_retries" value="4" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
@@ -1281,9 +1283,9 @@ function doshow(component) {
 <li id="postingFixes_section" class="post not_mine regular">
 <div class="post_content">
 <form id="postingFixes_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Posting Fixes</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Posting Tweaks</div>
 <div class="post_thumb"><a href="postingFixes/screen.png" rel="facebox"><img src="postingFixes/thumb.png" /><br />Screenshot</a></div>
-<p>A few convenient interface fixes for new Tumblr posts.</p>
+<p>A few convenient interface tweaks for new Tumblr posts.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Allow switching back to uploading images on photo posts<br /><ul><li><small>By default, Tumblr allows you to switch to a URL with a "<em>Use a URL instead</em>" option, this will allow you to switch back with a "<em>Upload images instead</em>" option.</small></li></ul></td><td class="even"><input type="checkbox" name="MissingE_postingFixes_uploaderToggle" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
@@ -1327,9 +1329,9 @@ function doshow(component) {
 <li id="askFixes_section" class="post not_mine regular">
 <div class="post_content">
 <form id="askFixes_options">
-<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Ask Fixes</div>
+<div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Ask Tweaks</div>
 <div class="post_thumb"><a href="askFixes/screen.png" rel="facebox"><img src="askFixes/thumb.png" /><br />Screenshot</a></div>
-<p>Convenient interface fixes for Tumblr <em>ask</em> posts.</p>
+<p>Convenient interface tweaks for Tumblr <em>ask</em> posts.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Add scroll bars when typing long entries into Tumblr <em>ask</em> page text boxes</td><td class="odd"><input type="checkbox" name="MissingE_askFixes_scroll" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Add post options (draft, queue, private) and allow tags to be added when answering messages</td><td class="even"><input type="checkbox" name="MissingE_askFixes_betterAnswers" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>

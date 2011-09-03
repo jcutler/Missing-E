@@ -184,6 +184,7 @@ function realignReplyNipple(nip) {
    $(nip).css({left:'auto', right:right+'px'});
 }
 
+/*
 function addQueueArrows(item) {
    if (item.tagName !== 'LI' ||
        !$(item).hasClass('post') ||
@@ -210,6 +211,7 @@ function addQueueArrows(item) {
          qpost.get(0).dispatchEvent(evt);
       }
    });
+*/
 /**** Only implement up arrow for now
    $('<a href="#" onclick="return false;" ' +
                 'class="MissingE_queuearrow_control ' +
@@ -222,7 +224,9 @@ function addQueueArrows(item) {
       }
    });
 ****/
+/*
 }
+*/
 
 function addExpandAllHandler(item) {
    var post = $(item);
@@ -439,6 +443,11 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
        (/http:\/\/www\.tumblr\.com\/queue/.test(location.href) ||
         /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/queue/
             .test(location.href))) {
+      $('head').append('<style type="text/css">' +
+                       '#posts li.queued div.post_controls .sort_handlebar, ' +
+                       '#posts li.queued div.post_controls .move_to_top { ' +
+                       'display:inline !important; }</style>');
+/*
       var queueStyle = document.createElement("link");
       queueStyle.setAttribute('rel','stylesheet');
       queueStyle.setAttribute('type','text/css');
@@ -465,6 +474,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       $('#posts li.queued').each(function() {
          addQueueArrows(this);
       });
+*/
    }
 
    if (replaceIcons === 1 &&
@@ -481,6 +491,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
          doIcons(this);
       });
    }
+/*
    if (timeoutAJAX === 1) {
       var timeout = timeoutLength * 1000;
       $('head').append('<script type="text/javascript">' +
@@ -522,6 +533,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
          '});' +
          '</script>');
    }
+*/
    if (massDelete === 1 &&
        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/
          .test(location.href)) {

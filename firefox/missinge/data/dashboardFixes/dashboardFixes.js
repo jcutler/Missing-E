@@ -189,6 +189,7 @@ function realignReplyNipple(nip) {
    jQuery(nip).css({left:'auto', right:right+'px'});
 }
 
+/*
 function addQueueArrows(item) {
    if (item.tagName !== 'LI' ||
        !jQuery(item).hasClass('post') ||
@@ -215,6 +216,7 @@ function addQueueArrows(item) {
          qpost.get(0).dispatchEvent(evt);
       }
    });
+*/
 /**** Only implement up arrow for now
    jQuery('<a href="#" onclick="return false;" ' +
                 'class="MissingE_queuearrow_control ' +
@@ -227,7 +229,9 @@ function addQueueArrows(item) {
       }
    });
 ****/
+/*
 }
+*/
 
 function addExpandAllHandler(item) {
    var post = jQuery(item);
@@ -449,6 +453,11 @@ self.on('message', function(message) {
        (/http:\/\/www\.tumblr\.com\/queue/.test(location.href) ||
         /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/queue/
             .test(location.href))) {
+      jQuery('head').append('<style type="text/css">' +
+                       '#posts li.queued div.post_controls .sort_handlebar, ' +
+                       '#posts li.queued div.post_controls .move_to_top { ' +
+                       'display:inline !important; }</style>');
+/*
       var queueStyle = document.createElement("link");
       queueStyle.setAttribute('rel','stylesheet');
       queueStyle.setAttribute('type','text/css');
@@ -465,7 +474,9 @@ self.on('message', function(message) {
                           'update_publish_on_times();' +
                        '}, false);</script>');
       document.addEventListener('MissingEajax', function(e) {
-         var type = e.data.match(/^[^:]*/)[0];
+*/
+//         var type = e.data.match(/^[^:]*/)[0];
+/*
          var list = e.data.match(/(post_[0-9]+)/g);
          if (type === 'notes') { return; }
          jQuery.each(list, function(i,val) {
@@ -475,6 +486,7 @@ self.on('message', function(message) {
       jQuery('#posts li.queued').each(function() {
          addQueueArrows(this);
       });
+*/
    }
 
    if (message.replaceIcons === 1 &&
@@ -494,6 +506,7 @@ self.on('message', function(message) {
          doIcons(this);
       });
    }
+/*
    if (message.timeoutAJAX === 1) {
       var timeout = message.timeoutLength * 1000;
       jQuery('head').append('<script type="text/javascript">' +
@@ -535,6 +548,7 @@ self.on('message', function(message) {
          '});' +
          '</script>');
    }
+*/
    if (message.massDelete === 1 &&
        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/
          .test(location.href)) {

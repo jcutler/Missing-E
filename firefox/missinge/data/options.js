@@ -301,8 +301,8 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_reblogQuoteFit',1);
          loadCheck(frm,'MissingE_dashboardFixes_wrapTags',1);
          loadCheck(frm,'MissingE_dashboardFixes_replaceIcons',1);
-         loadCheck(frm,'MissingE_dashboardFixes_timeoutAJAX',1);
-         frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
+         //loadCheck(frm,'MissingE_dashboardFixes_timeoutAJAX',1);
+         //frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
          loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
          loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
