@@ -35,6 +35,19 @@ function clearReblogTags() {
    localStorage.removeItem("tbr_ReblogTags");
 }
 
+function isTagOverride() {
+   if (localStorage.getItem("tbr_OverrideTags","1") === "1") {
+      return true;
+   }
+   else {
+      return false;
+   }
+}
+
+function clearTagOverride() {
+   localStorage.removeItem("tbr_OverrideTags");
+}
+
 function getReblogTags() {
    var retval = localStorage.getItem("tbr_ReblogTags");
    if (retval === undefined || retval === null || retval === "") {
@@ -70,6 +83,11 @@ function MissingE_betterReblogs_fill_doStartup(noPassTags, fullText) {
    }
    var addHeight = 0;
    var lang = $('html').attr('lang');
+   if (isTagOverride()) {
+      document.getElementById('post_tags').value = "";
+      document.getElementById('tokens').innerHTML = "";
+      clearTagOverride();
+   }
    var tags = getReblogTags();
    if (tags.length == 0) {
       setReblogTagsPlainText(document.getElementById('edit_post').post_tags
