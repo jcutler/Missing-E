@@ -44,7 +44,7 @@ if ((window.top === window &&
       info += active.url + "\n";
       for (i in active) {
          if (active.hasOwnProperty(i)) {
-            if (i !== 'url') {
+            if (i !== 'url' && i !== 'version') {
                info += i + ": " + (active[i] ? "active" : "inactive") + "\n";
             }
          }

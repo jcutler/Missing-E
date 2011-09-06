@@ -75,7 +75,8 @@ self.on('message', function (message) {
              i !== 'isFrame' &&
              !(/_fill$/.test(i)) &&
              i !== 'greeting' &&
-             i !== 'extensionURL') {
+             i !== 'extensionURL' &&
+             i !== 'version') {
             info += i + ": " + (message[i] ? "active" : "inactive") +
                      "\n";
          }

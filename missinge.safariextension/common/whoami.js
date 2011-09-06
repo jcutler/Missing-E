@@ -113,7 +113,7 @@ function doStartup(response) {
    for (i in response.message) {
       if (response.message.hasOwnProperty(i)) {
          if (i !== 'url' && i !== 'isFrame' && !(/_fill$/.test(i)) &&
-             i !== 'zindexFix') {
+             i !== 'zindexFix' && i !== 'version') {
             info += i + ": " + (response.message[i] ? "active" : "inactive") +
                      "\n";
          }
