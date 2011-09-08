@@ -148,7 +148,7 @@ function reblogTextFull(item) {
       post.find('div.post_controls a[href^="/reblog/"]').each(function() {
          if (/[a-zA-Z0-9]\?/.test(this.href)) {
             this.setAttribute('href',
-               this.getAttribute('href').replace(/\?/,'/text?'));
+               this.getAttribute('href').replace(/(\/text)?\?/,'/text?'));
          }
       });
    }
@@ -157,7 +157,7 @@ function reblogTextFull(item) {
             post.closest('li.post').hasClass('regular')) {
       if (/[a-zA-Z0-9]\?/.test(item.href)) {
          item.setAttribute('href',
-            item.getAttribute('href').replace(/\?/,'/text?'));
+            item.getAttribute('href').replace(/(\/text)?\?/,'/text?'));
       }
    }
 }
