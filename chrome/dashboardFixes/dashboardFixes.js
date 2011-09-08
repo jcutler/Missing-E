@@ -398,10 +398,9 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
        (/http:\/\/www\.tumblr\.com\/queue/.test(location.href) ||
         /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/queue/
             .test(location.href))) {
-      $('head').append('<style type="text/css">' +
-                       '#posts li.queued div.post_controls .sort_handlebar, ' +
-                       '#posts li.queued div.post_controls .move_to_top { ' +
-                       'display:inline !important; }</style>');
+      $('head').append('<link type="text/css" rel="stylesheet" href="' +
+                       chrome.extension.getURL("dashboardFixes/queueArrows.css") +
+                       '" />');
 /*
       var queuearrs = chrome.extension
                         .getURL('dashboardFixes/queue_arrows.png');

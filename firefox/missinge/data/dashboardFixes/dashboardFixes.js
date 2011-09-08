@@ -453,16 +453,14 @@ self.on('message', function(message) {
        (/http:\/\/www\.tumblr\.com\/queue/.test(location.href) ||
         /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/queue/
             .test(location.href))) {
-      jQuery('head').append('<style type="text/css">' +
-                       '#posts li.queued div.post_controls .sort_handlebar, ' +
-                       '#posts li.queued div.post_controls .move_to_top { ' +
-                       'display:inline !important; }</style>');
-/*
       var queueStyle = document.createElement("link");
       queueStyle.setAttribute('rel','stylesheet');
       queueStyle.setAttribute('type','text/css');
       queueStyle.href = extensionURL + "dashboardFixes/queueArrows.css";
       head.appendChild(queueStyle);
+
+/*
+
       var queuearrs = extensionURL + 'dashboardFixes/queue_arrows.png';
       jQuery('head').append('<style type="text/css">' +
                        '#posts .post .MissingE_queuearrow_control {' +

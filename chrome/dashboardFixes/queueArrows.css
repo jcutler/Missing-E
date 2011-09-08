@@ -41,3 +41,12 @@ background-position:0 0;
 #posts .queued .MissingE_queuedown_control {
 background-position:-9px 0;
 }
+
+#posts li.queued div.post_controls .sort_handlebar,
+#posts li.queued div.post_controls .move_to_top {
+display:inline !important;
+}
+
+#posts li.new_post + li.queued div.post_controls .move_to_top {
+display:none !important;
+}
