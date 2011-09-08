@@ -73,7 +73,6 @@ function MissingE_betterReblogs_fill_doStartup(noPassTags, fullText) {
    if (fullText === 1 &&
        $('#edit_post').hasClass('link_post')) {
       var src = encodeURIComponent($('#post_two').val());
-      console.log(src);
       if (document.referrer.indexOf("src="+src) >= 0 ||
           (document.referrer === "" &&
            location.href.indexOf("redirect_to="+src) >= 0)) {
@@ -122,6 +121,9 @@ function MissingE_betterReblogs_fill_doStartup(noPassTags, fullText) {
          if (func !== 'var tags=[];') {
             func += 'var posttags=document.getElementById(\'post_tags\');' +
                     'var currtags=posttags.value.split(\',\');' +
+                    'if (currtags.length === 1 && /^\\s*$/.test(currtags[0])) {' +
+                     'currtags=[];' +
+                    '}' +
                     'var addtags=[];' +
                     'for(i=0;i<tags.length;i++){' +
                      'var f=false;' +
@@ -153,7 +155,6 @@ function MissingE_betterReblogs_fill_doStartup(noPassTags, fullText) {
                       'document.getElementById(\'tokens\').appendChild(newtoken);' +
                      '}' +
                     '}return false;';
-
             var set_tags = $('#set_tags');
             addHeight = $('<div style="text-align:left">' +
                               '<a class="reblog_tags" style="color:#666;' +
