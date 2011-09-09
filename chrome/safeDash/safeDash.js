@@ -50,7 +50,7 @@ if ($('#new_post').css('background-image') !== "none") {
 function undoNSFW() {
    $('#posts .nsfwed').css('opacity','1');
    $('#posts div.nsfwembed span.nsfwed').css('visibility','visible');
-   $('#posts div.nsfwembed object.nsfwvid').css('visibility','visible');
+   $('#posts div.nsfwembed .nsfwvid').css('visibility','visible');
    $('img.nsfw_overlay').css('opacity','1');
    $('#MissingE_safeDash li:first').removeClass('selected');
    $('#posts li div.nsfwdiv').addClass('nsfwoff');
@@ -59,7 +59,7 @@ function undoNSFW() {
 function doNSFW() {
    $('#posts .nsfwed').css('opacity','0');
    $('#posts div.nsfwembed span.nsfwed').css('visibility','hidden');
-   $('#posts div.nsfwembed object.nsfwvid').css('visibility','hidden');
+   $('#posts div.nsfwembed .nsfwvid').css('visibility','hidden');
    $('img.nsfw_overlay').css('opacity','0');
    $('#MissingE_safeDash li:first').addClass('selected');
    $('#posts li div.nsfwdiv').removeClass('nsfwoff');

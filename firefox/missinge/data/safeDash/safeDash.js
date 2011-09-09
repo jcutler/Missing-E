@@ -28,7 +28,7 @@ var lock, lockicon;
 function undoNSFW() {
    jQuery('#posts .nsfwed').css('opacity','1');
    jQuery('#posts div.nsfwembed span.nsfwed').css('visibility','visible');
-   jQuery('#posts div.nsfwembed object.nsfwvid').css('visibility','visible');
+   jQuery('#posts div.nsfwembed .nsfwvid').css('visibility','visible');
    jQuery('img.nsfw_overlay').css('opacity','1');
    jQuery('#MissingE_safeDash li:first').removeClass('selected');
    jQuery('#posts li div.nsfwdiv').addClass('nsfwoff');
@@ -37,7 +37,7 @@ function undoNSFW() {
 function doNSFW() {
    jQuery('#posts .nsfwed').css('opacity','0');
    jQuery('#posts div.nsfwembed span.nsfwed').css('visibility','hidden');
-   jQuery('#posts div.nsfwembed object.nsfwvid').css('visibility','hidden');
+   jQuery('#posts div.nsfwembed .nsfwvid').css('visibility','hidden');
    jQuery('img.nsfw_overlay').css('opacity','0');
    jQuery('#MissingE_safeDash li:first').addClass('selected');
    jQuery('#posts li div.nsfwdiv').removeClass('nsfwoff');
