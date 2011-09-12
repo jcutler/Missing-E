@@ -39,6 +39,11 @@ margin-bottom:20px;
 text-decoration:underline;
 }
 
+#home #logo img {
+width:172px;
+height:138px;
+} 
+
 #versioncheck {
 margin-bottom:20px;
 font-size:11px;
@@ -260,6 +265,11 @@ text-align:center;
 
 #downloads img {
 margin:0 1px;
+}
+
+#downloads #browsers img {
+width:100px;
+height:133px;
 }
 
 #downloads #browsers:hover img {
