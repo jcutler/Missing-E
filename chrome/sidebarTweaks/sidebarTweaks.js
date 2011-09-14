@@ -269,7 +269,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "sidebarTweaks"},
       $('#right_column a.following').attr('href','/following');
    }
    if (sidebarTweaks_settings.slimSidebar === 1) {
-      $('#tag_contributors li.item, #tag_editors li.item').each(function() {
+      $('#tag_contributors li.item, #tag_editors li.item, ' +
+        '#recommended_tumblelogs li.item').each(function() {
          var bg = $(this).css('background-image');
          bg = bg.replace(/_40\./,'_30.');
          $(this).css('background-image',bg);

@@ -273,7 +273,8 @@ function MissingE_sidebarTweaks_doStartup(retries, accountNum,
       style.setAttribute('type','text/css');
       style.href = safari.extension.baseURI + "sidebarTweaks/slimSidebar.css";
       document.getElementsByTagName('head')[0].appendChild(style);
-      $('#tag_contributors li.item, #tag_editors li.item').each(function() {
+      $('#tag_contributors li.item, #tag_editors li.item, ' +
+        '#recommended_tumblelogs li.item').each(function() {
          var bg = $(this).css('background-image');
          bg = bg.replace(/_40\./,'_30.');
          $(this).css('background-image',bg);

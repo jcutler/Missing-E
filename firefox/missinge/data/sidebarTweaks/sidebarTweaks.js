@@ -281,7 +281,8 @@ self.on('message', function(message) {
       style.setAttribute('type','text/css');
       style.href = extensionURL + "sidebarTweaks/slimSidebar.css";
       document.getElementsByTagName('head')[0].appendChild(style);
-      jQuery('#tag_contributors li.item, #tag_editors li.item').each(function(){
+      jQuery('#tag_contributors li.item, #tag_editors li.item, ' +
+        '#recommended_tumblelogs li.item').each(function() {
          var bg = jQuery(this).css('background-image');
          bg = bg.replace(/_40\./,'_30.');
          jQuery(this).css('background-image',bg);
