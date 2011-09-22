@@ -362,6 +362,13 @@ jQuery('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
                .addClass('MissingE_bookmarker_forceHide');
       return false;
    }
+   else {
+      var bar = jQuery('#bookmarkbar_' + jQuery(this).attr('post'));
+      if (bar.length > 0) {
+         jQuery(window).scrollTop(bar.offset().top-10);
+         return false;
+      }
+   }
 });
 
 function marklistClick(e) {
