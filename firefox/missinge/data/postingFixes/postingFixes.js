@@ -429,6 +429,8 @@ self.on('message', function(message) {
    }
    else if (message.addUploader === 1 &&
             /http:\/\/www\.tumblr\.com\/share/.test(location.href)) {
+      var adjust = /http:\/\/www\.tumblr\.com\/share\/photo/.test(location.href) ||
+                   /http:\/\/www\.tumblr\.com\/share\/video/.test(location.href);
       tag = '<img src=\\"X\\" />';
       jQuery('textarea').each(function() {
          if ((this.name !== "post[two]" &&
@@ -450,6 +452,8 @@ self.on('message', function(message) {
                      (/regular_/.test(this.id) ? 'margin-bottom:5px;' :
                       'padding-top:3px;') + '">',
                      '</div><div style="clear:both;"></div>'];
+         var adjwrap = ['<div style="position:absolute;right:0;top:-20px;">',
+                        '</div>'];
          var imgwrap = ['<div style="text-align:right;margin-top:-19px;' +
                         'margin-bottom:3px;">','</div>'];
 
@@ -457,6 +461,11 @@ self.on('message', function(message) {
             h2.before('<div style="height:' + h2.css("margin-top") +
                       ';"></div>').css({"float":"left","margin-top":"0"})
                .after(wrap[0] + uploader + wrap[1]);
+         }
+         else if (adjust) {
+            ta.parent().css('position','relative');
+            uploader = adjwrap[0] + uploader + adjwrap[1];
+            ta.parent().prepend(uploader);
          }
          else {
             if (ta.closest('form').attr('id') === 'photo_form' &&
