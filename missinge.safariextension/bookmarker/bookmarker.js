@@ -357,7 +357,8 @@ $('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
    }
    else {
       var bar = $('#bookmarkbar_' + $(this).attr('post'));
-      if (bar.length > 0) {
+      if (/http:\/\/www\.tumblr\.com\/dashboard/.test(location.href) &&
+          bar.length > 0) {
          $(window).scrollTop(bar.offset().top-10);
          return false;
       }
