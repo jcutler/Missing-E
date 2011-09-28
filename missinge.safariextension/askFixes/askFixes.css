@@ -132,12 +132,16 @@ background-position:6px -66px !important;
 }
 
 #posts li.post input.MissingEmassDeleteSelect {
+margin-left:0;
+}
+
+#posts li.post .MissingEmassDeleteSpan {
 vertical-align:-1px;
 margin-left:8px;
 opacity:0.5;
 }
 
-#posts li.post input.MissingEmassDeleteSelect:hover {
+#posts li.post .MissingEmassDeleteSpan:hover {
 opacity:1;
 }
 

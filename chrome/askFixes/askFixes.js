@@ -24,8 +24,9 @@
 /*global $,chrome,locale */
 
 function setupMassDeletePost(item) {
-   $('<input type="checkbox" val="0" id="' + item.id + '_select" ' +
-     'class="MissingEmassDeleteSelect" />')
+   $('<span class="MissingEmassDeleteSpan">' +
+     '<input type="checkbox" val="0" id="' + item.id + '_select" ' +
+     'class="MissingEmassDeleteSelect" /></span>')
          .appendTo($(item).find('div.post_controls'));
 }
 
