@@ -24,8 +24,9 @@
 /*global escapeHTML,jQuery,locale,self */
 
 function setupMassDeletePost(item) {
-   jQuery('<input type="checkbox" val="0" id="' + item.id + '_select" ' +
-     'class="MissingEmassDeleteSelect" />')
+   jQuery('<span class="MissingEmassDeleteSpan">' +
+          '<input type="checkbox" val="0" id="' + item.id + '_select" ' +
+          'class="MissingEmassDeleteSelect" /></span>')
          .appendTo(jQuery(item).find('div.post_controls'));
 }
 
@@ -561,11 +562,13 @@ self.on('message', function(message) {
             beforeguy = jQuery('#search_form');
          }
       }
-      jQuery('head').append('<style type="text/css">' +
-                       '#right_column #MissingEmassDeleter a { ' +
-                       'background-image:url("' +
-                       message.extensionURL + "dashboardFixes/massDelete.png" +
-                       '") !important; }</style>');
+      jQuery('head').append('<link type="text/css" rel="stylesheet" href="' +
+                        message.extensionURL + "dashboardFixes/massDelete.css" +
+                        '" />').append('<style type="text/css">' +
+                        '#right_column #MissingEmassDeleter a { ' +
+                        'background-image:url("' +
+                        message.extensionURL + "dashboardFixes/massDelete.png" +
+                        '") !important; }</style>');
       jQuery('<ul class="controls_section" id="MissingEmassDeleter">' +
         '<li><a href="#" class="select_all">' +
         '<div class="hide_overflow">' +

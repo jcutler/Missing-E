@@ -23,7 +23,7 @@
 
 /*global $,chrome,locale */
 
-function setupMassDeletePost(item) {
+function setupMassDeleteAsk(item) {
    $('<span class="MissingEmassDeleteSpan">' +
      '<input type="checkbox" val="0" id="' + item.id + '_select" ' +
      'class="MissingEmassDeleteSelect" /></span>')
@@ -396,12 +396,12 @@ chrome.extension.sendRequest({greeting: "settings",
            locale[lang].massDelete.deleteSelected + '</div></a></li></ul>')
                .insertBefore(beforeguy);
          $('#posts li.post').each(function() {
-            setupMassDeletePost(this);
+            setupMassDeleteAsk(this);
          });
          $(document).bind('MissingEajax', function(e) {
             if (e.originalEvent.data.type === "messages") {
                $.each(e.originalEvent.data.list, function(i, val) {
-                  setupMassDeletePost($('#'+val).get(0));
+                  setupMassDeleteAsk($('#'+val).get(0));
                });
             }
          });

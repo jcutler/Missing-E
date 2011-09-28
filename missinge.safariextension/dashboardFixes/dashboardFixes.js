@@ -24,8 +24,9 @@
 /*global $,locale,safari */
 
 function setupMassDeletePost(item) {
-   $('<input type="checkbox" val="0" id="' + item.id + '_select" ' +
-     'class="MissingEmassDeleteSelect" />')
+   $('<span class="MissingEmassDeleteSpan">' +
+     '<input type="checkbox" val="0" id="' + item.id + '_select" ' +
+     'class="MissingEmassDeleteSelect" /></span>')
          .appendTo($(item).find('div.post_controls'));
 }
 
@@ -546,10 +547,10 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
          }
       }
       $('head').append('<style type="text/css">' +
-                       '#right_column #MissingEmassDeleter a { ' +
-                       'background-image:url("' +
-                       safari.extension.baseURI + "dashboardFixes/massDelete.png" +
-                       '") !important; }</style>');
+                    '#right_column #MissingEmassDeleter a { ' +
+                    'background-image:url("' +
+                    safari.extension.baseURI + "dashboardFixes/massDelete.png" +
+                    '") !important; }</style>');
       $('<ul class="controls_section" id="MissingEmassDeleter">' +
         '<li><a href="#" class="select_all">' +
         '<div class="hide_overflow">' +

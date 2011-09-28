@@ -1189,6 +1189,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/wrapTags.css"});
             if (getStorage("MissingE_dashboardFixes_postLinks",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/postLinks.css"});
+            if (getStorage("MissingE_dashboardFixes_massDelete",1) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/massDelete.css"});
             if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1 &&
                 !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/.test(sender.tab.url)))
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});

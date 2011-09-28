@@ -23,7 +23,7 @@
 
 /*global escapeHTML,jQuery,locale,self */
 
-function setupMassDeletePost(item) {
+function setupMassDeleteAsk(item) {
    jQuery('<span class="MissingEmassDeleteSpan">' +
           '<input type="checkbox" val="0" id="' + item.id + '_select" ' +
           'class="MissingEmassDeleteSelect" /></span>')
@@ -416,14 +416,14 @@ self.on('message', function (message) {
            locale[lang].massDelete.deleteSelected + '</div></a></li></ul>')
                .insertBefore(beforeguy);
          jQuery('#posts li.post').each(function() {
-            setupMassDeletePost(this);
+            setupMassDeleteAsk(this);
          });
          document.addEventListener('MissingEajax', function(e) {
             var type = e.data.match(/^[^:]*/)[0];
             var list = e.data.match(/(post_[0-9]+)/g);
             if (type === "messages") {
                jQuery.each(list, function(i, val) {
-                  setupMassDeletePost(jQuery('#'+val).get(0));
+                  setupMassDeleteAsk(jQuery('#'+val).get(0));
                });
             }
          }, false);
