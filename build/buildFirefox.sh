@@ -68,9 +68,11 @@ s/\s*"jid0-0pgffacvvhubiefykrvvc5w6liu-at-jetpack-api-utils-lib":\s*\[\s*\n\s*"r
 mv harness-options.new.6 harness-options.json
 rm -f harness-options.new.*
 
-sed -e 's/<em:maxVersion>[^<]*/<em:maxVersion>9.0a1/' install.rdf > install.new
+sed -e 's/<em:maxVersion>[^<]*/<em:maxVersion>9.0a1/' install.rdf > install.new.0
+sed -e 's/<em:minVersion>[^<]*/<em:minVersion>7.0/' install.new.0 > install.new.1
 
-mv install.new install.rdf
+mv install.new.1 install.rdf
+rm -f install.new.*
 
 "$SEVZ" a missinge.zip *
 
