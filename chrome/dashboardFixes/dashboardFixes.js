@@ -143,6 +143,16 @@ function doIcons(item) {
       else if (/^\/edit/.test(a.attr('href'))) {
          a.attr('title',locale[lang].dashFixesText.edit)
             .addClass(klass + "MissingE_edit_control").text('');
+         if ($(item).hasClass('queued')) {
+            a.click(function() {
+               if ($(this).attr('target') === "_blank") {
+                  window.open(this.href);
+               }
+               else {
+                  location.href = this.href;
+               }
+            });
+         }
       }
       else if (/^\/reblog/.test(a.attr('href'))) {
          a.attr('title',locale[lang].dashFixesText.reblog)

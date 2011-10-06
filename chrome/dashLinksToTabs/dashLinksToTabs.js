@@ -85,7 +85,10 @@ chrome.extension.sendRequest({greeting: "settings",
 
    var dashLinksToTabs_settings = JSON.parse(response);
    if (lcol) {
-      lcol.addEventListener('click', function(e) {
+      /* Chrome version uses mouseup to fix an issue in queued posts
+         where the edit button (when icon-replaced) doesn't always
+         execute the default behaviour (because of dragging) */
+      lcol.addEventListener('mouseup', function(e) {
          dashLinksToTabs_click(e, dashLinksToTabs_settings);
       }, false);
    }
