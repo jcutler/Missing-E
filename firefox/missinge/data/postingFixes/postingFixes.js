@@ -455,18 +455,23 @@ self.on('message', function(message) {
          var imgwrap = ['<div style="text-align:right;margin-top:-19px;' +
                         'margin-bottom:3px;">','</div>'];
 
+         var frm = ta.closest('form');
+         var adjust = frm.attr('id') === "photo_form" ||
+            (frm.attr('id') === "video_form" &&
+             frm.find('input[name="post[one]"]').attr('type') === "hidden");
+
          if (h2.length > 0) {
             h2.before('<div style="height:' + h2.css("margin-top") +
                       ';"></div>').css({"float":"left","margin-top":"0"})
                .after(wrap[0] + uploader + wrap[1]);
          }
-         else if (ta.closest('form').attr('id') === "photo_form") {
+         else if (adjust) {
             ta.parent().css('position','relative');
             uploader = adjwrap[0] + uploader + adjwrap[1];
             ta.parent().prepend(uploader);
          }
          else {
-            if (ta.closest('form').attr('id') === 'photo_form' &&
+            if (frm.attr('id') === 'photo_form' &&
                 ta.parent().prevAll('img').length > 0) {
                //Single image share bookmarklet looks different
                uploader = imgwrap[0] + uploader + imgwrap[1];
