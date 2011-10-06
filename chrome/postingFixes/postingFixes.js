@@ -403,8 +403,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
    }
    else if (postingFixes_settings.addUploader === 1 &&
             /http:\/\/www\.tumblr\.com\/share/.test(location.href)) {
-      var adjust = /http:\/\/www\.tumblr\.com\/share\/photo/.test(location.href) ||
-                   /http:\/\/www\.tumblr\.com\/share\/video/.test(location.href);
       tag = '<img src=\\"X\\" />';
       $('textarea').each(function() {
          if ((this.name !== "post[two]" &&
@@ -436,7 +434,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                       ';"></div>').css({"float":"left","margin-top":"0"})
                         .after(wrap[0] + uploader + wrap[1]);
          }
-         else if (adjust) {
+         else if (ta.closest('form').attr('id') === "photo_form") {
             ta.parent().css('position','relative');
             uploader = adjwrap[0] + uploader + adjwrap[1];
             ta.parent().prepend(uploader);
