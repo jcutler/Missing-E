@@ -286,7 +286,7 @@ self.on('message', function (message) {
       queueTags = message.queueTags;
    }
 
-   if (message.noPassTags === 0) {
+   if (message.passTags === 1) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
       if (message.quickReblog === 1) {
          selector = '#MissingE_quick_reblog_manual';
@@ -498,7 +498,7 @@ self.on('message', function (message) {
          var tagarr = [];
          var marg = parseInt(jQuery('body').css('margin-top'));
          if (isNaN(marg)) { marg = 0; }
-         if (message.noPassTags === 0) {
+         if (message.passTags === 1) {
             var tags = reblog.closest('li.post').find('span.tags a');
             if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href)) {
                var i;

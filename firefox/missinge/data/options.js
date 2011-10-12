@@ -311,7 +311,9 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_massDelete',1);
       }
       else if (v == "betterReblogs") {
-         loadCheck(frm,'MissingE_betterReblogs_noPassTags',0);
+         loadCheck(frm,'MissingE_betterReblogs_passTags',1);
+         loadCheck(frm,'MissingE_betterReblogs_autoFillTags',1);
+         frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
          loadCheck(frm,'MissingE_betterReblogs_quickReblog',0);
          if (getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
             document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;

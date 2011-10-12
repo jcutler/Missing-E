@@ -172,16 +172,7 @@ self.on('message', function (message) {
                }
             }
          }
-         if (message.noPassTags === 1) {
-            var label = jQuery('<label for="post_tags" ' +
-              'class="inline_input_label" id="post_tags_label" ' +
-              'style="left:8px;right:auto;text-align:left">tags</label>')
-                  .prependTo('#set_tags');
-            var labelHeight = parseInt(label.css('top').match(/[0-9]*/)[0]);
-            if (!isNaN(labelHeight)) {
-               labelHeight += addHeight;
-               label.css('top',labelHeight+'px');
-            }
+         if (message.passTags === 0 || message.autoFillTags === 0) {
             document.getElementById('post_tags').value = "";
             document.getElementById('tokens').innerHTML = "";
          }

@@ -255,6 +255,19 @@ function getFormattedDate(d, format, lang) {
    return ret;
 }
 
+function doTags(stamp, id, theWorker) {
+   if (!stamp.tags) {
+      debug("Cache entry does not have tags");
+      return false;
+   }
+   var tags = stamp.tags;
+   if (!tags) {
+      tags = [];
+   }
+   theWorker.postMessage({greeting: "tags", success: true, data: tags,
+                          extensionURL: data.url("")});
+}
+
 function doTimestamp(stamp, id, theWorker) {
    if (!stamp.timestamp) {
       debug("Cache entry does not have timestamp");
@@ -356,6 +369,9 @@ function runItem(call) {
    }
    else if (call.type === "timestamp") {
       startTimestamp(call.message, call.worker);
+   }
+   else if (call.type === "tags") {
+      startTags(call.message, call.worker);
    }
 }
 
@@ -522,6 +538,71 @@ function checkPermission(user, count, myWorker, retries) {
    }).get();
 }
 
+function doTagsAjax(url, pid, count, myWorker, retries) {
+   var failMsg = {greeting:"tags", success:false};
+   Request({
+      url: url,
+      headers: {tryCount: count,
+                retryLimit: retries,
+                targetId: pid},
+      onComplete: function(response) {
+         var goodData = /<guid>[^<]*<\/guid>/.test(response.text);
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
+         if (response.status === 404) {
+            debug("tags request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         if (response.status != 200 || !goodData) {
+            if (closed) {
+               debug("Stop tags request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
+            if (cacheServe("tags", this.headers.targetId, myWorker,
+                           doTags, true)) {
+               return true;
+            }
+            else {
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  debug("Retry tags request (" + this.headers.targetId + ")");
+                  doTagsAjax(this.url,
+                         this.headers.targetId, (this.headers.tryCount + 1),
+                         myWorker, this.headers.retryLimit);
+               }
+               else {
+                  debug("tags request (" + this.headers.targetId + ") failed");
+                  dequeueAjax(this.headers.targetId);
+                  myWorker.postMessage(failMsg);
+               }
+            }
+         }
+         else {
+            var i;
+            var tags = response.text.match(/<category>[^<]*<\/category>/g);
+            if (!tags) { tags = []; }
+            for (i=0; i<tags.length; i++) {
+               tags[i] = tags[i].replace(/^<category>/,'')
+                              .replace(/<\/category>$/,'');
+            }
+            var info = {"tags":tags};
+            saveCache(this.headers.targetId, info);
+            dequeueAjax(this.headers.targetId);
+            if (!closed) {
+               doTags(info, this.headers.targetId, myWorker);
+            }
+         }
+      }
+   }).get();
+}
+
 function doReblogYourselfAjax(url, pid, count, myWorker, retries, additional) {
    var failMsg = {greeting:"reblogYourself", success:false};
    if (additional) {
@@ -668,6 +749,33 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
    }).get();
 }
 */
+
+function startTags(message, myWorker) {
+   try {
+      var tab = myWorker.tab;
+   }
+   catch (err) {
+      debug("Stop tags request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   if (cacheServe("tags", message.pid, myWorker, doTags, false)) {
+      return true;
+   }
+   else if (isRequested({type: "tags", message: message, worker: myWorker})) {
+      return true;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "tags", message: message, worker: myWorker});
+   }
+   else {
+      var url = message.url + "/post/" + message.pid + "/rss";
+      debug("AJAX tags request (" + message.pid + ")");
+      startAjax(message.pid);
+      doTagsAjax(url, message.pid, 0, myWorker,
+             getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries));
+   }
+}
 
 function startMagnifier(message, myWorker) {
    try {
@@ -882,6 +990,9 @@ function handleMessage(message, myWorker) {
    }
    else if (message.greeting == "magnifier") {
       startMagnifier(message, myWorker);
+   }
+   else if (message.greeting == "tags") {
+      startTags(message, myWorker);
    }
    else if (message.greeting == "timestamp") {
       if (message.type == "ask") {
@@ -1140,7 +1251,9 @@ function handleMessage(message, myWorker) {
       settings.MissingE_replyReplies_addTags = getStorage("extensions.MissingE.replyReplies.addTags",1);
       settings.MissingE_replyReplies_defaultTags = getStorage("extensions.MissingE.replyReplies.defaultTags",'');
       settings.MissingE_replyReplies_newTab = getStorage("extensions.MissingE.replyReplies.newTab",1);
-      settings.MissingE_betterReblogs_noPassTags = getStorage("extensions.MissingE.betterReblogs.noPassTags",0);
+      settings.MissingE_betterReblogs_passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
+      settings.MissingE_betterReblogs_retries = getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries);
+      settings.MissingE_betterReblogs_autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
       settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
@@ -1239,7 +1352,8 @@ function handleMessage(message, myWorker) {
             settings.magnifyAvatars = getStorage("extensions.MissingE.magnifier.magnifyAvatars",0);
             break;
          case "betterReblogs":
-            settings.noPassTags = getStorage("extensions.MissingE.betterReblogs.noPassTags",0);
+            settings.passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
+            settings.autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
             settings.quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
             settings.accountName = '0';
             if (getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0) == 1) {
@@ -1415,6 +1529,13 @@ function handleMessage(message, myWorker) {
          else
             activeScripts.reblogYourself = false;
 
+         if (getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1 &&
+             getStorage("extensions.MissingE.betterReblogs.passTags",1) == 1) {
+            activeScripts.betterReblogs = true;
+         }
+         else
+            activeScripts.betterReblogs = false;
+
          if (getStorage("extensions.MissingE.postingFixes.enabled",1) == 1 &&
              getStorage("extensions.MissingE.postingFixes.subEdit",1)) {
             activeScripts.postingFixes = true;
@@ -1578,6 +1699,7 @@ pageMod.PageMod({
    include: ["http://www.tumblr.com/dashboard/iframe*"],
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("common/localizations.js"),
+                       data.url("betterReblogs/betterReblogs_post.js"),
                        data.url("gotoDashPost/gotoDashPost.js"),
                        data.url("reblogYourself/reblogYourself_post.js"),
                        data.url("postingFixes/subEdit.js")],
@@ -1588,7 +1710,11 @@ pageMod.PageMod({
             answer = !(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(this.tab.url)) &&
                !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(this.tab.url)) &&
                !(/http:\/\/www\.tumblr\.com\/new\//.test(this.tab.url)) &&
-               ((data.component === 'gotoDashPost' &&
+               ((data.component === 'betterReblogs' &&
+                 data.subcomponent === 'post' &&
+                 getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1 &&
+                 getStorage("extensions.MissingE.betterReblogs.passTags",1) == 1) ||
+                (data.component === 'gotoDashPost' &&
                  getStorage("extensions.MissingE.gotoDashPost.enabled",1) == 1) ||
                 (data.component === 'reblogYourself' &&
                  data.subcomponent === 'post' &&
@@ -1660,6 +1786,6 @@ setIntegerPrefType('extensions.MissingE.replyReplies.smallAvatars',1);
 moveSetting('extensions.MissingE.dashboardFixes.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
 moveSetting('extensions.MissingE.dashboardFixes.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
 collapseSettings('extensions.MissingE.askFixes.betterAnswers','extensions.MissingE.askFixes.buttons','extensions.MissingE.askFixes.tags');
-invertSetting('extensions.MissingE.betterReblogs.passTags','extensions.MissingE.betterReblogs.noPassTags');
+invertSetting('extensions.MissingE.betterReblogs.noPassTags','extensions.MissingE.betterReblogs.passTags');
 
 console.log("Missing e is running.");
