@@ -114,7 +114,7 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
    if (!addTags()) {
       document.addEventListener('MissingEaddReblog',function(e){
          var item = e.target;
-         if (item.tagName === 'A' && /reblog/.test(item.href)) {
+         if (item.tagName === 'A' && /\/reblog/.test(item.href)) {
             addTags(item);
          }
       }, false);
