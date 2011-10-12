@@ -89,6 +89,18 @@ function debug(msg) {
    }
 }
 
+function doTags(stamp, id, sendResponse) {
+   if (!stamp.tags) {
+      debug("Cache entry does not have tags");
+      return false;
+   }
+   var tags = stamp.tags;
+   if (!tags) {
+      tags = [];
+   }
+   sendResponse({success: true, data: tags});
+}
+
 function doTimestamp(stamp, id, sendResponse) {
    if (!stamp.timestamp) {
       debug("Cache entry does not have timestamp");
@@ -157,7 +169,8 @@ function saveCache(id, entry) {
              i == "post_url" ||
              i == "tags" ||
              i == "type" ||
-             i == "blog_name") {
+             i == "blog_name" ||
+             i == "tags") {
             theEntry[i] = entry[i];
          }
       }
@@ -368,6 +381,92 @@ function checkPermission(request, sender, sendResponse, hash, retries, tryCount)
       }
    };
    ajax.send();
+}
+
+function doTagsAjax(request, sender, sendResponse, hash, retries) {
+   debug("AJAX reblogYourself request (" + request.pid + ")");
+   startAjax(request.pid);
+   var failMsg = {success:false};
+   $.ajax({
+      type: "GET",
+      url: request.url + "/post/" + request.pid + "/rss",
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.pid,
+      tabId: sender.tab.id,
+      tabHash: hash,
+      error: function(xhr, textStatus) {
+         if (xhr.status === 404) {
+            debug("tags request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            sendResponse(failMsg);
+            return;
+         }
+         if (this.tabHash !== tabs[this.tabId]) {
+            debug("Stop tags request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         if (cacheServe("tags", request.pid, sendResponse, doTags, true)) {
+            return true;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry tags request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug("tags request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               sendResponse(failMsg);
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         var closed = (this.tabHash !== tabs[this.tabId]);
+         if (!(/<guid>[^<]*<\/guid>/.test(data))) {
+            if (closed) {
+               debug("Stop tags request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (cacheServe("tags", request.pid, sendResponse, doTags, true)) {
+               return true;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry tags request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug("tags request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  sendResponse(failMsg);
+               }
+            }
+         }
+         else {
+            var i;
+            var tags = data.match(/<category>[^<]*<\/category>/g);
+            if (!tags) { tags = []; }
+            for (i=0; i<tags.length; i++) {
+               tags[i] = tags[i].replace(/^<category>/,'')
+                              .replace(/<\/category>$/,'');
+            }
+            var info = {"tags":tags};
+            saveCache(this.targetId, info);
+            dequeueAjax(this.targetId);
+            if (!closed) {
+               doTags(info, this.targetId, sendResponse);
+            }
+         }
+      }
+   });
 }
 
 function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
@@ -616,6 +715,27 @@ function requestTimestamp(request, sender, sendResponse, hash) {
    }
 }
 
+function requestTags(request, sender, sendResponse, hash) {
+   if (hash !== tabs[sender.tab.id]) {
+      debug("Stop tags request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (cacheServe("tags", request.pid, sendResponse, doTags, false)) {
+      return true;
+   }
+   else if (isRequested({type: "tags", request: request, sender: sender, sendResponse: sendResponse, hash: hash})) {
+      return true;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "tags", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
+   }
+   else {
+      doTagsAjax(request, sender, sendResponse, hash,
+                 getStorage("MissingE_betterReblogs_retries",defaultRetries));
+   }
+}
+
 function requestMagnifier(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop magnifier request: Tab closed or changed.");
@@ -787,6 +907,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "reblogYourself") {
       requestReblogYourself(request, sender, sendResponse, tabs[sender.tab.id]);
+   }
+   else if (request.greeting == "tags") {
+      requestTags(request, sender, sendResponse, tabs[sender.tab.id]);
    }
    else if (request.greeting == "timestamp") {
       if (request.type == "ask") {
@@ -1060,7 +1183,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.magnifyAvatars = getStorage("MissingE_magnifier_magnifyAvatars",0);
             break;
          case "betterReblogs":
-            settings.noPassTags = getStorage("MissingE_betterReblogs_noPassTags",0);
+            settings.passTags = getStorage("MissingE_betterReblogs_passTags",1);
+            settings.autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
             settings.quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
             settings.accountName = '0';
             if (getStorage("MissingE_betterReblogs_quickReblogAcctType",0) == 1) {
@@ -1268,6 +1392,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.reblogYourself = false;
 
+         if (getStorage("MissingE_betterReblogs_enabled",1) == 1 &&
+             getStorage("MissingE_betterReblogs_passTags",1) == 1) {
+            activeScripts.betterReblogs = true;
+            widenIframe = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "betterReblogs/betterReblogs_post.js", allFrames: true});
+         }
+         else
+            activeScripts.betterReblogs = false;
+
          if (getStorage("MissingE_postingFixes_enabled",1) == 1 &&
              getStorage("MissingE_postingFixes_subEdit",1) == 1) {
             activeScripts.postingFixes = true;
@@ -1465,7 +1598,7 @@ getExternalVersion();
 moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
 moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
 collapseSettings('MissingE_askFixes_betterAnswers','MissingE_askFixes_buttons','MissingE_askFixes_tags');
-invertSetting('MissingE_betterReblogs_passTags','MissingE_betterReblogs_noPassTags');
+invertSetting('MissingE_betterReblogs_noPassTags','MissingE_betterReblogs_passTags');
 
 var fivedays = 432000000;
 var now = (new Date()).valueOf();
@@ -1486,6 +1619,7 @@ if (now >= parseInt(getStorage("MissingE_compatCheck",0)) + fivedays) {
                case "Tumblr Reblog Yourself":
                case "Tumblr Reply Replies":
                case "Tumblr SafeDash":
+               case "Tumblr Timestamps":
                //case "Tumblr Sidebr":
                   repl.push(arr[i].name);
                   ids.push(arr[i].id);

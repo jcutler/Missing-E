@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.13</string>
+	<string>2.1.14</string>
 	<key>CFBundleVersion</key>
-	<string>21013</string>
+	<string>21014</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -59,6 +59,7 @@
 				<string>askFixes/askFixes.js</string>
 				<string>betterReblogs/betterReblogs_dash.js</string>
 				<string>betterReblogs/betterReblogs_fill.js</string>
+				<string>betterReblogs/betterReblogs_post.js</string>
 				<string>bookmarker/bookmarker.js</string>
 				<string>dashLinksToTabs/dashLinksToTabs.js</string>
 				<string>gotoDashPost/gotoDashPost.js</string>

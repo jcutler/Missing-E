@@ -58,7 +58,8 @@ function getReblogTags() {
    }
 }
 
-function MissingE_betterReblogs_fill_doStartup(noPassTags, fullText) {
+function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
+                                               fullText) {
    if (document.body.id !== 'dashboard_edit_post') {
       if (/[\?&]channel_id=/.test(location.href) &&
           /Request denied/i.test($('#container').text())) {
@@ -171,16 +172,7 @@ function MissingE_betterReblogs_fill_doStartup(noPassTags, fullText) {
                }
             }
          }
-         if (noPassTags === 1) {
-            var label = $('<label for="post_tags" class="inline_input_label" '+
-              'id="post_tags_label" ' +
-              'style="left:8px;right:auto;text-align:left">tags</label>')
-                  .prependTo('#set_tags');
-            var labelHeight = parseInt(label.css('top').match(/[0-9]*/)[0]);
-            if (!isNaN(labelHeight)) {
-               labelHeight += addHeight;
-               label.css('top',labelHeight+'px');
-            }
+         if (passTags === 0 || autoFillTags === 0) {
             document.getElementById('post_tags').value = "";
             document.getElementById('tokens').innerHTML = "";
          }

@@ -195,6 +195,9 @@ function doStartup(response) {
       }
    }
    else {
+      if (response.message.betterReblogs) {
+         MissingE_betterReblogs_post_doStartup(response.message.url);
+      }
       if (response.message.askFixes) {
          MissingE_askFixes_scroll_doStartup();
       }
@@ -264,7 +267,7 @@ function settings_startup(response) {
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {
-         MissingE_betterReblogs_dash_doStartup(response.message.noPassTags,
+         MissingE_betterReblogs_dash_doStartup(response.message.passTags,
                                      response.message.quickReblog,
                                      response.message.replaceIcons,
                                      response.message.accountName,
@@ -274,7 +277,8 @@ function settings_startup(response) {
                                      response.message.queueTags);
       }
       else if (response.message.subcomponent === "fill") {
-         MissingE_betterReblogs_fill_doStartup(response.message.noPassTags,
+         MissingE_betterReblogs_fill_doStartup(response.message.passTags,
+                                               response.message.autoFillTags,
                                                response.message.fullText);
       }
    }

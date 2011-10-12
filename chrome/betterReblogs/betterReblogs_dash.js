@@ -278,7 +278,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       queueTags = reblog_settings.queueTags;
    }
 
-   if (reblog_settings.noPassTags === 0) {
+   if (reblog_settings.passTags === 1) {
       var selector = '#posts div.post_controls a[href^="/reblog/"]';
       if (reblog_settings.quickReblog === 1) {
          selector = '#MissingE_quick_reblog_manual';
@@ -467,7 +467,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          var marg = parseInt($('body').css('margin-top'));
          if (isNaN(marg)) { marg = 0; }
          var tagarr = [];
-         if (reblog_settings.noPassTags === 0) {
+         if (reblog_settings.passTags === 1) {
             var tags = reblog.closest('li.post').find('span.tags a');
             if (/http:\/\/www\.tumblr\.com\/tagged\//.test(location.href)) {
                var i;
