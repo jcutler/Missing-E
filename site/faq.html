@@ -68,7 +68,8 @@ jQuery(document).ready(function($) {
 <h2>Ask Tweaks</h2>
 <ul><li><a href="#asktweaks-on">How do I add tags when I answer a message (ask)?</a></li></ul>
 <h2>Better Reblogs</h2>
-<ul><li><a href="#no-reblog-tags">I don't want my reblogs to include tags from the original post. How can I turn that feature off?</a></li>
+<ul><li><a href="#reblog-tags">Why does 'Missing e' change the look of the reblog button on post pages?</a></li>
+<li><a href="#no-reblog-tags">I don't want my reblogs to include tags from the original post. How can I turn that feature off?</a></li>
 <li><a href="#quick-reblog-on">How do I turn on quick (1-click) reblogging?</a></li>
 <li><a href="#quickreblog-account">I want quick (1-click) reblogging to post to one of my secondary Tumblr accounts. How can I do that?</a></li>
 </ul>
@@ -223,11 +224,17 @@ jQuery(document).ready(function($) {
 <a name="asktweaks-on"></a><p class="question">How do I add tags when I answer a message (ask)?</p>
 <div class="response"><p>Tagging of messages (asks) when you answer them, part of the <em>Ask Tweaks</em> feature is <strong>disabled by default</strong> when you first 'Install Missing e' or update to version 1.2.1+. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Social Features</em> tab, in the <em>Ask Tweaks</em> section.</p>
 <div class="totop"><a href="#">Top</a></div></div>
+-<a name="reblog-tags"></a><p class="question">Why does 'Missing e' change the look of the reblog button on post pages?</p>
+<div class="response"><p>The <em>Better Reblogs</em> feature can automatically keep the tags from a post when you reblog it. To support this on individual post pages, <em>Better Reblogs</em> must get the tags from the Tumblr RSS feed. When it does so successfully, the reblog button changes to what you see below to indicate that the tags will be preserved when you reblog.</p>
+<div class="example"><img src="images/examples/reblog_tags.png" alt="Reblog with Tags button" /><div class="caption">Reblog (with tags) button</div></div>
+<p>During times when Tumblr is very busy or error-prone, the RSS feeds may not work correctly. <em>Better Reblogs</em> will retry a few times before giving up. When that happens, the reblog button will change to the button below. You can still click on it to reblog the post, but the tags will not be added automatically.</p>
+<div class="example"><img src="images/examples/reblog_tags_fail.png" alt="Reblog with Tags (failed) button" /><div class="caption">Reblog with tags (failed) button</div></div>
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="no-reblog-tags"></a><p class="question">I don't want my reblogs to include tags from the original post. How can I turn that feature off?</p>
-<div class="response"><p>With the <em>Better Reblogs</em> feature, you can decide to choose whether or not to automatically add tags from the original post when reblogging. You can change this behaviour in the settings (which you can access <a href="http://missinge.infraware.ca/faq#settings">like this</a>), under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
+<div class="response"><p>The <em>Better Reblogs</em> feature can add tags from the original post when reblogging. You can turn it off completely in the settings (which you can access <a href="http://missinge.infraware.ca/faq#settings">like this</a>), under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
 <p><strong>You Can:</strong></p>
-<ul><li>Allow automatic adding of original post tags<ul><li><small>Do this by turning off the checkbox labelled: <em>"Do not automatically keep original post tags when reblogging"</em></small></li></ul></li>
-<li>Disable automatic adding of original post tags<ul><li><small>Do this by turning on the checkbox labelled: <em>"Do not automatically keep original post tags when reblogging"</em>. You will still be able to manually add the original post tags with the <em>"Reblog Tags"</em> button</small></li></ul></li></ul>
+<ul><li>Turn off reblogging tags completely<ul><li><small>Do this by turning off the checkbox labelled: <em>"Keep original post tags when reblogging"</em></small></li></ul></li>
+<li>Disable automatic adding of original post tags<ul><li><small>You will still be able to manually add the original post tags with the <em>"Reblog Tags"</em> button</small></li></ul></li></ul>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="quick-reblog-on"></a><p class="question">How do I turn on quick (1-click) reblogging?</p>
 <div class="response"><p>Quick (1-clicking) reblogging, part of the <em>Better Reblogs</em> feature, is <strong>disabled by default</strong> when you first install 'Missing e' or update to version 1.1.0+. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
