@@ -338,22 +338,36 @@ self.on('message', function (message) {
          avatar = avatar.replace(/64\./,'40.');
          var url = this.href.match(/(http[s]?:\/\/([^\/]*))/);
          if (url && url.length > 2) {
-            jQuery('#MissingE_askbox .MissingE_askPerson')
-               .html('<a href="' + encodeURI(url[1]) + '">' + user + '</a>');
-            jQuery('#MissingE_askbox .MissingE_askPerson_avatar')
-               .attr('href',encodeURI(url[1])).css('background-image',avatar);
-            jQuery.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
-            jQuery('#facebox .MissingE_askbox_loaded iframe')
-               .attr('src','http://www.tumblr.com/ask_form/' + encodeURI(url[2]));
-            jQuery('#facebox').draggable({
-               containment:'document',
-               start: function(e, ui) {
-                  if (jQuery(e.target).find('div.MissingE_askbox_loaded')
-                        .length === 0) {
-                     return false;
-                  }
+            var skipRender = false;
+            var ifr = jQuery('#facebox iframe');
+            if (ifr.length > 0) {
+               ifr = ifr.get(0);
+               if (ifr.src === 'http://www.tumblr.com/ask_form/' +
+                                 encodeURI(url[2]) &&
+                   ifr.contentDocument.referrer !==
+                     'http://www.tumblr.com/ask_form/' + encodeURI(url[2])) {
+                  skipRender = true;
+                  jQuery.facebox.show('MissingE_askbox_loaded');
                }
-            });
+            }
+            if (!skipRender) {
+               jQuery('#MissingE_askbox .MissingE_askPerson')
+                  .html('<a href="' + encodeURI(url[1]) + '">' + user + '</a>');
+               jQuery('#MissingE_askbox .MissingE_askPerson_avatar')
+                  .attr('href',encodeURI(url[1])).css('background-image',avatar);
+               jQuery.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
+               jQuery('#facebox .MissingE_askbox_loaded iframe')
+                  .attr('src','http://www.tumblr.com/ask_form/' + encodeURI(url[2]));
+               jQuery('#facebox').draggable({
+                  containment:'document',
+                  start: function(e, ui) {
+                     if (jQuery(e.target).find('div.MissingE_askbox_loaded')
+                           .length === 0) {
+                        return false;
+                     }
+                  }
+               });
+            }
             jQuery(this).closest("div.user_menu").hide();
             return false;
          }

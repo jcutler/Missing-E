@@ -89,6 +89,12 @@
       close: function() {
          $(document).trigger('close.facebox');
          return false;
+      },
+
+      show: function(klass) {
+         if (klass) $('#facebox .content').addClass(klass);
+         showOverlay();
+         $('#facebox').show();
       }
    });
 
