@@ -320,22 +320,37 @@ chrome.extension.sendRequest({greeting: "settings",
          avatar = avatar.replace(/64\./,'40.');
          var url = this.href.match(/(http[s]?:\/\/([^\/]*))/);
          if (url && url.length > 2) {
-            $('#MissingE_askbox .MissingE_askPerson')
-               .html('<a href="' + url[1] + '">' + user + '</a>');
-            $('#MissingE_askbox .MissingE_askPerson_avatar')
-               .attr('href',url[1]).css('background-image',avatar);
-            $.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
-            $('#facebox .MissingE_askbox_loaded iframe')
-               .attr('src','http://www.tumblr.com/ask_form/' + url[2]);
-            $('#facebox').draggable({
-               containment:'document',
-               start: function(e, ui) {
-                  if ($(e.target).find('div.MissingE_askbox_loaded')
-                        .length === 0) {
-                     return false;
-                  }
+            var skipRender = false;
+            var ifr = $('#facebox iframe');
+            if (ifr.length > 0) {
+               ifr = ifr.get(0);
+               if (ifr.src === 'http://www.tumblr.com/ask_form/' +
+                                 encodeURI(url[2]) &&
+                   ifr.contentDocument.referrer !==
+                     'http://www.tumblr.com/ask_form/' + encodeURI(url[2])) {
+                  skipRender = true;
+                  $.facebox.show('MissingE_askbox_loaded');
                }
-            });
+            }
+            if (!skipRender) {
+               $('#MissingE_askbox .MissingE_askPerson')
+                  .html('<a href="' + url[1] + '">' + user + '</a>');
+               $('#MissingE_askbox .MissingE_askPerson_avatar')
+                  .attr('href',url[1]).css('background-image',avatar);
+               $.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
+               $('#facebox .MissingE_askbox_loaded iframe')
+                  .attr('src','http://www.tumblr.com/ask_form/' + url[2]);
+               $('#facebox').draggable({
+                  containment:'document',
+                  cursor:'move',
+                  start: function(e, ui) {
+                     if ($(e.target).find('div.MissingE_askbox_loaded')
+                           .length === 0) {
+                        return false;
+                     }
+                  }
+               });
+            }
             return false;
          }
       });
