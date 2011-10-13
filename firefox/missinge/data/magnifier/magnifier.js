@@ -68,7 +68,8 @@ function insertAvatarMagnifier(item) {
       mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(it.find('a.avatar_frame'));
    }
-   else if (item.tagName === "LI" && it.hasClass("post")) {
+   else if (item.tagName === "LI" && it.hasClass("post") &&
+            !it.hasClass('queued')) {
       mag = jQuery('<div class="MissingE_magnify_avatar"></div>')
          .appendTo(it.find('div.avatar_and_i'));
    }
