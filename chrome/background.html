@@ -1143,6 +1143,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
             settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
             settings.massDelete = getStorage("MissingE_dashboardFixes_massDelete",1);
+            settings.sortableNotes = getStorage("MissingE_dashboardFixes_sortableNotes",1);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
@@ -1310,6 +1311,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.dashboardFixes = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/replaceIcons.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "dashboardFixes/dashboardFixes.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/notesSorter.css"});
             if (getStorage("MissingE_dashboardFixes_reblogQuoteFit",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/reblogQuoteFit.css"});
             if (getStorage("MissingE_dashboardFixes_wrapTags",1) == 1)

@@ -154,6 +154,12 @@ var locale = {
    "messagesError": "Some messages could not be deleted. Please try again later.",
    "postsConfirm": "Are you sure you want to delete the # selected posts?",
    "postsError": "Some posts could not be deleted. Please try again later."
+  },
+  "sorting": {
+   "sort": "Sort",
+   "type": "Type",
+   "user": "User",
+   "reset": "Reset"
   }
  },
  "es": {
@@ -311,6 +317,12 @@ var locale = {
    "messagesError": "Algunos mensajes no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde.",
    "postsConfirm": "¿Está seguro que desea eliminar los # publicaciones seleccionados?",
    "postsError": "Algunos publicaciones no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde."
+  },
+  "sorting": {
+   "sort": "Ordenar",
+   "type": "Tipo",
+   "user": "Usuario",
+   "reset": "Restablecer"
   }
  },
  "de": {
@@ -468,6 +480,12 @@ var locale = {
    "messagesError": "Einige Nachrichten können nicht gelöscht werden. Bitte versuchen Sie es später erneut.",
    "postsConfirm": "Sind Sie sicher, dass Sie die # ausgewählten Einträge löschen wollen?",
    "postsError": "Einige Einträge können nicht gelöscht werden. Bitte versuchen Sie es später erneut."
+  },
+  "sorting": {
+   "sort": "Sortieren",
+   "type": "Art",
+   "user": "Benutzer",
+   "reset": "Zurücksetzen"
   }
  },
  "fr": {
@@ -625,6 +643,12 @@ var locale = {
    "messagesError": "Certains messages n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard.",
    "postsConfirm": "Etes-vous sûr de vouloir supprimer les # billets sélectionnés?",
    "postsError": "Certains billets n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard."
+  },
+  "sorting": {
+   "sort": "Trier",
+   "type": "Type",
+   "user": "Utilisateur",
+   "reset": "Réinitialiser"
   }
  },
  "it": {
@@ -782,6 +806,12 @@ var locale = {
    "messagesError": "Alcuni messaggi non sono stati eliminati. Riprova più tardi.",
    "postsConfirm": "Sei sicuro di voler eliminare i # posti selezionati?",
    "postsError": "Alcuni posti non sono stati eliminati. Riprova più tardi."
+  },
+  "sorting": {
+   "sort": "Ordinare",
+   "type": "Tipo",
+   "user": "Utente",
+   "reset": "Resetta"
   }
  },
  "ja": {
@@ -939,6 +969,12 @@ var locale = {
    "messagesError": "一部のメッセージが削除できませんでした。後でもう一度やり直してください。",
    "postsConfirm": "あなたは # 選択した投稿を削除してもよろしいですか？",
    "postsError": "一部の投稿が削除できませんでした。後でもう一度やり直してください。"
+  },
+  "sorting": {
+   "sort": "ソート",
+   "type": "タイプ",
+   "user": "ユーザ",
+   "reset": "リセット"
   }
  },
  "tr": {
@@ -1120,6 +1156,12 @@ var locale = {
    "messagesError": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin.",
    "postsConfirm": "Seçili olan bu # gönderiler silinsin mi?",
    "postsError": "Üzgünüz bazı gönderiler şu anda silinemiyor. Lütfen daha sonra yeniden deneyin."
+  },
+  "sorting": {
+   "sort": "Sırala",
+   "type": "Tipi",
+   "user": "Kullanıcı",
+   "reset": "Sıfırla"
   }
  }
 };

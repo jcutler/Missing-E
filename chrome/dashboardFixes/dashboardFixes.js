@@ -570,4 +570,221 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          }
       });
    }
+
+   if (dashboardFixes_settings.sortableNotes === 1) {
+      $(document).bind('MissingEajax', function(e) {
+         if (e.originalEvent.data.type !== 'notes') { return; }
+         var container = $('#'+e.originalEvent.data.list[0]);
+         var div = container.find('#'+e.originalEvent.data.list[0].replace(/post/,"notes_container"));
+         div.prepend('<div class="MissingE_notesSorter">' +
+                     locale[lang].sorting.sort + ': ' +
+                     '<div class="MissingE_sorterContainer">' +
+                     '<div class="MissingE_sorterButton MissingE_typeSort">' +
+                        locale[lang].sorting.type + ' ' +
+                        '<span class="MissingE_upArrow">&uArr;</span>' +
+                        '<span class="MissingE_downArrow">&dArr;</span>' +
+                     '</div>' +
+                     '<div class="MissingE_sorterButton MissingE_userSort">' +
+                        locale[lang].sorting.user + ' ' +
+                        '<span class="MissingE_upArrow">&uArr;</span>' +
+                        '<span class="MissingE_downArrow">&dArr;</span>' +
+                     '</div>' +
+                     '</div>' +
+                     '<div class="MissingE_sorterButton MissingE_unsort">' +
+                        locale[lang].sorting.reset +
+                     '</div></div>');
+         var node = container.find('ol.notes');
+         var list = node.find('li').not('.more_notes_link_container');
+         list.each(function(i) {
+            $(this).attr('index',i).addClass('MissingE_sortedNote');
+         });
+         node.data('length',list.length);
+         $(div).find(".MissingE_sorterContainer").sortable({
+            items: "div",
+            cursor: "move",
+            axis: "x",
+            opacity: 0.6,
+            placeholder: 'MissingE_sorterPlaceholder',
+            forcePlaceholderSize: true,
+            update: function(e,ui) {
+               var item = $(this);
+               var ol = item.closest("li.post").find('ol.notes');
+               var sortorder = ol.data('sortorder');
+               var newsortorder = sortorder;
+               if (!sortorder || sortorder === "" ||
+                   !(/^([tT][uU]|[uU][tT])$/.test(sortorder))) {
+                  sortorder = 'TU';
+               }
+               if (item.find('.MissingE_sorterButton:first')
+                   .hasClass('MissingE_typeSort')) {
+                  newsortorder = sortorder.match(/[tT]/)[0] +
+                                 sortorder.match(/[uU]/)[0];
+               }
+               else {
+                  newsortorder = sortorder.match(/[uU]/)[0] +
+                                 sortorder.match(/[tT]/)[0];
+               }
+               if (newsortorder !== sortorder) {
+                  ol.data('sortorder',newsortorder);
+                  styleSorters($(this).closest('div.MissingE_notesSorter'),newsortorder);
+                  sortList(ol);
+               }
+            }
+         });
+      });
+
+      $('#posts ol.notes').live('mouseover', function() {
+         var startIndex = $(this).data('length');
+         var list = $(this).find('li:not(.MissingE_sortedNote)').not('.more_notes_link_container');
+         if (list.length > 0) {
+            list.each(function(i) {
+               $(this).attr('index',startIndex + i).addClass('MissingE_sortedNote');
+            });
+            $(this).data('length',startIndex + list.length);
+            sortList(this);
+         }
+      });
+
+      $('#posts .MissingE_sorterButton').live('click', function() {
+         var item = $(this);
+         var ol = item.closest("li.post").find('ol.notes');
+         var sortorder = ol.data('sortorder');
+         if (item.hasClass('MissingE_unsort')) {
+            if (sortorder && sortorder !== "") {
+               ol.data('sortorder','');
+               styleSorters($(this).parent(),'');
+               unsortList(ol);
+            }
+         }
+         else {
+            var newsortorder = sortorder;
+            if (!sortorder || sortorder === "" ||
+                !(/^([tT][uU]|[uU][tT])$/.test(sortorder))) {
+               newsortorder = 'TU';
+            }
+            else if (item.hasClass('MissingE_typeSort')) {
+               var m = sortorder.match(/.*([tT]).*/);
+               newsortorder = m[0].replace(/[tT]/,m[1] === "t" ? "T" : "t");
+            }
+            else if (item.hasClass('MissingE_userSort')) {
+               var m = sortorder.match(/.*([uU]).*/);
+               newsortorder = m[0].replace(/[uU]/,m[1] === "u" ? "U" : "u");
+            }
+            if (newsortorder !== sortorder) {
+               ol.data('sortorder',newsortorder);
+               styleSorters($(this).closest('div.MissingE_notesSorter'),newsortorder);
+               sortList(ol);
+            }
+         }
+      });
+   }
 });
+
+function styleSorters(sorters, order) {
+   var buttons = sorters.find(".MissingE_sorterButton")
+   if (!order || order === "") {
+      buttons.css('opacity','').removeClass("MissingE_descSort");
+      var firstBtn = sorters.find(".MissingE_sorterButton:first");
+      if (firstBtn.hasClass('MissingE_userSort')) {
+         firstBtn.detach().appendTo(sorters.find(".MissingE_sorterContainer"));
+      }
+   }
+   else {
+      buttons.css('opacity','1');
+      sorters.find(".MissingE_typeSort").toggleClass("MissingE_descSort", /t/.test(order));
+      sorters.find(".MissingE_userSort").toggleClass("MissingE_descSort", /u/.test(order));
+   }
+}
+
+function unsortList(ol) {
+   var notes = $(ol);
+   var arr = [];
+   var list = notes.find('li.MissingE_sortedNote');
+   list.each(function() {
+      arr[$(this).attr('index')] = this;
+   });
+   list.detach();
+   notes.prepend($(arr));
+}
+
+function sortList(ol) {
+   var ANSWER=0, REPLY=1, REBLOG_COMMENTARY=2, REBLOG=3, LIKE=4;
+   var didReverse = false;
+   var notes = $(ol);
+   var sortorder = notes.data('sortorder');
+   if (!sortorder || sortorder === "" ||
+       !(/^([tT][uU]|[uU][tT])$/.test(sortorder))) {
+      return;
+   }
+   sortorder = sortorder.split(''); 
+   var arr = [], entryOrder = {}, i;
+   var sorted = [];
+   var list = notes.find('li.MissingE_sortedNote');
+   if (sortorder[0] === "T" || sortorder[0] === "t") {
+      entryOrder = {"type":0,"user":1};
+   }
+   else {
+      entryOrder = {"type":1,"user":0};
+   }
+   list.each(function(i) {
+      var entry = [];
+      if ($(this).hasClass('answer')) {
+         entry[entryOrder.type] = ANSWER;
+      }
+      else if ($(this).hasClass('reply')) {
+         entry[entryOrder.type] = REPLY;
+      }
+      else if ($(this).hasClass('reblog')) {
+         if ($(this).hasClass('with_commentary')) {
+            entry[entryOrder.type] = REBLOG_COMMENTARY;
+         }
+         else {
+            entry[entryOrder.type] = REBLOG;
+         }
+      }
+      else if ($(this).hasClass('like')) {
+         entry[entryOrder.type] = 4;
+      }
+      else {
+         entry[entryOrder.type] = 5;
+      }
+      var username = this.className.match(/tumblelog_([^\s]*)/);
+      if (username && username.length > 1) {
+         entry[entryOrder.user] = username[1];
+      }
+      else {
+         entry[entryOrder.user] = "";
+      }
+      entry[2] = this;
+      arr.push(entry);
+   });
+   arr.sort();
+   if (/[ut]/.test(sortorder[0])) {
+      arr.reverse();
+      didReverse = true;
+   }
+   if ((/[ut]/.test(sortorder[1]) && !didReverse) ||
+       (/[UT]/.test(sortorder[1]) && didReverse)) {
+      var cType = arr.length > 0 ? arr[0][0] : 0;
+      var mid = [];
+      for (i=0; i<arr.length; i++) {
+         if (arr[i][0] === cType) {
+            mid.unshift(arr[i][2]);
+         }
+         else {
+            cType = arr[i][0];
+            sorted = sorted.concat(mid);
+            mid = [arr[i][2]];
+         }
+      }
+      sorted = sorted.concat(mid);
+   }
+   else {
+      for (i=0; i<arr.length; i++) {
+         sorted[i] = arr[i][2];
+      }
+   }
+   list.detach();
+   notes.prepend($(sorted));
+}
+                
