@@ -1,8 +1,2 @@
-2.0.5
-Spanish localization
-Timestamps
- - Timestamps back on dash posts
-Dashboard Fixes
- - mass deletion of draft and queued posts [mangtimang]
-Posting Fixes
- - automatically tag queued posts
+2.2.1
+Draggable askbox [lifewasted]

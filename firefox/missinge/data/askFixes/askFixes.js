@@ -345,6 +345,16 @@ self.on('message', function (message) {
             jQuery.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
             jQuery('#facebox .MissingE_askbox_loaded iframe')
                .attr('src','http://www.tumblr.com/ask_form/' + encodeURI(url[2]));
+            jQuery('#facebox').draggable({
+               containment:'document',
+               start: function(e, ui) {
+                  if (jQuery(e.target).find('div.MissingE_askbox_loaded')
+                        .length === 0) {
+                     return false;
+                  }
+               }
+            });
+            jQuery(this).closest("div.user_menu").hide();
             return false;
          }
       });

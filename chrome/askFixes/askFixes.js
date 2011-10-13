@@ -327,6 +327,15 @@ chrome.extension.sendRequest({greeting: "settings",
             $.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
             $('#facebox .MissingE_askbox_loaded iframe')
                .attr('src','http://www.tumblr.com/ask_form/' + url[2]);
+            $('#facebox').draggable({
+               containment:'document',
+               start: function(e, ui) {
+                  if ($(e.target).find('div.MissingE_askbox_loaded')
+                        .length === 0) {
+                     return false;
+                  }
+               }
+            });
             return false;
          }
       });

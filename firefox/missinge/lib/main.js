@@ -1375,6 +1375,8 @@ function handleMessage(message, myWorker) {
    else if (message.greeting == "start") {
       var activeScripts = {};
       var zindexFix = false;
+      var needUI = false, needUIresizable = false, needUIsortable = false,
+          needUIdraggable = false;
       var injectScripts = [data.url("common/storage.js"),
                            data.url("common/utils.js"),
                            data.url("common/localizations.js")];
@@ -1432,10 +1434,8 @@ function handleMessage(message, myWorker) {
             activeScripts.dashLinksToTabs = false;
 
          if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
-            injectScripts.push(data.url("common/jquery.ui.core.js"));
-            injectScripts.push(data.url("common/jquery.ui.widget.js"));
-            injectScripts.push(data.url("common/jquery.ui.mouse.js"));
-            injectScripts.push(data.url("common/jquery.ui.sortable.js"));
+            needUI = true;
+            needUIsortable = true;
             injectScripts.push(data.url("bookmarker/bookmarker.js"));
             activeScripts.bookmarker = true;
          }
@@ -1464,6 +1464,7 @@ function handleMessage(message, myWorker) {
             activeScripts.dashboardFixes = false;
 
          if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+            needUIdraggable = true;
             injectScripts.push(data.url("askFixes/askFixes.js"));
             activeScripts.askFixes = true;
          }
@@ -1492,10 +1493,8 @@ function handleMessage(message, myWorker) {
           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/drafts/.test(message.url)) ||
          (/http:\/\/www\.tumblr\.com\/share/.test(message.url)))) {
          if (getStorage("extensions.MissingE.postingFixes.enabled",1) == 1) {
-            injectScripts.push(data.url("common/jquery.ui.core.js"));
-            injectScripts.push(data.url("common/jquery.ui.widget.js"));
-            injectScripts.push(data.url("common/jquery.ui.mouse.js"));
-            injectScripts.push(data.url("common/jquery.ui.resizable.js"));
+            needUI = true;
+            needUIresizable = true;
             injectScripts.push(data.url("postingFixes/postingFixes.js"));
             activeScripts.postingFixes = true;
          }
@@ -1651,6 +1650,22 @@ function handleMessage(message, myWorker) {
       }
 
       injectScripts.unshift(data.url("common/ajaxEvents.js"));
+
+      // In reverse order of requirements
+      if (needUI) {
+         if (needUIresizable) {
+            injectScripts.unshift(data.url("common/jquery.ui.resizable.js"));
+         }
+         if (needUIsortable) {
+            injectScripts.unshift(data.url("common/jquery.ui.sortable.js"));
+         }
+         if (needUIdraggable) {
+            injectScripts.unshift(data.url("common/jquery.ui.draggable.js"));
+         }
+         injectScripts.unshift(data.url("common/jquery.ui.mouse.js"));
+         injectScripts.unshift(data.url("common/jquery.ui.widget.js"));
+         injectScripts.unshift(data.url("common/jquery.ui.core.js"));
+      }
       injectScripts.unshift(data.url("common/jquery-1.5.2.min.js"));
       if (zindexFix) {
          injectScripts.push(data.url("common/zindexFix.js"));

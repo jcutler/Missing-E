@@ -1213,6 +1213,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var activeScripts = {};
       activeScripts.version = currVersion;
       var zindexFix = false;
+      var loadedUI = false;
       var widenIframe = false;
       if (sender.tab.url == request.url &&
           /http:\/\/www\.tumblr\.com\/mega-editor\//.test(sender.tab.url)) {
@@ -1270,7 +1271,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "bookmarker/bookmarker.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+            if (!loadedUI) {
+               loadedUI = true;
+               chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+            }
             chrome.tabs.executeScript(sender.tab.id, {file: "bookmarker/bookmarker.js"});
          }
          else
@@ -1323,6 +1327,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getStorage("MissingE_askFixes_enabled",1) == 1) {
             activeScripts.askFixes = true;
+            if (!loadedUI) {
+               loadedUI = true;
+               chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+            }
             chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askFixes.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askFixes.js"});
          }
@@ -1353,7 +1361,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          (/http:\/\/www\.tumblr\.com\/share/.test(sender.tab.url)))) {
          if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
             activeScripts.postingFixes = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+            if (!loadedUI) {
+               loadedUI = true;
+               chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+            }
             chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/postingFixes.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "postingFixes/postingFixes.css"});
          }
