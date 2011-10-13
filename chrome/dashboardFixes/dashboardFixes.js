@@ -708,7 +708,7 @@ function unsortList(ol) {
 }
 
 function sortList(ol) {
-   var ANSWER=0, REPLY=1, REBLOG_COMMENTARY=2, REBLOG=3, LIKE=4;
+   var ANSWER=0, REPLY=1, PHOTO=2, REBLOG_COMMENTARY=3, REBLOG=4, LIKE=5, OTHER=6;
    var didReverse = false;
    var notes = $(ol);
    var sortorder = notes.data('sortorder');
@@ -731,6 +731,9 @@ function sortList(ol) {
       if ($(this).hasClass('answer')) {
          entry[entryOrder.type] = ANSWER;
       }
+      else if ($(this).hasClass('photo')) {
+         entry[entryOrder.type] = PHOTO;
+      }
       else if ($(this).hasClass('reply')) {
          entry[entryOrder.type] = REPLY;
       }
@@ -743,10 +746,10 @@ function sortList(ol) {
          }
       }
       else if ($(this).hasClass('like')) {
-         entry[entryOrder.type] = 4;
+         entry[entryOrder.type] = LIKE;
       }
       else {
-         entry[entryOrder.type] = 5;
+         entry[entryOrder.type] = OTHER;
       }
       var username = this.className.match(/tumblelog_([^\s]*)/);
       if (username && username.length > 1) {
