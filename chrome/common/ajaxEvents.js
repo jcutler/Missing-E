@@ -38,6 +38,7 @@ function checkAjaxReady(data, tries) {
 
 if (location.host === 'www.tumblr.com') {
    $('head').append('<script type="text/javascript">\
+      if (window.__qc===undefined) { __qc = {firepixel:function(){return;}}} \
       Ajax.Responders.register({ \
          onComplete: function(request) { \
             if (request.transport.status === 200) { \
