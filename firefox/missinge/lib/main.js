@@ -62,7 +62,7 @@ var lang = 'en';
 var debugMode = false;
 
 function getVersion() {
-   return data.load("version").replace(/\s/g,'');
+   return require("self").version;
 }
 
 function getStorage(key, defVal) {
