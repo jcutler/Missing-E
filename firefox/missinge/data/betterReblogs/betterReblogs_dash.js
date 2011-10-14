@@ -93,6 +93,10 @@ function setTagOverride() {
    localStorage.setItem('tbr_OverrideTags','1');
 }
 
+function clearTagOverride() {
+   localStorage.removeItem('tbr_OverrideTags');
+}
+
 function startReblog(id,replaceIcons) {
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
@@ -293,7 +297,6 @@ self.on('message', function (message) {
       }
       jQuery(selector).live('mousedown', function(e) {
          var tags;
-         if (e.which !== 1 && e.which !== 2) { return; }
          if (this.id === 'MissingE_quick_reblog_manual') {
             tags = jQuery('#MissingE_quick_reblog_tags input').val();
             tags = tags.replace(/\s*,\s*/g,',').replace(/,$/,'')
@@ -323,6 +326,7 @@ self.on('message', function (message) {
                tagarr.push(jQuery(this).text().replace(/^#/,''));
             });
             setReblogTags(tagarr);
+            clearTagOverride();
          }
       });
    }
