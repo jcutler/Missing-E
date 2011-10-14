@@ -263,7 +263,8 @@ function settings_startup(response) {
                                         response.message.widescreen,
                                         response.message.queueArrows,
                                         response.message.expandAll,
-                                        response.message.massDelete);
+                                        response.message.massDelete,
+                                        response.message.sortableNotes);
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {

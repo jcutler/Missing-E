@@ -1311,7 +1311,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.dashboardFixes = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/replaceIcons.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "dashboardFixes/dashboardFixes.js"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/notesSorter.css"});
+            if (getStorage("MissingE_dashboardFixes_sortableNotes",1) == 1) {
+               if (!loadedUI) {
+                  loadedUI = true;
+                  chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+               }
+               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/notesSorter.css"});
+            }
             if (getStorage("MissingE_dashboardFixes_reblogQuoteFit",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/reblogQuoteFit.css"});
             if (getStorage("MissingE_dashboardFixes_wrapTags",1) == 1)

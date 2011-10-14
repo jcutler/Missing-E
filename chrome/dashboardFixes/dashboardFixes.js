@@ -294,6 +294,117 @@ function addExpandAllHandler(item) {
    });
 }
 
+function styleSorters(sorters, order) {
+   var buttons = sorters.find(".MissingE_sorterButton")
+   if (!order || order === "") {
+      buttons.css('opacity','').removeClass("MissingE_descSort");
+      var firstBtn = sorters.find(".MissingE_sorterButton:first");
+      if (firstBtn.hasClass('MissingE_userSort')) {
+         firstBtn.detach().appendTo(sorters.find(".MissingE_sorterContainer"));
+      }
+   }
+   else {
+      buttons.css('opacity','1');
+      sorters.find(".MissingE_typeSort").toggleClass("MissingE_descSort", /t/.test(order));
+      sorters.find(".MissingE_userSort").toggleClass("MissingE_descSort", /u/.test(order));
+   }
+}
+
+function unsortList(ol) {
+   var notes = $(ol);
+   var arr = [];
+   var list = notes.find('li.MissingE_sortedNote');
+   list.each(function() {
+      arr[$(this).attr('index')] = this;
+   });
+   list.detach();
+   notes.prepend($(arr));
+}
+
+function sortList(ol) {
+   var ANSWER=0, REPLY=1, PHOTO=2, REBLOG_COMMENTARY=3, REBLOG=4, LIKE=5, OTHER=6;
+   var didReverse = false;
+   var notes = $(ol);
+   var sortorder = notes.data('sortorder');
+   if (!sortorder || sortorder === "" ||
+       !(/^([tT][uU]|[uU][tT])$/.test(sortorder))) {
+      return;
+   }
+   sortorder = sortorder.split('');
+   var arr = [], entryOrder = {}, i;
+   var sorted = [];
+   var list = notes.find('li.MissingE_sortedNote');
+   if (sortorder[0] === "T" || sortorder[0] === "t") {
+      entryOrder = {"type":0,"user":1};
+   }
+   else {
+      entryOrder = {"type":1,"user":0};
+   }
+   list.each(function(i) {
+      var entry = [];
+      if ($(this).hasClass('answer')) {
+         entry[entryOrder.type] = ANSWER;
+      }
+      else if ($(this).hasClass('photo')) {
+         entry[entryOrder.type] = PHOTO;
+      }
+      else if ($(this).hasClass('reply')) {
+         entry[entryOrder.type] = REPLY;
+      }
+      else if ($(this).hasClass('reblog')) {
+         if ($(this).hasClass('with_commentary')) {
+            entry[entryOrder.type] = REBLOG_COMMENTARY;
+         }
+         else {
+            entry[entryOrder.type] = REBLOG;
+         }
+      }
+      else if ($(this).hasClass('like')) {
+         entry[entryOrder.type] = LIKE;
+      }
+      else {
+         entry[entryOrder.type] = OTHER;
+      }
+      var username = this.className.match(/tumblelog_([^\s]*)/);
+      if (username && username.length > 1) {
+         entry[entryOrder.user] = username[1];
+      }
+      else {
+         entry[entryOrder.user] = "";
+      }
+      entry[2] = this;
+      arr.push(entry);
+   });
+   arr.sort();
+   if (/[ut]/.test(sortorder[0])) {
+      arr.reverse();
+      didReverse = true;
+   }
+   if ((/[ut]/.test(sortorder[1]) && !didReverse) ||
+       (/[UT]/.test(sortorder[1]) && didReverse)) {
+      var cType = arr.length > 0 ? arr[0][0] : 0;
+      var mid = [];
+      for (i=0; i<arr.length; i++) {
+         if (arr[i][0] === cType) {
+            mid.unshift(arr[i][2]);
+         }
+         else {
+            cType = arr[i][0];
+            sorted = sorted.concat(mid);
+            mid = [arr[i][2]];
+         }
+      }
+      sorted = sorted.concat(mid);
+   }
+   else {
+      for (i=0; i<arr.length; i++) {
+         sorted[i] = arr[i][2];
+      }
+   }
+   list.detach();
+   notes.prepend($(sorted));
+}
+
 chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
                              function(response) {
    var dashboardFixes_settings = JSON.parse(response);
@@ -680,114 +791,3 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
    }
 });
 
-function styleSorters(sorters, order) {
-   var buttons = sorters.find(".MissingE_sorterButton")
-   if (!order || order === "") {
-      buttons.css('opacity','').removeClass("MissingE_descSort");
-      var firstBtn = sorters.find(".MissingE_sorterButton:first");
-      if (firstBtn.hasClass('MissingE_userSort')) {
-         firstBtn.detach().appendTo(sorters.find(".MissingE_sorterContainer"));
-      }
-   }
-   else {
-      buttons.css('opacity','1');
-      sorters.find(".MissingE_typeSort").toggleClass("MissingE_descSort", /t/.test(order));
-      sorters.find(".MissingE_userSort").toggleClass("MissingE_descSort", /u/.test(order));
-   }
-}
-
-function unsortList(ol) {
-   var notes = $(ol);
-   var arr = [];
-   var list = notes.find('li.MissingE_sortedNote');
-   list.each(function() {
-      arr[$(this).attr('index')] = this;
-   });
-   list.detach();
-   notes.prepend($(arr));
-}
-
-function sortList(ol) {
-   var ANSWER=0, REPLY=1, PHOTO=2, REBLOG_COMMENTARY=3, REBLOG=4, LIKE=5, OTHER=6;
-   var didReverse = false;
-   var notes = $(ol);
-   var sortorder = notes.data('sortorder');
-   if (!sortorder || sortorder === "" ||
-       !(/^([tT][uU]|[uU][tT])$/.test(sortorder))) {
-      return;
-   }
-   sortorder = sortorder.split(''); 
-   var arr = [], entryOrder = {}, i;
-   var sorted = [];
-   var list = notes.find('li.MissingE_sortedNote');
-   if (sortorder[0] === "T" || sortorder[0] === "t") {
-      entryOrder = {"type":0,"user":1};
-   }
-   else {
-      entryOrder = {"type":1,"user":0};
-   }
-   list.each(function(i) {
-      var entry = [];
-      if ($(this).hasClass('answer')) {
-         entry[entryOrder.type] = ANSWER;
-      }
-      else if ($(this).hasClass('photo')) {
-         entry[entryOrder.type] = PHOTO;
-      }
-      else if ($(this).hasClass('reply')) {
-         entry[entryOrder.type] = REPLY;
-      }
-      else if ($(this).hasClass('reblog')) {
-         if ($(this).hasClass('with_commentary')) {
-            entry[entryOrder.type] = REBLOG_COMMENTARY;
-         }
-         else {
-            entry[entryOrder.type] = REBLOG;
-         }
-      }
-      else if ($(this).hasClass('like')) {
-         entry[entryOrder.type] = LIKE;
-      }
-      else {
-         entry[entryOrder.type] = OTHER;
-      }
-      var username = this.className.match(/tumblelog_([^\s]*)/);
-      if (username && username.length > 1) {
-         entry[entryOrder.user] = username[1];
-      }
-      else {
-         entry[entryOrder.user] = "";
-      }
-      entry[2] = this;
-      arr.push(entry);
-   });
-   arr.sort();
-   if (/[ut]/.test(sortorder[0])) {
-      arr.reverse();
-      didReverse = true;
-   }
-   if ((/[ut]/.test(sortorder[1]) && !didReverse) ||
-       (/[UT]/.test(sortorder[1]) && didReverse)) {
-      var cType = arr.length > 0 ? arr[0][0] : 0;
-      var mid = [];
-      for (i=0; i<arr.length; i++) {
-         if (arr[i][0] === cType) {
-            mid.unshift(arr[i][2]);
-         }
-         else {
-            cType = arr[i][0];
-            sorted = sorted.concat(mid);
-            mid = [arr[i][2]];
-         }
-      }
-      sorted = sorted.concat(mid);
-   }
-   else {
-      for (i=0; i<arr.length; i++) {
-         sorted[i] = arr[i][2];
-      }
-   }
-   list.detach();
-   notes.prepend($(sorted));
-}
-                

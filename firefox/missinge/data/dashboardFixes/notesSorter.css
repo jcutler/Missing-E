@@ -1,0 +1,91 @@
+/*
+* 'Missing e' Extension
+*
+* Copyright 2011, Jeremy Cutler
+* Released under the GPL version 2 licence.
+* SEE: GPL-LICENSE.txt
+*
+* This file is part of 'Missing e'.
+*
+* 'Missing e' is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* 'Missing e' is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#posts .MissingE_notesSorter {
+text-align:right;
+position:relative;
+font-size:11px;
+color:#567;
+}
+
+#posts .MissingE_notesSorter .MissingE_sorterContainer {
+display:inline-block;
+}
+
+#posts .MissingE_notesSorter .MissingE_sorterButton {
+padding:2px 4px;
+font-weight:bold;
+font-size:11px;
+display:inline-block;
+background:#e7e9ee;
+border:1px solid #a7a9ce;
+border-radius:5px;
+cursor:pointer;
+opacity:0.5;
+}
+
+#posts .MissingE_notesSorter .ui-sortable-helper {
+cursor:move;
+
+}
+
+#posts .MissingE_notesSorter .MissingE_sorterPlaceholder {
+display:inline-block;
+padding:3px 5px;
+border-radius:5px;
+background:#EEE;
+vertical-align:bottom;
+}
+
+#posts .MissingE_notesSorter .MissingE_sorterContainer .MissingE_sorterButton:hover {
+opacity:1;
+}
+
+#posts .MissingE_notesSorter .MissingE_sorterContainer {
+padding:0 2px;
+}
+
+#posts .MissingE_notesSorter .MissingE_sorterContainer div {
+margin:0 2px;
+}
+
+#posts .MissingE_notesSorter .MissingE_unsort {
+background:white;
+opactiy:0.2;
+}
+
+#posts .MissingE_notesSorter .MissingE_upArrow,
+#posts .MissingE_notesSorter .MissingE_downArrow {
+font-size:13px;
+line-height:11px;
+}
+
+#posts .MissingE_notesSorter .MissingE_descSort .MissingE_downArrow,
+#posts .MissingE_notesSorter .MissingE_upArrow {
+display:inline;
+}
+
+#posts .MissingE_notesSorter .MissingE_downArrow,
+#posts .MissingE_notesSorter .MissingE_descSort .MissingE_upArrow {
+display:none;
+}

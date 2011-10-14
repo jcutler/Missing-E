@@ -1218,6 +1218,7 @@ function handleMessage(message, myWorker) {
       settings.MissingE_dashboardFixes_queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
       settings.MissingE_dashboardFixes_expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
       settings.MissingE_dashboardFixes_massDelete = getStorage("extensions.MissingE.dashboardFixes.massDelete",1);
+      settings.MissingE_dashboardFixes_sortableNotes = getStorage("extensions.MissingE.dashboardFixes.sortableNotes",1);
       settings.MissingE_sidebarTweaks_retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
       settings.MissingE_sidebarTweaks_slimSidebar = getStorage("extensions.MissingE.sidebarTweaks.slimSidebar",0);
@@ -1312,6 +1313,7 @@ function handleMessage(message, myWorker) {
             settings.queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
             settings.expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
             settings.massDelete = getStorage("extensions.MissingE.dashboardFixes.massDelete",1);
+            settings.sortableNotes = getStorage("extensions.MissingE.dashboardFixes.sortableNotes",1);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
@@ -1457,6 +1459,9 @@ function handleMessage(message, myWorker) {
             activeScripts.magnifier = false;
 
          if (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1) {
+            if (getStorage("extensions.MissingE.dashboardFixes.sortableNotes",1) == 1) {
+               needUIsortable = true;
+            }
             injectScripts.push(data.url("dashboardFixes/dashboardFixes.js"));
             activeScripts.dashboardFixes = true;
          }
