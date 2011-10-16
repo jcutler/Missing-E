@@ -1460,6 +1460,7 @@ function handleMessage(message, myWorker) {
 
          if (getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1) {
             if (getStorage("extensions.MissingE.dashboardFixes.sortableNotes",1) == 1) {
+               needUI = true;
                needUIsortable = true;
             }
             injectScripts.push(data.url("dashboardFixes/dashboardFixes.js"));
@@ -1469,6 +1470,7 @@ function handleMessage(message, myWorker) {
             activeScripts.dashboardFixes = false;
 
          if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1) {
+            needUI = true;
             needUIdraggable = true;
             injectScripts.push(data.url("askFixes/askFixes.js"));
             activeScripts.askFixes = true;
