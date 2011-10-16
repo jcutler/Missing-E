@@ -324,10 +324,15 @@ chrome.extension.sendRequest({greeting: "settings",
             var ifr = $('#facebox iframe');
             if (ifr.length > 0) {
                ifr = ifr.get(0);
+               var referrer = 'http://www.tumblr.com/ask_form/' + encodeURI(url[2]);
+               try {
+                  referrer = ifr.contentDocument.referrer;
+               }
+               catch (e) {
+               }
                if (ifr.src === 'http://www.tumblr.com/ask_form/' +
                                  encodeURI(url[2]) &&
-                   ifr.contentDocument.referrer !==
-                     'http://www.tumblr.com/ask_form/' + encodeURI(url[2])) {
+                   referrer !== 'http://www.tumblr.com/ask_form/' + encodeURI(url[2])) {
                   skipRender = true;
                   $.facebox.show('MissingE_askbox_loaded');
                }

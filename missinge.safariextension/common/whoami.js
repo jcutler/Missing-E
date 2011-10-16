@@ -200,6 +200,7 @@ function doStartup(response) {
       }
       if (response.message.askFixes) {
          MissingE_askFixes_scroll_doStartup();
+         MissingE_askFixes_domain_doStartup();
       }
       if (response.message.gotoDashPost) {
          MissingE_gotoDashPost_doStartup();

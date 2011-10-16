@@ -1704,7 +1704,8 @@ pageMod.PageMod({
 pageMod.PageMod({
    include: ["http://www.tumblr.com/ask_form/*"],
    contentScriptWhen: 'ready',
-   contentScriptFile: data.url("askFixes/askFixes.js"),
+   contentScriptFile: [data.url("askFixes/askFixes.js"),
+                       data.url("askFixes/askboxDomain.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {
          if (getStorage("extensions.MissingE.askFixes.enabled",1) == 1 &&

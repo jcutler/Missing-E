@@ -1354,6 +1354,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.askFixes = false;
+
+         if (/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/submissions/
+                  .test(sender.tab.url) ||
+             /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/messages/
+                  .test(sender.tab.url) ||
+             /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
+             /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url)) {
+            chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askboxDomain.js", allFrames: true});
+         }
       }
       if (sender.tab.url == request.url &&
           ((/http:\/\/www\.tumblr\.com\/new\//.test(sender.tab.url) ||
