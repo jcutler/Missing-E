@@ -173,11 +173,12 @@ chrome.extension.sendRequest({greeting: "settings",
                               component: "magnifier"}, function(response) {
    var magnifier_settings = JSON.parse(response);
 
-   if (!(/drafts$/.test(location.href)) &&
-       !(/queue$/.test(location.href)) &&
-       !(/messages$/.test(location.href)) &&
-       !(/submissions[^\/]*$/.test(location.href)) &&
-       !(/inbox$/.test(location.href)) &&
+   if (!(/drafts[\/]?$/.test(location.href)) &&
+       !(/queue[\/]?$/.test(location.href)) &&
+       !(/messages[\/]?$/.test(location.href)) &&
+       !(/submissions[^\/]*[\/]?$/.test(location.href)) &&
+       !(/inbox[\/]?$/.test(location.href)) &&
+       !(/inbox\/after\/[^\/]*[\/]?$/.test(location.href)) &&
        !(/tumblelog\/[^\/]*\/followers/.test(location.href)) &&
        !(/\/following/.test(location.href))) {
       $('#facebox .turner_left,#facebox .turner_right')

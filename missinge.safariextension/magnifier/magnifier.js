@@ -175,12 +175,14 @@ function MissingE_magnifier_doStartup(magnifyAvatars) {
                     '.MissingE_magnify_avatar { ' +
                     'background-image:url("' + overlay + '"); }</style>');
 
-   if (!(/drafts$/.test(location.href)) &&
-       !(/queue$/.test(location.href)) &&
-       !(/messages$/.test(location.href)) &&
-       !(/submissions[^\/]*$/.test(location.href)) &&
-       !(/inbox$/.test(location.href)) &&
-       !(/tumblelog\/[^\/]*\/followers/.test(location.href))) {
+   if (!(/drafts[\/]?$/.test(location.href)) &&
+       !(/queue[\/]?$/.test(location.href)) &&
+       !(/messages[\/]?$/.test(location.href)) &&
+       !(/submissions[^\/]*[\/]?$/.test(location.href)) &&
+       !(/inbox[\/]?$/.test(location.href)) &&
+       !(/inbox\/after\/[^\/]*[\/]?$/.test(location.href)) &&
+       !(/tumblelog\/[^\/]*\/followers/.test(location.href)) &&
+       !(/\/following/.test(location.href))) {
       safari.self.addEventListener("message", receiveMagnifier, false);
       $('#facebox .turner_left,#facebox .turner_right')
             .live('click', function() {

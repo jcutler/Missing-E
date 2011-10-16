@@ -185,11 +185,12 @@ self.on('message', function (message) {
                     '.MissingE_magnify_avatar { ' +
                     'background-image:url("' + overlay + '"); }</style>');
 
-   if (!(/drafts$/.test(location.href)) &&
-       !(/queue$/.test(location.href)) &&
-       !(/messages$/.test(location.href)) &&
-       !(/submissions[^\/]*$/.test(location.href)) &&
-       !(/inbox$/.test(location.href)) &&
+   if (!(/drafts[\/]?$/.test(location.href)) &&
+       !(/queue[\/]?$/.test(location.href)) &&
+       !(/messages[\/]?$/.test(location.href)) &&
+       !(/submissions[^\/]*[\/]?$/.test(location.href)) &&
+       !(/inbox[\/]?$/.test(location.href)) &&
+       !(/inbox\/after\/[^\/]*[\/]?$/.test(location.href)) &&
        !(/tumblelog\/[^\/]*\/followers/.test(location.href)) &&
        !(/\/following/.test(location.href))) {
       self.on("message", receiveMagnifier);
