@@ -74,9 +74,9 @@ function addBar(mark, lang, altPost) {
             'class="MissingE_bookmark_line"></div><div ' +
             'class="MissingE_bookmark_text">' + locale[lang].bookmarkNoun +
             ' - <em id="bookmarkbar_label_' +
-            markid + '">' + marktxt + '</em><span ' +
+            markid + '">' + marktxt + '</em>' + (altPost ? '<span ' +
             'class="MissingE_bookmark_missing ' +
-            'MissingE_bookmark_missing_' + lang + '">' + (altPost ? ' (' +
+            'MissingE_bookmark_missing_' + lang + '"> (' +
             '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
             'target="_blank">' + locale[lang].postUnavailable + '</a>)' +
             '</span>' : '') + '</div></div>');
