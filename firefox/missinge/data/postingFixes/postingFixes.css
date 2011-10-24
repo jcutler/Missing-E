@@ -90,6 +90,10 @@ padding:5px;
 height:30px;
 }
 
+html[lang="ru"] #post_controls #extra_channel {
+width:110px;
+}
+
 .ui-resizable {
 display:block;
 width:100% !important;

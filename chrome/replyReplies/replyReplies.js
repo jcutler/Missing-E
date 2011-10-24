@@ -294,8 +294,14 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                if (anstype === 'reblog' &&
                    x === locale[lang].notifications.reblogIndex &&
                    reblnk !== "") {
+                  var rebtxt = locale[lang].notifications[anstype][x];
+                  if (locale[lang].notificationChanges &&
+                      locale[lang].notificationChanges[anstype] &&
+                      locale[lang].notificationChanges[anstype].hasOwnProperty(rebtxt)) {
+                     rebtxt = locale[lang].notificationChanges[anstype][rebtxt];
+                  }
                   newcode += ' <a href="' + reblnk + '">' +
-                     locale[lang].notifications[anstype][x] + '</a>';
+                     rebtxt + '</a>';
                }
                else if (locale[lang].notifications[anstype][x] === "U") {
                   if (newcode !== '' && newcode !== img) {
@@ -312,36 +318,39 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                else if (locale[lang].notifications[anstype][x] === "P") {
                   var y;
                   var postType = locale[lang].posts[type];
-                  if (!(postType instanceof Array)) {
-                     if (anstype === "reply") {
-                        postType = postType.reply;
-                     }
-                     else {
-                        postType = postType.normal;
-                     }
-                  }
                   for (y=0; y<postType.length; y++) {
+                     var posttypetxt = postType[y];
                      newcode += ' ';
-                     if (y === 0 && lang === 'it' &&
-                         (anstype === "answer" || anstype === "reply")) {
-                        if (locale[lang].posts[type][0] === 'il') {
-                           newcode += 'al';
-                        }
-                        else {
-                           newcode += 'alla';
-                        }
+                     if (locale[lang].notificationChanges &&
+                         locale[lang].notificationChanges[anstype] &&
+                         locale[lang].notificationChanges[anstype].hasOwnProperty(posttypetxt)) {
+                        posttypetxt = locale[lang].notificationChanges[anstype][posttypetxt];
                      }
-                     else if (y === postType.length - 1) {
+                     if (y === postType.length - 1) {
                         newcode += '<a href="' + postlnk + '">' +
-                           postType[y] + '</a>';
+                           posttypetxt + '</a>';
                      }
                      else {
-                        newcode += postType[y];
+                        newcode += posttypetxt;
                      }
                   }
                }
                else {
-                  newcode += ' ' + locale[lang].notifications[anstype][x];
+                  var othertxt = locale[lang].notifications[anstype][x];
+                  if (locale[lang].notificationChanges &&
+                      locale[lang].notificationChanges[anstype] &&
+                      locale[lang].notificationChanges[anstype].hasOwnProperty(othertxt)) {
+                     othertxt = locale[lang].notificationChanges[anstype][othertxt];
+                  }
+                  newcode += ' ' + othertxt;
+               }
+            }
+            if (locale[lang].postNotificationChanges &&
+                locale[lang].postNotificationChanges[anstype]) {
+               for (findtxt in locale[lang].postNotificationChanges[anstype]) {
+                  if (locale[lang].postNotificationChanges[anstype].hasOwnProperty(findtxt)) {
+                     newcode = newcode.replace(findtxt, locale[lang].postNotificationChanges[anstype][findtxt]);
+                  }
                }
             }
             if (posttxt === '') {

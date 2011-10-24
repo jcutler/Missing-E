@@ -791,6 +791,16 @@ var locale = {
    "answer": ["U", "ha riposto", "P"],
    "reply": ["U", "ha riposto", "P"]
   },
+  "notificationChanges": {
+   "answer": {
+    "il": "al",
+    "la": "alla"
+   },
+   "reply": {
+    "il": "al",
+    "la": "alla"
+   }
+  },
   "replyType": {
    "as": "come ...",
    "photo": "come <strong>foto</strong>",
@@ -1100,38 +1110,14 @@ var locale = {
   "loading": "Yüklüyor",
   "error": "Bir hata oluştu! Lütfen yeniden deneyin.",
   "posts": {
-   "text": {
-    "normal": ["gönderini"],
-    "reply": ["gönderine"]
-   },
-   "photo": {
-    "normal": ["fotoğrafını"],
-    "reply": ["fotoğrafına"]
-   },
-   "photoset": {
-    "normal": ["fotoğraf albümü'nü"],
-    "reply": ["fotoğraf albümüne"]
-   },
-   "quote": {
-    "normal": ["alıntın"],
-    "reply": ["alıntına"]
-   },
-   "link": {
-    "normal": ["bağlantını"],
-    "reply": ["bağlantına"]
-   },
-   "conversation": {
-    "normal": ["diyaloğunu"],
-    "reply": ["diyaloğuna"]
-   },
-   "audio": {
-    "normal": ["ses gönderini"],
-    "reply": ["ses gönderine"]
-   },
-   "video": {
-    "normal": ["videonu"],
-    "reply": ["videona"]
-   },
+   "text": ["gönderini"],
+   "photo": ["fotoğrafını"],
+   "photoset": ["fotoğraf albümü'nü"],
+   "quote": ["alıntın"],
+   "link": ["bağlantını"],
+   "conversation": ["diyaloğunu"],
+   "audio": ["ses gönderini"],
+   "video": ["videonu"],
    "question": ["soruya"]
   },
   "notifications": {
@@ -1140,6 +1126,18 @@ var locale = {
    "reblogIndex": 2,
    "answer": ["U,", "sorduğun", "P", "cevap verdi"],
    "reply": ["U,", "P", "yorum yaptı"]
+  },
+  "notificationChanges": {
+   "reply": {
+    "gönderini": "gönderine",
+    "fotoğrafını": "fotoğrafına",
+    "fotoğraf albümü'nü": "fotoğraf albümüne",
+    "alıntın": "alıntına",
+    "bağlantını": "bağlantına",
+    "diyaloğunu": "diyaloğuna",
+    "ses gönderini": "ses gönderine",
+    "videonu": "videona"
+   }
   },
   "replyType": {
    "as": "gibi ...",
@@ -1162,6 +1160,187 @@ var locale = {
    "type": "Tipi",
    "user": "Kullanıcı",
    "reset": "Sıfırla"
+  }
+ },
+ "ru": {
+  "daysLong": [
+   "воскресенье",
+   "понедельник",
+   "вторник",
+   "среда",
+   "четверг",
+   "пятница",
+   "суббота"
+  ],
+  "daysShort": [
+   "вс",
+   "пн",
+   "вт",
+   "ср",
+   "чт",
+   "пт",
+   "сб"
+  ],
+  "monthsLong": [
+   "Январь",
+   "Февраль",
+   "Март",
+   "Апрель",
+   "Май",
+   "Июнь",
+   "Июль",
+   "Август",
+   "Сентябрь",
+   "Октябрь",
+   "Ноябрь",
+   "Декабрь"
+  ],
+  "monthsShort": [
+   "Янв",
+   "Фев",
+   "Мар",
+   "Апр",
+   "Май",
+   "Июн",
+   "Июл",
+   "Авг",
+   "Сент",
+   "Окт",
+   "Ноя",
+   "Дек"
+  ],
+  "update": "Обновите Missing e",
+  "sidebar": {
+   "posts": "Посты",
+   "followers": "Читатели",
+   "messages": "Сообщения",
+   "drafts": "Черновики",
+   "queue": "Очередь",
+   "massEditor": "Массовый редактор"
+  },
+  "reblog": "реблог",
+  "reblogging": "реблоггинг...",
+  "reblogFailed": "Переблог фаилед!",
+  "rebloggedText": "реблоггед",
+  "reblogOptions": [
+   {
+    "item": "draft",
+    "text": "Сохранить черновик"
+   },
+   {
+    "item": "queue",
+    "text": "Добавить в очередь"
+   },
+   {
+    "item": "private",
+    "text": "Личное"
+   },
+   {
+    "item": "manual",
+    "text": "Реблог вручную"
+   }
+  ],
+  "tagsText": "теги",
+  "twitterText": "Отправить в Twitter",
+  "askPost": "Спросить",
+  "askPerson": ["Спросите", "U"],
+  "select": "Выбрать",
+  "first100": "Первые 100",
+  "postTypeNames": {
+   "text": "Текст",
+   "photo": "Фото",
+   "quote": "Цитата",
+   "link": "Ссылка",
+   "chat": "Чат",
+   "audio": "Аудио",
+   "video": "Видео"
+  },
+  "dashFixesText": {
+   "edit": "изменить",
+   "del": "удалить",
+   "reblog": "реблог",
+   "reply": "ответить",
+   "notes": "заметок",
+   "queue": "в очередь",
+   "experimental": "ЭКСПЕРИМЕНТАЛЬНЫЙ",
+   "exp": "ЭКСП"
+  },
+  "bookmarkVerb": "закладку",
+  "bookmarkNoun": "Закладка",
+  "bookmarksTitle": "Закладкаи",
+  "postUnavailable": "Пост не доступна",
+  "magnify": "увеличивать",
+  "postingFixes": {
+   "submitText": {
+    "publish": "Опубликовать пост",
+    "queue": "Добавить в очередь",
+    "draft": "Сохранить черновик",
+    "private": "Сохранить личное"
+   },
+   "uploadImagesText": "Загрузить фото вместо",
+   "clearTagsText": "Очистить теги"
+  },
+  "reblogTags": "Реблог теги",
+  "removeTag": "Удалить тег",
+  "loading": "Загрузка...",
+  "error": "Произошла ошибка. Нагружать снова.",
+  "posts": {
+   "text": ["ваш", "пост"],
+   "photo": ["ваше", "фото"],
+   "photoset": ["ваш", "фотосет"],
+   "quote": ["ваша", "цитата"],
+   "link": ["ваша", "ссылка"],
+   "conversation": ["ваш", "чат"],
+   "audio": ["ваш", "видео"],
+   "video": ["ваше", "видео"],
+   "question": ["ваш", "вопрос"]
+  },
+  "notifications": {
+   "like": ["U", "понравился", "P"],
+   "reblog": ["U", "сделал(а) реблог", "P"],
+   "reblogIndex": 1,
+   "answer": ["U", "ответил(a) на", "P"],
+   "reply": ["U", "ответил(a) на", "P"]
+  },
+  "notificationChanges": {
+   "reblog": {
+    "ваше": "вашего",
+    "ваш": "вашего",
+    "ваша": "вашей",
+    "пост": "поста",
+    "цитата": "цитаты",
+    "ссылка": "ссылки",
+    "чат": "чата",
+    "аудиопост": "аудиопоста"
+   }
+  },
+  "postNotificationChanges": {
+   "like": {
+    "понравился ваше": "понравилось ваше",
+    "понравилася ваша": "понравилась ваша"
+   }
+  },
+  "replyType": {
+   "as": "как...",
+   "photo": "как <strong>фото</strong>",
+   "photoTitle": "Фото Ответить",
+   "text": "как <strong>текста</strong>",
+   "textTitle": "Текст Ответить"
+  },
+  "massDelete": {
+   "selectAll": "Выбрать все",
+   "deselectAll": "Отменить выбор всех",
+   "deleteSelected": "Удалять выбранные",
+   "messagesConfirm": "Вы уверены что хотите удалить выбранные # сообщений?",
+   "messagesError": "Некоторые сообщения не могут быть удалены. Попробуйте еще раз позже.",
+   "postsConfirm": "Вы уверены что хотите удалить выбранные # посты?",
+   "postsError": "Некоторые постов не могут быть удалены. Попробуйте еще раз позже."
+  },
+  "sorting": {
+   "sort": "Сортировать",
+   "type": "тип",
+   "user": "пользователь",
+   "reset": "Сброс"
   }
  }
 };
