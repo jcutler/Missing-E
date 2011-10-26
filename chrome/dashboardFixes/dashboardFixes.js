@@ -662,8 +662,31 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
             var key = $('#posts input[name="form_key"]:first').val();
             var count = $('#posts li.MissingEmdSelected').length;
             if (count > 0) {
-               var sure = confirm(locale[lang].massDelete.postsConfirm
-                                  .replace('#',count));
+               var sureMsg = locale[lang].massDelete.postsConfirm
+                                 .replace('#',count);
+               if (locale[lang].massDelete.confirmReplace) {
+                  var countOp = count;
+                  switch(locale[lang].massDelete.confirmReplace.operation[0]) {
+                     case "+":
+                        countOp += locale[lang].massDelete.confirmReplace.operation[1];
+                        break;
+                     case "-":
+                        countOp -= locale[lang].massDelete.confirmReplace.operation[1];
+                        break;
+                     case "%":
+                        countOp %= locale[lang].massDelete.confirmReplace.operation[1];
+                        break;
+                  }
+                  if (locale[lang].massDelete.confirmReplace[countOp]) {
+                     var repls = locale[lang].massDelete.confirmReplace[countOp];
+                     for (r in repls) {
+                        if (repls.hasOwnProperty(r)) {
+                           sureMsg = sureMsg.replace(r,repls[r]);
+                        }
+                     }
+                  }
+               }
+               var sure = confirm(sureMsg);
                if (sure) {
                   deletePosts(key, lang);
                }

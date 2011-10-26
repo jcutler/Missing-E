@@ -153,7 +153,14 @@ var locale = {
    "messagesConfirm": "Are you sure you want to delete the # selected messages?",
    "messagesError": "Some messages could not be deleted. Please try again later.",
    "postsConfirm": "Are you sure you want to delete the # selected posts?",
-   "postsError": "Some posts could not be deleted. Please try again later."
+   "postsError": "Some posts could not be deleted. Please try again later.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    0: {
+     "1 selected messages": "selected message",
+     "1 selected posts": "selected post"
+    }
+   }
   },
   "sorting": {
    "sort": "Sort",
@@ -315,8 +322,15 @@ var locale = {
    "deleteSelected": "Eliminar Seleccionados",
    "messagesConfirm": "¿Está seguro que desea eliminar los # mensajes seleccionados?",
    "messagesError": "Algunos mensajes no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde.",
-   "postsConfirm": "¿Está seguro que desea eliminar los # publicaciones seleccionados?",
-   "postsError": "Algunos publicaciones no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde."
+   "postsConfirm": "¿Está seguro que desea eliminar las # publicaciones seleccionadas?",
+   "postsError": "Algunos publicaciones no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    0: {
+     "los 1 mensajes seleccionados": "el mensaje seleccionado",
+     "las 1 publicaciones seleccionadas": "la publicación seleccionada"
+    }
+   }
   },
   "sorting": {
    "sort": "Ordenar",
@@ -479,7 +493,14 @@ var locale = {
    "messagesConfirm": "Sind Sie sicher, dass Sie die # ausgewählten Nachrichten löschen wollen?",
    "messagesError": "Einige Nachrichten können nicht gelöscht werden. Bitte versuchen Sie es später erneut.",
    "postsConfirm": "Sind Sie sicher, dass Sie die # ausgewählten Einträge löschen wollen?",
-   "postsError": "Einige Einträge können nicht gelöscht werden. Bitte versuchen Sie es später erneut."
+   "postsError": "Einige Einträge können nicht gelöscht werden. Bitte versuchen Sie es später erneut.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    0: {
+     "Nachrichten": "Nachricht",
+     "Einträge": "Eintrag"
+    }
+   }
   },
   "sorting": {
    "sort": "Sortieren",
@@ -642,7 +663,14 @@ var locale = {
    "messagesConfirm": "Etes-vous sûr de vouloir supprimer les # messages sélectionnés?",
    "messagesError": "Certains messages n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard.",
    "postsConfirm": "Etes-vous sûr de vouloir supprimer les # billets sélectionnés?",
-   "postsError": "Certains billets n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard."
+   "postsError": "Certains billets n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    0: {
+     "les 1 messages sélectionnés": "le message 1 sélectionné",
+     "les 1 billets sélectionnés": "le billet sélectionné"
+    }
+   }
   },
   "sorting": {
    "sort": "Trier",
@@ -815,7 +843,14 @@ var locale = {
    "messagesConfirm": "Sei sicuro di voler eliminare i # messaggi selezionati?",
    "messagesError": "Alcuni messaggi non sono stati eliminati. Riprova più tardi.",
    "postsConfirm": "Sei sicuro di voler eliminare i # posti selezionati?",
-   "postsError": "Alcuni posti non sono stati eliminati. Riprova più tardi."
+   "postsError": "Alcuni posti non sono stati eliminati. Riprova più tardi.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    0: {
+     "i 1 messaggi": "il messaggio",
+     "i 1 posti": "il post"
+    }
+   }
   },
   "sorting": {
    "sort": "Ordinare",
@@ -1153,7 +1188,14 @@ var locale = {
    "messagesConfirm": "Seçili olan bu # mesajlar silinsin mi?",
    "messagesError": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin.",
    "postsConfirm": "Seçili olan bu # gönderiler silinsin mi?",
-   "postsError": "Üzgünüz bazı gönderiler şu anda silinemiyor. Lütfen daha sonra yeniden deneyin."
+   "postsError": "Üzgünüz bazı gönderiler şu anda silinemiyor. Lütfen daha sonra yeniden deneyin.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    0: {
+     "mesajlar": "mesajı",
+     "gönderiler": "gönderi"
+    }
+   }
   },
   "sorting": {
    "sort": "Sırala",
@@ -1219,9 +1261,9 @@ var locale = {
    "massEditor": "Массовый редактор"
   },
   "reblog": "реблог",
-  "reblogging": "реблоггинг...",
-  "reblogFailed": "Переблог фаилед!",
-  "rebloggedText": "реблоггед",
+  "reblogging": "сделав...",
+  "reblogFailed": "Не удалось поместить запись к вам в блог!",
+  "rebloggedText": "сделанный",
   "reblogOptions": [
    {
     "item": "draft",
@@ -1243,7 +1285,7 @@ var locale = {
   "tagsText": "теги",
   "twitterText": "Отправить в Twitter",
   "askPost": "Спросить",
-  "askPerson": ["Спросите", "U"],
+  "askPerson": ["Задать", "U", "вопрос"],
   "select": "Выбрать",
   "first100": "Первые 100",
   "postTypeNames": {
@@ -1265,25 +1307,25 @@ var locale = {
    "experimental": "ЭКСПЕРИМЕНТАЛЬНЫЙ",
    "exp": "ЭКСП"
   },
-  "bookmarkVerb": "закладку",
+  "bookmarkVerb": "Сделать закладку",
   "bookmarkNoun": "Закладка",
-  "bookmarksTitle": "Закладкаи",
-  "postUnavailable": "Пост не доступна",
-  "magnify": "увеличивать",
+  "bookmarksTitle": "Закладки",
+  "postUnavailable": "Запись недоступна",
+  "magnify": "увеличить",
   "postingFixes": {
    "submitText": {
     "publish": "Опубликовать пост",
     "queue": "Добавить в очередь",
     "draft": "Сохранить черновик",
-    "private": "Сохранить личное"
+    "private": "Сохранить как личное"
    },
-   "uploadImagesText": "Загрузить фото вместо",
+   "uploadImagesText": "Загрузить фото",
    "clearTagsText": "Очистить теги"
   },
   "reblogTags": "Реблог теги",
   "removeTag": "Удалить тег",
   "loading": "Загрузка...",
-  "error": "Произошла ошибка. Нагружать снова.",
+  "error": "Произошла ошибка. Кликните, чтобы перезагрузить.",
   "posts": {
    "text": ["ваш", "пост"],
    "photo": ["ваше", "фото"],
@@ -1323,18 +1365,37 @@ var locale = {
   "replyType": {
    "as": "как...",
    "photo": "как <strong>фото</strong>",
-   "photoTitle": "Фото Ответить",
+   "photoTitle": "Ответить фото",
    "text": "как <strong>текста</strong>",
-   "textTitle": "Текст Ответить"
+   "textTitle": "Ответить текстом"
   },
   "massDelete": {
    "selectAll": "Выбрать все",
-   "deselectAll": "Отменить выбор всех",
-   "deleteSelected": "Удалять выбранные",
-   "messagesConfirm": "Вы уверены что хотите удалить выбранные # сообщений?",
-   "messagesError": "Некоторые сообщения не могут быть удалены. Попробуйте еще раз позже.",
-   "postsConfirm": "Вы уверены что хотите удалить выбранные # посты?",
-   "postsError": "Некоторые постов не могут быть удалены. Попробуйте еще раз позже."
+   "deselectAll": "Отменить выбор",
+   "deleteSelected": "Удалить выбранное",
+   "messagesConfirm": "Вы уверены, что хотите удалить выбранные # сообщений?",
+   "messagesError": "Некоторые сообщения не могут быть удалены. Пожалуйста, попробуйте еще раз позже.",
+   "postsConfirm": "Вы уверены, что хотите удалить выбранные # записей?",
+   "postsError": "Некоторые записи не могут быть удалены. Пожалуйста, попробуйте ещё раз позже.",
+   "confirmReplace": {
+    "operation": ["%", 10],
+    1: {
+     "сообщений": "сообщение",
+     "записей": "запись"
+    },
+    2: {
+     "сообщений": "сообщения",
+     "записей": "записи"
+    },
+    3: {
+     "сообщений": "сообщения",
+     "записей": "записи"
+    },
+    4: {
+     "сообщений": "сообщения",
+     "записей": "записи"
+    }
+   }
   },
   "sorting": {
    "sort": "Сортировать",
