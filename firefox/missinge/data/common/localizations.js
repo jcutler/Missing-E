@@ -156,7 +156,7 @@ var locale = {
    "postsError": "Some posts could not be deleted. Please try again later.",
    "confirmReplace": {
     "operation": ["-", 1],
-    0: {
+    "0": {
      "1 selected messages": "selected message",
      "1 selected posts": "selected post"
     }
@@ -326,7 +326,7 @@ var locale = {
    "postsError": "Algunos publicaciones no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde.",
    "confirmReplace": {
     "operation": ["-", 1],
-    0: {
+    "0": {
      "los 1 mensajes seleccionados": "el mensaje seleccionado",
      "las 1 publicaciones seleccionadas": "la publicación seleccionada"
     }
@@ -496,7 +496,7 @@ var locale = {
    "postsError": "Einige Einträge können nicht gelöscht werden. Bitte versuchen Sie es später erneut.",
    "confirmReplace": {
     "operation": ["-", 1],
-    0: {
+    "0": {
      "Nachrichten": "Nachricht",
      "Einträge": "Eintrag"
     }
@@ -666,7 +666,7 @@ var locale = {
    "postsError": "Certains billets n'ont pas pu être supprimé. S'il vous plaît essayez de nouveau plus tard.",
    "confirmReplace": {
     "operation": ["-", 1],
-    0: {
+    "0": {
      "les 1 messages sélectionnés": "le message 1 sélectionné",
      "les 1 billets sélectionnés": "le billet sélectionné"
     }
@@ -846,7 +846,7 @@ var locale = {
    "postsError": "Alcuni posti non sono stati eliminati. Riprova più tardi.",
    "confirmReplace": {
     "operation": ["-", 1],
-    0: {
+    "0": {
      "i 1 messaggi": "il messaggio",
      "i 1 posti": "il post"
     }
@@ -1191,7 +1191,7 @@ var locale = {
    "postsError": "Üzgünüz bazı gönderiler şu anda silinemiyor. Lütfen daha sonra yeniden deneyin.",
    "confirmReplace": {
     "operation": ["-", 1],
-    0: {
+    "0": {
      "mesajlar": "mesajı",
      "gönderiler": "gönderi"
     }
@@ -1261,9 +1261,9 @@ var locale = {
    "massEditor": "Массовый редактор"
   },
   "reblog": "реблог",
-  "reblogging": "сделав...",
+  "reblogging": "делаю...",
   "reblogFailed": "Не удалось поместить запись к вам в блог!",
-  "rebloggedText": "сделанный",
+  "rebloggedText": "сделал",
   "reblogOptions": [
    {
     "item": "draft",
@@ -1379,19 +1379,19 @@ var locale = {
    "postsError": "Некоторые записи не могут быть удалены. Пожалуйста, попробуйте ещё раз позже.",
    "confirmReplace": {
     "operation": ["%", 10],
-    1: {
+    "1": {
      "сообщений": "сообщение",
      "записей": "запись"
     },
-    2: {
+    "2": {
      "сообщений": "сообщения",
      "записей": "записи"
     },
-    3: {
+    "3": {
      "сообщений": "сообщения",
      "записей": "записи"
     },
-    4: {
+    "4": {
      "сообщений": "сообщения",
      "записей": "записи"
     }
