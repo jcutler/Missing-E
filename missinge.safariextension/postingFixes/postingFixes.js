@@ -121,10 +121,12 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          ctags = ctags.split(',');
       }
       for (i=0; i<ctags.length; i++) {
-         txt += '<div class="token"><span class="tag">' + ctags[i] +
-                  '</span><a title="Remove tag" ' +
-                  'onclick="tag_editor_remove_tag($(this).up()); ' +
-                  'return false;" href="#">x</a></div>';
+         if (ctags[i] !== "") {
+            txt += '<div class="token"><span class="tag">' + ctags[i] +
+                     '</span><a title="Remove tag" ' +
+                     'onclick="tag_editor_remove_tag($(this).up()); ' +
+                     'return false;" href="#">x</a></div>';
+         }
       }
       document.getElementById('tokens').innerHTML = txt;
    }
