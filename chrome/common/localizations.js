@@ -1263,7 +1263,7 @@ var locale = {
   "reblog": "реблог",
   "reblogging": "делаю...",
   "reblogFailed": "Не удалось поместить запись к вам в блог!",
-  "rebloggedText": "сделал",
+  "rebloggedText": "сделано",
   "reblogOptions": [
    {
     "item": "draft",
