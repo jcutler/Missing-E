@@ -1261,9 +1261,9 @@ var locale = {
    "massEditor": "Массовый редактор"
   },
   "reblog": "реблог",
-  "reblogging": "делаю...",
+  "reblogging": "ребложу...",
   "reblogFailed": "Не удалось поместить запись к вам в блог!",
-  "rebloggedText": "сделано",
+  "rebloggedText": "реблогнул",
   "reblogOptions": [
    {
     "item": "draft",
