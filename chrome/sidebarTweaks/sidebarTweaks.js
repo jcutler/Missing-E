@@ -85,7 +85,7 @@ function makeSidebar(tumblrAcctNum, retries) {
             'MissingE_sidebar_bloglink" target="_blank"></a>' +
             bloglist + '</li>';
       for (i=0; i<sidebarList.length; i++) {
-         sidebartxt += '<li><a href="/tumblelog/' + tumblrAcct +
+         sidebartxt += '<li><a href="/blog/' + tumblrAcct +
             (sidebarList[i].klass !== 'posts' ? '/'+sidebarList[i].klass : '') +
             '" class="' + sidebarList[i].klass + '">' +
             '<div class="hide_overflow">' + sidebarList[i].label +
@@ -111,7 +111,7 @@ function makeSidebar(tumblrAcctNum, retries) {
       if (sidebar) {
          $.ajax({
             type: "GET",
-            url: "http://www.tumblr.com/tumblelog/" + tumblrAcct,
+            url: "http://www.tumblr.com/blog/" + tumblrAcct,
             tumblrAcctNum: tumblrAcctNum,
             tumblrAcct: tumblrAcct,
             dataType: "html",

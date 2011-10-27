@@ -31,7 +31,7 @@ function dashLinksToTabs_click(e, newPostTabs, reblogLinks, editLinks) {
        $(node).parents('#new_post').length > 0) {
       return false;
    }
-   if (/\/tumblelog\/[^\/]*\/followers/.test(location.pathname) &&
+   if (/\/blog\/[^\/]*\/followers/.test(location.pathname) &&
        $(node).parent().hasClass('pagination')) {
       return false;
    }

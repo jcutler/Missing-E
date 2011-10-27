@@ -360,7 +360,7 @@ chrome.extension.sendRequest({greeting: "settings",
          }
       });
    }
-   if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?(submissions|messages|inbox)/
+   if (/http:\/\/www\.tumblr\.com\/(blog\/[^\/]*\/)?(submissions|messages|inbox)/
          .test(location.href)) {
       if (askFixes_settings.betterAnswers === 1) {
          $('head').append('<script type="text/javascript">' +

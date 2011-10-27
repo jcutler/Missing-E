@@ -181,7 +181,7 @@ function MissingE_magnifier_doStartup(magnifyAvatars) {
        !(/submissions[^\/]*[\/]?$/.test(location.href)) &&
        !(/inbox[\/]?$/.test(location.href)) &&
        !(/inbox\/after\/[^\/]*[\/]?$/.test(location.href)) &&
-       !(/tumblelog\/[^\/]*\/followers/.test(location.href)) &&
+       !(/blog\/[^\/]*\/followers/.test(location.href)) &&
        !(/\/following/.test(location.href))) {
       safari.self.addEventListener("message", receiveMagnifier, false);
       $('#facebox .turner_left,#facebox .turner_right')

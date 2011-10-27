@@ -127,7 +127,7 @@ function doIcons(item) {
    $(item).find('div.post_controls a').each(function() {
       var a = $(this);
       var klass = "MissingE_post_control ";
-      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
+      if (!(/http:\/\/www\.tumblr\.com\/(blog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/delete_post_/.test(a.attr('onclick')) ||
           /^post_delete_/.test(a.attr('id')))) {
          a.attr('title',locale[lang].dashFixesText.del)
@@ -352,7 +352,7 @@ function sortList(ol) {
       else {
          entry[entryOrder.type] = OTHER;
       }
-      var username = this.className.match(/tumblelog_([^\s]*)/);
+      var username = this.className.match(/blog_([^\s]*)/);
       if (username && username.length > 1) {
          entry[entryOrder.user] = username[1];
       }
@@ -455,7 +455,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
       });
    }
    if (widescreen === 1 &&
-       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
+       !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/settings/
             .test(location.href))) {
       var style = document.createElement("link");
       style.setAttribute('rel','stylesheet');
@@ -554,7 +554,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
 
    if (queueArrows === 1 &&
        (/http:\/\/www\.tumblr\.com\/queue/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/queue/
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
             .test(location.href))) {
       var queueStyle = document.createElement("link");
       queueStyle.setAttribute('rel','stylesheet');
@@ -609,7 +609,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
             'onCreate: function(request) {' +
                'if (/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
                     '.test(request.url) || ' +
-                    '/\\/tumblelog\\/[^\\/]*\\/[0-9]+\\?lite$/' +
+                    '/\\/blog\\/[^\\/]*\\/[0-9]+\\?lite$/' +
                     '.test(request.url)) {' +
                  'request["timeoutId"] = window.setTimeout(function() {' +
                      'if ((request.transport.readyState >= 1 && ' +
@@ -645,7 +645,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
    }
 */
    if (massDelete === 1 &&
-       /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/
+       /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
          .test(location.href)) {
       var afterguy = $('#right_column a.settings');
       var beforeguy;

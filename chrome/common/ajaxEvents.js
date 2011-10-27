@@ -45,16 +45,16 @@ if (location.host === 'www.tumblr.com') {
          onComplete: function(request) { \
             if (request.transport.status === 200) { \
                var type, newPosts; \
-               if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/((dashboard\\/(([0-9]+\\/[0-9]+)|(search\\/[^\\/+[0-9]+)))|(tumblelog\\/[^\\/]+\\/(([0-9]+)|(search\\/[^\\/]*\\/[0-9]+))))/.test(request.url)) { \
+               if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/((dashboard\\/(([0-9]+\\/[0-9]+)|(search\\/[^\\/+[0-9]+)))|(blog\\/[^\\/]+\\/(([0-9]+)|(search\\/[^\\/]*\\/[0-9]+))))/.test(request.url)) { \
                   type = "posts"; \
                } \
-               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/((inbox\\/after\\/[0-9]+)|((tumblelog\\/[^\\/]+\\/)?messages\\/page\\/[0-9]+))/.test(request.url)) { \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/((inbox\\/after\\/[0-9]+)|((blog\\/[^\\/]+\\/)?messages\\/page\\/[0-9]+))/.test(request.url)) { \
                   type = "messages"; \
                } \
-               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/(tumblelog\\/[^\\/]+\\/)?drafts\\/after\\/[0-9]+/.test(request.url)) { \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/(blog\\/[^\\/]+\\/)?drafts\\/after\\/[0-9]+/.test(request.url)) { \
                   type = "drafts"; \
                } \
-               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/(tumblelog\\/[^\\/]+\\/)?queue\\?page=[0-9]+/.test(request.url)) { \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/(blog\\/[^\\/]+\\/)?queue\\?page=[0-9]+/.test(request.url)) { \
                   type = "queue"; \
                } \
                else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/tagged\\/[^\\?]+\\?before=[0-9]*/.test(request.url)) { \

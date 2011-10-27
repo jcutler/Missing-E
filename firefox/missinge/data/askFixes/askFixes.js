@@ -378,7 +378,7 @@ self.on('message', function (message) {
          }
       });
    }
-   if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?(submissions|messages|inbox)/
+   if (/http:\/\/www\.tumblr\.com\/(blog\/[^\/]*\/)?(submissions|messages|inbox)/
          .test(location.href)) {
       if (message.betterAnswers === 1) {
          jQuery('head').append('<script type="text/javascript">' +

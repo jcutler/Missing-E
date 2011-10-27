@@ -357,7 +357,7 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, betterAnswers,
          }
       });
    }
-   if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?(submissions|messages|inbox)/
+   if (/http:\/\/www\.tumblr\.com\/(blog\/[^\/]*\/)?(submissions|messages|inbox)/
          .test(location.href)) {
       if (betterAnswers) {
          $('head').append('<script type="text/javascript">' +

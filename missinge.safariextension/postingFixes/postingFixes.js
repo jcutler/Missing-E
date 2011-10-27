@@ -328,17 +328,17 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
    }
 
    if (addUploader === 1 &&
-       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/drafts/
+       !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/drafts/
             .test(location.href)) &&
        !(/\/new\/text/.test(location.href)) &&
        !(/\/new\/chat/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/messages/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/inbox/.test(location.href)) &&
-       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/
+       !(/http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/messages/
             .test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/share/.test(location.href)) &&
        !(/http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) &&
-       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/
+       !(/http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/submissions/
             .test(location.href)) &&
        $('#regular_form_inline_image_iframe').length === 0) {
       var headings = $('h2');
@@ -484,10 +484,10 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
    else if (addUploader === 1 &&
        (/http:\/\/www\.tumblr\.com\/messages/.test(location.href) ||
         /http:\/\/www\.tumblr\.com\/inbox/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]+\/messages/
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]+\/messages/
             .test(location.href) ||
         /http:\/\/www\.tumblr\.com\/submissions/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]+\/submissions/
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]+\/submissions/
             .test(location.href))) {
       $('#posts li.post a[id^="ask_answer_link_"]').live('click', function() {
          var post = $(this).closest("li.post");

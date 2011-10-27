@@ -100,9 +100,9 @@ function doStartup(response) {
        window.location.href !== response.message.url) {
       return;
    }
-   if (/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/submissions/
+   if (/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/submissions/
          .test(location.href) ||
-       /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/messages/
+       /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/messages/
          .test(location.href) ||
        /http:\/\/www\.tumblr\.com\/inbox/.test(location.href) ||
        /http:\/\/www\.tumblr\.com\/submissions/.test(location.href)) {

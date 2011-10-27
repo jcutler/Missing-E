@@ -31,7 +31,7 @@ function getTwitterDefaults() {
    options.each(function() {
       jQuery.ajax({
          type: "GET",
-         url: "http://www.tumblr.com/tumblelog/" + this.value + "/settings",
+         url: "http://www.tumblr.com/blog/" + this.value + "/settings",
          dataType: "html",
          tryCount: 0,
          retryLimit: 4,

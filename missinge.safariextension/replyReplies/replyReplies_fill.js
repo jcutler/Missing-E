@@ -61,9 +61,9 @@ function tags_setValue(ar) {
 
 function getAsLinks(lang, type) {
    var urlPref = location.href
-      .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
+      .match(/http:\/\/www\.tumblr\.com\/blog\/([^\/]*)/);
    if (urlPref && urlPref.length >= 2) {
-      urlPref = '/tumblelog/' + urlPref[1];
+      urlPref = '/blog/' + urlPref[1];
    }
    else {
       urlPref = '';
@@ -83,7 +83,7 @@ function getAsLinks(lang, type) {
 
 function MissingE_replyReplies_fill_doStartup() {
    var i;
-   if (/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?new\/(text|photo)/
+   if (/http:\/\/www\.tumblr\.com\/(blog\/[^\/]*\/)?new\/(text|photo)/
          .test(location.href) &&
        document.body.id === 'dashboard_edit_post' &&
        reply_getValue().length > 0) {

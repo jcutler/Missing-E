@@ -127,7 +127,7 @@ function doIcons(item) {
    $(item).find('div.post_controls a').each(function() {
       var a = $(this);
       var klass = "MissingE_post_control ";
-      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
+      if (!(/http:\/\/www\.tumblr\.com\/(blog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/delete_post_/.test(a.attr('onclick')) ||
           /^post_delete_/.test(a.attr('id')) ||
           (new RegExp(locale[lang].dashFixesText.del, "i").test(a.text())))) {
@@ -365,7 +365,7 @@ function sortList(ol) {
       else {
          entry[entryOrder.type] = OTHER;
       }
-      var username = this.className.match(/tumblelog_([^\s]*)/);
+      var username = this.className.match(/blog_([^\s]*)/);
       if (username && username.length > 1) {
          entry[entryOrder.user] = username[1];
       }
@@ -436,7 +436,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
       });
    }
    if (dashboardFixes_settings.widescreen === 1 &&
-       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
+       !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/settings/
             .test(location.href))) {
       var w = $('#right_column').width() + 20;
       $('head').append('<style type="text/css">' +
@@ -518,7 +518,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
 
    if (dashboardFixes_settings.queueArrows === 1 &&
        (/http:\/\/www\.tumblr\.com\/queue/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/queue/
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
             .test(location.href))) {
       $('head').append('<link type="text/css" rel="stylesheet" href="' +
                        chrome.extension.getURL("dashboardFixes/queueArrows.css") +
@@ -570,7 +570,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
             'onCreate: function(request) {' +
                'if (/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
                     '.test(request.url) || ' +
-                    '/\\/tumblelog\\/[^\\/]*\\/[0-9]+\\?lite$/' +
+                    '/\\/blog\\/[^\\/]*\\/[0-9]+\\?lite$/' +
                     '.test(request.url)) {' +
                  'request["timeoutId"] = window.setTimeout(function() {' +
                      'if ((request.transport.readyState >= 1 && ' +
@@ -606,7 +606,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
    }
 */
    if (dashboardFixes_settings.massDelete === 1 &&
-       /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/
+       /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
          .test(location.href)) {
       var afterguy = $('#right_column a.settings');
       var beforeguy;

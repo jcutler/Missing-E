@@ -368,7 +368,7 @@ function doAskAjax(request, retries, type, doFunc) {
 
 function checkPermission(request, retries, tryCount) {
    var ajax = new XMLHttpRequest();
-   ajax.open("HEAD", "http://www.tumblr.com/tumblelog/" +
+   ajax.open("HEAD", "http://www.tumblr.com/blog/" +
              request.message.user, true);
    if (!tryCount) { tryCount = 0; }
    ajax.onreadystatechange = function() {
@@ -1297,10 +1297,10 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/inbox/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
-          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) &&
-           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+          (/http:\/\/www\.tumblr\.com\/blog/.test(request.message.url) &&
+           !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//
              .test(request.message.url)) &&
-           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/processing/
+           !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/processing/
              .test(request.message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
          if (getStorage("MissingE_safeDash_enabled",1) == 1) {
@@ -1318,8 +1318,8 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/inbox/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/queue/.test(request.message.url) ||
-          (/http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) &&
-           !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//
+          (/http:\/\/www\.tumblr\.com\/blog/.test(request.message.url) &&
+           !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//
              .test(request.message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url))) {
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
@@ -1372,15 +1372,15 @@ function handleRequest(request) {
       }
       if (!request.message.isFrame &&
           ((/http:\/\/www\.tumblr\.com\/new\//.test(request.message.url) ||
-            /http:\/\/www\.tumblr\.com\/tumblelog\/[0-9A-Za-z\-\_]+\/new\//.test(request.message.url) ||
+            /http:\/\/www\.tumblr\.com\/blog\/[0-9A-Za-z\-\_]+\/new\//.test(request.message.url) ||
             /http:\/\/www\.tumblr\.com\/reblog\//.test(request.message.url) ||
             /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(request.message.url)) ||
          (/http:\/\/www\.tumblr\.com\/messages/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/inbox/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/messages/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/messages/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/submissions/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/submissions/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/drafts/.test(request.message.url)) ||
+          /http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/submissions/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/drafts/.test(request.message.url)) ||
          (/http:\/\/www\.tumblr\.com\/share/.test(request.message.url)))) {
          if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
             activeScripts.postingFixes = true;
@@ -1399,7 +1399,7 @@ function handleRequest(request) {
       }
       if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(request.message.url) &&
           !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(request.message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[A-Za-z0-9\-\_]+\/new\//.test(request.message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/new\//.test(request.message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/new\//.test(request.message.url))) {
          if (getStorage("MissingE_gotoDashPost_enabled",1) == 1) {
             activeScripts.gotoDashPost = true;
@@ -1430,7 +1430,7 @@ function handleRequest(request) {
       }
       if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url))) {
+          /http:\/\/www\.tumblr\.com\/blog/.test(request.message.url))) {
          if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
             activeScripts.replyReplies_fill = false;
@@ -1439,7 +1439,7 @@ function handleRequest(request) {
             activeScripts.replyReplies = false;
       }
       if (!request.message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]*\/)?new\/(text|photo)/.test(request.message.url)) {
+          /http:\/\/www\.tumblr\.com\/(blog\/[^\/]*\/)?new\/(text|photo)/.test(request.message.url)) {
          if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
             activeScripts.replyReplies_fill = true;
@@ -1474,7 +1474,7 @@ function handleRequest(request) {
       }
       if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(request.message.url) ||
-           /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages)/.test(request.message.url))) {
+           /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(submissions|messages)/.test(request.message.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
          }
@@ -1483,12 +1483,12 @@ function handleRequest(request) {
       }
       if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
-          /http:\/\/www\.tumblr\.com\/tumblelog/.test(request.message.url) ||
+          /http:\/\/www\.tumblr\.com\/blog/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/likes/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(request.message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(request.message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/new\//.test(request.message.url))) {
+          !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(request.message.url)) &&
+          !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//.test(request.message.url))) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
          }

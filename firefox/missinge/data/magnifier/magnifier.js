@@ -191,7 +191,7 @@ self.on('message', function (message) {
        !(/submissions[^\/]*[\/]?$/.test(location.href)) &&
        !(/inbox[\/]?$/.test(location.href)) &&
        !(/inbox\/after\/[^\/]*[\/]?$/.test(location.href)) &&
-       !(/tumblelog\/[^\/]*\/followers/.test(location.href)) &&
+       !(/blog\/[^\/]*\/followers/.test(location.href)) &&
        !(/\/following/.test(location.href))) {
       self.on("message", receiveMagnifier);
       jQuery('#facebox .turner_left,#facebox .turner_right')

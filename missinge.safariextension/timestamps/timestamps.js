@@ -27,7 +27,7 @@ function loadTimestamp(item) {
    var lang = $('html').attr('lang');
    /* Comment this section to enable timestamps
    if (!/^\/(inbox|messages|submissions)/.test(location.pathname) &&
-       !/^\/tumblelog\/[^\/]*\/(messages|submissions)/
+       !/^\/blog\/[^\/]*\/(messages|submissions)/
          .test(location.pathname)) {
       return false;
    }
@@ -39,7 +39,7 @@ function loadTimestamp(item) {
       var perm = $(item).find("a.permalink:first");
       var addr, type, stamp;
       if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
-          /^\/tumblelog\/[^\/]*\/(messages|submissions)/
+          /^\/blog\/[^\/]*\/(messages|submissions)/
             .test(location.pathname)) {
          type = 'ask';
          addr = 'http://www.tumblr.com/edit/';
@@ -94,7 +94,7 @@ function receiveTimestamp(response) {
                      .find('span.MissingE_timestamp');
       var failHTML = 'Timestamp loading failed.';
       if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
-          /^\/tumblelog\/[^\/]*\/(messages|submissions)/
+          /^\/blog\/[^\/]*\/(messages|submissions)/
             .test(location.pathname)) {
          failHTML += ' <a class="MissingE_timestamp_retry" href="#" ' +
                      'onclick="return false;">Retry</a>';

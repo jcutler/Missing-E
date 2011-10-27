@@ -129,7 +129,7 @@ function doIcons(item) {
    jQuery(item).find('div.post_controls a').each(function() {
       var a = jQuery(this);
       var klass = "MissingE_post_control ";
-      if (!(/http:\/\/www\.tumblr\.com\/(tumblelog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
+      if (!(/http:\/\/www\.tumblr\.com\/(blog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/^delete_post_/.test(a.prev().attr('id')) ||
           /^post_delete_/.test(a.attr('id')) ||
           (new RegExp(locale[lang].dashFixesText.del, "i").test(a.text())))) {
@@ -359,7 +359,7 @@ function sortList(ol) {
       else {
          entry[entryOrder.type] = OTHER;
       }
-      var username = this.className.match(/tumblelog_([^\s]*)/);
+      var username = this.className.match(/blog_([^\s]*)/);
       if (username && username.length > 1) {
          entry[entryOrder.user] = username[1];
       }
@@ -462,7 +462,7 @@ self.on('message', function(message) {
       }, false);
    }
    if (message.widescreen === 1 &&
-       !(/http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/settings/
+       !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/settings/
             .test(location.href))) {
       var style = document.createElement("link");
       style.setAttribute('rel','stylesheet');
@@ -563,7 +563,7 @@ self.on('message', function(message) {
 
    if (message.queueArrows === 1 &&
        (/http:\/\/www\.tumblr\.com\/queue/.test(location.href) ||
-        /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/queue/
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
             .test(location.href))) {
       var queueStyle = document.createElement("link");
       queueStyle.setAttribute('rel','stylesheet');
@@ -624,7 +624,7 @@ self.on('message', function(message) {
             'onCreate: function(request) {' +
                'if (/\\/dashboard\\/[0-9]+\\/[0-9]+\\?lite$/' +
                     '.test(request.url) || ' +
-                    '/\\/tumblelog\\/[^\\/]*\\/[0-9]+\\?lite$/' +
+                    '/\\/blog\\/[^\\/]*\\/[0-9]+\\?lite$/' +
                     '.test(request.url)) {' +
                  'request["timeoutId"] = window.setTimeout(function() {' +
                      'if ((request.transport.readyState >= 1 && ' +
@@ -660,7 +660,7 @@ self.on('message', function(message) {
    }
 */
    if (message.massDelete === 1 &&
-       /http:\/\/www\.tumblr\.com\/tumblelog\/[^\/]*\/(drafts|queue)/
+       /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
          .test(location.href)) {
       var afterguy = jQuery('#right_column a.settings');
       var beforeguy;

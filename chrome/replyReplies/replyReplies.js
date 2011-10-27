@@ -409,9 +409,9 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       tags_setValue(tags);
 
       var urlPref = location.href
-         .match(/http:\/\/www\.tumblr\.com\/tumblelog\/([^\/]*)/);
+         .match(/http:\/\/www\.tumblr\.com\/blog\/([^\/]*)/);
       if (urlPref && urlPref.length >= 2) {
-         urlPref = '/tumblelog/' + urlPref[1];
+         urlPref = '/blog/' + urlPref[1];
       }
       else {
          urlPref = '';
