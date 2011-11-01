@@ -1117,17 +1117,20 @@ function handleMessage(message, myWorker) {
          }
          if (!dt.year) {
             if (dt.month) {
-               var dq = new Date(dt.month + "/" + dt.date + "/" + today.getUTCFullYear() + " " +
-                                dt.hours + ":" + dt.minutes + ":00 UTC");
+               var dq = new Date(dt.month + "/" + dt.date + "/" +
+                                 today.getUTCFullYear() + " " + dt.hours +
+                                 ":" + dt.minutes + ":00 UTC");
+               /* If more than a day ahead, month is in previous year */
                if (dq > today + 86400000) {
                   dt.year = today.getUTCFullYear() - 1;
                }
                else {
                   dt.year = today.getUTCFullYear();
                }
-               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
-               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
-                              dt.hours + ":" + dt.minutes + ":00 " + tz);
+               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT":"EST";
+               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year +
+                                " " + dt.hours + ":" + dt.minutes + ":00 " +
+                                tz);
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(message.pid,info);
@@ -1135,27 +1138,26 @@ function handleMessage(message, myWorker) {
                doTimestamp(info, message.pid, myWorker);
             }
             else if (dt.date < 0) {
-               var dq = new Date(today.month + "/" + today.date + "/" + today.getUTCFullYear() + " " +
-                                dt.hours + ":" + dt.minutes + ":00 UTC");
+               var dq = new Date((today.getUTCMonth()+1) + "/" +
+                                 today.getUTCDate() + "/" +
+                                 today.getUTCFullYear() + " " + dt.hours +
+                                 ":" + dt.minutes + ":00 UTC");
+               /* If more than a month ahead, wrapped backwards across year */
                if (dq > today + 2764800000) {
-                  dt.year = today.getUTCFullYear() - 1;
                   today.setUTCFullYear(dt.year);
                }
-               else {
-                  dt.year = today.getUTCFullYear();
-               }
+               /* If more than a day ahead, wrapped backwards across month */
                if (dq > today + 86400000) {
-                  dt.month = today.getUTCMonth();
                   today.setUTCMonth(today.getUTCMonth()-1);
-               }
-               else {
-                  dt.month = today.getUTCMonth()+1;
                }
                today = new Date(today.valueOf()+86400000*dt.date);
                dt.date = today.getUTCDate();
-               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
-               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
-                              dt.hours + ":" + dt.minutes + ":00 " + tz);
+               dt.month = today.getUTCMonth()+1;
+               dt.year = today.getUTCFullYear();
+               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT":"EST";
+               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year +
+                                " " + dt.hours + ":" + dt.minutes + ":00 " +
+                                tz);
                var ts = Math.round(d.getTime()/1000);
                var info = {"timestamp":ts};
                saveCache(message.pid,info);
@@ -1176,8 +1178,6 @@ function handleMessage(message, myWorker) {
                doTimestamp(info, message.pid, myWorker);
             }
          }
-         //console.log(message.stamp);
-         //console.log(dt);
          if (!sentStamp) {
             theWorker.postMessage({greeting: "timestamp", pid: id,
                                    success: false});
