@@ -124,9 +124,10 @@ function doReblogDash(stamp, id, sendResponse) {
       return false;
    }
    var key = stamp.reblog_key;
+   var name = stamp.name;
    var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
                       getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
-   sendResponse({pid: id, success: true, data: key, icons: replaceIcons});
+   sendResponse({pid: id, success: true, data: key, name: name, icons: replaceIcons});
    return true;
 }
 
@@ -169,7 +170,7 @@ function saveCache(id, entry) {
              i == "post_url" ||
              i == "tags" ||
              i == "type" ||
-             i == "blog_name") {
+             (i == "name" && entry[i] != "")) {
             theEntry[i] = entry[i];
          }
       }
@@ -199,6 +200,9 @@ function cacheServe(type, id, sendResponse, fn, midFlight, notAjax) {
 function runItem(call) {
    if (call.type === "reblogYourself") {
       requestReblogYourself(call.request, call.sender, call.sendResponse, call.hash);
+   }
+   else if (call.type === "betterReblogs") {
+      requestBetterReblogsAsk(call.request, call.sender, call.sendResponse, call.hash);
    }
    else if (call.type === "timestamp") {
       requestTimestamp(call.request, call.sender, call.sendResponse, call.hash);
@@ -468,9 +472,9 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
    });
 }
 
-function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
+function doReblogAjax(type, request, sender, sendResponse, hash, retries,
                               additional) {
-   debug("AJAX reblogYourself request (" + request.pid + ")");
+   debug("AJAX " + type + " request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {success:false};
    if (additional) {
@@ -491,28 +495,28 @@ function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
       tabHash: hash,
       error: function(xhr, textStatus) {
          if (xhr.status === 404) {
-            debug("reblogYourself request (" + this.targetId + ") not found");
+            debug(type + " request (" + this.targetId + ") not found");
             dequeueAjax(this.targetId);
             sendResponse(failMsg);
             return;
          }
          if (this.tabHash !== tabs[this.tabId]) {
-            debug("Stop reblogYourself request: Tab closed or changed.");
+            debug("Stop " + type + " request: Tab closed or changed.");
             dequeueAjax(this.targetId);
             return;
          }
-         if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, true)) {
+         if (cacheServe(type, request.pid, sendResponse, doReblogDash, true)) {
             return true;
          }
          else {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-               debug("Retry reblogYourself request (" + this.targetId + ")");
+               debug("Retry " + type + " request (" + this.targetId + ")");
                $.ajax(this);
                return;
             }
             else {
-               debug("reblogYourself request (" + this.targetId + ") failed");
+               debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
             }
@@ -523,31 +527,39 @@ function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
          var ifr = data.match(/<\s*iframe[^>]*id="tumblr_controls"[^>]*>/);
          if (!ifr || ifr.length === 0) {
             if (closed) {
-               debug("Stop reblogYourself request: Tab closed or changed.");
+               debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.targetId);
                return;
             }
-            if (cacheServe("reblogYourself", request.pid, sendResponse, doReblogDash, true)) {
+            if (cacheServe(type, request.pid, sendResponse, doReblogDash, true)) {
                return true;
             }
             else {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
-                  debug("Retry reblogYourself request (" + this.targetId + ")");
+                  debug("Retry " + type + " request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  debug("reblogYourself request (" + this.targetId + ") failed");
+                  debug(type + " request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
                   sendResponse(failMsg);
                }
             }
          }
          else {
-            var rk = ifr[0].match(/rk=([^&]*)/);
+            var rk = ifr[0].match(/rk=([^&"']*)/);
+            var poster = ifr[0].match(/name=([^&"']*)/);
             if (rk && rk.length > 1) {
-               var info = {"reblog_key":rk[1]};
+               if (!poster || poster.length <= 1) {
+                  user = "";
+               }
+               else {
+                  user = poster[1];
+               }
+               var info = {"reblog_key":rk[1],
+                           "name":user};
                saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
                if (!closed) {
@@ -555,7 +567,7 @@ function doReblogYourselfAjax(request, sender, sendResponse, hash, retries,
                }
             }
             else if (!closed) {
-               debug("reblogYourself request (" + this.targetId + ") failed");
+               debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
             }
@@ -659,6 +671,32 @@ function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
 }
 */
 
+function requestBetterReblogsAsk(request, sender, sendResponse, hash) {
+   if (hash !== tabs[sender.tab.id]) {
+      debug("Stop betterReblogs request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (cacheServe("betterReblogs", request.pid, sendResponse, doReblogDash, false)) {
+      return true;
+   }
+   else if (isRequested({type: "betterReblogs", request: request, sender: sender, sendResponse: sendResponse, hash: hash})) {
+      return true;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "betterReblogs", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
+   }
+   else {
+      doReblogAjax("betterReblogs", request, sender, sendResponse, hash,
+             getStorage("MissingE_betterReblogs_askRetries",defaultRetries),
+             {
+               pid:request.pid,
+               icons:getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
+                     getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1
+             });
+   }
+}
+
 function requestReblogYourself(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop reblogYourself request: Tab closed or changed.");
@@ -675,7 +713,7 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
       queueAjax({type: "reblogYourself", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
    }
    else {
-      doReblogYourselfAjax(request, sender, sendResponse, hash,
+      doReblogAjax("reblogYourself", request, sender, sendResponse, hash,
              getStorage("MissingE_reblogYourself_retries",defaultRetries),
              {
                pid:request.pid,
@@ -906,6 +944,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "reblogYourself") {
       requestReblogYourself(request, sender, sendResponse, tabs[sender.tab.id]);
+   }
+   else if (request.greeting == "betterReblogs") {
+      requestBetterReblogsAsk(request, sender, sendResponse, tabs[sender.tab.id]);
    }
    else if (request.greeting == "tags") {
       requestTags(request, sender, sendResponse, tabs[sender.tab.id]);
@@ -1198,6 +1239,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
+            settings.reblogAsks = getStorage("MissingE_betterReblogs_reblogAsks",0);
             break;
       }
       sendResponse(JSON.stringify(settings));

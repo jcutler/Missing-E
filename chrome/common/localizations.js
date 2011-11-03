@@ -81,6 +81,8 @@ var locale = {
   "twitterText": "Send to Twitter",
   "askPost": "Ask",
   "askPerson": ["Ask", "U"],
+  "asked": ["U", "asked"],
+  "reblogAsk": "Reblog Ask Post",
   "select": "Select",
   "first100": "First 100",
   "postTypeNames": {
@@ -251,6 +253,8 @@ var locale = {
   "twitterText": "Enviar a Twitter",
   "askPost": "Preguntar",
   "askPerson": ["Preguntar a", "U"],
+  "asked": ["U", "preguntó"],
+  "reblogAsk": "Rebloguear Pregunta",
   "select": "Seleccionar",
   "first100": "Primeros 100",
   "postTypeNames": {
@@ -421,6 +425,8 @@ var locale = {
   "twitterText": "auf Twitter posten",
   "askPost": "Fragen",
   "askPerson": ["Fragen Sie", "U"],
+  "asked": ["U", "gefragt"],
+  "reblogAsk": "Frage Eintrag rebloggen",
   "select": "Selektieren",
   "first100": "ersten 100",
   "postTypeNames": {
@@ -591,6 +597,8 @@ var locale = {
   "twitterText": "Publier sur Twitter",
   "askPost": "Question",
   "askPerson": ["Demandez", "U"],
+  "asked": ["U", "a demandé"],
+  "reblogAsk": "Rebloguer la question",
   "select": "Sélectionner",
   "first100": "Première 100",
   "postTypeNames": {
@@ -761,6 +769,8 @@ var locale = {
   "twitterText": "Posta su Twitter",
   "askPost": "Chiedi",
   "askPerson": ["Chiedi", "U"],
+  "asked": ["U", "ha chiesto"],
+  "reblogAsk": "Reblogga domanda",
   "select": "Seleziona",
   "first100": "Primi 100",
   "postTypeNames": {
@@ -941,6 +951,8 @@ var locale = {
   "twitterText": "投稿を Twitter にも送信",
   "askPost": "質問",
   "askPerson": ["U", "尋ねる"],
+  "asked": ["U", "は尋ねた"],
+  "reblogAsk": "質問をリブログ",
   "select": "選択",
   "first100": "最新100",
   "postTypeNames": {
@@ -1104,6 +1116,8 @@ var locale = {
   "twitterText": "Twitter'a gönder",
   "askPost": "Sor",
   "askPerson": ["U", "Sor"],
+  "asked": ["U", "sordu"],
+  "reblogAsk": "Soru Yeniden Blogla",
   "select": "Seç",
   "first100": "Ilk 100",
   "postTypeNames": {
@@ -1286,6 +1300,8 @@ var locale = {
   "twitterText": "Отправить в Twitter",
   "askPost": "Спросить",
   "askPerson": ["Задать", "U", "вопрос"],
+  "asked": ["U", "спросил(a)"],
+  "reblogAsk": "Реблог вопрос",
   "select": "Выбрать",
   "first100": "Первые 100",
   "postTypeNames": {
