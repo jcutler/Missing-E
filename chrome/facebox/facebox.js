@@ -29,7 +29,7 @@
    $.extend($.facebox, {
       settings: {
          width        : 370,
-         opacity      : 0.2,
+         opacity      : 0.6,
          overlay      : true,
          loadingImage : chrome.extension.getURL('facebox/loading.gif'),
          closeImage   : chrome.extension.getURL('facebox/closelabel.png'),

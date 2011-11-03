@@ -29,7 +29,7 @@
    $.extend($.facebox, {
       settings: {
          width        : 370,
-         opacity      : 0.2,
+         opacity      : 0.6,
          overlay      : true,
          loadingImage : safari.extension.baseURI + 'facebox/loading.gif',
          closeImage   : safari.extension.baseURI + 'facebox/closelabel.png',
