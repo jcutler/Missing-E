@@ -26,6 +26,102 @@
 var resetTumblr;
 var checked = {};
 
+function addAskReblog(item) {
+   var i;
+   if (item.tagName === "LI" && jQuery(item).hasClass('post') &&
+       jQuery(item).hasClass('note')) {
+      jQuery(item).find('div.post_controls a.MissingE_betterReblogs_retryAsk')
+               .remove();
+      if (jQuery(item).find('div.post_controls a[href^="/reblog"]')
+            .length > 0 ||
+          jQuery(item).find('div.post_controls a.MissingE_reblog_control')
+            .length > 0) {
+         return true;
+      }
+      var tid = jQuery(item).attr("id").match(/[0-9]*$/)[0];
+      var perm = jQuery(item).find("a.permalink:first");
+      if (perm.length === 0) {
+         return;
+      }
+      self.postMessage({greeting: "betterReblogs", pid: tid,
+                        url: perm.attr("href")});
+   }
+}
+
+function receiveAskReblog(message) {
+   if (message.greeting !== "betterReblogs") { return; }
+   var item = jQuery('#post_' + message.pid);
+   var perm = item.find("a.permalink:first");
+   var tid = message.pid;
+   var klass, before, rblnk, txt;
+
+   var lang = jQuery('html').attr('lang');
+   var question = "";
+   var asker = jQuery(item).find("a.post_question_asker").text();
+   for (i=0; i<locale[lang].asked.length; i++) {
+      if (i>0) {
+         question += " ";
+      }
+      if (locale[lang].asked[i] === "U") {
+         question += asker;
+      }
+      else {
+         question += locale[lang].asked[i];
+      }
+   }
+   question += ": " + jQuery(item).find("div.post_question").text()
+                        .replace(/\s+/g,' ').replace(/^\s/,'')
+                        .replace(/\s$/,'');
+   question = encodeURIComponent(question);
+
+   var reblog_text = locale[lang].reblog;
+   before = item.find('div.post_controls a[href^="/edit"]');
+   if (before.length === 0) {
+      before = item.find('div.post_controls a.MissingE_edit_control');
+   }
+   if (before.length === 0) {
+      before = jQuery('#post_control_reply_' + tid);
+   }
+   if (before.length === 0) {
+      before = jQuery('#show_notes_link_' + tid);
+   }
+   if (message.success) {
+      klass = (message.icons ? 'MissingE_post_control ' +
+               'MissingE_reblog_control' : '');
+      txt = (message.icons ? '' : locale[lang].reblog);
+      rblnk = jQuery('<a title="' + reblog_text + '" href="/reblog/' + tid +
+                    '/' + message.data + '/text?post%5Bone%5D=' +
+                    escapeHTML(question) + '&MissingEname=' +
+                    message.name + '&MissingEpost=' +
+                    encodeURIComponent(perm.attr("href")) + '" class="' +
+                    klass + '">' + txt + '</a>');
+      if (before.length === 0) {
+         rblnk.prependTo(item.find('div.post_controls')).after(' ');
+      }
+      else {
+         rblnk.insertAfter(before).before(' ');
+      }
+      item.attr('name', message.name);
+      rblnk.trigger('MissingEaddReblog');
+   }
+   else {
+      var reblog_err = locale[lang].error;
+      klass = (message.icons ? 'MissingE_post_control ' +
+                  'MissingE_reblog_control ' +
+                  'MissingE_reblog_control_retry' : '');
+      txt = (message.icons ? '' : '<del>' + reblog_text + '</del>');
+      rblnk = jQuery('<a title="' + reblog_err + '" href="#" ' +
+                'class="MissingE_betterReblogs_retryAsk ' + klass +
+                '" onclick="return false;">' + txt + '</a>');
+      if (before.length === 0) {
+         rblnk.prependTo(item.find('div.post_controls')).after(' ');
+      }
+      else {
+         rblnk.insertAfter(before).before(' ');
+      }
+   }
+}
+
 function getTwitterDefaults() {
    var options = jQuery('#MissingE_quick_reblog_selector option');
    options.each(function() {
@@ -167,14 +263,13 @@ function reblogTextFull(item) {
 }
 
 function doReblog(item,replaceIcons,accountName,queueTags) {
-   var i;
    var reblogMode = {
       "normal":  '0',
       "draft":   '1',
       "queue":   '2',
       "private": 'private'
    };
-   var type,url,postId;
+   var i,isAsk,type,url,postId,perm,user;
    if (jQuery(item).parent().hasClass('post_controls')) {
       type = 'normal';
       url = jQuery(item).attr('href');
@@ -202,6 +297,9 @@ function doReblog(item,replaceIcons,accountName,queueTags) {
       }
       tags = taglist.join(",");
    }
+   isAsk = jQuery('#post_' + postId).hasClass('note');
+   perm = jQuery('#permalink_' + postId).attr("href");
+   user = jQuery('#post_' + postId).attr("name");
    var twitter = jQuery('#MissingE_quick_reblog_twitter input').is(':checked');
    startReblog(postId,replaceIcons);
    jQuery.ajax({
@@ -252,6 +350,15 @@ function doReblog(item,replaceIcons,accountName,queueTags) {
          params["post[tags]"] = this.tags;
          params["post[state]"] = this.mode;
          params["channel_id"] = accountName;
+         if (isAsk) {
+            if (!perm || perm === "" || !user || user === "") {
+               failReblog(this.postId,this.replaceIcons);
+               return;
+            }
+            params["post[two]"] = '<p><a href="' + perm + '" ' +
+              'class="tumblr_blog">' + user + '</a>:</p><blockquote>' +
+              params["post[two]"] + '</blockquote>';
+         }
          if (!twitter) {
             delete params["send_to_twitter"];
          }
@@ -323,6 +430,9 @@ self.on('message', function (message) {
                tagarr.push(str);
             }
             tags.each(function() {
+               if (/http:\/\/[^\/]*\/ask/.test(this.href)) {
+                  return true;
+               }
                tagarr.push(jQuery(this).text().replace(/^#/,''));
             });
             setReblogTags(tagarr);
@@ -343,6 +453,26 @@ self.on('message', function (message) {
       jQuery('#posts div.post_controls a').live('MissingEaddReblog',function() {
          reblogTextFull(this);
       });
+   }
+   if (message.experimental === 1 &&
+       message.reblogAsks === 1) {
+      self.on("message", receiveAskReblog);
+      jQuery('#posts li.post div.post_controls a.MissingE_betterReblogs_retryAsk')
+         .live('click', function() {
+         var post = jQuery(this).closest('li.post');
+         if (post.length === 1) {
+            addAskReblog(jQuery(this).parents('li.post').get(0));
+         }
+      });
+      jQuery('#posts li.post').each(function(){addAskReblog(this);});
+      document.addEventListener('MissingEajax',function(e) {
+         var type = e.data.match(/^[^:]*/)[0];
+         var list = e.data.match(/(post_[0-9]+)/g);
+         if (type !== 'posts') { return; }
+         jQuery.each(list, function(i,val) {
+            addAskReblog($('#'+val).get(0));
+         });
+      }, false);
    }
    if (message.quickReblog === 1) {
       var r,s;
@@ -520,6 +650,9 @@ self.on('message', function (message) {
                tagarr.push(str);
             }
             tags.each(function() {
+               if (/http:\/\/[^\/]*\/ask/.test(this.href)) {
+                  return true;
+               }
                var currtag = jQuery(this).text().replace(/^#/,'');
                if (!(/^\s*$/.test(currtag))) {
                   tagarr.push(currtag);

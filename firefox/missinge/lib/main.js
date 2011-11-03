@@ -284,15 +284,16 @@ function doTimestamp(stamp, id, theWorker) {
    return true;
 }
 
-function doReblogDash(stamp, id, theWorker) {
+function doReblogDash(stamp, id, theWorker, type) {
    if (!stamp.reblog_key) {
       debug("Cache entry does not have reblog key.");
       return false;
    }
    var key = stamp.reblog_key;
+   var name = stamp.name;
    var replaceIcons = getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                       getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
-   theWorker.postMessage({greeting: "reblogYourself", pid: id, success: true, data: key, icons: replaceIcons});
+   theWorker.postMessage({greeting: type, pid: id, success: true, data: key, name: name, icons: replaceIcons});
    return true;
 }
 
@@ -335,7 +336,7 @@ function saveCache(id, entry) {
              i == "post_url" ||
              i == "tags" ||
              i == "type" ||
-             i == "blog_name") {
+             (i == "name" && entry[i] != "")) {
             theEntry[i] = entry[i];
          }
       }
@@ -355,7 +356,7 @@ function cacheServe(type, id, theWorker, fn, midFlight, notAjax) {
       else if (!notAjax) {
          dequeueAjax();
       }
-      return fn(entry, id, theWorker);
+      return fn(entry, id, theWorker, type);
       return true;
    }
    else {
@@ -366,6 +367,9 @@ function cacheServe(type, id, theWorker, fn, midFlight, notAjax) {
 function runItem(call) {
    if (call.type === "reblogYourself") {
       startReblogYourself(call.message, call.worker);
+   }
+   else if (call.type === "betterReblogs") {
+      startBetterReblogsAsk(call.message, call.worker);
    }
    else if (call.type === "timestamp") {
       startTimestamp(call.message, call.worker);
@@ -603,8 +607,8 @@ function doTagsAjax(url, pid, count, myWorker, retries) {
    }).get();
 }
 
-function doReblogYourselfAjax(url, pid, count, myWorker, retries, additional) {
-   var failMsg = {greeting:"reblogYourself", success:false};
+function doReblogAjax(type, url, pid, count, myWorker, retries, additional) {
+   var failMsg = {greeting:type, success:false};
    if (additional) {
       for (i in additional) {
          if (additional.hasOwnProperty(i)) {
@@ -627,47 +631,56 @@ function doReblogYourselfAjax(url, pid, count, myWorker, retries, additional) {
             closed = true;
          }
          if (response.status === 404) {
-            debug("reblogYourself request (" + this.headers.targetId + ") not found");
+            debug(type + " request (" + this.headers.targetId + ") not found");
             dequeueAjax(this.headers.targetId);
             myWorker.postMessage(failMsg);
             return;
          }
          if (response.status != 200 || !ifr || ifr.length === 0) {
             if (closed) {
-               debug("Stop reblogYourself request: Tab closed or changed.");
+               debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
                return;
             }
-            if (cacheServe("reblogYourself", this.headers.targetId, myWorker,
+            if (cacheServe(type, this.headers.targetId, myWorker,
                            doReblogDash, true)) {
                return true;
             }
             else {
                if (this.headers.tryCount <= this.headers.retryLimit) {
-                  debug("Retry reblogYourself request (" + this.headers.targetId + ")");
-                  doReblogYourselfAjax(this.url,
+                  debug("Retry " + type + " request (" + this.headers.targetId + ")");
+                  doReblogAjax(this.url,
                          this.headers.targetId, (this.headers.tryCount + 1),
                          myWorker, this.headers.retryLimit, additional);
                }
                else {
-                  debug("reblogYourself request (" + this.headers.targetId + ") failed");
+                  debug(type + " request (" + this.headers.targetId + ") failed");
                   dequeueAjax(this.headers.targetId);
                   myWorker.postMessage(failMsg);
                }
             }
          }
          else {
-            var rk = ifr[0].match(/rk=([^&]*)/);
+            var rk = ifr[0].match(/rk=([^&"']*)/);
+            var poster = ifr[0].match(/name=([^&"']*)/);
+            var user;
             if (rk && rk.length > 1) {
-               var info = {"reblog_key":rk[1]};
+               if (!poster || poster.length <= 1) {
+                  user = "";
+               }
+               else {
+                  user = poster[1];
+               }
+               var info = {"reblog_key":rk[1],
+                           "name":user};
                saveCache(this.headers.targetId, info);
                dequeueAjax(this.headers.targetId);
                if (!closed) {
-                  doReblogDash(info, this.headers.targetId, myWorker);
+                  doReblogDash(info, this.headers.targetId, myWorker, type);
                }
             }
             else if (!closed) {
-               debug("reblogYourself request (" + this.headers.targetId + ") failed");
+               debug(type + " request (" + this.headers.targetId + ") failed");
                dequeueAjax(this.headers.targetId);
                myWorker.postMessage(failMsg);
             }
@@ -839,6 +852,38 @@ function startTimestamp(message, myWorker) {
    }
 }
 
+function startBetterReblogsAsk(message, myWorker) {
+   try {
+      var tab = myWorker.tab;
+   }
+   catch (err) {
+      debug("Stop betterReblogs request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   if (cacheServe("betterReblogs", message.pid, myWorker, doReblogDash,
+                  false)) {
+      return true;
+   }
+   else if (isRequested({type: "betterReblogs", message: message, worker: myWorker})) {
+      return true;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "betterReblogs", message: message, worker: myWorker});
+   }
+   else {
+      debug("AJAX betterReblogs request (" + message.pid + ")");
+      startAjax(message.pid);
+      doReblogAjax("betterReblogs", message.url, message.pid, 0, myWorker,
+             getStorage("extensions.MissingE.reblogYourself.askRetries",defaultRetries),
+             {
+               pid:message.pid,
+               icons:getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 && 
+                     getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1
+             });
+   }
+}
+
 function startReblogYourself(message, myWorker) {
    try {
       var tab = myWorker.tab;
@@ -861,7 +906,7 @@ function startReblogYourself(message, myWorker) {
    else {
       debug("AJAX reblogYourself request (" + message.pid + ")");
       startAjax(message.pid);
-      doReblogYourselfAjax(message.url, message.pid, 0, myWorker,
+      doReblogAjax("reblogYourself", message.url, message.pid, 0, myWorker,
              getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries),
              {
                pid:message.pid,
@@ -987,6 +1032,9 @@ function handleMessage(message, myWorker) {
    }
    else if (message.greeting == "reblogYourself") {
       startReblogYourself(message, myWorker);
+   }
+   else if (message.greeting == "betterReblogs") {
+      startBetterReblogsAsk(message, myWorker);
    }
    else if (message.greeting == "magnifier") {
       startMagnifier(message, myWorker);
@@ -1260,7 +1308,9 @@ function handleMessage(message, myWorker) {
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
       settings.MissingE_betterReblogs_quickReblogForceTwitter = getStorage("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
       settings.MissingE_betterReblogs_fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
+      settings.MissingE_betterReblogs_reblogAsks = getStorage("extensions.MissingE.betterReblogs.reblogAsks",0);
       settings.MissingE_version = getStorage("extensions.MissingE.version",'');
+      settings.MissingE_betterReblogs_askRetries = getStorage("extensions.MissingE.betterReblogs.askRetries",defaultRetries);
       myWorker.postMessage(settings);
    }
    else if (message.greeting == "sidebarTweaks") {
@@ -1370,6 +1420,7 @@ function handleMessage(message, myWorker) {
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
+            settings.reblogAsks = getStorage("extensions.MissingE.betterReblogs.reblogAsks",0);
             break;
       }
       myWorker.postMessage(settings);

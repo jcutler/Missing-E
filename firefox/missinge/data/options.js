@@ -327,6 +327,8 @@ function loadSettings() {
          frm.MissingE_betterReblogs_quickReblogAcctName.value = qran;
          jQuery(frm.MissingE_betterReblogs_quickReblogForceTwitter).val(getStorage('MissingE_betterReblogs_quickReblogForceTwitter','default'));
          loadCheck(frm,'MissingE_betterReblogs_fullText',0);
+         loadCheck(frm,'MissingE_betterReblogs_reblogAsks',0);
+         frm.MissingE_betterReblogs_askRetries.value = getStorage('MissingE_betterReblogs_askRetries',defaultRetries);
       }
       else if (v == "postingFixes") {
          loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
