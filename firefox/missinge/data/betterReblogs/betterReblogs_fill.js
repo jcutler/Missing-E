@@ -117,24 +117,23 @@ self.on('message', function (message) {
          title.html(title.html().replace(/[^<]*/,locale[lang].reblogAsk));
          jQuery('head').append('<script type="text/javascript">' +
                           'var ta = document.getElementById("post_two");' +
-                          'ta.value = \'<p><a href="' +
-                                      decodeURIComponent(askPost[1]) +
-                                      '" class="tumblr_blog">' + askName[1] +
-                                      '</a>:</p>\\n\\n<blockquote>\'' +
-                                      ' + ta.value + \'</blockquote>\\n\\n' +
-                                      '<p></p>\';' +
                           'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
-                             'val = ed.getContent();' +
-                             'if (ta.value !== val) {' +
-                                'val = \'<p><a href="' +
-                                       decodeURIComponent(askPost[1]) +
-                                       '" class="tumblr_blog">' + askName[1] +
-                                       '</a>:</p>\\n\\n<blockquote>\'' +
-                                       ' + val + \'</blockquote>\\n\\n' +
-                                       '<p></p>\';' +
-                                'ed.execCommand("mceReplaceContent", false, ' +
-                                                'val);' +
-                             '}' +
+                             'var val = \'<p><a href="' +
+                                    decodeURIComponent(askPost[1]) +
+                                    '" class="tumblr_blog">' + askName[1] +
+                                    '</a>:</p>\\n\\n<blockquote>\'' +
+                                    ' + ta.value + \'</blockquote>\\n\\n' +
+                                    '<p></p>\';' +
+                             'ed.execCommand("mceReplaceContent", false, ' +
+                                             'val);' +
+                          '}' +
+                          'else {' +
+                             'ta.value = \'<p><a href="' +
+                                         decodeURIComponent(askPost[1]) +
+                                         '" class="tumblr_blog">' + askName[1] +
+                                         '</a>:</p>\\n\\n<blockquote>\'' +
+                                         ' + ta.value + \'</blockquote>\\n\\n' +
+                                         '<p></p>\';' +
                           '}' +
                           '</script>');
       }
