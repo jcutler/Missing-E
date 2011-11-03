@@ -105,6 +105,36 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
             setReblogTags(tags);
          }
       });
+
+      var askName = location.search.match(/MissingEname=([^&]*)/);
+      var askPost = location.search.match(/MissingEpost=([^&]*)/);
+      if (askName && askName.length > 1 && askPost && askPost.length > 1) {
+         var title = $('#left_column h1:first');
+         title.find('span.as_links').remove();
+         title.html(title.html().replace(/[^<]*/,locale[lang].reblogAsk));
+         $('head').append('<script type="text/javascript">' +
+                          'var ta = document.getElementById("post_two");' +
+                          'ta.value = \'<p><a href="' +
+                                      decodeURIComponent(askPost[1]) +
+                                      '" class="tumblr_blog">' + askName[1] +
+                                      '</a>:</p>\\n\\n<blockquote>\'' +
+                                      ' + ta.value + \'</blockquote>\\n\\n' +
+                                      '<p></p>\';' +
+                          'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
+                             'val = ed.getContent();' +
+                             'if (ta.value !== val) {' +
+                                'val = \'<p><a href="' +
+                                       decodeURIComponent(askPost[1]) +
+                                       '" class="tumblr_blog">' + askName[1] +
+                                       '</a>:</p>\\n\\n<blockquote>\'' +
+                                       ' + val + \'</blockquote>\\n\\n' +
+                                       '<p></p>\';' +
+                                'ed.execCommand("mceReplaceContent", false, ' +
+                                                'val);' +
+                             '}' +
+                          '}' +
+                          '</script>');
+      }
    }
 
    if (document.body.id === 'dashboard_edit_post' &&

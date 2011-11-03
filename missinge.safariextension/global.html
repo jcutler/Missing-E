@@ -55,7 +55,7 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var debugMode = false;
+var debugMode = true;// false;
 var lang = 'en';
 
 function getStorage(key, defVal) {
@@ -139,9 +139,10 @@ function doReblogDash(stamp, id, request) {
       return false;
    }
    var key = stamp.reblog_key;
+   var name = stamp.name;
    var replaceIcons = getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
                       getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1;
-   request.target.page.dispatchMessage("reblogYourself",{pid: id, success: true, data: key, icons: replaceIcons});
+   request.target.page.dispatchMessage(request.name,{pid: id, success: true, data: key, name: name, icons: replaceIcons});
    return true;
 }
 
@@ -154,6 +155,9 @@ function queueAjax(details) {
 function runItem(call) {
    if (call.type === "reblogYourself") {
       requestReblogYourself(call.request);
+   }
+   else if (call.type === "betterReblogs") {
+      requestBetterReblogsAsk(call.request);
    }
    else if (call.type === "timestamp") {
       requestTimestamp(call.request);
@@ -198,7 +202,7 @@ function saveCache(id, entry) {
              i == "post_url" ||
              i == "tags" ||
              i == "type" ||
-             i == "blog_name") {
+             (i == "name" && entry[i] != "")) {
             theEntry[i] = entry[i];
          }
       }
@@ -376,7 +380,6 @@ function checkPermission(request, retries, tryCount) {
          return;
       }
       else if (this.readyState == 4) {
-         console.log(this);
          if (this.status == 200) {
             request.target.page.dispatchMessage("tumblrPermission",
                                                 {allow: true});
@@ -485,8 +488,8 @@ function doTagsAjax(request, retries) {
    });
 }
 
-function doReblogYourselfAjax(request, retries, additional) {
-   debug("AJAX reblogYourself request (" + request.message.pid + ")");
+function doReblogAjax(type, request, retries, additional) {
+   debug("AJAX " + type + " request (" + request.message.pid + ")");
    startAjax(request.message.pid);
    var failMsg = {success:false};
    if (additional) {
@@ -505,30 +508,30 @@ function doReblogYourselfAjax(request, retries, additional) {
       targetId: request.message.pid,
       error: function(xhr, textStatus) {
          if (xhr.status === 404) {
-            debug("reblogYourself request (" + this.targetId + ") not found");
+            debug(type + " request (" + this.targetId + ") not found");
             dequeueAjax(this.targetId);
-            request.target.page.dispatchMessage("reblogYourself",failMsg);
+            request.target.page.dispatchMessage(type,failMsg);
             return;
          }
          if (request.target.page === undefined) {
-            debug("Stop reblogYourself request: Tab closed or changed.");
+            debug("Stop " + type + " request: Tab closed or changed.");
             dequeueAjax(this.targetId);
             return;
          }
-         if (cacheServe("reblogYourself", request.message.pid, request, doReblogDash, true)) {
+         if (cacheServe(type, request.message.pid, request, doReblogDash, true)) {
             return true;
          }
          else {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-               debug("Retry reblogYourself request (" + this.targetId + ")");
+               debug("Retry " + type + " request (" + this.targetId + ")");
                $.ajax(this);
                return;
             }
             else {
-               debug("reblogYourself request (" + this.targetId + ") failed");
+               debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
-               request.target.page.dispatchMessage("reblogYourself",failMsg);
+               request.target.page.dispatchMessage(type,failMsg);
             }
          }
       },
@@ -536,31 +539,40 @@ function doReblogYourselfAjax(request, retries, additional) {
          var ifr = data.match(/<\s*iframe[^>]*id="tumblr_controls"[^>]*>/);
          if (!ifr || ifr.length === 0) {
             if (request.target.page === undefined) {
-               debug("Stop reblogYourself request: Tab closed or changed.");
+               debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.targetId);
                return;
             }
-            if (cacheServe("reblogYourself", request.message.pid, request, doReblogDash, true)) {
+            if (cacheServe(type, request.message.pid, request, doReblogDash, true)) {
                return true;
             }
             else {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
-                  debug("Retry reblogYourself request (" + this.targetId + ")");
+                  debug("Retry " + type + " request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  debug("reblogYourself request (" + this.targetId + ") failed");
+                  debug(type + " request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
-                  request.target.page.dispatchMessage("reblogYourself",failMsg);
+                  request.target.page.dispatchMessage(type,failMsg);
                }
             }
          }
          else {
-            var rk = ifr[0].match(/rk=([^&]*)/);
+            var rk = ifr[0].match(/rk=([^&"']*)/);
+            var poster = ifr[0].match(/name=([^&"']*)/);
+            var user;
             if (rk && rk.length > 1) {
-               var info = {"reblog_key":rk[1]};
+               if (!poster || poster.length <= 1) {
+                  user = "";
+               }
+               else {
+                  user = poster[1];
+               }
+               var info = {"reblog_key":rk[1],
+                           "name":user};
                saveCache(this.targetId, info);
                dequeueAjax(this.targetId);
                if (request.target.page !== undefined) {
@@ -568,9 +580,9 @@ function doReblogYourselfAjax(request, retries, additional) {
                }
             }
             else if (request.target.page !== undefined) {
-               debug("reblogYourself request (" + this.targetId + ") failed");
+               debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
-               request.target.page.dispatchMessage("reblogYourself",failMsg);
+               request.target.page.dispatchMessage(type,failMsg);
             }
          }
       }
@@ -668,7 +680,6 @@ function doAjax(request, retries, type, doFunc, additional) {
 }
 */
 
-
 function requestTags(request) {
    if (request.target.page === undefined) {
       debug("Stop tags request: Tab closed or changed.");
@@ -721,6 +732,33 @@ function requestTimestamp(request) {
    }
 }
 
+function requestBetterReblogsAsk(request) {
+   if (request.target.page === undefined) {
+      debug("Stop betterReblogs request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (cacheServe("betterReblogs", request.message.pid, request,
+                  doReblogDash, false)) {
+      return true;
+   }
+   else if (isRequested({type: "betterReblogs", request: request})) {
+      return true;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "betterReblogs", request: request});
+   }
+   else {
+      doReblogAjax("betterReblogs",request,
+             getStorage("MissingE_betterReblogs_askRetries",defaultRetries),
+             {
+               pid:request.pid,
+               icons:getStorage("MissingE_dashboardFixes_enabled",1) == 1 && 
+                     getStorage("MissingE_dashboardFixes_replaceIcons",1) == 1
+             });
+   }
+}
+
 function requestReblogYourself(request) {
    if (request.target.page === undefined) {
       debug("Stop reblogYourself request: Tab closed or changed.");
@@ -738,7 +776,7 @@ function requestReblogYourself(request) {
       queueAjax({type: "reblogYourself", request: request});
    }
    else {
-      doReblogYourselfAjax(request,
+      doReblogAjax("reblogYourself", request,
              getStorage("MissingE_reblogYourself_retries",defaultRetries),
              {
                pid:request.pid,
@@ -899,6 +937,9 @@ function handleRequest(request) {
    }
    else if (request.name == "reblogYourself") {
       requestReblogYourself(request);
+   }
+   else if (request.name == "betterReblogs") {
+      requestBetterReblogsAsk(request);
    }
    else if (request.name == "tags") {
       requestTags(request);
@@ -1166,6 +1207,8 @@ function handleRequest(request) {
       settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("MissingE_betterReblogs_quickReblogAcctName",'');
       settings.MissingE_betterReblogs_quickReblogForceTwitter = getStorage("MissingE_betterReblogs_quickReblogForceTwitter","default");
       settings.MissingE_betterReblogs_fullText = getStorage("MissingE_betterReblogs_fullText",0);
+      settings.MissingE_betterReblogs_reblogAsks = getStorage("MissingE_betterReblogs_reblogAsks",0);
+      settings.MissingE_betterReblogs_askRetries = getStorage("MissingE_betterReblogs_askRetries",defaultRetries);
       settings.MissingE_version = getStorage("MissingE_version",'');
       request.target.page.dispatchMessage("all-settings",settings);
    }
@@ -1273,6 +1316,7 @@ function handleRequest(request) {
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
+            settings.reblogAsks = getStorage("MissingE_betterReblogs_reblogAsks",0);
             break;
       }
       request.target.page.dispatchMessage("settings",settings);

@@ -269,14 +269,16 @@ function settings_startup(response) {
    }
    else if (response.message.component === "betterReblogs") {
       if (response.message.subcomponent === "dash") {
-         MissingE_betterReblogs_dash_doStartup(response.message.passTags,
+         MissingE_betterReblogs_dash_doStartup(response.message.experimental,
+                                     response.message.passTags,
                                      response.message.quickReblog,
                                      response.message.replaceIcons,
                                      response.message.accountName,
                                      response.message.fullText,
                                      response.message.quickReblogForceTwitter,
                                      response.message.tagQueuedPosts,
-                                     response.message.queueTags);
+                                     response.message.queueTags,
+                                     response.message.reblogAsks);
       }
       else if (response.message.subcomponent === "fill") {
          MissingE_betterReblogs_fill_doStartup(response.message.passTags,
