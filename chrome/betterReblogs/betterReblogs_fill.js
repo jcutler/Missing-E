@@ -110,7 +110,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       if (askName && askName.length > 1 && askPost && askPost.length > 1) {
          var title = $('#left_column h1:first');
          title.find('span.as_links').remove();
-         console.log(title.get(0).childNodes);
+         title.html(title.html().replace(/[^<]*/,locale[lang].reblogAsk));
          $('head').append('<script type="text/javascript">' +
                           'var ta = document.getElementById("post_two");' +
                           'ta.value = \'<p><a href="' +
