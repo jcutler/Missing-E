@@ -357,11 +357,12 @@ function replyRepliesSettings(message) {
                        .replace(/onclick="[^"]*"/g,'')
                        .replace(/white-space:nowrap;/g,'')
                        .replace(/margin-right:5px;/g,'')
-                       .replace(/style="\s*"\s*/g,'');
+                       .replace(/style="\s*"\s*/g,'')
+                       .replace(/^\s*/,'').replace(/\s*$/,'');
       thecode.push('<p>' + newcode + '</p>');
    }
 
-   var code = thecode.join("") + "\n<p><br /></p>";
+   var code = thecode.join("\n") + "\n\n<p><br /></p>";
    if (/nsfwdone/.test(code) || /nsfwed/.test(code)) {
       code = code.replace(/opacity:\s*[01]\s*;/g,'')
                   .replace(/class="nsfwdone"/g,'')
