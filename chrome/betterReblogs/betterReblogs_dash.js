@@ -430,7 +430,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          reblogTextFull(this);
       });
       $(document).bind('MissingEajax', function(e) {
-         if (e.originalEvent.data.type === 'notes') { return; }
+         if (e.originalEvent.data.type !== 'posts') { return; }
          $.each(e.originalEvent.data.list, function(i, val) {
             reblogTextFull($('#'+val).get(0));
          });
@@ -450,7 +450,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       });
       $('#posts li.post').each(function(){addAskReblog(this);});
       $(document).bind('MissingEajax',function(e) {
-         if (e.originalEvent.data.type === 'notes') { return; }
+         if (e.originalEvent.data.type !== 'posts') { return; }
          $.each(e.originalEvent.data.list, function(i,val) {
             addAskReblog($('#'+val).get(0));
          });

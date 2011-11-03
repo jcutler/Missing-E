@@ -551,6 +551,7 @@ function doReblogAjax(type, request, sender, sendResponse, hash, retries,
          else {
             var rk = ifr[0].match(/rk=([^&"']*)/);
             var poster = ifr[0].match(/name=([^&"']*)/);
+            var user;
             if (rk && rk.length > 1) {
                if (!poster || poster.length <= 1) {
                   user = "";
