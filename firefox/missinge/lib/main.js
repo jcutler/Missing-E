@@ -1030,6 +1030,14 @@ function handleMessage(message, myWorker) {
                                getStorage("extensions.MissingE.version",'0')) > 0,
          msg:locale[message.lang]["update"]});
    }
+   else if (message.greeting == "getAsker") {
+      myWorker.tab.attach({
+         contentScriptFile: data.url("betterReblogs/permalink.js"),
+         onMessage: function(msg) {
+            myWorker.postMessage({greeting: "asker", name: msg.name, url: myWorker.tab.url});
+         }
+      });
+   }
    else if (message.greeting == "reblogYourself") {
       startReblogYourself(message, myWorker);
    }

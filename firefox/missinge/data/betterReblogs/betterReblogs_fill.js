@@ -111,7 +111,43 @@ self.on('message', function (message) {
 
       var askName = location.search.match(/MissingEname=([^&]*)/);
       var askPost = location.search.match(/MissingEpost=([^&]*)/);
+      if (!askName || askName.length < 2 || !askPost || askPost.length < 2) {
+         if (jQuery('#left_column').children("div.post_question")) {
+            var pt = document.getElementById('post_tags').value;
+            if (pt !== '') {
+               setReblogTagsPlainText(pt);
+            }
+            else if (tags !== '') {
+               setReblogTags(tags);
+            }
+            askName = jQuery('#left_column .post_question_asker:first').text();
+            askPost = location.search.match(/redirect_to=([^&]*)/);
+            if (askPost && askPost.length > 1) {
+               var addSearch = "MissingEname=" + askName +
+                  "&MissingEpost=" + askPost[1];
+               location.href = location.href.replace(/\?/,"/text?" + addSearch);
+            }
+         }
+      }
       if (askName && askName.length > 1 && askPost && askPost.length > 1) {
+         if (!(/[\?\&]post%5[bB]one%5[dD]/.test(location.search))) {
+            var postone = jQuery('#post_one').val();
+            var question = "";
+            postone = unescapeHTML(postone.replace(/<[^>]*>/g,''));
+            for (i=0; i<locale[lang].asked.length; i++) {
+               if (i>0) {
+                  question += " ";
+               }
+               if (locale[lang].asked[i] === "U") {
+                  question += askName[1];
+               }
+               else {
+                  question += locale[lang].asked[i];
+               }
+            }
+            question += ": " + postone;
+            jQuery('#post_one').val(question);
+         }
          var title = jQuery('#left_column h1:first');
          title.find('span.as_links').remove();
          title.html(title.html().replace(/[^<]*/,locale[lang].reblogAsk));

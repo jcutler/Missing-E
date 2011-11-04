@@ -104,6 +104,44 @@ function receiveTags(message) {
    }
 }
 
+function receiveAsker(response) {
+   if (response.greeting !== "asker") { return; }
+   if (response.name && response.name !== "") {
+      document.addEventListener('mousedown', function(e) {
+         var trg;
+         if (e.target.tagName === "A" &&
+             /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.href)) {
+            trg = e.target;
+         }
+         else if (e.target.parentNode &&
+                  e.target.parentNode.tagName === "A" &&
+                  /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.href)) {
+            trg = e.target.parentNode;
+         }
+         else if (e.target.parentNode &&
+                  e.target.parentNode.parentNode &&
+                  e.target.parentNode.parentNode.tagName === "A" &&
+                  /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.parentNode.href)) {
+            trg = e.target.parentNode.parentNode;
+         }
+         if (trg) {
+            if (/MissingEname=/.test(trg.href)) {
+               return;
+            }
+            if (/\?/.test(trg.href)) {
+               trg.href += "&";
+            }
+            else {
+               trg.href += "?";
+            }
+            trg.href = trg.href.replace(/\?/,'/text?');
+            trg.href += "MissingEname=" + response.name;
+            trg.href += "&MissingEpost=" + encodeURIComponent(response.url);
+        }
+      }, false);
+   }
+}
+
 self.on('message', function(message) {
    if (message.greeting !== "settings" ||
        message.component !== "betterReblogs" ||
@@ -112,6 +150,7 @@ self.on('message', function(message) {
    }
 
    self.on("message", receiveTags);
+   self.on("message", receiveAsker);
 
    var st = document.createElement('style');
    st.type = 'text/css';
@@ -131,6 +170,7 @@ self.on('message', function(message) {
                      '{ background-position:-50px 0; }';
    document.getElementsByTagName('head')[0].appendChild(st);
 
+   self.postMessage({greeting: "getAsker"});
    if (!addTags()) {
       document.addEventListener('MissingEaddReblog',function(e){
          var item = e.target;

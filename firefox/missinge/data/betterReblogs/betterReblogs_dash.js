@@ -57,7 +57,7 @@ function receiveAskReblog(message) {
 
    var lang = jQuery('html').attr('lang');
    var question = "";
-   var asker = jQuery(item).find("a.post_question_asker").text();
+   var asker = jQuery(item).find(".post_question_asker").text();
    for (i=0; i<locale[lang].asked.length; i++) {
       if (i>0) {
          question += " ";
@@ -454,8 +454,7 @@ self.on('message', function (message) {
          reblogTextFull(this);
       });
    }
-   if (message.experimental === 1 &&
-       message.reblogAsks === 1) {
+   if (message.reblogAsks === 1) {
       self.on("message", receiveAskReblog);
       jQuery('#posts li.post div.post_controls a.MissingE_betterReblogs_retryAsk')
          .live('click', function() {
