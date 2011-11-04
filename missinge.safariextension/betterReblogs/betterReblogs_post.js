@@ -104,7 +104,7 @@ function receiveTags(response) {
    }
 }
 
-function receiveAsk(response) {
+function receiveAsker(response) {
    if (response.name !== "asker") { return; }
    if (response.message.name && response.message.name !== "") {
       document.addEventListener('mousedown', function(e) {
@@ -161,7 +161,7 @@ function MissingE_betterReblogs_post_doStartup(frameURL) {
                      '.MissingE_reblog_fail .half ' +
                      '{ background-position:-50px 0; }';
       document.getElementsByTagName('head')[0].appendChild(st);
-      safari.self.addEventListener("message", receiveAsk, false);
+      safari.self.addEventListener("message", receiveAsker, false);
       safari.self.addEventListener("message", receiveTags, false);
       safari.self.tab.dispatchMessage("getAsker");
       if (!addTags()) {
