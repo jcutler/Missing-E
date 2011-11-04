@@ -106,10 +106,26 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
          }
       });
 
-      var askName = location.search.match(/MissingEname=([^&]*)/);
-      var askPost = location.search.match(/MissingEpost=([^&]*)/);
-      if (!askName || askName.length < 2 || !askPost || askPost.length < 2) {
-         if ($('#left_column').children("div.post_question")) {
+      var askName = location.search.match(/MissingEaskName=([^&]*)/);
+      var askPost = location.search.match(/MissingEaskPost=([^&]*)/);
+      var askSure = location.search.match(/MissingEaskSure=([^&]*)/);
+      if (askSure && askSure.length > 1 && askSure[1] === "0") {
+         if (askName && askName.length > 1 &&
+             askPost && askPost.length > 1 &&
+             $('#left_column').children("div.post_question").length !== 0) {
+            var pt = document.getElementById('edit_post').post_tags.value;
+            if (pt !== '') {
+               setReblogTagsPlainText(pt);
+            }
+            else if (tags !== '') {
+               setReblogTags(tags);
+            }
+            location.href = location.href.replace(/MissingEaskSure=0&/,'')
+                                 .replace(/\?/,"/text?");
+         }
+      }
+      else if (!askName || askName.length < 2 || !askPost || askPost.length < 2) {
+         if ($('#left_column').children("div.post_question").length !== 0) {
             var pt = document.getElementById('edit_post').post_tags.value;
             if (pt !== '') {
                setReblogTagsPlainText(pt);
@@ -120,13 +136,13 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
             askName = $('#left_column .post_question_asker:first').text();
             askPost = location.search.match(/redirect_to=([^&]*)/);
             if (askPost && askPost.length > 1) {
-               var addSearch = "MissingEname=" + askName +
-                  "&MissingEpost=" + askPost[1];
+               var addSearch = "MissingEaskName=" + askName +
+                  "&MissingEaskPost=" + askPost[1];
                location.href = location.href.replace(/\?/,"/text?" + addSearch);
             }
          }
       }
-      if (askName && askName.length > 1 && askPost && askPost.length > 1) {
+      else if (askName && askName.length > 1 && askPost && askPost.length > 1) {
          if (!(/[\?\&]post%5[bB]one%5[dD]/.test(location.search))) {
             var postone = $('#post_one').val();
             var question = "";

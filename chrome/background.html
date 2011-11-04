@@ -900,8 +900,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       sendResponse({uptodate:versionCompare(getStorage("MissingE_version",'0'),
                                             request.v) >= 0});
    }
-   else if (request.greeting == "asker") {
-      chrome.tabs.sendRequest(sender.tab.id, {greeting: "asker", name: request.name, url: request.url});
+   else if (request.greeting == "sendAsker") {
+      chrome.tabs.sendRequest(sender.tab.id, {greeting: "sendAsker",
+         name: request.name, url: request.url, isSure: request.isSure});
    }
    else if (request.greeting == "uploader") {
       $.ajax({

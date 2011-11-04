@@ -1034,7 +1034,8 @@ function handleMessage(message, myWorker) {
       myWorker.tab.attach({
          contentScriptFile: data.url("betterReblogs/permalink.js"),
          onMessage: function(msg) {
-            myWorker.postMessage({greeting: "asker", name: msg.name, url: myWorker.tab.url});
+            myWorker.postMessage({greeting: "sendAsker", name: msg.name,
+                                  url: myWorker.tab.url, isSure: msg.isSure});
          }
       });
    }

@@ -105,7 +105,7 @@ function receiveTags(message) {
 }
 
 function receiveAsker(response) {
-   if (response.greeting !== "asker") { return; }
+   if (response.greeting !== "sendAsker") { return; }
    if (response.name && response.name !== "") {
       document.addEventListener('mousedown', function(e) {
          var trg;
@@ -125,7 +125,7 @@ function receiveAsker(response) {
             trg = e.target.parentNode.parentNode;
          }
          if (trg) {
-            if (/MissingEname=/.test(trg.href)) {
+            if (/MissingEaskName=/.test(trg.href)) {
                return;
             }
             if (/\?/.test(trg.href)) {
@@ -134,9 +134,14 @@ function receiveAsker(response) {
             else {
                trg.href += "?";
             }
-            trg.href = trg.href.replace(/\?/,'/text?');
-            trg.href += "MissingEname=" + response.name;
-            trg.href += "&MissingEpost=" + encodeURIComponent(response.url);
+            if (response.isSure) {
+               trg.href = trg.href.replace(/\?/,'/text?');
+            }
+            else {
+               trg.href += "MissingEaskSure=0&";
+            }
+            trg.href += "MissingEaskName=" + response.name;
+            trg.href += "&MissingEaskPost=" + encodeURIComponent(response.url);
         }
       }, false);
    }

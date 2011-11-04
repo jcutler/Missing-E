@@ -110,7 +110,7 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
                      '{ background-position:-50px 0; }';
    document.getElementsByTagName('head')[0].appendChild(st);
    chrome.extension.onRequest.addListener(function(request) {
-      if (request.greeting !== "asker") { return; }
+      if (request.greeting !== "sendAsker") { return; }
       if (request.name && request.name !== "") {
          document.addEventListener('mousedown', function(e) {
             var trg;
@@ -130,7 +130,7 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
                trg = e.target.parentNode.parentNode;
             }
             if (trg) {
-               if (/MissingEname=/.test(trg.href)) {
+               if (/MissingEaskName=/.test(trg.href)) {
                   return;
                }
                if (/\?/.test(trg.href)) {
@@ -139,9 +139,14 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
                else {
                   trg.href += "?";
                }
-               trg.href = trg.href.replace(/\?/,'/text?');
-               trg.href += "MissingEname=" + request.name;
-               trg.href += "&MissingEpost=" + encodeURIComponent(request.url);
+               if (request.isSure) {
+                  trg.href = trg.href.replace(/\?/,'/text?');
+               }
+               else {
+                  trg.href += "MissingEaskSure=0&";
+               }
+               trg.href += "MissingEaskName=" + request.name;
+               trg.href += "&MissingEaskPost=" + encodeURIComponent(request.url);
             }
          }, false);
       }
@@ -157,6 +162,7 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
 }
 else if (window.top === window) {
    var myasker = document.getElementsByClassName('asker');
+   var isSure = true;
    var name = "";
    var i;
    for (i=0; i<myasker.length; i++) {
@@ -168,12 +174,13 @@ else if (window.top === window) {
       }
    }
    if (name === "") {
+      isSure = false;
       myasker = document.body.innerHTML
                      .match(/<a href="[^"]*">([a-zA-Z0-9\-]+)<\/a>\s*asked\:/);
       if (myasker && myasker.length > 1) {
          name = myasker[1];
       }
    }
-   chrome.extension.sendRequest({greeting: "asker", name: name, url: location.href});
+   chrome.extension.sendRequest({greeting: "sendAsker", name: name, url: location.href, isSure: isSure});
 }
 

@@ -30,6 +30,7 @@
    }
    var myasker = document.getElementsByClassName('asker');
    var name = "";
+   var isSure = true;
    var i;
    for (i=0; i<myasker.length; i++) {
       if (myasker[i].tagName === "A") {
@@ -40,11 +41,12 @@
       }
    }
    if (name === "") {
+      isSure = false;
       myasker = document.body.innerHTML
                      .match(/<a href="[^"]*">([a-zA-Z0-9\-]+)<\/a>\s*asked\:/);
       if (myasker && myasker.length > 1) {
          name = myasker[1];
       }
    }
-   self.postMessage({greeting: "asker", name: name});
+   self.postMessage({greeting: "sendAsker", name: name, isSure: isSure});
 })();

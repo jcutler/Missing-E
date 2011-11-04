@@ -91,8 +91,8 @@ function receiveAskReblog(response) {
       txt = (response.message.icons ? '' : locale[lang].reblog);
       rblnk = $('<a title="' + reblog_text + '" href="/reblog/' + tid +
                     '/' + response.message.data + '/text?post%5Bone%5D=' +
-                    escapeHTML(question) + '&MissingEname=' +
-                    response.message.name + '&MissingEpost=' +
+                    escapeHTML(question) + '&MissingEaskName=' +
+                    response.message.name + '&MissingEaskPost=' +
                     encodeURIComponent(perm.attr("href")) + '" class="' +
                     klass + '">' + txt + '</a>');
       if (before.length === 0) {

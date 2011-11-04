@@ -948,13 +948,14 @@ function handleRequest(request) {
       if (askerTable[request.target.url]) {
          debug("Found saved asker for '" + request.target.url + "'");
          var name = askerTable[request.target.url].asker;
+         var isSure = askerTable[request.target.url].isSure;
          if (--askerTable[request.target.url].count == 0) {
             debug("Deleting saved asker for '" + request.target.url + "'");
             delete askerTable[request.target.url];
          }
          if (name && name !== "") {
-            request.target.page.dispatchMessage("asker",
-               {name: name, url: request.target.url});
+            request.target.page.dispatchMessage("sendAsker",
+               {name: name, isSure: isSure, url: request.target.url});
          }
       }
       else {
@@ -968,7 +969,7 @@ function handleRequest(request) {
          }
       }
    }
-   else if (request.name == "asker") {
+   else if (request.name == "sendAsker") {
       if (askerWaiters[request.target.url]) {
          debug("Found existing askerWaiter for '" + request.target.url + "'");
          var r = askerWaiters[request.target.url].pop();
@@ -977,8 +978,9 @@ function handleRequest(request) {
             delete askerWaiters[request.target.url];
          }
          if (request.message.name && request.message.name !== "") {
-            r.target.page.dispatchMessage("asker",
-               {name: request.message.name, url: request.target.url});
+            r.target.page.dispatchMessage("sendAsker",
+               {name: request.message.name, isSure: request.message.isSure,
+                url: request.target.url});
          }
       }
       else {
@@ -988,7 +990,8 @@ function handleRequest(request) {
          }
          else {
             debug("Creating askerTable entry for '" + request.target.url + "'");
-            askerTable[request.target.url] = {asker: request.message.name, count:1};
+            askerTable[request.target.url] = {asker: request.message.name,
+                                              isSure: request.message.isSure, count:1};
          }
       }
    }

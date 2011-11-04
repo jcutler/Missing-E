@@ -29,6 +29,7 @@
       return;
    }
    var myasker = document.getElementsByClassName('asker');
+   var isSure = true;
    var name = "";
    var i;
    for (i=0; i<myasker.length; i++) {
@@ -40,11 +41,12 @@
       }
    }
    if (name === "") {
+      isSure = false;
       myasker = document.body.innerHTML
                      .match(/<a href="[^"]*">([a-zA-Z0-9\-]+)<\/a>\s*asked\:/);
       if (myasker && myasker.length > 1) {
          name = myasker[1];
       }
    }
-   safari.self.tab.dispatchMessage("asker", {name: name});
+   safari.self.tab.dispatchMessage("sendAsker", {name: name, isSure: isSure});
 })();
