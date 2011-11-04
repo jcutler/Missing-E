@@ -439,8 +439,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
          reblogTextFull(this);
       });
    }
-   if (reblog_settings.experimental === 1 &&
-       reblog_settings.reblogAsks === 1) {
+   if (reblog_settings.reblogAsks === 1) {
       $('#posts li.post div.post_controls a.MissingE_betterReblogs_retryAsk')
          .live('click', function() {
          var post = $(this).closest('li.post');

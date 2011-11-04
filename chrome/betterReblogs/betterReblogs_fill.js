@@ -108,6 +108,24 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       var askName = location.search.match(/MissingEname=([^&]*)/);
       var askPost = location.search.match(/MissingEpost=([^&]*)/);
       if (askName && askName.length > 1 && askPost && askPost.length > 1) {
+         if (!(/[\?\&]post%5[bB]one%5[dD]/.test(location.search))) {
+            var postone = $('#post_one').val();
+            var question = "";
+            postone = unescapeHTML(postone.replace(/<[^>]*>/g,''));
+            for (i=0; i<locale[lang].asked.length; i++) {
+               if (i>0) {
+                  question += " ";
+               }
+               if (locale[lang].asked[i] === "U") {
+                  question += askName[1];
+               }
+               else {
+                  question += locale[lang].asked[i];
+               }
+            }
+            question += ": " + postone;
+            $('#post_one').val(question);
+         }
          var title = $('#left_column h1:first');
          title.find('span.as_links').remove();
          title.html(title.html().replace(/[^<]*/,locale[lang].reblogAsk));

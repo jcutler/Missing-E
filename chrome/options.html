@@ -1266,8 +1266,8 @@ function doshow(component) {
 <option value="off">Do not send to Twitter</option>
 </select></td></tr>
 <tr><td colspan="2" class="odd">Always reblog long text posts as text</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_fullText" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td colspan="2" class="even experimental"><strong>[EXPERIMENTAL]</strong> Allow reblogging of <em>Ask</em> posts as text<br /><small><em>This feature currently only works from the dashboard</em></small></td><td class="even experimental"><input type="checkbox" name="MissingE_betterReblogs_reblogAsks" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
-<tr><td class="subopt experimental"></td><td class="odd experimental">Number of retries on failure to add reblog link to ask posts (default <span class="defRetries">4</span>)</td><td class="odd experimental"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_askRetries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td colspan="2" class="even">Allow reblogging of <em>Ask</em> posts as text<br /><small><em>This feature does not always work correctly from permalink pages</em></small></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_reblogAsks" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
+<tr><td class="subopt"></td><td class="odd">Number of retries on failure to add reblog link to ask posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_askRetries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>

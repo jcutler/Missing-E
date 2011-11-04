@@ -109,6 +109,43 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
                   '.MissingE_reblog_fail .half ' +
                      '{ background-position:-50px 0; }';
    document.getElementsByTagName('head')[0].appendChild(st);
+   chrome.extension.onRequest.addListener(function(request) {
+      if (request.greeting !== "asker") { return; }
+      if (request.name && request.name !== "") {
+         document.addEventListener('mousedown', function(e) {
+            var trg;
+            if (e.target.tagName === "A" &&
+                /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.href)) {
+               trg = e.target;
+            }
+            else if (e.target.parentNode &&
+                     e.target.parentNode.tagName === "A" &&
+                     /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.href)) {
+               trg = e.target.parentNode;
+            }
+            else if (e.target.parentNode &&
+                     e.target.parentNode.parentNode &&
+                     e.target.parentNode.parentNode.tagName === "A" &&
+                     /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.parentNode.href)) {
+               trg = e.target.parentNode.parentNode;
+            }
+            if (trg) {
+               if (/MissingEname=/.test(trg.href)) {
+                  return;
+               }
+               if (/\?/.test(trg.href)) {
+                  trg.href += "&";
+               }
+               else {
+                  trg.href += "?";
+               }
+               trg.href = trg.href.replace(/\?/,'/text?');
+               trg.href += "MissingEname=" + request.name;
+               trg.href += "&MissingEpost=" + encodeURIComponent(request.url);
+            }
+         }, false);
+      }
+   });
    if (!addTags()) {
       document.addEventListener('MissingEaddReblog',function(e){
          var item = e.target;
@@ -117,5 +154,26 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
          }
       }, false);
    }
+}
+else if (window.top === window) {
+   var myasker = document.getElementsByClassName('asker');
+   var name = "";
+   var i;
+   for (i=0; i<myasker.length; i++) {
+      if (myasker[i].tagName === "A") {
+         if (!(/[^a-zA-Z0-9\-]/.test(myasker[i].innerHTML))) {
+            name = myasker[i].innerHTML;
+            break;
+         }
+      }
+   }
+   if (name === "") {
+      myasker = document.body.innerHTML
+                     .match(/<a href="[^"]*">([a-zA-Z0-9\-]+)<\/a>\s*asked\:/);
+      if (myasker && myasker.length > 1) {
+         name = myasker[1];
+      }
+   }
+   chrome.extension.sendRequest({greeting: "asker", name: name, url: location.href});
 }
 
