@@ -8,6 +8,7 @@
    "permissions": [
       "management",
       "tabs",
+      "clipboardRead",
       "http://*/*",
       "http://*/"
    ],

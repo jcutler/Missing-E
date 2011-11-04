@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Missing e - Copy Settings</title>
+<style type="text/css">
+#options { width:0; height:0; border:0; }
+</style>
+<script type="text/javascript">
+
+function copyOptions() {
+   chrome.extension.sendRequest({greeting: "getOptionsXML"}, function(response) {
+      var options = document.getElementById("options");
+      response = response.replace(/&/g,"&amp;").replace(/</g,"&lt;")
+                  .replace(/>/g,"&gt;").replace(/\n/g,"<br />");
+      options.contentDocument.open("text/plain");
+      options.contentDocument.write(response);
+      options.contentDocument.close();
+      options.contentDocument.execCommand("selectAll");
+      options.contentDocument.execCommand("copy");
+      window.close();
+   });
+}
+
+function pasteOptions() {
+   var options = document.getElementById("options");
+   options.contentDocument.open("text/plain");
+   options.contentDocument.close();
+   options.contentDocument.body.contentEditable = true;
+   options.contentDocument.execCommand("selectAll");
+   options.contentDocument.execCommand("paste");
+   var settings = options.contentDocument.body.innerHTML;
+   settings = settings.replace(/<\/?div>/g,"\n")
+            .replace(/<br\s*\/?>/g,"\n").replace(/&gt;/g,">")
+            .replace(/&lt;/g,"<").replace(/&nbsp;/g," ")
+            .replace(/&amp;/g,"&");
+   console.log(settings);
+   chrome.extension.sendRequest({greeting:"sendOptionsXML", data: settings});
+   window.close();
+}
+
+chrome.extension.onRequest.addListener(function(request) {
+   if (request.greeting === "exportOptions") {
+      copyOptions();
+   }
+   else if (request.greeting === "importOptions") {
+      pasteOptions();
+   }
+});
+</script>
+</head>
+<body>
+<iframe id="options" src="options.html"></iframe>
+</body>
+</html>

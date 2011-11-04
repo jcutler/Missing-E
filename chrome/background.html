@@ -89,6 +89,169 @@ function debug(msg) {
    }
 }
 
+function importOptionsXML() {
+   chrome.tabs.create({url: chrome.extension.getURL("getOptions.html"), selected:false}, function(tab) {
+      chrome.tabs.sendRequest(tab.id, {greeting: "importOptions"});
+   });
+}
+
+function exportOptionsXML() {
+   chrome.tabs.create({url: chrome.extension.getURL("getOptions.html"), selected:false}, function(tab) {
+      chrome.tabs.sendRequest(tab.id, {greeting: "exportOptions"});
+   });
+}
+
+function isInternalSetting(setting) {
+   return !/^MissingE_/.test(setting) ||
+          setting === "MissingE_version" ||
+          /MissingE_externalVersion/.test(setting) ||
+          setting === "MissingE_compatCheck" ||
+          !/^[a-zA-Z0-9_]*$/.test(setting);
+}
+
+function sendOptionsXML(sendResponse) {
+   var setting;
+   var output = '<?xml version="1.0"?>\n<missing-e>\n';
+   for (setting in localStorage) {
+      if (localStorage.hasOwnProperty(setting)) {
+         if (!isInternalSetting(setting)) {
+            var value = localStorage[setting].replace(/&/g,"&amp;")
+               .replace(/</g,"&lt;").replace(/>/,"&gt;");
+            output += '<setting>\n';
+            output += '<name>' + setting + '</name>\n';
+            output += '<value>' + value + '</value>\n';
+            output += '</setting>\n';
+         }
+      }
+   }
+   output += '</missing-e>';
+   sendResponse(output);
+   chrome.tabs.create({url:chrome.extension.getURL("options.html")});
+}
+
+function receiveOptionsXML(request) {
+   var i, state;
+   var ROOT=0,SETTING=1,HASNAME=2,HASVALUE=4;
+   var failed = false;
+   var currentSetting;
+   var currentVal = null;
+   var settings = {};
+   var data = request.data.replace(/\n\s*/g,"\n").replace(/\s*\n/g,"\n")
+                  .replace(/^\s*/,"").replace(/\s*$/,"");
+   var lines = data.split("\n");
+   
+   if (!/^\s*<\?\s*xml\s*version\s*=\s*"1\.0"\s*\?>\s*$/.test(lines[0]) ||
+       !/^\s*<\s*missing\-e\s*>\s*$/.test(lines[1]) ||
+       !/^\s*<\/\s*missing\-e\s*>\s*$/.test(lines[lines.length-1])) {
+      console.log(lines);
+      alert("Malformed settings imported from clipboard!\n" +
+            "Please copy again and retry import.");
+   }
+   state = ROOT;
+   for (i=2; i<lines.length-1; i++) {
+      var line = lines[i].replace(/^\s*/,"").replace(/\s*$/,"");
+      if (state === ROOT) {
+         if (!/<\s*setting\s*>/.test(line)) {
+            alert("Malformed imported settings (line " + (i+1) + ")\n\n" +
+                  "'" + lines[i] + "'");
+            failed = true;
+            break;
+         }
+         else {
+            state = SETTING;
+         }
+      }
+      else if ((state & SETTING) === SETTING) {
+         if (((state & HASNAME) === HASNAME &&
+              /^\s*<\s*name\s*>/.test(line)) ||
+             ((state & HASVALUE) === HASVALUE &&
+              /^<\s*value\s*>/.test(line))) {
+            alert("Duplicate setting node (line " + (i+1) + ")\n\n" +
+                  "'" + lines[i] + "'");
+            failed = true;
+            break;
+         }
+         else if (/^<\/\s*setting\s*>$/.test(line)) {
+            if ((state & HASNAME) === 0 ||
+                (state & HASVALUE) === 0) {
+               alert("Setting missing name or value (line " + (i+1) + ")\n\n" +
+                     "'" + lines[i] + "'");
+               failed = true;
+               break;
+            }
+            else {
+               currentSetting = null;
+               currentVal = null;
+               state = ROOT;
+            }
+         }
+         else {
+            var name = line.match(/^<\s*name\s*>([^<]*)<\/\s*name\s*>$/);
+            var val = line.match(/^<\s*value\s*>([^<]*)<\/\s*value\s*>$/);
+            if (name && name.length > 1) {
+               if (isInternalSetting(name[1])) {
+                  alert("Invalid setting name (line " + (i+1) + ")\n\n" +
+                        "'" + lines[i] + "'");
+                  failed = true;
+                  break;
+               }
+               currentSetting = name[1];
+               state = state | HASNAME;
+               if (settings.hasOwnProperty(currentSetting)) {
+                  alert("Duplicate setting node (line " + (i+1) + ")\n\n" +
+                        "'" + lines[i] + "'");
+                  failed = true;
+                  break;
+               }
+               if (currentVal !== null && currentVal !== undefined) {
+                  settings[currentSetting] = currentVal;
+                  currentVal = null;
+               }
+            }
+            else if (val && val.length > 1) {
+               state = state | HASVALUE;
+               var currentVal = val[1].replace(/&lt;/g,"<").replace(/&gt;/g,">")
+                                       .replace(/&amp;/g,"&");
+               if ((state & HASNAME) === HASNAME) {
+                  settings[currentSetting] = currentVal;
+                  currentVal = null;
+               }
+            }
+            else {
+               alert("Malformed imported settings (line " + (i+1) + ")\n\n" +
+                     "'" + lines[i] + "'");
+               failed = true;
+               break;
+            }
+         }
+      }
+   }
+   if (!failed) {
+      for (i in settings) {
+         if (settings.hasOwnProperty(i)) {
+            if (!localStorage.hasOwnProperty(i) ||
+                localStorage[i] !== settings[i]) {
+               var old = "'" + localStorage[i] + "'";
+               if (localStorage[i] === undefined) {
+                  old = "undefined";
+               }
+               console.log(i + " [" + old + " => '" +
+                           settings[i] + "']");
+               localStorage[i] = settings[i];
+            }
+         }
+      }
+      for (i in localStorage) {
+         if (localStorage.hasOwnProperty(i) &&
+             !settings.hasOwnProperty(i) &&
+             !isInternalSetting(i)) {
+            localStorate.removeItem(i);
+         }
+      }
+      chrome.tabs.create({url:chrome.extension.getURL("options.html")});
+   }
+}
+
 function doTags(stamp, id, sendResponse) {
    if (!stamp.tags) {
       debug("Cache entry does not have tags");
@@ -899,6 +1062,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "version") {
       sendResponse({uptodate:versionCompare(getStorage("MissingE_version",'0'),
                                             request.v) >= 0});
+   }
+   else if (request.greeting == "getOptionsXML") {
+      sendOptionsXML(sendResponse);
+   }
+   else if (request.greeting == "sendOptionsXML") {
+      receiveOptionsXML(request);
    }
    else if (request.greeting == "sendAsker") {
       chrome.tabs.sendRequest(sender.tab.id, {greeting: "sendAsker",
