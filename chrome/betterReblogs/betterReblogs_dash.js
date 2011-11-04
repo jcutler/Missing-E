@@ -45,7 +45,7 @@ function addAskReblog(item) {
          return;
       }
       var question = "";
-      var asker = $(item).find("a.post_question_asker").text();
+      var asker = $(item).find(".post_question_asker").text();
       for (i=0; i<locale[lang].asked.length; i++) {
          if (i>0) {
             question += " ";
