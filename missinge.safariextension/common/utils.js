@@ -73,3 +73,14 @@ function escapeHTML(str) {
    return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
             .replace(/>/,'&gt;').replace(/</,'&lt;');
 }
+
+function unescapeHTML(str) {
+   var ret = str;
+   while (/&#[0-9]*;/.test(ret)) {
+      var entity = ret.match(/&#([0-9]+);/);
+      var symbol = String.fromCharCode(entity[1]);
+      ret = ret.replace(entity[0], symbol);
+   }
+   return ret.replace(/&amp;/g,'&').replace(/&quot;/g,'"')
+            .replace(/&gt;/g,'>').replace(/&lt;/,'<');
+}

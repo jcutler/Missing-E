@@ -446,7 +446,7 @@ function MissingE_betterReblogs_dash_doStartup(experimental, passTags,
          reblogTextFull(this);
       });
    }
-   if (experimental === 1 && reblogAsks === 1) {
+   if (reblogAsks === 1) {
       safari.self.addEventListener("message", receiveAskReblog, false);
       $('#posts li.post div.post_controls a.MissingE_betterReblogs_retryAsk')
          .live('click', function() {

@@ -53,6 +53,10 @@ var cache = {};
 var cacheElements = 0;
 var cacheClear;
 var clearQueues;
+var askerTable = {};
+var askerWaiters = {};
+var askerTableCopy = {};
+var askerTableClear;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
@@ -83,6 +87,22 @@ var prevVersion = getStorage('MissingE_installedVersion',null);
 function setStorage(key, val) {
    safari.extension.settings[key] = val;
 }
+
+askerTableClear = setInterval(function() {
+   var i;
+   for (i in askerTableCopy) {
+      if (askerTableCopy.hasOwnProperty(i) &&
+          askerTable.hasOwnProperty(i)) {
+         delete askerTable[i];
+      }
+   }
+   askerTableCopy = {};
+   for (i in askerTable) {
+      if (askerTable.hasOwnProperty(i)) {
+         askerTableCopy[i] = true;
+      }
+   }
+}, fiveMinutes);
 
 cacheClear = setInterval(function() {
    cache = {};
@@ -924,6 +944,54 @@ function handleRequest(request) {
          {uptodate:(versionCompare(getStorage("MissingE_version",'0'),
                                    request.v) >= 0)});
    }
+   else if (request.name == "getAsker") {
+      if (askerTable[request.target.url]) {
+         debug("Found saved asker for '" + request.target.url + "'");
+         var name = askerTable[request.target.url].asker;
+         if (--askerTable[request.target.url].count == 0) {
+            debug("Deleting saved asker for '" + request.target.url + "'");
+            delete askerTable[request.target.url];
+         }
+         if (name && name !== "") {
+            request.target.page.dispatchMessage("asker",
+               {name: name, url: request.target.url});
+         }
+      }
+      else {
+         if (askerWaiters[request.target.url]) {
+            debug("Creating new askerWaiter for '" + request.target.url + "'");
+            askerWaiters[request.target.url].push(request);
+         }
+         else {
+            debug("Adding askerWaiter for '" + request.target.url + "'");
+            askerWaiters[request.target.url] = [request];
+         }
+      }
+   }
+   else if (request.name == "asker") {
+      if (askerWaiters[request.target.url]) {
+         debug("Found existing askerWaiter for '" + request.target.url + "'");
+         var r = askerWaiters[request.target.url].pop();
+         if (askerWaiters[request.target.url].length === 0) {
+            debug("Deleting existing askerWaiter queue for '" + request.target.url + "'");
+            delete askerWaiters[request.target.url];
+         }
+         if (request.message.name && request.message.name !== "") {
+            r.target.page.dispatchMessage("asker",
+               {name: request.message.name, url: request.target.url});
+         }
+      }
+      else {
+         if (askerTable[request.target.url]) {
+            debug("Found existing askerTable entry for '" + request.target.url + "'");
+            askerTable[request.target.url].count++;
+         }
+         else {
+            debug("Creating askerTable entry for '" + request.target.url + "'");
+            askerTable[request.target.url] = {asker: request.message.name, count:1};
+         }
+      }
+   }
    else if (request.name == "update") {
       request.target.page.dispatchMessage("update",
          {update:versionCompare(getStorage("MissingE_externalVersion",'0'),
@@ -963,7 +1031,7 @@ function handleRequest(request) {
             today.setUTCHours(today.getUTCHours()-5);
          }
          dt.day = today.getUTCDay();
-         stamp = request.message.stamp.replace(/,/,'').split(" ");
+         var stamp = request.message.stamp.replace(/,/,'').split(" ");
          for (i=0; i<stamp.length; i++) {
             if (/[0-9][0-9][0-9][0-9]$/.test(stamp[i])) {
                dt.year = parseInt(stamp[i]);
@@ -1641,6 +1709,9 @@ function onStart(currVersion, prevVersion) {
 safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
                                              "common/widenIframe.css",
                                              "http://*");
+safari.extension.addContentScriptFromURL(safari.extension.baseURI +
+                                         "betterReblogs/permalink.js",
+                                         "http://*", null, true);
 
 onStart(currVersion, prevVersion);
 getExternalVersion();

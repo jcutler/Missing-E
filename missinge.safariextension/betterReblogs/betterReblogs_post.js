@@ -104,6 +104,44 @@ function receiveTags(response) {
    }
 }
 
+function receiveAsk(response) {
+   if (response.name !== "asker") { return; }
+   if (response.message.name && response.message.name !== "") {
+      document.addEventListener('mousedown', function(e) {
+         var trg;
+         if (e.target.tagName === "A" &&
+             /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.href)) {
+            trg = e.target;
+         }
+         else if (e.target.parentNode &&
+                  e.target.parentNode.tagName === "A" &&
+                  /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.href)) {
+            trg = e.target.parentNode;
+         }
+         else if (e.target.parentNode &&
+                  e.target.parentNode.parentNode &&
+                  e.target.parentNode.parentNode.tagName === "A" &&
+                  /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.parentNode.href)) {
+            trg = e.target.parentNode.parentNode;
+         }
+         if (trg) {
+            if (/MissingEname=/.test(trg.href)) {
+               return;
+            }
+            if (/\?/.test(trg.href)) {
+               trg.href += "&";
+            }
+            else {
+               trg.href += "?";
+            }
+            trg.href = trg.href.replace(/\?/,'/text?');
+            trg.href += "MissingEname=" + response.message.name;
+            trg.href += "&MissingEpost=" + encodeURIComponent(response.message.url);
+        }
+      }, false);
+   }
+}
+
 function MissingE_betterReblogs_post_doStartup(frameURL) {
    if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) &&
        location.href === frameURL) {
@@ -123,7 +161,9 @@ function MissingE_betterReblogs_post_doStartup(frameURL) {
                      '.MissingE_reblog_fail .half ' +
                      '{ background-position:-50px 0; }';
       document.getElementsByTagName('head')[0].appendChild(st);
+      safari.self.addEventListener("message", receiveAsk, false);
       safari.self.addEventListener("message", receiveTags, false);
+      safari.self.tab.dispatchMessage("getAsker");
       if (!addTags()) {
          document.addEventListener('MissingEaddReblog',function(e){
             var item = e.target;
@@ -134,4 +174,3 @@ function MissingE_betterReblogs_post_doStartup(frameURL) {
       }
    }
 }
-
