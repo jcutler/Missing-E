@@ -878,30 +878,40 @@ function performCommand(cmd) {
 }
 
 function isEDTfromUTC(dt) {
+   var add;
    var start = new Date("03/01/" + dt.getUTCFullYear() + " 07:00:00 UTC");
    var day = start.getDay();
-   start.setUTCDate(start.getUTCDate()+14-day);
+   if (day === 0) { add = 7; }
+   else { add = 14-day; }
+   start.setUTCDate(start.getUTCDate()+add);
    var end = new Date("11/01/" + dt.getUTCFullYear() + " 06:00:00 UTC");
    day = end.getDay();
-   end.setUTCDate(end.getUTCDate()+7-day);
+   if (day === 0) { add = 0; }
+   else { add = 7-day; }
+   end.setUTCDate(end.getUTCDate()+add);
    return (dt>=start && dt<end);
 }
 
-function isEDT(year,month,day,hours) {
+function isEDT(year,month,date,hours) {
+   var add;
    var start = new Date("03/01/" + year + " 07:00:00 UTC");
    var day = start.getDay();
-   start.setUTCDate(start.getUTCDate()+14-day);
+   if (day === 0) { add = 7; }
+   else { add = 14-day; }
+   start.setUTCDate(start.getUTCDate()+add);
    var end = new Date("11/01/" + year + " 06:00:00 UTC");
    day = end.getDay();
-   end.setUTCDate(end.getUTCDate()+7-day);
+   if (day === 0) { add = 0; }
+   else { add = 7-day; }
+   end.setUTCDate(end.getUTCDate()+add);
    if (month>start.getUTCMonth()+1 && month<end.getUTCMonth()+1) {
       return true;
    }
    else if (month === start.getUTCMonth()+1) {
-      if (day > start.getUTCDate()) {
+      if (date > start.getUTCDate()) {
          return true;
       }
-      else if (day < start.getUTCDate()) {
+      else if (date < start.getUTCDate()) {
          return false;
       }
       else {
@@ -914,10 +924,10 @@ function isEDT(year,month,day,hours) {
       }
    }
    else if (month === end.getUTCMonth()+1) {
-      if (day < end.getUTCDate()) {
+      if (date < end.getUTCDate()) {
          return true;
       }
-      else if (day > end.getUTCDate()) {
+      else if (date > end.getUTCDate()) {
          return false;
       }
       else {
