@@ -60,7 +60,7 @@ width:auto !important;
 max-width:none !important;
 } 
 
-li.new_post, #rescued_post {
+li.new_post, #rescued_post, #facebook_notice {
 width:540px;
 }
 
