@@ -90,8 +90,12 @@ function debug(msg) {
 }
 
 function importOptionsXML() {
-   chrome.tabs.create({url: chrome.extension.getURL("getOptions.html"), selected:false}, function(tab) {
-      chrome.tabs.sendRequest(tab.id, {greeting: "importOptions"});
+   closeTab(chrome.extension.getURL("getOptions.html"));
+   chrome.windows.create({url: chrome.extension.getURL("getOptions.html"),
+         width:700, height:500, focused: true, type: "popup"}, function(window) {
+      chrome.tabs.getSelected(window.id, function(tab) {
+         chrome.tabs.sendRequest(tab.id, {greeting: "importOptions"});
+      });
    });
 }
 
@@ -126,7 +130,6 @@ function sendOptionsXML(sendResponse) {
    }
    output += '</missing-e>';
    sendResponse(output);
-   chrome.tabs.create({url:chrome.extension.getURL("options.html")});
 }
 
 function receiveOptionsXML(request) {
@@ -143,7 +146,7 @@ function receiveOptionsXML(request) {
    if (!/^\s*<\?\s*xml\s*version\s*=\s*"1\.0"\s*\?>\s*$/.test(lines[0]) ||
        !/^\s*<\s*missing\-e\s*>\s*$/.test(lines[1]) ||
        !/^\s*<\/\s*missing\-e\s*>\s*$/.test(lines[lines.length-1])) {
-      console.log(lines);
+      failed = true;
       alert("Malformed settings imported from clipboard!\n" +
             "Please copy again and retry import.");
    }
@@ -245,7 +248,7 @@ function receiveOptionsXML(request) {
          if (localStorage.hasOwnProperty(i) &&
              !settings.hasOwnProperty(i) &&
              !isInternalSetting(i)) {
-            localStorate.removeItem(i);
+            localStorage.removeItem(i);
          }
       }
       chrome.tabs.create({url:chrome.extension.getURL("options.html")});
@@ -1072,6 +1075,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "version") {
       sendResponse({uptodate:versionCompare(getStorage("MissingE_version",'0'),
                                             request.v) >= 0});
+   }
+   else if (request.greeting == "postMessage") {
+      alert(request.text);
    }
    else if (request.greeting == "getOptionsXML") {
       sendOptionsXML(sendResponse);
