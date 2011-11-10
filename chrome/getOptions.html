@@ -1,138 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+ - 'Missing e' Extension
+ -
+ - Copyright 2011, Jeremy Cutler
+ - Released under the GPL version 2 licence.
+ - SEE: GPL-LICENSE.txt
+ -
+ - This file is part of 'Missing e'.
+ -
+ - 'Missing e' is free software: you can redistribute it and/or modify
+ - it under the terms of the GNU General Public License as published by
+ - the Free Software Foundation, either version 2 of the License, or
+ - (at your option) any later version.
+ -
+ - 'Missing e' is distributed in the hope that it will be useful,
+ - but WITHOUT ANY WARRANTY; without even the implied warranty of
+ - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ - GNU General Public License for more details.
+ -
+ - You should have received a copy of the GNU General Public License
+ - along with 'Missing e'.  If not, see [http://www.gnu.org/licenses/].
+-->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Missing e - Import Settings</title>
+<title>Missing e - Export Settings</title>
 <style type="text/css">
 body {
 background-color:#2C4762;
 }
-
-#content {
-width:600px;
-margin:0 auto;
-padding:10px 0;
-}
-
-#options {
-visibility:hidden;
-width:600px;
-height:400px;
-border:0;
-border-radius:8px;
-background-color:#ffffff;
-padding:4px 4px 4px 0;
-}
-
-#saver {
-margin-top:10px;
-display:none;
-width:600px;
-text-align:center;
-}
-
-#saver button {
-color:#529214;
-border:1px solid #CCC;
-border-top:1px solid #DDD;
-border-left:1px solid #DDD;
-font:15px Helvetica,Arial,sans-serif;
-background-color:#f5f5f5;
-line-height:36px;
-height:36px;
-padding:0 14px 0 12px;
-border-radius:4px;
-margin:0 4px;
-cursor:pointer;
-}
-
-#saver button:hover {
-background-color:#e6efc2;
-border:1px solid #c6d880;
-}
-
-#saver #cancel {
-color:#d12f19;
-}
-
-#saver #cancel:hover {
-background-color:#fbe3e4;
-border:1px solid #fbc2c4;
-}
 </style>
-<script type="text/javascript">
-function clearHelpText() {
-   var options = document.getElementById("options");
-   if (options.contentDocument.getElementById("starter")) {
-      options.contentDocument.body.innerHTML = "";
-   }
-}
-function getPastedOptions() {
-   var options = document.getElementById("options");
-   var settings = options.contentDocument.body.innerHTML;
-   settings = settings.replace(/<\/?div>/g,"\n")
-            .replace(/<br\s*\/?>/g,"\n").replace(/&gt;/g,">")
-            .replace(/&lt;/g,"<").replace(/&nbsp;/g," ")
-            .replace(/&amp;/g,"&");
-   console.log(settings);
-   chrome.extension.sendRequest({greeting:"sendOptionsXML", data: settings});
-   window.close();
-}
-
-function copyOptions() {
-   chrome.extension.sendRequest({greeting: "getOptionsXML"}, function(response) {
-      var options = document.getElementById("options");
-      response = response.replace(/&/g,"&amp;").replace(/</g,"&lt;")
-                  .replace(/>/g,"&gt;").replace(/\n/g,"<br />");
-      options.contentDocument.open("text/plain");
-      options.contentDocument.write(response);
-      options.contentDocument.close();
-      options.contentDocument.execCommand("selectAll");
-      options.contentDocument.execCommand("copy");
-      chrome.extension.sendRequest({greeting: "postMessage", text: "Exported 'Missing e' settings now in the clipboard.\n\nPaste into a new text file or in the \"Import Settings\" page on another 'Missing e' extension."});
-      window.close();
-   });
-}
-
-function pasteOptions() {
-   document.getElementById("saver").style.display = "block";
-   var savebutton = document.getElementById("saveOptions");
-   var cancelbutton = document.getElementById("cancel");
-   var options = document.getElementById("options");
-   options.style.visibility = "visible";
-   options.contentDocument.body.contentEditable = true;
-   options.contentDocument.body.innerHTML = '<div id="starter" ' +
-      'style="width:100%;font:40px bold Arial,Helvetica,sans-serif;' +
-      'color:#CCC;text-align:center;">Paste <em>Missing e</em> ' +
-      'settings here<br />Then click <strong>Save</strong></div>';
-   options.contentDocument.body.addEventListener("focus", function() {
-      clearHelpText();
-   }, false);
-   cancelbutton.addEventListener("click", function() {
-      window.close();
-   }, false);
-   savebutton.addEventListener("click", function() {
-      clearHelpText();
-      getPastedOptions();
-   }, false);
-}
-
-chrome.extension.onRequest.addListener(function(request) {
-   if (request.greeting === "exportOptions") {
-      copyOptions();
-   }
-   else if (request.greeting === "importOptions") {
-      pasteOptions();
-   }
-});
-</script>
 </head>
 <body>
-<div id="content">
-<iframe id="options" src=""></iframe>
-<div id="saver">
-<button id="saveOptions">Save</button>
-<button id="cancel">Cancel</button>
-</div>
-</div>
 </body>
 </html>

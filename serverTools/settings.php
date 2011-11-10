@@ -1,0 +1,36 @@
+<?php
+
+header("Cache-Control: public");
+header("Content-Type: text/xml");
+header("Content-Disposition: attachment; filename=settings.xml");
+
+if ($_FILES["import"]) {
+   if ($_FILES["import"]["error"] == UPLOAD_ERR_OK &&
+       is_uploaded_file($_FILES["import"]["tmp_name"])) {
+      echo file_get_contents($_FILES["import"]["tmp_name"]);
+   }
+}
+else {
+   echo "<?xml version=\"1.0\"?>\n";
+   echo "<missing-e>\n";
+   $patterns = array();
+   $repl = array();
+   
+   $patterns[0] = "/&/";
+   $patterns[1] = "/</";
+   $patterns[2] = "/>/";
+   
+   $repl[0]     = "&amp;";
+   $repl[1]     = "&lt;";
+   $repl[2]     = "&gt;";
+   
+   foreach ($_GET as $key => $value) {
+      echo "<setting>\n";
+      echo "<name>" . $key . "</name>\n";
+      echo "<value>" . preg_replace($patterns,$repl,$value) . "</value>\n";
+      echo "</setting>\n";
+   }
+   
+   echo "</missing-e>";
+}
+?>
