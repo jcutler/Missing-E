@@ -1,8 +1,7 @@
 <?php
 
-header("Cache-Control: public");
 header("Content-Type: text/xml");
-header("Content-Disposition: attachment; filename=settings.xml");
+header("Cache-Control: public");
 
 if ($_FILES["import"]) {
    if ($_FILES["import"]["error"] == UPLOAD_ERR_OK &&
@@ -11,6 +10,7 @@ if ($_FILES["import"]) {
    }
 }
 else {
+   header("Content-Disposition: attachment; filename=settings.xml");
    echo "<?xml version=\"1.0\"?>\n";
    echo "<missing-e>\n";
    $patterns = array();
