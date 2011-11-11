@@ -65,6 +65,16 @@ function getVersion() {
    return require("self").version;
 }
 
+function parameterize(input) {
+   var p = [];
+   for (i in input) {
+      if (input.hasOwnProperty(i)) {
+         p.push(encodeURIComponent(i)+"="+encodeURIComponent(input[i]));
+      }
+   }
+   return p.join("&").replace(/%20/g,"+");
+}
+
 function getStorage(key, defVal) {
    return ps.get(key, defVal);
 }
@@ -130,6 +140,81 @@ var months = ["Jan",
               "Oct",
               "Nov",
               "Dec"];
+
+function getAllSettings() {
+   var settings = {};
+   settings.greeting = "all-settings";
+   settings.MissingE_experimentalFeatures_enabled = getStorage("extensions.MissingE.experimentalFeatures.enabled",0);
+   for (i=0; i<componentList.length; i++) {
+      settings["MissingE_" + componentList[i] + "_enabled"] =
+         getStorage("extensions.MissingE." + componentList[i] + ".enabled", 1);
+   }
+   settings.MissingE_askFixes_scroll = getStorage("extensions.MissingE.askFixes.scroll",1);
+   settings.MissingE_askFixes_betterAnswers = getStorage("extensions.MissingE.askFixes.betterAnswers",0);
+   settings.MissingE_askFixes_tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
+   settings.MissingE_askFixes_defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
+   settings.MissingE_askFixes_askDash = getStorage("extensions.MissingE.askFixes.askDash",0);
+   settings.MissingE_askFixes_massDelete = getStorage("extensions.MissingE.askFixes.massDelete",1);
+   settings.MissingE_bookmarker_format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
+   settings.MissingE_bookmarker_addBar = getStorage("extensions.MissingE.bookmarker.addBar",1);
+   settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
+   settings.MissingE_dashboardFixes_wrapTags = getStorage("extensions.MissingE.dashboardFixes.wrapTags",1);
+   settings.MissingE_dashboardFixes_replaceIcons = getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1);
+   settings.MissingE_dashboardFixes_timeoutAJAX = getStorage("extensions.MissingE.dashboardFixes.timeoutAJAX",1);
+   settings.MissingE_dashboardFixes_timeoutLength = getStorage("extensions.MissingE.dashboardFixes.timeoutLength",defaultTimeout);
+   settings.MissingE_dashboardFixes_postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
+   settings.MissingE_dashboardFixes_reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
+   settings.MissingE_dashboardFixes_widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
+   settings.MissingE_dashboardFixes_queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
+   settings.MissingE_dashboardFixes_expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
+   settings.MissingE_dashboardFixes_massDelete = getStorage("extensions.MissingE.dashboardFixes.massDelete",1);
+   settings.MissingE_dashboardFixes_sortableNotes = getStorage("extensions.MissingE.dashboardFixes.sortableNotes",1);
+   settings.MissingE_sidebarTweaks_retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
+   settings.MissingE_sidebarTweaks_addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
+   settings.MissingE_sidebarTweaks_slimSidebar = getStorage("extensions.MissingE.sidebarTweaks.slimSidebar",0);
+   settings.MissingE_sidebarTweaks_followingLink = getStorage("extensions.MissingE.sidebarTweaks.followingLink",0);
+   settings.MissingE_magnifier_retries = getStorage("extensions.MissingE.magnifier.retries",defaultRetries);
+   settings.MissingE_magnifier_magnifyAvatars = getStorage("extensions.MissingE.magnifier.magnifyAvatars",0);
+   settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
+   settings.MissingE_dashLinksToTabs_sidebar = getStorage("extensions.MissingE.dashLinksToTabs.sidebar",0);
+   settings.MissingE_dashLinksToTabs_reblogLinks = getStorage("extensions.MissingE.dashLinksToTabs.reblogLinks",0);
+   settings.MissingE_dashLinksToTabs_editLinks = getStorage("extensions.MissingE.dashLinksToTabs.editLinks",0);
+   settings.MissingE_timestamps_retries = getStorage("extensions.MissingE.timestamps.retries",defaultRetries);
+   settings.MissingE_timestamps_format = getStorage("extensions.MissingE.timestamps.format",defaultFormat);
+   settings.MissingE_postingFixes_photoReplies = getStorage("extensions.MissingE.postingFixes.photoReplies",1);
+   settings.MissingE_postingFixes_uploaderToggle = getStorage("extensions.MissingE.postingFixes.uploaderToggle",1);
+   settings.MissingE_postingFixes_addUploader = getStorage("extensions.MissingE.postingFixes.addUploader",1);
+   settings.MissingE_postingFixes_quickButtons = getStorage("extensions.MissingE.postingFixes.quickButtons",1);
+   settings.MissingE_postingFixes_blogSelect = getStorage("extensions.MissingE.postingFixes.blogSelect",0);
+   settings.MissingE_postingFixes_subEdit = getStorage("extensions.MissingE.postingFixes.subEdit",1);
+   settings.MissingE_postingFixes_subEditRetries = getStorage("extensions.MissingE.postingFixes.subEditRetries",defaultRetries);
+   settings.MissingE_postingFixes_tagQueuedPosts = getStorage("extensions.MissingE.postingFixes.tagQueuedPosts",0);
+   settings.MissingE_postingFixes_queueTags = getStorage("extensions.MissingE.postingFixes.queueTags",'');
+   settings.MissingE_reblogYourself_postPage = getStorage("extensions.MissingE.reblogYourself.postPage",1);
+   settings.MissingE_reblogYourself_dashboard = getStorage("extensions.MissingE.reblogYourself.dashboard",1);
+   settings.MissingE_reblogYourself_retries = getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries);
+   settings.MissingE_postCrushes_prefix = getStorage("extensions.MissingE.postCrushes.prefix","Tumblr Crushes:");
+   settings.MissingE_postCrushes_crushSize = getStorage("extensions.MissingE.postCrushes.crushSize",1);
+   settings.MissingE_postCrushes_addTags = getStorage("extensions.MissingE.postCrushes.addTags",1);
+   settings.MissingE_postCrushes_showPercent = getStorage("extensions.MissingE.postCrushes.showPercent",1);
+   settings.MissingE_replyReplies_showAvatars = getStorage("extensions.MissingE.replyReplies.showAvatars",1);
+   settings.MissingE_replyReplies_smallAvatars = getStorage("extensions.MissingE.replyReplies.smallAvatars",1);
+   settings.MissingE_replyReplies_addTags = getStorage("extensions.MissingE.replyReplies.addTags",1);
+   settings.MissingE_replyReplies_defaultTags = getStorage("extensions.MissingE.replyReplies.defaultTags",'');
+   settings.MissingE_replyReplies_newTab = getStorage("extensions.MissingE.replyReplies.newTab",1);
+   settings.MissingE_betterReblogs_passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
+   settings.MissingE_betterReblogs_retries = getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries);
+   settings.MissingE_betterReblogs_autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
+   settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
+   settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0);
+   settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
+   settings.MissingE_betterReblogs_quickReblogForceTwitter = getStorage("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
+   settings.MissingE_betterReblogs_fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
+   settings.MissingE_betterReblogs_reblogAsks = getStorage("extensions.MissingE.betterReblogs.reblogAsks",0);
+   settings.MissingE_version = getStorage("extensions.MissingE.version",'');
+   settings.MissingE_betterReblogs_askRetries = getStorage("extensions.MissingE.betterReblogs.askRetries",defaultRetries);
+   return settings;
+}
 
 function collapseSettings(toPref, oldA, oldB) {
    if ((ps.isSet(oldA) || ps.isSet(oldB)) &&
@@ -253,6 +338,92 @@ function getFormattedDate(d, format, lang) {
             .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
             .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
    return ret;
+}
+
+function exportOptionsXML(theWorker) {
+   theWorker.postMessage({greeting: "exportOptions", url: "http://tools.missinge.infraware.ca/settings?" + parameterize(createOptionParams())});
+}
+
+function isInternalSetting(setting) {
+   return !/^MissingE_/.test(setting) ||
+          setting === "MissingE_version" ||
+          /MissingE_externalVersion/.test(setting) ||
+          setting === "MissingE_compatCheck" ||
+          !/^[a-zA-Z0-9_]*$/.test(setting);
+}
+
+function createOptionParams() {
+   var opts = {};
+   var currSettings = getAllSettings();
+   for (setting in currSettings) {
+      if (currSettings.hasOwnProperty(setting) &&
+          ps.isSet("extensions." + setting.replace(/_/g,".")) &&
+          !isInternalSetting(setting)) {
+         opts[setting] = currSettings[setting];
+      }
+   }
+   return opts;
+}
+
+function receiveOptions(message, theWorker) {
+   var changed, set, reset;
+   changed = set = reset = 0;
+   var settings = message.data;
+   var allSettings = getAllSettings();
+   var currSettings = getAllSettings();
+   for (i in currSettings) {
+      if (currSettings.hasOwnProperty(i) &&
+          !ps.isSet("extensions." + i.replace(/_/g,"."))) {
+         delete currSettings[i];
+      }
+   }
+   for (i in settings) {
+      if (settings.hasOwnProperty(i)) {
+         if (!currSettings.hasOwnProperty(i) ||
+             currSettings[i] !== settings[i]) {
+            var done = false;
+            if (typeof allSettings[i] === "number") {
+               var val = parseInt(settings[i]);
+               if (!isNaN(val)) {
+                  done = true;
+                  setStorage('extensions.' + i.replace(/_/g,"."), val);
+               }
+            }
+            else {
+               done = true;
+               setStorage('extensions.' + i.replace(/_/g,"."), settings[i]);
+            }
+            if (done) {
+               var old = "'" + currSettings[i] + "'";
+               if (currSettings[i] === undefined) {
+                  old = "undefined";
+                  set++;
+               }
+               else {
+                  changed++;
+               }
+               debug(i + " [" + old + " => '" +
+                           settings[i] + "']");
+            }
+         }
+      }
+   }
+   for (i in currSettings) {
+      if (currSettings.hasOwnProperty(i) &&
+          !settings.hasOwnProperty(i) &&
+          !isInternalSetting(i)) {
+         reset++;
+         ps.reset('extensions.' + i.replace(/_/g,"."));
+      }
+   }
+   if (set + changed + reset > 0) {
+      theWorker.postMessage({greeting:"importOptions",success:true,
+         msg:"Import complete.\n\n" + (set+changed+reset) + " change(s) made."});
+   }
+   else {
+      theWorker.postMessage({greeting:"importOptions",success:false,
+         msg:"No changes imported."});
+   }
 }
 
 function doTags(stamp, id, theWorker) {
@@ -1040,6 +1211,16 @@ function handleMessage(message, myWorker) {
                                getStorage("extensions.MissingE.version",'0')) > 0,
          msg:locale[message.lang]["update"]});
    }
+   else if (message.greeting == "exportOptions") {
+      exportOptionsXML(myWorker);
+   }
+   else if (message.greeting == "importOptions") {
+      receiveOptions(message, myWorker);
+   }
+   else if (message.greeting == "importOptions2") {
+
+
+   }
    else if (message.greeting == "getAsker") {
       myWorker.tab.attach({
          contentScriptFile: data.url("betterReblogs/permalink.js"),
@@ -1259,77 +1440,7 @@ function handleMessage(message, myWorker) {
       setStorage(key, message.val);
    }
    else if (message.greeting == "all-settings") {
-      var settings = {};
-      settings.greeting = "all-settings";
-      settings.MissingE_experimentalFeatures_enabled = getStorage("extensions.MissingE.experimentalFeatures.enabled",0);
-      for (i=0; i<componentList.length; i++) {
-         settings["MissingE_" + componentList[i] + "_enabled"] =
-            getStorage("extensions.MissingE." + componentList[i] + ".enabled", 1);
-      }
-      settings.MissingE_askFixes_scroll = getStorage("extensions.MissingE.askFixes.scroll",1);
-      settings.MissingE_askFixes_betterAnswers = getStorage("extensions.MissingE.askFixes.betterAnswers",0);
-      settings.MissingE_askFixes_tagAsker = getStorage("extensions.MissingE.askFixes.tagAsker",1);
-      settings.MissingE_askFixes_defaultTags = getStorage("extensions.MissingE.askFixes.defaultTags",'');
-      settings.MissingE_askFixes_askDash = getStorage("extensions.MissingE.askFixes.askDash",0);
-      settings.MissingE_askFixes_massDelete = getStorage("extensions.MissingE.askFixes.massDelete",1);
-      settings.MissingE_bookmarker_format = getStorage("extensions.MissingE.bookmarker.format",defaultFormat);
-      settings.MissingE_bookmarker_addBar = getStorage("extensions.MissingE.bookmarker.addBar",1);
-      settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
-      settings.MissingE_dashboardFixes_wrapTags = getStorage("extensions.MissingE.dashboardFixes.wrapTags",1);
-      settings.MissingE_dashboardFixes_replaceIcons = getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1);
-      settings.MissingE_dashboardFixes_timeoutAJAX = getStorage("extensions.MissingE.dashboardFixes.timeoutAJAX",1);
-      settings.MissingE_dashboardFixes_timeoutLength = getStorage("extensions.MissingE.dashboardFixes.timeoutLength",defaultTimeout);
-      settings.MissingE_dashboardFixes_postLinks = getStorage("extensions.MissingE.dashboardFixes.postLinks",1);
-      settings.MissingE_dashboardFixes_reblogReplies = getStorage("extensions.MissingE.dashboardFixes.reblogReplies",0);
-      settings.MissingE_dashboardFixes_widescreen = getStorage("extensions.MissingE.dashboardFixes.widescreen",0);
-      settings.MissingE_dashboardFixes_queueArrows = getStorage("extensions.MissingE.dashboardFixes.queueArrows",1);
-      settings.MissingE_dashboardFixes_expandAll = getStorage("extensions.MissingE.dashboardFixes.expandAll",1);
-      settings.MissingE_dashboardFixes_massDelete = getStorage("extensions.MissingE.dashboardFixes.massDelete",1);
-      settings.MissingE_dashboardFixes_sortableNotes = getStorage("extensions.MissingE.dashboardFixes.sortableNotes",1);
-      settings.MissingE_sidebarTweaks_retries = getStorage("extensions.MissingE.sidebarTweaks.retries",defaultRetries);
-      settings.MissingE_sidebarTweaks_addSidebar = getStorage("extensions.MissingE.sidebarTweaks.addSidebar",0);
-      settings.MissingE_sidebarTweaks_slimSidebar = getStorage("extensions.MissingE.sidebarTweaks.slimSidebar",0);
-      settings.MissingE_sidebarTweaks_followingLink = getStorage("extensions.MissingE.sidebarTweaks.followingLink",0);
-      settings.MissingE_magnifier_retries = getStorage("extensions.MissingE.magnifier.retries",defaultRetries);
-      settings.MissingE_magnifier_magnifyAvatars = getStorage("extensions.MissingE.magnifier.magnifyAvatars",0);
-      settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
-      settings.MissingE_dashLinksToTabs_sidebar = getStorage("extensions.MissingE.dashLinksToTabs.sidebar",0);
-      settings.MissingE_dashLinksToTabs_reblogLinks = getStorage("extensions.MissingE.dashLinksToTabs.reblogLinks",0);
-      settings.MissingE_dashLinksToTabs_editLinks = getStorage("extensions.MissingE.dashLinksToTabs.editLinks",0);
-      settings.MissingE_timestamps_retries = getStorage("extensions.MissingE.timestamps.retries",defaultRetries);
-      settings.MissingE_timestamps_format = getStorage("extensions.MissingE.timestamps.format",defaultFormat);
-      settings.MissingE_postingFixes_photoReplies = getStorage("extensions.MissingE.postingFixes.photoReplies",1);
-      settings.MissingE_postingFixes_uploaderToggle = getStorage("extensions.MissingE.postingFixes.uploaderToggle",1);
-      settings.MissingE_postingFixes_addUploader = getStorage("extensions.MissingE.postingFixes.addUploader",1);
-      settings.MissingE_postingFixes_quickButtons = getStorage("extensions.MissingE.postingFixes.quickButtons",1);
-      settings.MissingE_postingFixes_blogSelect = getStorage("extensions.MissingE.postingFixes.blogSelect",0);
-      settings.MissingE_postingFixes_subEdit = getStorage("extensions.MissingE.postingFixes.subEdit",1);
-      settings.MissingE_postingFixes_subEditRetries = getStorage("extensions.MissingE.postingFixes.subEditRetries",defaultRetries);
-      settings.MissingE_postingFixes_tagQueuedPosts = getStorage("extensions.MissingE.postingFixes.tagQueuedPosts",0);
-      settings.MissingE_postingFixes_queueTags = getStorage("extensions.MissingE.postingFixes.queueTags",'');
-      settings.MissingE_reblogYourself_postPage = getStorage("extensions.MissingE.reblogYourself.postPage",1);
-      settings.MissingE_reblogYourself_dashboard = getStorage("extensions.MissingE.reblogYourself.dashboard",1);
-      settings.MissingE_reblogYourself_retries = getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries);
-      settings.MissingE_postCrushes_prefix = getStorage("extensions.MissingE.postCrushes.prefix","Tumblr Crushes:");
-      settings.MissingE_postCrushes_crushSize = getStorage("extensions.MissingE.postCrushes.crushSize",1);
-      settings.MissingE_postCrushes_addTags = getStorage("extensions.MissingE.postCrushes.addTags",1);
-      settings.MissingE_postCrushes_showPercent = getStorage("extensions.MissingE.postCrushes.showPercent",1);
-      settings.MissingE_replyReplies_showAvatars = getStorage("extensions.MissingE.replyReplies.showAvatars",1);
-      settings.MissingE_replyReplies_smallAvatars = getStorage("extensions.MissingE.replyReplies.smallAvatars",1);
-      settings.MissingE_replyReplies_addTags = getStorage("extensions.MissingE.replyReplies.addTags",1);
-      settings.MissingE_replyReplies_defaultTags = getStorage("extensions.MissingE.replyReplies.defaultTags",'');
-      settings.MissingE_replyReplies_newTab = getStorage("extensions.MissingE.replyReplies.newTab",1);
-      settings.MissingE_betterReblogs_passTags = getStorage("extensions.MissingE.betterReblogs.passTags",1);
-      settings.MissingE_betterReblogs_retries = getStorage("extensions.MissingE.betterReblogs.retries",defaultRetries);
-      settings.MissingE_betterReblogs_autoFillTags = getStorage("extensions.MissingE.betterReblogs.autoFillTags",1);
-      settings.MissingE_betterReblogs_quickReblog = getStorage("extensions.MissingE.betterReblogs.quickReblog",0);
-      settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctType",0);
-      settings.MissingE_betterReblogs_quickReblogAcctName = getStorage("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
-      settings.MissingE_betterReblogs_quickReblogForceTwitter = getStorage("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
-      settings.MissingE_betterReblogs_fullText = getStorage("extensions.MissingE.betterReblogs.fullText",0);
-      settings.MissingE_betterReblogs_reblogAsks = getStorage("extensions.MissingE.betterReblogs.reblogAsks",0);
-      settings.MissingE_version = getStorage("extensions.MissingE.version",'');
-      settings.MissingE_betterReblogs_askRetries = getStorage("extensions.MissingE.betterReblogs.askRetries",defaultRetries);
+      var settings = getAllSettings();
       myWorker.postMessage(settings);
    }
    else if (message.greeting == "sidebarTweaks") {

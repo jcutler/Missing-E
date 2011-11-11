@@ -21,20 +21,67 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-var all_settings;
+var all_settings, interval, intervalCount;
+
+function exportSettings() {
+   self.postMessage({greeting: "exportOptions"});
+}
+
+function importSettings(e) {
+   clearInterval(interval);
+   if (e.files[0]) {
+      var formData = new FormData(document.getElementById("importform"));
+      formData.append("import", e.files[0]);
+      document.getElementById("importform").submit();
+      intervalCount = 0;
+      interval = setInterval(function(){
+         var xmlDoc = document.getElementById("settingsframe").contentDocument;
+         var importedSettings = {};
+         if (xmlDoc.childNodes[1] && xmlDoc.childNodes[1].nodeName === "parsererror") {
+            clearInterval(interval);
+            document.getElementById("settingsframe").src = "";
+            jQuery('#importform').get(0).reset();
+            alert("Imported settings file is not valid XML.");
+         }
+         else if (xmlDoc.readyState === "complete" &&
+                  xmlDoc.childNodes[0].nodeName === "missing-e") {
+            clearInterval(interval);
+            jQuery('missing-e setting', xmlDoc).each(function(i){
+               importedSettings[$(this).find('name').text()] = $(this).find('value').text();
+            });
+            document.getElementById("settingsframe").src = "";
+            jQuery('#importform').get(0).reset();
+            self.postMessage({greeting: "importOptions", data: importedSettings});
+         }
+         else if (intervalCount++ > 15) {
+            clearInterval(interval);
+            document.getElementById("settingsframe").src = "";
+            jQuery('#importform').get(0).reset();
+            alert("Problem uploading file. Please try again later.");
+         }
+      },1000);
+   }
+   else {
+      jQuery('#importform').get(0).reset();
+   }
+}
 
 jQuery(document).ready(function (){
    jQuery('a[rel*=facebox]').facebox({
       loadingImage : 'facebox/loading.gif',
       closeImage   : 'facebox/closelabel.png'
    });
-   self.postMessage({greeting: "all-settings"});
+
+   jQuery("#exportdiv").click(exportSettings);
+   jQuery("#import").change(function() { importSettings(this); });
+
    self.on('message', function(message) {
       if (message.greeting !== "all-settings") { return false; }
       all_settings = message;
       loadSettings();
       jQuery('input.toggler').checkbox();
    });
+   self.postMessage({greeting: "all-settings"});
 
    jQuery('#nav a.nav_item').live('click',function() {
       if (this.id === 'close_nav') {
@@ -130,6 +177,19 @@ var componentList = ["dashboardFixes",
                      "replyReplies",
                      "massEditor",
                      "sidebarTweaks"];
+
+self.on("message", function(message) {
+   if (message.greeting === "importOptions") {
+      if (message.msg) { alert(message.msg); }
+      if (message.success) { window.location.reload(); }
+      else {
+         jQuery('#importform').get(0).reset();
+      }
+   }
+   else if (message.greeting === "exportOptions") {
+      jQuery('#settingsframe').get(0).src = message.url;
+   }
+});
 
 function getStorage(key,defaultValue) {
    if (all_settings[key] == undefined)

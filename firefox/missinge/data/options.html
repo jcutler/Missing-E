@@ -28,6 +28,15 @@
 <link type="image/x-icon" href="missinge32.png" rel="shortcut icon" />
 <link type="image/x-icon" href="missinge32.png" rel="icon" />
 <style type="text/css">
+#settingsframe {
+width:1px;
+height:1px;
+visibility:hidden;
+position:absolute;
+top:0;
+left:0;
+}
+
 body{
 background:#2c4762 url('images/background.png') top repeat-x;
 font:normal 14px Arial,Helvetica,sans-serif;
@@ -546,6 +555,7 @@ margin:0 10px;
 }
 
 #devpage {
+float:right;
 text-align:right;
 }
 
@@ -612,6 +622,54 @@ border-top:1px solid #444;
 padding-top:6px;
 text-align:center;
 }
+
+#iodiv {
+margin:2px 0 0 85px;
+font-size:12px;
+color:white;
+line-height:32px;
+}
+
+#iodiv img {
+width:32px;
+height:32px;
+cursor:pointer;
+vertical-align:top;
+}
+
+#importdiv, #exportdiv, #iosep {
+height:32px;
+position:relative;
+overflow:hidden;
+float:left;
+}
+
+#importdiv, #exportdiv {
+cursor:pointer;
+}
+
+#iosep {
+text-align:center;
+width:4px;
+color:#BBB;
+}
+
+#importdiv #importform {
+opacity:0;
+}
+
+#importdiv #import {
+position:absolute;
+top:0;
+right:0;
+margin:0;
+height:32px;
+cursor:pointer;
+}
+
+#importdiv img {
+margin-right:-2px;
+}
 </style>
 <link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css" />
 <link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css" />
@@ -623,6 +681,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </style>
 </head>
 <body id="MissingE_settings">
+<iframe id="settingsframe" name="settingsframe" src=""></iframe>
 <div id="container">
 <div id="header_container">
 <div id="header">
@@ -1058,7 +1117,13 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </li>
 </div>
 </ol>
+<div id="iodiv">
+<div id="exportdiv" title="Export settings to a file">Export<img id="export" alt="Export settings to a file" title="Export settings to a file" src="images/load.png"></div>
+<div id="iosep"></div>
+<div id="importdiv"><img src="images/save.png" alt="Import settings from a file">Import<form id="importform" enctype="multipart/form-data" target="settingsframe" method="post" action="http://tools.missinge.infraware.ca/settings"><input title="Import settings from a file" name="import" id="import" type="file" /></form></div>
+</div>
 <div id="devpage"><a target="_blank" href="http://missinge.infraware.ca">Go To Add-On Homepage</a></div>
+<div class="clear"></div>
 </div>
 </div>
 </div>
