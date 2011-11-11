@@ -10,7 +10,7 @@ if ($_FILES["import"]) {
    }
 }
 else {
-   header("Content-Disposition: attachment; filename=settings.xml");
+   header("Content-Disposition: attachment; filename=missinge.xml");
    echo "<?xml version=\"1.0\"?>\n";
    echo "<missing-e>\n";
    $patterns = array();
