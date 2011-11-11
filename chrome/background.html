@@ -89,17 +89,8 @@ function debug(msg) {
    }
 }
 
-chrome.tabs.onUpdated.addListener(function(id, changeInfo, tab) {
-   if (tab.url === chrome.extension.getURL("common/getOptions.html") + "?export" &&
-       changeInfo.status === "complete") {
-      setTimeout(function() { chrome.tabs.remove(tab.id); },3000);
-   }
-});
-
-function exportOptionsXML() {
-   chrome.tabs.create({selected: false, url: chrome.extension.getURL("common/getOptions.html") + "?export"}, function(tab) {
-      chrome.tabs.update(tab.id, {url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
-   });
+function exportOptionsXML(sendResponse) {
+   sendResponse({url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
 }
 
 function isInternalSetting(setting) {
@@ -986,7 +977,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       alert(request.text);
    }
    else if (request.greeting == "exportOptions") {
-      exportOptionsXML();
+      exportOptionsXML(sendResponse);
    }
    else if (request.greeting == "importOptions") {
       receiveOptions(request, sendResponse);

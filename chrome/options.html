@@ -26,6 +26,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Missing e - Settings</title>
 <style type="text/css">
+#settingsframe {
+width:1px;
+height:1px;
+visibility:hidden;
+position:absolute;
+top:0;
+left:0;
+}
+
 body{
 background:#2c4762 url('images/background.png') top repeat-x;
 font:normal 14px Arial,Helvetica,sans-serif;
@@ -725,7 +734,10 @@ var componentList = ["dashboardFixes",
                      "sidebarTweaks"];
 
 function exportSettings() {
-   chrome.extension.sendRequest({greeting: "exportOptions"});
+   chrome.extension.sendRequest({greeting: "exportOptions"},
+                                function(response) {
+      $('#settingsframe').get(0).src = response.url;
+   });
 }
 
 function importSettings(e) {
@@ -1055,6 +1067,7 @@ function doshow(component) {
 </script>
 </head>
 <body id="MissingE_settings">
+<iframe id="settingsframe" src=""></iframe>
 <div id="container">
 <div id="header_container">
 <div id="header">
