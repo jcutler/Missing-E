@@ -123,10 +123,10 @@ function receiveOptions(request, sendResponse) {
             var old = "'" + localStorage[i] + "'";
             if (localStorage[i] === undefined) {
                old = "undefined";
-               changed++;
+               set++;
             }
             else {
-               set++;
+               changed++;
             }
             debug(i + " [" + old + " => '" +
                         settings[i] + "']");

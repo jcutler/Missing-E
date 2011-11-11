@@ -135,7 +135,7 @@ function exportOptionsXML(request) {
 }
 
 function isInternalSetting(setting) {
-return !/^MissingE_/.test(setting) ||
+   return !/^MissingE_/.test(setting) ||
           setting === "MissingE_version" ||
           setting === "MissingE_installedVersion" ||
           /MissingE_externalVersion/.test(setting) ||
