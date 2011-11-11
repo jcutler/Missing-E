@@ -26,6 +26,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Missing e - Settings</title>
 <style type="text/css">
+#settingsframe {
+width:1px;
+height:1px;
+visibility:hidden;
+position:absolute;
+top:0;
+left:0;
+}
+
 body{
 background:#2c4762 url('images/background.png') top repeat-x;
 font:normal 14px Arial,Helvetica,sans-serif;
@@ -544,6 +553,7 @@ margin:0 20px;
 }
 
 #devpage {
+float:right;
 text-align:right;
 }
 
@@ -609,6 +619,54 @@ background-color:#DDD;
 border-top:1px solid #444;
 padding-top:6px;
 text-align:center;
+}
+
+#iodiv {
+margin:2px 0 0 85px;
+font-size:12px;
+color:white;
+line-height:32px;
+}
+
+#iodiv img {
+width:32px;
+height:32px;
+cursor:pointer;
+vertical-align:top;
+}
+
+#importdiv, #exportdiv, #iosep {
+height:32px;
+position:relative;
+overflow:hidden;
+float:left;
+}
+
+#importdiv, #exportdiv {
+cursor:pointer;
+}
+
+#iosep {
+text-align:center;
+width:4px;
+color:#BBB;
+}
+
+#importdiv #importform {
+opacity:0;
+}
+
+#importdiv #import {
+position:absolute;
+top:0;
+right:0;
+margin:0;
+height:32px;
+cursor:pointer;
+}
+
+#importdiv img {
+margin-right:-2px;
 }
 </style>
 <script type="text/javascript" src="common/jquery.min.js"></script>
@@ -682,6 +740,54 @@ var componentList = ["dashboardFixes",
                      "replyReplies",
                      "massEditor",
                      "sidebarTweaks"];
+
+safari.self.addEventListener("message", function(response) {
+   if (response.name === "importOptions") {
+      if (response.message.success) { window.location.reload(); }
+      else {
+         $('#importform').get(0).reset();
+      }
+   }
+   else if (response.name === "exportOptions") {
+      $('#settingsframe').get(0).src = response.message.url;
+   }
+});
+
+function exportSettings() {
+   safari.self.tab.dispatchMessage("exportOptions");
+}
+
+function importSettings(e) {
+   if (e.files[0]) {
+      var formData = new FormData();
+      formData.append("import", e.files[0]);
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://tools.missinge.infraware.ca/settings', true);
+      xhr.onload = function() {
+         var importedSettings = {};
+         if (xhr.status === 200 && xhr.responseXML) {
+            $('missing-e setting', xhr.responseXML).each(function(i) {
+               importedSettings[$(this).find('name').text()] = $(this).find('value').text();
+            });
+         }
+         else if (xhr.status === 200) {
+            alert("Imported settings file is not valid XML.");
+            $('#importform').get(0).reset();
+            return;
+         }
+         else {
+            alert("Problem uploading file. Please try again later.");
+            $('#importform').get(0).reset();
+            return;
+         }
+         safari.self.tab.dispatchMessage("importOptions", {data: importedSettings});
+      };
+      xhr.send(formData);
+   }
+   else {
+      $('#importform').get(0).reset();
+   }
+}
 
 function getStorage(key,defaultValue) {
    if (all_settings[key] == undefined)
@@ -977,6 +1083,7 @@ function doshow(component) {
 </script>
 </head>
 <body id="MissingE_settings">
+<iframe id="settingsframe" src=""></iframe>
 <div id="container">
 <div id="header_container">
 <div id="header">
@@ -1411,7 +1518,13 @@ function doshow(component) {
 </li>
 </div>
 </ol>
+<div id="iodiv">
+<div id="exportdiv" onclick="exportSettings();" title="Export settings to a file">Export<img onclick="exportSettings();" id="export" alt="Export settings to a file" title="Export settings to a file" src="images/load.png"></div>
+<div id="iosep"></div>
+<div id="importdiv"><img src="images/save.png" alt="Import settings from a file">Import<form id="importform"><input title="Import settings from a file" id="import" type="file" onchange="importSettings(this);" /></form></div>
+</div>
 <div id="devpage"><a target="_blank" href="http://missinge.infraware.ca">Extension Homepage</a></div>
+<div class="clear"></div>
 </div>
 </div>
 </div>

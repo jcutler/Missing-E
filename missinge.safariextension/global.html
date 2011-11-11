@@ -125,6 +125,94 @@ function debug(msg) {
    }
 }
 
+safari.extension.addContentScriptFromURL(safari.extension.baseURI +
+                                  "common/getOptions.js",
+                                  safari.extension.baseURI +
+                                  "common/getOptions.html", null, true);
+
+function exportOptionsXML(request) {
+   request.target.page.dispatchMessage("exportOptions", {url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
+}
+
+function isInternalSetting(setting) {
+return !/^MissingE_/.test(setting) ||
+          setting === "MissingE_version" ||
+          setting === "MissingE_installedVersion" ||
+          /MissingE_externalVersion/.test(setting) ||
+          setting === "MissingE_compatCheck" ||
+          !/^[a-zA-Z0-9_]*$/.test(setting);
+}
+
+function createOptionParams() {
+   var opts = {};
+   for (setting in safari.extension.settings) {
+      if (safari.extension.settings.hasOwnProperty(setting) &&
+          !isInternalSetting(setting)) {
+         opts[setting] = safari.extension.settings[setting];
+      }
+   }
+   return opts;
+}
+
+function receiveOptions(request) {
+   var currSettings = {};
+   var changed, set, reset;
+   changed = set = reset = 0;
+   for (i in safari.extension.settings) {
+      if (safari.extension.settings.hasOwnProperty(i)) {
+         currSettings[i] = safari.extension.settings[i];
+      }
+   }
+   var settings = request.message.data;
+   for (i in settings) {
+      if (settings.hasOwnProperty(i)) {
+         if (!currSettings.hasOwnProperty(i) ||
+             currSettings[i] != settings[i]) {
+            var done = false;
+            if (typeof safari.extension.settings[i] === "number") {
+               var val = parseInt(settings[i]);
+               if (!isNaN(val)) {
+                  done = true;
+                  safari.extension.settings[i] = val;
+               }
+            }
+            else {
+               done = true;
+               safari.extension.settings[i] = settings[i];
+            }
+            if (done) {
+               var old = "'" + currSettings[i] + "'";
+               if (currSettings[i] === undefined) {
+                  old = "undefined";
+                  set++;
+               }
+               else {
+                  changed++;
+               }
+               debug(i + " [" + old + " => '" +
+                           settings[i] + "']");
+            }
+         }
+      }
+   }
+   for (i in currSettings) {
+      if (currSettings.hasOwnProperty(i) &&
+          !settings.hasOwnProperty(i) &&
+          !isInternalSetting(i)) {
+         reset++;
+         safari.extension.settings.removeItem(i);
+      }
+   }
+   if (set + changed + reset > 0) {
+      alert("Import complete.\n\n" + (set+changed+reset) + " change(s) made.");
+      request.target.page.dispatchMessage("importOptions", {success:true});
+   }
+   else {
+      alert("No changes imported.");
+      request.target.page.dispatchMessage("importOptions", {success:false});
+   }
+}
+
 function doTags(stamp, id, request) {
    if (!stamp.tags) {
       debug("Cache entry does not have tags");
@@ -953,6 +1041,12 @@ function handleRequest(request) {
       request.target.page.dispatchMessage("version",
          {uptodate:(versionCompare(getStorage("MissingE_version",'0'),
                                    request.v) >= 0)});
+   }
+   else if (request.name == "exportOptions") {
+      exportOptionsXML(request);
+   }
+   else if (request.name == "importOptions") {
+      receiveOptions(request);
    }
    else if (request.name == "getAsker") {
       if (askerTable[request.target.url]) {
