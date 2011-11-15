@@ -25,15 +25,19 @@
 opacity:0.7;
 }
 
-#right_column #MissingEmassDeleter li .select_all {
+#right_column #MissingEdraftQueueTools li .select_all {
 background-position:12px 11px;
 }
 
-#right_column #MissingEmassDeleter li .deselect_all {
+#right_column #MissingEdraftQueueTools li .deselect_all {
 background-position:12px -26px;
 }
 
-#right_column #MissingEmassDeleter li .delete_selected {
+#right_column #MissingEdraftQueueTools li .delete_selected {
+background-position:10px -62px;
+}
+
+#right_column #MissingEdraftQueueTools li .randomize {
 background-position:10px -62px;
 }
 

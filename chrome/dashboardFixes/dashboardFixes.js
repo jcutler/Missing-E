@@ -605,9 +605,18 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          '</script>');
    }
 */
-   if (dashboardFixes_settings.massDelete === 1 &&
-       /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
-         .test(location.href)) {
+   if ((dashboardFixes_settings.massDelete === 1 &&
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
+            .test(location.href)) ||
+       (dashboardFixes_settings.randomQueue === 1 &&
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
+            .test(location.href))) {
+      var massDelete = dashboardFixes_settings.massDelete === 1 &&
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
+            .test(location.href);
+      var randomQueue = dashboardFixes_settings.randomQueue === 1 &&
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
+            .test(location.href);
       var afterguy = $('#right_column a.settings');
       var beforeguy;
       if (afterguy.length > 0) {
@@ -620,20 +629,24 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          }
       }
       $('head').append('<style type="text/css">' +
-                       '#right_column #MissingEmassDeleter a { ' +
+                       '#right_column #MissingEdraftQueueTools a { ' +
                        'background-image:url("' +
-                       chrome.extension.getURL("dashboardFixes/massDelete.png") +
+                       chrome.extension.getURL("dashboardFixes/draftQueueTools.png") +
                        '") !important; }</style>');
-      $('<ul class="controls_section" id="MissingEmassDeleter">' +
-        '<li><a href="#" class="select_all">' +
-        '<div class="hide_overflow">' +
-        locale[lang].massDelete.selectAll + '</div></a></li>' +
-        '<li><a href="#" class="deselect_all">' +
-        '<div class="hide_overflow">' +
-        locale[lang].massDelete.deselectAll + '</div></a></li>' +
-        '<li><a href="#" class="delete_selected">' +
-        '<div class="hide_overflow">' +
-        locale[lang].massDelete.deleteSelected + '</div></a></li></ul>')
+      $('<ul class="controls_section" id="MissingEdraftQueueTools">' +
+        (randomQueue ? '<li><a href="#" class="randomize">' +
+         '<div class="hide_overflow">' +
+         locale[lang].shuffle + '</div></a></li>' : '') +
+        (massDelete ? '<li><a href="#" class="select_all">' +
+         '<div class="hide_overflow">' +
+         locale[lang].massDelete.selectAll + '</div></a></li>' +
+         '<li><a href="#" class="deselect_all">' +
+         '<div class="hide_overflow">' +
+         locale[lang].massDelete.deselectAll + '</div></a></li>' +
+         '<li><a href="#" class="delete_selected">' +
+         '<div class="hide_overflow">' +
+         locale[lang].massDelete.deleteSelected + '</div></a></li>' : '') +
+        '</ul>')
             .insertBefore(beforeguy);
       $('#posts li.post').each(function() {
          setupMassDeletePost(this);
@@ -644,9 +657,19 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
             setupMassDeletePost($('#'+val).get(0));
          });
       });
-      $('#MissingEmassDeleter a').click(function() {
+      $('#MissingEdraftQueueTools a').click(function() {
          var btn = $(this);
-         if (btn.hasClass('select_all')) {
+         if (btn.hasClass('randomize')) {
+            var arr = [];
+            $('#posts li.queued').each(function() {
+               arr.push(this.id.match(/[0-9]*$/)[0]);
+            });
+            arr.shuffle();
+            $('head').append('<script type="text/javascript">' +
+               'Sortable.setSequence("posts",["' + arr.join('","') + '"]);' +
+               'update_publish_on_times();</script>');
+         }
+         else if (btn.hasClass('select_all')) {
             $('#posts input.MissingEmassDeleteSelect').each(function() {
                this.checked = true;
                $(this).trigger('change');

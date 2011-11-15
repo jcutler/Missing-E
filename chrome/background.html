@@ -1271,6 +1271,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.queueArrows = getStorage("MissingE_dashboardFixes_queueArrows",1);
             settings.expandAll = getStorage("MissingE_dashboardFixes_expandAll",1);
             settings.massDelete = getStorage("MissingE_dashboardFixes_massDelete",1);
+            settings.randomQueue = getStorage("MissingE_dashboardFixes_randomQueue",0);
             settings.sortableNotes = getStorage("MissingE_dashboardFixes_sortableNotes",1);
             break;
          case "dashLinksToTabs":
@@ -1453,8 +1454,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/wrapTags.css"});
             if (getStorage("MissingE_dashboardFixes_postLinks",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/postLinks.css"});
-            if (getStorage("MissingE_dashboardFixes_massDelete",1) == 1)
-               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/massDelete.css"});
+            if (getStorage("MissingE_dashboardFixes_massDelete",1) == 1 ||
+                getStorage("MissingE_dashboardFixes_randomQueue",0) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/draftQueueTools.css"});
             if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1 &&
                 !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/settings/.test(sender.tab.url)))
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});
