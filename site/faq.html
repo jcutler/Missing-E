@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
 <li><a href="#featurecontrol">I don't want to use one of the features. How can I turn it off?</a></li>
 <li><a href="#featurecontrol">How can I customize the way 'Missing e' works?</a></li>
 <li><a href="#settings">How can I see or change my settings for 'Missing e'?</a></li>
-<li><a href="#importexport">How do I copy my 'Missing e' settings from one browser to another?</a></li></ul>
+<li><a href="#transfer-settings">How do I copy my 'Missing e' settings from one browser to another?</a></li></ul>
 <h2>Ask Tweaks</h2>
 <ul><li><a href="#asktweaks-on">How do I add tags when I answer a message (ask)?</a></li></ul>
 <h2>Better Reblogs</h2>
@@ -83,12 +83,12 @@ jQuery(document).ready(function($) {
 <li><a href="#rename-bookmark">How do I change the name of a bookmark to something more useful?</a></li>
 <li><a href="#clear-bookmarks">My bookmarks disappeared! What happened?</a></li>
 </ul>
-<!--
 <h2>Dashboard Tweaks</h2>
 <ul>
-<li><a href="#scroll">What are the <em>endless scroll</em> "prevent stalling" and "timeout" options for?</a></li>
+<!--<li><a href="#scroll">What are the <em>endless scroll</em> "prevent stalling" and "timeout" options for?</a></li>-->
+<li><a href="#shuffle">How do I shuffle or randomize posts in my queue?</a></li>
+<li><a href="#shuffle-limit">Why does the <em>Shuffle</em> button not randomize all the posts in my queue (including ones not currently on the page)?</a></li>
 </ul>
--->
 <h2>Dash Links to Tabs</h2>
 <ul>
 <li><a href="#newtabs">I don't want 'Missing e' to open up all these new tabs. How do I stop it?</a></li>
@@ -224,7 +224,7 @@ jQuery(document).ready(function($) {
 <li>Click on the '<big><strong>e</strong></big>' at the top of any Tumblr dashboard page.</li></ul>
 <p><em>For a visual example of how to get to the settings page, see the related <a href="http://blog.missinge.infraware.ca/post/3876407352/settings-page">Tumblr post.</a></em></p>
 <div class="totop"><a href="#">Top</a></div></div>
-<a name="importexport"></a><p class="question">How do I copy my 'Missing e' settings from one browser to another?</p>
+<a name="transfer-settings"></a><p class="question">How do I copy my 'Missing e' settings from one browser to another?</p>
 <div class="response"><p>In version 2.2.13 or higher of 'Missing e' you can export your settings to a file and import them from a file.</p>
 <div class="example"><img src="images/export.png" alt="Export Settings button" /><div class="caption">Export Settings button</div></div>
 <p>On the browser you wish to export your 'Missing e' settings from (the <em>source browser</em>), go to the 'Missing e' settings page (<a href="#settings">find out how to get there</a>). At the bottom of the settings page, click on the <em>Export</em> button. A dialog box will come up allowing you to save your 'Missing e' settings in an <em>.xml</em> file.</p>
@@ -320,6 +320,14 @@ jQuery(document).ready(function($) {
 <p><em>Dashboard Tweaks</em> will resolve this situation by forcing the next page load to restart or display the "Try again" button.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 -->
+<a name="shuffle"></a><p class="question">How do I shuffle or randomize posts in my queue?</p>
+<div class="response"><p>The queue <em>Shuffle</em> button, part of the <em>Dashboard Tweaks</em> feature, is <strong>disabled by default</strong> when you first install 'Missing e' or update to version 2.2.13+. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Dashboard Features</em> tab, in the <em>Dashboard Tweaks</em> section.</p>
+<p>Once activated, a <em>Shuffle</em> button will be added to the dashboard sidebar whenever you are on a Tumblr Queue page. Clicking it will randomize the order of queued posts currently loaded on the page.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="shuffle-limit"></a><p class="question">Why does the <em>Shuffle</em> button not randomize all the posts in my queue (including ones not currently on the page)?</p>
+<div class="response"><p>Due to the way the Tumblr interface works, the <em>Shuffle</em> button can only randomize queued posts that are currently visible in the Queue page.</p>
+<p>However, you can use Tumblr's "<strong>endless scrolling</strong>" dashboard feature to load as many queued posts as you want. The <em>Shuffle</em> button can then randomize a larger set of queued posts.</p>
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="newtabs"></a><p class="question">I don't want 'Missing e' to open up all these new tabs. How do I stop it?</p>
 <div class="response"><p>In the settings (which you can access <a href="#settings">like this</a>), under the <em>Dashboard Features</em> tab, in the <em>Dash Links to Tabs</em> section, you can change this behaviour.</p>
 <p><strong>You can:</strong></p>
