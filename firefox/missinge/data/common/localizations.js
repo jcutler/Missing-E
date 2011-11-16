@@ -148,6 +148,7 @@ var locale = {
    "text": "as <strong>text</strong>",
    "textTitle": "Text Reply"
   },
+  "shuffle": "Shuffle Queue",
   "massDelete": {
    "selectAll": "Select All",
    "deselectAll": "Deselect All",
@@ -320,6 +321,7 @@ var locale = {
    "text": "como <strong>texto</strong>",
    "textTitle": "Respuesta en Texto"
   },
+  "shuffle": "Barajar la cola",
   "massDelete": {
    "selectAll": "Seleccionar Todos",
    "deselectAll": "Deseleccionar Todos",
@@ -492,6 +494,7 @@ var locale = {
    "text": "als <strong>Text</strong>",
    "textTitle": "Text Antwort"
   },
+  "shuffle": "Warteschleife mischen",
   "massDelete": {
    "selectAll": "Alle auswählen",
    "deselectAll": "Alle abwählen",
@@ -664,6 +667,7 @@ var locale = {
    "text": "<strong>texte</strong>",
    "textTitle": "Texte Réponse"
   },
+  "shuffle": "Mélanger",
   "massDelete": {
    "selectAll": "Tout sélectionner",
    "deselectAll": "Tout désélectionner",
@@ -846,6 +850,7 @@ var locale = {
    "text": "come <strong>testo</strong>",
    "textTitle": "Rispondi con un testo"
   },
+  "Shuffle": "Mischiare la coda",
   "massDelete": {
    "selectAll": "Seleziona tutto",
    "deselectAll": "Deseleziona tutto",
@@ -1018,6 +1023,7 @@ var locale = {
    "text": "<strong>テキスト</strong>",
    "textTitle": "テキスト返信"
   },
+  "shuffle": "シャッフルキュー",
   "massDelete": {
    "selectAll": "すべて選択",
    "deselectAll": "すべて選択解除",
@@ -1195,6 +1201,7 @@ var locale = {
    "text": "<strong>metin</strong> olarak",
    "textTitle": "Metin'le Cevapla"
   },
+  "shuffle": "Sırasını karıştırmak",
   "massDelete": {
    "selectAll": "Hepsini Seç",
    "deselectAll": "Seçimi Kaldır",
@@ -1385,6 +1392,7 @@ var locale = {
    "text": "как <strong>текста</strong>",
    "textTitle": "Ответить текстом"
   },
+  "shuffle": "Смешайте очередь",
   "massDelete": {
    "selectAll": "Выбрать все",
    "deselectAll": "Отменить выбор",

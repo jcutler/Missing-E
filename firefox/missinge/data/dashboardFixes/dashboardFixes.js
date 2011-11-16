@@ -659,9 +659,18 @@ self.on('message', function(message) {
          '</script>');
    }
 */
-   if (message.massDelete === 1 &&
-       /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
-         .test(location.href)) {
+   if ((message.massDelete === 1 &&
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
+            .test(location.href)) ||
+       (message.randomQueue === 1 &&
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
+            .test(location.href))) {
+      var doMassDelete = message.massDelete === 1 &&
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
+            .test(location.href);
+      var doRandomQueue = message.randomQueue === 1 &&
+        /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
+            .test(location.href);
       var afterguy = jQuery('#right_column a.settings');
       var beforeguy;
       if (afterguy.length > 0) {
@@ -674,23 +683,28 @@ self.on('message', function(message) {
          }
       }
       jQuery('head').append('<link type="text/css" rel="stylesheet" href="' +
-                        message.extensionURL + "dashboardFixes/massDelete.css" +
+                        message.extensionURL +
+                        "dashboardFixes/draftQueueTools.css" +
                         '" />').append('<style type="text/css">' +
-                        '#right_column #MissingEmassDeleter a { ' +
+                        '#right_column #MissingEdraftQueueTools a { ' +
                         'background-image:url("' +
-                        message.extensionURL + "dashboardFixes/massDelete.png" +
+                        message.extensionURL +
+                        "dashboardFixes/draftQueueTools.png" +
                         '") !important; }</style>');
-      jQuery('<ul class="controls_section" id="MissingEmassDeleter">' +
-        '<li><a href="#" class="select_all">' +
-        '<div class="hide_overflow">' +
-        locale[lang].massDelete.selectAll + '</div></a></li>' +
-        '<li><a href="#" class="deselect_all">' +
-        '<div class="hide_overflow">' +
-        locale[lang].massDelete.deselectAll + '</div></a></li>' +
-        '<li><a href="#" class="delete_selected">' +
-        '<div class="hide_overflow">' +
-        locale[lang].massDelete.deleteSelected + '</div></a></li></ul>')
-            .insertBefore(beforeguy);
+      jQuery('<ul class="controls_section" id="MissingEdraftQueueTools">' +
+         (doRandomQueue ? '<li><a href="#" class="randomize">' +
+          '<div class="hide_overflow">' +
+          locale[lang].shuffle + '</div></a></li>' : '') +
+         (doMassDelete ? '<li><a href="#" class="select_all">' +
+          '<div class="hide_overflow">' +
+          locale[lang].massDelete.selectAll + '</div></a></li>' +
+          '<li><a href="#" class="deselect_all">' +
+          '<div class="hide_overflow">' +
+          locale[lang].massDelete.deselectAll + '</div></a></li>' +
+          '<li><a href="#" class="delete_selected">' +
+          '<div class="hide_overflow">' +
+          locale[lang].massDelete.deleteSelected + '</div></a></li>' : '') +
+         '</ul>').insertBefore(beforeguy);
       jQuery('#posts li.post').each(function() {
          setupMassDeletePost(this);
       });
@@ -702,9 +716,19 @@ self.on('message', function(message) {
             setupMassDeletePost(jQuery('#'+val).get(0));
          });
       }, false);
-      jQuery('#MissingEmassDeleter a').click(function() {
+      jQuery('#MissingEdraftQueueTools a').click(function() {
          var btn = jQuery(this);
-         if (btn.hasClass('select_all')) {
+         if (btn.hasClass('randomize')) {
+            var arr = [];
+            jQuery('#posts li.queued').each(function() {
+               arr.push(this.id.match(/[0-9]*$/)[0]);
+            });
+            arr.shuffle();
+            jQuery('head').append('<script type="text/javascript">' +
+               'Sortable.setSequence("posts",["' + arr.join('","') + '"]);' +
+               'update_publish_on_times();</script>');
+         }
+         else if (btn.hasClass('select_all')) {
             jQuery('#posts input.MissingEmassDeleteSelect').each(function(){
                this.checked = true;
                jQuery(this).trigger('change');

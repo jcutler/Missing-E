@@ -281,6 +281,7 @@ function loadCheck(f, i, def) {
 }
 
 function loadSettings() {
+   var i;
    jQuery('span.defRetries').text(defaultRetries);
    jQuery('#versionnum').text(getStorage('MissingE_version',''));
    var exp = document.getElementById("experimentalFeatures_options").active;
@@ -292,7 +293,7 @@ function loadSettings() {
       exp.checked = false;
       jQuery('#posts td.experimental').hide();
    }
-   for (i in componentList) {
+   for (i=0; i<componentList.length; i++) {
       var v = componentList[i];
       var frm = document.getElementById(v + "_options");
       var active = frm.active;
@@ -369,6 +370,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
          loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
          loadCheck(frm,'MissingE_dashboardFixes_massDelete',1);
+         loadCheck(frm,'MissingE_dashboardFixes_randomQueue',0);
          loadCheck(frm,'MissingE_dashboardFixes_sortableNotes',1);
       }
       else if (v == "betterReblogs") {

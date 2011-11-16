@@ -169,16 +169,20 @@ background-position:6px -395px !important;
 background-position:-445px -395px !important;
 }
 
-#MissingEmassDeleter li .select_all {
+#MissingEmassDeleter li .select_all, #MissingEdraftQueueTools li .select_all {
 background-position:8px 7px !important;
 }
 
-#MissingEmassDeleter li .deselect_all {
+#MissingEmassDeleter li .deselect_all, #MissingEdraftQueueTools li .deselect_all {
 background-position:8px -30px !important;
 }
 
-#MissingEmassDeleter li .delete_selected {
+#MissingEmassDeleter li .delete_selected, #MissingEdraftQueueTools li .delete_selected {
 background-position:6px -66px !important;
+}
+
+#MissingEdraftQueueTools li .randomize {
+background-position:6px -102px !important;
 }
 
 #MissingE_safeDash li a {
