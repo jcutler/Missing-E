@@ -2,6 +2,16 @@
 title: Change History - Missing e - The browser extension for Tumblr!
 ---
 
+<style type="text/css">
+body {
+   font:13px Helvetica,Arial,sans-serif;
+}
+
+h1 {
+   font-size:170%;
+}
+</style>
+
 #_Missing e_ Change History
 
     + indicates added features or functionliaty  
