@@ -1,3 +1,7 @@
+---
+title: Change History - Missing e - The browser extension for Tumblr!
+---
+
 #_Missing e_ Change History
 
     + indicates added features or functionliaty  
