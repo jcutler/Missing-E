@@ -80,13 +80,13 @@ function addBar(mark, lang, altPost) {
       post.before('<div id="bookmarkbar_' + mark[1] + '" ' +
             'class="MissingE_bookmark_bar"><div ' +
             'class="MissingE_bookmark_line"></div><div ' +
-            'class="MissingE_bookmark_text">' + locale[lang].bookmarkNoun +
+            'class="MissingE_bookmark_text">' + getLocale(lang).bookmarkNoun +
             ' - <em id="bookmarkbar_label_' +
             mark[1] + '">' + mark[2] + '</em>' + (altPost ? '<span ' +
             'class="MissingE_bookmark_missing ' +
             'MissingE_bookmark_missing_' + lang + '"> (' +
             '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
-            'target="_blank">' + locale[lang].postUnavailable + '</a>)' +
+            'target="_blank">' + getLocale(lang).postUnavailable + '</a>)' +
             '</span>' : '') + '</div></div>');
    }
    else {
@@ -286,7 +286,7 @@ function doMarks(item) {
          }
       }
       var node = $('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + locale[lang].bookmarkVerb + '" ' +
+                   '" title="' + getLocale(lang).bookmarkVerb + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -444,7 +444,7 @@ chrome.extension.sendRequest({greeting: "settings",
                    'class="controls_section">' +
                    '<li class="MissingE_marklist_title recessed">' +
                    '<a href="#" onclick="return false;">' +
-                   locale[lang].bookmarksTitle + '</a></li></ul>');
+                   getLocale(lang).bookmarksTitle + '</a></li></ul>');
       $(function() {
          $('#MissingE_marklist').sortable({
             items: "li[post]",

@@ -135,7 +135,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
         'style="color:#666;font-size:10px;" href="#" ' +
         'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
         'document.getElementById(\'post_tags\').value = \'\';' +
-        'return false;">' + locale[lang].postingFixes.clearTagsText +
+        'return false;">' + getLocale(lang).postingFixes.clearTagsText +
         '</a></div>');
    $('#photo_src').keyup(function(){
       if (/^http:\/\/https?:\/\//.test(this.value)) {
@@ -147,7 +147,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                         postingFixes_settings.queueTags;
       $('#posts div.post_controls a').live('click',function(){
          if (!$(this).hasClass('MissingE_queue_control') &&
-             !(new RegExp(locale[lang].dashFixesText.queue,"i")).test($(this).text())) {
+             !(new RegExp(getLocale(lang).dashFixesText.queue,"i")).test($(this).text())) {
             return;
          }
          var id = $(this).closest('li.post').attr('id').match(/[0-9]+$/)[0];
@@ -246,7 +246,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          bottom = Math.round(bottom);
          if ($('#post_state').val() === '0') {
             $('#post_controls input[type="submit"]')
-               .val(locale[lang].postingFixes.submitText.publish);
+               .val(getLocale(lang).postingFixes.submitText.publish);
          }
       }
       else {
@@ -255,12 +255,12 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
       }
 
       var allbtns = "";
-      for (i in locale[lang].postingFixes.submitText) {
-         if (locale[lang].postingFixes.submitText.hasOwnProperty(i)) {
+      for (i in getLocale(lang).postingFixes.submitText) {
+         if (getLocale(lang).postingFixes.submitText.hasOwnProperty(i)) {
             allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
                         'type="submit" class="positive" ' +
                         'onclick="return true;"><span>' +
-                        locale[lang].postingFixes.submitText[i] +
+                        getLocale(lang).postingFixes.submitText[i] +
                         '</span></button></div>';
          }
       }
@@ -298,7 +298,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          showHideButtons(newbtns, $('#post_state').val());
          if (isShare) {
             changeButtonText($('#post_state').val(),
-                             locale[lang].postingFixes.submitText);
+                             getLocale(lang).postingFixes.submitText);
          }
       });
    }
@@ -319,7 +319,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           locale[lang].postingFixes.uploadImagesText + '</a>';
+                           getLocale(lang).postingFixes.uploadImagesText + '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
       }

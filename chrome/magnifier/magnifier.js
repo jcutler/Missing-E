@@ -136,7 +136,7 @@ function insertMagnifier(item) {
          }
       }
       if (str) {
-         var mi = $('<a title="' + locale[lang].loading + '" ' +
+         var mi = $('<a title="' + getLocale(lang).loading + '" ' +
                     'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
                     tid + '" href="#" onclick="return false;"></a>');
          mi.click(magClick);
@@ -156,13 +156,13 @@ function insertMagnifier(item) {
             if (response.success) {
                $('#magnify_' + response.pid).attr('src',response.data)
                   .removeClass('MissingE_magnify_hide')
-                  .attr('title', locale[lang].magnify);
+                  .attr('title', getLocale(lang).magnify);
             }
             else {
                $('#magnify_' + response.pid).attr('src','')
                   .addClass('MissingE_magnify_err')
                   .removeClass('MissingE_magnify_hide')
-                  .attr('title', locale[lang].error);
+                  .attr('title', getLocale(lang).error);
             }
          });
       }

@@ -58,7 +58,7 @@ if ((window.top === window &&
          var html = document.getElementsByTagName('html');
          var lang = 'en';
          if (html && html[0]) { lang = html[0].getAttribute('lang'); }
-         up.setAttribute('title', locale[lang]["update"]);
+         up.setAttribute('title', getLocale(lang).update);
          var post = '';
          if (response.link !== '') {
             post = 'post/' + response.link;

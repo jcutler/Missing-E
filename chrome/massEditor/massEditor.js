@@ -68,7 +68,7 @@ $('#nav .header_button:last')
            '<button id="MissingE_selecttype" type="button" ' +
            'class="chrome big_dark"><div class="chrome_button">' +
            '<div class="chrome_button_left"></div>' +
-           locale[lang].select + ' ' +
+           getLocale(lang).select + ' ' +
            '<img src="http://assets.tumblr.com/images/archive_header_' +
            'button_arrow.png" width="9" height="6" ' +
            'style="vertical-align:2px; margin:0 0 0 3px;" />' +
@@ -81,14 +81,14 @@ sbtlisttext += '<div id="MissingE_select_btn" class="header_button">' +
            '<button id="MissingE_select" type="button" ' +
            'class="chrome big_dark"><div class="chrome_button">' +
            '<div class="chrome_button_left"></div>' +
-           locale[lang].first100 + '<div ' +
+           getLocale(lang).first100 + '<div ' +
            'class="chrome_button_right"></div></div></button></div>';
-for (i in locale[lang].postTypeNames) {
-   if (locale[lang].postTypeNames.hasOwnProperty(i)) {
-      sbtlisttext += generateButton(i,locale[lang].postTypeNames[i]);
+for (i in getLocale(lang).postTypeNames) {
+   if (getLocale(lang).postTypeNames.hasOwnProperty(i)) {
+      sbtlisttext += generateButton(i,getLocale(lang).postTypeNames[i]);
    }
 }
-sbtlisttext += generateButton('note', locale[lang].askPost, true);
+sbtlisttext += generateButton('note', getLocale(lang).askPost, true);
 sbtlisttext += '</div>';
 var sbtlist = $(sbtlisttext).insertAfter(sbt);
 
