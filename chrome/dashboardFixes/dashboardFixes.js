@@ -664,7 +664,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
             $('#posts li.queued').each(function() {
                arr.push(this.id.match(/[0-9]*$/)[0]);
             });
-            arr.shuffle();
+            shuffle(arr);
             $('head').append('<script type="text/javascript">' +
                'Sortable.setSequence("posts",["' + arr.join('","') + '"]);' +
                'update_publish_on_times();</script>');

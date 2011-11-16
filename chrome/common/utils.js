@@ -89,13 +89,13 @@ function randomRange(from, to) {
    return Math.floor(Math.random() * (to - from + 1) + from);
 }
 
-Array.prototype.shuffle = function () {
+function shuffle(arr) {
    var s = [];
-   while (this.length) {
-      s.push(this.splice(Math.random() * this.length, 1)[0]);
+   while (arr.length) {
+      s.push(arr.splice(Math.random() * arr.length, 1)[0]);
    }
    while (s.length) {
-      this.push(s.pop());
+      arr.push(s.pop());
    }
-   return this;
+   return arr;
 }
