@@ -4,11 +4,63 @@ title: Change History - Missing e - The browser extension for Tumblr!
 
 <style type="text/css">
 body {
-   font:13px Helvetica,Arial,sans-serif;
+font:13px Helvetica,Arial,sans-serif;
 }
 
 h1 {
-   font-size:170%;
+font-size:170%;
+border-top:4px solid #AAA;
+padding-top:0.5em;
+margin-top:1.5em;
+}
+
+h2, h3 {
+margin:1em 0;
+}
+
+h2 {
+font-size:130%;
+margin-top:1.5em;
+border-top:4px solid #E0E0E0;
+padding-top:0.5em;
+}
+
+p {
+margin:1em 0;
+line-height:1.5em;
+}
+
+pre {
+margin:1em 0;
+font-size:12px;
+background-color:#EEE;
+border:1px solid #DDD;
+padding:5px;
+color:#444;
+overflow:auto;
+-webkit-box-shadow:rgba(0,0,0,0.07) 0 1px 2px inset;
+-webkit-border-radius:3px;
+-moz-border-radius:3px;
+border-radius:3px;
+}
+
+code {
+font-size:12px;
+background-color:#f8f8ff;
+color:#444;
+padding:0 0.2em;
+border:1px solid #DEDEDE;
+}
+
+pre code {
+padding:0;
+font-size:12px;
+background-color:#EEE;
+border:none;
+}
+
+a {
+color:#4183c4;
 }
 </style>
 
