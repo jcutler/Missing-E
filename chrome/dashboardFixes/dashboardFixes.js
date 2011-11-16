@@ -611,10 +611,10 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
        (dashboardFixes_settings.randomQueue === 1 &&
         /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
             .test(location.href))) {
-      var massDelete = dashboardFixes_settings.massDelete === 1 &&
+      var doMassDelete = dashboardFixes_settings.massDelete === 1 &&
         /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
             .test(location.href);
-      var randomQueue = dashboardFixes_settings.randomQueue === 1 &&
+      var doRandomQueue = dashboardFixes_settings.randomQueue === 1 &&
         /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
             .test(location.href);
       var afterguy = $('#right_column a.settings');
@@ -634,10 +634,10 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
                        chrome.extension.getURL("dashboardFixes/draftQueueTools.png") +
                        '") !important; }</style>');
       $('<ul class="controls_section" id="MissingEdraftQueueTools">' +
-        (randomQueue ? '<li><a href="#" class="randomize">' +
+        (doRandomQueue ? '<li><a href="#" class="randomize">' +
          '<div class="hide_overflow">' +
          locale[lang].shuffle + '</div></a></li>' : '') +
-        (massDelete ? '<li><a href="#" class="select_all">' +
+        (doMassDelete ? '<li><a href="#" class="select_all">' +
          '<div class="hide_overflow">' +
          locale[lang].massDelete.selectAll + '</div></a></li>' +
          '<li><a href="#" class="deselect_all">' +
@@ -646,8 +646,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          '<li><a href="#" class="delete_selected">' +
          '<div class="hide_overflow">' +
          locale[lang].massDelete.deleteSelected + '</div></a></li>' : '') +
-        '</ul>')
-            .insertBefore(beforeguy);
+        '</ul>').insertBefore(beforeguy);
       $('#posts li.post').each(function() {
          setupMassDeletePost(this);
       });

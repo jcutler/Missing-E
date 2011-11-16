@@ -650,10 +650,10 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
        (randomQueue === 1 &&
         /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
             .test(location.href))) {
-      var massDelete = massDelete === 1 &&
+      var doMassDelete = massDelete === 1 &&
         /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(drafts|queue)/
             .test(location.href);
-      var randomQueue = randomQueue === 1 &&
+      var doRandomQueue = randomQueue === 1 &&
         /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/queue/
             .test(location.href);
       var afterguy = $('#right_column a.settings');
@@ -673,10 +673,10 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                     safari.extension.baseURI + "dashboardFixes/draftQueueTools.png" +
                     '") !important; }</style>');
       $('<ul class="controls_section" id="MissingEdraftQueueTools">' +
-        (randomQueue ? '<li><a href="#" class="randomize">' +
+        (doRandomQueue ? '<li><a href="#" class="randomize">' +
          '<div class="hide_overflow">' +
          locale[lang].shuffle + '</div></a></li>' : '') +
-        (massDelete ? '<li><a href="#" class="select_all">' +
+        (doMassDelete ? '<li><a href="#" class="select_all">' +
          '<div class="hide_overflow">' +
          locale[lang].massDelete.selectAll + '</div></a></li>' +
          '<li><a href="#" class="deselect_all">' +
@@ -685,8 +685,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
          '<li><a href="#" class="delete_selected">' +
          '<div class="hide_overflow">' +
          locale[lang].massDelete.deleteSelected + '</div></a></li>' : '') +
-        '</ul>')
-            .insertBefore(beforeguy);
+        '</ul>').insertBefore(beforeguy);
       $('#posts li.post').each(function() {
          setupMassDeletePost(this);
       });
