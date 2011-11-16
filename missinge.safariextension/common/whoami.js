@@ -265,6 +265,7 @@ function settings_startup(response) {
                                         response.message.queueArrows,
                                         response.message.expandAll,
                                         response.message.massDelete,
+                                        response.message.randomQueue,
                                         response.message.sortableNotes);
    }
    else if (response.message.component === "betterReblogs") {

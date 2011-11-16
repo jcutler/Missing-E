@@ -91,7 +91,7 @@
 			<string>postingFixes/postingFixes.css</string>
 			<string>massEditor/massEditor.css</string>
 			<string>sidebarTweaks/sidebarTweaks.css</string>
-			<string>dashboardFixes/massDelete.css</string>
+			<string>dashboardFixes/draftQueueTools.css</string>
 			<string>dashboardFixes/notesSorter.css</string>
 		</array>
 		<key>Whitelist</key>

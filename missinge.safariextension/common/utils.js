@@ -84,3 +84,18 @@ function unescapeHTML(str) {
    return ret.replace(/&amp;/g,'&').replace(/&quot;/g,'"')
             .replace(/&gt;/g,'>').replace(/&lt;/,'<');
 }
+
+function randomRange(from, to) {
+   return Math.floor(Math.random() * (to - from + 1) + from);
+}
+
+function shuffle(arr) {
+   var s = [];
+   while (arr.length) {
+      s.push(arr.splice(Math.random() * arr.length, 1)[0]);
+   }
+   while (s.length) {
+      arr.push(s.pop());
+   }
+   return arr;
+}
