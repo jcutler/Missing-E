@@ -122,7 +122,7 @@ var locale = {
   "reblogTags": "Reblog Tags",
   "removeTag": "Remove tag",
   "loading": "Loading...",
-  "error": "An error occured. Click to reload.",
+  "error": "An error occurred. Click to reload.",
   "posts": {
    "text": ["your", "post"],
    "photo": ["your", "photo"],
@@ -1426,6 +1426,179 @@ var locale = {
    "type": "тип",
    "user": "пользователь",
    "reset": "Сброс"
+  }
+ },
+ "pl": {
+  "daysLong": [
+   "niedziela",
+   "poniedziałek",
+   "wtorek",
+   "środa",
+   "czwartek",
+   "piątek",
+   "sobota"
+  ],
+  "daysShort": [
+   "niedz",
+   "pon",
+   "wt",
+   "śr",
+   "czw",
+   "pt",
+   "sob"
+  ],
+  "monthsLong": [
+   "styczeń",
+   "luty",
+   "marzec",
+   "kwiecień",
+   "maj",
+   "czerwiec",
+   "lipiec",
+   "sierpień",
+   "wrzesień",
+   "październik",
+   "listopad",
+   "grudzień"
+  ],
+  "monthsShort": [
+   "sty",
+   "lut",
+   "mar",
+   "kwi",
+   "maj",
+   "cze",
+   "lip",
+   "sie",
+   "wrz",
+   "paź",
+   "lis",
+   "gru"
+  ],
+  "update": "Aktualizacja Missing e",
+  "sidebar": {
+   "posts": "Posty",
+   "followers": "Obserwatorzy",
+   "messages": "Wiadomości",
+   "drafts": "Wersje robocze",
+   "queue": "Kolejka",
+   "massEditor": "Masowy edytor postów"
+  },
+  "reblog": "rebloguj",
+  "reblogging": "reblogowanie...",
+  "reblogFailed": "Reblogu nie powiodło!",
+  "rebloggedText": "reblogował",
+  "reblogOptions": [
+   {
+    "item": "draft",
+    "text": "Wersję roboczą"
+   },
+   {
+    "item": "queue",
+    "text": "Dodaj do kolejki"
+   },
+   {
+    "item": "private",
+    "text": "Private"
+   },
+   {
+    "item": "manual",
+    "text": "Reblogu ręcznie"
+   }
+  ],
+  "tagsText": "tagi",
+  "twitterText": "Wyślij na Twittera",
+  "askPost": "Pytanie",
+  "askPerson": ["Pytać", "U"],
+  "asked": ["U", "apytał(a)"],
+  "reblogAsk": "Reblogu Pytanie",
+  "select": "Zaznacz",
+  "first100": "Pierwsze 100",
+  "postTypeNames": {
+   "text": "Tekst",
+   "photo": "Zdjęcie",
+   "quote": "Cytat",
+   "link": "Link",
+   "chat": "Dialog",
+   "audio": "Audio",
+   "video": "Wideo"
+  },
+  "dashFixesText": {
+   "edit": "edytuj",
+   "del": "usuń",
+   "reblog": "rebloguj",
+   "reply": "komentuj",
+   "notes": "notek",
+   "queue": "kolejkuj",
+   "experimental": "EKSPERYMENTALNYM",
+   "exp": "X"
+  },
+  "bookmarkVerb": "zakładka",
+  "bookmarkNoun": "Zakładka",
+  "bookmarksTitle": "Zakładki",
+  "postUnavailable": "Post Niedostępne",
+  "magnify": "powiększać",
+  "postingFixes": {
+   "submitText": {
+    "publish": "Publikuj",
+    "queue": "Kolejkuj",
+    "draft": "Wersję roboczą",
+    "private": "Post prywatny"
+   },
+   "uploadImagesText": "Przesłać zdjęcia zamiast",
+   "clearTagsText": "Usuwanie tagi"
+  },
+  "reblogTags": "Reblogu tagi",
+  "removeTag": "Usuń tag",
+  "loading": "Załadunek...",
+  "error": "Wystąpił błąd. Kliknij, aby przeładować.",
+  "posts": {
+   "text": ["Twój", "post"],
+   "photo": ["Twóje", "zdjęcie"],
+   "photoset": ["Twój", "zestaw zdjęć"],
+   "quote": ["Twój", "cytat"],
+   "link": ["Twój", "link"],
+   "conversation": ["Twój", "dialog"],
+   "audio": ["Twój", "post audio"],
+   "video": ["Twój", "klip wideo"],
+   "question": ["Twóje", "pytanie"]
+  },
+  "notifications": {
+   "like": ["U", "lubi", "P"],
+   "reblog": ["U", "reblogował(a)", "P"],
+   "reblogIndex": 1,
+   "answer": ["U", "odpowiedział(a) na", "P"],
+   "reply": ["U", "skomentował(a)", "P"]
+  },
+  "replyType": {
+   "as": "jako ...",
+   "photo": "jak <strong>zdjęcie</strong>",
+   "photoTitle": "Odpowiedź zdjęcie",
+   "text": "jako <strong>tekst</strong>",
+   "textTitle": "Odpowiedź tekst"
+  },
+  "shuffle": "Potasować kolejka",
+  "massDelete": {
+   "selectAll": "Zaznacz wszystko",
+   "deselectAll": "Odznacz wszystkie",
+   "deleteSelected": "Usunąć wybrane",
+   "messagesConfirm": "Czy na pewno chcesz usunąć # wybranych wiadomości?",
+   "messagesError": "Niektóre wiadomości nie może być usunięty. Spróbuj ponownie później.",
+   "postsConfirm": "Czy na pewno chcesz usunąć # wybranych posty?",
+   "postsError": "Niektóre posty nie może być usunięty. Spróbuj ponownie później.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    "0": {
+     "1 wybranych wiadomości": "wybrane wiadomośca",
+     "1 wybranych posty": "wybrany post"
+    }
+   }
+  },
+  "sorting": {
+   "sort": "Sortuj",
+   "type": "Typ",
+   "user": "Login",
+   "reset": "Zresetować"
   }
  }
 };
