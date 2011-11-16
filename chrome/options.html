@@ -861,6 +861,7 @@ function loadCheck(f, i, def) {
 }
 
 function loadSettings() {
+   var i;
    $('span.defRetries').text(defaultRetries);
    $('#versionnum').text(getStorage('MissingE_version',''));
    var exp = document.getElementById("experimentalFeatures_options").active;
@@ -872,7 +873,7 @@ function loadSettings() {
       exp.checked = false;
       $('#posts td.experimental').hide();
    }
-   for (i in componentList) {
+   for (i=0; i<componentList.length; i++) {
       var v = componentList[i];
       var frm = document.getElementById(v + "_options");
       var active = frm.active;
