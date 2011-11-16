@@ -8,6 +8,7 @@ font:13px Helvetica,Arial,sans-serif;
 margin:20px;
 padding:20px;
 max-width:900px;
+border:1px solid #CCC;
 border-radius:3px;
 -webkit-box-shadow:rgba(0,0,0,0.07) 0 1px 2px inset;
 -webkit-border-radius:3px;
