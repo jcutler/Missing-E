@@ -86,10 +86,15 @@ function unescapeHTML(str) {
 
 function getLocale(lang) {
    lang = lang.toLowerCase();
-   if (locale.hasOwnProperty(lang)) {
+   if (locale.hasOwnProperty(lang) &&
+       locale[lang] !== false) {
       return locale[lang];
    }
    else {
+      if (!locale.hasOwnProperty(lang)) {
+         locale[lang] = false;
+         console.log("Warning: Localization not found for language '" + lang + "'");
+      }
       return locale.en;
    }
 }
