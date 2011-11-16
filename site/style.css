@@ -257,6 +257,7 @@ font-size:12px;
 
 #donate img {
 margin-top:4px;
+cursor:pointer;
 }
 
 #downloads, #donate {
@@ -301,6 +302,23 @@ bottom:5px;
 width:100%;
 }
 
+#footer-left, #footer-right {
+font-size:80%;
+background-color:rgba(255,255,255,0.5);
+padding:0 10px;
+display:inline-block;
+position:fixed;
+bottom:5px;
+}
+
+#footer-left {
+left:0;
+}
+
+#footer-right {
+right:0;
+}
+
 #footer a, #inlinefooter a {
 font-style:italic;
 }
@@ -309,11 +327,11 @@ font-style:italic;
 padding:0 10px;
 }
 
-#footer #foot-left, #inlinefooter #foot-left {
+#inlinefooter #foot-left {
 float:left;
 }
 
-#footer #foot-right, #inlinefooter #foot-right {
+#inlinefooter #foot-right {
 float:right;
 }
 
