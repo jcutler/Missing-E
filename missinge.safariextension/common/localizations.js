@@ -172,179 +172,6 @@ var locale = {
    "reset": "Reset"
   }
  },
- "es": {
-  "daysLong": [
-   "Domingo",
-   "Lunes",
-   "Martes",
-   "Miércoles",
-   "Jueves",
-   "Viernes",
-   "Sábado"
-  ],
-  "daysShort": [
-   "Dom",
-   "Lun",
-   "Mar",
-   "Mié",
-   "Jue",
-   "Vie",
-   "Sáb"
-  ],
-  "monthsLong": [
-   "Enero",
-   "Febrero",
-   "Marzo",
-   "Abril",
-   "Mayo",
-   "Junio",
-   "Julio",
-   "Agosto",
-   "Septiembre",
-   "Octubre",
-   "Noviembre",
-   "Diciembre"
-  ],
-  "monthsShort": [
-   "Ene",
-   "Feb",
-   "Mar",
-   "Abr",
-   "May",
-   "Jun",
-   "Jul",
-   "Ago",
-   "Sep",
-   "Oct",
-   "Nov",
-   "Dic"
-  ],
-  "update": "Actualización de Missing e",
-  "sidebar": {
-   "posts": "Publicaciones",
-   "followers": "Seguidores",
-   "messages": "Mensajes",
-   "drafts": "Borradores",
-   "queue": "En cola",
-   "massEditor": "Editar varias publicaciones"
-  },
-  "reblog": "rebloguear",
-  "reblogging": "reblogueando...",
-  "reblogFailed": "¡El reblog falló!",
-  "rebloggedText": "reblogueado",
-  "reblogOptions": [
-   {
-    "item": "draft",
-    "text": "Guardar borrador"
-   },
-   {
-    "item": "queue",
-    "text": "Añadir a la cola"
-   },
-   {
-    "item": "private",
-    "text": "Privado"
-   },
-   {
-    "item": "manual",
-    "text": "Rebloguear manualmente"
-   }
-  ],
-  "tagsText": "Etiquetas",
-  "twitterText": "Enviar a Twitter",
-  "askPost": "Preguntar",
-  "askPerson": ["Preguntar a", "U"],
-  "asked": ["U", "preguntó"],
-  "reblogAsk": "Rebloguear Pregunta",
-  "select": "Seleccionar",
-  "first100": "Primeros 100",
-  "postTypeNames": {
-   "text": "Texto",
-   "photo": "Foto",
-   "quote": "Cita",
-   "link": "Enlace",
-   "chat": "Chat",
-   "audio": "Audio",
-   "video": "Vídeo"
-  },
-  "dashFixesText": {
-   "edit": "editar",
-   "del": "borrar",
-   "reblog": "rebloguear",
-   "reply": "responder",
-   "notes": "notas",
-   "queue": "cola",
-   "experimental": "EXPERIMENTAL",
-   "exp": "X"
-  },
-  "bookmarkVerb": "marcar",
-  "bookmarkNoun": "Marcador",
-  "bookmarksTitle": "Marcadores",
-  "postUnavailable": "Publicación no disponible",
-  "magnify": "agrandar",
-  "postingFixes": {
-   "submitText": {
-    "publish": "Crear publicación",
-    "queue": "Poner publicación en cola",
-    "draft": "Guardar borrador",
-    "private": "Guardar como Privado"
-   },
-   "uploadImagesText": "Subir fotos en su lugar",
-   "clearTagsText": "Quitar etiquetas"
-  },
-  "reblogTags": "Rebloguear etiquetas",
-  "removeTag": "Eliminar etiqueta",
-  "loading": "Cargando...",
-  "error": "Se ha producido un error. Haga clic aquí para intentarlo de nuevo.",
-  "posts": {
-   "text": ["tu", "publicación"],
-   "photo": ["tu", "foto"],
-   "photoset": ["tu", "set de fotos"],
-   "quote": ["tu", "cita"],
-   "link": ["tu", "enlace"],
-   "conversation": ["tu", "chat"],
-   "audio": ["tu", "publicación de audio"],
-   "video": ["tu", "vídeo"],
-   "question": ["tu", "pregunta"]
-  },
-  "notifications": {
-   "like": ["A", "U", "le gusta", "P"],
-   "reblog": ["U", "ha reblogueado", "P"],
-   "reblogIndex": 1,
-   "answer": ["U", "ha contestado a", "P"],
-   "reply": ["U", "ha respondido a", "P"]
-  },
-  "replyType": {
-   "as": "como ...",
-   "photo": "como <strong>una foto</strong>",
-   "photoTitle": "Respuesta en Foto",
-   "text": "como <strong>texto</strong>",
-   "textTitle": "Respuesta en Texto"
-  },
-  "shuffle": "Barajar la cola",
-  "massDelete": {
-   "selectAll": "Seleccionar Todos",
-   "deselectAll": "Deseleccionar Todos",
-   "deleteSelected": "Eliminar Seleccionados",
-   "messagesConfirm": "¿Está seguro que desea eliminar los # mensajes seleccionados?",
-   "messagesError": "Algunos mensajes no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde.",
-   "postsConfirm": "¿Está seguro que desea eliminar las # publicaciones seleccionadas?",
-   "postsError": "Algunos publicaciones no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde.",
-   "confirmReplace": {
-    "operation": ["-", 1],
-    "0": {
-     "los 1 mensajes seleccionados": "el mensaje seleccionado",
-     "las 1 publicaciones seleccionadas": "la publicación seleccionada"
-    }
-   }
-  },
-  "sorting": {
-   "sort": "Ordenar",
-   "type": "Tipo",
-   "user": "Usuario",
-   "reset": "Restablecer"
-  }
- },
  "de": {
   "daysLong": [
    "Sonntag",
@@ -516,6 +343,179 @@ var locale = {
    "type": "Art",
    "user": "Benutzer",
    "reset": "Zurücksetzen"
+  }
+ },
+ "es": {
+  "daysLong": [
+   "Domingo",
+   "Lunes",
+   "Martes",
+   "Miércoles",
+   "Jueves",
+   "Viernes",
+   "Sábado"
+  ],
+  "daysShort": [
+   "Dom",
+   "Lun",
+   "Mar",
+   "Mié",
+   "Jue",
+   "Vie",
+   "Sáb"
+  ],
+  "monthsLong": [
+   "Enero",
+   "Febrero",
+   "Marzo",
+   "Abril",
+   "Mayo",
+   "Junio",
+   "Julio",
+   "Agosto",
+   "Septiembre",
+   "Octubre",
+   "Noviembre",
+   "Diciembre"
+  ],
+  "monthsShort": [
+   "Ene",
+   "Feb",
+   "Mar",
+   "Abr",
+   "May",
+   "Jun",
+   "Jul",
+   "Ago",
+   "Sep",
+   "Oct",
+   "Nov",
+   "Dic"
+  ],
+  "update": "Actualización de Missing e",
+  "sidebar": {
+   "posts": "Publicaciones",
+   "followers": "Seguidores",
+   "messages": "Mensajes",
+   "drafts": "Borradores",
+   "queue": "En cola",
+   "massEditor": "Editar varias publicaciones"
+  },
+  "reblog": "rebloguear",
+  "reblogging": "reblogueando...",
+  "reblogFailed": "¡El reblog falló!",
+  "rebloggedText": "reblogueado",
+  "reblogOptions": [
+   {
+    "item": "draft",
+    "text": "Guardar borrador"
+   },
+   {
+    "item": "queue",
+    "text": "Añadir a la cola"
+   },
+   {
+    "item": "private",
+    "text": "Privado"
+   },
+   {
+    "item": "manual",
+    "text": "Rebloguear manualmente"
+   }
+  ],
+  "tagsText": "Etiquetas",
+  "twitterText": "Enviar a Twitter",
+  "askPost": "Preguntar",
+  "askPerson": ["Preguntar a", "U"],
+  "asked": ["U", "preguntó"],
+  "reblogAsk": "Rebloguear Pregunta",
+  "select": "Seleccionar",
+  "first100": "Primeros 100",
+  "postTypeNames": {
+   "text": "Texto",
+   "photo": "Foto",
+   "quote": "Cita",
+   "link": "Enlace",
+   "chat": "Chat",
+   "audio": "Audio",
+   "video": "Vídeo"
+  },
+  "dashFixesText": {
+   "edit": "editar",
+   "del": "borrar",
+   "reblog": "rebloguear",
+   "reply": "responder",
+   "notes": "notas",
+   "queue": "cola",
+   "experimental": "EXPERIMENTAL",
+   "exp": "X"
+  },
+  "bookmarkVerb": "marcar",
+  "bookmarkNoun": "Marcador",
+  "bookmarksTitle": "Marcadores",
+  "postUnavailable": "Publicación no disponible",
+  "magnify": "agrandar",
+  "postingFixes": {
+   "submitText": {
+    "publish": "Crear publicación",
+    "queue": "Poner publicación en cola",
+    "draft": "Guardar borrador",
+    "private": "Guardar como Privado"
+   },
+   "uploadImagesText": "Subir fotos en su lugar",
+   "clearTagsText": "Quitar etiquetas"
+  },
+  "reblogTags": "Rebloguear etiquetas",
+  "removeTag": "Eliminar etiqueta",
+  "loading": "Cargando...",
+  "error": "Se ha producido un error. Haga clic aquí para intentarlo de nuevo.",
+  "posts": {
+   "text": ["tu", "publicación"],
+   "photo": ["tu", "foto"],
+   "photoset": ["tu", "set de fotos"],
+   "quote": ["tu", "cita"],
+   "link": ["tu", "enlace"],
+   "conversation": ["tu", "chat"],
+   "audio": ["tu", "publicación de audio"],
+   "video": ["tu", "vídeo"],
+   "question": ["tu", "pregunta"]
+  },
+  "notifications": {
+   "like": ["A", "U", "le gusta", "P"],
+   "reblog": ["U", "ha reblogueado", "P"],
+   "reblogIndex": 1,
+   "answer": ["U", "ha contestado a", "P"],
+   "reply": ["U", "ha respondido a", "P"]
+  },
+  "replyType": {
+   "as": "como ...",
+   "photo": "como <strong>una foto</strong>",
+   "photoTitle": "Respuesta en Foto",
+   "text": "como <strong>texto</strong>",
+   "textTitle": "Respuesta en Texto"
+  },
+  "shuffle": "Barajar la cola",
+  "massDelete": {
+   "selectAll": "Seleccionar Todos",
+   "deselectAll": "Deseleccionar Todos",
+   "deleteSelected": "Eliminar Seleccionados",
+   "messagesConfirm": "¿Está seguro que desea eliminar los # mensajes seleccionados?",
+   "messagesError": "Algunos mensajes no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde.",
+   "postsConfirm": "¿Está seguro que desea eliminar las # publicaciones seleccionadas?",
+   "postsError": "Algunos publicaciones no se pudieron eliminar. Por favor, inténtelo de nuevo más tarde.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    "0": {
+     "los 1 mensajes seleccionados": "el mensaje seleccionado",
+     "las 1 publicaciones seleccionadas": "la publicación seleccionada"
+    }
+   }
+  },
+  "sorting": {
+   "sort": "Ordenar",
+   "type": "Tipo",
+   "user": "Usuario",
+   "reset": "Restablecer"
   }
  },
  "fr": {
@@ -1040,189 +1040,177 @@ var locale = {
    "reset": "リセット"
   }
  },
- "tr": {
+ "pl": {
   "daysLong": [
-   "Pazar",
-   "Pazartesi",
-   "Salı",
-   "Çarşamba",
-   "Perşembe",
-   "Cuma",
-   "Cumartesi"
+   "niedziela",
+   "poniedziałek",
+   "wtorek",
+   "środa",
+   "czwartek",
+   "piątek",
+   "sobota"
   ],
   "daysShort": [
-   "Paz",
-   "Pzt",
-   "Sal",
-   "Çar",
-   "Per",
-   "Cum",
-   "Cmt"
+   "niedz",
+   "pon",
+   "wt",
+   "śr",
+   "czw",
+   "pt",
+   "sob"
   ],
   "monthsLong": [
-   "Ocak",
-   "Şubat",
-   "Mart",
-   "Nisan",
-   "Mayıs",
-   "Haziran",
-   "Temmuz",
-   "Ağustos",
-   "Eylül",
-   "Ekim",
-   "Kasım",
-   "Aralık"
+   "styczeń",
+   "luty",
+   "marzec",
+   "kwiecień",
+   "maj",
+   "czerwiec",
+   "lipiec",
+   "sierpień",
+   "wrzesień",
+   "październik",
+   "listopad",
+   "grudzień"
   ],
   "monthsShort": [
-   "Oca",
-   "Şub",
-   "Mar",
-   "Nis",
-   "May",
-   "Haz",
-   "Tem",
-   "Ağu",
-   "Eyl",
-   "Eki",
-   "Kas",
-   "Ara"
+   "sty",
+   "lut",
+   "mar",
+   "kwi",
+   "maj",
+   "cze",
+   "lip",
+   "sie",
+   "wrz",
+   "paź",
+   "lis",
+   "gru"
   ],
-  "update": "Missing e'u Güncelleme",
+  "update": "Aktualizacja Missing e",
   "sidebar": {
-   "posts": "Gönderiler",
-   "followers": "Takipçiler",
-   "messages": "Mesajlar",
-   "drafts": "Taslaklar",
-   "queue": "Sırada",
-   "massEditor": "Toplu Gönderi Editörünü Aç"
+   "posts": "Posty",
+   "followers": "Obserwatorzy",
+   "messages": "Wiadomości",
+   "drafts": "Wersje robocze",
+   "queue": "Kolejka",
+   "massEditor": "Masowy edytor postów"
   },
-  "reblog": "yeniden blogla",
-  "reblogging": "yeniden bloglama...",
-  "reblogFailed": "Yeniden bloglama başarısız oldu!",
-  "rebloggedText": "yeniden blogladı",
+  "reblog": "rebloguj",
+  "reblogging": "reblogowanie...",
+  "reblogFailed": "Reblogu nie powiodło!",
+  "rebloggedText": "reblogował",
   "reblogOptions": [
    {
     "item": "draft",
-    "text": "Taslak olarak kaydet"
+    "text": "Wersję roboczą"
    },
    {
     "item": "queue",
-    "text": "Sıraya koy"
+    "text": "Dodaj do kolejki"
    },
    {
     "item": "private",
-    "text": "Özel"
+    "text": "Private"
    },
    {
     "item": "manual",
-    "text": "Yeniden blogla düzenleyerek"
+    "text": "Reblogu ręcznie"
    }
   ],
-  "tagsText": "Etiketler",
-  "twitterText": "Twitter'a gönder",
-  "askPost": "Sor",
-  "askPerson": ["U", "Sor"],
-  "asked": ["U", "sordu"],
-  "reblogAsk": "Soru Yeniden Blogla",
-  "select": "Seç",
-  "first100": "Ilk 100",
+  "tagsText": "tagi",
+  "twitterText": "Wyślij na Twittera",
+  "askPost": "Pytanie",
+  "askPerson": ["Pytać", "U"],
+  "asked": ["U", "apytał(a)"],
+  "reblogAsk": "Reblogu Pytanie",
+  "select": "Zaznacz",
+  "first100": "Pierwsze 100",
   "postTypeNames": {
-   "text": "Metin",
-   "photo": "Fotoğraf",
-   "quote": "Alıntı",
-   "link": "Bağlantı",
-   "chat": "Diyalog",
-   "audio": "Ses",
-   "video": "Video"
+   "text": "Tekst",
+   "photo": "Zdjęcie",
+   "quote": "Cytat",
+   "link": "Link",
+   "chat": "Dialog",
+   "audio": "Audio",
+   "video": "Wideo"
   },
   "dashFixesText": {
-   "edit": "düzenle",
-   "del": "sil",
-   "reblog": "yeniden blogla",
-   "reply": "yorum yap",
-   "notes": "yorum",
-   "queue": "sırada",
-   "experimental": "DENEME",
+   "edit": "edytuj",
+   "del": "usuń",
+   "reblog": "rebloguj",
+   "reply": "komentuj",
+   "notes": "notek",
+   "queue": "kolejkuj",
+   "experimental": "EKSPERYMENTALNYM",
    "exp": "X"
   },
-  "bookmarkVerb": "kalınan yer imi",
-  "bookmarkNoun": "Yer imi",
-  "bookmarksTitle": "Yer imleri",
-  "postUnavailable": "Gönderi Kullanılamıyor",
-  "magnify": "büyüt",
+  "bookmarkVerb": "zakładka",
+  "bookmarkNoun": "Zakładka",
+  "bookmarksTitle": "Zakładki",
+  "postUnavailable": "Post Niedostępne",
+  "magnify": "powiększać",
   "postingFixes": {
    "submitText": {
-    "publish": "Gönderi yayınla",
-    "queue": "Gönderiyi sıraya koy",
-    "draft": "Taslak olarak kaydet",
-    "private": "Özel olarak kaydet"
+    "publish": "Publikuj",
+    "queue": "Kolejkuj",
+    "draft": "Wersję roboczą",
+    "private": "Post prywatny"
    },
-   "uploadImagesText": "Bunun yerine başka fotograf yükle",
-   "clearTagsText": "Etiketleri sil"
+   "uploadImagesText": "Przesłać zdjęcia zamiast",
+   "clearTagsText": "Usuwanie tagi"
   },
-  "reblogTags": "Yeniden blogla etiketler",
-  "removeTag": "Etiketi kaldır",
-  "loading": "Yüklüyor",
-  "error": "Bir hata oluştu! Lütfen yeniden deneyin.",
+  "reblogTags": "Reblogu tagi",
+  "removeTag": "Usuń tag",
+  "loading": "Załadunek...",
+  "error": "Wystąpił błąd. Kliknij, aby przeładować.",
   "posts": {
-   "text": ["gönderini"],
-   "photo": ["fotoğrafını"],
-   "photoset": ["fotoğraf albümü'nü"],
-   "quote": ["alıntın"],
-   "link": ["bağlantını"],
-   "conversation": ["diyaloğunu"],
-   "audio": ["ses gönderini"],
-   "video": ["videonu"],
-   "question": ["soruya"]
+   "text": ["Twój", "post"],
+   "photo": ["Twóje", "zdjęcie"],
+   "photoset": ["Twój", "zestaw zdjęć"],
+   "quote": ["Twój", "cytat"],
+   "link": ["Twój", "link"],
+   "conversation": ["Twój", "dialog"],
+   "audio": ["Twój", "post audio"],
+   "video": ["Twój", "klip wideo"],
+   "question": ["Twóje", "pytanie"]
   },
   "notifications": {
-   "like": ["U,", "P", "beğendi"],
-   "reblog": ["U,", "P", "yeniden blogladı"],
-   "reblogIndex": 2,
-   "answer": ["U,", "sorduğun", "P", "cevap verdi"],
-   "reply": ["U,", "P", "yorum yaptı"]
-  },
-  "notificationChanges": {
-   "reply": {
-    "gönderini": "gönderine",
-    "fotoğrafını": "fotoğrafına",
-    "fotoğraf albümü'nü": "fotoğraf albümüne",
-    "alıntın": "alıntına",
-    "bağlantını": "bağlantına",
-    "diyaloğunu": "diyaloğuna",
-    "ses gönderini": "ses gönderine",
-    "videonu": "videona"
-   }
+   "like": ["U", "lubi", "P"],
+   "reblog": ["U", "reblogował(a)", "P"],
+   "reblogIndex": 1,
+   "answer": ["U", "odpowiedział(a) na", "P"],
+   "reply": ["U", "skomentował(a)", "P"]
   },
   "replyType": {
-   "as": "gibi ...",
-   "photo": "<strong>fotoğraf</strong> olarak",
-   "photoTitle": "Fotoğraf'la Cevapla",
-   "text": "<strong>metin</strong> olarak",
-   "textTitle": "Metin'le Cevapla"
+   "as": "jako ...",
+   "photo": "jak <strong>zdjęcie</strong>",
+   "photoTitle": "Odpowiedź zdjęcie",
+   "text": "jako <strong>tekst</strong>",
+   "textTitle": "Odpowiedź tekst"
   },
-  "shuffle": "Sırasını karıştırmak",
+  "shuffle": "Potasować kolejka",
   "massDelete": {
-   "selectAll": "Hepsini Seç",
-   "deselectAll": "Seçimi Kaldır",
-   "deleteSelected": "Seçilenleri Sil",
-   "messagesConfirm": "Seçili olan bu # mesajlar silinsin mi?",
-   "messagesError": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin.",
-   "postsConfirm": "Seçili olan bu # gönderiler silinsin mi?",
-   "postsError": "Üzgünüz bazı gönderiler şu anda silinemiyor. Lütfen daha sonra yeniden deneyin.",
+   "selectAll": "Zaznacz wszystko",
+   "deselectAll": "Odznacz wszystkie",
+   "deleteSelected": "Usunąć wybrane",
+   "messagesConfirm": "Czy na pewno chcesz usunąć # wybranych wiadomości?",
+   "messagesError": "Niektóre wiadomości nie może być usunięty. Spróbuj ponownie później.",
+   "postsConfirm": "Czy na pewno chcesz usunąć # wybranych posty?",
+   "postsError": "Niektóre posty nie może być usunięty. Spróbuj ponownie później.",
    "confirmReplace": {
     "operation": ["-", 1],
     "0": {
-     "mesajlar": "mesajı",
-     "gönderiler": "gönderi"
+     "1 wybranych wiadomości": "wybrane wiadomośca",
+     "1 wybranych posty": "wybrany post"
     }
    }
   },
   "sorting": {
-   "sort": "Sırala",
-   "type": "Tipi",
-   "user": "Kullanıcı",
-   "reset": "Sıfırla"
+   "sort": "Sortuj",
+   "type": "Typ",
+   "user": "Login",
+   "reset": "Zresetować"
   }
  },
  "ru": {
@@ -1428,177 +1416,189 @@ var locale = {
    "reset": "Сброс"
   }
  },
- "pl": {
+ "tr": {
   "daysLong": [
-   "niedziela",
-   "poniedziałek",
-   "wtorek",
-   "środa",
-   "czwartek",
-   "piątek",
-   "sobota"
+   "Pazar",
+   "Pazartesi",
+   "Salı",
+   "Çarşamba",
+   "Perşembe",
+   "Cuma",
+   "Cumartesi"
   ],
   "daysShort": [
-   "niedz",
-   "pon",
-   "wt",
-   "śr",
-   "czw",
-   "pt",
-   "sob"
+   "Paz",
+   "Pzt",
+   "Sal",
+   "Çar",
+   "Per",
+   "Cum",
+   "Cmt"
   ],
   "monthsLong": [
-   "styczeń",
-   "luty",
-   "marzec",
-   "kwiecień",
-   "maj",
-   "czerwiec",
-   "lipiec",
-   "sierpień",
-   "wrzesień",
-   "październik",
-   "listopad",
-   "grudzień"
+   "Ocak",
+   "Şubat",
+   "Mart",
+   "Nisan",
+   "Mayıs",
+   "Haziran",
+   "Temmuz",
+   "Ağustos",
+   "Eylül",
+   "Ekim",
+   "Kasım",
+   "Aralık"
   ],
   "monthsShort": [
-   "sty",
-   "lut",
-   "mar",
-   "kwi",
-   "maj",
-   "cze",
-   "lip",
-   "sie",
-   "wrz",
-   "paź",
-   "lis",
-   "gru"
+   "Oca",
+   "Şub",
+   "Mar",
+   "Nis",
+   "May",
+   "Haz",
+   "Tem",
+   "Ağu",
+   "Eyl",
+   "Eki",
+   "Kas",
+   "Ara"
   ],
-  "update": "Aktualizacja Missing e",
+  "update": "Missing e'u Güncelleme",
   "sidebar": {
-   "posts": "Posty",
-   "followers": "Obserwatorzy",
-   "messages": "Wiadomości",
-   "drafts": "Wersje robocze",
-   "queue": "Kolejka",
-   "massEditor": "Masowy edytor postów"
+   "posts": "Gönderiler",
+   "followers": "Takipçiler",
+   "messages": "Mesajlar",
+   "drafts": "Taslaklar",
+   "queue": "Sırada",
+   "massEditor": "Toplu Gönderi Editörünü Aç"
   },
-  "reblog": "rebloguj",
-  "reblogging": "reblogowanie...",
-  "reblogFailed": "Reblogu nie powiodło!",
-  "rebloggedText": "reblogował",
+  "reblog": "yeniden blogla",
+  "reblogging": "yeniden bloglama...",
+  "reblogFailed": "Yeniden bloglama başarısız oldu!",
+  "rebloggedText": "yeniden blogladı",
   "reblogOptions": [
    {
     "item": "draft",
-    "text": "Wersję roboczą"
+    "text": "Taslak olarak kaydet"
    },
    {
     "item": "queue",
-    "text": "Dodaj do kolejki"
+    "text": "Sıraya koy"
    },
    {
     "item": "private",
-    "text": "Private"
+    "text": "Özel"
    },
    {
     "item": "manual",
-    "text": "Reblogu ręcznie"
+    "text": "Yeniden blogla düzenleyerek"
    }
   ],
-  "tagsText": "tagi",
-  "twitterText": "Wyślij na Twittera",
-  "askPost": "Pytanie",
-  "askPerson": ["Pytać", "U"],
-  "asked": ["U", "apytał(a)"],
-  "reblogAsk": "Reblogu Pytanie",
-  "select": "Zaznacz",
-  "first100": "Pierwsze 100",
+  "tagsText": "Etiketler",
+  "twitterText": "Twitter'a gönder",
+  "askPost": "Sor",
+  "askPerson": ["U", "Sor"],
+  "asked": ["U", "sordu"],
+  "reblogAsk": "Soru Yeniden Blogla",
+  "select": "Seç",
+  "first100": "Ilk 100",
   "postTypeNames": {
-   "text": "Tekst",
-   "photo": "Zdjęcie",
-   "quote": "Cytat",
-   "link": "Link",
-   "chat": "Dialog",
-   "audio": "Audio",
-   "video": "Wideo"
+   "text": "Metin",
+   "photo": "Fotoğraf",
+   "quote": "Alıntı",
+   "link": "Bağlantı",
+   "chat": "Diyalog",
+   "audio": "Ses",
+   "video": "Video"
   },
   "dashFixesText": {
-   "edit": "edytuj",
-   "del": "usuń",
-   "reblog": "rebloguj",
-   "reply": "komentuj",
-   "notes": "notek",
-   "queue": "kolejkuj",
-   "experimental": "EKSPERYMENTALNYM",
+   "edit": "düzenle",
+   "del": "sil",
+   "reblog": "yeniden blogla",
+   "reply": "yorum yap",
+   "notes": "yorum",
+   "queue": "sırada",
+   "experimental": "DENEME",
    "exp": "X"
   },
-  "bookmarkVerb": "zakładka",
-  "bookmarkNoun": "Zakładka",
-  "bookmarksTitle": "Zakładki",
-  "postUnavailable": "Post Niedostępne",
-  "magnify": "powiększać",
+  "bookmarkVerb": "kalınan yer imi",
+  "bookmarkNoun": "Yer imi",
+  "bookmarksTitle": "Yer imleri",
+  "postUnavailable": "Gönderi Kullanılamıyor",
+  "magnify": "büyüt",
   "postingFixes": {
    "submitText": {
-    "publish": "Publikuj",
-    "queue": "Kolejkuj",
-    "draft": "Wersję roboczą",
-    "private": "Post prywatny"
+    "publish": "Gönderi yayınla",
+    "queue": "Gönderiyi sıraya koy",
+    "draft": "Taslak olarak kaydet",
+    "private": "Özel olarak kaydet"
    },
-   "uploadImagesText": "Przesłać zdjęcia zamiast",
-   "clearTagsText": "Usuwanie tagi"
+   "uploadImagesText": "Bunun yerine başka fotograf yükle",
+   "clearTagsText": "Etiketleri sil"
   },
-  "reblogTags": "Reblogu tagi",
-  "removeTag": "Usuń tag",
-  "loading": "Załadunek...",
-  "error": "Wystąpił błąd. Kliknij, aby przeładować.",
+  "reblogTags": "Yeniden blogla etiketler",
+  "removeTag": "Etiketi kaldır",
+  "loading": "Yüklüyor",
+  "error": "Bir hata oluştu! Lütfen yeniden deneyin.",
   "posts": {
-   "text": ["Twój", "post"],
-   "photo": ["Twóje", "zdjęcie"],
-   "photoset": ["Twój", "zestaw zdjęć"],
-   "quote": ["Twój", "cytat"],
-   "link": ["Twój", "link"],
-   "conversation": ["Twój", "dialog"],
-   "audio": ["Twój", "post audio"],
-   "video": ["Twój", "klip wideo"],
-   "question": ["Twóje", "pytanie"]
+   "text": ["gönderini"],
+   "photo": ["fotoğrafını"],
+   "photoset": ["fotoğraf albümü'nü"],
+   "quote": ["alıntın"],
+   "link": ["bağlantını"],
+   "conversation": ["diyaloğunu"],
+   "audio": ["ses gönderini"],
+   "video": ["videonu"],
+   "question": ["soruya"]
   },
   "notifications": {
-   "like": ["U", "lubi", "P"],
-   "reblog": ["U", "reblogował(a)", "P"],
-   "reblogIndex": 1,
-   "answer": ["U", "odpowiedział(a) na", "P"],
-   "reply": ["U", "skomentował(a)", "P"]
+   "like": ["U,", "P", "beğendi"],
+   "reblog": ["U,", "P", "yeniden blogladı"],
+   "reblogIndex": 2,
+   "answer": ["U,", "sorduğun", "P", "cevap verdi"],
+   "reply": ["U,", "P", "yorum yaptı"]
+  },
+  "notificationChanges": {
+   "reply": {
+    "gönderini": "gönderine",
+    "fotoğrafını": "fotoğrafına",
+    "fotoğraf albümü'nü": "fotoğraf albümüne",
+    "alıntın": "alıntına",
+    "bağlantını": "bağlantına",
+    "diyaloğunu": "diyaloğuna",
+    "ses gönderini": "ses gönderine",
+    "videonu": "videona"
+   }
   },
   "replyType": {
-   "as": "jako ...",
-   "photo": "jak <strong>zdjęcie</strong>",
-   "photoTitle": "Odpowiedź zdjęcie",
-   "text": "jako <strong>tekst</strong>",
-   "textTitle": "Odpowiedź tekst"
+   "as": "gibi ...",
+   "photo": "<strong>fotoğraf</strong> olarak",
+   "photoTitle": "Fotoğraf'la Cevapla",
+   "text": "<strong>metin</strong> olarak",
+   "textTitle": "Metin'le Cevapla"
   },
-  "shuffle": "Potasować kolejka",
+  "shuffle": "Sırasını karıştırmak",
   "massDelete": {
-   "selectAll": "Zaznacz wszystko",
-   "deselectAll": "Odznacz wszystkie",
-   "deleteSelected": "Usunąć wybrane",
-   "messagesConfirm": "Czy na pewno chcesz usunąć # wybranych wiadomości?",
-   "messagesError": "Niektóre wiadomości nie może być usunięty. Spróbuj ponownie później.",
-   "postsConfirm": "Czy na pewno chcesz usunąć # wybranych posty?",
-   "postsError": "Niektóre posty nie może być usunięty. Spróbuj ponownie później.",
+   "selectAll": "Hepsini Seç",
+   "deselectAll": "Seçimi Kaldır",
+   "deleteSelected": "Seçilenleri Sil",
+   "messagesConfirm": "Seçili olan bu # mesajlar silinsin mi?",
+   "messagesError": "Üzgünüz bazı mesajlar şu anda silinemiyor. Lütfen daha sonra yeniden deneyin.",
+   "postsConfirm": "Seçili olan bu # gönderiler silinsin mi?",
+   "postsError": "Üzgünüz bazı gönderiler şu anda silinemiyor. Lütfen daha sonra yeniden deneyin.",
    "confirmReplace": {
     "operation": ["-", 1],
     "0": {
-     "1 wybranych wiadomości": "wybrane wiadomośca",
-     "1 wybranych posty": "wybrany post"
+     "mesajlar": "mesajı",
+     "gönderiler": "gönderi"
     }
    }
   },
   "sorting": {
-   "sort": "Sortuj",
-   "type": "Typ",
-   "user": "Login",
-   "reset": "Zresetować"
+   "sort": "Sırala",
+   "type": "Tipi",
+   "user": "Kullanıcı",
+   "reset": "Sıfırla"
   }
  }
 };
