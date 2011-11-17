@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global locale */
+/*global getLocale */
 
 function MissingE_reblogYourself_post_doStartup() {
    var div = document.getElementsByTagName("div")[0];

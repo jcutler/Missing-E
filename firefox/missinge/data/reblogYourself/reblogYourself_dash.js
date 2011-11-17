@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,jQuery,locale,self */
+/*global escapeHTML,getLocale,jQuery,self */
 
 function addReblog(item) {
    if (item.tagName === "LI" && jQuery(item).hasClass('post') &&

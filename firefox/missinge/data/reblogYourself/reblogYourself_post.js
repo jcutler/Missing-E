@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global locale,self */
+/*global getLocale,self */
 
 self.on('message', function (message) {
    if (message.greeting !== "settings" ||

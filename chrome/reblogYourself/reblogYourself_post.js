@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global locale */
+/*global getLocale */
 
 var div = document.getElementsByTagName("div")[0];
 var controls;
