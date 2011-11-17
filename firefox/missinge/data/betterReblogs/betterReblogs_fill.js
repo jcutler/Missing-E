@@ -150,15 +150,15 @@ self.on('message', function (message) {
             var postone = jQuery('#post_one').val();
             var question = "";
             postone = unescapeHTML(postone.replace(/<[^>]*>/g,''));
-            for (i=0; i<locale[lang].asked.length; i++) {
+            for (i=0; i<getLocale(lang).asked.length; i++) {
                if (i>0) {
                   question += " ";
                }
-               if (locale[lang].asked[i] === "U") {
+               if (getLocale(lang).asked[i] === "U") {
                   question += askName[1];
                }
                else {
-                  question += locale[lang].asked[i];
+                  question += getLocale(lang).asked[i];
                }
             }
             question += ": " + postone;
@@ -166,7 +166,7 @@ self.on('message', function (message) {
          }
          var title = jQuery('#left_column h1:first');
          title.find('span.as_links').remove();
-         title.html(title.html().replace(/[^<]*/,locale[lang].reblogAsk));
+         title.html(title.html().replace(/[^<]*/,getLocale(lang).reblogAsk));
          jQuery('head').append('<script type="text/javascript">' +
                           'var ta = document.getElementById("post_two");' +
                           'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
@@ -242,7 +242,7 @@ self.on('message', function (message) {
                               '<a class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
                               'onclick="' + func + '">' +
-                              locale[lang].reblogTags + '</a></div>')
+                              getLocale(lang).reblogTags + '</a></div>')
                .prependTo(set_tags).outerHeight();
             label = jQuery('#post_tags_label');
             if (label.length > 0) {

@@ -54,7 +54,7 @@ function receiveReblog(message) {
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
    var edit, klass, txt;
-   var reblog_text = locale[lang].reblog;
+   var reblog_text = getLocale(lang).reblog;
    if (message.success) {
       klass = (message.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
@@ -81,7 +81,7 @@ function receiveReblog(message) {
       nr.trigger('MissingEaddReblog');
    }
    else {
-      var reblog_err = locale[lang].error;
+      var reblog_err = getLocale(lang).error;
       edit = jQuery('#post_'+message.pid)
          .find('div.post_controls a[href^="/edit"]');
       if (edit.length === 0) {

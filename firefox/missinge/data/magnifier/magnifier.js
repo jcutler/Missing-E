@@ -124,7 +124,7 @@ function insertMagnifier(item) {
          }
       }
       if (str) {
-         var mi = jQuery('<a title="' + locale[lang].loading + '" ' +
+         var mi = jQuery('<a title="' + getLocale(lang).loading + '" ' +
                     'class="MissingE_magnify MissingE_magnify_hide" ' +
                     'id="magnify_' + escapeHTML(tid) + '" href="#" ' +
                     'onclick="return false;"></a>');
@@ -151,13 +151,13 @@ function receiveMagnifier(message) {
    if (message.success) {
       jQuery('#magnify_' + message.pid).attr('src',message.data)
          .removeClass('MissingE_magnify_hide')
-         .attr('title', locale[lang].magnify);
+         .attr('title', getLocale(lang).magnify);
    }
    else {
       jQuery('#magnify_' + message.pid).attr('src','')
          .addClass('MissingE_magnify_err')
          .removeClass('MissingE_magnify_hide')
-         .attr('title', locale[lang].error);
+         .attr('title', getLocale(lang).error);
    }
 }
 

@@ -32,13 +32,12 @@ function zeroPad(num, len) {
 
 function getFormattedDate(d, format, lang) {
    var ret = format;
-   if (!lang || !locale[lang]) { lang = 'en'; }
    ret = ret.replace(/%Y/g,d.getFullYear())
             .replace(/%y/g,(d.getFullYear()%100))
-            .replace(/%M/g,locale[lang].monthsShort[d.getMonth()])
-            .replace(/%B/g,locale[lang].monthsLong[d.getMonth()])
-            .replace(/%w/g,locale[lang].daysShort[d.getDay()])
-            .replace(/%W/g,locale[lang].daysLong[d.getDay()])
+            .replace(/%M/g,getLocale(lang).monthsShort[d.getMonth()])
+            .replace(/%B/g,getLocale(lang).monthsLong[d.getMonth()])
+            .replace(/%w/g,getLocale(lang).daysShort[d.getDay()])
+            .replace(/%W/g,getLocale(lang).daysLong[d.getDay()])
             .replace(/%m/g,zeroPad(d.getMonth()+1,2))
             .replace(/%n/g,(d.getMonth()+1))
             .replace(/%D/g,zeroPad(d.getDate(),2))
@@ -83,6 +82,24 @@ function unescapeHTML(str) {
    }
    return ret.replace(/&amp;/g,'&').replace(/&quot;/g,'"')
             .replace(/&gt;/g,'>').replace(/&lt;/,'<');
+}
+
+function getLocale(lang) {
+   if (typeof lang != "string") {
+      lang = "en";
+   }
+   lang = lang.toLowerCase();
+   if (locale.hasOwnProperty(lang) &&
+       locale[lang] !== false) {
+      return locale[lang];
+   }
+   else {
+      if (!locale.hasOwnProperty(lang)) {
+         locale[lang] = false;
+         console.log("Warning: Localization not found for language '" + lang + "'");
+      }
+      return locale.en;
+   }
 }
 
 function randomRange(from, to) {

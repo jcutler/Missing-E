@@ -59,23 +59,23 @@ function makeSidebar(tumblrAcctNum, retries) {
       if (!lang) { lang = 'en'; }
       var sidebarList = [
          {
-         label: locale[lang].sidebar.posts,
+         label: getLocale(lang).sidebar.posts,
          klass: "posts"
          },
          {
-         label: locale[lang].sidebar.followers,
+         label: getLocale(lang).sidebar.followers,
          klass: "followers"
          },
          {
-         label: locale[lang].sidebar.messages,
+         label: getLocale(lang).sidebar.messages,
          klass: "messages"
          },
          {
-         label: locale[lang].sidebar.drafts,
+         label: getLocale(lang).sidebar.drafts,
          klass: "drafts"
          },
          {
-         label: locale[lang].sidebar.queue,
+         label: getLocale(lang).sidebar.queue,
          klass: "queue"
          }
       ];
@@ -96,7 +96,7 @@ function makeSidebar(tumblrAcctNum, retries) {
       sidebartxt += '<li class="recessed"><a href="/mega-editor/' +
          escapeHTML(tumblrAcct) +
          '" class="mass_editor"><div class="hide_overflow">' +
-         locale[lang].sidebar.massEditor + '</div><div class="gradient">' +
+         getLocale(lang).sidebar.massEditor + '</div><div class="gradient">' +
          '</div></a></li></ul>';
    
       var sidebar;

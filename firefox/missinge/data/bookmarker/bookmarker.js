@@ -72,13 +72,13 @@ function addBar(mark, lang, altPost) {
       post.before('<div id="bookmarkbar_' + markid + '" ' +
             'class="MissingE_bookmark_bar"><div ' +
             'class="MissingE_bookmark_line"></div><div ' +
-            'class="MissingE_bookmark_text">' + locale[lang].bookmarkNoun +
+            'class="MissingE_bookmark_text">' + getLocale(lang).bookmarkNoun +
             ' - <em id="bookmarkbar_label_' +
             markid + '">' + marktxt + '</em>' + (altPost ? '<span ' +
             'class="MissingE_bookmark_missing ' +
             'MissingE_bookmark_missing_' + lang + '"> (' +
             '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
-            'target="_blank">' + locale[lang].postUnavailable + '</a>)' +
+            'target="_blank">' + getLocale(lang).postUnavailable + '</a>)' +
             '</span>' : '') + '</div></div>');
    }
    else {
@@ -282,7 +282,7 @@ function doMarks(item) {
       }
       var node = jQuery('<a class="' + klass + '" id="bookmark_' +
                    escapeHTML(post) + '" title="' +
-                   locale[lang].bookmarkVerb + '" ' +
+                   getLocale(lang).bookmarkVerb + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -463,7 +463,7 @@ self.on('message', function (message) {
                         'class="controls_section">' +
                         '<li class="MissingE_marklist_title recessed">' +
                         '<a href="#" onclick="return false;">' +
-                        locale[lang].bookmarksTitle + '</a></li></ul>');
+                        getLocale(lang).bookmarksTitle + '</a></li></ul>');
       jQuery(function() {
          jQuery('#MissingE_marklist').sortable({
             items:"li[post]",
