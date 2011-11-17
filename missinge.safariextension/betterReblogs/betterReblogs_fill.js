@@ -147,15 +147,15 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
             var postone = $('#post_one').val();
             var question = "";
             postone = unescapeHTML(postone.replace(/<[^>]*>/g,''));
-            for (i=0; i<locale[lang].asked.length; i++) {
+            for (i=0; i<getLocale(lang).asked.length; i++) {
                if (i>0) {
                   question += " ";
                }
-               if (locale[lang].asked[i] === "U") {
+               if (getLocale(lang).asked[i] === "U") {
                   question += askName[1];
                }
                else {
-                  question += locale[lang].asked[i];
+                  question += getLocale(lang).asked[i];
                }
             }
             question += ": " + postone;
@@ -163,7 +163,7 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
          }
          var title = $('#left_column h1:first');
          title.find('span.as_links').remove();
-         title.html(title.html().replace(/[^<]*/,locale[lang].reblogAsk));
+         title.html(title.html().replace(/[^<]*/,getLocale(lang).reblogAsk));
          $('head').append('<script type="text/javascript">' +
                           'var ta = document.getElementById("post_two");' +
                           'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
@@ -242,7 +242,7 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
                               '<a class="reblog_tags" style="color:#666;' +
                               'font-size:10px;" href="#" ' +
                               'onclick="' + func + '">' +
-                              locale[lang].reblogTags + '</a></div>')
+                              getLocale(lang).reblogTags + '</a></div>')
                .prependTo(set_tags).outerHeight();
             label = $('#post_tags_label');
             if (label.length > 0) {

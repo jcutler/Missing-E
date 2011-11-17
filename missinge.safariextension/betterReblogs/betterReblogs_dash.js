@@ -58,15 +58,15 @@ function receiveAskReblog(response) {
    var lang = $('html').attr('lang');
    var question = "";
    var asker = $(item).find(".post_question_asker").text();
-   for (i=0; i<locale[lang].asked.length; i++) {
+   for (i=0; i<getLocale(lang).asked.length; i++) {
       if (i>0) {
          question += " ";
       }
-      if (locale[lang].asked[i] === "U") {
+      if (getLocale(lang).asked[i] === "U") {
          question += asker;
       }
       else {
-         question += locale[lang].asked[i];
+         question += getLocale(lang).asked[i];
       }
    }
    question += ": " + $(item).find("div.post_question").text()
@@ -74,7 +74,7 @@ function receiveAskReblog(response) {
                         .replace(/\s$/,'');
    question = encodeURIComponent(question);
 
-   var reblog_text = locale[lang].reblog;
+   var reblog_text = getLocale(lang).reblog;
    before = item.find('div.post_controls a[href^="/edit"]');
    if (before.length === 0) {
       before = item.find('div.post_controls a.MissingE_edit_control');
@@ -88,7 +88,7 @@ function receiveAskReblog(response) {
    if (response.message.success) {
       klass = (response.message.icons ? 'MissingE_post_control ' +
                'MissingE_reblog_control' : '');
-      txt = (response.message.icons ? '' : locale[lang].reblog);
+      txt = (response.message.icons ? '' : getLocale(lang).reblog);
       rblnk = $('<a title="' + reblog_text + '" href="/reblog/' + tid +
                     '/' + response.message.data + '/text?post%5Bone%5D=' +
                     escapeHTML(question) + '&MissingEaskName=' +
@@ -105,7 +105,7 @@ function receiveAskReblog(response) {
       rblnk.trigger('MissingEaddReblog');
    }
    else {
-      var reblog_err = locale[lang].error;
+      var reblog_err = getLocale(lang).error;
       klass = (response.message.icons ? 'MissingE_post_control ' +
                   'MissingE_reblog_control ' +
                   'MissingE_reblog_control_retry' : '');
@@ -203,9 +203,9 @@ function startReblog(id,replaceIcons) {
    }
    else {
       a.addClass('MissingE_quick_reblogging_text')
-         .text(locale[lang].reblogging);
+         .text(getLocale(lang).reblogging);
    }
-   a.attr('title',locale[lang].reblogging);
+   a.attr('title',getLocale(lang).reblogging);
 }
 
 function failReblog(id,replaceIcons) {
@@ -219,7 +219,7 @@ function failReblog(id,replaceIcons) {
    }
    a.attr('title',a.attr('oldtxt'));
    a.removeAttr('oldtxt');
-   alert(locale[lang].reblogFailed);
+   alert(getLocale(lang).reblogFailed);
 }
 
 function finishReblog(id,replaceIcons) {
@@ -231,9 +231,9 @@ function finishReblog(id,replaceIcons) {
    }
    else {
       a.addClass('MissingE_quick_reblogging_text_success')
-         .text(locale[lang].rebloggedText);
+         .text(getLocale(lang).rebloggedText);
    }
-   a.attr('title',locale[lang].rebloggedText);
+   a.attr('title',getLocale(lang).rebloggedText);
    a.removeAttr('oldtxt');
 }
 
@@ -477,23 +477,23 @@ function MissingE_betterReblogs_dash_doStartup(experimental, passTags,
       var txt = '<div class="user_menu" id="MissingE_quick_reblog">' +
                  '<div class="user_menu_nipple"></div>' +
                  '<div class="user_menu_list">';
-      for (idx=0; idx<locale[lang].reblogOptions.length; idx++) {
+      for (idx=0; idx<getLocale(lang).reblogOptions.length; idx++) {
          var doonclick = 'onclick="return false;"';
-         if (locale[lang].reblogOptions[idx].item === 'manual') {
+         if (getLocale(lang).reblogOptions[idx].item === 'manual') {
             doonclick = '';
          }
          txt += '<a class="MissingE_quick_reblog_button" ' +
                  'id="MissingE_quick_reblog_' +
-                 locale[lang].reblogOptions[idx].item +
+                 getLocale(lang).reblogOptions[idx].item +
                  '" href="#" ' + doonclick + '>' +
                  '<div class="user_menu_list_item">' +
-                 locale[lang].reblogOptions[idx].text + '</div></a>';
+                 getLocale(lang).reblogOptions[idx].text + '</div></a>';
       }
       txt +=  '<a href="#" onclick="return false;" ' +
                'class="MissingE_quick_reblog_field">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_twitter">' +
-               '<input type="checkbox" /> ' + locale[lang].twitterText +
+               '<input type="checkbox" /> ' + getLocale(lang).twitterText +
                '</div></div></a>';
       var list = $('#user_channels li');
       if (list.length > 0) {
@@ -522,7 +522,7 @@ function MissingE_betterReblogs_dash_doStartup(experimental, passTags,
                'class="MissingE_quick_reblog_field">' +
                '<div class="user_menu_list_item has_tag_input">' +
                '<div id="MissingE_quick_reblog_tags">' +
-               '<input type="text" /><br />' + locale[lang].tagsText +
+               '<input type="text" /><br />' + getLocale(lang).tagsText +
                '</div></div></a>';
       var qr = $(txt).appendTo('body');
       qr.find('#MissingE_quick_reblog_selector select').click(function(e) {

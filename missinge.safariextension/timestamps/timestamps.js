@@ -60,7 +60,7 @@ function loadTimestamp(item) {
                   .after('<div class="post_info">' +
                          '<span class="MissingE_timestamp" ' +
                          'style="font-weight:normal;">' +
-                         locale[lang].loading +
+                         getLocale(lang).loading +
                          '</span></div>');
       }
       else {
@@ -68,11 +68,11 @@ function loadTimestamp(item) {
          if (spn.length === 0) {
             div.append('<br><span class="MissingE_timestamp" ' +
                        'style="font-weight:normal;">' +
-                       locale[lang].loading +
+                       getLocale(lang).loading +
                        '</span>');
          }
          else {
-            spn.text(locale[lang].loading);
+            spn.text(getLocale(lang).loading);
          }
       }
       safari.self.tab.dispatchMessage("timestamp", {pid: tid, url: addr,

@@ -260,41 +260,41 @@ function replyRepliesSettings(response) {
          else {
             newcode = '';
          }
-         for (x=0; x<locale[lang].notifications[anstype].length; x++) {
+         for (x=0; x<getLocale(lang).notifications[anstype].length; x++) {
             if (anstype === 'reblog' &&
-                x === locale[lang].notifications.reblogIndex &&
+                x === getLocale(lang).notifications.reblogIndex &&
                 reblnk !== "") {
-               var rebtxt = locale[lang].notifications[anstype][x];
-               if (locale[lang].notificationChanges &&
-                   locale[lang].notificationChanges[anstype] &&
-                   locale[lang].notificationChanges[anstype].hasOwnProperty(rebtxt)) {
-                  rebtxt = locale[lang].notificationChanges[anstype][rebtxt];
+               var rebtxt = getLocale(lang).notifications[anstype][x];
+               if (getLocale(lang).notificationChanges &&
+                   getLocale(lang).notificationChanges[anstype] &&
+                   getLocale(lang).notificationChanges[anstype].hasOwnProperty(rebtxt)) {
+                  rebtxt = getLocale(lang).notificationChanges[anstype][rebtxt];
                }
                newcode += ' <a href="' + reblnk + '">' +
                   rebtxt + '</a>';
             }
-            else if (locale[lang].notifications[anstype][x] === "U") {
+            else if (getLocale(lang).notifications[anstype][x] === "U") {
                if (newcode !== '' && newcode !== img) {
                   newcode += ' ';
                }
                newcode += '<strong>' + user;
             }
-            else if (locale[lang].notifications[anstype][x] === "U,") {
+            else if (getLocale(lang).notifications[anstype][x] === "U,") {
                if (newcode !== '' && newcode !== img) {
                   newcode += ' ';
                }
                newcode += '<strong>' + user + ',';
             }
-            else if (locale[lang].notifications[anstype][x] === "P") {
+            else if (getLocale(lang).notifications[anstype][x] === "P") {
                var y;
-               var postType = locale[lang].posts[type];
+               var postType = getLocale(lang).posts[type];
                for (y=0; y<postType.length; y++) {
                   var posttypetxt = postType[y];
                   newcode += ' ';
-                  if (locale[lang].notificationChanges &&
-                      locale[lang].notificationChanges[anstype] &&
-                      locale[lang].notificationChanges[anstype].hasOwnProperty(posttypetxt)) {
-                     posttypetxt = locale[lang].notificationChanges[anstype][posttypetxt];
+                  if (getLocale(lang).notificationChanges &&
+                      getLocale(lang).notificationChanges[anstype] &&
+                      getLocale(lang).notificationChanges[anstype].hasOwnProperty(posttypetxt)) {
+                     posttypetxt = getLocale(lang).notificationChanges[anstype][posttypetxt];
                   }
                   if (y === postType.length - 1) {
                      newcode += '<a href="' + postlnk + '">' +
@@ -306,20 +306,20 @@ function replyRepliesSettings(response) {
                }
             }
             else {
-               var othertxt = locale[lang].notifications[anstype][x];
-               if (locale[lang].notificationChanges &&
-                   locale[lang].notificationChanges[anstype] &&
-                   locale[lang].notificationChanges[anstype].hasOwnProperty(othertxt)) {
-                  othertxt = locale[lang].notificationChanges[anstype][othertxt];
+               var othertxt = getLocale(lang).notifications[anstype][x];
+               if (getLocale(lang).notificationChanges &&
+                   getLocale(lang).notificationChanges[anstype] &&
+                   getLocale(lang).notificationChanges[anstype].hasOwnProperty(othertxt)) {
+                  othertxt = getLocale(lang).notificationChanges[anstype][othertxt];
                }
                newcode += ' ' + othertxt;
             }
          }
-         if (locale[lang].postNotificationChanges &&
-             locale[lang].postNotificationChanges[anstype]) {
-            for (findtxt in locale[lang].postNotificationChanges[anstype]) {
-               if (locale[lang].postNotificationChanges[anstype].hasOwnProperty(findtxt)) {
-                  newcode = newcode.replace(findtxt, locale[lang].postNotificationChanges[anstype][findtxt]);
+         if (getLocale(lang).postNotificationChanges &&
+             getLocale(lang).postNotificationChanges[anstype]) {
+            for (findtxt in getLocale(lang).postNotificationChanges[anstype]) {
+               if (getLocale(lang).postNotificationChanges[anstype].hasOwnProperty(findtxt)) {
+                  newcode = newcode.replace(findtxt, getLocale(lang).postNotificationChanges[anstype][findtxt]);
                }
             }
          }

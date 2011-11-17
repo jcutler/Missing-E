@@ -96,7 +96,7 @@ function MissingE_reblogYourself_post_doStartup() {
          icon.style.display='block';
          icon.style.cssFloat='left';
          icon.style.cursor='pointer';
-         icon.alt=locale[lang].reblog;
+         icon.alt=getLocale(lang).reblog;
          icon.src = 'http://assets.tumblr.com/images/iframe_reblog_alpha' +
             suffix;
          link.appendChild(icon);

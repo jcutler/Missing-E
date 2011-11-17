@@ -97,7 +97,7 @@ function receivePermission(response) {
       edit.setAttribute('target','_top');
       edit.innerHTML = '<img src="http://assets.tumblr.com/images/' +
          'iframe_edit_alpha' + suffix + '" alt="' +
-         locale[lang].dashFixesText.edit +
+         getLocale(lang).dashFixesText.edit +
          '" style="display:block;float:left;" />';
       like.parentNode.insertBefore(edit, like.nextSibling);
    }

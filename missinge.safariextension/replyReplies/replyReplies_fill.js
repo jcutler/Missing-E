@@ -69,14 +69,14 @@ function getAsLinks(lang, type) {
       urlPref = '';
    }
    var othertype = (type==='text' ? 'photo' : 'text');
-   return locale[lang].replyType[type+"Title"] + "\n" +
+   return getLocale(lang).replyType[type+"Title"] + "\n" +
       '<span class="as_links"><a href="#" id="the_as_link" ' +
       'onclick="Element.hide(this);Element.show(\'the_as_links\');' +
       'return false;" style="font-weight:bold;" >' +
-      locale[lang].replyType.as +
+      getLocale(lang).replyType.as +
       '</a><span id="the_as_links" style="display:none;"><a id="as_switch" ' +
       'href="' + urlPref + '/new/' + othertype + '">' +
-      locale[lang].replyType[othertype] +
+      getLocale(lang).replyType[othertype] +
       '</a><a href="#" onclick="Element.hide(\'the_as_links\');' +
       'Element.show(\'the_as_link\');return false;">x</a></span></span>';
 }

@@ -53,7 +53,7 @@ function deleteMessages(key, lang) {
       data: {"post_ids": posts.join(','),
              "form_key": key},
       error: function(xhr, textStatus) {
-         alert(locale[lang].massDelete.messagesError);
+         alert(getLocale(lang).massDelete.messagesError);
       },
       success: function(data, textStatus) {
          remset.removeClass('MissingEmdSelected').remove();
@@ -209,8 +209,8 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
    if (betterAnswers === 1) {
       var allbtns = "";
       var suffix;
-      for (i in locale[lang].postingFixes.submitText) {
-         if (locale[lang].postingFixes.submitText.hasOwnProperty(i)) {
+      for (i in getLocale(lang).postingFixes.submitText) {
+         if (getLocale(lang).postingFixes.submitText.hasOwnProperty(i)) {
             if (i === 'publish') { continue; }
             if (i === 'queue' || i === 'draft') {
                suffix = 'also_';
@@ -222,7 +222,7 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
                suffix + id + '" onclick="return false;">' +
                '<div class="chrome_button">' +
                '<div class="chrome_button_left"></div>' +
-               locale[lang].postingFixes.submitText[i] +
+               getLocale(lang).postingFixes.submitText[i] +
                '<div class="chrome_button_right"></div></div></button><br />';
          }
       }
@@ -273,10 +273,10 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
          startTags = '';
       }
       var adding = '<div class="MissingE_askFixes_group">';
-      adding += '<div>' + locale[lang].tagsText + ': <input ' +
+      adding += '<div>' + getLocale(lang).tagsText + ': <input ' +
                   'type="text" class="MissingE_askFixes_tags" value="' +
                   startTags + '"/></div>';
-      adding += '<div>' + locale[lang].twitterText + ': <input ' +
+      adding += '<div>' + getLocale(lang).twitterText + ': <input ' +
                   'type="checkbox" class="MissingE_askFixes_twitter" />' +
                   '</div></div>';
       answer.find('div:first').css('padding-top','10px')
@@ -295,13 +295,13 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, betterAnswers,
    if (askDash === 1) {
       var i;
       var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
-      for (i=0; i<locale[lang].askPerson.length; i++) {
+      for (i=0; i<getLocale(lang).askPerson.length; i++) {
          if (i>0) { askLabel += " "; }
-         if (locale[lang].askPerson[i] === "U") {
+         if (getLocale(lang).askPerson[i] === "U") {
             askLabel += '<span class="MissingE_askPerson"></span>';
          }
          else {
-            askLabel += locale[lang].askPerson[i];
+            askLabel += getLocale(lang).askPerson[i];
          }
       }
       askLabel += ':';
@@ -410,13 +410,13 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, betterAnswers,
          $('<ul class="controls_section" id="MissingEmassDeleter">' +
            '<li><a href="#" class="select_all">' +
            '<div class="hide_overflow">' +
-           locale[lang].massDelete.selectAll + '</div></a></li>' +
+           getLocale(lang).massDelete.selectAll + '</div></a></li>' +
            '<li><a href="#" class="deselect_all">' +
            '<div class="hide_overflow">' +
-           locale[lang].massDelete.deselectAll + '</div></a></li>' +
+           getLocale(lang).massDelete.deselectAll + '</div></a></li>' +
            '<li><a href="#" class="delete_selected">' +
            '<div class="hide_overflow">' +
-           locale[lang].massDelete.deleteSelected + '</div></a></li></ul>')
+           getLocale(lang).massDelete.deleteSelected + '</div></a></li></ul>')
                .insertBefore(beforeguy);
          $('#posts li.post').each(function() {
             setupMassDeleteAsk(this);
@@ -446,23 +446,23 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, betterAnswers,
                var key = $('#posts input[name="form_key"]:first').val();
                var count = $('#posts li.MissingEmdSelected').length;
                if (count > 0) {
-                  var sureMsg = locale[lang].massDelete.messagesConfirm
+                  var sureMsg = getLocale(lang).massDelete.messagesConfirm
                                     .replace('#',count);
-                  if (locale[lang].massDelete.confirmReplace) {
+                  if (getLocale(lang).massDelete.confirmReplace) {
                      var countOp = count;
-                     switch(locale[lang].massDelete.confirmReplace.operation[0]) {
+                     switch(getLocale(lang).massDelete.confirmReplace.operation[0]) {
                         case "+":
-                           countOp += locale[lang].massDelete.confirmReplace.operation[1];
+                           countOp += getLocale(lang).massDelete.confirmReplace.operation[1];
                            break;
                         case "-":
-                           countOp -= locale[lang].massDelete.confirmReplace.operation[1];
+                           countOp -= getLocale(lang).massDelete.confirmReplace.operation[1];
                            break;
                         case "%":
-                           countOp %= locale[lang].massDelete.confirmReplace.operation[1];
+                           countOp %= getLocale(lang).massDelete.confirmReplace.operation[1];
                            break;
                      }
-                     if (locale[lang].massDelete.confirmReplace[countOp]) {
-                        var repls = locale[lang].massDelete.confirmReplace[countOp];
+                     if (getLocale(lang).massDelete.confirmReplace[countOp]) {
+                        var repls = getLocale(lang).massDelete.confirmReplace[countOp];
                         for (r in repls) {
                            if (repls.hasOwnProperty(r)) {
                               sureMsg = sureMsg.replace(r,repls[r]);
