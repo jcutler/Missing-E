@@ -85,6 +85,9 @@ function unescapeHTML(str) {
 }
 
 function getLocale(lang) {
+   if (typeof lang != "string") {
+      lang = "en";
+   }
    lang = lang.toLowerCase();
    if (locale.hasOwnProperty(lang) &&
        locale[lang] !== false) {
