@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global locale,self */ 
+/*global self */ 
 
 var MissingE_startup;
 

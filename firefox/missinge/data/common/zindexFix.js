@@ -38,7 +38,6 @@ jQuery('#posts li.post embed').each(function() {
    zindexFixEmbed(this);
 });
 
-
 jQuery('#posts li.post div.video + input:hidden').each(function() {
    zindexFixFutureEmbed(this);
 });

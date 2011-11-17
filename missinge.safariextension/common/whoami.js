@@ -21,11 +21,13 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global doZindexFix,locale,
+/*global doZindexFix,getLocale,
   MissingE_askFixes_doStartup,
+  MissingE_askFixes_domain_doStartup,
   MissingE_askFixes_scroll_doStartup,
   MissingE_betterReblogs_dash_doStartup,
   MissingE_betterReblogs_fill_doStartup,
+  MissingE_betterReblogs_post_doStartup,
   MissingE_bookmarker_doStartup,
   MissingE_dashboardFixes_doStartup,
   MissingE_dashLinksToTabs_doStartup,

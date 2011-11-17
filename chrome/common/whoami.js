@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome, locale */
+/*global chrome,getLocale */
 
 if ((window.top === window &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||

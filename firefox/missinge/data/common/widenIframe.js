@@ -21,10 +21,12 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-var controls = document.getElementById('tumblr_controls');
-if (controls) {
-   var w = controls.getAttribute('width');
-   if (!w || (!(/%/.test(w)) && w < 445)) {
-      controls.setAttribute('width',445);
+(function(){
+   var controls = document.getElementById('tumblr_controls');
+   if (controls) {
+      var w = controls.getAttribute('width');
+      if (!w || (!(/%/.test(w)) && w < 445)) {
+         controls.setAttribute('width',445);
+      }
    }
-}
+}());

@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global jQuery,self */
+
 self.postMessage({greeting: "settings", component: "facebox"});
 self.on('message', function(message) {
    if (message.greeting === 'settings' &&

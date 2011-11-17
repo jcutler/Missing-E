@@ -93,4 +93,6 @@ $(document).bind('MissingEajaxInsert', function(e) {
    checkAjaxReady(e.originalEvent.data,0);
 });
 
-//$(document).bind('MissingEajax', function(e) { console.log(e.originalEvent.data); });
+//$(document).bind('MissingEajax', function(e) {
+//   console.log(e.originalEvent.data);
+//});

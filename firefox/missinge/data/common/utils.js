@@ -30,6 +30,25 @@ function zeroPad(num, len) {
    return ret;
 }
 
+function getLocale(lang) {
+   if (typeof lang !== "string") {
+      lang = "en";
+   }
+   lang = lang.toLowerCase();
+   if (locale.hasOwnProperty(lang) &&
+       locale[lang] !== false) {
+      return locale[lang];
+   }
+   else {
+      if (!locale.hasOwnProperty(lang)) {
+         locale[lang] = false;
+         console.log("Warning: Localization not found for language '" +
+                     lang + "'");
+      }
+      return locale.en;
+   }
+}
+
 function getFormattedDate(d, format, lang) {
    var ret = format;
    ret = ret.replace(/%Y/g,d.getFullYear())
@@ -60,12 +79,7 @@ function getBookmarkerFormat(d, user, format, lang) {
 }
 
 function getPageHeight() {
-   var windowHeight;
-   if (window.innerHeight) {
-      // all except Explorer
-      windowHeight = window.innerHeight;
-   }
-   return windowHeight;
+   return window.innerHeight;
 }
 
 function escapeHTML(str) {
@@ -84,24 +98,6 @@ function unescapeHTML(str) {
             .replace(/&gt;/g,'>').replace(/&lt;/,'<');
 }
 
-function getLocale(lang) {
-   if (typeof lang != "string") {
-      lang = "en";
-   }
-   lang = lang.toLowerCase();
-   if (locale.hasOwnProperty(lang) &&
-       locale[lang] !== false) {
-      return locale[lang];
-   }
-   else {
-      if (!locale.hasOwnProperty(lang)) {
-         locale[lang] = false;
-         console.log("Warning: Localization not found for language '" + lang + "'");
-      }
-      return locale.en;
-   }
-}
-
 function randomRange(from, to) {
    return Math.floor(Math.random() * (to - from + 1) + from);
 }
@@ -115,4 +111,4 @@ Array.prototype.shuffle = function () {
       this.push(s.pop());
    }
    return this;
-}
+};

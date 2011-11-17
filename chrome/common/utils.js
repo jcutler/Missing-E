@@ -21,13 +21,32 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global locale,self */
+/*global locale */
 
 function zeroPad(num, len) {
    var ret = "";
    ret += num;
    while (ret.length < len) { ret = "0" + ret; }
    return ret;
+}
+
+function getLocale(lang) {
+   if (typeof lang !== "string") {
+      lang = "en";
+   }
+   lang = lang.toLowerCase();
+   if (locale.hasOwnProperty(lang) &&
+       locale[lang] !== false) {
+      return locale[lang];
+   }
+   else {
+      if (!locale.hasOwnProperty(lang)) {
+         locale[lang] = false;
+         console.log("Warning: Localization not found for language '" +
+                     lang + "'");
+      }
+      return locale.en;
+   }
 }
 
 function getFormattedDate(d, format, lang) {
@@ -60,12 +79,7 @@ function getBookmarkerFormat(d, user, format, lang) {
 }
 
 function getPageHeight() {
-   var windowHeight;
-   if (self.innerHeight) {
-      // all except Explorer
-      windowHeight = self.innerHeight;
-   }
-   return windowHeight;
+   return window.innerHeight;
 }
 
 function escapeHTML(str) {
@@ -84,24 +98,6 @@ function unescapeHTML(str) {
             .replace(/&gt;/g,'>').replace(/&lt;/,'<');
 }
 
-function getLocale(lang) {
-   if (typeof lang !== "string") {
-      lang = "en";
-   }
-   lang = lang.toLowerCase();
-   if (locale.hasOwnProperty(lang) &&
-       locale[lang] !== false) {
-      return locale[lang];
-   }
-   else {
-      if (!locale.hasOwnProperty(lang)) {
-         locale[lang] = false;
-         console.log("Warning: Localization not found for language '" + lang + "'");
-      }
-      return locale.en;
-   }
-}
-
 function randomRange(from, to) {
    return Math.floor(Math.random() * (to - from + 1) + from);
 }
@@ -115,4 +111,4 @@ Array.prototype.shuffle = function () {
       this.push(s.pop());
    }
    return this;
-}
+};
