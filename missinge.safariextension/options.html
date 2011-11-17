@@ -146,7 +146,7 @@ right:0px;
 top:26px;
 font-size:16px;
 z-index:90;
-white-space:no-wrap;
+white-space:nowrap;
 text-align:right;
 }
 
@@ -1165,7 +1165,7 @@ function doshow(component) {
 <li id="about_section" class="post not_mine regular">
 <div class="post_content">
 <div id="version"><small>version</small> <span id="versionnum"></span>
-<div id="changehistory"><small><a href="http://github.missinge.infraware.ca/changes">Change History</a></div></div>
+<div id="changehistory"><small><a href="http://github.missinge.infraware.ca/changes">Change History</a></small></div></div>
 <div class="post_title"><em>Missing e</em> Settings</div>
 <div class="instructions"><div><p class="first">Click on the tabs above to change <strong>Missing e</strong>'s behaviour.</p>
 <p class="smaller"><em>Follow the <a href="http://blog.missinge.infraware.ca/" target="_blank"><strong>Missing e</strong> Tumblr</a> to get news and information about this extension.</em></p></div></div>
@@ -1431,7 +1431,7 @@ function doshow(component) {
 <tr><td colspan="2" class="even">Add quick "<em>Queue Post</em>", "<em>Save Draft</em>" and "<em>Save as Private</em>" buttons when posting (see screenshot)</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_quickButtons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Add extra <em>"Post to"</em> menu (for selecting Tumblr blog to post to) nearer to new post publish buttons (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_blogSelect" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Add an <em>"Edit"</em> button to your sub-Tumblr's individual post pages</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_subEdit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Number of retries on failure to check for sub-Tumblr post permissions (default <span class="defRetries">4</span>)</td><td class="odd" style="white-space:no-wrap;"><input type="text" class="numinput retryinput" size="1" name="MissingE_postingFixes_subEditRetries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
+<tr><td class="subopt"></td><td class="odd">Number of retries on failure to check for sub-Tumblr post permissions (default <span class="defRetries">4</span>)</td><td class="odd" style="white-space:nowrap;"><input type="text" class="numinput retryinput" size="1" name="MissingE_postingFixes_subEditRetries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Automatically add tags to queued posts</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_tagQueuedPosts" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Tags to add to queued posts (separated by commas)</td><td class="odd"><input type="text" name="MissingE_postingFixes_queueTags" style="width:250px;" value="" onchange="doSetting(this,false);" onblur="doSetting(this,false);" /></td></tr>
 </table>
