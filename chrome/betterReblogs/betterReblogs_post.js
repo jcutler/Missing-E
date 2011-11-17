@@ -80,7 +80,7 @@ function addTags(link) {
          }
       });
    
-      link.addEventListener('mousedown',function(e){
+      link.addEventListener('mousedown',function(){
          var tags = this.getAttribute('tags');
          if (tags !== undefined && tags !== null) {
             setReblogTags(this.getAttribute('tags').split(','));
@@ -120,13 +120,15 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
             }
             else if (e.target.parentNode &&
                      e.target.parentNode.tagName === "A" &&
-                     /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.href)) {
+                     /^http:\/\/www\.tumblr\.com\/reblog/
+                        .test(e.target.parentNode.href)) {
                trg = e.target.parentNode;
             }
             else if (e.target.parentNode &&
                      e.target.parentNode.parentNode &&
                      e.target.parentNode.parentNode.tagName === "A" &&
-                     /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.parentNode.href)) {
+                     /^http:\/\/www\.tumblr\.com\/reblog/
+                        .test(e.target.parentNode.parentNode.href)) {
                trg = e.target.parentNode.parentNode;
             }
             if (trg) {
@@ -146,7 +148,8 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
                   trg.href += "MissingEaskSure=0&";
                }
                trg.href += "MissingEaskName=" + request.name;
-               trg.href += "&MissingEaskPost=" + encodeURIComponent(request.url);
+               trg.href += "&MissingEaskPost=" +
+                              encodeURIComponent(request.url);
             }
          }, false);
       }
@@ -163,24 +166,25 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
 else if (window.top === window) {
    var myasker = document.getElementsByClassName('asker');
    var isSure = true;
-   var name = "";
+   var uname = "";
    var i;
    for (i=0; i<myasker.length; i++) {
       if (myasker[i].tagName === "A") {
          if (!(/[^a-zA-Z0-9\-]/.test(myasker[i].innerHTML))) {
-            name = myasker[i].innerHTML;
+            uname = myasker[i].innerHTML;
             break;
          }
       }
    }
-   if (name === "") {
+   if (uname === "") {
       isSure = false;
       myasker = document.body.innerHTML
                      .match(/<a href="[^"]*">([a-zA-Z0-9\-]+)<\/a>\s*asked\:/);
       if (myasker && myasker.length > 1) {
-         name = myasker[1];
+         uname = myasker[1];
       }
    }
-   chrome.extension.sendRequest({greeting: "sendAsker", name: name, url: location.href, isSure: isSure});
+   chrome.extension.sendRequest({greeting: "sendAsker", name: uname,
+                                 url: location.href, isSure: isSure});
 }
 

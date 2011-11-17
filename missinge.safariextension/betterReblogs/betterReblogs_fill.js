@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,locale,safari */
+/*global $,getLocale,safari,unescapeHTML */
 
 function setReblogTags(tags) {
    localStorage.setItem('tbr_ReblogTags',tags.join(','));
@@ -60,6 +60,7 @@ function getReblogTags() {
 
 function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
                                                fullText) {
+   var i;
    if (document.body.id !== 'dashboard_edit_post') {
       if (/[\?&]channel_id=/.test(location.href) &&
           /Request denied/i.test($('#container').text())) {
@@ -89,7 +90,7 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
       clearTagOverride();
    }
    var tags = getReblogTags();
-   if (tags.length == 0) {
+   if (tags.length === 0) {
       setReblogTagsPlainText(document.getElementById('edit_post').post_tags
                              .value);
    }
@@ -109,11 +110,12 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
       var askName = location.search.match(/MissingEaskName=([^&]*)/);
       var askPost = location.search.match(/MissingEaskPost=([^&]*)/);
       var askSure = location.search.match(/MissingEaskSure=([^&]*)/);
+      var pt;
       if (askSure && askSure.length > 1 && askSure[1] === "0") {
          if (askName && askName.length > 1 &&
              askPost && askPost.length > 1 &&
              $('#left_column').children("div.post_question").length !== 0) {
-            var pt = document.getElementById('edit_post').post_tags.value;
+            pt = document.getElementById('edit_post').post_tags.value;
             if (pt !== '') {
                setReblogTagsPlainText(pt);
             }
@@ -124,9 +126,10 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
                                  .replace(/\?/,"/text?");
          }
       }
-      else if (!askName || askName.length < 2 || !askPost || askPost.length < 2) {
+      else if (!askName || askName.length < 2 || !askPost ||
+               askPost.length < 2) {
          if ($('#left_column').children("div.post_question").length !== 0) {
-            var pt = document.getElementById('edit_post').post_tags.value;
+            pt = document.getElementById('edit_post').post_tags.value;
             if (pt !== '') {
                setReblogTagsPlainText(pt);
             }
@@ -190,7 +193,6 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
 
    if (document.body.id === 'dashboard_edit_post' &&
        getReblogTags().length > 0) {
-      var i;
       if (tags.length > 0) {
          var func = "var tags=[";
          for (i=0; i<tags.length; i++) {
@@ -203,7 +205,8 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
          if (func !== 'var tags=[];') {
             func += 'var posttags=document.getElementById(\'post_tags\');' +
                     'var currtags=posttags.value.split(\',\');' +
-                    'if (currtags.length === 1 && /^\\s*$/.test(currtags[0])) {' +
+                    'if (currtags.length === 1 && ' +
+                         '/^\\s*$/.test(currtags[0])) {' +
                      'currtags=[];' +
                     '}' +
                     'var addtags=[];' +
@@ -231,10 +234,12 @@ function MissingE_betterReblogs_fill_doStartup(passTags, autoFillTags,
                       'newtoken.appendChild(span);' +
                       'var rem=document.createElement(\'a\');' +
                       'rem.href=\'#\';rem.innerHTML=\'x\';' +
-                      'rem.onclick=function(){tag_editor_remove_tag($(this).up());' +
+                      'rem.onclick=' +
+                        'function(){tag_editor_remove_tag($(this).up());' +
                          'return false;};' +
                       'newtoken.appendChild(rem);' +
-                      'document.getElementById(\'tokens\').appendChild(newtoken);' +
+                      'document.getElementById(\'tokens\')' +
+                                               '.appendChild(newtoken);' +
                      '}' +
                     '}return false;';
             var set_tags = $('#set_tags');

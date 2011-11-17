@@ -67,7 +67,7 @@ function addTags(link) {
       pid = loc.match(/&pid=([0-9]*)/)[1];
       self.postMessage({greeting:"tags", pid: pid, url: host});
    
-      link.addEventListener('mousedown',function(e){
+      link.addEventListener('mousedown',function(){
          var tags = this.getAttribute('tags');
          if (tags !== undefined && tags !== null) {
             setReblogTags(this.getAttribute('tags').split(','));
@@ -115,13 +115,15 @@ function receiveAsker(response) {
          }
          else if (e.target.parentNode &&
                   e.target.parentNode.tagName === "A" &&
-                  /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.href)) {
+                  /^http:\/\/www\.tumblr\.com\/reblog/
+                     .test(e.target.parentNode.href)) {
             trg = e.target.parentNode;
          }
          else if (e.target.parentNode &&
                   e.target.parentNode.parentNode &&
                   e.target.parentNode.parentNode.tagName === "A" &&
-                  /^http:\/\/www\.tumblr\.com\/reblog/.test(e.target.parentNode.parentNode.href)) {
+                  /^http:\/\/www\.tumblr\.com\/reblog/
+                     .test(e.target.parentNode.parentNode.href)) {
             trg = e.target.parentNode.parentNode;
          }
          if (trg) {

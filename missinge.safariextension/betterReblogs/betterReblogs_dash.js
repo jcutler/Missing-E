@@ -21,13 +21,12 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,locale,safari */
+/*global $,escapeHTML,getLocale,safari */
 
 var resetTumblr;
 var checked = {};
 
 function addAskReblog(item) {
-   var i;
    if (item.tagName === "LI" && $(item).hasClass('post') &&
        $(item).hasClass('note')) {
       $(item).find('div.post_controls a.MissingE_betterReblogs_retryAsk')
@@ -53,7 +52,7 @@ function receiveAskReblog(response) {
    var item = $('#post_' + response.message.pid);
    var perm = item.find("a.permalink:first");
    var tid = response.message.pid;
-   var klass, before, rblnk, txt;
+   var klass, before, rblnk, txt,i;
 
    var lang = $('html').attr('lang');
    var question = "";
@@ -132,7 +131,7 @@ function getTwitterDefaults() {
          tryCount: 0,
          retryLimit: 4,
          blog: this.value,
-         error: function(xhr, textStatus) {
+         error: function(xhr) {
             if (xhr.status < 500) {
                return;
             }
@@ -144,7 +143,7 @@ function getTwitterDefaults() {
                }
             }
          },
-         success: function(data, textStatus) {
+         success: function(data) {
             var tumblr = this.blog;
             var select = $('#MissingE_quick_reblog_selector select');
             var cb = data.match(/<input[^>]*name="channel\[twitter_send_posts\]"[^>]*>/);
@@ -310,7 +309,7 @@ function doReblog(item,replaceIcons,accountName,queueTags) {
       error: function() {
          failReblog(this.postId,this.replaceIcons);
       },
-      success: function(data, textStatus) {
+      success: function(data) {
          var i;
          var frm = data.indexOf('<form');
          if (frm === -1) {
@@ -372,7 +371,7 @@ function doReblog(item,replaceIcons,accountName,queueTags) {
             error: function() {
                failReblog(this.postId,this.replaceIcons);
             },
-            success: function(data) {
+            success: function() {
                finishReblog(this.postId,this.replaceIcons);
             }
          });
@@ -395,7 +394,7 @@ function MissingE_betterReblogs_dash_doStartup(experimental, passTags,
       if (quickReblog === 1) {
          selector = '#MissingE_quick_reblog_manual';
       }
-      $(selector).live('mousedown', function(e) {
+      $(selector).live('mousedown', function() {
          var tags;
          if (this.id === 'MissingE_quick_reblog_manual') {
             tags = $('#MissingE_quick_reblog_tags input').val();

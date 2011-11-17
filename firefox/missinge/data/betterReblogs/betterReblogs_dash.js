@@ -21,13 +21,12 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global jQuery,locale,self */
+/*global escapeHTML,getLocale,jQuery,self */
 
 var resetTumblr;
 var checked = {};
 
 function addAskReblog(item) {
-   var i;
    if (item.tagName === "LI" && jQuery(item).hasClass('post') &&
        jQuery(item).hasClass('note')) {
       jQuery(item).find('div.post_controls a.MissingE_betterReblogs_retryAsk')
@@ -49,6 +48,7 @@ function addAskReblog(item) {
 }
 
 function receiveAskReblog(message) {
+   var i;
    if (message.greeting !== "betterReblogs") { return; }
    var item = jQuery('#post_' + message.pid);
    var perm = item.find("a.permalink:first");
@@ -132,7 +132,7 @@ function getTwitterDefaults() {
          tryCount: 0,
          retryLimit: 4,
          blog: this.value,
-         error: function(xhr, textStatus) {
+         error: function(xhr) {
             if (xhr.status < 500) {
                return;
             }
@@ -144,7 +144,7 @@ function getTwitterDefaults() {
                }
             }
          },
-         success: function(data, textStatus) {
+         success: function(data) {
             var tumblr = this.blog;
             var select = jQuery('#MissingE_quick_reblog_selector select');
             var cb = data.match(/<input[^>]*name="channel\[twitter_send_posts\]"[^>]*>/);
@@ -313,7 +313,7 @@ function doReblog(item,replaceIcons,accountName,queueTags) {
       error: function() {
          failReblog(this.postId,this.replaceIcons);
       },
-      success: function(data, textStatus) {
+      success: function(data) {
          var i;
          var frm = data.indexOf('<form');
          if (frm === -1) {
@@ -375,7 +375,7 @@ function doReblog(item,replaceIcons,accountName,queueTags) {
             error: function() {
                failReblog(this.postId,this.replaceIcons);
             },
-            success: function(data) {
+            success: function() {
                finishReblog(this.postId,this.replaceIcons);
             }
          });
@@ -402,7 +402,7 @@ self.on('message', function (message) {
       if (message.quickReblog === 1) {
          selector = '#MissingE_quick_reblog_manual';
       }
-      jQuery(selector).live('mousedown', function(e) {
+      jQuery(selector).live('mousedown', function() {
          var tags;
          if (this.id === 'MissingE_quick_reblog_manual') {
             tags = jQuery('#MissingE_quick_reblog_tags input').val();
@@ -456,7 +456,8 @@ self.on('message', function (message) {
    }
    if (message.reblogAsks === 1) {
       self.on("message", receiveAskReblog);
-      jQuery('#posts li.post div.post_controls a.MissingE_betterReblogs_retryAsk')
+      jQuery('#posts li.post div.post_controls ' +
+             'a.MissingE_betterReblogs_retryAsk')
          .live('click', function() {
          var post = jQuery(this).closest('li.post');
          if (post.length === 1) {
@@ -469,7 +470,7 @@ self.on('message', function (message) {
          var list = e.data.match(/(post_[0-9]+)/g);
          if (type !== 'posts') { return; }
          jQuery.each(list, function(i,val) {
-            addAskReblog($('#'+val).get(0));
+            addAskReblog(jQuery('#'+val).get(0));
          });
       }, false);
    }
@@ -495,7 +496,8 @@ self.on('message', function (message) {
                      .test(document.styleSheets[s].cssRules[r].selectorText)) {
                   spanStyle += document.styleSheets[s].cssRules[r].cssText
                                  .replace(/\.user_menu \.user_menu_list a/g,
-                                          '#MissingE_quick_reblog .user_menu_list span');
+                                          '#MissingE_quick_reblog ' +
+                                          '.user_menu_list span');
                }
             }
          } catch(e){}
@@ -615,7 +617,7 @@ self.on('message', function (message) {
          }
       });
       jQuery('#posts div.post_controls a[href^="/reblog/"]')
-            .live('mouseover',function(e) {
+            .live('mouseover',function() {
          var reblog = jQuery(this);
          reblog.addClass('MissingE_quick_reblog_main');
          if (reblog.hasClass('MissingE_quick_reblogging_icon') ||

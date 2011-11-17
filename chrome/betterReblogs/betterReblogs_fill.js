@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,locale */
+/*global $,chrome,getLocale,unescapeHTML */
 
 function setReblogTags(tags) {
    localStorage.setItem('tbr_ReblogTags',tags.join(','));
@@ -60,6 +60,7 @@ function getReblogTags() {
 
 chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                              function(response) {
+   var i;
    if (document.body.id !== 'dashboard_edit_post') {
       if (/[\?&]channel_id=/.test(location.href) &&
           /Request denied/i.test($('#container').text())) {
@@ -88,7 +89,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       clearTagOverride();
    }
    var tags = getReblogTags();
-   if (tags.length == 0) {
+   if (tags.length === 0) {
       setReblogTagsPlainText(document.getElementById('edit_post')
                               .post_tags.value);
    }
@@ -108,11 +109,12 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       var askName = location.search.match(/MissingEaskName=([^&]*)/);
       var askPost = location.search.match(/MissingEaskPost=([^&]*)/);
       var askSure = location.search.match(/MissingEaskSure=([^&]*)/);
+      var pt;
       if (askSure && askSure.length > 1 && askSure[1] === "0") {
          if (askName && askName.length > 1 &&
              askPost && askPost.length > 1 &&
              $('#left_column').children("div.post_question").length !== 0) {
-            var pt = document.getElementById('edit_post').post_tags.value;
+            pt = document.getElementById('edit_post').post_tags.value;
             if (pt !== '') {
                setReblogTagsPlainText(pt);
             }
@@ -123,9 +125,10 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                                  .replace(/\?/,"/text?");
          }
       }
-      else if (!askName || askName.length < 2 || !askPost || askPost.length < 2) {
+      else if (!askName || askName.length < 2 || !askPost ||
+               askPost.length < 2) {
          if ($('#left_column').children("div.post_question").length !== 0) {
-            var pt = document.getElementById('edit_post').post_tags.value;
+            pt = document.getElementById('edit_post').post_tags.value;
             if (pt !== '') {
                setReblogTagsPlainText(pt);
             }
@@ -189,7 +192,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
 
    if (document.body.id === 'dashboard_edit_post' &&
        getReblogTags().length > 0) {
-      var i;
       if (tags.length > 0) {
          var func = "var tags=[";
          for (i=0; i<tags.length; i++) {
@@ -227,10 +229,12 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                       'newtoken.appendChild(span);' +
                       'var rem=document.createElement(\'a\');' +
                       'rem.href=\'#\';rem.innerHTML=\'x\';' +
-                      'rem.onclick=function(){tag_editor_remove_tag($(this).up());' +
+                      'rem.onclick=' +
+                        'function(){tag_editor_remove_tag($(this).up());' +
                          'return false;};' +
                       'newtoken.appendChild(rem);' +
-                      'document.getElementById(\'tokens\').appendChild(newtoken);' +
+                      'document.getElementById(\'tokens\')' +
+                                               '.appendChild(newtoken);' +
                      '}' +
                     '}return false;';
 

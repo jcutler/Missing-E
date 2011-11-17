@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,jQuery,locale,self */
+/*global escapeHTML,getLocale,jQuery,self,unescapeHTML */
 
 function setReblogTags(tags) {
    localStorage.setItem('tbr_ReblogTags',tags.join(','));
@@ -59,6 +59,7 @@ function getReblogTags() {
 }
 
 self.on('message', function (message) {
+   var i;
    if (message.greeting !== "settings" ||
        message.component !== "betterReblogs" ||
        message.subcomponent !== "fill") {
@@ -78,9 +79,10 @@ self.on('message', function (message) {
    }
    if (message.fullText === 1 &&
        jQuery('#edit_post').hasClass('link_post')) {
-      var src = "src=" + encodeURIComponent($('#post_two').val());
+      var src = "src=" + encodeURIComponent(jQuery('#post_two').val());
       if (document.referrer.indexOf(src) >= 0) {
-         location.href = "http://" + location.host + jQuery('#the_as_links a[href*="/text"]').attr("href");
+         location.href = "http://" + location.host +
+            jQuery('#the_as_links a[href*="/text"]').attr("href");
          return;
       }
    }
@@ -93,7 +95,7 @@ self.on('message', function (message) {
       clearTagOverride();
    }
    var tags = getReblogTags();
-   if (tags.length == 0) {
+   if (tags.length === 0) {
       setReblogTagsPlainText(document.getElementById('post_tags').value);
    }
    tags = getReblogTags();
@@ -112,11 +114,13 @@ self.on('message', function (message) {
       var askName = location.search.match(/MissingEaskName=([^&]*)/);
       var askPost = location.search.match(/MissingEaskPost=([^&]*)/);
       var askSure = location.search.match(/MissingEaskSure=([^&]*)/);
+      var pt;
       if (askSure && askSure.length > 1 && askSure[1] === "0") {
          if (askName && askName.length > 1 &&
              askPost && askPost.length > 1 &&
-             jQuery('#left_column').children("div.post_question").length !== 0) {
-            var pt = document.getElementById('edit_post').post_tags.value;
+             jQuery('#left_column').children("div.post_question")
+                     .length !== 0) {
+            pt = document.getElementById('edit_post').post_tags.value;
             if (pt !== '') {
                setReblogTagsPlainText(pt);
             }
@@ -127,9 +131,11 @@ self.on('message', function (message) {
                                  .replace(/\?/,"/text?");
          }
       }
-      else if (!askName || askName.length < 2 || !askPost || askPost.length < 2) {
-         if (jQuery('#left_column').children("div.post_question").length !== 0) {
-            var pt = document.getElementById('post_tags').value;
+      else if (!askName || askName.length < 2 || !askPost ||
+               askPost.length < 2) {
+         if (jQuery('#left_column').children("div.post_question")
+               .length !== 0) {
+            pt = document.getElementById('post_tags').value;
             if (pt !== '') {
                setReblogTagsPlainText(pt);
             }
@@ -192,7 +198,6 @@ self.on('message', function (message) {
    }
    if (document.body.id === 'dashboard_edit_post' &&
        getReblogTags().length > 0) {
-      var i;
       if (tags.length > 0) {
          var func = "var tags=[";
          for (i=0; i<tags.length; i++) {
@@ -230,10 +235,12 @@ self.on('message', function (message) {
                       'newtoken.appendChild(span);' +
                       'var rem=document.createElement(\'a\');' +
                       'rem.href=\'#\';rem.innerHTML=\'x\';' +
-                      'rem.onclick=function(){tag_editor_remove_tag($(this).up());' +
+                      'rem.onclick=' +
+                        'function(){tag_editor_remove_tag($(this).up());' +
                          'return false;};' +
                       'newtoken.appendChild(rem);' +
-                      'document.getElementById(\'tokens\').appendChild(newtoken);' +
+                      'document.getElementById(\'tokens\')' +
+                                               '.appendChild(newtoken);' +
                      '}' +
                     '}return false;';
 

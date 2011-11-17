@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global safari */
+
 (function() {
    var frame = document.getElementById("tumblr_controls");
    if (!frame ||
@@ -49,4 +51,4 @@
       }
    }
    safari.self.tab.dispatchMessage("sendAsker", {name: name, isSure: isSure});
-})();
+}());

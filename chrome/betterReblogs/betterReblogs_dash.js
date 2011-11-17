@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,locale */
+/*global $,chrome,escapeHTML,getLocale */
 
 var resetTumblr;
 var checked = {};
@@ -126,7 +126,7 @@ function getTwitterDefaults() {
          tryCount: 0,
          retryLimit: 4,
          blog: this.value,
-         error: function(xhr, textStatus) {
+         error: function(xhr) {
             if (xhr.status < 500) {
                return;
             }
@@ -138,7 +138,7 @@ function getTwitterDefaults() {
                }
             }
          },
-         success: function(data, textStatus) {
+         success: function(data) {
             var tumblr = this.blog;
             var select = $('#MissingE_quick_reblog_selector select');
             var cb = data.match(/<input[^>]*name="channel\[twitter_send_posts\]"[^>]*>/);
@@ -304,7 +304,7 @@ function doReblog(item,replaceIcons,accountName,queueTags) {
       error: function() {
          failReblog(this.postId,this.replaceIcons);
       },
-      success: function(data, textStatus) {
+      success: function(data) {
          var i;
          var frm = data.indexOf('<form');
          if (frm === -1) {
@@ -366,7 +366,7 @@ function doReblog(item,replaceIcons,accountName,queueTags) {
             error: function() {
                failReblog(this.postId,this.replaceIcons);
             },
-            success: function(data) {
+            success: function() {
                finishReblog(this.postId,this.replaceIcons);
             }
          });
@@ -388,7 +388,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       if (reblog_settings.quickReblog === 1) {
          selector = '#MissingE_quick_reblog_manual';
       }
-      $(selector).live('mousedown', function(e) {
+      $(selector).live('mousedown', function() {
          var tags;
          if (this.id === 'MissingE_quick_reblog_manual') {
             tags = $('#MissingE_quick_reblog_tags input').val();
