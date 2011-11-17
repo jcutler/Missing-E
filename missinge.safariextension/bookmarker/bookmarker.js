@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,getBookmarkerFormat,getStorage,locale,safari,setStorage */
+/*global $,getBookmarkerFormat,getLocale,getStorage,safari,setStorage */
 
 var bmi = safari.extension.baseURI + 'bookmarker/sidebar_bookmark.png';
 var mimg = safari.extension.baseURI + 'bookmarker/post_bookmark.png';
@@ -131,7 +131,7 @@ function generateList() {
             idx++;
          }
       });
-      for(; idx<marks.length; idx++) {
+      for(idx; idx<marks.length; idx++) {
          $("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
          addBar(marks[idx], lang);
          marklist.append(getMarkText(marks[idx][0], marks[idx][1],

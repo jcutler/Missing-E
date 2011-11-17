@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,getBookmarkerFormat,getStorage,jQuery,locale,self,setStorage */
+/*global escapeHTML,getBookmarkerFormat,getLocale,getStorage,jQuery,self,setStorage */
 
 var markFormat;
 
@@ -133,7 +133,7 @@ function generateList() {
             idx++;
          }
       });
-      for(; idx<marks.length; idx++) {
+      for(idx; idx<marks.length; idx++) {
          jQuery("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
          addBar(marks[idx], lang);
          marklist.append(getMarkText(marks[idx][0], marks[idx][1],

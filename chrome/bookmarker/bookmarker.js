@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,getBookmarkerFormat,getStorage,locale,setStorage */
+/*global $,chrome,getBookmarkerFormat,getLocale,getStorage,setStorage */
 
 var bmi = chrome.extension.getURL('bookmarker/sidebar_bookmark.png');
 var mimg = chrome.extension.getURL('bookmarker/post_bookmark.png');
@@ -140,7 +140,7 @@ function generateList() {
             idx++;
          }
       });
-      for(; idx<marks.length; idx++) {
+      for(idx; idx<marks.length; idx++) {
          $("#bookmark_" + marks[idx][1]).addClass("MissingE_ismarked");
          addBar(marks[idx], lang);
          marklist.append(getMarkText(marks[idx][0], marks[idx][1],
