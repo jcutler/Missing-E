@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global self */
+/*global getLocale,self */
 
 var missingeServer = 'http://crush.missinge.infraware.ca';
 
@@ -102,6 +102,7 @@ function MissingE_postCrushes_doStartup(message) {
       infodiv = infodiv.nextSibling;
    }
 
+   var lang = document.getElementsByTagName("html")[0].getAttribute("lang");
    var newdiv = document.createElement('div');
    newdiv.style.position="relative";
    newdiv.style.verticalAlign="middle";
@@ -115,8 +116,8 @@ function MissingE_postCrushes_doStartup(message) {
                         'style="opacity:0.6;height:28px;width:29px;" />' +
                         '<div style="position:absolute;top:15%;width:100%;' +
                         'color:#2D4159;font:italic bold 12px/1.4 Arial,' +
-                        'Helvetica,sans-serif;">Post your crushes to ' +
-                        'Tumblr</div>';
+                        'Helvetica,sans-serif;">' +
+                        getLocale(lang).postCrushes + '</div>';
 
    innerdiv.addEventListener('click', function() {
       self.postMessage({greeting: "settings", component: "postCrushes"});

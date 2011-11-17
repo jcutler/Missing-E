@@ -47,6 +47,7 @@ var locale = {
    "Dec"
   ],
   "update": "Update Missing e",
+  "postCrushes": "Post your crushes",
   "sidebar": {
    "posts": "Posts",
    "followers": "Followers",
@@ -220,6 +221,7 @@ var locale = {
    "Dez"
   ],
   "update": "Aktualisieren von Missing e",
+  "postCrushes": "Veröffentlichen Sie Ihre Lieblinge",
   "sidebar": {
    "posts": "Einträge",
    "followers": "Follower",
@@ -285,7 +287,7 @@ var locale = {
   "postingFixes": {
    "submitText": {
     "publish": "Eintrag publizieren",
-    "queue": "Eintrag in die Warteschleife stellen",
+    "queue": "in die Warteschleife stellen",
     "draft": "Entwurf speichern",
     "private": "Speichern als privat"
    },
@@ -393,6 +395,7 @@ var locale = {
    "Dic"
   ],
   "update": "Actualización de Missing e",
+  "postCrushes": "Publica tus flechazos",
   "sidebar": {
    "posts": "Publicaciones",
    "followers": "Seguidores",
@@ -566,6 +569,7 @@ var locale = {
    "Déc"
   ],
   "update": "Mettre à jour Missing e",
+  "postCrushes": "Publiez vos chouchous",
   "sidebar": {
    "posts": "Billets",
    "followers": "Abonnés",
@@ -739,6 +743,7 @@ var locale = {
    "Dic"
   ],
   "update": "Aggiornamento di Missing e",
+  "postCrushes": "Pubblicare le tue cotte",
   "sidebar": {
    "posts": "Post",
    "followers": "Lettori",
@@ -922,6 +927,7 @@ var locale = {
    "12月"
   ],
   "update": "Missing e を更新する",
+  "postCrushes": "ラブリストを投稿",
   "sidebar": {
    "posts": "総合投稿数",
    "followers": "ファン",
@@ -1088,6 +1094,7 @@ var locale = {
    "gru"
   ],
   "update": "Aktualizacja Missing e",
+  "postCrushes": "Publikuj swoje fascynacje",
   "sidebar": {
    "posts": "Posty",
    "followers": "Obserwatorzy",
@@ -1261,6 +1268,7 @@ var locale = {
    "Дек"
   ],
   "update": "Обновите Missing e",
+  "postCrushes": "Опубликовать ваши хиты",
   "sidebar": {
    "posts": "Посты",
    "followers": "Читатели",
@@ -1464,6 +1472,7 @@ var locale = {
    "Ara"
   ],
   "update": "Missing e'u Güncelleme",
+  "postCrushes": "Aşkların yayınla",
   "sidebar": {
    "posts": "Gönderiler",
    "followers": "Takipçiler",

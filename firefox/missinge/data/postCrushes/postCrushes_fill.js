@@ -77,7 +77,6 @@ function MissingE_postCrushes_fill_doStartup(message) {
    else {
       self.removeListener('message', MissingE_postCrushes_fill_doStartup);
    }
-   var extensionURL = message.extensionURL;
    var url = window.localStorage.getItem("tcp_crushURL");
    if (document.body.id === 'dashboard_edit_post' &&
        url !== undefined && url !== null && url !== "") {
