@@ -372,9 +372,9 @@ function sortList(ol) {
       else {
          entry[entryOrder.type] = OTHER;
       }
-      var username = this.className.match(/blog_([^\s]*)/);
-      if (username && username.length > 1) {
-         entry[entryOrder.user] = username[1];
+      var username = this.className.match(/(tumblelog|blog)_([^\s]*)/);
+      if (username && username.length > 2) {
+         entry[entryOrder.user] = username[2];
       }
       else {
          entry[entryOrder.user] = "";
@@ -656,15 +656,17 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          '<div class="hide_overflow">' +
          getLocale(lang).massDelete.deleteSelected + '</div></a></li>' : '') +
         '</ul>').insertBefore(beforeguy);
-      $('#posts li.post').each(function() {
-         setupMassDeletePost(this);
-      });
-      $(document).bind('MissingEajax', function(e) {
-         if (e.originalEvent.data.type === 'notes') { return; }
-         $.each(e.originalEvent.data.list, function(i, val) {
-            setupMassDeletePost($('#'+val).get(0));
+      if (doMassDelete) {
+         $('#posts li.post').each(function() {
+            setupMassDeletePost(this);
          });
-      });
+         $(document).bind('MissingEajax', function(e) {
+            if (e.originalEvent.data.type === 'notes') { return; }
+            $.each(e.originalEvent.data.list, function(i, val) {
+               setupMassDeletePost($('#'+val).get(0));
+            });
+         });
+      }
       $('#MissingEdraftQueueTools a').click(function() {
          var btn = $(this);
          if (btn.hasClass('randomize')) {

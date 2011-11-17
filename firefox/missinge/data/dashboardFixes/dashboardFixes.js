@@ -366,9 +366,9 @@ function sortList(ol) {
       else {
          entry[entryOrder.type] = OTHER;
       }
-      var username = this.className.match(/blog_([^\s]*)/);
-      if (username && username.length > 1) {
-         entry[entryOrder.user] = username[1];
+      var username = this.className.match(/(tumblelog|blog)_([^\s]*)/);
+      if (username && username.length > 2) {
+         entry[entryOrder.user] = username[2];
       }
       else {
          entry[entryOrder.user] = "";
@@ -712,17 +712,19 @@ self.on('message', function(message) {
           '<div class="hide_overflow">' +
           getLocale(lang).massDelete.deleteSelected + '</div></a></li>' : '') +
          '</ul>').insertBefore(beforeguy);
-      jQuery('#posts li.post').each(function() {
-         setupMassDeletePost(this);
-      });
-      document.addEventListener('MissingEajax', function(e) {
-         var type = e.data.match(/^[^:]*/)[0];
-         var list = e.data.match(/(post_[0-9]+)/g);
-         if (type === "notes") { return false; }
-         jQuery.each(list, function(i, val) {
-            setupMassDeletePost(jQuery('#'+val).get(0));
+      if (doMassDelete) {
+         jQuery('#posts li.post').each(function() {
+            setupMassDeletePost(this);
          });
-      }, false);
+         document.addEventListener('MissingEajax', function(e) {
+            var type = e.data.match(/^[^:]*/)[0];
+            var list = e.data.match(/(post_[0-9]+)/g);
+            if (type === "notes") { return false; }
+            jQuery.each(list, function(i, val) {
+               setupMassDeletePost(jQuery('#'+val).get(0));
+            });
+         }, false);
+      }
       jQuery('#MissingEdraftQueueTools a').click(function() {
          var btn = jQuery(this);
          if (btn.hasClass('randomize')) {
