@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,locale */
+/*global $,chrome,getLocale */
 
 function makeSidebar(tumblrAcctNum, retries) {
    var tumblrAcct = '';
@@ -117,7 +117,7 @@ function makeSidebar(tumblrAcctNum, retries) {
             dataType: "html",
             tryCount: 0,
             retryLimit: retries,
-            error: function(xhr, textStatus) {
+            error: function() {
                var msb = $('#MissingE_sidebar');
                if (msb.attr('account') != this.tumblrAcctNum) {
                   return;
@@ -133,7 +133,7 @@ function makeSidebar(tumblrAcctNum, retries) {
                           'class="count MissingE_sidebar_retry">&#x21bb;' +
                           '</span>');
             },
-            success: function(data, textStatus) {
+            success: function(data) {
                var msb = $('#MissingE_sidebar');
                if (msb.attr('account') != this.tumblrAcctNum) {
                   return;
@@ -158,7 +158,8 @@ function makeSidebar(tumblrAcctNum, retries) {
                var msgsIdx = data.indexOf('<!-- Messages -->', beginIdx);
                var draftIdx = data.indexOf('<!-- Drafts -->', beginIdx);
                var queueIdx = data.indexOf('<!-- Queue -->', beginIdx);
-               var endIdx = data.indexOf('<!-- Launch Mass Post editor -->', beginIdx);
+               var endIdx = data.indexOf('<!-- Launch Mass Post editor -->',
+                                         beginIdx);
                if (followerIdx === -1) { followerIdx = len; }
                if (msgsIdx === -1) { msgsIdx = len; }
                var postNum = data.substring(postIdx, followerIdx)
