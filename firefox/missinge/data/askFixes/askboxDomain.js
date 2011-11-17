@@ -21,14 +21,12 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,locale */
-
 var topWin;
 try {
    topWin = window.top.location.href;
 }
 catch (e) {
 }
-if (top === undefined) {
+if (window.top === undefined) {
    document.domain = "tumblr.com";
 }

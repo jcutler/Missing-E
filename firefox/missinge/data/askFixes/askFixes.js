@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,jQuery,locale,self */
+/*global escapeHTML,getLocale,jQuery,self */
 
 function setupMassDeleteAsk(item) {
    jQuery('<span class="MissingEmassDeleteSpan">' +
@@ -52,17 +52,17 @@ function deleteMessages(key, lang) {
       url: '/delete_posts',
       data: {"post_ids": posts.join(','),
              "form_key": key},
-      error: function(xhr, textStatus) {
+      error: function() {
          alert(getLocale(lang).massDelete.messagesError);
       },
-      success: function(data, textStatus) {
+      success: function() {
          remset.removeClass('MissingEmdSelected').remove();
          deleteMessages(key, lang);
       }
    });
 }
 
-function failAnswer(id,type) {
+function failAnswer(id) {
    jQuery('#post_control_loader_' + id).hide();
    jQuery('#ask_publish_button_also_' + id).removeAttr('disabled');
    jQuery('#ask_queue_button_also_' + id).removeAttr('disabled');
@@ -81,7 +81,7 @@ function finishAnswer(id,type) {
    }
 }
 
-function doManualAnswering(e,id,type) {
+function doManualAnswering(id,type) {
    var mode = '3';
    if (type === 'draft') { mode = '1'; }
    else if (type === 'private') { mode = 'private'; }
@@ -124,13 +124,13 @@ function doManualAnswering(e,id,type) {
       answer: answer,
       twitter: twitter,
       error: function() {
-         failAnswer(this.postId,this.buttonType);
+         failAnswer(this.postId);
       },
-      success: function(data, textStatus) {
+      success: function(data) {
          var i;
          var frm = data.indexOf('<form');
          if (frm === -1) {
-            failAnswer(this.postId,this.buttonType);
+            failAnswer(this.postId);
             return;
          }
          var html = data.substr(frm);
@@ -138,7 +138,7 @@ function doManualAnswering(e,id,type) {
             html = html.substr(1);
             frm = html.indexOf('<form');
             if (frm === -1) {
-               failAnswer(this.postId,this.buttonType);
+               failAnswer(this.postId);
                return;
             }
             html = html.substr(frm);
@@ -182,9 +182,9 @@ function doManualAnswering(e,id,type) {
             buttonType: this.buttonType,
             data: params,
             error: function() {
-               failAnswer(this.postId,this.buttonType);
+               failAnswer(this.postId);
             },
-            success: function(data) {
+            success: function() {
                finishAnswer(this.postId,this.buttonType);
             }
          });
@@ -236,20 +236,20 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
                       btn.text() + '<div class="chrome_button_right"></div>' +
                       '</div></button>');
       btn.after(postbtn);
-      var newbtns = jQuery('<div class="MissingE_postMenu">' + allbtns +
-                           '</div>').insertAfter(postbtn);
+      jQuery('<div class="MissingE_postMenu">' + allbtns + '</div>')
+         .insertAfter(postbtn);
       btn.hide();
-      jQuery('#ask_publish_button_also_' + id).click(function(e) {
-         doManualAnswering(e, id, 'publish');
+      jQuery('#ask_publish_button_also_' + id).click(function() {
+         doManualAnswering(id, 'publish');
       });
-      jQuery('#ask_queue_button_also_' + id).click(function(e) {
-         doManualAnswering(e, id, 'queue');
+      jQuery('#ask_queue_button_also_' + id).click(function() {
+         doManualAnswering(id, 'queue');
       });
-      jQuery('#ask_draft_button_also_' + id).click(function(e) {
-         doManualAnswering(e, id, 'draft');
+      jQuery('#ask_draft_button_also_' + id).click(function() {
+         doManualAnswering(id, 'draft');
       });
-      jQuery('#ask_private_button_' + id).click(function(e) {
-         doManualAnswering(e, id, 'private');
+      jQuery('#ask_private_button_' + id).click(function() {
+         doManualAnswering(id, 'private');
       });
 
       var x;
@@ -342,7 +342,8 @@ self.on('message', function (message) {
             var ifr = jQuery('#facebox iframe');
             if (ifr.length > 0) {
                ifr = ifr.get(0);
-               var referrer = 'http://www.tumblr.com/ask_form/' + encodeURI(url[2]);
+               var referrer = 'http://www.tumblr.com/ask_form/' +
+                                 encodeURI(url[2]);
                try {
                   referrer = ifr.contentDocument.referrer;
                }
@@ -350,7 +351,8 @@ self.on('message', function (message) {
                }
                if (ifr.src === 'http://www.tumblr.com/ask_form/' +
                                  encodeURI(url[2]) &&
-                   referrer !== 'http://www.tumblr.com/ask_form/' + encodeURI(url[2])) {
+                   referrer !== 'http://www.tumblr.com/ask_form/' +
+                                 encodeURI(url[2])) {
                   skipRender = true;
                   jQuery.facebox.show('MissingE_askbox_loaded');
                }
@@ -359,13 +361,16 @@ self.on('message', function (message) {
                jQuery('#MissingE_askbox .MissingE_askPerson')
                   .html('<a href="' + encodeURI(url[1]) + '">' + user + '</a>');
                jQuery('#MissingE_askbox .MissingE_askPerson_avatar')
-                  .attr('href',encodeURI(url[1])).css('background-image',avatar);
-               jQuery.facebox({div:'#MissingE_askbox'}, 'MissingE_askbox_loaded');
+                  .attr('href',encodeURI(url[1]))
+                  .css('background-image',avatar);
+               jQuery.facebox({div:'#MissingE_askbox'},
+                              'MissingE_askbox_loaded');
                jQuery('#facebox .MissingE_askbox_loaded iframe')
-                  .attr('src','http://www.tumblr.com/ask_form/' + encodeURI(url[2]));
+                  .attr('src','http://www.tumblr.com/ask_form/' +
+                        encodeURI(url[2]));
                jQuery('#facebox').draggable({
                   containment:'document',
-                  start: function(e, ui) {
+                  start: function(e) {
                      if (jQuery(e.target).find('div.MissingE_askbox_loaded')
                            .length === 0) {
                         return false;
@@ -479,19 +484,25 @@ self.on('message', function (message) {
                                     .replace('#',count);
                   if (getLocale(lang).massDelete.confirmReplace) {
                      var countOp = count;
-                     switch(getLocale(lang).massDelete.confirmReplace.operation[0]) {
+                     switch(getLocale(lang).massDelete
+                              .confirmReplace.operation[0]) {
                         case "+":
-                           countOp += getLocale(lang).massDelete.confirmReplace.operation[1];
+                           countOp += getLocale(lang).massDelete
+                                       .confirmReplace.operation[1];
                            break;
                         case "-":
-                           countOp -= getLocale(lang).massDelete.confirmReplace.operation[1];
+                           countOp -= getLocale(lang).massDelete
+                                       .confirmReplace.operation[1];
                            break;
                         case "%":
-                           countOp %= getLocale(lang).massDelete.confirmReplace.operation[1];
+                           countOp %= getLocale(lang).massDelete
+                                       .confirmReplace.operation[1];
                            break;
                      }
                      if (getLocale(lang).massDelete.confirmReplace[countOp]) {
-                        var repls = getLocale(lang).massDelete.confirmReplace[countOp];
+                        var r;
+                        var repls = getLocale(lang).massDelete
+                                       .confirmReplace[countOp];
                         for (r in repls) {
                            if (repls.hasOwnProperty(r)) {
                               sureMsg = sureMsg.replace(r,repls[r]);

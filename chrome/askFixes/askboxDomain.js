@@ -21,8 +21,6 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,locale */
-
 if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
    document.domain = "tumblr.com";
 }
