@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,jQuery,locale */
+/*global escapeHTML,getLocale,jQuery */
 
 function reply_getValue() {
    var retval = localStorage.getItem("trr_ReplyText");

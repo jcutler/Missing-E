@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,escapeHTML,locale */
+/*global $,escapeHTML,getLocale */
 
 function reply_getValue() {
    var retval = localStorage.getItem("trr_ReplyText");
@@ -72,8 +72,9 @@ function getAsLinks(lang, type) {
    return getLocale(lang).replyType[type+"Title"] + "\n" +
       '<span class="as_links"><a href="#" id="the_as_link" ' +
       'onclick="Element.hide(this);Element.show(\'the_as_links\');' +
-      'return false;" style="font-weight:bold;" >' + getLocale(lang).replyType.as +
-      '</a><span id="the_as_links" style="display:none;"><a id="as_switch" ' +
+      'return false;" style="font-weight:bold;" >' +
+      getLocale(lang).replyType.as + '</a>' +
+      '<span id="the_as_links" style="display:none;"><a id="as_switch" ' +
       'href="' + urlPref + '/new/' + othertype + '">' +
       getLocale(lang).replyType[othertype] + '</a>' +
       '<a href="#" onclick="Element.hide(\'the_as_links\');' +

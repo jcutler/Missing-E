@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global jQuery,locale,self */
+/*global getLocale,jQuery,self */
 
 function reply_setValue(st) {
    localStorage.setItem('trr_ReplyText',st);
@@ -268,8 +268,10 @@ function replyRepliesSettings(message) {
                var rebtxt = getLocale(lang).notifications[anstype][x];
                if (getLocale(lang).notificationChanges &&
                    getLocale(lang).notificationChanges[anstype] &&
-                   getLocale(lang).notificationChanges[anstype].hasOwnProperty(rebtxt)) {
-                  rebtxt = getLocale(lang).notificationChanges[anstype][rebtxt];
+                   getLocale(lang).notificationChanges[anstype]
+                     .hasOwnProperty(rebtxt)) {
+                  rebtxt = getLocale(lang)
+                              .notificationChanges[anstype][rebtxt];
                }
                newcode += ' <a href="' + reblnk + '">' +
                   rebtxt + '</a>';
@@ -294,8 +296,10 @@ function replyRepliesSettings(message) {
                   newcode += ' ';
                   if (getLocale(lang).notificationChanges &&
                       getLocale(lang).notificationChanges[anstype] &&
-                      getLocale(lang).notificationChanges[anstype].hasOwnProperty(posttypetxt)) {
-                     posttypetxt = getLocale(lang).notificationChanges[anstype][posttypetxt];
+                      getLocale(lang).notificationChanges[anstype]
+                        .hasOwnProperty(posttypetxt)) {
+                     posttypetxt = getLocale(lang)
+                                    .notificationChanges[anstype][posttypetxt];
                   }
                   if (y === postType.length - 1) {
                      newcode += '<a href="' + postlnk + '">' +
@@ -310,17 +314,22 @@ function replyRepliesSettings(message) {
                var othertxt = getLocale(lang).notifications[anstype][x];
                if (getLocale(lang).notificationChanges &&
                    getLocale(lang).notificationChanges[anstype] &&
-                   getLocale(lang).notificationChanges[anstype].hasOwnProperty(othertxt)) {
-                  othertxt = getLocale(lang).notificationChanges[anstype][othertxt];
+                   getLocale(lang).notificationChanges[anstype]
+                     .hasOwnProperty(othertxt)) {
+                  othertxt = getLocale(lang)
+                              .notificationChanges[anstype][othertxt];
                }
                newcode += ' ' + othertxt;
             }
          }
          if (getLocale(lang).postNotificationChanges &&
              getLocale(lang).postNotificationChanges[anstype]) {
+            var findtxt;
             for (findtxt in getLocale(lang).postNotificationChanges[anstype]) {
-               if (getLocale(lang).postNotificationChanges[anstype].hasOwnProperty(findtxt)) {
-                  newcode = newcode.replace(findtxt, getLocale(lang).postNotificationChanges[anstype][findtxt]);
+               if (getLocale(lang).postNotificationChanges[anstype]
+                     .hasOwnProperty(findtxt)) {
+                  newcode = newcode.replace(findtxt,
+                     getLocale(lang).postNotificationChanges[anstype][findtxt]);
                }
             }
          }
