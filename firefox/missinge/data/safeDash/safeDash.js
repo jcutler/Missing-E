@@ -172,7 +172,8 @@ function doHide(item, retry) {
                         extra += 'width:' + w + 'px;';
                      }
                      else {
-                        extra += 'width:' + me.css('width').replace('px','') + 'px;';
+                        extra += 'width:' + me.css('width').replace('px','') +
+                                 'px;';
                      }
                   }
                   else if (!me.hasClass('inline_image')) {
