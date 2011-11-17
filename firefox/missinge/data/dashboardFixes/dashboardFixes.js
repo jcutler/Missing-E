@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,jQuery,locale,self */
+/*global escapeHTML,jQuery,getLocale,self */
 
 function setupMassDeletePost(item) {
    jQuery('<span class="MissingEmassDeleteSpan">' +
@@ -48,10 +48,10 @@ function deletePosts(key, lang) {
       url: '/delete_posts',
       data: {"post_ids": posts.join(','),
              "form_key": key},
-      error: function(xhr, textStatus) {
+      error: function() {
          alert(getLocale(lang).massDelete.postsError);
       },
-      success: function(data, textStatus) {
+      success: function() {
          remset.removeClass('MissingEmdSelected').remove();
          deletePosts(key, lang);
       }
@@ -132,7 +132,8 @@ function doIcons(item) {
       if (!(/http:\/\/www\.tumblr\.com\/(blog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/^delete_post_/.test(a.prev().attr('id')) ||
           /^post_delete_/.test(a.attr('id')) ||
-          (new RegExp(getLocale(lang).dashFixesText.del, "i").test(a.text())))) {
+          (new RegExp(getLocale(lang).dashFixesText.del, "i")
+            .test(a.text())))) {
          a.attr('title',getLocale(lang).dashFixesText.del)
             .addClass(klass + "MissingE_delete_control").text('');
       }
@@ -153,7 +154,8 @@ function doIcons(item) {
          var replyTitle = getLocale(lang).dashFixesText.reply;
          if (a.hasClass("MissingE_experimental_reply")) {
             klass += "MissingE_experimental_reply_control ";
-            replyTitle += " [" + getLocale(lang).dashFixesText.experimental + "]";
+            replyTitle += " [" + getLocale(lang).dashFixesText.experimental +
+                          "]";
          }
          a.attr('title',replyTitle)
             .addClass(klass + "MissingE_reply_control").text('');
@@ -289,7 +291,7 @@ function addExpandAllHandler(item) {
 }
 
 function styleSorters(sorters, order) {
-   var buttons = sorters.find(".MissingE_sorterButton")
+   var buttons = sorters.find(".MissingE_sorterButton");
    if (!order || order === "") {
       buttons.css('opacity','').removeClass("MissingE_descSort");
       var firstBtn = sorters.find(".MissingE_sorterButton:first");
@@ -299,8 +301,10 @@ function styleSorters(sorters, order) {
    }
    else {
       buttons.css('opacity','1');
-      sorters.find(".MissingE_typeSort").toggleClass("MissingE_descSort", /t/.test(order));
-      sorters.find(".MissingE_userSort").toggleClass("MissingE_descSort", /u/.test(order));
+      sorters.find(".MissingE_typeSort")
+         .toggleClass("MissingE_descSort", /t/.test(order));
+      sorters.find(".MissingE_userSort")
+         .toggleClass("MissingE_descSort", /u/.test(order));
    }
 }
 
@@ -316,7 +320,8 @@ function unsortList(ol) {
 }
 
 function sortList(ol) {
-   var ANSWER=0, REPLY=1, PHOTO=2, REBLOG_COMMENTARY=3, REBLOG=4, LIKE=5, OTHER=6;
+   var ANSWER=0, REPLY=1, PHOTO=2, REBLOG_COMMENTARY=3,
+       REBLOG=4, LIKE=5, OTHER=6;
    var didReverse = false;
    var notes = jQuery(ol);
    var sortorder = notes.data('sortorder');
@@ -334,7 +339,7 @@ function sortList(ol) {
    else {
       entryOrder = {"type":1,"user":0};
    }
-   list.each(function(i) {
+   list.each(function() {
       var entry = [];
       if (jQuery(this).hasClass('answer')) {
          entry[entryOrder.type] = ANSWER;
@@ -413,8 +418,8 @@ self.on('message', function(message) {
       jQuery.each(list, function (i,val) {
          var node = jQuery('#'+val);
          if (node.get(0).tagName === 'LI' && node.hasClass('post')) {
-            if (jQuery('#posts li.post[id="' + node.attr('id') + '"]').length >
-                  1) {
+            if (jQuery('#posts li.post[id="' + node.attr('id') + '"]')
+                  .length > 1) {
                node.remove();
             }
          }
@@ -480,6 +485,7 @@ self.on('message', function(message) {
       document.addEventListener('MissingEajax', function(e) {
          var type = e.data.match(/^[^:]*/)[0];
          var list = e.data.match(/(post_[0-9]+)/g);
+         if (type === "notes") { return; }
          /*
          if (jQuery(e.target).closest('#right_column').length > 0) {
             jQuery('#left_column').css('min-height',
@@ -572,7 +578,6 @@ self.on('message', function(message) {
       head.appendChild(queueStyle);
 
 /*
-
       var queuearrs = extensionURL + 'dashboardFixes/queue_arrows.png';
       jQuery('head').append('<style type="text/css">' +
                        '#posts .post .MissingE_queuearrow_control {' +
@@ -749,19 +754,25 @@ self.on('message', function(message) {
                                  .replace('#',count);
                if (getLocale(lang).massDelete.confirmReplace) {
                   var countOp = count;
-                  switch(getLocale(lang).massDelete.confirmReplace.operation[0]) {
+                  switch(getLocale(lang).massDelete
+                           .confirmReplace.operation[0]) {
                      case "+":
-                        countOp += getLocale(lang).massDelete.confirmReplace.operation[1];
+                        countOp += getLocale(lang).massDelete
+                                    .confirmReplace.operation[1];
                         break;
                      case "-":
-                        countOp -= getLocale(lang).massDelete.confirmReplace.operation[1];
+                        countOp -= getLocale(lang).massDelete
+                                    .confirmReplace.operation[1];
                         break;
                      case "%":
-                        countOp %= getLocale(lang).massDelete.confirmReplace.operation[1];
+                        countOp %= getLocale(lang).massDelete
+                                    .confirmReplace.operation[1];
                         break;
                   }
                   if (getLocale(lang).massDelete.confirmReplace[countOp]) {
-                     var repls = getLocale(lang).massDelete.confirmReplace[countOp];
+                     var r;
+                     var repls = getLocale(lang).massDelete
+                                    .confirmReplace[countOp];
                      for (r in repls) {
                         if (repls.hasOwnProperty(r)) {
                            sureMsg = sureMsg.replace(r,repls[r]);
@@ -794,10 +805,11 @@ self.on('message', function(message) {
                      '" />');
       document.addEventListener('MissingEajax', function(e) {
          var type = e.data.match(/^[^:]*/)[0];
-         var list = e.data.match(/(post_[0-9]+)/g);
+         var thelist = e.data.match(/(post_[0-9]+)/g);
          if (type !== 'notes') { return; }
-         var container = jQuery('#'+list[0]);
-         var div = container.find('#'+list[0].replace(/post/,"notes_container"));
+         var container = jQuery('#'+thelist[0]);
+         var div = container.find('#'+thelist[0]
+                                  .replace(/post/,"notes_container"));
          div.prepend('<div class="MissingE_notesSorter">' +
                      getLocale(lang).sorting.sort + ': ' +
                      '<div class="MissingE_sorterContainer">' +
@@ -828,7 +840,7 @@ self.on('message', function(message) {
             opacity: 0.6,
             placeholder: 'MissingE_sorterPlaceholder',
             forcePlaceholderSize: true,
-            update: function(e,ui) {
+            update: function() {
                var item = jQuery(this);
                var ol = item.closest("li.post").find('ol.notes');
                var sortorder = ol.data('sortorder');
@@ -848,7 +860,8 @@ self.on('message', function(message) {
                }
                if (newsortorder !== sortorder) {
                   ol.data('sortorder',newsortorder);
-                  styleSorters(jQuery(this).closest('div.MissingE_notesSorter'),newsortorder);
+                  styleSorters(jQuery(this).closest('div.MissingE_notesSorter'),
+                               newsortorder);
                   sortList(ol);
                }
             }
@@ -857,10 +870,12 @@ self.on('message', function(message) {
 
       jQuery('#posts ol.notes').live('mouseover', function() {
          var startIndex = jQuery(this).data('length');
-         var list = jQuery(this).find('li:not(.MissingE_sortedNote)').not('.more_notes_link_container');
+         var list = jQuery(this).find('li:not(.MissingE_sortedNote)')
+                     .not('.more_notes_link_container');
          if (list.length > 0) {
             list.each(function(i) {
-               jQuery(this).attr('index',startIndex + i).addClass('MissingE_sortedNote');
+               jQuery(this).attr('index',startIndex + i)
+                  .addClass('MissingE_sortedNote');
             });
             jQuery(this).data('length',startIndex + list.length);
             sortList(this);
@@ -879,22 +894,24 @@ self.on('message', function(message) {
             }
          }
          else {
+            var m;
             var newsortorder = sortorder;
             if (!sortorder || sortorder === "" ||
                 !(/^([tT][uU]|[uU][tT])$/.test(sortorder))) {
                newsortorder = 'TU';
             }
             else if (item.hasClass('MissingE_typeSort')) {
-               var m = sortorder.match(/.*([tT]).*/);
+               m = sortorder.match(/.*([tT]).*/);
                newsortorder = m[0].replace(/[tT]/,m[1] === "t" ? "T" : "t");
             }
             else if (item.hasClass('MissingE_userSort')) {
-               var m = sortorder.match(/.*([uU]).*/);
+               m = sortorder.match(/.*([uU]).*/);
                newsortorder = m[0].replace(/[uU]/,m[1] === "u" ? "U" : "u");
             }
             if (newsortorder !== sortorder) {
                ol.data('sortorder',newsortorder);
-               styleSorters(jQuery(this).closest('div.MissingE_notesSorter'),newsortorder);
+               styleSorters(jQuery(this).closest('div.MissingE_notesSorter'),
+                            newsortorder);
                sortList(ol);
             }
          }
