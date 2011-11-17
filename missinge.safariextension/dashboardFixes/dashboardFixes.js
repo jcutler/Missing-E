@@ -141,7 +141,9 @@ function doIcons(item) {
          a.attr('title',getLocale(lang).dashFixesText.edit)
             .addClass(klass + "MissingE_edit_control").text('');
       }
-      else if (/^\/reblog/.test(a.attr('href'))) {
+      else if (/^\/reblog/.test(a.attr('href')) ||
+               /http[s]?:\/\/www\.tumblr\.com\/register\?referer=soft_reblog/
+                  .test(a.attr('href'))) {
          a.attr('title',getLocale(lang).dashFixesText.reblog)
             .addClass(klass + "MissingE_reblog_control").text('');
       }

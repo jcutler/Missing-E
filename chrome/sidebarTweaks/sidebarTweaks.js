@@ -34,6 +34,9 @@ function makeSidebar(tumblrAcctNum, retries) {
       $('#all_blogs_menu li[id]').each(function() {
          list.push([this.id.match(/menuitem-(.*)/)[1], $(this).text()]);
       });
+      if (list.length === 0) {
+         return false;
+      }
       if (tumblrAcctNum >= list.length) {
          tumblrAcctNum = 0;
       }
