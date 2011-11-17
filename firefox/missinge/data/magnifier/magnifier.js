@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,jQuery,locale,self */
+/*global escapeHTML,getLocale,jQuery,self */
 
 function magClick(e) {
    if (e.which === 1) {
@@ -95,21 +95,21 @@ function insertMagnifier(item) {
       var caps;
       var tid = jQuery(item).attr("id").match(/[0-9]*$/)[0];
       var str, img;
-      var set = $('#photoset_' + tid);
+      var set = jQuery('#photoset_' + tid);
 
       if (set.length > 0) {
          var imgs = set.find('img');
          count = imgs.length;
          caps = [];
-         imgs.each(function(i) {
-            var thecap = $(this).attr('alt');
+         imgs.each(function() {
+            var thecap = jQuery(this).attr('alt');
             if (!thecap) { thecap = ""; }
             caps.push(thecap);
          });
          img = imgs.first();
       }
       else {
-         img = $(item).find('div.post_content img:first');
+         img = jQuery(item).find('div.post_content img:first');
       }
       if (img.length > 0) {
          str = img.attr("src").match(/\/(tumblr_[^_]*)/);

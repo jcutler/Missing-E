@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,locale,safari */
+/*global $,getLocale,safari */
 
 var magimg = safari.extension.baseURI + 'magnifier/magnifier.png';
 var turnimg = safari.extension.baseURI + 'magnifier/turners.png';
@@ -129,8 +129,9 @@ function insertMagnifier(item) {
 
       if (str) {
          var mi = $('<a title="' + getLocale(lang).loading + '" ' +
-                    'class="MissingE_magnify MissingE_magnify_hide" id="magnify_' +
-                    tid + '" href="#" onclick="return false;"></a>');
+                    'class="MissingE_magnify MissingE_magnify_hide" ' +
+                    'id="magnify_' + tid + '" href="#" ' +
+                    'onclick="return false;"></a>');
          mi.click(magClick);
          if (bm.length > 0) {
             bm.before(mi);
