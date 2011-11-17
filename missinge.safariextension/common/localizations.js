@@ -1093,7 +1093,7 @@ var locale = {
    "lis",
    "gru"
   ],
-  "update": "Aktualizacja Missing e",
+  "update": "Aktualizuj Misssing e",
   "postCrushes": "Publikuj swoje fascynacje",
   "sidebar": {
    "posts": "Posty",
@@ -1105,8 +1105,8 @@ var locale = {
   },
   "reblog": "rebloguj",
   "reblogging": "reblogowanie...",
-  "reblogFailed": "Reblogu nie powiodło!",
-  "rebloggedText": "reblogował",
+  "reblogFailed": "Reblogowanie się nie powiodło!",
+  "rebloggedText": "reblogował(a)",
   "reblogOptions": [
    {
     "item": "draft",
@@ -1130,7 +1130,7 @@ var locale = {
   "askPost": "Pytanie",
   "askPerson": ["Pytać", "U"],
   "asked": ["U", "apytał(a)"],
-  "reblogAsk": "Reblogu Pytanie",
+  "reblogAsk": "Rebloguj pytanie",
   "select": "Zaznacz",
   "first100": "Pierwsze 100",
   "postTypeNames": {
@@ -1152,11 +1152,11 @@ var locale = {
    "experimental": "EKSPERYMENTALNYM",
    "exp": "X"
   },
-  "bookmarkVerb": "zakładka",
+  "bookmarkVerb": "Dodaj zakładkę",
   "bookmarkNoun": "Zakładka",
   "bookmarksTitle": "Zakładki",
   "postUnavailable": "Post Niedostępne",
-  "magnify": "powiększać",
+  "magnify": "powiększ",
   "postingFixes": {
    "submitText": {
     "publish": "Publikuj",
@@ -1165,12 +1165,12 @@ var locale = {
     "private": "Post prywatny"
    },
    "uploadImagesText": "Przesłać zdjęcia zamiast",
-   "clearTagsText": "Usuwanie tagi"
+   "clearTagsText": "Usuń tagi"
   },
-  "reblogTags": "Reblogu tagi",
+  "reblogTags": "Rebloguj tagi",
   "removeTag": "Usuń tag",
-  "loading": "Załadunek...",
-  "error": "Wystąpił błąd. Kliknij, aby przeładować.",
+  "loading": "Ładuję...",
+  "error": "Wystąpił błąd. Kiknij, aby odświeżyć.",
   "posts": {
    "text": ["Twój", "post"],
    "photo": ["Twóje", "zdjęcie"],
@@ -1196,28 +1196,27 @@ var locale = {
    "text": "jako <strong>tekst</strong>",
    "textTitle": "Odpowiedź tekst"
   },
-  "shuffle": "Potasować kolejka",
+  "shuffle": "Przetasuj kolejkę",
   "massDelete": {
    "selectAll": "Zaznacz wszystko",
    "deselectAll": "Odznacz wszystkie",
    "deleteSelected": "Usunąć wybrane",
-   "messagesConfirm": "Czy na pewno chcesz usunąć # wybranych wiadomości?",
-   "messagesError": "Niektóre wiadomości nie może być usunięty. Spróbuj ponownie później.",
-   "postsConfirm": "Czy na pewno chcesz usunąć # wybranych posty?",
-   "postsError": "Niektóre posty nie może być usunięty. Spróbuj ponownie później.",
+   "messagesConfirm": "Liczba wybranych wiadomości: #. Czy na pewno chcesz je usunąć?",
+   "messagesError": "Niektóre wiadomości nie mogły być usunięte. Spróbuj później.",
+   "postsConfirm": "Liczba wybranych postów: #. Czy na pewno chcesz je usunąć?",
+   "postsError": "Niektóre posty nie mogły być usunięte. Spróbuj ponownie później.",
    "confirmReplace": {
     "operation": ["-", 1],
     "0": {
-     "1 wybranych wiadomości": "wybrane wiadomośca",
-     "1 wybranych posty": "wybrany post"
+     "je usunąć": "go usunąć"
     }
    }
   },
   "sorting": {
    "sort": "Sortuj",
    "type": "Typ",
-   "user": "Login",
-   "reset": "Zresetować"
+   "user": "Użytkownik",
+   "reset": "Resetuj"
   }
  },
  "ru": {
