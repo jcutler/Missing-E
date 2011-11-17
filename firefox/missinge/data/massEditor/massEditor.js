@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global jQuery,locale,self */
+/*global getLocale,jQuery,locale,self */
 
 function generateButton(type,text,islast) {
    return '<div id="MissingE_selecttype_' + type + '" class="header_button' +
@@ -120,7 +120,7 @@ self.on('message', function(message) {
       moveSelectList(sbt,sbtlist);
    });
    jQuery(':not(*[id="MissingE_selecttype_btn"],' +
-          '*[id="MissingE_selecttype_btn"] *)').click(function(e) {
+          '*[id="MissingE_selecttype_btn"] *)').click(function() {
       if (sbtlist.is(':visible')) {
          sbtlist.hide();
          sbt.removeClass('force_border');

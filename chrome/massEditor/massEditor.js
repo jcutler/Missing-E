@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,locale */
+/*global $,chrome,getLocale,locale */
 
 function generateButton(type,text,islast) {
    return '<div id="MissingE_selecttype_' + type + '" class="header_button' +

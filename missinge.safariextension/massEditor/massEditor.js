@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,locale,safari */
+/*global $,getLocale,locale,safari */
 
 function generateButton(type,text,islast) {
    return '<div id="MissingE_selecttype_' + type + '" class="header_button' +
@@ -115,7 +115,7 @@ function MissingE_massEditor_doStartup() {
       moveSelectList(sbt,sbtlist);
    });
    $(':not(*[id="MissingE_selecttype_btn"],*[id="MissingE_selecttype_btn"] *)')
-         .click(function(e) {
+         .click(function() {
       if (sbtlist.is(':visible')) {
          sbtlist.hide();
          sbt.removeClass('force_border');
