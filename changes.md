@@ -83,7 +83,8 @@ color:#4183c4;
 **_+_** Enable settings exporting and importing using files  
 **_+_** Add Shuffle Queue button to Dashboard Tweaks  
 **_+_** Added Polish language localization  
-**_!_** Force default language to English when correct localization does not exist
+**_!_** Force default language to English when correct localization does not exist  
+**_!_** Localize text for Post Crushes button
 
 ##**2.2.12** (11/07/2011)
 
