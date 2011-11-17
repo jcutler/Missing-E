@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,jQuery,locale,self */
+/*global escapeHTML,getLocale,jQuery,self */
 
 function resizeTinyMCE(post,extensionURL) {
    jQuery('head').append('<style type="text/css">' +
@@ -38,7 +38,7 @@ function resizeTinyMCE(post,extensionURL) {
       fr.parent().resizable({
          handles:'se',
          minHeight:h,
-         create:function(e, ui) {
+         create:function() {
             jQuery(this).prepend('<div class="resize_overlay"></div>');
          },
          start:function() {
@@ -151,10 +151,12 @@ self.on('message', function(message) {
       var queueTags = message.queueTags === '' ? [] : message.queueTags;
       jQuery('#posts div.post_controls a').live('click',function(){
          if (!jQuery(this).hasClass('MissingE_queue_control') &&
-             !(new RegExp(getLocale(lang).dashFixesText.queue,"i")).test(jQuery(this).text())) {
+             !(new RegExp(getLocale(lang).dashFixesText.queue,"i"))
+               .test(jQuery(this).text())) {
             return;
          }
-         var id = jQuery(this).closest('li.post').attr('id').match(/[0-9]+$/)[0];
+         var id = jQuery(this).closest('li.post').attr('id')
+                     .match(/[0-9]+$/)[0];
          var key = jQuery('#form_key').val();
          jQuery.ajax({
             type: "POST",
@@ -165,13 +167,15 @@ self.on('message', function(message) {
          });
       });
       jQuery('#posts div.MissingE_postMenu button').live('mouseup', function() {
+         var tagstr, taglist;
          if (/ask_queue_button_also_[0-9]+$/.test(this.id)) {
             var id = this.id.match(/[0-9]+$/)[0];
             var tags = jQuery('#ask_answer_form_' + id +
                          ' input.MissingE_askFixes_tags');
             if (tags.length === 0) {
-               tags = jQuery('<input type="hidden" class="MissingE_askFixes_tags" ' +
-                        'value="" />').appendTo('#ask_answer_form_' + id)
+               tags = jQuery('<input type="hidden" ' +
+                             'class="MissingE_askFixes_tags" value="" />')
+                        .appendTo('#ask_answer_form_' + id);
             }
             if (tags.length === 0) { return; }
             tagstr = tags.val();
@@ -195,7 +199,6 @@ self.on('message', function(message) {
          }
       });
       jQuery('#edit_post').submit(function() {
-         var fields = jQuery(this).serializeArray();
          if (/2/.test(jQuery(this["post[state]"]).val())) {
             var tags = jQuery(this["post[tags]"]).val().split(",");
             var addTags = [];
@@ -330,7 +333,8 @@ self.on('message', function(message) {
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           getLocale(lang).postingFixes.uploadImagesText + '</a>';
+                           getLocale(lang).postingFixes.uploadImagesText +
+                           '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
       }
@@ -389,7 +393,8 @@ self.on('message', function(message) {
       var iframesuffix = isRTE ? "?from_assets" : "";
       h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
          .css({"float":"left","margin-top":"0"})
-         .after('<div style="float:right;padding-top:3px;"><iframe src="/upload" ' +
+         .after('<div style="float:right;padding-top:3px;">' +
+                '<iframe src="/upload" ' +
                 'id="regular_form_inline_image_iframe" width="130" ' +
                 'height="16" border="0" scrolling="no" ' +
                 'allowtransparency="true" frameborder="0" ' +
@@ -405,9 +410,10 @@ self.on('message', function(message) {
                      'function catch_uploaded_photo(src) { ' +
                         'parent.catch_uploaded_photo(src); ' +
                      '}</script></head><body>' +
-                     '<iframe src="http://www.tumblr.com/upload/image' + iframesuffix + '" ' +
-                     'width="130" height="16" border="0" scrolling="no" ' +
-                     'allowtransparency="true" frameborder="0" ' +
+                     '<iframe src="http://www.tumblr.com/upload/image' +
+                     iframesuffix + '" width="130" height="16" border="0" ' +
+                     'scrolling="no" allowtransparency="true" ' +
+                     'frameborder="0" ' +
                      'style="background-color:transparent;overflow:hidden;">' +
                      '</iframe></body></html>');
          doc.close();

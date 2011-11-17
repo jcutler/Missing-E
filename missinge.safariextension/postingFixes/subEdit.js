@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global locale,safari */
+/*global getLocale,safari */
 
 var like, suffix='', lang='en';
 

@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,locale */
+/*global $,chrome,getLocale */
 
 function resizeTinyMCE(post) {
    $('head').append('<style type="text/css">' +
@@ -38,7 +38,7 @@ function resizeTinyMCE(post) {
       fr.parent().resizable({
          handles:'se',
          minHeight:h,
-         create:function(e, ui) {
+         create:function() {
             $(this).prepend('<div class="resize_overlay"></div>');
          },
          start:function() {
@@ -147,7 +147,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                         postingFixes_settings.queueTags;
       $('#posts div.post_controls a').live('click',function(){
          if (!$(this).hasClass('MissingE_queue_control') &&
-             !(new RegExp(getLocale(lang).dashFixesText.queue,"i")).test($(this).text())) {
+             !(new RegExp(getLocale(lang).dashFixesText.queue,"i"))
+               .test($(this).text())) {
             return;
          }
          var id = $(this).closest('li.post').attr('id').match(/[0-9]+$/)[0];
@@ -161,13 +162,14 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          });
       });
       $('#posts div.MissingE_postMenu button').live('mouseup', function() {
+         var tagstr, taglist;
          if (/ask_queue_button_also_[0-9]+$/.test(this.id)) {
             var id = this.id.match(/[0-9]+$/)[0];
             var tags = $('#ask_answer_form_' + id +
                          ' input.MissingE_askFixes_tags');
             if (tags.length === 0) {
                tags = $('<input type="hidden" class="MissingE_askFixes_tags" ' +
-                        'value="" />').appendTo('#ask_answer_form_' + id)
+                        'value="" />').appendTo('#ask_answer_form_' + id);
             }
             if (tags.length === 0) { return; }
             tagstr = tags.val();
@@ -191,7 +193,6 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          }
       });
       $('#edit_post').submit(function() {
-         var fields = $(this).serializeArray();
          if (/2/.test($(this["post[state]"]).val())) {
             var tags = $(this["post[tags]"]).val().split(",");
             var addTags = [];
@@ -319,7 +320,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           getLocale(lang).postingFixes.uploadImagesText + '</a>';
+                           getLocale(lang).postingFixes.uploadImagesText +
+                           '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);
       }
@@ -375,7 +377,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
             }
          }
       });
-      var iframeurl = isRTE ? "postingFixes/upload_rte.html" : "postingFixes/upload.html";
+      var iframeurl = isRTE ? "postingFixes/upload_rte.html" :
+                              "postingFixes/upload.html";
       h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
          .css({"float":"left","margin-top":"0"})
          .after('<div style="float:right;padding-top:3px;"><iframe ' +

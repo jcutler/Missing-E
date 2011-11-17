@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,locale,safari */
+/*global $,getLocale,safari */
 
 function resizeTinyMCE(post) {
    $('head').append('<style type="text/css">' +
@@ -38,7 +38,7 @@ function resizeTinyMCE(post) {
       fr.parent().resizable({
          handles:'se',
          minHeight:h,
-         create:function(e, ui) {
+         create:function() {
             $(this).prepend('<div class="resize_overlay"></div>');
          },
          start:function() {
@@ -146,10 +146,11 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
    });
 
    if (tagQueuedPosts === 1) {
-      var queueTags = queueTags === '' ? [] : queueTags;
+      queueTags = queueTags === '' ? [] : queueTags;
       $('#posts div.post_controls a').live('click',function(){
          if (!$(this).hasClass('MissingE_queue_control') &&
-             !(new RegExp(getLocale(lang).dashFixesText.queue,"i")).test($(this).text())) {
+             !(new RegExp(getLocale(lang).dashFixesText.queue,"i"))
+               .test($(this).text())) {
             return;
          }
          var id = $(this).closest('li.post').attr('id').match(/[0-9]+$/)[0];
@@ -163,13 +164,14 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          });
       });
       $('#posts div.MissingE_postMenu button').live('mouseup', function() {
+         var tagstr, taglist;
          if (/ask_queue_button_also_[0-9]+$/.test(this.id)) {
             var id = this.id.match(/[0-9]+$/)[0];
             var tags = $('#ask_answer_form_' + id +
                          ' input.MissingE_askFixes_tags');
             if (tags.length === 0) {
                tags = $('<input type="hidden" class="MissingE_askFixes_tags" ' +
-                        'value="" />').appendTo('#ask_answer_form_' + id)
+                        'value="" />').appendTo('#ask_answer_form_' + id);
             }
             if (tags.length === 0) { return; }
             tagstr = tags.val();
@@ -193,7 +195,6 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          }
       });
       $('#edit_post').submit(function() {
-         var fields = $(this).serializeArray();
          if (/2/.test($(this["post[state]"]).val())) {
             var tags = $(this["post[tags]"]).val().split(",");
             var addTags = [];
@@ -377,7 +378,8 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
             }
          }
       });
-      var iframeurl = isRTE ? "postingFixes/upload_rte.html" : "postingFixes/upload.html";
+      var iframeurl = isRTE ? "postingFixes/upload_rte.html" :
+                              "postingFixes/upload.html";
       h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
          .css({"float":"left","margin-top":"0"})
          .after('<div style="float:right;padding-top:3px;"><iframe ' +
