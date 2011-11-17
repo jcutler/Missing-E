@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global jQuery,locale,self */
+/*global getLocale,jQuery,self */
 
 function loadTimestamp(item) {
    var lang = jQuery('html').attr('lang');
