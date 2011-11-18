@@ -1164,7 +1164,7 @@ var locale = {
     "draft": "Wersję roboczą",
     "private": "Post prywatny"
    },
-   "uploadImagesText": "Przesłać zdjęcia zamiast",
+   "uploadImagesText": "Użyj zdjęcia",
    "clearTagsText": "Usuń tagi"
   },
   "reblogTags": "Rebloguj tagi",
