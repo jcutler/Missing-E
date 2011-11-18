@@ -1155,7 +1155,7 @@ var locale = {
   "bookmarkVerb": "Dodaj zakładkę",
   "bookmarkNoun": "Zakładka",
   "bookmarksTitle": "Zakładki",
-  "postUnavailable": "Post Niedostępne",
+  "postUnavailable": "Post niedostępne",
   "magnify": "powiększ",
   "postingFixes": {
    "submitText": {
