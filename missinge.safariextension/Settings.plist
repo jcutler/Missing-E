@@ -782,7 +782,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>0</real>
+		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_betterReblogs_passTags</string>
 		<key>Title</key>
