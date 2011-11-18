@@ -73,7 +73,8 @@ function getLocale(lang) {
    else {
       if (!locale.hasOwnProperty(lang)) {
          locale[lang] = false;
-         console.log("Warning: Localization not found for language '" + lang + "'");
+         console.log("Warning: Localization not found for language '" + lang +
+                     "'");
       }
       return locale.en;
    }
@@ -397,8 +398,10 @@ function receiveOptions(message, theWorker) {
    }
    for (i in settings) {
       if (settings.hasOwnProperty(i)) {
+         // Important! Firefox settings can be ints
+         // so comparison should be == (value only, not type)
          if (!currSettings.hasOwnProperty(i) ||
-             currSettings[i] !== settings[i]) {
+             currSettings[i] != settings[i]) {
             var done = false;
             if (typeof allSettings[i] === "number") {
                var val = parseInt(settings[i]);
