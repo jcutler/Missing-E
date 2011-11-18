@@ -736,6 +736,11 @@ self.on('message', function(message) {
             jQuery('head').append('<script type="text/javascript">' +
                'Sortable.setSequence("posts",["' + arr.join('","') + '"]);' +
                'update_publish_on_times();</script>');
+            if (jQuery('#posts li:first').attr('id') === "new_post" &&
+                jQuery('#posts li.post').length > 1) {
+               jQuery('#posts').find('li[id^="photo_reply_container"]').detach()
+                  .insertAfter('#posts li.post:not(#new_post):first');
+            }
          }
          else if (btn.hasClass('select_all')) {
             jQuery('#posts input.MissingEmassDeleteSelect').each(function(){
