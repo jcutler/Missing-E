@@ -1149,13 +1149,13 @@ var locale = {
    "reply": "komentuj",
    "notes": "notek",
    "queue": "kolejkuj",
-   "experimental": "EKSPERYMENTALNYM",
+   "experimental": "EKSPERYMENTALNA",
    "exp": "X"
   },
   "bookmarkVerb": "Dodaj zakładkę",
   "bookmarkNoun": "Zakładka",
   "bookmarksTitle": "Zakładki",
-  "postUnavailable": "Post niedostępne",
+  "postUnavailable": "Post niedostępny",
   "magnify": "powiększ",
   "postingFixes": {
    "submitText": {
@@ -1198,17 +1198,18 @@ var locale = {
   },
   "shuffle": "Przetasuj kolejkę",
   "massDelete": {
-   "selectAll": "Zaznacz wszystko",
+   "selectAll": "Zaznacz wszystkie",
    "deselectAll": "Odznacz wszystkie",
    "deleteSelected": "Usunąć wybrane",
    "messagesConfirm": "Liczba wybranych wiadomości: #. Czy na pewno chcesz je usunąć?",
-   "messagesError": "Niektóre wiadomości nie mogły być usunięte. Spróbuj później.",
+   "messagesError": "Niektóre wiadomości nie mogły zostać usunięte. Spróbuj ponownie później.",
    "postsConfirm": "Liczba wybranych postów: #. Czy na pewno chcesz je usunąć?",
-   "postsError": "Niektóre posty nie mogły być usunięte. Spróbuj ponownie później.",
+   "postsError": "Niektóre posty nie mogły zostać usunięte. Spróbuj ponownie później.",
    "confirmReplace": {
     "operation": ["-", 1],
     "0": {
-     "je usunąć": "go usunąć"
+     "wiadomości: 1. Czy na pewno chcesz je usunąć?": "wiadomości: #. Czy na pewno chcesz ją usunąć?",
+     "postów: #. Czy na pewno chcesz je usunąć?": "postów: #. Czy na pewno chcesz go usunąć?",
     }
    }
   },
