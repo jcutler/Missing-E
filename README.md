@@ -8,7 +8,7 @@
 ***
 
 Jeremy Cutler ([cutlerish.tumblr.com](cutlerish.tumblr.com))  
-Released under the [GPL Version 2 License](http://www.gnu.org/licenses/gpl-2.0.html)
+Released under the [GPL Version 3 (or later) License](http://www.gnu.org/licenses/gpl.html)
 
 [**Missing e** Change History](http://github.missinge.infraware.ca/changes)
 

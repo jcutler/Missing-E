@@ -92,7 +92,7 @@ if (!array_key_exists("b", $_GET) || $_GET["b"] === 'firefox') {
 }
 ?>
 </div>
-<div id="inlinefooter"><div id="foot-left">An open-source project released under <a href="http://www.gnu.org/licenses/gpl-2.0.html">GPL v2</a></div><div class="clear"></div></div>
+<div id="inlinefooter"><div id="foot-left">An open-source project released under <a href="http://www.gnu.org/licenses/gpl.html">GPL v3</a></div><div class="clear"></div></div>
 </div>
 </body>
 </html>
