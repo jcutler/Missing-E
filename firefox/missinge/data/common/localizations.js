@@ -1122,7 +1122,7 @@ var locale = {
    },
    {
     "item": "manual",
-    "text": "Reblogu ręcznie"
+    "text": "Rebloguj ręcznie"
    }
   ],
   "tagsText": "tagi",
