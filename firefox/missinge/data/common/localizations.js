@@ -1209,7 +1209,7 @@ var locale = {
     "operation": ["-", 1],
     "0": {
      "wiadomości: 1. Czy na pewno chcesz je usunąć?": "wiadomości: #. Czy na pewno chcesz ją usunąć?",
-     "postów: #. Czy na pewno chcesz je usunąć?": "postów: #. Czy na pewno chcesz go usunąć?",
+     "postów: #. Czy na pewno chcesz je usunąć?": "postów: #. Czy na pewno chcesz go usunąć?"
     }
    }
   },
