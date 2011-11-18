@@ -68,7 +68,7 @@ s/\s*"jid0-0pgffacvvhubiefykrvvc5w6liu-at-jetpack-api-utils-lib":\s*\[\s*\n\s*"r
 mv harness-options.new.6 harness-options.json
 rm -f harness-options.new.*
 
-sed -e 's/<em:maxVersion>[^<]*/<em:maxVersion>10.0a1/' install.rdf > install.new.0
+sed -e 's/<em:maxVersion>[^<]*/<em:maxVersion>11.0a1/' install.rdf > install.new.0
 sed -e 's/<em:minVersion>[^<]*/<em:minVersion>7.0/' install.new.0 > install.new.1
 
 mv install.new.1 install.rdf
