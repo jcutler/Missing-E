@@ -61,7 +61,7 @@ jQuery(document).ready(function($) {
 <p class="question">How do I update 'Missing e' to the newest version?</p>
 <div class="response">
 <?php
-if ($_GET["b"] === 'chrome') {
+if (!array_key_exists("b", $_GET) || $_GET["b"] === 'chrome') {
 ?>
 <p class="singleline"><strong>Google Chrome</strong></p>
 <p>Google Chrome extensions should update automatically on a somewhat regular basis. If you would like to <em>force</em> Chrome to update 'Missing e' now, follow these instructions:</p>
@@ -69,10 +69,10 @@ if ($_GET["b"] === 'chrome') {
 <div class="example"><img src="/images/examples/chrome-update-1.png" alt="Activate Developer mode" /></div>
 <p>Then, click the <em>"Update extensions now"</em> button.</p>
 <div class="example"><img src="/images/examples/chrome-update-2.png" alt="Update extensions" /></div>
-<p>You have successfully updated 'Missing e'. Reload any Tumblr tabs you have open to take advantage of features in the new version</p>
+<p>You have successfully updated 'Missing e'. Reload any Tumblr tabs you have open to take advantage of features in the new version.</p>
 <?php
 }
-else if ($_GET["b"] === 'safari') {
+if (!array_key_exists("b", $_GET) || $_GET["b"] === 'safari') {
 ?>
 <p class="singleline"><strong>Apple Safari</strong></p>
 <p>If Safari is configured to update extensions automatically, extensions should be updated on a somewhat regular basis. If it is not configured to do so, or you wish to <em>force</em> Safari to update 'Missing e' now, follow these instructions:</p>
@@ -82,7 +82,7 @@ else if ($_GET["b"] === 'safari') {
 <div class="example"><img src="/images/examples/safari-update-2.png" alt="Update extensions" /></div>
 <?php
 }
-else if ($_GET["b"] === 'firefox') {
+if (!array_key_exists("b", $_GET) || $_GET["b"] === 'firefox') {
 ?>
 <p class="singleline"><strong>Mozilla Firefox</strong></p>
 <p>Firefox should update extensions automatically. However, the newest versions of 'Missing e' may not be immediately updated until they are reviewed by the Mozilla Add-ons site. If you wish to <em>force</em> Firefox to update to the newest version of 'Missing e' now, follow these instructions:</p>
