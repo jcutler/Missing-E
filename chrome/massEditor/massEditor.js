@@ -137,6 +137,7 @@ $.globalEval('document.getElementById("MissingE_select_btn")' +
              'if (type && type.length > 0) { type = type[0]; }' +
              'else { return; }' +
              'if (type == "text") { type = "regular"; }' +
+             'else if (type == "chat") { type = "conversation"; }' +
              'var max = 100-$$("a.brick.highlighted").size();' +
              '$$("a.brick." + type).each(function(obj,i){' +
              'if (i<max){$(obj).addClassName("highlighted");}}); ' +
