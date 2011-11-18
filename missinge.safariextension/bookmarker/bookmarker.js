@@ -179,9 +179,9 @@ function addMark(post,user,custom) {
             ans = prompt("Enter a bookmark name:",ds);
          }
          else {
-            ans = prompt("Enter a bookmark name (cannot be empty):",ds);
+            ans = prompt("Enter a bookmark name (cannot be empty):", ds);
          }
-         if (ans === null || ans === undefined) { return false; }
+         if (ans === "" || ans === null || ans === undefined) { return false; }
          ans = ans.replace(/^\s*/,'').replace(/\s*$/,'').replace(/[;,]/g,'.');
          ok = false;
       }
