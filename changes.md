@@ -78,7 +78,11 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.2.13** (unreleased)
+##**2.2.14** (11/18/2011)
+
+**_!_** Fixed some translations for Polish localization
+
+##**2.2.13** (11/17/2011)
 
 **_+_** Enable settings exporting and importing using files  
 **_+_** Add Shuffle Queue button to Dashboard Tweaks  
