@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.2.16** (not yet released)
+**_!_** Change software license to GPL v3
+
 ##**2.2.15** (11/18/2011)
 
 **_!_** Fixed JSON format error in localization file that caused 'Missing e' for Firefox not to start up
