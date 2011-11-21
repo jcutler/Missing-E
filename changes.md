@@ -78,9 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.2.16** (not yet released)
+##**2.2.16** (11/21/2011)
 **_!_** Prevent left and right arrow navigation when using tags input field for Quick Reblogging and Ask Tweaks, as well as renaming bookmarks  
 **_!_** Implement overriding of Firefox Stylish hiding of notification type icons for Reply Replies  
+**_!_** Reblog tags option in Safari set to be active by default (to match other platforms)  
 **_!_** Change software license to GPL v3
 
 ##**2.2.15** (11/18/2011)
