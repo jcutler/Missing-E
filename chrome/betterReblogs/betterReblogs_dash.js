@@ -570,7 +570,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
             sel.trigger('change');
          }
       }).keydown(function(e) {
-         if (e.which === 74 || e.which === 75) {
+         if (e.which === 74 || e.which === 75 ||
+             e.which === 37 || e.which === 39) {
             e.stopPropagation();
          }
       });

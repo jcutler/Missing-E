@@ -340,7 +340,8 @@ $('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
       inp.focusout(function(e) { handleEdit('focusout',e);})
             .keyup(function(e) { handleEdit('keyup',e); })
             .keydown(function(e) {
-               if (e.which === 74 || e.which === 75) {
+               if (e.which === 74 || e.which === 75 ||
+                   e.which === 37 || e.which === 39) {
                   e.stopPropagation();
                }
             });

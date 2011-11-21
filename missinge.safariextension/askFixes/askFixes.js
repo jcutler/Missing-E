@@ -282,7 +282,8 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
       answer.find('div:first').css('padding-top','10px')
          .addClass('MissingE_askFixes_buttons').before(adding);
       $(item).find('input.MissingE_askFixes_tags').keydown(function(e) {
-         if (e.which === 74 || e.which === 75) {
+         if (e.which === 74 || e.which === 75 ||
+             e.which === 37 || e.which === 39) {
             e.stopPropagation();
          }
       });
