@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.2.17** (not yet released)
+**_!_** Prevent reblog replies from adding multiple buttons
+
 ##**2.2.16** (11/21/2011)
 **_!_** Prevent left and right arrow navigation when using tags input field for Quick Reblogging and Ask Tweaks, as well as renaming bookmarks  
 **_!_** Implement overriding of Firefox Stylish hiding of notification type icons for Reply Replies  
