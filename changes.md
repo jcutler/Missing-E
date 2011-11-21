@@ -80,6 +80,7 @@ color:#4183c4;
 
 ##**2.2.16** (not yet released)
 **_!_** Prevent left and right arrow navigation when using tags input field for Quick Reblogging and Ask Tweaks, as well as renaming bookmarks  
+**_!_** Implement overriding of Firefox Stylish hiding of notification type icons for Reply Replies  
 **_!_** Change software license to GPL v3
 
 ##**2.2.15** (11/18/2011)
