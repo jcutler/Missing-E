@@ -132,6 +132,13 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
                trg = e.target.parentNode.parentNode;
             }
             if (trg) {
+               var askee = location.href.match(/[&\?]name=([^&]*)/);
+               if (!askee || askee.length <= 1) {
+                  return;
+               }
+               else {
+                  askee = askee[1];
+               }
                if (/MissingEaskName=/.test(trg.href)) {
                   return;
                }
@@ -147,7 +154,8 @@ if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
                else {
                   trg.href += "MissingEaskSure=0&";
                }
-               trg.href += "MissingEaskName=" + request.name;
+               trg.href += "MissingEaskName=" + askee;
+               trg.href += "&MissingEaskerName=" + request.name;
                trg.href += "&MissingEaskPost=" +
                               encodeURIComponent(request.url);
             }

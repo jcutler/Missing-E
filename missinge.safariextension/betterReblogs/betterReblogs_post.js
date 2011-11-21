@@ -127,6 +127,13 @@ function receiveAsker(response) {
             trg = e.target.parentNode.parentNode;
          }
          if (trg) {
+            var askee = location.href.match(/[&\?]name=([^&]*)/);
+            if (!askee || askee.length <= 1) {
+               return;
+            }
+            else {
+               askee = askee[1];
+            }
             if (/MissingEaskName=/.test(trg.href)) {
                return;
             }
@@ -142,7 +149,8 @@ function receiveAsker(response) {
             else {
                trg.href += "MissingEaskSure=0&";
             }
-            trg.href += "MissingEaskName=" + response.message.name;
+            trg.href += "MissingEaskName=" + askee;
+            trg.href += "&MissingEaskerName=" + response.message.name;
             trg.href += "&MissingEaskPost=" +
                            encodeURIComponent(response.message.url);
         }

@@ -107,6 +107,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
       });
 
       var askName = location.search.match(/MissingEaskName=([^&]*)/);
+      var askerName = location.search.match(/MissingEaskerName=([^&]*)/);
       var askPost = location.search.match(/MissingEaskPost=([^&]*)/);
       var askSure = location.search.match(/MissingEaskSure=([^&]*)/);
       var pt;
@@ -123,6 +124,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
             }
             location.href = location.href.replace(/MissingEaskSure=0&/,'')
                                  .replace(/\?/,"/text?");
+            return;
          }
       }
       else if (!askName || askName.length < 2 || !askPost ||
@@ -135,12 +137,16 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
             else if (tags !== '') {
                setReblogTags(tags);
             }
-            askName = $('#left_column .post_question_asker:first').text();
+            askName = document.referrer.match(/[&\?]name=([^&]*)/);
+            askerName = $('#left_column .post_question_asker:first').text();
             askPost = location.search.match(/redirect_to=([^&]*)/);
-            if (askPost && askPost.length > 1) {
-               var addSearch = "MissingEaskName=" + askName +
-                  "&MissingEaskPost=" + askPost[1];
-               location.href = location.href.replace(/\?/,"/text?" + addSearch);
+            if (askPost && askPost.length > 1 &&
+                askName && askName.length > 1) {
+               var addSearch = "&MissingEaskerName=" + askerName +
+                  "&MissingEaskPost=" + askPost[1] + "&MissingEaskName=" +
+                  askName[1];
+               location.href = location.href.replace(/\?/,"/text?") + addSearch;
+               return;
             }
          }
       }
@@ -154,7 +160,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "betterReblogs"},
                   question += " ";
                }
                if (getLocale(lang).asked[i] === "U") {
-                  question += askName[1];
+                  question += askerName[1];
                }
                else {
                   question += getLocale(lang).asked[i];
