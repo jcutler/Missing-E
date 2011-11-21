@@ -88,7 +88,8 @@ function doReplies(item) {
    if (item.tagName !== 'LI' ||
        !(node.hasClass('post')) ||
        !(node.hasClass('is_reblog')) ||
-       node.hasClass('is_mine')) {
+       node.hasClass('is_mine') ||
+       node.find('a.MissingE_experimental_reply').length > 0) {
       return;
    }
    var lang = $('html').attr('lang');
