@@ -31,7 +31,7 @@ function tags_setValue(ar) {
    localStorage.setItem('trr_ReplyTags',ar.join(","));
 }
 
-function addNoteReply(item) {
+function addNoteReply(item, overrideStyle) {
    if (item.hasClass('MissingE_reply')) {
       return true;
    }
@@ -49,7 +49,9 @@ function addNoteReply(item) {
       return true;
    }
    else {
-      item.append('<div class="notification_type_icon ' +
+      klass = (overrideStyle ? "MissingE_notification_type" :
+               "notification_type_icon") + " " + klass;
+      item.append('<div class="' +
                   klass + '_icon"></div>');
       item.css('background-image', 'none');
    }
@@ -137,7 +139,7 @@ function replyRepliesSettings(message) {
          newcode = img + newcode;
       }
 
-      st = newcode.indexOf("<div class=\"notification_type_icon");
+      st = newcode.search(/<div class="[^"]*(notification_type_icon|MissingE_notification_type)/);
       if (st >= 0) {
          en = newcode.indexOf("</div>",st)+6;
          newcode = newcode.substring(0,st) + newcode.substr(en);
@@ -420,15 +422,30 @@ function MissingE_replyReplies_doStartup(message) {
    var extensionURL = message.extensionURL;
    self.on("message", replyRepliesSettings);
    jQuery('head').append('<style type="text/css">' +
-                    '#posts .notification .notification_type_icon {' +
+                    '#posts .notification .notification_type_icon, ' +
+                    '#posts .notification .MissingE_notification_type {' +
                     'background-image:url("' + extensionURL +
                     'replyReplies/notification_icons.png' + '") !important; ' +
-                    '} #posts ol.notes .notification_type_icon { ' +
+                    '} #posts ol.notes .notification_type_icon, ' +
+                    '#posts ol.notes .MissingE_notification_type { ' +
                     ' background-image:url("' + extensionURL +
                     'replyReplies/notes_icons.png") !important; }</style>');
    jQuery('head').append('<link rel="stylesheet" type="text/css" href="' +
                     extensionURL + 'replyReplies/replyReplies.css' +
                     '" />');
+
+   var overrideStyle = false;
+   if (jQuery("#posts").length > 0) {
+      var tester = jQuery('<li class="notification">' +
+                      '<div class="notification_type_icon"></div></li>')
+                  .appendTo('#posts');
+      var testerIcon = tester.find('.notification_type_icon');
+      if (testerIcon.css('display') === "none" ||
+          testerIcon.css('visibility') === "hidden") {
+         overrideStyle = true;
+      }
+      tester.remove();
+   }
 
    document.addEventListener('MissingEajax', function(e) {
       var type = e.data.match(/^[^:]*/)[0];
@@ -440,17 +457,24 @@ function MissingE_replyReplies_doStartup(message) {
       }
       list = node.find('ol.notes li');
       list.each(function() {
-         addNoteReply(jQuery(this));
+         addNoteReply(jQuery(this), overrideStyle);
       });
+      if (overrideStyle) {
+         jQuery('#posts div.notification_type_icon').each(function() {
+            jQuery(this).removeClass('notification_type_icon')
+                        .addClass('MissingE_notification_type');
+         });
+      }
    }, false);
 
    jQuery('#posts li.is_mine ol.notes').live('mouseover', function() {
       jQuery(this).find('li:not(.MissingE_reply)').each(function() {
-         addNoteReply(jQuery(this));
+         addNoteReply(jQuery(this), overrideStyle);
       });
    });
    
-   jQuery('div.notification_type_icon').live('mousedown', function(e) {
+   jQuery('div.notification_type_icon, div.MissingE_notification_type')
+         .live('mousedown', function(e) {
       if (e.shiftKey) { e.preventDefault(); }
    }).live('click', function(e) {
       if (e.which !== 1) { return; }
@@ -467,6 +491,11 @@ function MissingE_replyReplies_doStartup(message) {
       jQuery(this).toggleClass("MissingE_rt",true);
       self.postMessage({greeting: "settings", component: "replyReplies"});
    });
+   if (overrideStyle) {
+      jQuery('#posts div.notification_type_icon').each(function() {
+         jQuery(this).removeClass('notification_type_icon').addClass('MissingE_notification_type');
+      });
+   }
 }
 
 self.on('message',MissingE_replyReplies_doStartup);
