@@ -21,6 +21,10 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+.notifaction_type_icon {
+display:block !important;
+}
+
 #posts .notification .notification_type_icon,  #posts ol.notes .notification_type_icon {
 cursor:pointer;
 display:block !important;
