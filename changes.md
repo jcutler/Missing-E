@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.2.18** (not yet released)
+**_!_** Fix Polish messages/post deletion confirm message
+
 ##**2.2.17** (11/21/2011)
 **_!_** Fix incorrect blockquote attribution when reblogging asks from permalink pages  
 **_!_** Prevent reblog replies from adding multiple buttons
