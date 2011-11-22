@@ -1208,8 +1208,8 @@ var locale = {
    "confirmReplace": {
     "operation": ["-", 1],
     "0": {
-     "wiadomości: 1. Czy na pewno chcesz je usunąć?": "wiadomości: #. Czy na pewno chcesz ją usunąć?",
-     "postów: #. Czy na pewno chcesz je usunąć?": "postów: #. Czy na pewno chcesz go usunąć?"
+     "wiadomości: 1. Czy na pewno chcesz je usunąć?": "wiadomości: 1. Czy na pewno chcesz ją usunąć?",
+     "postów: 1. Czy na pewno chcesz je usunąć?": "postów: 1. Czy na pewno chcesz go usunąć?"
     }
    }
   },
