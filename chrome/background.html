@@ -28,6 +28,7 @@
 <script type="text/javascript" src="common/storage.js"></script>
 <script type="text/javascript" src="common/localizations.js"></script>
 <script>
+var currVersion;
 var maxActiveAjax = 15;
 var activeAjax = 0;
 var activeRequests = {};
@@ -44,6 +45,48 @@ var debugMode = false;
 var tabs = {};
 var lang = 'en';
 
+var urlPatterns = {
+   "askForm":    /^ask_form\/[^\/]+$/,
+   "blog":       /^blog\/[^\/]+(\/search\/[^\/]+)?(\/\d+)?[\/]?$/,
+   "blogData":   /^blog\/[^\/]+\/((members|followers)(\/page\/\d+)?|settings)[\/]?$/,
+   "crushes":    /^(blog\/[^\/]+\/)?new\/photo[\/]?$/,
+   "dashboard":  /^dashboard(\/search\/[^\/]+)?(\/\d+){0,2}[\/]?$/,
+   "drafts":     /^blog\/[^\/]+\/drafts[\/]?.*$/,
+   "following":  /^following(\/page\/\d+)?[\/]?$/,
+   "iframe":     /^dashboard\/iframe/,
+   "likes":      /^like(s(\/.*)?|d\/by\/[^\/]+(\/.*)?)$/,
+   "massEditor": /^mega-editor\/[^\/]+[\/]?$/,
+   "messages":   /^(blog\/[^\/]+\/)?(messages|submissions|inbox)[\/]?.*$/,
+   "post":       /^((blog\/[^\/]+\/)?new\/[^\/]+|edit\/\d+|share(\/\w+))[\/]?$/,
+   "queue":      /^blog\/[^\/]+\/queue[\/]?.*$/,
+   "reblog":     /^reblog\/\d+\/\w+(\/\w+)?[\/]?$/,
+   "reply":      /^(blog\/[^\/]+\/)?new\/(text|photo)[\/]?$/,
+   "settings":   /^blog\/[^\/]+\/settings[\/]?$/,
+   "tagged":     /^tagged\/[^\/]+[\/]?.*$/
+};
+
+function isTumblrURL(fullURL, matches) {
+   if (!/^http:\/\/www\.tumblr\.com\//.test(fullURL) ||
+       !matches) {
+      return false;
+   }
+
+   var i;
+   var url = fullURL.replace(/^http:\/\/www\.tumblr\.com\//,'')
+                    .replace(/\?.*$/,'');
+   for (i=0; i<matches.length; i++) {
+      if (!urlPatterns.hasOwnProperty(matches[i])) {
+         debug("Invalid Tumblr URL pattern: '" + matches[i] + "'");
+      }
+      else {
+         if (urlPatterns[matches[i]].test(url)) {
+            return true;
+         }
+      }
+   }
+   return false;
+}
+
 function getVersion() {
    var xhr = new XMLHttpRequest();
    xhr.open('GET', chrome.extension.getURL('manifest.json'), false);
@@ -51,9 +94,6 @@ function getVersion() {
    var manifest = JSON.parse(xhr.responseText);
    return manifest.version;
 }
-
-var currVersion = getVersion();
-var prevVersion = getStorage('MissingE_version',null);
 
 function addTab(id, url) {
    var d = (new Date()).valueOf();
@@ -72,6 +112,7 @@ cacheClear = setInterval(function() {
    cache = {};
    cacheElements = 0;
 }, fiveMinutes);
+
 clearQueues = setInterval(function() {
    if (activeAjax == 0) {
       if (numSleeping !== 0) {
@@ -89,8 +130,42 @@ function debug(msg) {
    }
 }
 
-function exportOptionsXML(sendResponse) {
-   sendResponse({url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
+function versionCompare(v1, v2) {
+   if (!v1 && !v2) { return 0; }
+   else if (!v1) { return -1; }
+   else if (!v2) { return 1; }
+   else {
+      var i;
+      var ver1 = v1.split('.');
+      var ver2 = v2.split('.');
+      var len = ver1.length >= ver2.length ? ver1.length : ver2.length;
+      for (i=0; i<len; i++) {
+         if (i >= ver1.length && ver2[i] !== '0') { return -1; }
+         else if (i >= ver2.length && ver1[i] !== '0') { return 1; }
+         else {
+            ver1[i] = parseInt(ver1[i]);
+            ver2[i] = parseInt(ver2[i]);
+         }
+         if (ver1[i] > ver2[i]) { return 1; }
+         if (ver2[i] > ver1[i]) { return -1; }
+      }
+      return 0;
+   }
+}
+
+function closeTab(url, currentId) {
+   chrome.windows.getAll({populate: true},
+                         function (windows) {
+      var i,j;
+      for (i=0; i<windows.length; i++) {
+         for (j=0; j<windows[i].tabs.length; j++) {
+            if (windows[i].tabs[j].url == url &&
+                windows[i].tabs[j].id != currentId) {
+               chrome.tabs.remove(windows[i].tabs[j].id);
+            }
+         }
+      }
+   });
 }
 
 function isInternalSetting(setting) {
@@ -98,7 +173,7 @@ function isInternalSetting(setting) {
           setting === "MissingE_version" ||
           /MissingE_externalVersion/.test(setting) ||
           setting === "MissingE_compatCheck" ||
-          !/^[a-zA-Z0-9_]*$/.test(setting);
+          !/^\w*$/.test(setting);
 }
 
 function createOptionParams() {
@@ -403,7 +478,7 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
                sendResponse(failMsg);
                return;
             }
-            var m = txt.match(/([A-Za-z]+) ([0-9]+)[^,]*, ([0-9]+) ([0-9]+):([0-9]+)([aApP][mM])/);
+            var m = txt.match(/([A-Za-z]+) (\d+)[^,]*, (\d+) (\d+):(\d+)([aApP][mM])/);
             var d = new Date(m[1] + ' ' + m[2] + ', ' + m[3] + ' ' +
                              (m[6]=='pm' && m[4] !== '12' ? parseInt(m[4])+12 : m[4]) +
                              ':' + m[5] + ':00 GMT');
@@ -643,101 +718,6 @@ function doReblogAjax(type, request, sender, sendResponse, hash, retries,
    });
 }
 
-/*
-function doAjax(request, sender, sendResponse, hash, retries, type, doFunc,
-                additional) {
-   debug("AJAX " + type + " request (" + request.pid + ")");
-   startAjax(request.pid);
-   var failMsg = {success:false};
-   if (additional) {
-      for (i in additional) {
-         if (additional.hasOwnProperty(i)) {
-            failMsg[i] = additional[i];
-         }
-      }
-   }
-   $.ajax({
-      type: "GET",
-      url: "http://api.tumblr.com/v2/blog/" +
-            request.url.replace(/^https?:\/\//,'') + "/posts?api_key=" +
-            apiKey + "&id=" + request.pid,
-      dataType: "text",
-      tryCount: 0,
-      retryLimit: retries,
-      targetId: request.pid,
-      tabId: sender.tab.id,
-      tabHash: hash,
-      error: function(xhr, textStatus) {
-         if (xhr.status === 404) {
-            debug(type + " request (" + this.targetId + ") not found");
-            dequeueAjax(this.targetId);
-            sendResponse(failMsg);
-            return;
-         }
-         if (this.tabHash !== tabs[this.tabId]) {
-            debug("Stop " + type + " request: Tab closed or changed.");
-            dequeueAjax(this.targetId);
-            return;
-         }
-         if (cacheServe(type, request.pid, sendResponse, doFunc, true)) {
-            return true;
-         }
-         else {
-            this.tryCount++;
-            if (this.tryCount <= this.retryLimit) {
-               debug("Retry " + type + " request (" + this.targetId + ")");
-               $.ajax(this);
-               return;
-            }
-            else {
-               debug(type + " request (" + this.targetId + ") failed");
-               dequeueAjax(this.targetId);
-               sendResponse(failMsg);
-            }
-         }
-      },
-      success: function(data, textStatus) {
-         var closed = (this.tabHash !== tabs[this.tabId]);
-         if (!(/^\s*var\s+tumblr_api_read/.test(data)) &&
-             !(/^\s*{\s*['"]meta['"]\s*:\s*{[^}]*['"]status['"]\s*:\s*200,/
-                .test(data))) {
-            if (closed) {
-               debug("Stop " + type + " request: Tab closed or changed.");
-               dequeueAjax(this.targetId);
-               return;
-            }
-            if (cacheServe(type, request.pid, sendResponse, doFunc, true)) {
-               return true;
-            }
-            else {
-               this.tryCount++;
-               if (this.tryCount <= this.retryLimit) {
-                  debug("Retry " + type + " request (" + this.targetId + ")");
-                  $.ajax(this);
-                  return;
-               }
-               else {
-                  debug(type + " request (" + this.targetId + ") failed");
-                  dequeueAjax(this.targetId);
-                  sendResponse(failMsg);
-               }
-            }
-         }
-         else {
-            var txt = data.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-            var stamp = JSON.parse(txt);
-            var info = stamp.response.posts[0];
-            saveCache(this.targetId, info);
-            dequeueAjax(this.targetId);
-            if (!closed) {
-               doFunc(info, this.targetId, sendResponse);
-            }
-         }
-      }
-   });
-}
-*/
-
 function requestBetterReblogsAsk(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop betterReblogs request: Tab closed or changed.");
@@ -865,44 +845,6 @@ function requestMagnifier(request, sender, sendResponse, hash) {
    }
 }
 
-function versionCompare(v1, v2) {
-   if (!v1 && !v2) { return 0; }
-   else if (!v1) { return -1; }
-   else if (!v2) { return 1; }
-   else {
-      var i;
-      var ver1 = v1.split('.');
-      var ver2 = v2.split('.');
-      var len = ver1.length >= ver2.length ? ver1.length : ver2.length;
-      for (i=0; i<len; i++) {
-         if (i >= ver1.length && ver2[i] !== '0') { return -1; }
-         else if (i >= ver2.length && ver1[i] !== '0') { return 1; }
-         else {
-            ver1[i] = parseInt(ver1[i]);
-            ver2[i] = parseInt(ver2[i]);
-         }
-         if (ver1[i] > ver2[i]) { return 1; }
-         if (ver2[i] > ver1[i]) { return -1; }
-      }
-      return 0;
-   }
-}
-
-function closeTab(url, currentId) {
-   chrome.windows.getAll({populate: true},
-                         function (windows) {
-      var i,j;
-      for (i=0; i<windows.length; i++) {
-         for (j=0; j<windows[i].tabs.length; j++) {
-            if (windows[i].tabs[j].url == url &&
-                windows[i].tabs[j].id != currentId) {
-               chrome.tabs.remove(windows[i].tabs[j].id);
-            }
-         }
-      }
-   });
-}
-
 function isEDTfromUTC(dt) {
    var add;
    var start = new Date("03/01/" + dt.getUTCFullYear() + " 07:00:00 UTC");
@@ -934,35 +876,29 @@ function isEDT(year,month,date,hours) {
       return true;
    }
    else if (month === start.getUTCMonth()+1) {
-      if (date > start.getUTCDate()) {
-         return true;
-      }
-      else if (date < start.getUTCDate()) {
-         return false;
-      }
-      else {
+      if (date === start.getUTCDate()) {
          if (hours >= 2) {
             return true;
          }
          else {
             return false;
          }
+      }
+      else {
+         return date > start.getUTCDate();
       }
    }
    else if (month === end.getUTCMonth()+1) {
-      if (date < end.getUTCDate()) {
-         return true;
-      }
-      else if (date > end.getUTCDate()) {
-         return false;
-      }
-      else {
+      if (date === end.getUTCDate()) {
          if (hours >= 2) {
             return false;
          }
          else {
             return true;
          }
+      }
+      else {
+         return date < end.getUTCDate();
       }
    }
    else {
@@ -980,7 +916,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       alert(request.text);
    }
    else if (request.greeting == "exportOptions") {
-      exportOptionsXML(sendResponse);
+      sendResponse({url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
    }
    else if (request.greeting == "importOptions") {
       receiveOptions(request, sendResponse);
@@ -1049,6 +985,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          return true;
       }
       else {
+         var stamp, x;
          var sentStamp = false;
          debug("Building timestamp (" + request.pid + ")");
          var dt = {};
@@ -1062,16 +999,16 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          dt.day = today.getUTCDay();
          stamp = request.stamp.replace(/,/,'').split(" ");
          for (i=0; i<stamp.length; i++) {
-            if (/[0-9][0-9][0-9][0-9]$/.test(stamp[i])) {
+            if (/\d{4}$/.test(stamp[i])) {
                dt.year = parseInt(stamp[i]);
             }
-            else if (/[0-9][0-9]*:[0-9][0-9]$/.test(stamp[i])) {
-               var tmp = stamp[i].match(/([0-9]*):([0-9]*)/);
+            else if (/\d{1,2}:\d{2}$/.test(stamp[i])) {
+               var tmp = stamp[i].match(/(\d{1,2}):(\d{2})/);
                dt.hours = parseInt(tmp[1]);
                dt.minutes = parseInt(tmp[2].replace(/^0/,''));
             }
-            else if (/[0-9][0-9]*:[0-9][0-9](am|AM|pm|PM)/.test(stamp[i])) {
-               var tmp = stamp[i].match(/([0-9]*):([0-9]*)/);
+            else if (/\d{1,2}:\d{2}(am|pm)/i.test(stamp[i])) {
+               var tmp = stamp[i].match(/(\d{1,2}):(\d{2})/);
                if (/pm$/i.test(stamp[i])) {
                   dt.hours = parseInt(tmp[1])+12;
                   if (dt.hours === 24) { dt.hours = 12; }
@@ -1082,73 +1019,31 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                }
                dt.minutes = parseInt(tmp[2].replace(/^0/,''));
             }
-            else if (/[0-9][0-9]*\/[0-9][0-9]*\/[0-9][0-9]*/.test(stamp[i])) {
-               var tmp = stamp[i].match(/([0-9]*)\/([0-9]*)\/([0-9]*)/);
+            else if (/\d{1,2}\/\d{1,2}\/\d{4}/.test(stamp[i])) {
+               var tmp = stamp[i].match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
                dt.date = parseInt(tmp[1]);
                dt.month = parseInt(tmp[2]);
                dt.year = parseInt(tmp[3]);
             }
-            else if (/[0-9][0-9]*(st|nd|rd|th)$/.test(stamp[i])) {
-               var tmp = stamp[i].match(/([0-9]*)/);
+            else if (/\d{1,2}(st|nd|rd|th)$/.test(stamp[i])) {
+               var tmp = stamp[i].match(/(\d{1,2})/);
                dt.date = parseInt(tmp[1]);
             }
             else if (/^[A-Za-z]+$/.test(stamp[i])) {
-               if (/^jan(uary)?$/i.test(stamp[i])) {
-                  dt.month = 1;
+               var found = false;
+               for (x=0; !found && x<locale.en.monthsLong.length; x++) {
+                  if ((new RegExp(locale.en.monthsLong[x],"i")).test(stamp[i]) ||
+                      (new RegExp(locale.en.monthsShort[x],"i")).test(stamp[i])) {
+                     dt.month = x+1;
+                     found = true;
+                  }
                }
-               else if (/^feb(ruary)?$/i.test(stamp[i])) {
-                  dt.month = 2;
-               }
-               else if (/^mar(ch)?$/i.test(stamp[i])) {
-                  dt.month = 3;
-               }
-               else if (/^apr(il)?$/i.test(stamp[i])) {
-                  dt.month = 4;
-               }
-               else if (/^may$/i.test(stamp[i])) {
-                  dt.month = 5;
-               }
-               else if (/^jun(e)?$/i.test(stamp[i])) {
-                  dt.month = 6;
-               }
-               else if (/^jul(y)?$/i.test(stamp[i])) {
-                  dt.month = 7;
-               }
-               else if (/^aug(ust)?$/i.test(stamp[i])) {
-                  dt.month = 8;
-               }
-               else if (/^sep(t|tember)?$/i.test(stamp[i])) {
-                  dt.month = 9;
-               }
-               else if (/^oct(ober)?$/i.test(stamp[i])) {
-                  dt.month = 10;
-               }
-               else if (/^nov(ember)?$/i.test(stamp[i])) {
-                  dt.month = 11;
-               }
-               else if (/^dec(ember)?$/i.test(stamp[i])) {
-                  dt.month = 12;
-               }
-               else if (/^sun(day)?$/i.test(stamp[i])) {
-                  dt.date = -dt.day; 
-               }
-               else if (/^mon(day)?$/i.test(stamp[i])) {
-                  dt.date = (1-dt.day-7)%7;
-               }
-               else if (/^tue(s|sday)?$/i.test(stamp[i])) {
-                  dt.date = (2-dt.day-7)%7;
-               }
-               else if (/^wed(nesday)?$/i.test(stamp[i])) {
-                  dt.date = (3-dt.day-7)%7;
-               }
-               else if (/^thu(r|rs|rsday)?$/i.test(stamp[i])) {
-                  dt.date = (4-dt.day-7)%7;
-               }
-               else if (/^fri(day)?$/i.test(stamp[i])) {
-                  dt.date = (5-dt.day-7)%7;
-               }
-               else if (/^sat(urday)?$/i.test(stamp[i])) {
-                  dt.date = (6-dt.day-7)%7;
+               for (x=0; !found && x<locale.en.daysLong.length; x++) {
+                  if ((new RegExp(locale.en.daysLong[x],"i")).test(stamp[i]) ||
+                      (new RegExp(locale.en.daysShort[x], "i")).test(stamp[i])) {
+                     dt.date = (x - dt.day - 7) % 7;
+                     found = true;
+                  }
                }
             }
          }
@@ -1337,7 +1232,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "start") {
       addTab(sender.tab.id, sender.tab.url);
-      if (!(/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.url))) {
+      if (!isTumblrURL(request.url, ["askForm"])) {
          chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery.min.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "common/ajaxEvents.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
@@ -1350,7 +1245,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var loadedUI = false;
       var widenIframe = false;
       if (sender.tab.url == request.url &&
-          /http:\/\/www\.tumblr\.com\/mega-editor\//.test(sender.tab.url)) {
+          isTumblrURL(sender.tab.url, ["massEditor"])) {
          if (getStorage("MissingE_massEditor_enabled",1) == 1) {
             activeScripts.massEditor = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "massEditor/massEditor.css"});
@@ -1360,20 +1255,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.massEditor = false;
       }
       if (sender.tab.url == request.url &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
-           (/http:\/\/www\.tumblr\.com\/blog/.test(sender.tab.url) &&
-            !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//
-              .test(sender.tab.url)) &&
-            !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/processing/
-              .test(sender.tab.url))) ||
-           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url))) {
+          isTumblrURL(sender.tab.url,
+                      ["dashboard",
+                       "blog",
+                       "blogData",
+                       "drafts",
+                       "queue",
+                       "messages",
+                       "likes",
+                       "tagged"])) {
          if (getStorage("MissingE_safeDash_enabled",1) == 1) {
             activeScripts.safeDash = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "safeDash/safeDash.css"});
@@ -1381,20 +1271,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.safeDash = false;
-      }
-      if (sender.tab.url == request.url &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/drafts/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/queue/.test(sender.tab.url) ||
-           (/http:\/\/www\.tumblr\.com\/blog/.test(sender.tab.url) &&
-            !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//
-              .test(sender.tab.url))) ||
-           /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url))) {
+
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
             activeScripts.dashLinksToTabs = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "dashLinksToTabs/dashLinksToTabs.js"});
@@ -1461,7 +1338,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                 getStorage("MissingE_dashboardFixes_randomQueue",0) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/draftQueueTools.css"});
             if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1 &&
-                !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/settings/.test(sender.tab.url)))
+                !isTumblrURL(sender.tab.url, ["settings"]))
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});
          }
          else
@@ -1480,7 +1357,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.askFixes = false;
          }
       }
-      if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(request.url)) {
+      if (isTumblrURL(request.url, ["askForm"])) {
          if (getStorage("MissingE_askFixes_enabled",1) == 1 &&
              getStorage("MissingE_askFixes_scroll",1) == 1) {
             activeScripts.askFixes = true;
@@ -1489,27 +1366,16 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.askFixes = false;
 
-         if (/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/submissions/
-                  .test(sender.tab.url) ||
-             /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/messages/
-                  .test(sender.tab.url) ||
-             /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
-             /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url)) {
+         if (isTumblrURL(sender.tab.url, ["messages"])) {
             chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askboxDomain.js", allFrames: true});
          }
       }
       if (sender.tab.url == request.url &&
-          ((/http:\/\/www\.tumblr\.com\/new\//.test(sender.tab.url) ||
-            /http:\/\/www\.tumblr\.com\/blog\/[0-9A-Za-z\-\_]+\/new\//.test(sender.tab.url) ||
-            /http:\/\/www\.tumblr\.com\/reblog\//.test(sender.tab.url) ||
-            /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(sender.tab.url)) ||
-         (/http:\/\/www\.tumblr\.com\/messages/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/inbox/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/messages/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/submissions/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/submissions/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/drafts/.test(sender.tab.url)) ||
-         (/http:\/\/www\.tumblr\.com\/share/.test(sender.tab.url)))) {
+          isTumblrURL(sender.tab.url,
+                      ["post",
+                       "reblog",
+                       "messages",
+                       "drafts"])) {
          if (getStorage("MissingE_postingFixes_enabled",1) == 1) {
             activeScripts.postingFixes = true;
             if (!loadedUI) {
@@ -1523,7 +1389,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.postingFixes = false;
       }
       if (sender.tab.url == request.url &&
-          /http:\/\/www\.tumblr\.com\/reblog\//.test(sender.tab.url)) {
+          isTumblrURL(sender.tab.url, ["reblog"])) {
          if (getStorage("MissingE_betterReblogs_enabled",1) == 1) {
             activeScripts.betterReblogs = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "betterReblogs/betterReblogs_fill.js"});
@@ -1531,10 +1397,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.betterReblogs = false;
       }
-      if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(request.url) &&
-          !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(sender.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/new\//.test(sender.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/new\//.test(sender.tab.url))) {
+      if (isTumblrURL(request.url, ["iframe"]) &&
+          !isTumblrURL(sender.tab.url,
+                       ["post",
+                        "reblog"])) {
          chrome.tabs.insertCSS(sender.tab.id, {file: "common/endlessPages.css", allFrames:true});
          if (getStorage("MissingE_gotoDashPost_enabled",1) == 1) {
             activeScripts.gotoDashPost = true;
@@ -1572,8 +1438,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.postingFixes = false;
       }
       if (sender.tab.url == request.url &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/blog/.test(sender.tab.url))) {
+          isTumblrURL(sender.tab.url,
+                      ["dashboard",
+                       "blog"])) {
          if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
             chrome.tabs.insertCSS(sender.tab.id, {code: "#posts .notification .notification_type_icon { background-image:url('" + chrome.extension.getURL('replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + chrome.extension.getURL('replyReplies/notes_icons.png') + "') !important; }"});
@@ -1584,7 +1451,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.replyReplies = false;
       }
       if (sender.tab.url == request.url &&
-          /http:\/\/www\.tumblr\.com\/(blog\/[^\/]*\/)?new\/(text|photo)/.test(sender.tab.url)) {
+          isTumblrURL(sender.tab.url, ["reply"])) {
          if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "replyReplies/replyReplies_fill.js"});
@@ -1593,7 +1460,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.replyReplies = false;
       }
       if (sender.tab.url == request.url &&
-          /http:\/\/www\.tumblr\.com\/following/.test(sender.tab.url)) {
+          isTumblrURL(sender.tab.url, ["following"])) {
          if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
             activeScripts.postCrushes = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "postCrushes/postCrushes.js"});
@@ -1613,7 +1480,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.magnifier = false;
       }
       if (sender.tab.url == request.url &&
-          /http:\/\/www\.tumblr\.com\/new\/photo/.test(sender.tab.url)) {
+          isTumblrURL(sender.tab.url, ["crushes"])) {
          if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
             activeScripts.postCrushes = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "postCrushes/postCrushes_fill.js"});
@@ -1622,8 +1489,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.postCrushes = false;
       }
       if (sender.tab.url == request.url &&
-          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(sender.tab.url) ||
-           /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(submissions|messages)/.test(sender.tab.url))) {
+          isTumblrURL(sender.tab.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged",
+                       "messages"])) {
          if (getStorage("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "timestamps/timestamps.js"});
@@ -1632,20 +1503,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.timestamps = false;
       }
       if (sender.tab.url == request.url &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/blog/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(sender.tab.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(sender.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(sender.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//.test(sender.tab.url))) {
-         if (getStorage("MissingE_timestamps_enabled",1) == 1) {
-            activeScripts.timestamps = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "timestamps/timestamps.js"});
-         }
-         else
-            activeScripts.timestamps = false;
-
+          isTumblrURL(sender.tab.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged"])) {
          if (getStorage("MissingE_betterReblogs_enabled",1) == 1) {
             activeScripts.betterReblogs = true;
             if (getStorage("MissingE_betterReblogs_quickReblog",0) == 1) {
@@ -1738,6 +1600,8 @@ function getExternalVersion() {
    });
 }
 
+currVersion = getVersion();
+
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
       console.log("Updated Missing e (" +
@@ -1753,7 +1617,7 @@ function onStart(currVersion, prevVersion) {
    setStorage('MissingE_version',currVersion);
 }
 
-onStart(currVersion, prevVersion);
+onStart(currVersion, getStorage('MissingE_version',null));
 getExternalVersion();
 
 moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
