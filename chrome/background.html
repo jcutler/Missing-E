@@ -270,6 +270,9 @@ function runItem(call) {
    else if (call.type === "timestamp") {
       requestTimestamp(call.request, call.sender, call.sendResponse, call.hash);
    }
+   else if (call.type === "tags") {
+      requestTags(call.request, call.sender, call.sendResponse, call.hash);
+   }
 }
 
 function wakeById(id) {
