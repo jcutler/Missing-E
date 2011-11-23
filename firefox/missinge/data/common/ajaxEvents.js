@@ -91,7 +91,7 @@ if (location.host === 'www.tumblr.com') {
 
 document.addEventListener('MissingEajaxInsert', function(e) {
    var type = e.data.match(/^[^:]*/)[0];
-   var list = e.data.match(/(post_\\d+)/g);
+   var list = e.data.match(/(post_\d+)/g);
    checkAjaxReady({"type":type,"list":list}, 0);
 }, false);
 
