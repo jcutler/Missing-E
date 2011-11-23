@@ -1,1 +1,7 @@
 Caching for edit button permission check!!
+
+Commonify code:
+https://addons.mozilla.org/en-US/developers/docs/sdk/1.2/dev-guide/addon-development/module-search.html
+https://addons.mozilla.org/en-US/developers/docs/sdk/1.2/dev-guide/addon-development/implementing-reusable-module.html
+- Need new build scripts
+- Need readme for linking

@@ -1582,7 +1582,8 @@ function handleMessage(message, myWorker) {
       var zindexFix = false;
       var needUI = false, needUIresizable = false, needUIsortable = false,
           needUIdraggable = false;
-      var injectScripts = [data.url("common/storage.js"),
+      var injectScripts = [data.url("extension.js"),
+                           data.url("common/storage.js"),
                            data.url("common/utils.js"),
                            data.url("common/localizations.js")];
       activeScripts.extensionURL = data.url("");
@@ -1806,7 +1807,7 @@ function handleMessage(message, myWorker) {
           (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(message.url) ||
            /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(submissions|messages)/.test(message.url))) {
          if (getStorage("extensions.MissingE.timestamps.enabled",1) == 1) {
-            injectScripts.push(data.url("timestamps/timestamps.js"));
+            injectScripts.push(data.url("core/timestamps/timestamps.js"));
             activeScripts.timestamps = true;
          }
          else
@@ -1821,7 +1822,7 @@ function handleMessage(message, myWorker) {
           !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url)) &&
           !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//.test(message.url))) {
          if (getStorage("extensions.MissingE.timestamps.enabled",1) == 1) {
-            injectScripts.push(data.url("timestamps/timestamps.js"));
+            injectScripts.push(data.url("core/timestamps/timestamps.js"));
             activeScripts.timestamps = true;
          }
          else

@@ -23,6 +23,48 @@
 
 /*global locale */
 
+var urlPatterns = {
+   "askForm":    /^ask_form\/[^\/]+$/,
+   "blog":       /^blog\/[^\/]+(\/search\/[^\/]+)?(\/\d+)?[\/]?$/,
+   "blogData":   /^blog\/[^\/]+\/((members|followers)(\/page\/\d+)?|settings)[\/]?$/,
+   "crushes":    /^(blog\/[^\/]+\/)?new\/photo[\/]?$/,
+   "dashboard":  /^dashboard(\/search\/[^\/]+)?(\/\d+){0,2}[\/]?$/,
+   "drafts":     /^blog\/[^\/]+\/drafts[\/]?.*$/,
+   "following":  /^following(\/page\/\d+)?[\/]?$/,
+   "iframe":     /^dashboard\/iframe/,
+   "likes":      /^like(s(\/.*)?|d\/by\/[^\/]+(\/.*)?)$/,
+   "massEditor": /^mega-editor\/[^\/]+[\/]?$/,
+   "messages":   /^(blog\/[^\/]+\/)?(messages|submissions|inbox)[\/]?.*$/,
+   "post":       /^((blog\/[^\/]+\/)?new\/[^\/]+|edit\/\d+|share(\/\w+))[\/]?$/,
+   "queue":      /^blog\/[^\/]+\/queue[\/]?.*$/,
+   "reblog":     /^reblog\/\d+\/\w+(\/\w+)?[\/]?$/,
+   "reply":      /^(blog\/[^\/]+\/)?new\/(text|photo)[\/]?$/,
+   "settings":   /^blog\/[^\/]+\/settings[\/]?$/,
+   "tagged":     /^tagged\/[^\/]+[\/]?.*$/
+};
+
+function isTumblrURL(fullURL, matches) {
+   if (!/^http:\/\/www\.tumblr\.com\//.test(fullURL) ||
+       !matches) {
+      return false;
+   }
+
+   var i;
+   var url = fullURL.replace(/^http:\/\/www\.tumblr\.com\//,'')
+                    .replace(/\?.*$/,'');
+   for (i=0; i<matches.length; i++) {
+      if (!urlPatterns.hasOwnProperty(matches[i])) {
+         debug("Invalid Tumblr URL pattern: '" + matches[i] + "'");
+      }
+      else {
+         if (urlPatterns[matches[i]].test(url)) {
+            return true;
+         }
+      }
+   }
+   return false;
+}
+
 function zeroPad(num, len) {
    var ret = "";
    ret += num;

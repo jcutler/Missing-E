@@ -46,6 +46,7 @@
 		<dict>
 			<key>End</key>
 			<array>
+				<string>extension.js</string>
 				<string>common/whoami.js</string>
 				<string>common/addmenu.js</string>
 				<string>common/jquery.min.js</string>
@@ -74,7 +75,7 @@
 				<string>replyReplies/replyReplies.js</string>
 				<string>replyReplies/replyReplies_fill.js</string>
 				<string>safeDash/safeDash.js</string>
-				<string>timestamps/timestamps.js</string>
+				<string>core/timestamps/timestamps.js</string>
 				<string>massEditor/massEditor.js</string>
 				<string>postingFixes/subEdit.js</string>
 				<string>common/zindexFix.js</string>

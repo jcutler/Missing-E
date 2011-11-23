@@ -189,7 +189,8 @@ function doStartup(response) {
          MissingE_safeDash_doStartup();
       }
       if (response.message.timestamps) {
-         MissingE_timestamps_doStartup();
+         //MissingE_timestamps_doStartup();
+         MissingE.timestamps.init();
       }
       if (response.message.magnifier) {
          safari.self.tab.dispatchMessage("settings",
