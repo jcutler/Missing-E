@@ -41,7 +41,7 @@ function deletePosts(key, lang) {
       return true;
    }).each(function(i) {
       if (i >= 100) { return false; }
-      posts.push(this.id.match(/[0-9]+$/)[0]);
+      posts.push(this.id.match(/\d+$/)[0]);
    });
    $.ajax({
       type: "POST",
@@ -93,14 +93,14 @@ function doReplies(item) {
       return;
    }
    var lang = $('html').attr('lang');
-   var id = node.attr('id').match(/[0-9]*$/)[0];
+   var id = node.attr('id').match(/\d*$/)[0];
    var notes = $('#show_notes_link_' + id);
    if (notes.length === 0) {
       return false;
    }
    var key = notes.attr('onclick')
                   .toString()
-                  .match(/display_post_notes\([0-9]+, '([0-9A-Za-z]+)'/);
+                  .match(/display_post_notes\(\d+,\s*'(\w+)'/);
    if (!key) {
       return false;
    }
@@ -673,7 +673,7 @@ chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
          if (btn.hasClass('randomize')) {
             var arr = [];
             $('#posts li.queued').each(function() {
-               arr.push(this.id.match(/[0-9]*$/)[0]);
+               arr.push(this.id.match(/\d*$/)[0]);
             });
             arr.shuffle();
             $('head').append('<script type="text/javascript">' +

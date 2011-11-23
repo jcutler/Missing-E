@@ -89,8 +89,8 @@ function escapeHTML(str) {
 
 function unescapeHTML(str) {
    var ret = str;
-   while (/&#[0-9]*;/.test(ret)) {
-      var entity = ret.match(/&#([0-9]+);/);
+   while (/&#\d+;/.test(ret)) {
+      var entity = ret.match(/&#(\d+);/);
       var symbol = String.fromCharCode(entity[1]);
       ret = ret.replace(entity[0], symbol);
    }

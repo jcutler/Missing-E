@@ -36,11 +36,10 @@ function loadTimestamp(item) {
    if (item.tagName === "LI" && $(item).hasClass("post") &&
        $(item).attr("id") !== "new_post" &&
        $(item).find('.private_label').length === 0) {
-      var tid = $(item).attr("id").match(/[0-9]*$/)[0];
+      var tid = $(item).attr("id").match(/\d*$/)[0];
       var perm = $(item).find("a.permalink:first");
       var addr, type, stamp;
-      if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
-          /^\/blog\/[^\/]*\/(messages|submissions)/
+      if (/^\/(blog\/[^\/]*\/)?(inbox|messages|submissions)/
             .test(location.pathname)) {
          type = 'ask';
          addr = 'http://www.tumblr.com/edit/';
@@ -90,8 +89,7 @@ function loadTimestamp(item) {
                            response.pid + '">' + response.pid + '</a>)';
             }
             var failHTML = 'Timestamp loading failed.';
-            if (/^\/(inbox|messages|submissions)/.test(location.pathname) ||
-                /^\/blog\/[^\/]*\/(messages|submissions)/
+            if (/^\/(blog\/[^\/]*\/)?(inbox|messages|submissions)/
                   .test(location.pathname)) {
                failHTML += ' <a class="MissingE_timestamp_retry" href="#" ' +
                            'onclick="return false;">Retry</a>';

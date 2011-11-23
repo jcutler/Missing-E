@@ -57,7 +57,7 @@ function addAskUploader(obj) {
             .length === 0) {
          return;
       }
-      var aid = obj.id.match(/[0-9]+$/)[0];
+      var aid = obj.id.match(/\d+$/)[0];
       var it = document.getElementById('ask_answer_form_container_' + aid);
       $(it).css('padding-top','0')
          .prepend('<div style="min-height:15px;">' +
@@ -151,7 +151,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                .test($(this).text())) {
             return;
          }
-         var id = $(this).closest('li.post').attr('id').match(/[0-9]+$/)[0];
+         var id = $(this).closest('li.post').attr('id').match(/\d+$/)[0];
          var key = $('#form_key').val();
          $.ajax({
             type: "POST",
@@ -163,8 +163,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
       });
       $('#posts div.MissingE_postMenu button').live('mouseup', function() {
          var tagstr, taglist;
-         if (/ask_queue_button_also_[0-9]+$/.test(this.id)) {
-            var id = this.id.match(/[0-9]+$/)[0];
+         if (/ask_queue_button_also_\d+$/.test(this.id)) {
+            var id = this.id.match(/\d+$/)[0];
             var tags = $('#ask_answer_form_' + id +
                          ' input.MissingE_askFixes_tags');
             if (tags.length === 0) {

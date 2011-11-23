@@ -140,7 +140,7 @@ function doHide(item, retry) {
          });
       }
       else if (node.hasClass('post') && node.attr('id') !== 'new_post') {
-         var pid = node.attr('id').match(/[0-9]*$/)[0];
+         var pid = node.attr('id').match(/\d*$/)[0];
          var vid = node.find('#video_player_' + pid);
          if (vid.length > 0 && vid.find('embed').length === 0) {
             if (retry < 4) {
@@ -158,7 +158,7 @@ function doHide(item, retry) {
                me.addClass('nsfwdone');
                return;
             }
-            if (/^audio_node_[0-9]*$/.test(me.prev().attr('id')) ||
+            if (/^audio_node_\d*$/.test(me.prev().attr('id')) ||
                 me.parents('.so_ie_doesnt_treat_this_as_inline').size()>0) {
                me.css('opacity','1').addClass('nsfwdone');
                return;

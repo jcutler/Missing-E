@@ -105,7 +105,7 @@ function insertMagnifier(item) {
       var heart = ctrl.find('a.like_button');
       var count = 1;
       var caps;
-      var tid = $(item).attr("id").match(/[0-9]*$/)[0];
+      var tid = $(item).attr("id").match(/\d*$/)[0];
       var str, img;
       var set = $('#photoset_' + tid);
 

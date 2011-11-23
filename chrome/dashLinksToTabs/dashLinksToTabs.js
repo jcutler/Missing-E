@@ -37,11 +37,11 @@ function dashLinksToTabs_click(e, dashLinksToTabs_settings) {
    }
    if ($(node).closest('#dashboard_controls').length > 0) { return false; }
    if ($(node).parent().hasClass('post_controls')) {
-      if (/^\/reblog\/[0-9]+\//.test($(node).attr('href')) &&
+      if (/^\/reblog\/\d+\//.test($(node).attr('href')) &&
           dashLinksToTabs_settings.reblogLinks !== 1) {
          return false;
       }
-      if (/^\/edit\/[0-9]+/.test($(node).attr('href')) &&
+      if (/^\/edit\/\d+/.test($(node).attr('href')) &&
           dashLinksToTabs_settings.editLinks !== 1) {
          return false;
       }

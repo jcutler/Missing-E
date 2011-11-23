@@ -150,7 +150,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
 
          if (addTags === 1) {
             en = newcode.indexOf("</a>");
-            nm = newcode.substr(0,en).match(/[a-zA-Z0-9\-\_]*$/g)[0];
+            nm = newcode.substr(0,en).match(/[\w\-]*$/g)[0];
             add = true;
             for (n = 0; n < tags.length; n++) {
                if (tags[n] === nm) {
@@ -265,7 +265,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                user = user.replace(/^&nbsp;/,'').replace(/<span [^>]*>/,'');
             }
             else {
-               user = newcode.match(/<a href[^>]*>[a-zA-Z0-9\-_]*<\/a>/)[0];
+               user = newcode.match(/<a href[^>]*>[\w\-]*<\/a>/)[0];
             }
             z = newcode.indexOf('</span>',a) + 7;
             a = newcode.indexOf('<blockquote');

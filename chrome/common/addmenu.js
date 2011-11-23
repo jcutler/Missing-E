@@ -60,7 +60,7 @@ if (bar && logout) {
    bar.insertBefore(tab, logout);
 }
 
-if (/http:\/\/www\.tumblr\.com\/dashboard\/[0-9]/.test(location.href)) {
+if (/http:\/\/www\.tumblr\.com\/dashboard\/\d+/.test(location.href)) {
    var lcol = document.getElementById('left_column');
    var rcol = document.getElementById('right_column');
    if (lcol && !rcol) {

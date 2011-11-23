@@ -38,7 +38,7 @@ function addReblog(item) {
                   .length === 0)) {
          return true;
       }
-      var tid = $(item).attr("id").match(/[0-9]*$/)[0];
+      var tid = $(item).attr("id").match(/\d*$/)[0];
       var perm = $(item).find("a.permalink:first");
       if (perm.length === 0) {
          return;

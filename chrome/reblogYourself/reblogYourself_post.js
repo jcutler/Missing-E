@@ -55,9 +55,9 @@ if (noReblog) {
    loc = loc.replace(/%3A/gi,":")
             .replace(/%2F/gi,"/");
    url = "/reblog/";
-   if (/&pid=([0-9]*)/.test(loc)) {
-      url += loc.match(/&pid=([0-9]*)/)[1] + "/";
-      url += loc.match(/&rk=([a-zA-Z0-9]*)/)[1];
+   if (/&pid=(\d*)/.test(loc)) {
+      url += loc.match(/&pid=(\d*)/)[1] + "/";
+      url += loc.match(/&rk=(\w*)/)[1];
       url += '?redirect_to=' + redir;
 
       var link = document.createElement('a');

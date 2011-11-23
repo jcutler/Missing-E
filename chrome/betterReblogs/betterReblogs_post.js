@@ -64,7 +64,7 @@ function addTags(link) {
       loc = loc.replace(/%3A/gi,":")
                .replace(/%2F/gi,"/");
       host = loc.match(/http:\/\/[^\/]*/)[0];
-      pid = loc.match(/&pid=([0-9]*)/)[1];
+      pid = loc.match(/&pid=(\d*)/)[1];
       chrome.extension.sendRequest({greeting: "tags", pid: pid, url: host},
                                    function(response) {
          if (response.success) {
@@ -178,7 +178,7 @@ else if (window.top === window) {
    var i;
    for (i=0; i<myasker.length; i++) {
       if (myasker[i].tagName === "A") {
-         if (!(/[^a-zA-Z0-9\-]/.test(myasker[i].innerHTML))) {
+         if (!(/[^\w\-]/.test(myasker[i].innerHTML))) {
             uname = myasker[i].innerHTML;
             break;
          }
@@ -187,7 +187,7 @@ else if (window.top === window) {
    if (uname === "") {
       isSure = false;
       myasker = document.body.innerHTML
-                     .match(/<a href="[^"]*">([a-zA-Z0-9\-]+)<\/a>\s*asked\:/);
+                     .match(/<a href="[^"]*">([\w\-]+)<\/a>\s*asked\:/);
       if (myasker && myasker.length > 1) {
          uname = myasker[1];
       }
