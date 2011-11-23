@@ -46,36 +46,36 @@ if (location.host === 'www.tumblr.com') {
          onComplete: function(request) { \
             if (request.transport.status === 200) { \
                var type, newPosts; \
-               if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/((dashboard\\/(([0-9]+\\/[0-9]+)|(search\\/[^\\/+[0-9]+)))|(blog\\/[^\\/]+\\/(([0-9]+)|(search\\/[^\\/]*\\/[0-9]+))))/.test(request.url)) { \
+               if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/((dashboard\\/((\\d+\\/\\d+)|(search\\/[^\\/]+\\/\\d+)))|(blog\\/[^\\/]+\\/((\\d+)|(search\\/[^\\/]*\\/\\d+))))/.test(request.url)) { \
                   type = "posts"; \
                } \
-               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/((inbox\\/after\\/[0-9]+)|((blog\\/[^\\/]+\\/)?messages\\/page\\/[0-9]+))/.test(request.url)) { \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/((inbox\\/after\\/\\d+)|((blog\\/[^\\/]+\\/)?messages\\/page\\/\\d+))/.test(request.url)) { \
                   type = "messages"; \
                } \
-               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/(blog\\/[^\\/]+\\/)?drafts\\/after\\/[0-9]+/.test(request.url)) { \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/(blog\\/[^\\/]+\\/)?drafts\\/after\\/\\d+/.test(request.url)) { \
                   type = "drafts"; \
                } \
-               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/(blog\\/[^\\/]+\\/)?queue\\?page=[0-9]+/.test(request.url)) { \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/(blog\\/[^\\/]+\\/)?queue\\?page=\\d+/.test(request.url)) { \
                   type = "queue"; \
                } \
-               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/tagged\\/[^\\?]+\\?before=[0-9]*/.test(request.url)) { \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/tagged\\/[^\\?]+\\?before=\\d*/.test(request.url)) { \
                   type = "tagged"; \
                } \
-               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/mega-editor\\/[^\\/]+\\?before_time=[0-9]*/.test(request.url)) { \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/mega-editor\\/[^\\/]+\\?before_time=\\d*/.test(request.url)) { \
                   type = "mass-editor"; \
                } \
-               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/dashboard\\/notes\\/[0-9]+\\//.test(request.url)) { \
+               else if (/^(http:\\/\\/www\\.tumblr\\.com)?\\/dashboard\\/notes\\/\\d+\\//.test(request.url)) { \
                   type = "notes"; \
-                  newPosts = ["post_" + request.url.match(/notes\\/([0-9]+)/)[1]]; \
+                  newPosts = ["post_" + request.url.match(/notes\\/(\\d+)/)[1]]; \
                } \
                if (type === "mass-editor") { \
-                  newPosts = request.transport.responseText.match(/<a id="(post_[0-9]+)/g); \
+                  newPosts = request.transport.responseText.match(/<a id="(post_\\d+)/g); \
                   for (i=0; i<newPosts.length; i++) { \
                      newPosts[i] = newPosts[i].replace(/<a id="/,""); \
                   } \
                } \
                if (type !== "notes") { \
-                  newPosts = request.transport.responseText.match(/<li id="(post_[0-9]+)/g); \
+                  newPosts = request.transport.responseText.match(/<li id="(post_\\d+)/g); \
                   for (i=0; i<newPosts.length; i++) { \
                      newPosts[i] = newPosts[i].replace(/<li id="/,""); \
                   } \
@@ -91,13 +91,13 @@ if (location.host === 'www.tumblr.com') {
 
 document.addEventListener('MissingEajaxInsert', function(e) {
    var type = e.data.match(/^[^:]*/)[0];
-   var list = e.data.match(/(post_[0-9]+)/g);
+   var list = e.data.match(/(post_\\d+)/g);
    checkAjaxReady({"type":type,"list":list}, 0);
 }, false);
 
 //jQuery(document).bind('MissingEajax', function(e) {
 //   var type = e.originalEvent.data.match(/^[^:]*/)[0];
-//   var list = e.originalEvent.data.match(/(post_[0-9]+)/g);
+//   var list = e.originalEvent.data.match(/(post_\d+)/g);
 //   console.log(type);
 //   console.log(list);
 //});
