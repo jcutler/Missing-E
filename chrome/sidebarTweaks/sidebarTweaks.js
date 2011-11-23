@@ -111,6 +111,9 @@ function makeSidebar(tumblrAcctNum, retries) {
       else if ($('#search_form').length > 0) {
          sidebar = $(sidebartxt).insertBefore('#search_form');
       }
+      else {
+         sidebar = $(sidebartxt).prependTo('#right_column');
+      }
       if (sidebar) {
          $.ajax({
             type: "GET",
