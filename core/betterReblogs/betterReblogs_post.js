@@ -228,8 +228,7 @@ MissingE.packages.betterReblogsPost = {
    init: function() {
       if (window.top !== window &&
           /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
-         if (extension.isFirefox &&
-             !extension.hasBaseURL()) {
+         if (extension.isFirefox) {
             extension.sendRequest("settings",
                                   {component: "betterReblogs",
                                    subcomponent: "post"},
