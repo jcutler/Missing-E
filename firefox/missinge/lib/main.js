@@ -1946,7 +1946,7 @@ pageMod.PageMod({
                        data.url("common/localizations.js"),
                        data.url("common/utils.js"),
                        data.url("core/betterReblogs/betterReblogs_post.js"),
-                       data.url("gotoDashPost/gotoDashPost.js"),
+                       data.url("core/gotoDashPost/gotoDashPost.js"),
                        data.url("reblogYourself/reblogYourself_post.js"),
                        data.url("postingFixes/subEdit.js")],
    onAttach: function (worker) {

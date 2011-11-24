@@ -201,7 +201,7 @@ function doStartup(response) {
          MissingE_askFixes_domain_doStartup();
       }
       if (response.message.gotoDashPost) {
-         MissingE_gotoDashPost_doStartup();
+         MissingE.packages.gotoDashPost.init();
       }
       if (response.message.reblogYourself) {
          MissingE_reblogYourself_post_doStartup();

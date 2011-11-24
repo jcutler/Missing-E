@@ -1367,7 +1367,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_gotoDashPost_enabled",1) == 1) {
             activeScripts.gotoDashPost = true;
             widenIframe = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "gotoDashPost/gotoDashPost.js", allFrames: true});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/gotoDashPost/gotoDashPost.js", allFrames: true});
          }
          else
             activeScripts.gotoDashPost = false;
