@@ -135,8 +135,7 @@ function doStartup(response) {
                                          {component: "bookmarker"});
       }
       if (response.message.dashLinksToTabs) {
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "dashLinksToTabs"});
+         MissingE.packages.dashLinksToTabs.init();
       }
       if (response.message.postCrushes) {
          if (response.message.postCrushes_fill) {
@@ -236,12 +235,6 @@ function settings_startup(response) {
                                   response.message.betterAnswers,
                                   response.message.askDash,
                                   response.message.massDelete);
-   }
-   else if (response.message.component === "dashLinksToTabs") {
-      MissingE_dashLinksToTabs_doStartup(response.message.newPostTabs,
-                                         response.message.sidebar,
-                                         response.message.reblogLinks,
-                                         response.message.editLinks);
    }
    else if (response.message.component === "sidebarTweaks") {
       MissingE_sidebarTweaks_doStartup(response.message.retries,

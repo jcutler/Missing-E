@@ -1236,7 +1236,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getStorage("MissingE_dashLinksToTabs_enabled",1) == 1) {
             activeScripts.dashLinksToTabs = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "dashLinksToTabs/dashLinksToTabs.js"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/dashLinksToTabs/dashLinksToTabs.js"});
          }
          else
             activeScripts.dashLinksToTabs = false;

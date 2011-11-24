@@ -30,6 +30,7 @@ var urlPatterns = {
    "crushes":    /^(blog\/[^\/]+\/)?new\/photo[\/]?$/,
    "dashboard":  /^dashboard(\/search\/[^\/]+)?(\/\d+){0,2}[\/]?$/,
    "drafts":     /^blog\/[^\/]+\/drafts[\/]?.*$/,
+   "followers":  /^blog\/[^\/]+\/followers[\/]?.*$/,
    "following":  /^following(\/page\/\d+)?[\/]?$/,
    "iframe":     /^dashboard\/iframe/,
    "likes":      /^like(s(\/.*)?|d\/by\/[^\/]+(\/.*)?)$/,

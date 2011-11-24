@@ -1636,7 +1636,7 @@ function handleMessage(message, myWorker) {
              .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
          if (getStorage("extensions.MissingE.dashLinksToTabs.enabled",1) == 1) {
-            injectScripts.push(data.url("dashLinksToTabs/dashLinksToTabs.js"));
+            injectScripts.push(data.url("core/dashLinksToTabs/dashLinksToTabs.js"));
             activeScripts.dashLinksToTabs = true;
          }
          else
