@@ -33,7 +33,8 @@ MissingE.packages.gotoDashPost = {
       for (i=0; noGoto && i<controls.length; i++) {
          var imgs = controls[i].getElementsByTagName('img');
          for (j=0; j<imgs.length; j++) {
-            if (imgs[j].src === extension.getURL('gotoDashPost/goto.png')) {
+            if (imgs[j].src ===
+                extension.getURL('core/gotoDashPost/goto.png')) {
                noGoto = false;
                break;
             }
@@ -74,7 +75,8 @@ MissingE.packages.gotoDashPost = {
             icn.style.cssFloat='left';
             icn.style.cursor='pointer';
             icn.alt='To Dash';
-            icn.setAttribute('src', extension.getURL('gotoDashPost/goto.png'));
+            icn.setAttribute('src',
+                             extension.getURL('core/gotoDashPost/goto.png'));
             dashlnk.appendChild(icn);
             div.insertBefore(dashlnk,last);
          }
