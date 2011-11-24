@@ -47,7 +47,6 @@
 			<key>End</key>
 			<array>
 				<string>extension.js</string>
-				<string>common/whoami.js</string>
 				<string>common/addmenu.js</string>
 				<string>common/jquery.min.js</string>
 				<string>common/ajaxEvents.js</string>
@@ -60,7 +59,7 @@
 				<string>askFixes/askFixes.js</string>
 				<string>core/betterReblogs/betterReblogs_dash.js</string>
 				<string>core/betterReblogs/betterReblogs_fill.js</string>
-				<string>betterReblogs/betterReblogs_post.js</string>
+				<string>core/betterReblogs/betterReblogs_post.js</string>
 				<string>bookmarker/bookmarker.js</string>
 				<string>dashLinksToTabs/dashLinksToTabs.js</string>
 				<string>gotoDashPost/gotoDashPost.js</string>
@@ -79,6 +78,7 @@
 				<string>massEditor/massEditor.js</string>
 				<string>postingFixes/subEdit.js</string>
 				<string>common/zindexFix.js</string>
+				<string>common/whoami.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>

@@ -21,28 +21,66 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-var MissingE = {
+(function(){
+
+if (typeof MissingE !== "undefined") { return; }
+
+MissingE = {
    packages: {}
 };
 
-var extension = {
+extension = {
    isChrome: true,
    isFirefox: false,
    isOpera: false,
    isSafari: false,
+   _listeners: {},
+   _hasListener: function(name, func) {
+      var i;
+      for (i=0; i<this._listeners[name].length; i++) {
+         if (this._listeners[name][i] === func) {
+            return true;
+         }
+      }
+      return false;
+   },
    addAjaxListener: function(func) {
       if (typeof func !== "function") { return false; }
       $(document).bind('MissingEajax', function(e) {
          func(e.originalEvent.data.type, e.originalEvent.data.list);
       });
    },
+   addListener: function(name, func) {
+      var i;
+      if (!this._listeners.hasOwnProperty(name)) {
+         this._listeners[name] = [];
+      }
+      if (func &&
+          !this._hasListener(name, func)) {
+         this._listeners[name].push(func);
+      }
+   },
    getURL: function(rel) {
       return chrome.extension.getURL(rel);
    },
    sendRequest: function(name, request, callback) {
+      if (!request) {
+         request = {};
+      }
       request.greeting = name;
       chrome.extension.sendRequest(request, function(response) {
          callback(response);
       });
    }
 };
+
+chrome.extension.onRequest.addListener(function(response) {
+   var i;
+   if (extension._listeners.hasOwnProperty(response.greeting)) {
+      for (i=0; i<extension._listeners[response.greeting].length; i++) {
+         extension._listeners[response.greeting][i](response);
+      }
+   }
+});
+
+})();

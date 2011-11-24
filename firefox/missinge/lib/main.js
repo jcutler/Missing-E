@@ -1244,7 +1244,9 @@ function handleMessage(message, myWorker) {
    }
    else if (message.greeting == "getAsker") {
       myWorker.tab.attach({
-         contentScriptFile: data.url("betterReblogs/permalink.js"),
+         contentScriptFile: [data.url("common/utils.js"),
+                             data.url("extension.js"),
+                             data.url("core/betterReblogs/betterReblogs_post.js")],
          onMessage: function(msg) {
             myWorker.postMessage({greeting: "sendAsker", name: msg.name,
                                   url: myWorker.tab.url, isSure: msg.isSure});
@@ -1476,6 +1478,7 @@ function handleMessage(message, myWorker) {
       var settings = {};
       settings.greeting = "settings";
       settings.component = message.component;
+      settings.subcomponent = message.subcomponent;
       settings.experimental = getStorage("extensions.MissingE.experimentalFeatures.enabled",0);
       settings.extensionURL = data.url("");
       switch(message.component) {
@@ -1938,9 +1941,11 @@ pageMod.PageMod({
 pageMod.PageMod({
    include: ["http://www.tumblr.com/dashboard/iframe*"],
    contentScriptWhen: 'ready',
-   contentScriptFile: [data.url("common/localizations.js"),
+   contentScriptFile: [data.url("common/utils.js"),
+                       data.url("extension.js"),
+                       data.url("common/localizations.js"),
                        data.url("common/utils.js"),
-                       data.url("betterReblogs/betterReblogs_post.js"),
+                       data.url("core/betterReblogs/betterReblogs_post.js"),
                        data.url("gotoDashPost/gotoDashPost.js"),
                        data.url("reblogYourself/reblogYourself_post.js"),
                        data.url("postingFixes/subEdit.js")],

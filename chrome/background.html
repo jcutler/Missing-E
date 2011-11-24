@@ -1198,6 +1198,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
       }
+      if (!isTumblrURL(request.url)) {
+         chrome.tabs.executeScript(sender.tab.id, {file: "extension.js"});
+      }
       var activeScripts = {};
       activeScripts.version = currVersion;
       var zindexFix = false;
@@ -1382,7 +1385,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
              getStorage("MissingE_betterReblogs_passTags",1) == 1) {
             activeScripts.betterReblogs = true;
             widenIframe = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "betterReblogs/betterReblogs_post.js", allFrames: true});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/betterReblogs/betterReblogs_post.js", allFrames: true});
          }
          else
             activeScripts.betterReblogs = false;

@@ -30,11 +30,11 @@ var extension = {
    isFirefox: false,
    isOpera: false,
    isSafari: true,
-   callbacks: {},
-   _hasCallback: function(name,func) {
+   _listeners: {},
+   _hasListener: function(name,func) {
       var i;
-      for (i=0; i<this.callbacks[name].length; i++) {
-         if (this.callbacks[name][i] === func) {
+      for (i=0; i<this._listeners[name].length; i++) {
+         if (this._listeners[name][i] === func) {
             return true;
          }
       }
@@ -46,27 +46,30 @@ var extension = {
          func(e.originalEvent.data.type, e.originalEvent.data.list);
       });
    },
+   addListener: function(name, func) {
+      var i;
+      if (!this._listeners.hasOwnProperty(name)) {
+         this._listeners[name] = [];
+      }
+      if (func &&
+          !this._hasListener(name, func)) {
+         this._listeners[name].push(func);
+      }
+   },
    getURL: function(rel) {
       return safari.extension.baseURI + rel;
    },
    sendRequest: function(name, request, callback) {
-      var i;
-      if (!this.callbacks.hasOwnProperty(name)) {
-         this.callbacks[name] = [];
-      }
-      if (callback &&
-          !this._hasCallback(name, callback)) {
-         this.callbacks[name].push(callback);
-      }
+      this.addListener(name, callback);
       safari.self.tab.dispatchMessage(name, request);
    }
 };
 
 safari.self.addEventListener("message", function(response) {
    var i;
-   if (extension.callbacks.hasOwnProperty(response.name)) {
-      for (i=0; i<extension.callbacks[response.name].length; i++) {
-         extension.callbacks[response.name][i](response.message);
+   if (extension._listeners.hasOwnProperty(response.name)) {
+      for (i=0; i<extension._listeners[response.name].length; i++) {
+         extension._listeners[response.name][i](response.message);
       }
    }
 });

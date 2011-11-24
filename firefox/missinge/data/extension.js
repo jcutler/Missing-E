@@ -21,20 +21,24 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-var MissingE = {
+(function(){
+
+if (typeof MissingE !== "undefined") { return; }
+
+MissingE = {
    packages: {}
 };
 
-var extension = {
+extension = {
    isChrome: false,
    isFirefox: true,
    isOpera: false,
    isSafari: false,
-   callbacks: {},
-   _hasCallback: function(name,func) {
+   _listeners: {},
+   _hasListener: function(name,func) {
       var i;
-      for (i=0; i<this.callbacks[name].length; i++) {
-         if (this.callbacks[name][i] === func) {
+      for (i=0; i<this._listeners[name].length; i++) {
+         if (this._listeners[name][i] === func) {
             return true;
          }
       }
@@ -48,17 +52,25 @@ var extension = {
          func(type, list);
       }, false);
    },
+   addListener: function(name, func) {
+      if (!this._listeners.hasOwnProperty(name)) {
+         this._listeners[name] = [];
+      }
+      if (func &&
+          !this._hasListener(name, func)) {
+         this._listeners[name].push(func);
+      }
+   },
    getURL: function(rel) {
-      return this.baseURL + rel;
+      return this._baseURL + rel;
+   },
+   hasBaseURL: function() {
+      return (typeof this._baseURL !== "undefined");
    },
    sendRequest: function(name, request, callback) {
-      var i;
-      if (!this.callbacks.hasOwnProperty(name)) {
-         this.callbacks[name] = [];
-      }
-      if (callback &&
-          !this._hasCallback(name, callback)) {
-         this.callbacks[name].push(callback);
+      this.addListener(name, callback);
+      if (!request) {
+         request = {};
       }
       request.greeting = name;
       self.postMessage(request);
@@ -67,14 +79,15 @@ var extension = {
 
 self.on("message", function(response) {
    var i;
-   if (response.greeting === "settings") {
-      if (!extension.baseURL) {
-         extension.baseURL = response.extensionURL;
-      }
+   if (response.greeting === "settings" &&
+       !extension._baseURL) {
+         extension._baseURL = response.extensionURL;
    }
-   if (extension.callbacks.hasOwnProperty(response.greeting)) {
-      for (i=0; i<extension.callbacks[response.greeting].length; i++) {
-         extension.callbacks[response.greeting][i](response);
+   if (extension._listeners.hasOwnProperty(response.greeting)) {
+      for (i=0; i<extension._listeners[response.greeting].length; i++) {
+         extension._listeners[response.greeting][i](response);
       }
    }
 });
+
+})();
