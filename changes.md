@@ -81,6 +81,7 @@ color:#4183c4;
 ##**2.3.0** (not yet released)
 **_!_** Extend sidebar adding to paginated dashboard pages  
 **_!_** Re-run tags AJAX request when dequeueing it (Chrome-only bug)  
+**_!_** Fix bug that prevented retrying when initially failing to get reblog keys for Reblog Yourself or ask reblogging in Better Reblogs (Firefox-only bug)  
 **_!_** Move to common source code base for all platforms
 
 ##**2.2.18** (11/22/2011)
