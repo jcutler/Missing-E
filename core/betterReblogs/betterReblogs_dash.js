@@ -773,8 +773,8 @@ MissingE.packages.betterReblogs = {
    },
 
    init: function() {
-      extension.sendRequest("settings",
-                            {component: "betterReblogs"}, function(response) {
+      extension.sendRequest("settings", {component: "betterReblogs"},
+                            function(response) {
          if (response.component === "betterReblogs") {
             var i;
             MissingE.packages.betterReblogs.settings = {};
