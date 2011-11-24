@@ -106,7 +106,7 @@ function showHideButtons(newbtns, val) {
 chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                              function(response) {
 
-   var postingFixes_settings = JSON.parse(response);
+   var postingFixes_settings = response;
    var lang = $('html').attr('lang');
    var i,tag;
    if (/http:\/\/www\.tumblr\.com\/edit\//.test(location.href) ||

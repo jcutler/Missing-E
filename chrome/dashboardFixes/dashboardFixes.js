@@ -415,7 +415,7 @@ function sortList(ol) {
 
 chrome.extension.sendRequest({greeting:"settings", component:"dashboardFixes"},
                              function(response) {
-   var dashboardFixes_settings = JSON.parse(response);
+   var dashboardFixes_settings = response;
    var lang = $('html').attr('lang');
 
    $(document).bind('MissingEajax', function(e) {

@@ -26,7 +26,7 @@
 if (document.body.id === 'dashboard_edit_post') {
    chrome.extension.sendRequest({greeting: "settings",
                                  component: "postCrushes"}, function(response) {
-      var postCrushes_settings = JSON.parse(response);
+      var postCrushes_settings = response;
       var tagarr, i;
       var url = localStorage.getItem("tcp_crushURL");
       if (url !== undefined && url !== null && url !== "") {

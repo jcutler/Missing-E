@@ -291,7 +291,7 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
 
 chrome.extension.sendRequest({greeting: "settings",
                               component: "askFixes"}, function(response) {
-   var askFixes_settings = JSON.parse(response);
+   var askFixes_settings = response;
    var lang = $('html').attr('lang');
 
    if (askFixes_settings.askDash === 1) {

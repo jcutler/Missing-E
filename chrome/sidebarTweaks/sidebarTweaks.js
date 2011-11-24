@@ -260,7 +260,7 @@ function makeSidebar(tumblrAcctNum, retries) {
 
 chrome.extension.sendRequest({greeting: "settings", component: "sidebarTweaks"},
                              function(response) {
-   var sidebarTweaks_settings = JSON.parse(response);
+   var sidebarTweaks_settings = response;
    $('head').append('<style type="text/css">' +
                     '#MissingE_sidebar_title a {' +
                     'background-image:url("' +

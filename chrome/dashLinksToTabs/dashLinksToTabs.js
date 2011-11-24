@@ -83,7 +83,7 @@ chrome.extension.sendRequest({greeting: "settings",
                               component: "dashLinksToTabs"},
                               function(response) {
 
-   var dashLinksToTabs_settings = JSON.parse(response);
+   var dashLinksToTabs_settings = response;
    if (lcol) {
       /* Chrome version uses mouseup to fix an issue in queued posts
          where the edit button (when icon-replaced) doesn't always

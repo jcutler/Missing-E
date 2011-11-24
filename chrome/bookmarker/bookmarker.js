@@ -411,7 +411,7 @@ function doMove(f,t) {
 
 chrome.extension.sendRequest({greeting: "settings",
                               component: "bookmarker"}, function(response) {
-   var bookmarker_settings = JSON.parse(response);
+   var bookmarker_settings = response;
    markFormat = bookmarker_settings.format;
    if (document.body.id !== "tinymce" &&
        document.body.id !== "dashboard_edit_post") {

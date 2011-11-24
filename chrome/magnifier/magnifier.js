@@ -172,7 +172,7 @@ function insertMagnifier(item) {
 
 chrome.extension.sendRequest({greeting: "settings",
                               component: "magnifier"}, function(response) {
-   var magnifier_settings = JSON.parse(response);
+   var magnifier_settings = response;
 
    if (!(/drafts[\/]?$/.test(location.href)) &&
        !(/queue[\/]?$/.test(location.href)) &&

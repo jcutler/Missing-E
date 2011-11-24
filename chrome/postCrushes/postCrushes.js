@@ -84,7 +84,7 @@ innerdiv.addEventListener('click', function() {
 
    chrome.extension.sendRequest({greeting: "settings",
                                  component: "postCrushes"}, function(response) {
-      var postCrushes_settings = JSON.parse(response);
+      var postCrushes_settings = response;
       var prefix = postCrushes_settings.prefix;
       var txt = '';
       if (prefix.length > 0) {

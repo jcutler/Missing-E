@@ -94,7 +94,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                                  function(response) {
       var i, n, img;
       var redir = "";
-      var replyReplies_settings = JSON.parse(response);
+      var replyReplies_settings = response;
       var thecode = [];
       var tags = [];
       arr = $('.MissingE_rt');
