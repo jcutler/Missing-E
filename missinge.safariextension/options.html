@@ -36,7 +36,7 @@ left:0;
 }
 
 body{
-background:#2c4762 url('images/background.png') top repeat-x;
+background:#2c4762 url('core/images/background.png') top repeat-x;
 font:normal 14px Arial,Helvetica,sans-serif;
 line-height:1.4;
 color:#444;
@@ -93,7 +93,7 @@ border:solid 1px #bbb;
 padding:7px;
 font:normal 13px 'Lucida Grande',Helvetica,Arial,sans-serif;
 color:#222;
-background:#fff url('/images/input_bg.gif') repeat-x top;
+background-color:#fff;
 outline:0;
 margin:0;
 border:solid 1px #bbb
@@ -116,7 +116,7 @@ border-radius:8px
 }
 
 input.text_field.huge:focus{
-background:#f3faff url('/images/input_highlight_bg.png') top repeat-x;
+background-color:#f3faff;
 border-color:#b7c7d3
 }
 
@@ -302,7 +302,7 @@ height:15px;
 position:absolute;
 left:-7px;
 top:25px;
-background:url('images/post_nipple.png') no-repeat transparent
+background:url('core/images/post_nipple.png') no-repeat transparent
 }
 
 #posts .post .post_info,#posts .post .post_controls{
@@ -365,7 +365,7 @@ bottom:-7px;
 left:7px;
 width:8px;
 height:7px;
-background:url('images/new_post_nipple.png') no-repeat transparent
+background:url('core/images/new_post_nipple.png') no-repeat transparent
 }
 
 form table td {
@@ -387,7 +387,7 @@ padding:10px 12px 10px 10px;
 }
 
 td.subopt, td.experimental.subobt {
-background:transparent url('images/subopt.png') no-repeat center center !important;
+background:transparent url('core/images/subopt.png') no-repeat center center !important;
 padding:0;
 width:32px;
 opacity:0.65;
@@ -445,7 +445,7 @@ height:20px;
 
 .options_table td.experimental {
 display:none;
-background-image:url('images/exp_bg.png');
+background-image:url('core/images/exp_bg.png');
 }
 
 td.input_left {
@@ -1108,7 +1108,7 @@ function doshow(component) {
 <div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
 </div>
 </a>
-<a target="_blank" class="nav_item" href="http://missinge.infraware.ca/faq">FAQ <img src="images/external_link.gif" alt="FAQ on external site" /></a>
+<a target="_blank" class="nav_item" href="http://missinge.infraware.ca/faq">FAQ <img src="core/images/external_link.gif" alt="FAQ on external site" /></a>
 <a href="#" class="nav_item" id="dashboard_nav" onclick="doshow('dashboard');return false;">
 <div>Dashboard Features</div>
 <div class="nav_item_nipple">
@@ -1143,7 +1143,7 @@ function doshow(component) {
 </div>
 </a>
 <a href="#" class="nav_item" id="close_nav" onclick="window.close();return false;">
-<img src="images/close.png" alt="Close Settings" />
+<img src="core/images/close.png" alt="Close Settings" />
 </a>
 </div>
 <div id="new_post_notice_container">
@@ -1154,7 +1154,7 @@ function doshow(component) {
 <div id="content">
 <div id="experimental_section">
 <form id="experimentalFeatures_options">
-<div class="experimental_title"><div class="experimental_switch"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" value="1" /></div><img src="images/flask.png" alt="Experimental Features" title="Experimental Features" /></div>
+<div class="experimental_title"><div class="experimental_switch"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" value="1" /></div><img src="core/images/flask.png" alt="Experimental Features" title="Experimental Features" /></div>
 <div class="clear"></div>
 </form>
 </div>
@@ -1170,7 +1170,7 @@ function doshow(component) {
 <div class="instructions"><div><p class="first">Click on the tabs above to change <strong>Missing e</strong>'s behaviour.</p>
 <p class="smaller"><em>Follow the <a href="http://blog.missinge.infraware.ca/" target="_blank"><strong>Missing e</strong> Tumblr</a> to get news and information about this extension.</em></p></div></div>
 <p class="first">If you enjoy this extension, please consider <a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8">donating</a> to support future development<br />
-<a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8"><img src="images/pledgie.png" border="0" alt="Support development by donating to Missing e! [PayPal]"></a></p><p>Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br />Released under the <a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GPL Version 3 (or later) License</a></p><p class="first"><small><em>Missing e</em> is not endorsed or certified by Tumblr, Inc. nor is it affiliated with Tumblr in any way.<br />All Tumblr logos and trademarks displayed in this extension are the property of Tumblr, Inc.<br />By downloading and using this extension, you agree to the terms and conditions set forth in the<br /><a href="http://missinge.infraware.ca/EULA.txt" target="_blank">Missing e End User License Agreement</a></small></p>
+<a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8"><img src="core/images/pledgie.png" border="0" alt="Support development by donating to Missing e! [PayPal]"></a></p><p>Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br />Released under the <a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GPL Version 3 (or later) License</a></p><p class="first"><small><em>Missing e</em> is not endorsed or certified by Tumblr, Inc. nor is it affiliated with Tumblr in any way.<br />All Tumblr logos and trademarks displayed in this extension are the property of Tumblr, Inc.<br />By downloading and using this extension, you agree to the terms and conditions set forth in the<br /><a href="http://missinge.infraware.ca/EULA.txt" target="_blank">Missing e End User License Agreement</a></small></p>
 </div>
 <div class="clear"></div>
 <div>
@@ -1528,9 +1528,9 @@ function doshow(component) {
 </div>
 </ol>
 <div id="iodiv">
-<div id="exportdiv" onclick="exportSettings();" title="Export settings to a file">Export<img id="export" alt="Export settings to a file" title="Export settings to a file" src="images/load.png"></div>
+<div id="exportdiv" onclick="exportSettings();" title="Export settings to a file">Export<img id="export" alt="Export settings to a file" title="Export settings to a file" src="core/images/load.png"></div>
 <div id="iosep"></div>
-<div id="importdiv"><img src="images/save.png" alt="Import settings from a file">Import<form id="importform"><input title="Import settings from a file" id="import" type="file" accept="text/xml" onchange="importSettings(this);" /></form></div>
+<div id="importdiv"><img src="core/images/save.png" alt="Import settings from a file">Import<form id="importform"><input title="Import settings from a file" id="import" type="file" accept="text/xml" onchange="importSettings(this);" /></form></div>
 </div>
 <div id="devpage"><a target="_blank" href="http://missinge.infraware.ca">Extension Homepage</a></div>
 <div class="clear"></div>
