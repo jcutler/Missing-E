@@ -1660,7 +1660,8 @@ function handleMessage(message, myWorker) {
             activeScripts.sidebarTweaks = false;
 
          if (getStorage("extensions.MissingE.magnifier.enabled",1) == 1) {
-            injectScripts.push(data.url("magnifier/magnifier.js"));
+            injectStyles.push(data.url("core/magnifier/magnifier.css"));
+            injectScripts.push(data.url("core/magnifier/magnifier.js"));
             activeScripts.magnifier = true;
          }
          else
@@ -1791,7 +1792,8 @@ function handleMessage(message, myWorker) {
 
          if (getStorage("extensions.MissingE.magnifier.enabled",1) == 1) {
             activeScripts.magnifier = true;
-            injectScripts.unshift(data.url("magnifier/magnifier.js"));
+            injectStyles.push(data.url("core/magnifier/magnifier.css"));
+            injectScripts.unshift(data.url("core/magnifier/magnifier.js"));
          }
          else
             activeScripts.magnifier = false;
