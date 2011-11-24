@@ -5,3 +5,6 @@ https://addons.mozilla.org/en-US/developers/docs/sdk/1.2/dev-guide/addon-develop
 https://addons.mozilla.org/en-US/developers/docs/sdk/1.2/dev-guide/addon-development/implementing-reusable-module.html
 - Need new build scripts
 - Need readme for linking
+
+Add reblog button to permalink pages when reblogYourself is off
+- also, only reblog yourself add when no follow/unfollow button
