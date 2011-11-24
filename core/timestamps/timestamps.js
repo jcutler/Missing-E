@@ -21,11 +21,9 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,getLocale */
-
 (function($){
 
-MissingE.timestamps = {
+MissingE.packages.timestamps = {
 
    receiveTimestamp: function(response) {
       var info;
@@ -111,17 +109,17 @@ MissingE.timestamps = {
          .live('click',function() {
          var post = $(this).closest('li.post');
          if (post.length === 1) {
-            MissingE.timestamps.loadTimestamp($(this).parents('li.post').get(0));
+            MissingE.packages.timestamps
+               .loadTimestamp($(this).parents('li.post').get(0));
          }
       });
       $('#posts li.post').each(function(){
-         MissingE.timestamps.loadTimestamp(this);
+         MissingE.packages.timestamps.loadTimestamp(this);
       });
       extension.addAjaxListener(function(type,list) {
-         console.log(type);
          if (type === 'notes') { return; }
          $.each(list, function(i,val) {
-            MissingE.timestamps.loadTimestamp($('#'+val).get(0));
+            MissingE.packages.timestamps.loadTimestamp($('#'+val).get(0));
          });
       });
    },
@@ -133,7 +131,7 @@ MissingE.timestamps = {
 
 if (extension.isChrome ||
     extension.isFirefox) {
-   MissingE.timestamps.init();
+   MissingE.packages.timestamps.init();
 }
 
 })(jQuery);

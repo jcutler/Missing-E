@@ -21,7 +21,9 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-var MissingE = {};
+var MissingE = {
+   packages: {}
+};
 
 var extension = {
    isChrome: true,
@@ -34,18 +36,13 @@ var extension = {
          func(e.originalEvent.data.type, e.originalEvent.data.list);
       });
    },
+   getURL: function(rel) {
+      return chrome.extension.getURL(rel);
+   },
    sendRequest: function(name, request, callback) {
       request.greeting = name;
       chrome.extension.sendRequest(request, function(response) {
          callback(response);
       });
-   },
-   start: function() {
-      var i;
-      for (i in MissingE) {
-         if (MissingE.hasOwnProperty(i)) {
-            MissingE[i].init();
-         }
-      }
    }
 };

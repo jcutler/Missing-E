@@ -21,7 +21,9 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-var MissingE = {};
+var MissingE = {
+   packages: {}
+};
 
 var extension = {
    isChrome: false,
