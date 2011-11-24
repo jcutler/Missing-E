@@ -1210,8 +1210,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           isTumblrURL(sender.tab.url, ["massEditor"])) {
          if (getStorage("MissingE_massEditor_enabled",1) == 1) {
             activeScripts.massEditor = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "massEditor/massEditor.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "massEditor/massEditor.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/massEditor/massEditor.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/massEditor/massEditor.js"});
          }
          else
             activeScripts.massEditor = false;

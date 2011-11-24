@@ -128,7 +128,7 @@ function doStartup(response) {
          doZindexFix();
       }
       if (response.message.massEditor) {
-         MissingE_massEditor_doStartup();
+         MissingE.packages.massEditor.init();
       }
       if (response.message.bookmarker) {
          safari.self.tab.dispatchMessage("settings",

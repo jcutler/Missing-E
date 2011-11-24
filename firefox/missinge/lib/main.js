@@ -1594,7 +1594,8 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/mega-editor\//.test(message.url)) {
             if (getStorage("extensions.MissingE.massEditor.enabled",1) == 1) {
-               injectScripts.push(data.url("massEditor/massEditor.js"));
+               injectStyles.push(data.url("core/massEditor/massEditor.css"));
+               injectScripts.push(data.url("core/massEditor/massEditor.js"));
                activeScripts.massEditor = true;
             }
             else

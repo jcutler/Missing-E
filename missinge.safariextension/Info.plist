@@ -75,7 +75,7 @@
 				<string>replyReplies/replyReplies_fill.js</string>
 				<string>safeDash/safeDash.js</string>
 				<string>core/timestamps/timestamps.js</string>
-				<string>massEditor/massEditor.js</string>
+				<string>core/massEditor/massEditor.js</string>
 				<string>postingFixes/subEdit.js</string>
 				<string>common/zindexFix.js</string>
 				<string>common/whoami.js</string>
@@ -90,7 +90,7 @@
 			<string>magnifier/magnifier.css</string>
 			<string>safeDash/safeDash.css</string>
 			<string>postingFixes/postingFixes.css</string>
-			<string>massEditor/massEditor.css</string>
+			<string>core/massEditor/massEditor.css</string>
 			<string>sidebarTweaks/sidebarTweaks.css</string>
 			<string>dashboardFixes/draftQueueTools.css</string>
 			<string>dashboardFixes/notesSorter.css</string>
