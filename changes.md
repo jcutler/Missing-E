@@ -78,9 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.2.19** (not yet released)
+##**2.3.0** (not yet released)
 **_!_** Extend sidebar adding to paginated dashboard pages  
-**_!_** Re-run tags AJAX request when dequeueing it (Chrome-only bug)
+**_!_** Re-run tags AJAX request when dequeueing it (Chrome-only bug)  
+**_!_** Move to common source code base for all platforms
 
 ##**2.2.18** (11/22/2011)
 **_!_** Fix Polish messages/post deletion confirm message
