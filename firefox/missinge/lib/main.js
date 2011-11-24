@@ -841,7 +841,7 @@ function doReblogAjax(type, url, pid, count, myWorker, retries, additional) {
             else {
                if (this.headers.tryCount <= this.headers.retryLimit) {
                   debug("Retry " + type + " request (" + this.headers.targetId + ")");
-                  doReblogAjax(this.url,
+                  doReblogAjax(type, this.url,
                          this.headers.targetId, (this.headers.tryCount + 1),
                          myWorker, this.headers.retryLimit, additional);
                }
