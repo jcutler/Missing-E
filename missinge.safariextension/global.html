@@ -1399,7 +1399,6 @@ function handleRequest(request) {
    else if (request.name == "settings") {
       var settings = {};
       settings.component = request.message.component;
-      settings.subcomponent = request.message.subcomponent;
       settings.experimental = getStorage("MissingE_experimentalFeatures_enabled",0);
       switch(request.message.component) {
          case "askFixes":

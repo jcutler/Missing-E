@@ -41,14 +41,15 @@ var extension = {
       return false;
    },
    addAjaxListener: function(func) {
-                       console.log(document);
-                       console.log(func);
       if (typeof func !== "function") { return false; }
       document.addEventListener('MissingEajax', function(e) {
          var type = e.data.match(/^[^:]*/)[0];
          var list = e.data.match(/(post_\d+)/g);
          func(type, list);
       }, false);
+   },
+   getURL: function(rel) {
+      return this.baseURL + rel;
    },
    sendRequest: function(name, request, callback) {
       var i;
@@ -66,6 +67,11 @@ var extension = {
 
 self.on("message", function(response) {
    var i;
+   if (response.greeting === "settings") {
+      if (!extension.baseURL) {
+         extension.baseURL = response.extensionURL;
+      }
+   }
    if (extension.callbacks.hasOwnProperty(response.greeting)) {
       for (i=0; i<extension.callbacks[response.greeting].length; i++) {
          extension.callbacks[response.greeting][i](response);

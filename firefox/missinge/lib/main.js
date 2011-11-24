@@ -892,7 +892,7 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
       }
    }
    Request({
-      url: "http://api.tumblr.com/v2/blog/" + 
+      url: "http://api.tumblr.com/v2/blog/" +
             url.replace(/^https?:\/\//,'') + "/posts?api_key=" + apiKey +
             "&id=" + escapeHTML(pid),
       headers: {tryCount: count,
@@ -1070,7 +1070,7 @@ function startBetterReblogsAsk(message, myWorker) {
              getStorage("extensions.MissingE.reblogYourself.askRetries",defaultRetries),
              {
                pid:message.pid,
-               icons:getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 && 
+               icons:getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                      getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1
              });
    }
@@ -1102,7 +1102,7 @@ function startReblogYourself(message, myWorker) {
              getStorage("extensions.MissingE.reblogYourself.retries",defaultRetries),
              {
                pid:message.pid,
-               icons:getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 && 
+               icons:getStorage("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
                      getStorage("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1
              });
    }
@@ -1352,7 +1352,7 @@ function handleMessage(message, myWorker) {
                   dt.month = 12;
                }
                else if (/^sun(day)?$/i.test(stamp[i])) {
-                  dt.date = -dt.day; 
+                  dt.date = -dt.day;
                }
                else if (/^mon(day)?$/i.test(stamp[i])) {
                   dt.date = (1-dt.day-7)%7;
@@ -1476,7 +1476,6 @@ function handleMessage(message, myWorker) {
       var settings = {};
       settings.greeting = "settings";
       settings.component = message.component;
-      settings.subcomponent = message.subcomponent;
       settings.experimental = getStorage("extensions.MissingE.experimentalFeatures.enabled",0);
       settings.extensionURL = data.url("");
       switch(message.component) {
@@ -1586,6 +1585,7 @@ function handleMessage(message, myWorker) {
                            data.url("common/storage.js"),
                            data.url("common/utils.js"),
                            data.url("common/localizations.js")];
+      var injectStyles = [];
       activeScripts.extensionURL = data.url("");
       activeScripts.version = currVersion;
       if (!message.isFrame &&
@@ -1715,7 +1715,7 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
          /http:\/\/www\.tumblr\.com\/reblog\//.test(message.url)) {
          if (getStorage("extensions.MissingE.betterReblogs.enabled",1) == 1) {
-            injectScripts.push(data.url("betterReblogs/betterReblogs_fill.js"));
+            injectScripts.push(data.url("core/betterReblogs/betterReblogs_fill.js"));
             activeScripts.betterReblogs = true;
             activeScripts.betterReblogs_fill = true;
          }
@@ -1791,7 +1791,7 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.magnifier = false;
-            
+
       }
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/new\/photo/.test(message.url)) {
@@ -1832,7 +1832,8 @@ function handleMessage(message, myWorker) {
             if (getStorage("extensions.MissingE.betterReblogs.quickReblog",0) == 1) {
                zindexFix = true;
             }
-            injectScripts.push(data.url("betterReblogs/betterReblogs_dash.js"));
+            injectStyles.push(data.url("core/betterReblogs/quickReblog.css"));
+            injectScripts.push(data.url("core/betterReblogs/betterReblogs_dash.js"));
             activeScripts.betterReblogs = true;
          }
          else
@@ -1884,8 +1885,20 @@ function handleMessage(message, myWorker) {
       activeScripts.url = message.url;
       activeScripts.isFrame = message.isFrame;
       activeScripts.greeting = "startup";
+
+      var loadStyles = '';
+      if (injectStyles.length > 0) {
+         loadStyles = '(function($){' +
+            'var head = $("head");';
+         for (i=0; i<injectStyles.length; i++) {
+            loadStyles += 'head.append(\'<link rel="stylesheet" ' +
+               'type="text/css" href="' + injectStyles[i] + '" />\');';
+         }
+         loadStyles += '})(jQuery);';
+      }
       myWorker.tab.attach({
          contentScriptFile: injectScripts,
+         contentScript: loadStyles,
          onMessage: function onMessage(data) {
             handleMessage(data, this);
          }
@@ -1994,7 +2007,7 @@ function getExternalVersion() {
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
       console.log("Updated Missing e (" +
-                  prevVersion + " => " + currVersion + 
+                  prevVersion + " => " + currVersion +
                   ")");
    }
    else if (!prevVersion) {

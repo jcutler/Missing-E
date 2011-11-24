@@ -148,14 +148,10 @@ function doStartup(response) {
       }
       if (response.message.betterReblogs) {
          if (response.message.betterReblogs_fill) {
-            safari.self.tab.dispatchMessage("settings",
-                                            {component: "betterReblogs",
-                                             subcomponent: "fill"});
+            MissingE.packages.betterReblogsFill.init();
          }
          else {
-            safari.self.tab.dispatchMessage("settings",
-                                            {component: "betterReblogs",
-                                             subcomponent: "dash"});
+            MissingE.packages.betterReblogs.init();
          }
       }
       if (response.message.replyReplies) {
@@ -189,8 +185,7 @@ function doStartup(response) {
          MissingE_safeDash_doStartup();
       }
       if (response.message.timestamps) {
-         //MissingE_timestamps_doStartup();
-         MissingE.timestamps.init();
+         MissingE.packages.timestamps.init();
       }
       if (response.message.magnifier) {
          safari.self.tab.dispatchMessage("settings",
@@ -270,25 +265,6 @@ function settings_startup(response) {
                                         response.message.massDelete,
                                         response.message.randomQueue,
                                         response.message.sortableNotes);
-   }
-   else if (response.message.component === "betterReblogs") {
-      if (response.message.subcomponent === "dash") {
-         MissingE_betterReblogs_dash_doStartup(response.message.experimental,
-                                     response.message.passTags,
-                                     response.message.quickReblog,
-                                     response.message.replaceIcons,
-                                     response.message.accountName,
-                                     response.message.fullText,
-                                     response.message.quickReblogForceTwitter,
-                                     response.message.tagQueuedPosts,
-                                     response.message.queueTags,
-                                     response.message.reblogAsks);
-      }
-      else if (response.message.subcomponent === "fill") {
-         MissingE_betterReblogs_fill_doStartup(response.message.passTags,
-                                               response.message.autoFillTags,
-                                               response.message.fullText);
-      }
    }
 }
 

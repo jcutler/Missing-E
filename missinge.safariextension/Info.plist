@@ -58,8 +58,8 @@
 				<string>common/localizations.js</string>
 				<string>facebox/facebox.js</string>
 				<string>askFixes/askFixes.js</string>
-				<string>betterReblogs/betterReblogs_dash.js</string>
-				<string>betterReblogs/betterReblogs_fill.js</string>
+				<string>core/betterReblogs/betterReblogs_dash.js</string>
+				<string>core/betterReblogs/betterReblogs_fill.js</string>
 				<string>betterReblogs/betterReblogs_post.js</string>
 				<string>bookmarker/bookmarker.js</string>
 				<string>dashLinksToTabs/dashLinksToTabs.js</string>
@@ -85,7 +85,7 @@
 		<array>
 			<string>facebox/facebox.css</string>
 			<string>askFixes/askFixes.css</string>
-			<string>betterReblogs/quickReblog.css</string>
+			<string>core/betterReblogs/quickReblog.css</string>
 			<string>bookmarker/bookmarker.css</string>
 			<string>magnifier/magnifier.css</string>
 			<string>safeDash/safeDash.css</string>

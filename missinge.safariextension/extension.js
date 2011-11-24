@@ -46,6 +46,9 @@ var extension = {
          func(e.originalEvent.data.type, e.originalEvent.data.list);
       });
    },
+   getURL: function(rel) {
+      return safari.extension.baseURI + rel;
+   },
    sendRequest: function(name, request, callback) {
       var i;
       if (!this.callbacks.hasOwnProperty(name)) {

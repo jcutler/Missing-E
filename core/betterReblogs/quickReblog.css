@@ -58,13 +58,14 @@ width:95%;
 vertical-align:-2px;
 }
 
-.MissingE_quick_reblogging_icon, 
+.MissingE_quick_reblogging_icon,
 .MissingE_quick_reblogging_success {
 opacity:1 !important;
 background-position:0 0 !important;
 }
 
-#MissingE_quick_reblog .user_menu_list a .user_menu_list_item {
+#MissingE_quick_reblog .user_menu_list a .user_menu_list_item,
+#MissingE_quick_reblog .user_menu_list span .user_menu_list_item {
 height:auto !important;
 min-height:12px !important;
 }
@@ -73,7 +74,8 @@ min-height:12px !important;
 color:#FEFEFE !important;
 }
 
-#MissingE_quick_reblog .user_menu_list a .user_menu_list_item.has_tag_input {
+#MissingE_quick_reblog .user_menu_list a .user_menu_list_item.has_tag_input,
+#MissingE_quick_reblog .user_menu_list span .user_menu_list_item.has_tag_input {
 background-image:none !important;
 background-color:black !important;
 opacity:0.9;
