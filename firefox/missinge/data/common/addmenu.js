@@ -58,7 +58,7 @@ self.on("message", function (message) {
       st.setAttribute('type','text/css');
       st.innerHTML = '#header #missinge_button a {' +
                      'background-image:url("' +
-                     message.extensionURL + 'missinge_dash.png' +
+                     message.extensionURL + 'identity/missinge_dash.png' +
                      '") !important; background-position:center center; ' +
                      'opacity:0.5; } ' +
                      '#header #missinge_button a:hover {' +

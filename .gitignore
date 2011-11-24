@@ -6,3 +6,6 @@ firefox/missinge/data/core
 chrome/license
 missinge.safariextension/license
 firefox/missinge/data/license
+chrome/identity
+missinge.safariextension/identity
+firefox/missinge/data/identity

@@ -31,7 +31,7 @@ if (bar && logout) {
    st.setAttribute('type', 'text/css');
    st.innerHTML = '#header #missinge_button a {' +
                   'background-image:url("' +
-                  chrome.extension.getURL('missinge_dash.png') +
+                  chrome.extension.getURL('identity/missinge_dash.png') +
                   '") !important; background-position:center center; ' +
                   'opacity:0.5; } ' +
                   '#header #missinge_button a:hover {' +
