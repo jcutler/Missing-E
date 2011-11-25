@@ -19,9 +19,9 @@
          "matches": ["http://www.tumblr.com/*"],
          "js": ["extension.js",
                 "core/localizations.js",
+                "core/utils.js",
                 "common/whoami.js",
-                "common/addmenu.js",
-                "core/utils.js"],
+                "core/menuButton.js"],
          "all_frames": true
       },
       {

@@ -1835,7 +1835,8 @@ function handleMessage(message, myWorker) {
 pageMod.PageMod({
    include: ["http://www.tumblr.com/*"],
    contentScriptWhen: 'ready',
-   contentScriptFile: [data.url("common/addmenu.js"),
+   contentScriptFile: [data.url("extension.js"),
+                       data.url("core/menuButton.js"),
                        data.url("common/whoami.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {

@@ -63,7 +63,8 @@ extension = {
       this._listeners = {};
       self.on("message", function(response) {
          var i;
-         if (response.greeting === "settings" &&
+         if ((response.greeting === "settings" ||
+              response.greeting === "addMenu") &&
              !extension._baseURL) {
                extension._baseURL = response.extensionURL;
          }
