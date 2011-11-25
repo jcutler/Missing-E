@@ -228,8 +228,7 @@ MissingE.packages.betterReblogsPost = {
    },
 
    init: function() {
-      if (window.top !== window &&
-          /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
+      if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
          if (extension.isFirefox) {
             extension.sendRequest("settings",
                                   {component: "betterReblogs",
@@ -245,7 +244,7 @@ MissingE.packages.betterReblogsPost = {
             MissingE.packages.betterReblogsPost.run(location.href);
          }
       }
-      else if (window.top === window) {
+      else {
          MissingE.packages.betterReblogsPost.runPermalink();
       }
    }
