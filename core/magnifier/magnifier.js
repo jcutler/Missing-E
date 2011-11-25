@@ -21,8 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global extension, jQuery, MissingE,
-  getLocale, isTumblrURL */
+/*global extension, jQuery, MissingE */
 
 (function($){
 
@@ -130,7 +129,7 @@ MissingE.packages.magnifier = {
          }
 
          if (str) {
-            var mi = $('<a title="' + getLocale(lang).loading + '" ' +
+            var mi = $('<a title="' + MissingE.getLocale(lang).loading + '" ' +
                        'class="MissingE_magnify MissingE_magnify_hide" ' +
                        'id="magnify_' + tid + '" href="#" ' +
                        'onclick="return false;"></a>');
@@ -157,13 +156,13 @@ MissingE.packages.magnifier = {
       if (response.success) {
          $('#magnify_' + response.pid).attr('src', response.data)
             .removeClass('MissingE_magnify_hide')
-            .attr('title', getLocale(lang).magnify);
+            .attr('title', MissingE.getLocale(lang).magnify);
       }
       else {
          $('#magnify_' + response.pid).attr('src','')
             .addClass('MissingE_magnify_err')
             .removeClass('MissingE_magnify_hide')
-            .attr('title', getLocale(lang).error);
+            .attr('title', MissingE.getLocale(lang).error);
       }
    },
 
@@ -183,7 +182,7 @@ MissingE.packages.magnifier = {
                        '.MissingE_magnify_avatar { ' +
                        'background-image:url("' + overlay + '"); }</style>');
 
-      if (!isTumblrURL(location.href, ["drafts", "queue", "messages",
+      if (!MissingE.isTumblrURL(location.href, ["drafts", "queue", "messages",
                                        "followers", "following"])) {
          $('#facebox .turner_left, #facebox .turner_right')
                .live('click', function() {

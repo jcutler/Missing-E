@@ -27,7 +27,7 @@ var MissingE = {};
 </script>
 <script type="text/javascript" src="common/jquery.min.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
-<script type="text/javascript" src="common/utils.js"></script>
+<script type="text/javascript" src="core/utils.js"></script>
 <script type="text/javascript" src="common/storage.js"></script>
 <script type="text/javascript" src="core/localizations.js"></script>
 <script>
@@ -211,7 +211,7 @@ function doTimestamp(stamp, id, sendResponse) {
       sendResponse({pid: id, success: false});
    }
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
-   ins = getFormattedDate(d, ins, lang);
+   ins = MissingE.getFormattedDate(d, ins, lang);
    ins = ins.replace(/%X/g,id);
    sendResponse({pid: id, success: true, data: ins});
    return true;
@@ -992,16 +992,16 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             }
             else if (/^[A-Za-z]+$/.test(stamp[i])) {
                var found = false;
-               for (x=0; !found && x<locale.en.monthsLong.length; x++) {
-                  if ((new RegExp(locale.en.monthsLong[x],"i")).test(stamp[i]) ||
-                      (new RegExp(locale.en.monthsShort[x],"i")).test(stamp[i])) {
+               for (x=0; !found && x<MissingE.getLocale("en").monthsLong.length; x++) {
+                  if ((new RegExp(MissingE.getLocale("en").monthsLong[x],"i")).test(stamp[i]) ||
+                      (new RegExp(MissingE.getLocale("en").monthsShort[x],"i")).test(stamp[i])) {
                      dt.month = x+1;
                      found = true;
                   }
                }
-               for (x=0; !found && x<locale.en.daysLong.length; x++) {
-                  if ((new RegExp(locale.en.daysLong[x],"i")).test(stamp[i]) ||
-                      (new RegExp(locale.en.daysShort[x], "i")).test(stamp[i])) {
+               for (x=0; !found && x<MissingE.getLocale("en").daysLong.length; x++) {
+                  if ((new RegExp(MissingE.getLocale("en").daysLong[x],"i")).test(stamp[i]) ||
+                      (new RegExp(MissingE.getLocale("en").daysShort[x], "i")).test(stamp[i])) {
                      dt.date = (x - dt.day - 7) % 7;
                      found = true;
                   }
@@ -1194,15 +1194,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "start") {
       addTab(sender.tab.id, sender.tab.url);
-      if (!isTumblrURL(request.url, ["askForm"])) {
+      if (!MissingE.isTumblrURL(request.url)) {
+         chrome.tabs.executeScript(sender.tab.id, {file: "extension.js"});
+      }
+      if (!MissingE.isTumblrURL(request.url, ["askForm"])) {
          chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery.min.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "common/ajaxEvents.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "common/defs.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
-         chrome.tabs.executeScript(sender.tab.id, {file: "common/utils.js"});
-      }
-      if (!isTumblrURL(request.url)) {
-         chrome.tabs.executeScript(sender.tab.id, {file: "extension.js"});
+         chrome.tabs.executeScript(sender.tab.id, {file: "core/utils.js"});
       }
       var activeScripts = {};
       activeScripts.version = currVersion;
@@ -1210,7 +1210,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var loadedUI = false;
       var widenIframe = false;
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url, ["massEditor"])) {
+          MissingE.isTumblrURL(sender.tab.url, ["massEditor"])) {
          if (getStorage("MissingE_massEditor_enabled",1) == 1) {
             activeScripts.massEditor = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "core/massEditor/massEditor.css"});
@@ -1220,7 +1220,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.massEditor = false;
       }
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url,
+          MissingE.isTumblrURL(sender.tab.url,
                       ["dashboard",
                        "blog",
                        "blogData",
@@ -1303,7 +1303,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                 getStorage("MissingE_dashboardFixes_randomQueue",0) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/draftQueueTools.css"});
             if (getStorage("MissingE_dashboardFixes_widescreen",0) == 1 &&
-                !isTumblrURL(sender.tab.url, ["settings"]))
+                !MissingE.isTumblrURL(sender.tab.url, ["settings"]))
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/widescreen.css"});
          }
          else
@@ -1322,7 +1322,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.askFixes = false;
          }
       }
-      if (isTumblrURL(request.url, ["askForm"])) {
+      if (MissingE.isTumblrURL(request.url, ["askForm"])) {
          if (getStorage("MissingE_askFixes_enabled",1) == 1 &&
              getStorage("MissingE_askFixes_scroll",1) == 1) {
             activeScripts.askFixes = true;
@@ -1331,12 +1331,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.askFixes = false;
 
-         if (isTumblrURL(sender.tab.url, ["messages"])) {
+         if (MissingE.isTumblrURL(sender.tab.url, ["messages"])) {
             chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askboxDomain.js", allFrames: true});
          }
       }
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url,
+          MissingE.isTumblrURL(sender.tab.url,
                       ["post",
                        "reblog",
                        "messages",
@@ -1354,7 +1354,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.postingFixes = false;
       }
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url, ["reblog"])) {
+          MissingE.isTumblrURL(sender.tab.url, ["reblog"])) {
          if (getStorage("MissingE_betterReblogs_enabled",1) == 1) {
             activeScripts.betterReblogs = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "core/betterReblogs/betterReblogs_fill.js"});
@@ -1362,8 +1362,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.betterReblogs = false;
       }
-      if (isTumblrURL(request.url, ["iframe"]) &&
-          !isTumblrURL(sender.tab.url,
+      if (MissingE.isTumblrURL(request.url, ["iframe"]) &&
+          !MissingE.isTumblrURL(sender.tab.url,
                        ["post",
                         "reblog"])) {
          chrome.tabs.insertCSS(sender.tab.id, {file: "common/endlessPages.css", allFrames:true});
@@ -1403,7 +1403,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.postingFixes = false;
       }
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url,
+          MissingE.isTumblrURL(sender.tab.url,
                       ["dashboard",
                        "blog"])) {
          if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
@@ -1416,7 +1416,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.replyReplies = false;
       }
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url, ["reply"])) {
+          MissingE.isTumblrURL(sender.tab.url, ["reply"])) {
          if (getStorage("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "replyReplies/replyReplies_fill.js"});
@@ -1425,7 +1425,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.replyReplies = false;
       }
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url, ["following"])) {
+          MissingE.isTumblrURL(sender.tab.url, ["following"])) {
          if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
             activeScripts.postCrushes = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "postCrushes/postCrushes.js"});
@@ -1445,7 +1445,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.magnifier = false;
       }
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url, ["crushes"])) {
+          MissingE.isTumblrURL(sender.tab.url, ["crushes"])) {
          if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
             activeScripts.postCrushes = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "postCrushes/postCrushes_fill.js"});
@@ -1454,7 +1454,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.postCrushes = false;
       }
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url,
+          MissingE.isTumblrURL(sender.tab.url,
                       ["dashboard",
                        "blog",
                        "likes",
@@ -1468,7 +1468,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.timestamps = false;
       }
       if (sender.tab.url == request.url &&
-          isTumblrURL(sender.tab.url,
+          MissingE.isTumblrURL(sender.tab.url,
                       ["dashboard",
                        "blog",
                        "likes",

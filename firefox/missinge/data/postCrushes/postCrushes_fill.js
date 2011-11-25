@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,self */
+/*global MissingE.escapeHTML,self */
 
 function postCrushesFillSettings(message) {
    var tagarr, i;
@@ -43,7 +43,7 @@ function postCrushesFillSettings(message) {
          for (i=0; i<tagarr.length; i++) {
             if (tagarr[i] !== null && tagarr[i] !== '') {
                txt += '<div class="token"><span class="tag">' +
-                      escapeHTML(tagarr[i]) +
+                      MissingE.escapeHTML(tagarr[i]) +
                       '</span><a title="Remove tag" ' +
                       'onclick="tag_editor_remove_tag($(this).up()); ' +
                       'return false;" href="#">x</a></div>';

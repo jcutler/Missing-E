@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global getLocale,safari */
+/*global MissingE.getLocale,safari */
 
 var like, suffix='', lang='en';
 
@@ -97,7 +97,7 @@ function receivePermission(response) {
       edit.setAttribute('target','_top');
       edit.innerHTML = '<img src="http://assets.tumblr.com/images/' +
          'iframe_edit_alpha' + suffix + '" alt="' +
-         getLocale(lang).dashFixesText.edit +
+         MissingE.getLocale(lang).dashFixesText.edit +
          '" style="display:block;float:left;" />';
       like.parentNode.insertBefore(edit, like.nextSibling);
    }

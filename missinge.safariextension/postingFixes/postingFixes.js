@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,getLocale,safari */
+/*global $,MissingE.getLocale,safari */
 
 function resizeTinyMCE(post) {
    $('head').append('<style type="text/css">' +
@@ -136,7 +136,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
      'style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">' + getLocale(lang).postingFixes.clearTagsText +
+     'return false;">' + MissingE.getLocale(lang).postingFixes.clearTagsText +
      '</a></div>');
 
    $('#photo_src').keyup(function(){
@@ -149,7 +149,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       queueTags = queueTags === '' ? [] : queueTags;
       $('#posts div.post_controls a').live('click',function(){
          if (!$(this).hasClass('MissingE_queue_control') &&
-             !(new RegExp(getLocale(lang).dashFixesText.queue,"i"))
+             !(new RegExp(MissingE.getLocale(lang).dashFixesText.queue,"i"))
                .test($(this).text())) {
             return;
          }
@@ -249,7 +249,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          bottom = Math.round(bottom);
          if ($('#post_state').val() === '0') {
             $('#post_controls input[type="submit"]')
-               .val(getLocale(lang).postingFixes.submitText.publish);
+               .val(MissingE.getLocale(lang).postingFixes.submitText.publish);
          }
       }
       else {
@@ -258,12 +258,12 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
       }
 
       var allbtns = "";
-      for (i in getLocale(lang).postingFixes.submitText) {
-         if (getLocale(lang).postingFixes.submitText.hasOwnProperty(i)) {
+      for (i in MissingE.getLocale(lang).postingFixes.submitText) {
+         if (MissingE.getLocale(lang).postingFixes.submitText.hasOwnProperty(i)) {
             allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
                         'type="submit" class="positive" ' +
                         'onclick="return true;"><span>' +
-                        getLocale(lang).postingFixes.submitText[i] +
+                        MissingE.getLocale(lang).postingFixes.submitText[i] +
                         '</span></button></div>';
          }
       }
@@ -300,7 +300,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          showHideButtons(newbtns, $('#post_state').val());
          if (isShare) {
             changeButtonText($('#post_state').val(),
-                             getLocale(lang).postingFixes.submitText);
+                             MissingE.getLocale(lang).postingFixes.submitText);
          }
       });
    }
@@ -321,7 +321,7 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           getLocale(lang).postingFixes.uploadImagesText +
+                           MissingE.getLocale(lang).postingFixes.uploadImagesText +
                            '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);

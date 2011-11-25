@@ -21,8 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global extension, jQuery, MissingE,
-  getLocale, escapeHTML, isTumblrURL */
+/*global extension, jQuery, MissingE */
 
 (function($){
 
@@ -61,15 +60,15 @@ MissingE.packages.betterReblogs = {
       var lang = $('html').attr('lang');
       var question = "";
       var asker = $(item).find(".post_question_asker").text();
-      for (i=0; i<getLocale(lang).asked.length; i++) {
+      for (i=0; i<MissingE.getLocale(lang).asked.length; i++) {
          if (i>0) {
             question += " ";
          }
-         if (getLocale(lang).asked[i] === "U") {
+         if (MissingE.getLocale(lang).asked[i] === "U") {
             question += asker;
          }
          else {
-            question += getLocale(lang).asked[i];
+            question += MissingE.getLocale(lang).asked[i];
          }
       }
       question += ": " + $(item).find("div.post_question").text()
@@ -77,7 +76,7 @@ MissingE.packages.betterReblogs = {
                            .replace(/\s$/,'');
       question = encodeURIComponent(question);
 
-      var reblog_text = getLocale(lang).reblog;
+      var reblog_text = MissingE.getLocale(lang).reblog;
       before = item.find('div.post_controls a[href^="/edit"]');
       if (before.length === 0) {
          before = item.find('div.post_controls a.MissingE_edit_control');
@@ -91,10 +90,10 @@ MissingE.packages.betterReblogs = {
       if (response.success) {
          klass = (response.icons ? 'MissingE_post_control ' +
                   'MissingE_reblog_control' : '');
-         txt = (response.icons ? '' : getLocale(lang).reblog);
+         txt = (response.icons ? '' : MissingE.getLocale(lang).reblog);
          rblnk = $('<a title="' + reblog_text + '" href="/reblog/' + tid +
                        '/' + response.data + '/text?post%5Bone%5D=' +
-                       escapeHTML(question) + '&MissingEaskName=' +
+                       MissingE.escapeHTML(question) + '&MissingEaskName=' +
                        response.name + '&MissingEaskPost=' +
                        encodeURIComponent(perm.attr("href")) + '" class="' +
                        klass + '">' + txt + '</a>');
@@ -108,7 +107,7 @@ MissingE.packages.betterReblogs = {
          rblnk.trigger('MissingEaddReblog');
       }
       else {
-         var reblog_err = getLocale(lang).error;
+         var reblog_err = MissingE.getLocale(lang).error;
          klass = (response.icons ? 'MissingE_post_control ' +
                      'MissingE_reblog_control ' +
                      'MissingE_reblog_control_retry' : '');
@@ -208,9 +207,9 @@ MissingE.packages.betterReblogs = {
       }
       else {
          a.addClass('MissingE_quick_reblogging_text')
-            .text(getLocale(lang).reblogging);
+            .text(MissingE.getLocale(lang).reblogging);
       }
-      a.attr('title',getLocale(lang).reblogging);
+      a.attr('title',MissingE.getLocale(lang).reblogging);
    },
 
    failReblog: function(id,replaceIcons) {
@@ -224,7 +223,7 @@ MissingE.packages.betterReblogs = {
       }
       a.attr('title',a.attr('oldtxt'));
       a.removeAttr('oldtxt');
-      alert(getLocale(lang).reblogFailed);
+      alert(MissingE.getLocale(lang).reblogFailed);
    },
 
    finishReblog: function(id,replaceIcons) {
@@ -236,9 +235,9 @@ MissingE.packages.betterReblogs = {
       }
       else {
          a.addClass('MissingE_quick_reblogging_text_success')
-            .text(getLocale(lang).rebloggedText);
+            .text(MissingE.getLocale(lang).rebloggedText);
       }
-      a.attr('title',getLocale(lang).rebloggedText);
+      a.attr('title',MissingE.getLocale(lang).rebloggedText);
       a.removeAttr('oldtxt');
    },
 
@@ -415,7 +414,7 @@ MissingE.packages.betterReblogs = {
             else {
                tags = $(this).closest('li.post').find('span.tags a');
                var tagarr = [];
-               if (isTumblrURL(location.href, ["tagged"])) {
+               if (MissingE.isTumblrURL(location.href, ["tagged"])) {
                   var i;
                   var str = location.href.match(/[^\/\?]*(?:$|\?)/)[0];
                   str = str.replace(/\?/,'').replace(/\+/,' ');
@@ -510,17 +509,17 @@ MissingE.packages.betterReblogs = {
          var txt = '<div class="user_menu" id="MissingE_quick_reblog">' +
                     '<div class="user_menu_nipple"></div>' +
                     '<div class="user_menu_list">';
-         for (idx=0; idx<getLocale(lang).reblogOptions.length; idx++) {
+         for (idx=0; idx<MissingE.getLocale(lang).reblogOptions.length; idx++) {
             var doonclick = 'onclick="return false;"';
-            if (getLocale(lang).reblogOptions[idx].item === 'manual') {
+            if (MissingE.getLocale(lang).reblogOptions[idx].item === 'manual') {
                doonclick = '';
             }
             txt += '<a class="MissingE_quick_reblog_button" ' +
                     'id="MissingE_quick_reblog_' +
-                    getLocale(lang).reblogOptions[idx].item +
+                    MissingE.getLocale(lang).reblogOptions[idx].item +
                     '" href="#" ' + doonclick + '>' +
                     '<div class="user_menu_list_item">' +
-                    getLocale(lang).reblogOptions[idx].text + '</div></a>';
+                    MissingE.getLocale(lang).reblogOptions[idx].text + '</div></a>';
          }
          var node = extension.isFirefox ?
                ['<span class="MissingE_quick_reblog_field">',
@@ -531,7 +530,7 @@ MissingE.packages.betterReblogs = {
          txt +=  node[0] +
                   '<div class="user_menu_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_twitter">' +
-                  '<input type="checkbox" /> ' + getLocale(lang).twitterText +
+                  '<input type="checkbox" /> ' + MissingE.getLocale(lang).twitterText +
                   '</div></div>' +
                   node[1];
          var list = $('#user_channels li');
@@ -558,7 +557,7 @@ MissingE.packages.betterReblogs = {
          }
          txt += node[0] + '<div class="user_menu_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_tags">' +
-                  '<input type="text" /><br />' + getLocale(lang).tagsText +
+                  '<input type="text" /><br />' + MissingE.getLocale(lang).tagsText +
                   '</div></div>' + node[1];
          var qr = $(txt).appendTo('body');
          qr.find('#MissingE_quick_reblog_selector select').click(function(e) {
@@ -652,7 +651,7 @@ MissingE.packages.betterReblogs = {
             var tagarr = [];
             if (settings.passTags === 1) {
                var tags = reblog.closest('li.post').find('span.tags a');
-               if (isTumblrURL(location.href, ["tagged"])) {
+               if (MissingE.isTumblrURL(location.href, ["tagged"])) {
                   var i;
                   var str = location.href.match(/[^\/\?]*(?:$|\?)/)[0];
                   str = str.replace(/\?/,'').replace(/\+/,' ');

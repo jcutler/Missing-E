@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,getBookmarkerFormat,getLocale,getStorage,setStorage */
+/*global $,chrome,MissingE.getBookmarkerFormat,MissingE.getLocale,getStorage,setStorage */
 
 var bmi = chrome.extension.getURL('bookmarker/sidebar_bookmark.png');
 var mimg = chrome.extension.getURL('bookmarker/post_bookmark.png');
@@ -80,13 +80,13 @@ function addBar(mark, lang, altPost) {
       post.before('<div id="bookmarkbar_' + mark[1] + '" ' +
             'class="MissingE_bookmark_bar"><div ' +
             'class="MissingE_bookmark_line"></div><div ' +
-            'class="MissingE_bookmark_text">' + getLocale(lang).bookmarkNoun +
+            'class="MissingE_bookmark_text">' + MissingE.getLocale(lang).bookmarkNoun +
             ' - <em id="bookmarkbar_label_' +
             mark[1] + '">' + mark[2] + '</em>' + (altPost ? '<span ' +
             'class="MissingE_bookmark_missing ' +
             'MissingE_bookmark_missing_' + lang + '"> (' +
             '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
-            'target="_blank">' + getLocale(lang).postUnavailable + '</a>)' +
+            'target="_blank">' + MissingE.getLocale(lang).postUnavailable + '</a>)' +
             '</span>' : '') + '</div></div>');
    }
    else {
@@ -178,7 +178,7 @@ function removeMark(post) {
 function addMark(post,user,custom) {
    var lang = $('html').attr('lang');
    var d = new Date();
-   var ds = getBookmarkerFormat(d, user, markFormat, lang);
+   var ds = MissingE.getBookmarkerFormat(d, user, markFormat, lang);
 
    if (custom) {
       var ans = "";
@@ -286,7 +286,7 @@ function doMarks(item) {
          }
       }
       var node = $('<a class="' + klass + '" id="bookmark_' + post +
-                   '" title="' + getLocale(lang).bookmarkVerb + '" ' +
+                   '" title="' + MissingE.getLocale(lang).bookmarkVerb + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -445,7 +445,7 @@ chrome.extension.sendRequest({greeting: "settings",
                    'class="controls_section">' +
                    '<li class="MissingE_marklist_title recessed">' +
                    '<a href="#" onclick="return false;">' +
-                   getLocale(lang).bookmarksTitle + '</a></li></ul>');
+                   MissingE.getLocale(lang).bookmarksTitle + '</a></li></ul>');
       $(function() {
          $('#MissingE_marklist').sortable({
             items: "li[post]",

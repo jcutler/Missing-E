@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,getLocale,jQuery */
+/*global MissingE.escapeHTML,MissingE.getLocale,jQuery */
 
 function reply_getValue() {
    var retval = localStorage.getItem("trr_ReplyText");
@@ -69,14 +69,14 @@ function getAsLinks(lang, type) {
       urlPref = '';
    }
    var othertype = (type==='text' ? 'photo' : 'text');
-   return getLocale(lang).replyType[type+"Title"] + "\n" +
+   return MissingE.getLocale(lang).replyType[type+"Title"] + "\n" +
       '<span class="as_links"><a href="#" id="the_as_link" ' +
       'onclick="Element.hide(this);Element.show(\'the_as_links\');' +
       'return false;" style="font-weight:bold;" >' +
-      getLocale(lang).replyType.as +
+      MissingE.getLocale(lang).replyType.as +
       '</a><span id="the_as_links" style="display:none;"><a id="as_switch" ' +
       'href="' + urlPref + '/new/' + othertype + '">' +
-      getLocale(lang).replyType[othertype] +
+      MissingE.getLocale(lang).replyType[othertype] +
       '</a><a href="#" onclick="Element.hide(\'the_as_links\');' +
       'Element.show(\'the_as_link\');return false;">x</a></span></span>';
 }
@@ -134,7 +134,7 @@ function MissingE_replyReplies_fill_doStartup() {
          for (i=0; i<tags.length; i++) {
             if (tags[i] !== undefined && tags[i] !== null && tags[i] !== '') {
                txt += '<div class="token"><span class="tag">' +
-                        escapeHTML(tags[i]) +
+                        MissingE.escapeHTML(tags[i]) +
                         '</span><a title="Remove tag" ' +
                         'onclick="tag_editor_remove_tag($(this).up()); ' +
                         'return false;" href="#">x</a></div>';

@@ -21,8 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global extension, jQuery, MissingE,
-  locale, getLocale */
+/*global extension, jQuery, MissingE */
 
 (function($){
 
@@ -49,9 +48,9 @@ MissingE.packages.massEditor = {
       var lang = 'en';
       var deltext = $('#delete_posts').text().toLowerCase();
       var o;
-      for (o in locale) {
-         if (locale.hasOwnProperty(o) &&
-             locale[o].dashFixesText.del === deltext) {
+      for (o in MissingE.locale) {
+         if (MissingE.locale.hasOwnProperty(o) &&
+             MissingE.locale[o].dashFixesText.del === deltext) {
             lang = o;
             break;
          }
@@ -73,7 +72,7 @@ MissingE.packages.massEditor = {
                  '<button id="MissingE_selecttype" type="button" ' +
                  'class="chrome big_dark"><div class="chrome_button">' +
                  '<div class="chrome_button_left"></div>' +
-                 getLocale(lang).select + ' ' +
+                 MissingE.getLocale(lang).select + ' ' +
                  '<img src="http://assets.tumblr.com/images/archive_header_' +
                  'button_arrow.png" width="9" height="6" ' +
                  'style="vertical-align:2px; margin:0 0 0 3px;" />' +
@@ -87,16 +86,16 @@ MissingE.packages.massEditor = {
                  '<button id="MissingE_select" type="button" ' +
                  'class="chrome big_dark"><div class="chrome_button">' +
                  '<div class="chrome_button_left"></div>' +
-                 getLocale(lang).first100 + '<div ' +
+                 MissingE.getLocale(lang).first100 + '<div ' +
                  'class="chrome_button_right"></div></div></button></div>';
-      for (i in getLocale(lang).postTypeNames) {
-         if (getLocale(lang).postTypeNames.hasOwnProperty(i)) {
+      for (i in MissingE.getLocale(lang).postTypeNames) {
+         if (MissingE.getLocale(lang).postTypeNames.hasOwnProperty(i)) {
             sbtlisttext += MissingE.packages.massEditor
-               .generateButton(i,getLocale(lang).postTypeNames[i]);
+               .generateButton(i,MissingE.getLocale(lang).postTypeNames[i]);
          }
       }
       sbtlisttext += MissingE.packages.massEditor
-         .generateButton('note', getLocale(lang).askPost, true);
+         .generateButton('note', MissingE.getLocale(lang).askPost, true);
       sbtlisttext += '</div>';
       var sbtlist = $(sbtlisttext).insertAfter(sbt);
 

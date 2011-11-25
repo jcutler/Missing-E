@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,jQuery,getLocale,self */
+/*global MissingE.escapeHTML,jQuery,MissingE.getLocale,self */
 
 function setupMassDeletePost(item) {
    jQuery('<span class="MissingEmassDeleteSpan">' +
@@ -49,7 +49,7 @@ function deletePosts(key, lang) {
       data: {"post_ids": posts.join(','),
              "form_key": key},
       error: function() {
-         alert(getLocale(lang).massDelete.postsError);
+         alert(MissingE.getLocale(lang).massDelete.postsError);
       },
       success: function() {
          remset.removeClass('MissingEmdSelected').remove();
@@ -64,11 +64,11 @@ function addPostLinks() {
    var pltxt = '<div class="short_post_labels">';
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
-   for (i in getLocale(lang).postTypeNames) {
-      if (getLocale(lang).postTypeNames.hasOwnProperty(i)) {
+   for (i in MissingE.getLocale(lang).postTypeNames) {
+      if (MissingE.getLocale(lang).postTypeNames.hasOwnProperty(i)) {
          pltxt += '<div class="short_label">' +
                   '<a href="/new/' + i + '" class="new_post_label">' +
-                  getLocale(lang).postTypeNames[i] + '</a></div>';
+                  MissingE.getLocale(lang).postTypeNames[i] + '</a></div>';
       }
    }
    pltxt += '<div class="clear"></div></div>';
@@ -104,14 +104,14 @@ function doReplies(item) {
    if (!key) {
       return false;
    }
-   key = escapeHTML(key[1]);
-   id = escapeHTML(id);
+   key = MissingE.escapeHTML(key[1]);
+   id = MissingE.escapeHTML(id);
    notes.after('<a class="MissingE_experimental_reply" href="#" onclick="' +
                'display_reply_pane([' + id + ', \'' + key + '\']);' +
                'return false;" id="post_control_reply_' + id + '" title="' +
-               getLocale(lang).dashFixesText.reply + ' [' +
-               getLocale(lang).dashFixesText.experimental + ']">[' +
-               getLocale(lang).dashFixesText.reply + ']</small></a>');
+               MissingE.getLocale(lang).dashFixesText.reply + ' [' +
+               MissingE.getLocale(lang).dashFixesText.experimental + ']">[' +
+               MissingE.getLocale(lang).dashFixesText.reply + ']</small></a>');
 
    notes.after('<span class="MissingE_post_control ' +
                'MissingE_experimental_reply_wait" id="reply_fail_' + id +
@@ -133,31 +133,31 @@ function doIcons(item) {
       if (!(/http:\/\/www\.tumblr\.com\/(blog\/[^\/]+\/)?(inbox|messages|submissions)/.test(location.href)) &&
           (/^delete_post_/.test(a.prev().attr('id')) ||
           /^post_delete_/.test(a.attr('id')) ||
-          (new RegExp(getLocale(lang).dashFixesText.del, "i")
+          (new RegExp(MissingE.getLocale(lang).dashFixesText.del, "i")
             .test(a.text())))) {
-         a.attr('title',getLocale(lang).dashFixesText.del)
+         a.attr('title',MissingE.getLocale(lang).dashFixesText.del)
             .addClass(klass + "MissingE_delete_control").text('');
       }
-      else if ((new RegExp(getLocale(lang).dashFixesText.queue,
+      else if ((new RegExp(MissingE.getLocale(lang).dashFixesText.queue,
                            "i")).test(a.text())) {
-         a.attr('title',getLocale(lang).dashFixesText.queue)
+         a.attr('title',MissingE.getLocale(lang).dashFixesText.queue)
             .addClass(klass + "MissingE_queue_control").text('');
       }
       else if (/^\/edit/.test(a.attr('href'))) {
-         a.attr('title',getLocale(lang).dashFixesText.edit)
+         a.attr('title',MissingE.getLocale(lang).dashFixesText.edit)
             .addClass(klass + "MissingE_edit_control").text('');
       }
       else if (/^\/reblog/.test(a.attr('href')) ||
                /http[s]?:\/\/www\.tumblr\.com\/register\?referer=soft_reblog/
                   .test(a.attr("href"))) {
-         a.attr('title',getLocale(lang).dashFixesText.reblog)
+         a.attr('title',MissingE.getLocale(lang).dashFixesText.reblog)
             .addClass(klass + "MissingE_reblog_control").text('');
       }
       else if (/^post_control_reply_/.test(a.attr('id'))) {
-         var replyTitle = getLocale(lang).dashFixesText.reply;
+         var replyTitle = MissingE.getLocale(lang).dashFixesText.reply;
          if (a.hasClass("MissingE_experimental_reply")) {
             klass += "MissingE_experimental_reply_control ";
-            replyTitle += " [" + getLocale(lang).dashFixesText.experimental +
+            replyTitle += " [" + MissingE.getLocale(lang).dashFixesText.experimental +
                           "]";
          }
          a.attr('title',replyTitle)
@@ -165,11 +165,11 @@ function doIcons(item) {
       }
       else if (/^show_notes_/.test(a.attr('id')) &&
                a.children().length === 0) {
-         a.attr('title',getLocale(lang).dashFixesText.notes)
+         a.attr('title',MissingE.getLocale(lang).dashFixesText.notes)
             .addClass(klass + "MissingE_notes_control").text('');
       }
       else if (a.hasClass('reblog_count')) {
-         a.attr('title',getLocale(lang).dashFixesText.notes)
+         a.attr('title',MissingE.getLocale(lang).dashFixesText.notes)
             .addClass('MissingE_notes_control_container')
             .find('span').each(function() {
             // doesn't need to be sanitizied, pulled straight from existing DOM
@@ -702,16 +702,16 @@ self.on('message', function(message) {
       jQuery('<ul class="controls_section" id="MissingEdraftQueueTools">' +
          (doRandomQueue ? '<li><a href="#" class="randomize">' +
           '<div class="hide_overflow">' +
-          getLocale(lang).shuffle + '</div></a></li>' : '') +
+          MissingE.getLocale(lang).shuffle + '</div></a></li>' : '') +
          (doMassDelete ? '<li><a href="#" class="select_all">' +
           '<div class="hide_overflow">' +
-          getLocale(lang).massDelete.selectAll + '</div></a></li>' +
+          MissingE.getLocale(lang).massDelete.selectAll + '</div></a></li>' +
           '<li><a href="#" class="deselect_all">' +
           '<div class="hide_overflow">' +
-          getLocale(lang).massDelete.deselectAll + '</div></a></li>' +
+          MissingE.getLocale(lang).massDelete.deselectAll + '</div></a></li>' +
           '<li><a href="#" class="delete_selected">' +
           '<div class="hide_overflow">' +
-          getLocale(lang).massDelete.deleteSelected + '</div></a></li>' : '') +
+          MissingE.getLocale(lang).massDelete.deleteSelected + '</div></a></li>' : '') +
          '</ul>').insertBefore(beforeguy);
       if (doMassDelete) {
          jQuery('#posts li.post').each(function() {
@@ -760,28 +760,28 @@ self.on('message', function(message) {
             var key = jQuery('#posts input[name="form_key"]:first').val();
             var count = jQuery('#posts li.MissingEmdSelected').length;
             if (count > 0) {
-               var sureMsg = getLocale(lang).massDelete.postsConfirm
+               var sureMsg = MissingE.getLocale(lang).massDelete.postsConfirm
                                  .replace('#',count);
-               if (getLocale(lang).massDelete.confirmReplace) {
+               if (MissingE.getLocale(lang).massDelete.confirmReplace) {
                   var countOp = count;
-                  switch(getLocale(lang).massDelete
+                  switch(MissingE.getLocale(lang).massDelete
                            .confirmReplace.operation[0]) {
                      case "+":
-                        countOp += getLocale(lang).massDelete
+                        countOp += MissingE.getLocale(lang).massDelete
                                     .confirmReplace.operation[1];
                         break;
                      case "-":
-                        countOp -= getLocale(lang).massDelete
+                        countOp -= MissingE.getLocale(lang).massDelete
                                     .confirmReplace.operation[1];
                         break;
                      case "%":
-                        countOp %= getLocale(lang).massDelete
+                        countOp %= MissingE.getLocale(lang).massDelete
                                     .confirmReplace.operation[1];
                         break;
                   }
-                  if (getLocale(lang).massDelete.confirmReplace[countOp]) {
+                  if (MissingE.getLocale(lang).massDelete.confirmReplace[countOp]) {
                      var r;
-                     var repls = getLocale(lang).massDelete
+                     var repls = MissingE.getLocale(lang).massDelete
                                     .confirmReplace[countOp];
                      for (r in repls) {
                         if (repls.hasOwnProperty(r)) {
@@ -821,21 +821,21 @@ self.on('message', function(message) {
          var div = container.find('#'+thelist[0]
                                   .replace(/post/,"notes_container"));
          div.prepend('<div class="MissingE_notesSorter">' +
-                     getLocale(lang).sorting.sort + ': ' +
+                     MissingE.getLocale(lang).sorting.sort + ': ' +
                      '<div class="MissingE_sorterContainer">' +
                      '<div class="MissingE_sorterButton MissingE_typeSort">' +
-                        getLocale(lang).sorting.type + ' ' +
+                        MissingE.getLocale(lang).sorting.type + ' ' +
                         '<span class="MissingE_upArrow">&uArr;</span>' +
                         '<span class="MissingE_downArrow">&dArr;</span>' +
                      '</div>' +
                      '<div class="MissingE_sorterButton MissingE_userSort">' +
-                        getLocale(lang).sorting.user + ' ' +
+                        MissingE.getLocale(lang).sorting.user + ' ' +
                         '<span class="MissingE_upArrow">&uArr;</span>' +
                         '<span class="MissingE_downArrow">&dArr;</span>' +
                      '</div>' +
                      '</div>' +
                      '<div class="MissingE_sorterButton MissingE_unsort">' +
-                        getLocale(lang).sorting.reset +
+                        MissingE.getLocale(lang).sorting.reset +
                      '</div></div>');
          var node = container.find('ol.notes');
          var list = node.find('li').not('.more_notes_link_container');

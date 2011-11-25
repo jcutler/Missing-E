@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,getLocale,jQuery,self */
+/*global MissingE.escapeHTML,MissingE.getLocale,jQuery,self */
 
 function makeSidebar(tumblrAcctNum, retries) {
    var tumblrAcct = '';
@@ -46,13 +46,13 @@ function makeSidebar(tumblrAcctNum, retries) {
          for (i=0; i<list.length; i++) {
             var klass = '';
             if (i === tumblrAcctNum) {
-               tumblrAcct = escapeHTML(list[i][0]);
-               tumblrText = escapeHTML(list[i][1]);
+               tumblrAcct = MissingE.escapeHTML(list[i][0]);
+               tumblrText = MissingE.escapeHTML(list[i][1]);
                klass = 'class="current_sidebar"';
             }
             bloglist += '<li ' + klass + '><a tumblr="' +
-               escapeHTML(list[i][0]) + '" href="#" onclick="return false;">' +
-               '<div class="hide_overflow">' + escapeHTML(list[i][1]) +
+               MissingE.escapeHTML(list[i][0]) + '" href="#" onclick="return false;">' +
+               '<div class="hide_overflow">' + MissingE.escapeHTML(list[i][1]) +
                '</div></a></li>';
          }
          bloglist += '</ul>';
@@ -62,23 +62,23 @@ function makeSidebar(tumblrAcctNum, retries) {
       if (!lang) { lang = 'en'; }
       var sidebarList = [
          {
-         label: getLocale(lang).sidebar.posts,
+         label: MissingE.getLocale(lang).sidebar.posts,
          klass: "posts"
          },
          {
-         label: getLocale(lang).sidebar.followers,
+         label: MissingE.getLocale(lang).sidebar.followers,
          klass: "followers"
          },
          {
-         label: getLocale(lang).sidebar.messages,
+         label: MissingE.getLocale(lang).sidebar.messages,
          klass: "messages"
          },
          {
-         label: getLocale(lang).sidebar.drafts,
+         label: MissingE.getLocale(lang).sidebar.drafts,
          klass: "drafts"
          },
          {
-         label: getLocale(lang).sidebar.queue,
+         label: MissingE.getLocale(lang).sidebar.queue,
          klass: "queue"
          }
       ];
@@ -97,9 +97,9 @@ function makeSidebar(tumblrAcctNum, retries) {
             '</div></a></li>';
       }
       sidebartxt += '<li class="recessed"><a href="/mega-editor/' +
-         escapeHTML(tumblrAcct) +
+         MissingE.escapeHTML(tumblrAcct) +
          '" class="mass_editor"><div class="hide_overflow">' +
-         getLocale(lang).sidebar.massEditor + '</div><div class="gradient">' +
+         MissingE.getLocale(lang).sidebar.massEditor + '</div><div class="gradient">' +
          '</div></a></li></ul>';
    
       var sidebar;
@@ -172,14 +172,14 @@ function makeSidebar(tumblrAcctNum, retries) {
                   .match(/<span class="count">([^<]*)/);
                if (postNum && postNum.length >= 2) {
                   msb.find('a.posts').append('<span class="count">' +
-                             escapeHTML(postNum[1]) + '</span>');
+                             MissingE.escapeHTML(postNum[1]) + '</span>');
                }
                if (followerIdx !== len) {
                   var followerNum = data.substring(followerIdx, msgsIdx)
                      .match(/<span class="count">([^<]*)/);
                   if (followerNum && followerNum.length >= 2) {
                      msb.find('a.followers').append('<span class="count">' +
-                                escapeHTML(followerNum[1]) + '</span>');
+                                MissingE.escapeHTML(followerNum[1]) + '</span>');
                   }
                }
                if (msgsIdx !== len) {
@@ -187,20 +187,20 @@ function makeSidebar(tumblrAcctNum, retries) {
                      .match(/<span class="count">([^<]*)/);
                   if (msgsNum && msgsNum.length >= 2) {
                      msb.find('a.messages').append('<span class="count">' +
-                                escapeHTML(msgsNum[1]) + '</span>');
+                                MissingE.escapeHTML(msgsNum[1]) + '</span>');
                   }
                }
                var draftNum = data.substring(draftIdx, queueIdx)
                   .match(/<span class="count">([^<]*)/);
                if (draftNum && draftNum.length >= 2) {
                   msb.find('a.drafts').append('<span class="count">' +
-                             escapeHTML(draftNum[1]) + '</span>');
+                             MissingE.escapeHTML(draftNum[1]) + '</span>');
                }
                var queueNum = data.substring(queueIdx, endIdx)
                   .match(/<span class="count">([^<]*)/);
                if (queueNum && queueNum.length >= 2) {
                   msb.find('a.queue').append('<span class="count">' +
-                             escapeHTML(queueNum[1]) + '</span>');
+                             MissingE.escapeHTML(queueNum[1]) + '</span>');
                }
                msb.trigger('load.sidebar', this.tumblrAcct);
             }

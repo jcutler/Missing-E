@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global getLocale,self */
+/*global MissingE.getLocale,self */
 
 self.on('message', function (message) {
    if (message.greeting !== "settings" ||
@@ -101,7 +101,7 @@ self.on('message', function (message) {
          icon.style.display='block';
          icon.style.cssFloat='left';
          icon.style.cursor='pointer';
-         icon.alt=getLocale(lang).reblog;
+         icon.alt=MissingE.getLocale(lang).reblog;
          icon.src = 'http://assets.tumblr.com/images/iframe_reblog_alpha' +
             suffix;
          link.appendChild(icon);

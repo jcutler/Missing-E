@@ -55,30 +55,10 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var MissingE = {};
+var MissingE = require("utils").utils;
 MissingE.locale = require("localizations").locale;
-var locale = MissingE.locale;
 var lang = 'en';
 var debugMode = false;
-
-function getLocale(lang) {
-   if (typeof lang != "string") {
-      lang = "en";
-   }
-   lang = lang.toLowerCase();
-   if (locale.hasOwnProperty(lang) &&
-       locale[lang] !== false) {
-      return locale[lang];
-   }
-   else {
-      if (!locale.hasOwnProperty(lang)) {
-         locale[lang] = false;
-         console.log("Warning: Localization not found for language '" + lang +
-                     "'");
-      }
-      return locale.en;
-   }
-}
 
 function getVersion() {
    return require("self").version;
@@ -104,11 +84,6 @@ function setStorage(key, val) {
 
 var currVersion = getVersion();
 var prevVersion = getStorage('extensions.MissingE.version',null);
-
-function escapeHTML(str) {
-   return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
-            .replace(/>/,'&gt;').replace(/</,'&lt;');
-}
 
 cacheClear = timer.setInterval(function() {
    cache = {};
@@ -146,19 +121,6 @@ var componentList = ["dashboardFixes",
                      "replyReplies",
                      "massEditor",
                      "sidebarTweaks"];
-
-var months = ["Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec"];
 
 function getAllSettings() {
    var settings = {};
@@ -304,7 +266,7 @@ function openSettings() {
                                 data.url("common/defs.js"),
                                 data.url("extension.js"),
                                 data.url("core/localizations.js"),
-                                data.url("common/utils.js"),
+                                data.url("core/utils.js"),
                                 data.url("checkbox/jquery.checkbox.min.js"),
                                 data.url("facebox/facebox.js"),
                                 data.url("jquery-spin/jquery-spin.js"),
@@ -327,37 +289,6 @@ if (!getStorage("extensions.MissingE.hideWidget",false)) {
          openSettings();
       }
    });
-}
-
-function zeroPad(num, len) {
-   var ret = "";
-   ret += num;
-   while (ret.length < len) { ret = "0" + ret; }
-   return ret;
-}
-
-function getFormattedDate(d, format, lang) {
-   var ret = format;
-   ret = ret.replace(/%Y/g,d.getFullYear())
-            .replace(/%y/g,(d.getFullYear()%100))
-            .replace(/%M/g,getLocale(lang)["monthsShort"][d.getMonth()])
-            .replace(/%B/g,getLocale(lang)["monthsLong"][d.getMonth()])
-            .replace(/%w/g,getLocale(lang)["daysShort"][d.getDay()])
-            .replace(/%W/g,getLocale(lang)["daysLong"][d.getDay()])
-            .replace(/%m/g,zeroPad(d.getMonth()+1,2))
-            .replace(/%n/g,(d.getMonth()+1))
-            .replace(/%D/g,zeroPad(d.getDate(),2))
-            .replace(/%d/g,d.getDate())
-            .replace(/%G/g,zeroPad((d.getHours()%12===0 ?
-                                    "12" : d.getHours()%12),2))
-            .replace(/%g/g,(d.getHours()%12===0 ? "12" : d.getHours()%12))
-            .replace(/%H/g,zeroPad(d.getHours(),2))
-            .replace(/%h/g,d.getHours())
-            .replace(/%i/g,zeroPad(d.getMinutes(),2))
-            .replace(/%s/g,zeroPad(d.getSeconds(),2))
-            .replace(/%A/g,(d.getHours() < 12 ? "AM" : "PM"))
-            .replace(/%a/g,(d.getHours() < 12 ? "am" : "pm"));
-   return ret;
 }
 
 function exportOptionsXML(theWorker) {
@@ -472,7 +403,7 @@ function doTimestamp(stamp, id, theWorker) {
       theWorker.postMessage({greeting: "timestamp", pid: id, success: false});
    }
    var ins = getStorage("extensions.MissingE.timestamps.format",defaultFormat);
-   ins = getFormattedDate(d, ins, lang);
+   ins = MissingE.getFormattedDate(d, ins, lang);
    theWorker.postMessage({greeting: "timestamp", pid: id, success: true, data: ins});
    return true;
 }
@@ -895,7 +826,7 @@ function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
    Request({
       url: "http://api.tumblr.com/v2/blog/" +
             url.replace(/^https?:\/\//,'') + "/posts?api_key=" + apiKey +
-            "&id=" + escapeHTML(pid),
+            "&id=" + MissingE.escapeHTML(pid),
       headers: {tryCount: count,
                 retryLimit: retries,
                 targetId: pid},
@@ -1231,7 +1162,7 @@ function handleMessage(message, myWorker) {
       myWorker.postMessage({greeting: "update",
          update:versionCompare(getStorage("extensions.MissingE.externalVersion",'0'),
                                getStorage("extensions.MissingE.version",'0')) > 0,
-         msg:getLocale(message.lang).update});
+         msg:MissingE.getLocale(message.lang).update});
    }
    else if (message.greeting == "exportOptions") {
       exportOptionsXML(myWorker);
@@ -1244,9 +1175,10 @@ function handleMessage(message, myWorker) {
 
    }
    else if (message.greeting == "getAsker") {
+      console.log("getAsker");
       myWorker.tab.attach({
-         contentScriptFile: [data.url("common/utils.js"),
-                             data.url("extension.js"),
+         contentScriptFile: [data.url("extension.js"),
+                             data.url("core/utils.js"),
                              data.url("core/betterReblogs/betterReblogs_post.js")],
          onMessage: function(msg) {
             myWorker.postMessage({greeting: "sendAsker", name: msg.name,
@@ -1587,8 +1519,8 @@ function handleMessage(message, myWorker) {
           needUIdraggable = false;
       var injectScripts = [data.url("extension.js"),
                            data.url("common/storage.js"),
-                           data.url("common/utils.js"),
-                           data.url("core/localizations.js")];
+                           data.url("core/localizations.js"),
+                           data.url("core/utils.js")];
       var injectStyles = [];
       activeScripts.extensionURL = data.url("");
       activeScripts.version = currVersion;
@@ -1945,10 +1877,9 @@ pageMod.PageMod({
 pageMod.PageMod({
    include: ["http://www.tumblr.com/dashboard/iframe*"],
    contentScriptWhen: 'ready',
-   contentScriptFile: [data.url("common/utils.js"),
-                       data.url("extension.js"),
+   contentScriptFile: [data.url("extension.js"),
                        data.url("core/localizations.js"),
-                       data.url("common/utils.js"),
+                       data.url("core/utils.js"),
                        data.url("core/betterReblogs/betterReblogs_post.js"),
                        data.url("core/gotoDashPost/gotoDashPost.js"),
                        data.url("reblogYourself/reblogYourself_post.js"),

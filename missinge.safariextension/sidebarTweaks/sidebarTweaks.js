@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,getLocale,safari */
+/*global $,MissingE.getLocale,safari */
 
 function makeSidebar(tumblrAcctNum, retries) {
    var tumblrAcct = '';
@@ -60,23 +60,23 @@ function makeSidebar(tumblrAcctNum, retries) {
       var lang = $('html').attr('lang');
       var sidebarList = [
          {
-         label: getLocale(lang).sidebar.posts,
+         label: MissingE.getLocale(lang).sidebar.posts,
          klass: "posts"
          },
          {
-         label: getLocale(lang).sidebar.followers,
+         label: MissingE.getLocale(lang).sidebar.followers,
          klass: "followers"
          },
          {
-         label: getLocale(lang).sidebar.messages,
+         label: MissingE.getLocale(lang).sidebar.messages,
          klass: "messages"
          },
          {
-         label: getLocale(lang).sidebar.drafts,
+         label: MissingE.getLocale(lang).sidebar.drafts,
          klass: "drafts"
          },
          {
-         label: getLocale(lang).sidebar.queue,
+         label: MissingE.getLocale(lang).sidebar.queue,
          klass: "queue"
          }
       ];
@@ -96,7 +96,7 @@ function makeSidebar(tumblrAcctNum, retries) {
       }
       sidebartxt += '<li class="recessed"><a href="/mega-editor/' + tumblrAcct +
          '" class="mass_editor"><div class="hide_overflow">' +
-         getLocale(lang).sidebar.massEditor + '</div><div class="gradient">' +
+         MissingE.getLocale(lang).sidebar.massEditor + '</div><div class="gradient">' +
          '</div></a></li></ul>';
    
       var sidebar;

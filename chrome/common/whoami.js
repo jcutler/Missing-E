@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome,getLocale */
+/*global chrome,MissingE.getLocale */
 
 if ((window.top === window &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
@@ -58,7 +58,7 @@ if ((window.top === window &&
          var html = document.getElementsByTagName('html');
          var lang = 'en';
          if (html && html[0]) { lang = html[0].getAttribute('lang'); }
-         up.setAttribute('title', getLocale(lang).update);
+         up.setAttribute('title', MissingE.getLocale(lang).update);
          var post = '';
          if (response.link !== '') {
             post = 'post/' + response.link;

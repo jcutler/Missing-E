@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,getLocale,safari */
+/*global $,MissingE.getLocale,safari */
 
 function setupMassDeleteAsk(item) {
    $('<span class="MissingEmassDeleteSpan">' +
@@ -53,7 +53,7 @@ function deleteMessages(key, lang) {
       data: {"post_ids": posts.join(','),
              "form_key": key},
       error: function() {
-         alert(getLocale(lang).massDelete.messagesError);
+         alert(MissingE.getLocale(lang).massDelete.messagesError);
       },
       success: function() {
          remset.removeClass('MissingEmdSelected').remove();
@@ -209,8 +209,8 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
    if (betterAnswers === 1) {
       var allbtns = "";
       var suffix;
-      for (i in getLocale(lang).postingFixes.submitText) {
-         if (getLocale(lang).postingFixes.submitText.hasOwnProperty(i)) {
+      for (i in MissingE.getLocale(lang).postingFixes.submitText) {
+         if (MissingE.getLocale(lang).postingFixes.submitText.hasOwnProperty(i)) {
             if (i === 'publish') { continue; }
             if (i === 'queue' || i === 'draft') {
                suffix = 'also_';
@@ -222,7 +222,7 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
                suffix + id + '" onclick="return false;">' +
                '<div class="chrome_button">' +
                '<div class="chrome_button_left"></div>' +
-               getLocale(lang).postingFixes.submitText[i] +
+               MissingE.getLocale(lang).postingFixes.submitText[i] +
                '<div class="chrome_button_right"></div></div></button><br />';
          }
       }
@@ -273,10 +273,10 @@ function moreAnswerOptions(item, tagAsker, defTags, betterAnswers) {
          startTags = '';
       }
       var adding = '<div class="MissingE_askFixes_group">';
-      adding += '<div>' + getLocale(lang).tagsText + ': <input ' +
+      adding += '<div>' + MissingE.getLocale(lang).tagsText + ': <input ' +
                   'type="text" class="MissingE_askFixes_tags" value="' +
                   startTags + '"/></div>';
-      adding += '<div>' + getLocale(lang).twitterText + ': <input ' +
+      adding += '<div>' + MissingE.getLocale(lang).twitterText + ': <input ' +
                   'type="checkbox" class="MissingE_askFixes_twitter" />' +
                   '</div></div>';
       answer.find('div:first').css('padding-top','10px')
@@ -296,13 +296,13 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, betterAnswers,
    if (askDash === 1) {
       var i;
       var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
-      for (i=0; i<getLocale(lang).askPerson.length; i++) {
+      for (i=0; i<MissingE.getLocale(lang).askPerson.length; i++) {
          if (i>0) { askLabel += " "; }
-         if (getLocale(lang).askPerson[i] === "U") {
+         if (MissingE.getLocale(lang).askPerson[i] === "U") {
             askLabel += '<span class="MissingE_askPerson"></span>';
          }
          else {
-            askLabel += getLocale(lang).askPerson[i];
+            askLabel += MissingE.getLocale(lang).askPerson[i];
          }
       }
       askLabel += ':';
@@ -413,13 +413,13 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, betterAnswers,
          $('<ul class="controls_section" id="MissingEmassDeleter">' +
            '<li><a href="#" class="select_all">' +
            '<div class="hide_overflow">' +
-           getLocale(lang).massDelete.selectAll + '</div></a></li>' +
+           MissingE.getLocale(lang).massDelete.selectAll + '</div></a></li>' +
            '<li><a href="#" class="deselect_all">' +
            '<div class="hide_overflow">' +
-           getLocale(lang).massDelete.deselectAll + '</div></a></li>' +
+           MissingE.getLocale(lang).massDelete.deselectAll + '</div></a></li>' +
            '<li><a href="#" class="delete_selected">' +
            '<div class="hide_overflow">' +
-           getLocale(lang).massDelete.deleteSelected + '</div></a></li></ul>')
+           MissingE.getLocale(lang).massDelete.deleteSelected + '</div></a></li></ul>')
                .insertBefore(beforeguy);
          $('#posts li.post').each(function() {
             setupMassDeleteAsk(this);
@@ -449,28 +449,28 @@ function MissingE_askFixes_doStartup(tagAsker, defaultTags, betterAnswers,
                var key = $('#posts input[name="form_key"]:first').val();
                var count = $('#posts li.MissingEmdSelected').length;
                if (count > 0) {
-                  var sureMsg = getLocale(lang).massDelete.messagesConfirm
+                  var sureMsg = MissingE.getLocale(lang).massDelete.messagesConfirm
                                     .replace('#',count);
-                  if (getLocale(lang).massDelete.confirmReplace) {
+                  if (MissingE.getLocale(lang).massDelete.confirmReplace) {
                      var countOp = count;
-                     switch(getLocale(lang).massDelete
+                     switch(MissingE.getLocale(lang).massDelete
                               .confirmReplace.operation[0]) {
                         case "+":
-                           countOp += getLocale(lang).massDelete
+                           countOp += MissingE.getLocale(lang).massDelete
                                        .confirmReplace.operation[1];
                            break;
                         case "-":
-                           countOp -= getLocale(lang).massDelete
+                           countOp -= MissingE.getLocale(lang).massDelete
                                        .confirmReplace.operation[1];
                            break;
                         case "%":
-                           countOp %= getLocale(lang).massDelete
+                           countOp %= MissingE.getLocale(lang).massDelete
                                        .confirmReplace.operation[1];
                            break;
                      }
-                     if (getLocale(lang).massDelete.confirmReplace[countOp]) {
+                     if (MissingE.getLocale(lang).massDelete.confirmReplace[countOp]) {
                         var r;
-                        var repls = getLocale(lang).massDelete
+                        var repls = MissingE.getLocale(lang).massDelete
                                        .confirmReplace[countOp];
                         for (r in repls) {
                            if (repls.hasOwnProperty(r)) {

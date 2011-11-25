@@ -21,8 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global extension, jQuery, MissingE,
-  isTumblrURL, getLocale */
+/*global extension, jQuery, MissingE */
 
 (function($){
 
@@ -36,7 +35,7 @@ MissingE.packages.timestamps = {
       }
       else {
          var failHTML = 'Timestamp loading failed.';
-         if (isTumblrURL(location.href, ["messages"])) {
+         if (MissingE.isTumblrURL(location.href, ["messages"])) {
             failHTML += ' <a class="MissingE_timestamp_retry" href="#" ' +
                         'onclick="return false;">Retry</a>';
          }
@@ -53,7 +52,7 @@ MissingE.packages.timestamps = {
          var tid = $(item).attr("id").match(/\d*$/)[0];
          var perm = $(item).find("a.permalink:first");
          var addr, type, stamp;
-         if (isTumblrURL(location.href, ["messages"])) {
+         if (MissingE.isTumblrURL(location.href, ["messages"])) {
             type = 'ask';
             addr = 'http://www.tumblr.com/edit/';
             stamp = '';
@@ -72,7 +71,7 @@ MissingE.packages.timestamps = {
                   .after('<div class="post_info">' +
                          '<span class="MissingE_timestamp" ' +
                          'style="font-weight:normal;">' +
-                         getLocale(lang).loading +
+                         MissingE.getLocale(lang).loading +
                          '</span></div>');
          }
          else {
@@ -80,10 +79,10 @@ MissingE.packages.timestamps = {
             if (spn.length === 0) {
                div.append('<br><span class="MissingE_timestamp" ' +
                           'style="font-weight:normal;">' +
-                          getLocale(lang).loading + '</span>');
+                          MissingE.getLocale(lang).loading + '</span>');
             }
             else {
-               spn.text(getLocale(lang).loading);
+               spn.text(MissingE.getLocale(lang).loading);
             }
          }
          extension.sendRequest("timestamp",

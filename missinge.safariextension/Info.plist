@@ -52,9 +52,9 @@
 				<string>common/ajaxEvents.js</string>
 				<string>common/jquery-ui.min.js</string>
 				<string>common/defs.js</string>
-				<string>common/utils.js</string>
-				<string>common/storage.js</string>
 				<string>core/localizations.js</string>
+				<string>core/utils.js</string>
+				<string>common/storage.js</string>
 				<string>facebox/facebox.js</string>
 				<string>askFixes/askFixes.js</string>
 				<string>core/betterReblogs/betterReblogs_dash.js</string>

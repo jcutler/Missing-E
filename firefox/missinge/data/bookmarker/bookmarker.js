@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,getBookmarkerFormat,getLocale,getStorage,jQuery,self,setStorage */
+/*global MissingE.escapeHTML,MissingE.getBookmarkerFormat,MissingE.getLocale,getStorage,jQuery,self,setStorage */
 
 var markFormat;
 
@@ -50,9 +50,9 @@ function parseMarks(s) {
 
 function getMarkText(dt, post, name) {
    var pid = Number(post)+1;
-   dt = escapeHTML(dt);
-   post = escapeHTML(post);
-   name = escapeHTML(name);
+   dt = MissingE.escapeHTML(dt);
+   post = MissingE.escapeHTML(post);
+   name = MissingE.escapeHTML(name);
    return '<li post="' + post + '" id="mark_' + post + '">' +
             '<a href="/dashboard/1000/' + pid +
             '?lite" post="' + post + '" class="MissingE_bookmarker_marklink">' +
@@ -67,23 +67,23 @@ function addBar(mark, lang, altPost) {
    if (altPost) { post = jQuery(altPost); }
    else { post = jQuery('#post_' + mark[1]); }
    if (jQuery('#bookmarkbar_' + mark[1]).length === 0) {
-      var markid = escapeHTML(mark[1]);
-      var marktxt = escapeHTML(mark[2]);
+      var markid = MissingE.escapeHTML(mark[1]);
+      var marktxt = MissingE.escapeHTML(mark[2]);
       post.before('<div id="bookmarkbar_' + markid + '" ' +
             'class="MissingE_bookmark_bar"><div ' +
             'class="MissingE_bookmark_line"></div><div ' +
-            'class="MissingE_bookmark_text">' + getLocale(lang).bookmarkNoun +
+            'class="MissingE_bookmark_text">' + MissingE.getLocale(lang).bookmarkNoun +
             ' - <em id="bookmarkbar_label_' +
             markid + '">' + marktxt + '</em>' + (altPost ? '<span ' +
             'class="MissingE_bookmark_missing ' +
             'MissingE_bookmark_missing_' + lang + '"> (' +
             '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
-            'target="_blank">' + getLocale(lang).postUnavailable + '</a>)' +
+            'target="_blank">' + MissingE.getLocale(lang).postUnavailable + '</a>)' +
             '</span>' : '') + '</div></div>');
    }
    else {
       jQuery('#bookmarkbar_' + mark[1]).removeData('toremove');
-      jQuery('#bookmarkbar_label_' + mark[1]).html(escapeHTML(mark[2]));
+      jQuery('#bookmarkbar_label_' + mark[1]).html(MissingE.escapeHTML(mark[2]));
    }
 }
 
@@ -172,7 +172,7 @@ function addMark(post,user,custom) {
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
    var d = new Date();
-   var ds = getBookmarkerFormat(d, user, markFormat, lang);
+   var ds = MissingE.getBookmarkerFormat(d, user, markFormat, lang);
 
    if (custom) {
       var ans = "";
@@ -281,8 +281,8 @@ function doMarks(item) {
          }
       }
       var node = jQuery('<a class="' + klass + '" id="bookmark_' +
-                   escapeHTML(post) + '" title="' +
-                   getLocale(lang).bookmarkVerb + '" ' +
+                   MissingE.escapeHTML(post) + '" title="' +
+                   MissingE.getLocale(lang).bookmarkVerb + '" ' +
                    'href="#" onclick="return false;"></a>');
       node.click(markClick);
       ctrl.addClass('bookmarkAdded');
@@ -464,7 +464,7 @@ self.on('message', function (message) {
                         'class="controls_section">' +
                         '<li class="MissingE_marklist_title recessed">' +
                         '<a href="#" onclick="return false;">' +
-                        getLocale(lang).bookmarksTitle + '</a></li></ul>');
+                        MissingE.getLocale(lang).bookmarksTitle + '</a></li></ul>');
       jQuery(function() {
          jQuery('#MissingE_marklist').sortable({
             items:"li[post]",

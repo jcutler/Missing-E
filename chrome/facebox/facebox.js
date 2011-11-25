@@ -53,7 +53,7 @@
          $('#facebox .content').children().hide().end().append('<div style="padding:50px 0;" class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>');
 
          $('#facebox').css({
-            top:  (getPageHeight() / 10),
+            top:  (window.innerHeight / 10),
             left: $(window).width() / 2 - 205
          }).show();
 
@@ -72,7 +72,7 @@
          $('#facebox .body').children().fadeIn('normal');
          $('#facebox').css('left', $(window).width() / 2 - ($('#facebox .popup').width() / 2));
          var h = $('#facebox .popup').height();
-         var ph = getPageHeight();
+         var ph = window.innerHeight;
          if (h > ((8 * ph) / 10)) {
             $('#facebox').css('top', ((ph-h)>>1));
          }
@@ -170,24 +170,6 @@
       return new Array(xScroll,yScroll);
    }
 
-   // Adapted from getPageSize() by quirksmode.com
-   function getPageHeight() {
-      var windowHeight;
-      if (self.innerHeight) {
-         // all except Explorer
-         windowHeight = self.innerHeight;
-      }
-      else if (document.documentElement &&
-               document.documentElement.clientHeight) {
-         // Explorer 6 Strict Mode
-         windowHeight = document.documentElement.clientHeight;
-      }
-      else if (document.body) { // other Explorers
-         windowHeight = document.body.clientHeight;
-      }
-      return windowHeight;
-   }
-
    // Backwards compatibility
    function makeCompatible() {
       var $s = $.facebox.settings;
@@ -234,7 +216,7 @@
             facebox_images[i].onload = function() {
                facebox_imagesCount++;
                if (facebox_imagesCount == facebox_images.length) {
-                  var ph = getPageHeight() - 30;
+                  var ph = window.innerHeight - 30;
                   var pw = $(window).width() - 30;
                   var maxWidth = 0;
                   var maxHeight = 0;
@@ -299,7 +281,7 @@
       else {
          var image = new Image();
          image.onload = function() {
-            var ph = getPageHeight() - 30;
+            var ph = window.innerHeight - 30;
             var pw = $(window).width() - 30;
             var wide, high;
             if (image.width <= pw && image.height <= ph) {

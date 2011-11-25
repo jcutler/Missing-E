@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,getLocale,jQuery,self */
+/*global MissingE.escapeHTML,MissingE.getLocale,jQuery,self */
 
 function resizeTinyMCE(post,extensionURL) {
    jQuery('head').append('<style type="text/css">' +
@@ -125,7 +125,7 @@ self.on('message', function(message) {
       for (i=0; i<ctags.length; i++) {
          if (ctags[i] !== "") {
             txt += '<div class="token"><span class="tag">' +
-                     escapeHTML(ctags[i]) +
+                     MissingE.escapeHTML(ctags[i]) +
                      '</span><a title="Remove tag" ' +
                      'onclick="tag_editor_remove_tag($(this).up()); ' +
                      'return false;" href="#">x</a></div>';
@@ -138,7 +138,7 @@ self.on('message', function(message) {
      '<a class="clear_tags" style="color:#666;font-size:10px;" href="#" ' +
      'onclick="document.getElementById(\'tokens\').innerHTML=\'\';' +
      'document.getElementById(\'post_tags\').value = \'\';' +
-     'return false;">' + getLocale(lang).postingFixes.clearTagsText +
+     'return false;">' + MissingE.getLocale(lang).postingFixes.clearTagsText +
      '</a></div>');
 
    jQuery('#photo_src').keyup(function(){
@@ -151,7 +151,7 @@ self.on('message', function(message) {
       var queueTags = message.queueTags === '' ? [] : message.queueTags;
       jQuery('#posts div.post_controls a').live('click',function(){
          if (!jQuery(this).hasClass('MissingE_queue_control') &&
-             !(new RegExp(getLocale(lang).dashFixesText.queue,"i"))
+             !(new RegExp(MissingE.getLocale(lang).dashFixesText.queue,"i"))
                .test(jQuery(this).text())) {
             return;
          }
@@ -255,7 +255,7 @@ self.on('message', function(message) {
          bottom = Math.round(bottom);
          if (jQuery('#post_state').val() === '0') {
             jQuery('#post_controls input[type="submit"]')
-               .val(getLocale(lang).postingFixes.submitText.publish);
+               .val(MissingE.getLocale(lang).postingFixes.submitText.publish);
          }
       }
       else {
@@ -272,12 +272,12 @@ self.on('message', function(message) {
          doOnClick = 'document.getElementById(\'the_submit_btn\').click();' +
                      doOnClick;
       }
-      for (i in getLocale(lang).postingFixes.submitText) {
-         if (getLocale(lang).postingFixes.submitText.hasOwnProperty(i)) {
+      for (i in MissingE.getLocale(lang).postingFixes.submitText) {
+         if (MissingE.getLocale(lang).postingFixes.submitText.hasOwnProperty(i)) {
             allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
                         'type="submit" class="positive" ' +
                         'onclick="' + doOnClick + '"><span>' +
-                        getLocale(lang).postingFixes.submitText[i] +
+                        MissingE.getLocale(lang).postingFixes.submitText[i] +
                         '</span></button></div>';
          }
       }
@@ -313,7 +313,7 @@ self.on('message', function(message) {
       showHideButtons(newbtns, jQuery('#post_state').val());
       if (isShare) {
          changeButtonText(jQuery('#post_state').val(),
-                          getLocale(lang).postingFixes.submitText);
+                          MissingE.getLocale(lang).postingFixes.submitText);
       }
    }
 
@@ -333,7 +333,7 @@ self.on('message', function(message) {
          uil.innerHTML = '<a href="#" onclick="Element.hide(\'photo_url\'); ' +
                            '$(\'photo_src\').value = \'\'; ' +
                            'Element.show(\'photo_upload\'); return false;">' +
-                           getLocale(lang).postingFixes.uploadImagesText +
+                           MissingE.getLocale(lang).postingFixes.uploadImagesText +
                            '</a>';
          uil.style.marginTop = "7px";
          url.appendChild(uil);

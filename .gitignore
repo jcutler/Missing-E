@@ -13,3 +13,4 @@ build/chrome-build
 build/firefox-build
 build/safari-build
 firefox/missinge/lib/localizations.js
+firefox/missinge/lib/utils.js

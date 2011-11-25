@@ -21,8 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global extension, jQuery, MissingE,
-  escapeHTML, unescapeHTML, getLocale */
+/*global extension, jQuery, MissingE */
 
 (function($){
 
@@ -70,7 +69,7 @@ MissingE.packages.betterReblogsFill = {
              /Request denied/i.test($('#container').text())) {
             var blog = location.href.match(/[\?&]channel_id=([^&]*)/)[1];
             $('<p>You attempted to reblog using Tumblr username:<br />' +
-              '<strong>' + escapeHTML(blog) + '</strong></p>' +
+              '<strong>' + MissingE.escapeHTML(blog) + '</strong></p>' +
               '<p>This may not be a valid username!<br />' +
               'Please check your <em>Missing e</em> settings.</p>')
                   .insertBefore('#container div.sorry p:last');
@@ -97,14 +96,13 @@ MissingE.packages.betterReblogsFill = {
       var tags = MissingE.packages.betterReblogsFill.getReblogTags();
       if (tags.length === 0) {
          MissingE.packages.betterReblogsFill
-            .setReblogTagsPlainText(document.getElementById('edit_post')
-                                       .post_tags.value);
+            .setReblogTagsPlainText(document.getElementById('post_tags').value);
       }
       tags = MissingE.packages.betterReblogsFill.getReblogTags();
 
       if (document.body.id === 'dashboard_edit_post') {
          $('#the_as_links a[href!="#"]').click(function() {
-            var pt = document.getElementById('edit_post').post_tags.value;
+            var pt = document.getElementById('post_tags').value;
             if (pt !== '') {
                MissingE.packages.betterReblogsFill.setReblogTagsPlainText(pt);
             }
@@ -122,7 +120,7 @@ MissingE.packages.betterReblogsFill = {
             if (askName && askName.length > 1 &&
                 askPost && askPost.length > 1 &&
                 $('#left_column').children("div.post_question").length !== 0) {
-               pt = document.getElementById('edit_post').post_tags.value;
+               pt = document.getElementById('post_tags').value;
                if (pt !== '') {
                   MissingE.packages.betterReblogsFill
                      .setReblogTagsPlainText(pt);
@@ -138,7 +136,7 @@ MissingE.packages.betterReblogsFill = {
          else if (!askName || askName.length < 2 || !askPost ||
                   askPost.length < 2) {
             if ($('#left_column').children("div.post_question").length !== 0) {
-               pt = document.getElementById('edit_post').post_tags.value;
+               pt = document.getElementById('post_tags').value;
                if (pt !== '') {
                   MissingE.packages.betterReblogsFill
                      .setReblogTagsPlainText(pt);
@@ -165,16 +163,16 @@ MissingE.packages.betterReblogsFill = {
             if (!(/[\?\&]post%5[bB]one%5[dD]/.test(location.search))) {
                var postone = $('#post_one').val();
                var question = "";
-               postone = unescapeHTML(postone.replace(/<[^>]*>/g,''));
-               for (i=0; i<getLocale(lang).asked.length; i++) {
+               postone = MissingE.unescapeHTML(postone.replace(/<[^>]*>/g,''));
+               for (i=0; i<MissingE.getLocale(lang).asked.length; i++) {
                   if (i>0) {
                      question += " ";
                   }
-                  if (getLocale(lang).asked[i] === "U") {
+                  if (MissingE.getLocale(lang).asked[i] === "U") {
                      question += askerName[1];
                   }
                   else {
-                     question += getLocale(lang).asked[i];
+                     question += MissingE.getLocale(lang).asked[i];
                   }
                }
                question += ": " + postone;
@@ -182,7 +180,7 @@ MissingE.packages.betterReblogsFill = {
             }
             var title = $('#left_column h1:first');
             title.find('span.as_links').remove();
-            title.html(title.html().replace(/[^<]*/,getLocale(lang).reblogAsk));
+            title.html(title.html().replace(/[^<]*/,MissingE.getLocale(lang).reblogAsk));
             $('head').append('<script type="text/javascript">' +
                           'var ta = document.getElementById("post_two");' +
                           'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
@@ -260,7 +258,7 @@ MissingE.packages.betterReblogsFill = {
                                  '<a class="reblog_tags" style="color:#666;' +
                                  'font-size:10px;" href="#" ' +
                                  'onclick="' + func + '">' +
-                                 getLocale(lang).reblogTags + '</a></div>')
+                                 MissingE.getLocale(lang).reblogTags + '</a></div>')
                   .prependTo(set_tags).outerHeight();
                label = $('#post_tags_label');
                if (label.length > 0) {

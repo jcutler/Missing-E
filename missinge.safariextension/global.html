@@ -28,7 +28,7 @@ var MissingE = {};
 <script type="text/javascript" src="common/jquery.min.js"></script>
 <script type="text/javascript" src="core/localizations.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
-<script type="text/javascript" src="common/utils.js"></script>
+<script type="text/javascript" src="core/utils.js"></script>
 <script>
 var componentList = ["dashboardFixes",
                      "bookmarker",
@@ -239,7 +239,7 @@ function doTimestamp(stamp, id, request) {
       request.target.page.dispatchMessage("timestamp",{pid: id, success: false});
    }
    var ins = getStorage("MissingE_timestamps_format",defaultFormat);
-   ins = getFormattedDate(d, ins, lang);
+   ins = MissingE.getFormattedDate(d, ins, lang);
    request.target.page.dispatchMessage("timestamp",{pid: id, success: true, data: ins});
    return true;
 }

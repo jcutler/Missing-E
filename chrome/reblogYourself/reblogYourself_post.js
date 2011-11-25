@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global getLocale */
+/*global MissingE.getLocale */
 
 var div = document.getElementsByTagName("div")[0];
 var controls;
@@ -97,7 +97,7 @@ if (noReblog) {
       icon.style.display='block';
       icon.style.cssFloat='left';
       icon.style.cursor='pointer';
-      icon.alt=getLocale(lang).reblog;
+      icon.alt=MissingE.getLocale(lang).reblog;
       icon.src = 'http://assets.tumblr.com/images/iframe_reblog_alpha' +
          suffix;
       link.appendChild(icon);

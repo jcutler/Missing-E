@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome,getLocale */
+/*global chrome,MissingE.getLocale */
 
 var missingeServer = 'http://crush.missinge.infraware.ca';
 
@@ -47,7 +47,7 @@ innerdiv.innerHTML = '<img src="' +
                      '<div style="position:absolute;top:15%;width:100%;' +
                      'color:#2D4159;font:italic bold 12px/1.4 Arial,' +
                      'Helvetica,sans-serif;">' +
-                     getLocale(lang).postCrushes + '</div>';
+                     MissingE.getLocale(lang).postCrushes + '</div>';
 
 innerdiv.addEventListener('click', function() {
    var i,j;

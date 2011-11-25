@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global doZindexFix,getLocale,
+/*global doZindexFix,MissingE.getLocale,
   MissingE_askFixes_doStartup,
   MissingE_askFixes_domain_doStartup,
   MissingE_askFixes_scroll_doStartup,
@@ -74,7 +74,7 @@ function updateCheck(response) {
       var html = document.getElementsByTagName('html');
       var lang = 'en';
       if (html && html[0]) { lang = html[0].getAttribute('lang'); }
-      up.setAttribute('title', getLocale(lang).update);
+      up.setAttribute('title', MissingE.getLocale(lang).update);
       var post = '';
       if (response.message.link !== '') {
          post = 'post/' + response.message.link;

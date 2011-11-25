@@ -675,10 +675,13 @@ cursor:pointer;
 margin-right:-2px;
 }
 </style>
+<script type="text/javascript">
+var MissingE = {};
+</script>
 <script type="text/javascript" src="common/jquery.min.js"></script>
-<script type="text/javascript" src="common/localizations.js"></script>
+<script type="text/javascript" src="core/localizations.js"></script>
 <script type="text/javascript" src="common/defs.js"></script>
-<script type="text/javascript" src="common/utils.js"></script>
+<script type="text/javascript" src="core/utils.js"></script>
 <link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css" />
 <script type="text/javascript" src="facebox/facebox.js"></script>
 <link rel="stylesheet" type="text/css" href="checkbox/jquery.checkbox.css" />
@@ -854,10 +857,10 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
       }
    }
    if (obj.name === 'MissingE_bookmarker_format') {
-      $('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', obj.value));
+      $('#MissingE_bookmarker_format_sample').text(MissingE.getBookmarkerFormat(new Date(), 'missing-e', obj.value));
    }
    else if (obj.name === 'MissingE_timestamps_format') {
-      $('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), obj.value));
+      $('#MissingE_timestamps_format_sample').text(MissingE.getFormattedDate(new Date(), obj.value));
    }
 }
 
@@ -917,13 +920,13 @@ function loadSettings() {
          loadCheck(frm,'MissingE_bookmarker_addBar',1);
          var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
          frm.MissingE_bookmarker_format.value = bmFormat;
-         $('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
+         $('#MissingE_bookmarker_format_sample').text(MissingE.getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
       }
       else if (v == "timestamps") {
          frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
          var tsFormat = getStorage('MissingE_timestamps_format',defaultFormat);
          frm.MissingE_timestamps_format.value = tsFormat;
-         $('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), tsFormat));
+         $('#MissingE_timestamps_format_sample').text(MissingE.getFormattedDate(new Date(), tsFormat));
       }
       else if (v == "postCrushes") {
          if (getStorage('MissingE_postCrushes_crushSize',1) == 1)

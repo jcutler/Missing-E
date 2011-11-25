@@ -22,3 +22,8 @@ if [[ ! -f "$CWD/firefox/missinge/lib/localizations.js" ]]; then
    echo "Creating hardlink for Firefox localization module"
    fsutil hardlink create $CWD/firefox/missinge/lib/localizations.js $CWD/core/localizations.js
 fi
+
+if [[ ! -f "$CWD/firefox/missinge/lib/utils.js" ]]; then
+   echo "Creating hardlink for Firefox utilities module"
+   fsutil hardlink create $CWD/firefox/missinge/lib/utils.js $CWD/core/utils.js
+fi

@@ -21,8 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global extension, jQuery, MissingE,
-  isTumblrURL */
+/*global extension, jQuery, MissingE */
 
 (function($){
 
@@ -37,7 +36,7 @@ MissingE.packages.dashLinksToTabs = {
           $(node).parents('#new_post').length > 0) {
          return false;
       }
-      if (isTumblrURL(location.href, ["followers"]) &&
+      if (MissingE.isTumblrURL(location.href, ["followers"]) &&
           $(node).parent().hasClass('pagination')) {
          return false;
       }

@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome,getLocale */
+/*global chrome,MissingE.getLocale */
 
 var div = document.getElementsByTagName("div")[0];
 var controls;
@@ -92,7 +92,7 @@ if (noEdit) {
             edit.setAttribute('target','_top');
             edit.innerHTML = '<img src="http://assets.tumblr.com/images/' +
                'iframe_edit_alpha' + suffix + '" alt="' +
-               getLocale(lang).dashFixesText.edit +
+               MissingE.getLocale(lang).dashFixesText.edit +
                '" style="display:block;float:left;" />';
             like.parentNode.insertBefore(edit, like.nextSibling);
          }

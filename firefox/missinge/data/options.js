@@ -268,10 +268,10 @@ function doSetting(obj, isNumber, defaultValue, min, max) {
       }
    }
    if (obj.name === 'MissingE_bookmarker_format') {
-      jQuery('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', obj.value));
+      jQuery('#MissingE_bookmarker_format_sample').text(MissingE.getBookmarkerFormat(new Date(), 'missing-e', obj.value));
    }
    else if (obj.name === 'MissingE_timestamps_format') {
-      jQuery('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), obj.value));
+      jQuery('#MissingE_timestamps_format_sample').text(MissingE.getFormattedDate(new Date(), obj.value));
    }
 }
 
@@ -331,13 +331,13 @@ function loadSettings() {
          loadCheck(frm,'MissingE_bookmarker_addBar',1);
          var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
          frm.MissingE_bookmarker_format.value = bmFormat;
-         jQuery('#MissingE_bookmarker_format_sample').text(getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
+         jQuery('#MissingE_bookmarker_format_sample').text(MissingE.getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
       }
       else if (v == "timestamps") {
          frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
          var tsFormat = getStorage('MissingE_timestamps_format',defaultFormat);
          frm.MissingE_timestamps_format.value = tsFormat;
-         jQuery('#MissingE_timestamps_format_sample').text(getFormattedDate(new Date(), tsFormat));
+         jQuery('#MissingE_timestamps_format_sample').text(MissingE.getFormattedDate(new Date(), tsFormat));
       }
       else if (v == "postCrushes") {
          if (getStorage('MissingE_postCrushes_crushSize',1) == 1)

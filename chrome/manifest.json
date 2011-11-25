@@ -21,7 +21,7 @@
                 "common/whoami.js",
                 "common/addmenu.js",
                 "core/localizations.js",
-                "common/utils.js"],
+                "core/utils.js"],
          "all_frames": true
       },
       {

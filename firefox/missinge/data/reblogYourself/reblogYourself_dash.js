@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global escapeHTML,getLocale,jQuery,self */
+/*global MissingE.escapeHTML,MissingE.getLocale,jQuery,self */
 
 function addReblog(item) {
    if (item.tagName === "LI" && jQuery(item).hasClass('post') &&
@@ -54,7 +54,7 @@ function receiveReblog(message) {
    var lang = jQuery('html').attr('lang');
    if (!lang) { lang = 'en'; }
    var edit, klass, txt;
-   var reblog_text = getLocale(lang).reblog;
+   var reblog_text = MissingE.getLocale(lang).reblog;
    if (message.success) {
       klass = (message.icons ? 'MissingE_post_control ' +
                          'MissingE_reblog_control' : '');
@@ -74,14 +74,14 @@ function receiveReblog(message) {
                      .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                      .replace(/&/g,'%26');
       var nr = jQuery('<a title="' + reblog_text + '" href="/reblog/' +
-                 escapeHTML(message.pid) + '/' +
-                 escapeHTML(message.data) + '?redirect_to=' + redir +
+                 MissingE.escapeHTML(message.pid) + '/' +
+                 MissingE.escapeHTML(message.data) + '?redirect_to=' + redir +
                  '" class="' + klass + '">' + txt + '</a>')
          .insertAfter(edit).before(' ');
       nr.trigger('MissingEaddReblog');
    }
    else {
-      var reblog_err = getLocale(lang).error;
+      var reblog_err = MissingE.getLocale(lang).error;
       edit = jQuery('#post_'+message.pid)
          .find('div.post_controls a[href^="/edit"]');
       if (edit.length === 0) {
