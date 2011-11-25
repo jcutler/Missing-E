@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global chrome, extension, MissingE */
+
 (function(){
 
 if (typeof MissingE !== "undefined") { return; }
@@ -138,4 +140,4 @@ extension = {
    }
 };
 
-})();
+}());

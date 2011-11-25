@@ -21,6 +21,9 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global extension, jQuery, MissingE,
+  isTumblrURL */
+
 (function($){
 
 MissingE.packages.dashLinksToTabs = {
@@ -125,4 +128,4 @@ if (extension.isChrome ||
    MissingE.packages.dashLinksToTabs.init();
 }
 
-})(jQuery);
+}(jQuery));

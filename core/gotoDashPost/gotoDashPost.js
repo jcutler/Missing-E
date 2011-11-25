@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global extension, MissingE */
+
 (function(){
 
 MissingE.packages.gotoDashPost = {
@@ -63,8 +65,9 @@ MissingE.packages.gotoDashPost = {
             pid = Number(pid)+1;
 
             var dashlnk = document.createElement('a');
-            dashlnk.setAttribute('href', 'http://www.tumblr.com/dashboard/1000/' +
-                                          pid + "?lite");
+            dashlnk.setAttribute('href',
+                                 'http://www.tumblr.com/dashboard/1000/' +
+                                    pid + "?lite");
             dashlnk.setAttribute('target', '_top');
             dashlnk.id = "MissingE_gotoDashPost_link";
             var icn = document.createElement('img');
@@ -107,4 +110,4 @@ if (extension.isChrome ||
    MissingE.packages.gotoDashPost.init();
 }
 
-})();
+}());

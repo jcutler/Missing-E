@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global extension, MissingE */
+
 (function(){
 
 if (typeof MissingE === "undefined") { return; }
@@ -256,4 +258,4 @@ if (extension.isChrome ||
    MissingE.packages.betterReblogsPost.init();
 }
 
-})();
+}());

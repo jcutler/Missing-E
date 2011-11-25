@@ -21,6 +21,9 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global extension, jQuery, MissingE,
+  getLocale, escapeHTML, isTumblrURL */
+
 (function($){
 
 MissingE.packages.betterReblogs = {
@@ -393,7 +396,7 @@ MissingE.packages.betterReblogs = {
       var settings = this.settings;
       var queueTags = "";
       if (settings.tagQueuedPosts === 1) {
-         settings.queueTags = settings.queueTags;
+         queueTags = settings.queueTags;
       }
       if (settings.passTags === 1) {
          var selector = '#posts div.post_controls a[href^="/reblog/"]';
@@ -484,6 +487,7 @@ MissingE.packages.betterReblogs = {
                '") !important; }</style>');
 
          if (extension.isFirefox) {
+            var r,s;
             var spanStyle = "";
             for (s=0; s<document.styleSheets.length; s++) {
                try {
@@ -492,14 +496,15 @@ MissingE.packages.betterReblogs = {
                            .test(document.styleSheets[s].cssRules[r]
                                  .selectorText)) {
                         spanStyle += document.styleSheets[s].cssRules[r].cssText
-                                       .replace(/\.user_menu \.user_menu_list a/g,
-                                                '#MissingE_quick_reblog ' +
-                                                '.user_menu_list span');
+                                    .replace(/\.user_menu \.user_menu_list a/g,
+                                             '#MissingE_quick_reblog ' +
+                                             '.user_menu_list span');
                      }
                   }
                } catch(e){}
             }
-            $('head').append('<style type="text/css">' + spanStyle + '</style>');
+            $('head').append('<style type="text/css">' + spanStyle +
+                             '</style>');
          }
 
          var txt = '<div class="user_menu" id="MissingE_quick_reblog">' +
@@ -561,7 +566,8 @@ MissingE.packages.betterReblogs = {
             return false;
          }).change(function() {
             MissingE.packages.betterReblogs
-               .changeQuickReblogAcct($(this), settings.quickReblogForceTwitter);
+               .changeQuickReblogAcct($(this),
+                                      settings.quickReblogForceTwitter);
          });
          qr.mouseover(function(e){
             if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
@@ -641,7 +647,7 @@ MissingE.packages.betterReblogs = {
             var pos = reblog.offset();
             var h = reblog.outerHeight() - 2;
             var w = (qr.outerWidth()>>1) - (reblog.innerWidth()>>1);
-            var marg = parseInt($('body').css('margin-top'));
+            var marg = parseInt($('body').css('margin-top'), 10);
             if (isNaN(marg)) { marg = 0; }
             var tagarr = [];
             if (settings.passTags === 1) {
@@ -795,4 +801,4 @@ if (extension.isChrome ||
    MissingE.packages.betterReblogs.init();
 }
 
-})(jQuery);
+}(jQuery));

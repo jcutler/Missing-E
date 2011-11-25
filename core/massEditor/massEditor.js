@@ -21,6 +21,9 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global extension, jQuery, MissingE,
+  locale, getLocale */
+
 (function($){
 
 MissingE.packages.massEditor = {
@@ -167,4 +170,4 @@ if (extension.isChrome ||
    MissingE.packages.massEditor.init();
 }
 
-})(jQuery);
+}(jQuery));

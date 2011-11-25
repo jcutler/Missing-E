@@ -21,31 +21,26 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global extension, jQuery, MissingE,
+  isTumblrURL, getLocale */
+
 (function($){
 
 MissingE.packages.timestamps = {
 
    receiveTimestamp: function(response) {
-      var info;
+      var info = $('#post_' + response.pid).find('span.MissingE_timestamp');
+
       if (response.success) {
-         info = $('#post_' + response.pid)
-                        .find('span.MissingE_timestamp');
-         info.html(response.data);
+         info.text(response.data);
       }
       else {
-         var extraHTML = '';
-         if (response.debugMode) {
-            extraHTML = ' (<a href="' + addr + '/api/read/json?id=' +
-                        response.pid + '">' + response.pid + '</a>)';
-         }
          var failHTML = 'Timestamp loading failed.';
          if (isTumblrURL(location.href, ["messages"])) {
             failHTML += ' <a class="MissingE_timestamp_retry" href="#" ' +
                         'onclick="return false;">Retry</a>';
          }
-         info = $('#post_' + response.pid)
-                        .find('span.MissingE_timestamp');
-         info.html(failHTML + extraHTML);
+         info.html(failHTML);
       }
    },
    
@@ -134,4 +129,4 @@ if (extension.isChrome ||
    MissingE.packages.timestamps.init();
 }
 
-})(jQuery);
+}(jQuery));

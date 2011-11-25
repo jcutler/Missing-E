@@ -21,6 +21,8 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global extension, MissingE, self */
+
 (function(){
 
 if (typeof MissingE !== "undefined") { return; }
@@ -71,13 +73,6 @@ extension = {
             }
          }
       });
-   },
-
-   addAjaxListener: function(func) {
-      if (typeof func !== "function") { return false; }
-      if (!this._hasAjaxListener(func)) {
-         this._ajaxListeners.push(func);
-      }
    },
 
    addAjaxListener: function(func) {
@@ -150,4 +145,4 @@ extension = {
    }
 };
 
-})();
+}());

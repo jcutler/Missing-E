@@ -21,6 +21,9 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global extension, jQuery, MissingE,
+  escapeHTML, unescapeHTML, getLocale */
+
 (function($){
 
 MissingE.packages.betterReblogsFill = {
@@ -261,7 +264,8 @@ MissingE.packages.betterReblogsFill = {
                   .prependTo(set_tags).outerHeight();
                label = $('#post_tags_label');
                if (label.length > 0) {
-                  var newHeight = parseInt(label.css('top').match(/\d*/)[0]);
+                  var newHeight = parseInt(label.css('top').match(/\d*/)[0],
+                                           10);
                   if (!isNaN(newHeight)) {
                      newHeight += addHeight;
                      label.css('top',newHeight+'px');
@@ -306,4 +310,4 @@ if (extension.isChrome ||
    MissingE.packages.betterReblogsFill.init();
 }
 
-})(jQuery);
+}(jQuery));

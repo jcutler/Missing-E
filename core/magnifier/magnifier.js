@@ -21,6 +21,9 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*global extension, jQuery, MissingE,
+  getLocale, isTumblrURL */
+
 (function($){
 
 MissingE.packages.magnifier = {
@@ -103,7 +106,7 @@ MissingE.packages.magnifier = {
             var imgs = set.find('img');
             count = imgs.length;
             caps = [];
-            imgs.each(function(i) {
+            imgs.each(function() {
                var thecap = $(this).attr('alt');
                if (!thecap) { thecap = ""; }
                caps.push(thecap);
@@ -261,4 +264,4 @@ if (extension.isChrome ||
    MissingE.packages.magnifier.init();
 }
 
-})(jQuery);
+}(jQuery));
