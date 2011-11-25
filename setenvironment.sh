@@ -17,3 +17,8 @@ for i in $COMMON; do
       junction $CWD/firefox/missinge/data/$i $CWD/$i
    fi
 done
+
+if [[ ! -f "$CWD/firefox/missinge/lib/localizations.js" ]]; then
+   echo "Creating hardlink for Firefox localization module"
+   fsutil hardlink create $CWD/firefox/missinge/lib/localizations.js $CWD/core/localizations.js
+fi

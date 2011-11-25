@@ -12,3 +12,4 @@ firefox/missinge/data/identity
 build/chrome-build
 build/firefox-build
 build/safari-build
+firefox/missinge/lib/localizations.js

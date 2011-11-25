@@ -54,7 +54,7 @@
 				<string>common/defs.js</string>
 				<string>common/utils.js</string>
 				<string>common/storage.js</string>
-				<string>common/localizations.js</string>
+				<string>core/localizations.js</string>
 				<string>facebox/facebox.js</string>
 				<string>askFixes/askFixes.js</string>
 				<string>core/betterReblogs/betterReblogs_dash.js</string>

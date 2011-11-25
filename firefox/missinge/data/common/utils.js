@@ -78,17 +78,17 @@ function getLocale(lang) {
       lang = "en";
    }
    lang = lang.toLowerCase();
-   if (locale.hasOwnProperty(lang) &&
-       locale[lang] !== false) {
-      return locale[lang];
+   if (MissingE.locale.hasOwnProperty(lang) &&
+       MissingE.locale[lang] !== false) {
+      return MissingE.locale[lang];
    }
    else {
-      if (!locale.hasOwnProperty(lang)) {
-         locale[lang] = false;
+      if (!MissingE.locale.hasOwnProperty(lang)) {
+         MissingE.locale[lang] = false;
          console.log("Warning: Localization not found for language '" +
                      lang + "'");
       }
-      return locale.en;
+      return MissingE.locale.en;
    }
 }
 

@@ -55,9 +55,9 @@ var cacheClear;
 var clearQueues;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var locale=JSON.parse(data.load("common/localizations.js")
-                      .replace(/^[^{]*/,'')
-                      .replace(/;\s*$/,''));
+var MissingE = {};
+MissingE.locale = require("localizations").locale;
+var locale = MissingE.locale;
 var lang = 'en';
 var debugMode = false;
 
@@ -302,7 +302,8 @@ function openSettings() {
          tab.attach({
             contentScriptFile: [data.url("common/jquery-1.5.2.min.js"),
                                 data.url("common/defs.js"),
-                                data.url("common/localizations.js"),
+                                data.url("extension.js"),
+                                data.url("core/localizations.js"),
                                 data.url("common/utils.js"),
                                 data.url("checkbox/jquery.checkbox.min.js"),
                                 data.url("facebox/facebox.js"),
@@ -1587,7 +1588,7 @@ function handleMessage(message, myWorker) {
       var injectScripts = [data.url("extension.js"),
                            data.url("common/storage.js"),
                            data.url("common/utils.js"),
-                           data.url("common/localizations.js")];
+                           data.url("core/localizations.js")];
       var injectStyles = [];
       activeScripts.extensionURL = data.url("");
       activeScripts.version = currVersion;
@@ -1946,7 +1947,7 @@ pageMod.PageMod({
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("common/utils.js"),
                        data.url("extension.js"),
-                       data.url("common/localizations.js"),
+                       data.url("core/localizations.js"),
                        data.url("common/utils.js"),
                        data.url("core/betterReblogs/betterReblogs_post.js"),
                        data.url("core/gotoDashPost/gotoDashPost.js"),

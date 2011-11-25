@@ -1,3 +1,5 @@
+(function(){
+
 var locale = {
  "en": {
   "daysLong": [
@@ -1611,3 +1613,13 @@ var locale = {
   }
  }
 };
+
+if (typeof require === "function" &&
+    require("api-utils/xul-app")) {
+   exports.locale = locale;
+}
+else {
+   MissingE.locale = locale;
+}
+   
+}());
