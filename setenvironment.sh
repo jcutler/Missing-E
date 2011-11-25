@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CWD=`dirname $0`
-COMMON="core license identity"
+COMMON="core license identity lib"
 
 for i in $COMMON; do
    if [[ ! -e "$CWD/chrome/$i" ]]; then

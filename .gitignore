@@ -9,6 +9,9 @@ firefox/missinge/data/license
 chrome/identity
 missinge.safariextension/identity
 firefox/missinge/data/identity
+chrome/lib
+missinge.safariextension/lib
+firefox/missinge/data/lib
 build/chrome-build
 build/firefox-build
 build/safari-build

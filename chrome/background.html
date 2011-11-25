@@ -867,6 +867,23 @@ function isEDT(year,month,date,hours) {
    }
 }
 
+function loadUI(tabId, uiType) {
+   if (uiType === "core") {
+      chrome.tabs.executeScript(tabId, {file: "lib/jquery.ui.core.min.js"});
+      chrome.tabs.executeScript(tabId, {file: "lib/jquery.ui.widget.min.js"});
+      chrome.tabs.executeScript(tabId, {file: "lib/jquery.ui.mouse.min.js"});
+   }
+   else if (uiType === "draggable") {
+      chrome.tabs.executeScript(tabId, {file: "lib/jquery.ui.draggable.min.js"});
+   }
+   else if (uiType === "sortable") {
+      chrome.tabs.executeScript(tabId, {file: "lib/jquery.ui.sortable.min.js"});
+   }
+   else if (uiType === "resizable") {
+      chrome.tabs.executeScript(tabId, {file: "lib/jquery.ui.resizable.min.js"});
+   }
+}
+
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
    else if (request.greeting == "version") {
@@ -1207,7 +1224,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var activeScripts = {};
       activeScripts.version = currVersion;
       var zindexFix = false;
-      var loadedUI = false;
+      var loadedUI = false, loadedUIresizable = false, loadedUIsortable = false,
+          loadedUIdraggable = false;
       var widenIframe = false;
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url, ["massEditor"])) {
@@ -1249,7 +1267,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             chrome.tabs.insertCSS(sender.tab.id, {file: "bookmarker/bookmarker.css"});
             if (!loadedUI) {
                loadedUI = true;
-               chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+               loadUI(sender.tab.id, "core");
+            }
+            if (!loadedUIsortable) {
+               loadedUIsortable = true;
+               loadUI(sender.tab.id, "sortable");
             }
             chrome.tabs.executeScript(sender.tab.id, {file: "bookmarker/bookmarker.js"});
          }
@@ -1289,7 +1311,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (getStorage("MissingE_dashboardFixes_sortableNotes",1) == 1) {
                if (!loadedUI) {
                   loadedUI = true;
-                  chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+                  loadUI(sender.tab.id, "core");
+               }
+               if (!loadedUIsortable) {
+                  loadedUIsortable = true;
+                  loadUI(sender.tab.id, "sortable");
                }
                chrome.tabs.insertCSS(sender.tab.id, {file: "dashboardFixes/notesSorter.css"});
             }
@@ -1313,7 +1339,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.askFixes = true;
             if (!loadedUI) {
                loadedUI = true;
-               chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+               loadUI(sender.tab.id, "core");
+            }
+            if (!loadedUIdraggable) {
+               loadedUIdraggable = true;
+               loadUI(sender.tab.id, "draggable");
             }
             chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askFixes.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askFixes.js"});
@@ -1345,7 +1375,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.postingFixes = true;
             if (!loadedUI) {
                loadedUI = true;
-               chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery-ui.min.js"});
+               loadUI(sender.tab.id, "core");
+            }
+            if (!loadedUIresizable) {
+               loadedUIresizable = true;
+               loadUI(sender.tab.id, "resizable");
             }
             chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/postingFixes.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "postingFixes/postingFixes.css"});

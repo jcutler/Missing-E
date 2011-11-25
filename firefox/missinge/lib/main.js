@@ -1805,17 +1805,17 @@ function handleMessage(message, myWorker) {
       // In reverse order of requirements
       if (needUI) {
          if (needUIresizable) {
-            injectScripts.unshift(data.url("common/jquery.ui.resizable.js"));
+            injectScripts.unshift(data.url("lib/jquery.ui.resizable.min.js"));
          }
          if (needUIsortable) {
-            injectScripts.unshift(data.url("common/jquery.ui.sortable.js"));
+            injectScripts.unshift(data.url("lib/jquery.ui.sortable.min.js"));
          }
          if (needUIdraggable) {
-            injectScripts.unshift(data.url("common/jquery.ui.draggable.js"));
+            injectScripts.unshift(data.url("lib/jquery.ui.draggable.min.js"));
          }
-         injectScripts.unshift(data.url("common/jquery.ui.mouse.js"));
-         injectScripts.unshift(data.url("common/jquery.ui.widget.js"));
-         injectScripts.unshift(data.url("common/jquery.ui.core.js"));
+         injectScripts.unshift(data.url("lib/jquery.ui.mouse.min.js"));
+         injectScripts.unshift(data.url("lib/jquery.ui.widget.min.js"));
+         injectScripts.unshift(data.url("lib/jquery.ui.core.min.js"));
       }
       injectScripts.unshift(data.url("common/jquery-1.5.2.min.js"));
       if (zindexFix) {
