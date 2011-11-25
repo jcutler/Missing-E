@@ -284,7 +284,7 @@ if (!getStorage("extensions.MissingE.hideWidget",false)) {
       label: "Missing e",
       id: "missinge",
       tooltip: "Missing e Settings",
-      contentURL: data.url("missinge32.png"),
+      contentURL: data.url("identity/missinge32.png"),
       onClick: function() {
          openSettings();
       }
