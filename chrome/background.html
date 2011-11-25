@@ -210,7 +210,7 @@ function doTimestamp(stamp, id, sendResponse) {
    if (isNaN(d)) {
       sendResponse({pid: id, success: false});
    }
-   var ins = getStorage("MissingE_timestamps_format",defaultFormat);
+   var ins = getStorage("MissingE_timestamps_format",MissingE.defaultFormat);
    ins = MissingE.getFormattedDate(d, ins, lang);
    ins = ins.replace(/%X/g,id);
    sendResponse({pid: id, success: true, data: ins});
@@ -696,7 +696,7 @@ function requestBetterReblogsAsk(request, sender, sendResponse, hash) {
    }
    else {
       doReblogAjax("betterReblogs", request, sender, sendResponse, hash,
-             getStorage("MissingE_betterReblogs_askRetries",defaultRetries),
+             getStorage("MissingE_betterReblogs_askRetries",MissingE.defaultRetries),
              {
                pid:request.pid,
                icons:getStorage("MissingE_dashboardFixes_enabled",1) == 1 &&
@@ -722,7 +722,7 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
    }
    else {
       doReblogAjax("reblogYourself", request, sender, sendResponse, hash,
-             getStorage("MissingE_reblogYourself_retries",defaultRetries),
+             getStorage("MissingE_reblogYourself_retries",MissingE.defaultRetries),
              {
                pid:request.pid,
                icons:getStorage("MissingE_dashboardFixes_enabled",1) == 1 && 
@@ -749,12 +749,12 @@ function requestTimestamp(request, sender, sendResponse, hash) {
    }
    else if (request.url === 'http://www.tumblr.com/edit/') {
       doAskAjax(request, sender, sendResponse, hash,
-                getStorage("MissingE_timestamps_retries",defaultRetries),
+                getStorage("MissingE_timestamps_retries",MissingE.defaultRetries),
                 "timestamp", doTimestamp);
    }
    else {
       doAjax(request, sender, sendResponse, hash,
-             getStorage("MissingE_timestamps_retries",defaultRetries),
+             getStorage("MissingE_timestamps_retries",MissingE.defaultRetries),
              "timestamp", doTimestamp,
              {pid: request.pid, debugMode: debugMode});
    }
@@ -777,7 +777,7 @@ function requestTags(request, sender, sendResponse, hash) {
    }
    else {
       doTagsAjax(request, sender, sendResponse, hash,
-                 getStorage("MissingE_betterReblogs_retries",defaultRetries));
+                 getStorage("MissingE_betterReblogs_retries",MissingE.defaultRetries));
    }
 }
 
@@ -1109,7 +1109,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "tumblrPermission") {
       checkPermission(request, sender, sendResponse, tabs[sender.tab.id],
-                      getStorage("MissingE_postingFixes_subEditRetries",defaultRetries));
+                      getStorage("MissingE_postingFixes_subEditRetries",MissingE.defaultRetries));
    }
    else if (request.greeting == "settings") {
       var settings = {};
@@ -1128,20 +1128,18 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.massDelete = getStorage("MissingE_askFixes_massDelete",1);
             break;
          case "sidebarTweaks":
-            settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
+            settings.retries = getStorage("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
             settings.accountNum = getStorage("MissingE_sidebarTweaks_accountNum",0);
             settings.slimSidebar = getStorage("MissingE_sidebarTweaks_slimSidebar",0);
             settings.followingLink = getStorage("MissingE_sidebarTweaks_followingLink",0);
             settings.addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);
             break;
          case "bookmarker":
-            settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
+            settings.format = getStorage("MissingE_bookmarker_format",MissingE.defaultFormat);
             settings.addBar = getStorage("MissingE_bookmarker_addBar",1);
             break;
          case "dashboardFixes":
             settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
-            settings.timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
-            settings.timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",10);
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);

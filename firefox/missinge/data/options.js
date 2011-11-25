@@ -116,30 +116,10 @@ jQuery(document).ready(function (){
    });
 
    jQuery('input.setting_retry').bind("change", function() {
-      doSetting(this, true, defaultRetries, minRetries, maxRetries);
+      doSetting(this, true, MissingE.defaultRetries, MissingE.minRetries, MissingE.maxRetries);
    }).spin({
-      min:minRetries,
-      max:maxRetries,
-      timeInterval:100,
-      lock:true,
-      btnClass:'spinner'
-   });
-
-   jQuery('input.setting_timeout').bind("change", function() {
-      doSetting(this, true, defaultTimeout, minTimeout, maxTimeout);
-   }).spin({
-      min:minRetries,
-      max:maxRetries,
-      timeInterval:100,
-      lock:true,
-      btnClass:'spinner'
-   });
-
-   jQuery('input.setting_fontsize').bind("change", function() {
-      doSetting(this, true, defaultMaxBig, minFontSize, maxFontSize);
-   }).spin({
-      min:minFontSize,
-      max:maxFontSize,
+      min:MissingE.minRetries,
+      max:MissingE.maxRetries,
       timeInterval:100,
       lock:true,
       btnClass:'spinner'
@@ -148,9 +128,6 @@ jQuery(document).ready(function (){
    jQuery('span.resetter').click(function() {
       if (this.id === "prefix-resetter") {
          resetPrefix(this);
-      }
-      else if (jQuery(this).hasClass('timeout_resetter')) {
-         resetTimeout(this);
       }
       else if (jQuery(this).hasClass('retry_resetter')) {
          resetRetries(this);
@@ -282,7 +259,7 @@ function loadCheck(f, i, def) {
 
 function loadSettings() {
    var i;
-   jQuery('span.defRetries').text(defaultRetries);
+   jQuery('span.defRetries').text(MissingE.defaultRetries);
    jQuery('#versionnum').text(getStorage('MissingE_version',''));
    var exp = document.getElementById("experimentalFeatures_options").active;
    if (getStorage('MissingE_experimentalFeatures_enabled', 0) == 1) {
@@ -315,7 +292,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
          loadCheck(frm,'MissingE_sidebarTweaks_slimSidebar',0);
          loadCheck(frm,'MissingE_sidebarTweaks_followingLink',0);
-         frm.MissingE_sidebarTweaks_retries.value = getStorage('MissingE_sidebarTweaks_retries',defaultRetries);
+         frm.MissingE_sidebarTweaks_retries.value = getStorage('MissingE_sidebarTweaks_retries',MissingE.defaultRetries);
       }
       else if (v == "dashLinksToTabs") {
          loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
@@ -324,18 +301,18 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashLinksToTabs_editLinks',0);
       }
       else if (v == "magnifier") {
-         frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
+         frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',MissingE.defaultRetries);
          loadCheck(frm,'MissingE_magnifier_magnifyAvatars',0);
       }
       else if (v == "bookmarker") {
          loadCheck(frm,'MissingE_bookmarker_addBar',1);
-         var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
+         var bmFormat = getStorage('MissingE_bookmarker_format',MissingE.defaultFormat);
          frm.MissingE_bookmarker_format.value = bmFormat;
          jQuery('#MissingE_bookmarker_format_sample').text(MissingE.getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
       }
       else if (v == "timestamps") {
-         frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
-         var tsFormat = getStorage('MissingE_timestamps_format',defaultFormat);
+         frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',MissingE.defaultRetries);
+         var tsFormat = getStorage('MissingE_timestamps_format',MissingE.defaultFormat);
          frm.MissingE_timestamps_format.value = tsFormat;
          jQuery('#MissingE_timestamps_format_sample').text(MissingE.getFormattedDate(new Date(), tsFormat));
       }
@@ -362,8 +339,6 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_reblogQuoteFit',1);
          loadCheck(frm,'MissingE_dashboardFixes_wrapTags',1);
          loadCheck(frm,'MissingE_dashboardFixes_replaceIcons',1);
-         //loadCheck(frm,'MissingE_dashboardFixes_timeoutAJAX',1);
-         //frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
          loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
          loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
@@ -376,7 +351,7 @@ function loadSettings() {
       else if (v == "betterReblogs") {
          loadCheck(frm,'MissingE_betterReblogs_passTags',1);
          loadCheck(frm,'MissingE_betterReblogs_autoFillTags',1);
-         frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
+         frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',MissingE.defaultRetries);
          loadCheck(frm,'MissingE_betterReblogs_quickReblog',0);
          if (getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
             document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;
@@ -390,7 +365,7 @@ function loadSettings() {
          jQuery(frm.MissingE_betterReblogs_quickReblogForceTwitter).val(getStorage('MissingE_betterReblogs_quickReblogForceTwitter','default'));
          loadCheck(frm,'MissingE_betterReblogs_fullText',0);
          loadCheck(frm,'MissingE_betterReblogs_reblogAsks',0);
-         frm.MissingE_betterReblogs_askRetries.value = getStorage('MissingE_betterReblogs_askRetries',defaultRetries);
+         frm.MissingE_betterReblogs_askRetries.value = getStorage('MissingE_betterReblogs_askRetries',MissingE.defaultRetries);
       }
       else if (v == "postingFixes") {
          loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
@@ -399,14 +374,14 @@ function loadSettings() {
          loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
          loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
          loadCheck(frm,'MissingE_postingFixes_subEdit',1);
-         frm.MissingE_postingFixes_subEditRetries.value = getStorage('MissingE_postingFixes_subEditRetries',defaultRetries);
+         frm.MissingE_postingFixes_subEditRetries.value = getStorage('MissingE_postingFixes_subEditRetries',MissingE.defaultRetries);
          loadCheck(frm,'MissingE_postingFixes_tagQueuedPosts',0);
          frm.MissingE_postingFixes_queueTags.value = getStorage('MissingE_postingFixes_queueTags','');
       }
       else if (v == "reblogYourself") {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);
          loadCheck(frm,'MissingE_reblogYourself_dashboard',1);
-         frm.MissingE_reblogYourself_retries.value = getStorage('MissingE_reblogYourself_retries',defaultRetries);
+         frm.MissingE_reblogYourself_retries.value = getStorage('MissingE_reblogYourself_retries',MissingE.defaultRetries);
       }
    }
 }
@@ -419,20 +394,8 @@ function resetPrefix() {
 
 function resetRetries(obj) {
    var input = jQuery(obj).siblings('input:text');
-   input.val(defaultRetries);
-   doSetting(input.get(0), true, defaultRetries, minRetries, maxRetries);
-}
-
-function resetTimeout(obj) {
-   var input = jQuery(obj).siblings('input:text');
-   input.val(defaultTimeout);
-   doSetting(input.get(0), true, defaultTimeout, minTimeout, maxTimeout);
-}
-
-function resetFontSize(obj) {
-   var input = jQuery(obj).siblings('input:text');
-   input.val(defaultMaxBig);
-   doSetting(input.get(0), true, defaultMaxBig, minFontSize, maxFontSize);
+   input.val(MissingE.defaultRetries);
+   doSetting(input.get(0), true, MissingE.defaultRetries, MissingE.minRetries, MissingE.maxRetries);
 }
 
 function toggle(obj) {

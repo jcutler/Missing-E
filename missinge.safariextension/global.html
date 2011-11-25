@@ -238,7 +238,7 @@ function doTimestamp(stamp, id, request) {
    if (isNaN(d)) {
       request.target.page.dispatchMessage("timestamp",{pid: id, success: false});
    }
-   var ins = getStorage("MissingE_timestamps_format",defaultFormat);
+   var ins = getStorage("MissingE_timestamps_format",MissingE.defaultFormat);
    ins = MissingE.getFormattedDate(d, ins, lang);
    request.target.page.dispatchMessage("timestamp",{pid: id, success: true, data: ins});
    return true;
@@ -809,7 +809,7 @@ function requestTags(request) {
    }
    else {
       doTagsAjax(request,
-             getStorage("MissingE_betterReblogs_retries",defaultRetries));
+             getStorage("MissingE_betterReblogs_retries",MissingE.defaultRetries));
    }
 }
 
@@ -832,12 +832,12 @@ function requestTimestamp(request) {
    }
    else if (request.message.url === 'http://www.tumblr.com/edit/') {
       doAskAjax(request,
-                getStorage("MissingE_timestamps_retries",defaultRetries),
+                getStorage("MissingE_timestamps_retries",MissingE.defaultRetries),
                 "timestamp", doTimestamp);
    }
    else {
       doAjax(request,
-             getStorage("MissingE_timestamps_retries",defaultRetries),
+             getStorage("MissingE_timestamps_retries",MissingE.defaultRetries),
              "timestamp", doTimestamp,
              {pid: request.pid});
    }
@@ -861,7 +861,7 @@ function requestBetterReblogsAsk(request) {
    }
    else {
       doReblogAjax("betterReblogs",request,
-             getStorage("MissingE_betterReblogs_askRetries",defaultRetries),
+             getStorage("MissingE_betterReblogs_askRetries",MissingE.defaultRetries),
              {
                pid:request.pid,
                icons:getStorage("MissingE_dashboardFixes_enabled",1) == 1 && 
@@ -888,7 +888,7 @@ function requestReblogYourself(request) {
    }
    else {
       doReblogAjax("reblogYourself", request,
-             getStorage("MissingE_reblogYourself_retries",defaultRetries),
+             getStorage("MissingE_reblogYourself_retries",MissingE.defaultRetries),
              {
                pid:request.pid,
                icons:getStorage("MissingE_dashboardFixes_enabled",1) == 1 && 
@@ -1330,13 +1330,11 @@ function handleRequest(request) {
       settings.MissingE_askFixes_defaultTags = getStorage("MissingE_askFixes_defaultTags",'');
       settings.MissingE_askFixes_askDash = getStorage("MissingE_askFixes_askDash",0);
       settings.MissingE_askFixes_massDelete = getStorage("MissingE_askFixes_massDelete",1);
-      settings.MissingE_bookmarker_format = getStorage("MissingE_bookmarker_format",defaultFormat);
+      settings.MissingE_bookmarker_format = getStorage("MissingE_bookmarker_format",MissingE.defaultFormat);
       settings.MissingE_bookmarker_addBar = getStorage("MissingE_bookmarker_addBar",1);
       settings.MissingE_dashboardFixes_reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
       settings.MissingE_dashboardFixes_wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
       settings.MissingE_dashboardFixes_replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
-      settings.MissingE_dashboardFixes_timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
-      settings.MissingE_dashboardFixes_timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",defaultTimeout);
       settings.MissingE_dashboardFixes_postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
       settings.MissingE_dashboardFixes_reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
       settings.MissingE_dashboardFixes_widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);
@@ -1345,30 +1343,30 @@ function handleRequest(request) {
       settings.MissingE_dashboardFixes_massDelete = getStorage("MissingE_dashboardFixes_massDelete",1);
       settings.MissingE_dashboardFixes_randomQueue = getStorage("MissingE_dashboardFixes_randomQueue",0);
       settings.MissingE_dashboardFixes_sortableNotes = getStorage("MissingE_dashboardFixes_sortableNotes",1);
-      settings.MissingE_sidebarTweaks_retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
+      settings.MissingE_sidebarTweaks_retries = getStorage("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);
       settings.MissingE_sidebarTweaks_slimSidebar = getStorage("MissingE_sidebarTweaks_slimSidebar",0);
       settings.MissingE_sidebarTweaks_followingLink = getStorage("MissingE_sidebarTweaks_followingLink",0);
-      settings.MissingE_magnifier_retries = getStorage("MissingE_magnifier_retries",defaultRetries);
+      settings.MissingE_magnifier_retries = getStorage("MissingE_magnifier_retries",MissingE.defaultRetries);
       settings.MissingE_magnifier_magnifyAvatars = getStorage("MissingE_magnifier_magnifyAvatars",0);
       settings.MissingE_dashLinksToTabs_newPostTabs = getStorage("MissingE_dashLinksToTabs_newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getStorage("MissingE_dashLinksToTabs_sidebar",0);
       settings.MissingE_dashLinksToTabs_reblogLinks = getStorage("MissingE_dashLinksToTabs_reblogLinks",0);
       settings.MissingE_dashLinksToTabs_editLinks = getStorage("MissingE_dashLinksToTabs_editLinks",0);
-      settings.MissingE_timestamps_retries = getStorage("MissingE_timestamps_retries",defaultRetries);
-      settings.MissingE_timestamps_format = getStorage("MissingE_timestamps_format",defaultFormat);
+      settings.MissingE_timestamps_retries = getStorage("MissingE_timestamps_retries",MissingE.defaultRetries);
+      settings.MissingE_timestamps_format = getStorage("MissingE_timestamps_format",MissingE.defaultFormat);
       settings.MissingE_postingFixes_photoReplies = getStorage("MissingE_postingFixes_photoReplies",1);
       settings.MissingE_postingFixes_uploaderToggle = getStorage("MissingE_postingFixes_uploaderToggle",1);
       settings.MissingE_postingFixes_addUploader = getStorage("MissingE_postingFixes_addUploader",1);
       settings.MissingE_postingFixes_quickButtons = getStorage("MissingE_postingFixes_quickButtons",1);
       settings.MissingE_postingFixes_blogSelect = getStorage("MissingE_postingFixes_blogSelect",0);
       settings.MissingE_postingFixes_subEdit = getStorage("MissingE_postingFixes_subEdit",1);
-      settings.MissingE_postingFixes_subEditRetries = getStorage("MissingE_postingFixes_subEditRetries",defaultRetries);
+      settings.MissingE_postingFixes_subEditRetries = getStorage("MissingE_postingFixes_subEditRetries",MissingE.defaultRetries);
       settings.MissingE_postingFixes_tagQueuedPosts = getStorage("MissingE_postingFixes_tagQueuedPosts",0);
       settings.MissingE_postingFixes_queueTags = getStorage("MissingE_postingFixes_queueTags",'');
       settings.MissingE_reblogYourself_postPage = getStorage("MissingE_reblogYourself_postPage",1);
       settings.MissingE_reblogYourself_dashboard = getStorage("MissingE_reblogYourself_dashboard",1);
-      settings.MissingE_reblogYourself_retries = getStorage("MissingE_reblogYourself_retries",defaultRetries);
+      settings.MissingE_reblogYourself_retries = getStorage("MissingE_reblogYourself_retries",MissingE.defaultRetries);
       settings.MissingE_postCrushes_prefix = getStorage("MissingE_postCrushes_prefix","Tumblr Crushes:");
       settings.MissingE_postCrushes_crushSize = getStorage("MissingE_postCrushes_crushSize",1);
       settings.MissingE_postCrushes_addTags = getStorage("MissingE_postCrushes_addTags",1);
@@ -1379,7 +1377,7 @@ function handleRequest(request) {
       settings.MissingE_replyReplies_defaultTags = getStorage("MissingE_replyReplies_defaultTags",'');
       settings.MissingE_replyReplies_newTab = getStorage("MissingE_replyReplies_newTab",1);
       settings.MissingE_betterReblogs_passTags = getStorage("MissingE_betterReblogs_passTags",1);
-      settings.MissingE_betterReblogs_retries = getStorage("MissingE_betterReblogs_retries",defaultRetries);
+      settings.MissingE_betterReblogs_retries = getStorage("MissingE_betterReblogs_retries",MissingE.defaultRetries);
       settings.MissingE_betterReblogs_autoFillTags = getStorage("MissingE_betterReblogs_autoFillTags",1);
       settings.MissingE_betterReblogs_quickReblog = getStorage("MissingE_betterReblogs_quickReblog",0);
       settings.MissingE_betterReblogs_quickReblogAcctType = getStorage("MissingE_betterReblogs_quickReblogAcctType",0);
@@ -1387,7 +1385,7 @@ function handleRequest(request) {
       settings.MissingE_betterReblogs_quickReblogForceTwitter = getStorage("MissingE_betterReblogs_quickReblogForceTwitter","default");
       settings.MissingE_betterReblogs_fullText = getStorage("MissingE_betterReblogs_fullText",0);
       settings.MissingE_betterReblogs_reblogAsks = getStorage("MissingE_betterReblogs_reblogAsks",0);
-      settings.MissingE_betterReblogs_askRetries = getStorage("MissingE_betterReblogs_askRetries",defaultRetries);
+      settings.MissingE_betterReblogs_askRetries = getStorage("MissingE_betterReblogs_askRetries",MissingE.defaultRetries);
       settings.MissingE_version = getStorage("MissingE_version",'');
       request.target.page.dispatchMessage("all-settings",settings);
    }
@@ -1397,7 +1395,7 @@ function handleRequest(request) {
    }
    else if (request.name == "tumblrPermission") {
       checkPermission(request,
-                      getStorage("MissingE_postingFixes_subEditRetries",defaultRetries));
+                      getStorage("MissingE_postingFixes_subEditRetries",MissingE.defaultRetries));
    }
    else if (request.name == "settings") {
       var settings = {};
@@ -1416,22 +1414,20 @@ function handleRequest(request) {
             settings.massDelete = getStorage("MissingE_askFixes_massDelete",1);
             break;
          case "sidebarTweaks":
-            settings.retries = getStorage("MissingE_sidebarTweaks_retries",defaultRetries);
+            settings.retries = getStorage("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
             settings.accountNum = getStorage("MissingE_sidebarTweaks_accountNum",0);
             settings.slimSidebar = getStorage("MissingE_sidebarTweaks_slimSidebar",0);
             settings.followingLink = getStorage("MissingE_sidebarTweaks_followingLink",0);
             settings.addSidebar = getStorage("MissingE_sidebarTweaks_addSidebar",0);
             break;
          case "bookmarker":
-            settings.format = getStorage("MissingE_bookmarker_format",defaultFormat);
+            settings.format = getStorage("MissingE_bookmarker_format",MissingE.defaultFormat);
             settings.addBar = getStorage("MissingE_bookmarker_addBar",1);
             break;
          case "dashboardFixes":
             settings.reblogQuoteFit = getStorage("MissingE_dashboardFixes_reblogQuoteFit",1);
             settings.wrapTags = getStorage("MissingE_dashboardFixes_wrapTags",1);
             settings.replaceIcons = getStorage("MissingE_dashboardFixes_replaceIcons",1);
-            settings.timeoutAJAX = getStorage("MissingE_dashboardFixes_timeoutAJAX",1);
-            settings.timeoutLength = getStorage("MissingE_dashboardFixes_timeoutLength",defaultTimeout);
             settings.postLinks = getStorage("MissingE_dashboardFixes_postLinks",1);
             settings.reblogReplies = getStorage("MissingE_dashboardFixes_reblogReplies",0);
             settings.widescreen = getStorage("MissingE_dashboardFixes_widescreen",0);

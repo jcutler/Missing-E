@@ -24,6 +24,11 @@
 (function(){
 
 var utils = {
+   defaultRetries: 4,
+   minRetries: 0,
+   maxRetries: 20,
+   defaultFormat: "%Y-%m-%D %H:%i",
+
    urlPatterns: {
       "askForm":    /^ask_form\/[^\/]+$/,
       "blog":       /^blog\/[^\/]+(\/search\/[^\/]+)?(\/\d+)?[\/]?$/,

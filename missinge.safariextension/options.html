@@ -703,22 +703,8 @@ safari.self.addEventListener("message", function(response) {
    loadSettings();
    $('input.toggler').checkbox();
    $('input.retryinput').spin({
-         min:minRetries,
-         max:maxRetries,
-         timeInterval:100,
-         lock:true,
-         btnClass:'spinner'
-   });
-   $('input.timeoutinput').spin({
-         min:minTimeout,
-         max:maxTimeout,
-         timeInterval:100,
-         lock:true,
-         btnClass:'spinner'
-   });
-   $('input.fontsizeinput').spin({
-         min:minFontSize,
-         max:maxFontSize,
+         min:MissingE.minRetries,
+         max:MissingE.maxRetries,
          timeInterval:100,
          lock:true,
          btnClass:'spinner'
@@ -883,7 +869,7 @@ function loadCheck(f, i, def) {
 
 function loadSettings() {
    var i;
-   $('span.defRetries').text(defaultRetries);
+   $('span.defRetries').text(MissingE.defaultRetries);
    $('#versionnum').text(getStorage('MissingE_version',''));
    var exp = document.getElementById("experimentalFeatures_options").active;
    if (getStorage('MissingE_experimentalFeatures_enabled', 0) == 1) {
@@ -916,7 +902,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
          loadCheck(frm,'MissingE_sidebarTweaks_slimSidebar',0);
          loadCheck(frm,'MissingE_sidebarTweaks_followingLink',0);
-         frm.MissingE_sidebarTweaks_retries.value = getStorage('MissingE_sidebarTweaks_retries',defaultRetries);
+         frm.MissingE_sidebarTweaks_retries.value = getStorage('MissingE_sidebarTweaks_retries',MissingE.defaultRetries);
       }
       else if (v == "dashLinksToTabs") {
          loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
@@ -925,18 +911,18 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashLinksToTabs_editLinks',0);
       }
       else if (v == "magnifier") {
-         frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',defaultRetries);
+         frm.MissingE_magnifier_retries.value = getStorage('MissingE_magnifier_retries',MissingE.defaultRetries);
          loadCheck(frm,'MissingE_magnifier_magnifyAvatars',0);
       }
       else if (v == "bookmarker") {
          loadCheck(frm,'MissingE_bookmarker_addBar',1);
-         var bmFormat = getStorage('MissingE_bookmarker_format',defaultFormat);
+         var bmFormat = getStorage('MissingE_bookmarker_format',MissingE.defaultFormat);
          frm.MissingE_bookmarker_format.value = bmFormat;
          $('#MissingE_bookmarker_format_sample').text(MissingE.getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
       }
       else if (v == "timestamps") {
-         frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',defaultRetries);
-         var tsFormat = getStorage('MissingE_timestamps_format',defaultFormat);
+         frm.MissingE_timestamps_retries.value = getStorage('MissingE_timestamps_retries',MissingE.defaultRetries);
+         var tsFormat = getStorage('MissingE_timestamps_format',MissingE.defaultFormat);
          frm.MissingE_timestamps_format.value = tsFormat;
          $('#MissingE_timestamps_format_sample').text(MissingE.getFormattedDate(new Date(), tsFormat));
       }
@@ -963,8 +949,6 @@ function loadSettings() {
          loadCheck(frm,'MissingE_dashboardFixes_reblogQuoteFit',1);
          loadCheck(frm,'MissingE_dashboardFixes_wrapTags',1);
          loadCheck(frm,'MissingE_dashboardFixes_replaceIcons',1);
-         //loadCheck(frm,'MissingE_dashboardFixes_timeoutAJAX',1);
-         //frm.MissingE_dashboardFixes_timeoutLength.value = getStorage('MissingE_dashboardFixes_timeoutLength',defaultTimeout);
          loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
          loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
          loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
@@ -978,7 +962,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_betterReblogs_passTags',1);
          loadCheck(frm,'MissingE_betterReblogs_autoFillTags',1);
          loadCheck(frm,'MissingE_betterReblogs_quickReblog',0);
-         frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',defaultRetries);
+         frm.MissingE_betterReblogs_retries.value = getStorage('MissingE_betterReblogs_retries',MissingE.defaultRetries);
          if (getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
             document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;
          else
@@ -991,7 +975,7 @@ function loadSettings() {
          loadCheck(frm,'MissingE_betterReblogs_fullText',0);
          $(frm.MissingE_betterReblogs_quickReblogForceTwitter).val(getStorage('MissingE_betterReblogs_quickReblogForceTwitter','default'));
          loadCheck(frm,'MissingE_betterReblogs_reblogAsks',0);
-         frm.MissingE_betterReblogs_askRetries.value = getStorage('MissingE_betterReblogs_askRetries',defaultRetries);
+         frm.MissingE_betterReblogs_askRetries.value = getStorage('MissingE_betterReblogs_askRetries',MissingE.defaultRetries);
       }
       else if (v == "postingFixes") {
          loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
@@ -1000,14 +984,14 @@ function loadSettings() {
          loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
          loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
          loadCheck(frm,'MissingE_postingFixes_subEdit',1);
-         frm.MissingE_postingFixes_subEditRetries.value = getStorage('MissingE_postingFixes_subEditRetries',defaultRetries);
+         frm.MissingE_postingFixes_subEditRetries.value = getStorage('MissingE_postingFixes_subEditRetries',MissingE.defaultRetries);
          loadCheck(frm,'MissingE_postingFixes_tagQueuedPosts',0);
          frm.MissingE_postingFixes_queueTags.value = getStorage('MissingE_postingFixes_queueTags','');
       }
       else if (v == "reblogYourself") {
          loadCheck(frm,'MissingE_reblogYourself_postPage',1);
          loadCheck(frm,'MissingE_reblogYourself_dashboard',1);
-         frm.MissingE_reblogYourself_retries.value = getStorage('MissingE_reblogYourself_retries',defaultRetries);
+         frm.MissingE_reblogYourself_retries.value = getStorage('MissingE_reblogYourself_retries',MissingE.defaultRetries);
       }
    }
 }
@@ -1020,20 +1004,8 @@ function resetPrefix() {
 
 function resetRetries(obj) {
    var input = $(obj).siblings('input:text');
-   input.val(defaultRetries);
-   doSetting(input.get(0), true, defaultRetries, minRetries, maxRetries);
-}
-
-function resetTimeout(obj) {
-   var input = $(obj).siblings('input:text');
-   input.val(defaultTimeout);
-   doSetting(input.get(0), true, defaultTimeout, minTimeout, maxTimeout);
-}
-
-function resetFontSize(obj) {
-   var input = $(obj).siblings('input:text');
-   input.val(defaultMaxBig);
-   doSetting(input.get(0), true, defaultMaxBig, minFontSize, maxFontSize);
+   input.val(MissingE.defaultRetries);
+   doSetting(input.get(0), true, MissingE.defaultRetries, MissingE.minRetries, MissingE.maxRetries);
 }
 
 function toggle(obj) {
@@ -1194,10 +1166,6 @@ function doshow(component) {
 <tr><td colspan="2" class="even">Wrap tags for posts in the dashboard onto multiple lines</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<!--
-<tr><td colspan="2" class="odd">Prevent the Tumblr dashboard's <em>endless scroll</em> feature from stalling (and allow you to try again)<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_timeoutAJAX" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="even">Number of seconds to wait for a stalled dashboard <em>endless scroll</em> load<br /><small><em><a href="http://missinge.infraware.ca/faq#scroll" target="_blank">What is this?</a></em></small></td><td class="even"><input class="numinput timeoutinput" type="text" name="MissingE_dashboardFixes_timeoutLength" value="15" size="1" onchange="doSetting(this,true,defaultTimeout,minTimeout,maxTimeout);" onkeyup="doKeyUp(this,true,defaultTimeout,minTimeout,maxTimeout);" />&nbsp;<span class="resetter" onclick="resetTimeout(this)">Reset</span></td></tr>
--->
 <tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Always display Tumblr's move to top of queue button on queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Expand/Minimize <strong>all</strong> thumbnail images in a dashboard post, together</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_expandAll" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
@@ -1222,7 +1190,7 @@ function doshow(component) {
 <p>Some useful interface tweaks for the Tumblr dashboard sidebar.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Add blog sidebar to <em>all</em> dashboard pages (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_sidebarTweaks_addSidebar" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="even">Number of retries on failure to load sidebar counts (default <span class="defRetries">4</span>)</td><td class="even" style="white-space:nowrap;"><input class="numinput retryinput" type="text" name="MissingE_sidebarTweaks_retries" value="4" size="1" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="subopt"></td><td class="even">Number of retries on failure to load sidebar counts (default <span class="defRetries">4</span>)</td><td class="even" style="white-space:nowrap;"><input class="numinput retryinput" type="text" name="MissingE_sidebarTweaks_retries" value="4" size="1" onchange="doSetting(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" onkeyup="doKeyUp(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 <tr><td colspan="2" class="odd">Slimmer dashboard sidebar</td><td class="odd"><input type="checkbox" name="MissingE_sidebarTweaks_slimSidebar" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Make the <em>Following</em> button on the Dashboard sidebar load your following list page (instead of reloading the Dashboard)</td><td class="even"><input type="checkbox" name="MissingE_sidebarTweaks_followingLink" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 </table>
@@ -1281,7 +1249,7 @@ function doshow(component) {
 <div class="post_thumb"><a href="core/magnifier/screen.jpg" rel="facebox"><img src="core/magnifier/thumb.jpg" /><br />Screenshot</a></div>
 <p>Add a small <img src="core/magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.</p><p>This feature is not meant to replace the existing magnification feature on the Tumblr dash, only provide an alternative where the built-in feature cannot enlarge the image or does not display it at full resolution.</p><p><em>Magnifier</em> can also add a <img src="core/magnifier/magoverlay.png" style="vertical-align:top;" alt="Magnify Avatars Icon" /> icon to Tumblr avatars that, when clicked, allows you to view enlarged avatars!</p>
 <table class="options_table">
-<tr><td colspan="2" class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" size="1" type="text" name="MissingE_magnifier_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" size="1" type="text" name="MissingE_magnifier_retries" value="4" onchange="doSetting(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" onkeyup="doKeyUp(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Add magnify buttons to Tumblr avatars (on the dashboard and in follower/following lists)</td><td class="even"><input type="checkbox" name="MissingE_magnifier_magnifyAvatars" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 </table>
 </form>
@@ -1333,7 +1301,7 @@ function doshow(component) {
 <div class="post_title"><input onchange="toggle(this);" class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Timestamps</div>
 <p><em>Timestamps</em> will add the date and time of an <em>ask</em>, <em>private message</em> or <em>submission</em> in your inbox, messages and submissions pages.</p>
 <table class="options_table">
-<tr><td colspan="2" class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" size="1" type="text" name="MissingE_timestamps_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput retryinput" size="1" type="text" name="MissingE_timestamps_retries" value="4" onchange="doSetting(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" onkeyup="doKeyUp(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Timestamp format<br />
 <table class="subnotes">
 <tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr>
@@ -1383,7 +1351,7 @@ function doshow(component) {
 <table class="options_table">
 <tr><td colspan="2" class="odd">Keep original post tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_passTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"><td class="even">Automatically add original tags to reblog post<br /><small><em>With this setting off, you can still click on the </em>"Reblog Tags"<em> button to add the tags manually</em></small></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_autoFillTags" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
+<tr><td class="subopt"></td><td class="odd">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_retries" value="4" onchange="doSetting(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" onkeyup="doKeyUp(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Quick (1-click) reblogging <em>(see screenshot)</em></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_quickReblog" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Default Tumblr blog to use with quick reblogging<br /><small>You must have posting privileges on the account you select.</small></td>
 <td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" onchange="doSetting(this,false);" /> Main Blog<br />
@@ -1397,7 +1365,7 @@ function doshow(component) {
 </select></td></tr>
 <tr><td colspan="2" class="odd">Always reblog long text posts as text</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_fullText" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Allow reblogging of <em>Ask</em> posts as text<br /><small><em>This feature does not always work correctly from permalink pages</em></small></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_reblogAsks" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Number of retries on failure to add reblog link to ask posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_askRetries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td class="subopt"></td><td class="odd">Number of retries on failure to add reblog link to ask posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_betterReblogs_askRetries" value="4" onchange="doSetting(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" onkeyup="doKeyUp(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
@@ -1434,7 +1402,7 @@ function doshow(component) {
 <tr><td colspan="2" class="even">Add quick "<em>Queue Post</em>", "<em>Save Draft</em>" and "<em>Save as Private</em>" buttons when posting (see screenshot)</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_quickButtons" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="odd">Add extra <em>"Post to"</em> menu (for selecting Tumblr blog to post to) nearer to new post publish buttons (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_blogSelect" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td colspan="2" class="even">Add an <em>"Edit"</em> button to your sub-Tumblr's individual post pages</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_subEdit" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Number of retries on failure to check for sub-Tumblr post permissions (default <span class="defRetries">4</span>)</td><td class="odd" style="white-space:nowrap;"><input type="text" class="numinput retryinput" size="1" name="MissingE_postingFixes_subEditRetries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
+<tr><td class="subopt"></td><td class="odd">Number of retries on failure to check for sub-Tumblr post permissions (default <span class="defRetries">4</span>)</td><td class="odd" style="white-space:nowrap;"><input type="text" class="numinput retryinput" size="1" name="MissingE_postingFixes_subEditRetries" value="4" onchange="doSetting(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" onkeyup="doKeyUp(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this);">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Automatically add tags to queued posts</td><td class="even"><input type="checkbox" name="MissingE_postingFixes_tagQueuedPosts" value="0" checked="checked" onchange="doSetting(this,false);" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Tags to add to queued posts (separated by commas)</td><td class="odd"><input type="text" name="MissingE_postingFixes_queueTags" style="width:250px;" value="" onchange="doSetting(this,false);" onblur="doSetting(this,false);" /></td></tr>
 </table>
@@ -1455,7 +1423,7 @@ function doshow(component) {
 <table class="options_table">
 <tr><td colspan="2" class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
 <tr><td colspan="2" class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" onchange="doSetting(this,false)" /></td></tr>
-<tr><td colspan="2" class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_reblogYourself_retries" value="4" onchange="doSetting(this,true,defaultRetries,minRetries,maxRetries);" onkeyup="doKeyUp(this,true,defaultRetries,minRetries,maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="numinput retryinput" size="1" name="MissingE_reblogYourself_retries" value="4" onchange="doSetting(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" onkeyup="doKeyUp(this,true,MissingE.defaultRetries,MissingE.minRetries,MissingE.maxRetries);" />&nbsp;<span class="resetter" onclick="resetRetries(this)">Reset</span></td></tr>
 </table>
 </form>
 </div>
