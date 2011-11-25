@@ -52,7 +52,7 @@ function isTumblrURL(fullURL, matches) {
 
    var i;
    var url = fullURL.replace(/^http:\/\/www\.tumblr\.com\//,'')
-                    .replace(/\?.*$/,'');
+                    .replace(/\?.*$/,'').replace(/#.*$/,'');
    for (i=0; i<matches.length; i++) {
       if (!urlPatterns.hasOwnProperty(matches[i])) {
          debug("Invalid Tumblr URL pattern: '" + matches[i] + "'");
