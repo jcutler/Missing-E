@@ -34,39 +34,112 @@ extension = {
    isFirefox: true,
    isOpera: false,
    isSafari: false,
-   _listeners: {},
-   _hasListener: function(name,func) {
-      var i;
-      for (i=0; i<this._listeners[name].length; i++) {
-         if (this._listeners[name][i] === func) {
-            return true;
-         }
-      }
-      return false;
+   _ajaxListeners: null,
+   _listeners: null,
+
+   _hasAjaxListener: function(func) {
+      return this._ajaxListeners.indexOf(func) >= 0;
    },
-   addAjaxListener: function(func) {
-      if (typeof func !== "function") { return false; }
+
+   _hasListener: function(name, func) {
+      return this._listeners[name].indexOf(func) >= 0;
+   },
+
+   _registerAjaxListener: function() {
+      this._ajaxListeners = [];
       document.addEventListener('MissingEajax', function(e) {
+         var i;
          var type = e.data.match(/^[^:]*/)[0];
          var list = e.data.match(/(post_\d+)/g);
-         func(type, list);
+         for (i=0; i<extension._ajaxListeners.length; i++) {
+            extension._ajaxListeners[i](type, list);
+         }
       }, false);
    },
+
+   _registerListener: function() {
+      this._listeners = {};
+      self.on("message", function(response) {
+         var i;
+         if (response.greeting === "settings" &&
+             !extension._baseURL) {
+               extension._baseURL = response.extensionURL;
+         }
+         if (extension._listeners.hasOwnProperty(response.greeting)) {
+            for (i=0; i<extension._listeners[response.greeting].length; i++) {
+               extension._listeners[response.greeting][i](response);
+            }
+         }
+      });
+   },
+
+   addAjaxListener: function(func) {
+      if (typeof func !== "function") { return false; }
+      if (!this._hasAjaxListener(func)) {
+         this._ajaxListeners.push(func);
+      }
+   },
+
+   addAjaxListener: function(func) {
+      if (typeof func !== "function") { return false; }
+      if (this._ajaxListeners === null) {
+         this._registerAjaxListener();
+      }
+      if (!this._hasAjaxListener(func)) {
+         this._ajaxListeners.push(func);
+      }
+   },
+
    addListener: function(name, func) {
+      if (typeof func !== "function") { return false; }
+      if (this._listeners === null) {
+         this._registerListener();
+      }
       if (!this._listeners.hasOwnProperty(name)) {
          this._listeners[name] = [];
       }
-      if (func &&
-          !this._hasListener(name, func)) {
+      if (!this._hasListener(name, func)) {
          this._listeners[name].push(func);
       }
    },
+
    getURL: function(rel) {
       return this._baseURL + rel;
    },
+
    hasBaseURL: function() {
       return (typeof this._baseURL !== "undefined");
    },
+
+   removeAjaxListener: function(func) {
+      var idx;
+      if (this._ajaxListeners === null) {
+         return null;
+      }
+      idx = this._ajaxListeners.indexOf(func);
+      if (idx >= 0) {
+         return this._ajaxListeners.splice(idx, 1);
+      }
+      else {
+         return false;
+      }
+   },
+
+   removeListener: function(name, func) {
+      var idx;
+      if (this._listeners === null ||
+          !this._listeners.hasOwnProperty(name)) {
+         return null;
+      }
+      idx = this._listeners[name].indexOf(func);
+      if (idx >= 0) {
+         return this._listeners[name].splice(idx, 1);
+      }
+      else {
+         return null;
+      }
+   },
+
    sendRequest: function(name, request, callback) {
       this.addListener(name, callback);
       if (!request) {
@@ -76,18 +149,5 @@ extension = {
       self.postMessage(request);
    }
 };
-
-self.on("message", function(response) {
-   var i;
-   if (response.greeting === "settings" &&
-       !extension._baseURL) {
-         extension._baseURL = response.extensionURL;
-   }
-   if (extension._listeners.hasOwnProperty(response.greeting)) {
-      for (i=0; i<extension._listeners[response.greeting].length; i++) {
-         extension._listeners[response.greeting][i](response);
-      }
-   }
-});
 
 })();

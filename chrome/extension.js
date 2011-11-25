@@ -34,35 +34,99 @@ extension = {
    isFirefox: false,
    isOpera: false,
    isSafari: false,
-   _listeners: {},
-   _hasListener: function(name, func) {
-      var i;
-      for (i=0; i<this._listeners[name].length; i++) {
-         if (this._listeners[name][i] === func) {
-            return true;
-         }
-      }
-      return false;
+   _ajaxListeners: null,
+   _listeners: null,
+
+   _hasAjaxListener: function(func) {
+      return this._ajaxListeners.indexOf(func) >= 0;
    },
-   addAjaxListener: function(func) {
-      if (typeof func !== "function") { return false; }
-      $(document).bind('MissingEajax', function(e) {
-         func(e.originalEvent.data.type, e.originalEvent.data.list);
+
+   _hasListener: function(name, func) {
+      return this._listeners[name].indexOf(func) >= 0;
+   },
+
+   _registerAjaxListener: function() {
+      this._ajaxListeners = [];
+      document.addEventListener('MissingEajax', function(e) {
+         var i;
+         for (i=0; i<extension._ajaxListeners.length; i++) {
+            extension._ajaxListeners[i](e.data.type, e.data.list);
+         }
+      }, false);
+   },
+
+   _registerListener: function() {
+      this._listeners = {};
+      chrome.extension.onRequest.addListener(function(response) {
+         var i;
+         if (extension._listeners.hasOwnProperty(response.greeting)) {
+            for (i=0; i<extension._listeners[response.greeting].length; i++) {
+               extension._listeners[response.greeting][i](response);
+            }
+         }
       });
    },
+
+   addAjaxListener: function(func) {
+      if (typeof func !== "function") { return false; }
+      if (this._ajaxListeners === null) {
+         this._registerAjaxListener();
+      }
+      if (!this._hasAjaxListener(func)) {
+         this._ajaxListeners.push(func);
+      }
+   },
+
    addListener: function(name, func) {
-      var i;
+      if (typeof func !== "function") { return false; }
+      if (this._listeners === null) {
+         this._registerListener();
+      }
       if (!this._listeners.hasOwnProperty(name)) {
          this._listeners[name] = [];
       }
-      if (func &&
-          !this._hasListener(name, func)) {
+      if (!this._hasListener(name, func)) {
          this._listeners[name].push(func);
       }
    },
+
    getURL: function(rel) {
       return chrome.extension.getURL(rel);
    },
+
+   hasBaseURL: function() {
+      return true;
+   },
+
+   removeAjaxListener: function(func) {
+      var idx;
+      if (this._ajaxListeners === null) {
+         return null;
+      }
+      idx = this._ajaxListeners.indexOf(func);
+      if (idx >= 0) {
+         return this._ajaxListeners.splice(idx, 1);
+      }
+      else {
+         return null;
+      }
+   },
+
+   removeListener: function(name, func) {
+      var idx;
+      if (this._listeners === null ||
+          !this._listeners.hasOwnProperty(name)) {
+         return null;
+      }
+      idx = this._listeners[name].indexOf(func);
+      if (idx >= 0) {
+         return this._listeners[name].splice(idx, 1);
+      }
+      else {
+         return null;
+      }
+   },
+
    sendRequest: function(name, request, callback) {
       if (!request) {
          request = {};
@@ -73,14 +137,5 @@ extension = {
       });
    }
 };
-
-chrome.extension.onRequest.addListener(function(response) {
-   var i;
-   if (extension._listeners.hasOwnProperty(response.greeting)) {
-      for (i=0; i<extension._listeners[response.greeting].length; i++) {
-         extension._listeners[response.greeting][i](response);
-      }
-   }
-});
 
 })();
