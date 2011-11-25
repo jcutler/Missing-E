@@ -56,7 +56,6 @@
 				<string>lib/jquery.ui.draggable.min.js</string>
 				<string>lib/jquery.ui.sortable.min.js</string>
 				<string>lib/jquery.ui.resizable.min.js</string>
-				<string>common/defs.js</string>
 				<string>core/localizations.js</string>
 				<string>core/utils.js</string>
 				<string>common/storage.js</string>

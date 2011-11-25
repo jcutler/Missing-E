@@ -324,26 +324,6 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_timeoutAJAX</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>15</real>
-		<key>Key</key>
-		<string>MissingE_dashboardFixes_timeoutLength</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>1</real>
-		<key>Key</key>
 		<string>MissingE_dashboardFixes_postLinks</string>
 		<key>Title</key>
 		<string></string>

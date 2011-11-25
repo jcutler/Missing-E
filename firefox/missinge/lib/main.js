@@ -251,7 +251,6 @@ function openSettings() {
       onReady: function(tab) {
          tab.attach({
             contentScriptFile: [data.url("common/jquery-1.5.2.min.js"),
-                                data.url("common/defs.js"),
                                 data.url("extension.js"),
                                 data.url("core/localizations.js"),
                                 data.url("core/utils.js"),
