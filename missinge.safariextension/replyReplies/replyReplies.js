@@ -380,6 +380,7 @@ function replyRepliesSettings(response) {
                   .replace(/<\/?div[^>]*>/g,'');
    }
 
+   code = code.replace(/ {2,}/g,' ');
    reply_setValue(code);
    if (response.message.defaultTags !== '') {
       tags = response.message.defaultTags.concat(tags);

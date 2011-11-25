@@ -414,6 +414,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                      .replace(/<\/?div[^>]*>/g,'');
       }
 
+      code = code.replace(/ {2,}/g,' ');
       reply_setValue(code);
       if (replyReplies_settings.defaultTags !== '') {
          tags = replyReplies_settings.defaultTags.concat(tags);

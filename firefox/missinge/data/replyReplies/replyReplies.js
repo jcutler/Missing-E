@@ -383,6 +383,8 @@ function replyRepliesSettings(message) {
                   .replace(/style="\s*"\s*/g,'')
                   .replace(/<\/?div[^>]*>/g,'');
    }
+   
+   code = code.replace(/ {2,}/g,' ');
    reply_setValue(code);
    if (message.defaultTags !== '') {
       tags = message.defaultTags.concat(tags);
