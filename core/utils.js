@@ -30,7 +30,7 @@ var utils = {
    defaultFormat: "%Y-%m-%D %H:%i",
 
    urlPatterns: {
-      "askForm":    /^ask_form\/[^\/]+$/,
+      "askForm":    /^ask_form\/[^\/]+(\/success)?[\/]?$/,
       "blog":       /^blog\/[^\/]+(\/search\/[^\/]+)?(\/\d+)?[\/]?$/,
       "blogData":   /^blog\/[^\/]+\/((members|followers)(\/page\/\d+)?|settings)[\/]?$/,
       "crushes":    /^(blog\/[^\/]+\/)?new\/photo[\/]?$/,

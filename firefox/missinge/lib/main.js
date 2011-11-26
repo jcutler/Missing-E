@@ -1790,7 +1790,9 @@ function handleMessage(message, myWorker) {
          injectScripts.splice(1, 0, data.url("lib/facebox/facebox.js"));
       }
 
-      injectScripts.unshift(data.url("common/ajaxEvents.js"));
+      if (!MissingE.isTumblrURL(message.url, ["askForm"])) {
+         injectScripts.unshift(data.url("common/ajaxEvents.js"));
+      }
 
       // In reverse order of requirements
       if (needUI) {
