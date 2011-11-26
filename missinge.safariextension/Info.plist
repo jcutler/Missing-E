@@ -28,7 +28,7 @@
 				<key>Identifier</key>
 				<string>missinge-settings</string>
 				<key>Image</key>
-				<string>missinge-button.png</string>
+				<string>identity/missinge_button.png</string>
 				<key>Include By Default</key>
 				<true/>
 				<key>Label</key>
