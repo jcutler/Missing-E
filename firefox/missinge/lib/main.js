@@ -254,7 +254,7 @@ function openSettings() {
                                 data.url("extension.js"),
                                 data.url("core/localizations.js"),
                                 data.url("core/utils.js"),
-                                data.url("checkbox/jquery.checkbox.min.js"),
+                                data.url("lib/checkbox/jquery.checkbox.min.js"),
                                 data.url("facebox/facebox.js"),
                                 data.url("lib/jquery-spin/jquery-spin.js"),
                                 data.url("options.js")],
