@@ -66,7 +66,9 @@ extension = {
          if ((response.greeting === "settings" ||
               response.greeting === "addMenu") &&
              !extension._baseURL) {
-               extension._baseURL = response.extensionURL;
+            extension._baseURL = response.extensionURL;
+            document.body.setAttribute("data-MissingE-extensionURL",
+                                       response.extensionURL);
          }
          if (extension._listeners.hasOwnProperty(response.greeting)) {
             for (i=0; i<extension._listeners[response.greeting].length; i++) {
@@ -100,10 +102,20 @@ extension = {
    },
 
    getURL: function(rel) {
-      return this._baseURL + rel;
+      if (!this.hasBaseURL()) {
+         return rel;
+      }
+      else {
+         return this._baseURL + rel;
+      }
    },
 
    hasBaseURL: function() {
+      if (document.body &&
+          document.body.hasAttribute("data-MissingE-extensionURL")) {
+         this._baseURL =
+            document.body.getAttribute("data-MissingE-extensionURL");
+      }
       return (typeof this._baseURL !== "undefined");
    },
 

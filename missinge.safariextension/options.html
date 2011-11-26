@@ -679,10 +679,11 @@ margin-right:-2px;
 var MissingE = {};
 </script>
 <script type="text/javascript" src="common/jquery.min.js"></script>
+<script type="text/javascript" src="extension.js"></script>
 <script type="text/javascript" src="core/localizations.js"></script>
 <script type="text/javascript" src="core/utils.js"></script>
-<link rel="stylesheet" media="screen" type="text/css" href="facebox/facebox.css" />
-<script type="text/javascript" src="facebox/facebox.js"></script>
+<link rel="stylesheet" media="screen" type="text/css" href="lib/facebox/facebox.css" />
+<script type="text/javascript" src="lib/facebox/facebox.js"></script>
 <link rel="stylesheet" type="text/css" href="lib/checkbox/jquery.checkbox.css" />
 <link rel="stylesheet" type="text/css" href="dashboardFixes/replaceIcons.css" />
 <script type="text/javascript" src="lib/jquery-spin/jquery-spin.js"></script>
@@ -713,8 +714,8 @@ safari.self.addEventListener("message", function(response) {
 jQuery(document).ready(function($) {
    safari.self.tab.dispatchMessage("close-options");
    $('a[rel*=facebox]').facebox({
-      loadingImage : 'facebox/loading.gif',
-      closeImage   : 'facebox/closelabel.png'
+      loadingImage : 'lib/facebox/loading.gif',
+      closeImage   : 'lib/facebox/closelabel.png'
    });
    safari.self.tab.dispatchMessage("all-settings",{});
 });

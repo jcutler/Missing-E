@@ -1278,8 +1278,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
              (getStorage("MissingE_askFixes_enabled",1) == 1 &&
               getStorage("MissingE_askFixes_askDash",0) == 1)) {
             zindexFix = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "lib/facebox/facebox.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "lib/facebox/facebox.css"});
          }
 
          if (getStorage("MissingE_sidebarTweaks_enabled",1) == 1) {
@@ -1466,8 +1466,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_magnifier_enabled",1) == 1) {
             activeScripts.magnifier = true;
             zindexFix = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "facebox/facebox.js"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "facebox/facebox.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "lib/facebox/facebox.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "lib/facebox/facebox.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "core/magnifier/magnifier.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "core/magnifier/magnifier.css"});
          }

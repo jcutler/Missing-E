@@ -255,7 +255,7 @@ function openSettings() {
                                 data.url("core/localizations.js"),
                                 data.url("core/utils.js"),
                                 data.url("lib/checkbox/jquery.checkbox.min.js"),
-                                data.url("facebox/facebox.js"),
+                                data.url("lib/facebox/facebox.js"),
                                 data.url("lib/jquery-spin/jquery-spin.js"),
                                 data.url("options.js")],
             onMessage: function(data) {
@@ -1507,6 +1507,11 @@ function handleMessage(message, myWorker) {
                            data.url("core/localizations.js"),
                            data.url("core/utils.js")];
       var injectStyles = [];
+      myWorker.tab.attach({
+         contentScript: 'document.body' +
+                           '.setAttribute("data-MissingE-extensionURL","' +
+                                          data.url("") + '");',
+      });
       activeScripts.extensionURL = data.url("");
       activeScripts.version = currVersion;
       if (!message.isFrame &&
@@ -1781,8 +1786,8 @@ function handleMessage(message, myWorker) {
           (activeScripts.askFixes &&
            getStorage("extensions.MissingE.askFixes.askDash",0) == 1)) {
          zindexFix = true;
-         injectScripts.unshift(data.url("common/faceboxHelper.js"));
-         injectScripts.unshift(data.url("facebox/facebox.js"));
+         injectStyles.push(data.url("lib/facebox/facebox.css"));
+         injectScripts.splice(1, 0, data.url("lib/facebox/facebox.js"));
       }
 
       injectScripts.unshift(data.url("common/ajaxEvents.js"));
