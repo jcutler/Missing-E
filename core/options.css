@@ -1,0 +1,587 @@
+/*
+ * 'Missing e' Extension
+ *
+ * Copyright 2011, Jeremy Cutler
+ * Released under the GPL version 3 licence.
+ * SEE: license/GPL-LICENSE.txt
+ *
+ * This file is part of 'Missing e'.
+ *
+ * 'Missing e' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * 'Missing e' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#settingsframe {
+width:1px;
+height:1px;
+visibility:hidden;
+position:absolute;
+top:0;
+left:0;
+}
+
+body {
+background:#2c4762 url('images/background.png') top repeat-x;
+font:normal 14px Arial,Helvetica,sans-serif;
+line-height:1.4;
+color:#444;
+margin:0;
+padding:0
+}
+
+a img {
+border-width:0
+}
+
+a {
+color:#444
+}
+
+p,ul,blockquote {
+margin-top:20px;
+margin-bottom:20px
+}
+
+ul ul, ul ol, ol ul, ol ol {
+margin:5px 0
+}
+
+form {
+margin:0;
+padding:0;
+display:inline
+}
+
+*,*:active,*:focus {
+outline:0;
+outline-style:none;
+outline-width:0;
+}
+
+.clear {
+clear:both;
+height:0;
+overflow:hidden
+}
+
+input, select {
+font:normal 13px 'Lucida Grande',Helvetica,Arial,sans-serif;
+color:#444
+}
+
+select {
+border:solid 1px #bbb
+}
+
+#container {
+width:900px;
+margin:auto;
+padding:0 30px
+}
+
+#header {
+height:80px;
+position:relative;
+z-index:80
+}
+
+#logo {
+width:66px;
+height:48px;
+position:absolute;
+left:15px;
+top:16px;
+}
+
+#nav {
+position:absolute;
+right:0px;
+top:26px;
+font-size:16px;
+z-index:90;
+white-space:nowrap;
+text-align:right;
+}
+
+#nav .nav_item {
+display:inline-block;
+position:relative;
+padding:3px 8px 2px 8px;
+margin-left:10px;
+color:#fff;
+text-decoration:none;
+cursor:pointer
+}
+
+#nav .nav_item img {
+vertical-align:middle;
+}
+
+#nav .nav_item:hover {
+color:#dde7f0;
+}
+
+#nav .nav_item:hover img {
+opacity:0.75;
+}
+
+#nav .nav_item .nav_item_nipple {
+position:absolute;
+left:0;
+right:0;
+bottom:-6px;
+height:6px;
+background:top center no-repeat;
+display:none
+}
+
+#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel {
+margin:0 auto;
+height:1px;
+background:#1f354c
+}
+
+#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_1 {
+width:11px
+}
+
+#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_2 {
+width:9px
+}
+
+#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_3 {
+width:7px
+}
+
+#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_4 {
+width:5px
+}
+
+#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_5 {
+width:3px
+}
+
+#nav .nav_item .nav_item_nipple .nav_item_nipple_pixel.nav_item_nipple_pixel_6 {
+width:1px
+}
+
+#nav .nav_item.active {
+background-color:#1f354c
+}
+
+#nav .nav_item.active .nav_item_nipple {
+display:block
+}
+
+#nav #close_nav {
+padding:0;
+margin:4px 8px 2px 10px;
+}
+
+#nav #close_nav img {
+vertical-align:1px;
+opacity:0.5;
+}
+
+#nav #close_nav:hover img {
+opacity:1;
+}
+
+#content {
+background:#2c4762;
+padding:20px;
+-webkit-border-radius:15px;
+-moz-border-radius:15px;
+border-radius:15px
+}
+
+#posts {
+list-style-type:none;
+margin:0 0 0 85px;
+padding:0
+}
+
+#posts .post {
+margin:20px 0 0 0;
+-webkit-border-radius:10px;
+-moz-border-radius:10px;
+border-radius:10px;
+background-color:#fff;
+padding:15px 20px 15px 20px;
+position:relative;
+border-bottom:solid 2px #bbb;
+word-wrap:break-word
+}
+
+#posts .post img {
+max-width:100%
+}
+
+#posts .post p,#posts .post ul,#posts .post ol {
+margin:10px 0
+}
+
+#posts .post p:last-child, #posts .post ul:last-child,
+#posts .post ol:last-child {
+margin-bottom:0
+}
+
+#posts .post ul {
+list-style-type:disc
+}
+
+#posts .post li {
+margin:0
+}
+
+#posts .post .post_avatar {
+display:block;
+width:64px;
+height:64px;
+position:absolute;
+left:-85px;
+top:0;
+overflow:hidden;
+-webkit-border-radius:6px;
+-moz-border-radius:6px;
+border-radius:6px;
+text-decoration:none;
+border-bottom:solid 1px #0a2939;
+background:#0a2939 no-repeat top right
+}
+
+#posts .post .arrow {
+width:8px;
+height:15px;
+position:absolute;
+left:-7px;
+top:25px;
+background:url('images/post_nipple.png') no-repeat transparent
+}
+
+#posts .post .post_content *:first-child{
+margin-top:0!important
+}
+
+#posts .post .post_content *:last-child{
+margin-bottom:0!important
+}
+
+#posts .post .post_title {
+font:bold 22px Arial,Helvetica;
+line-height:40px;
+height:40px;
+margin-bottom:10px
+}
+
+.toggler {
+cursor:pointer;
+float:right;
+}
+
+.new_post_notice {
+position:absolute;
+left:80px;
+top:10px;
+display:block;
+font:bold 14px Arial,sans-serif;
+text-decoration:none;
+background:#e53f29;
+color:#fff;
+padding:3px 7px;
+border-right:1px solid #3c444c;
+border-bottom:1px solid #3c444c;
+-webkit-border-radius:5px;
+-moz-border-radius:5px;
+border-radius:5px
+}
+
+.new_post_notice .new_post_notice_nipple {
+position:absolute;
+bottom:-7px;
+left:7px;
+width:8px;
+height:7px;
+background:url('images/new_post_nipple.png') no-repeat transparent
+}
+
+form table td {
+vertical-align:top;
+}
+
+#dashboard_posts, #posting_posts, #social_posts {
+display:none;
+}
+
+.options_table {
+clear:both;
+border-spacing:2px;
+}
+
+.options_table td {
+vertical-align:middle;
+padding:10px 12px 10px 10px;
+}
+
+td.subopt, td.experimental.subopt {
+background:transparent url('images/subopt.png') no-repeat center center !important;
+padding:0;
+width:32px;
+opacity:0.65;
+}
+
+tr:hover td.subopt {
+opacity:1.0;
+}
+
+.options_table .odd {
+background-color:#ECECEC;
+}
+
+.options_table .even {
+background-color:#F4F4F4;
+}
+
+td.even + td.even, td.odd + td.odd {
+text-align:center;
+}
+
+.options_table img {
+vertical-align:bottom;
+}
+
+#experimental_section {
+display:none;
+}
+
+#experimental_section .experimental_title {
+text-align:right;
+float:right;
+opacity:0.2;
+}
+
+#experimental_section .experimental_title:hover {
+opacity:1;
+}
+
+#experimental_section .experimental_title * {
+vertical-align:middle;
+}
+
+#experimental_section .experimental_switch {
+display:inline-block;
+padding:10px;
+border-radius:10px;
+background-color:white;
+margin-right:-10px;
+}
+
+#experimental_section .experimental_switch img {
+height:20px;
+}
+
+.options_table td.experimental {
+display:none;
+background-image:url('images/exp_bg.png');
+}
+
+td.input_left {
+text-align:left !important;
+}
+
+table.subnotes {
+padding-left:20px;
+font-size:80%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+table.subnotes td {
+padding:6px 10px;
+}
+
+table.subnotes .label {
+font-weight:bold;
+padding-right:5px;
+border-top:1px solid #eee;
+border-bottom:1px solid #eee;
+}
+
+table.subnotes .desc {
+font-style:italic;
+border-top:1px solid #eee;
+border-bottom:1px solid #eee;
+}
+
+td.odd table.subnotes .label, td.odd table.subnotes .desc {
+border-top:1px solid #f6f6f6;
+border-bottom:1px solid #f6f6f6;
+}
+
+span.resetter {
+text-decoration:underline;
+cursor:pointer;
+font-size:80%;
+}
+
+div.post_thumb {
+float:right;
+margin:-40px 5px 10px 2px;
+font-weight:bold;
+font-size:80%;
+text-align:center;
+background-color:#CCC;
+padding:4px 4px 2px;
+min-width:66px;
+}
+
+div.post_thumb a {
+display:block;
+width:100%;
+text-decoration:none;
+}
+
+div.post_thumb a:hover {
+font-style:italic;
+}
+
+li#about_section p {
+text-align:center;
+border-top:1px solid #CCC;
+padding-top:10px;
+}
+
+li#about_section p.first {
+border-top:0;
+padding-top:0;
+}
+
+li#about_section div.instructions {
+font-size:150%;
+position:relative;
+height:150px;
+}
+
+div.instructions div {
+width:100%;
+}
+
+li#about_section div.instructions p.smaller {
+font-size:80%;
+border-top:0;
+}
+
+input.numinput {
+text-align:right;
+}
+
+#inclusions {
+margin-top:60px;
+text-align:center;
+font-style:italic;
+}
+
+#inclusions img {
+vertical-align:middle;
+}
+
+#inclusions a {
+margin:0 20px;
+}
+
+#devpage {
+float:right;
+text-align:right;
+}
+
+#devpage a {
+color:white;
+}
+
+img.spinner {
+margin-left:-1px !important;
+vertical-align:top !important;
+}
+
+#version {
+float:right;
+font-style:italic;
+text-align:right;
+}
+
+#changehistory {
+font-size:90%;
+font-style:normal;
+}
+
+.stamp_sample {
+font-size:13px;
+}
+
+.stamp_label {
+font-style:italic;
+font-size:11px;
+margin-top:5px;
+}
+
+#iodiv {
+margin:2px 0 0 85px;
+font-size:12px;
+color:white;
+line-height:32px;
+}
+
+#iodiv img {
+width:32px;
+height:32px;
+cursor:pointer;
+vertical-align:top;
+}
+
+#importdiv, #exportdiv, #iosep {
+height:32px;
+position:relative;
+overflow:hidden;
+float:left;
+}
+
+#importdiv, #exportdiv {
+cursor:pointer;
+}
+
+#iosep {
+text-align:center;
+width:4px;
+color:#BBB;
+}
+
+#importdiv #importform {
+opacity:0;
+}
+
+#importdiv #import {
+position:absolute;
+top:0;
+right:0;
+margin:0;
+height:32px;
+cursor:pointer;
+}
+
+#importdiv img {
+margin-right:-2px;
+}
+
+#posts .post .MissingE_post_control {
+background-image:url("../dashboardFixes/icon_replacements.png");
+}
