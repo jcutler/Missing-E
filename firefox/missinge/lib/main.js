@@ -1812,7 +1812,7 @@ function handleMessage(message, myWorker) {
       }
       injectScripts.unshift(data.url("common/jquery-1.5.2.min.js"));
       if (zindexFix) {
-         injectScripts.push(data.url("common/zindexFix.js"));
+         injectScripts.push(data.url("core/common/zindexFix.js"));
       }
       activeScripts.url = message.url;
       activeScripts.isFrame = message.isFrame;

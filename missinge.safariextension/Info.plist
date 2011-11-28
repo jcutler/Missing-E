@@ -81,7 +81,7 @@
 				<string>core/timestamps/timestamps.js</string>
 				<string>core/massEditor/massEditor.js</string>
 				<string>postingFixes/subEdit.js</string>
-				<string>common/zindexFix.js</string>
+				<string>core/common/zindexFix.js</string>
 				<string>common/whoami.js</string>
 			</array>
 		</dict>

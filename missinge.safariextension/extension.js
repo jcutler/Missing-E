@@ -24,7 +24,8 @@
 /*global safari */
 
 var MissingE = {
-   packages: {}
+   packages: {},
+   utilities: {}
 };
 
 var extension = {

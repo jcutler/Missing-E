@@ -125,7 +125,7 @@ function doStartup(response) {
 
    if (window.top === window) {
       if (response.message.zindexFix) {
-         doZindexFix();
+         MissingE.utilities.zindexFix.init();
       }
       if (response.message.massEditor) {
          MissingE.packages.massEditor.init();

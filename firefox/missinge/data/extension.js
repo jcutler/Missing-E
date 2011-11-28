@@ -28,7 +28,8 @@
 if (typeof MissingE !== "undefined") { return; }
 
 MissingE = {
-   packages: {}
+   packages: {},
+   utilities: {}
 };
 
 extension = {
