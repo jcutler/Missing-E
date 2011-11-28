@@ -21,18 +21,31 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome */
+(function(){
 
-var versiondiv = document.getElementById('versioncheck');
-if (versiondiv) {
-   var ver = versiondiv.getAttribute('version');
-   chrome.extension.sendRequest({greeting: "version", v: ver},
-                                function(response) {
-      if (response.uptodate) {
+MissingE.utilities.versionCheck = {
+   
+   run: function() {
+      if (this.uptodate) {
          document.getElementById('uptodate').style.display = 'inline-block';
       }
       else {
          document.getElementById('notuptodate').style.display = 'inline-block';
       }
-   });
-}
+   },
+
+   init: function() {
+      var versiondiv = document.getElementById('versioncheck');
+      if (versiondiv) {
+         var ver = versiondiv.getAttribute('version');
+         extension.sendRequest("version", {v: ver}, function(response) {
+            MissingE.utilities.versionCheck.uptodate = response.uptodate;
+            MissingE.utilities.versionCheck.run();
+         });
+      }
+   }
+};
+
+MissingE.utilities.versionCheck.init();
+
+}());

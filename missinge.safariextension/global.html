@@ -127,11 +127,6 @@ function debug(msg) {
    }
 }
 
-safari.extension.addContentScriptFromURL(safari.extension.baseURI +
-                                  "common/getOptions.js",
-                                  safari.extension.baseURI +
-                                  "common/getOptions.html", null, true);
-
 function exportOptionsXML(request) {
    request.target.page.dispatchMessage("exportOptions", {url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
 }

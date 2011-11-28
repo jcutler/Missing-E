@@ -59,13 +59,6 @@ if ((window.top === window &&
                                              bodyId: document.body.id});
    safari.self.tab.dispatchMessage("update");
 }
-else if (/http:\/\/missinge\.infraware\.ca/.test(location.href)) {
-   var versiondiv = document.getElementById('versioncheck');
-   if (versiondiv) {
-      var ver = versiondiv.getAttribute('version');
-      safari.self.tab.dispatchMessage("version", {v: ver});
-   }
-}
 
 function updateCheck(response) {
    if (response.name !== "update") { return; }

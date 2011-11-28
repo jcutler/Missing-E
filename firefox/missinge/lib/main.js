@@ -1910,7 +1910,8 @@ pageMod.PageMod({
 pageMod.PageMod({
    include: ["http://missinge.infraware.ca/*"],
    contentScriptWhen: 'ready',
-   contentScriptFile: [data.url("common/versionchk.js")],
+   contentScriptFile: [data.url("extension.js"),
+                       data.url("common/versionchk.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {
          handleMessage(data, this);

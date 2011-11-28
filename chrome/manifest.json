@@ -26,7 +26,8 @@
       },
       {
          "matches": ["http://missinge.infraware.ca/*"],
-         "js": ["common/versionchk.js"]
+         "js": ["extension.js",
+                "core/versionCheck.js"]
       }
    ]
 }

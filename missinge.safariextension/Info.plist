@@ -82,6 +82,7 @@
 				<string>core/massEditor/massEditor.js</string>
 				<string>postingFixes/subEdit.js</string>
 				<string>core/common/zindexFix.js</string>
+                                <string>core/versionCheck.js</string>
 				<string>common/whoami.js</string>
 			</array>
 		</dict>
