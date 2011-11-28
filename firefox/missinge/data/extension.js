@@ -119,6 +119,10 @@ extension = {
       return (typeof this._baseURL !== "undefined");
    },
 
+   openWindow: function(addr) {
+      self.postMessage({greeting: "open", url: addr});
+   },
+
    removeAjaxListener: function(func) {
       var idx;
       if (this._ajaxListeners === null) {

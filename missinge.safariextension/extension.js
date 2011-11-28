@@ -96,6 +96,10 @@ var extension = {
       return true;
    },
 
+   openWindow: function(addr) {
+      safari.self.tab.dispatchMessage("open", addr);
+   },
+
    removeAjaxListener: function(func) {
       var idx;
       if (this._ajaxListeners === null) {

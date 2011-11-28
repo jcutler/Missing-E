@@ -1458,7 +1458,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           MissingE.isTumblrURL(sender.tab.url, ["following"])) {
          if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
             activeScripts.postCrushes = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "postCrushes/postCrushes.js"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/postCrushes/postCrushes.js"});
          }
          else
             activeScripts.postCrushes = false;
@@ -1478,7 +1478,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           MissingE.isTumblrURL(sender.tab.url, ["crushes"])) {
          if (getStorage("MissingE_postCrushes_enabled",1) == 1) {
             activeScripts.postCrushes = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "postCrushes/postCrushes_fill.js"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/postCrushes/postCrushes_fill.js"});
          }
          else
             activeScripts.postCrushes = false;

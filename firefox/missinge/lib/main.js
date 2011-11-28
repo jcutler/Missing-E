@@ -1162,7 +1162,6 @@ function handleMessage(message, myWorker) {
 
    }
    else if (message.greeting == "getAsker") {
-      console.log("getAsker");
       myWorker.tab.attach({
          contentScriptFile: [data.url("extension.js"),
                              data.url("core/utils.js"),
@@ -1707,7 +1706,7 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/following/.test(message.url)) {
          if (getStorage("extensions.MissingE.postCrushes.enabled",1) == 1) {
-            injectScripts.push(data.url("postCrushes/postCrushes.js"));
+            injectScripts.push(data.url("core/postCrushes/postCrushes.js"));
             activeScripts.postCrushes = true;
             activeScripts.postCrushes_fill = false;
          }
@@ -1717,7 +1716,7 @@ function handleMessage(message, myWorker) {
          if (getStorage("extensions.MissingE.magnifier.enabled",1) == 1) {
             activeScripts.magnifier = true;
             injectStyles.push(data.url("core/magnifier/magnifier.css"));
-            injectScripts.unshift(data.url("core/magnifier/magnifier.js"));
+            injectScripts.push(data.url("core/magnifier/magnifier.js"));
          }
          else
             activeScripts.magnifier = false;
@@ -1726,7 +1725,7 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/new\/photo/.test(message.url)) {
          if (getStorage("extensions.MissingE.postCrushes.enabled",1) == 1) {
-            injectScripts.push(data.url("postCrushes/postCrushes_fill.js"));
+            injectScripts.push(data.url("core/postCrushes/postCrushes_fill.js"));
             activeScripts.postCrushes = true;
             activeScripts.postCrushes_fill = true;
          }
@@ -1788,7 +1787,8 @@ function handleMessage(message, myWorker) {
            getStorage("extensions.MissingE.askFixes.askDash",0) == 1)) {
          zindexFix = true;
          injectStyles.push(data.url("lib/facebox/facebox.css"));
-         injectScripts.splice(1, 0, data.url("lib/facebox/facebox.js"));
+         var pos = injectScripts.indexOf(data.url("core/utils.js"));
+         injectScripts.splice(pos, 0, data.url("lib/facebox/facebox.js"));
       }
 
       if (!MissingE.isTumblrURL(message.url, ["askForm"])) {

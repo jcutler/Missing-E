@@ -21,19 +21,19 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global chrome */
+(function(){
 
-if (document.body.id === 'dashboard_edit_post') {
-   chrome.extension.sendRequest({greeting: "settings",
-                                 component: "postCrushes"}, function(response) {
-      var postCrushes_settings = response;
+MissingE.packages.postCrushesFill = {
+
+   run: function() {
+      var settings = this.settings;
       var tagarr, i;
       var url = localStorage.getItem("tcp_crushURL");
       if (url !== undefined && url !== null && url !== "") {
          localStorage.removeItem("tcp_crushURL");
-         var notlarge = postCrushes_settings.crushSize;
-         var showPercent = postCrushes_settings.showPercent;
-         var addTags = postCrushes_settings.addTags;
+         var notlarge = settings.crushSize;
+         var showPercent = settings.showPercent;
+         var addTags = settings.addTags;
          if (addTags === 1) {
             var tags = localStorage.getItem('tcp_crushTags');
             tagarr = tags.split(',');
@@ -64,5 +64,31 @@ if (document.body.id === 'dashboard_edit_post') {
          document.getElementById('photo_upload').style.display = "none";
          document.getElementById('photo_url').style.display = "block";
       }
-   });
+   },
+
+   init: function() {
+      if (document.body.id === 'dashboard_edit_post') {
+         extension.sendRequest("settings", {component: "postCrushes"},
+                               function(response) {
+            if (response.component === "postCrushes") {
+               var i;
+               MissingE.packages.postCrushesFill.settings = {};
+               for (i in response) {
+                  if (response.hasOwnProperty(i) &&
+                      i !== "component") {
+                     MissingE.packages.postCrushesFill.settings[i] = response[i];
+                  }
+               }
+               MissingE.packages.postCrushesFill.run();
+            }
+         });
+      }
+   }
+};
+
+if (extension.isChrome ||
+    extension.isFirefox) {
+   MissingE.packages.postCrushesFill.init();
 }
+
+}());

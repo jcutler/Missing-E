@@ -100,6 +100,10 @@ extension = {
       return true;
    },
 
+   openWindow: function(addr) {
+      window.open(addr);
+   },
+
    removeAjaxListener: function(func) {
       var idx;
       if (this._ajaxListeners === null) {

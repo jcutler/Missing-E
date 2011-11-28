@@ -138,10 +138,10 @@ function doStartup(response) {
       }
       if (response.message.postCrushes) {
          if (response.message.postCrushes_fill) {
-            MissingE_postCrushes_fill_doStartup();
+            MissingE.packages.postCrushesFill.init();
          }
          else {
-            MissingE_postCrushes_doStartup();
+            MissingE.packages.postCrushes.init();
          }
       }
       if (response.message.betterReblogs) {
