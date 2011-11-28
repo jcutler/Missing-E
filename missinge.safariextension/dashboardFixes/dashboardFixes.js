@@ -581,7 +581,7 @@ function MissingE_dashboardFixes_doStartup(experimental, reblogQuoteFit,
                        'document.addEventListener("MissingEqueueMove",' +
                                                   'function(e) {' +
                           'update_publish_on_times();' +
-                       '}, false);</script>'); 
+                       '}, false);</script>');
       $(document).bind('MissingEajax', function(e) {
          if (e.originalEvent.data.type === 'notes') { return; }
          $.each(e.originalEvent.data.list, function(i,val) {

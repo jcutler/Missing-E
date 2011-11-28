@@ -26,7 +26,7 @@
 (function($){
 
 MissingE.packages.magnifier = {
-   
+
    magClick: function(e) {
       if (e.which === 1) {
          if ($(this).hasClass('MissingE_magnify_err')) {

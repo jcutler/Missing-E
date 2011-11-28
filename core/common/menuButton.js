@@ -27,7 +27,7 @@ MissingE.packages.menuButton = {
    run: function() {
       var bar = document.getElementById("user_tools");
       var logout = document.getElementById("logout_button");
-     
+
       if (document.body.id === "dashboard_index") {
          var lcol = document.getElementById('left_column');
          var rcol = document.getElementById('right_column');

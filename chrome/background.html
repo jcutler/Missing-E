@@ -742,7 +742,7 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
              getSetting("MissingE_reblogYourself_retries",MissingE.defaultRetries),
              {
                pid:request.pid,
-               icons:getSetting("MissingE_dashboardFixes_enabled",1) == 1 && 
+               icons:getSetting("MissingE_dashboardFixes_enabled",1) == 1 &&
                      getSetting("MissingE_dashboardFixes_replaceIcons",1) == 1
              });
    }

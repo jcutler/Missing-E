@@ -443,7 +443,7 @@ self.on('message', function(message) {
    }
    if (message.wrapTags === 1) {
       data += "#posts .post .footer_links.with_tags { " +
-               "overflow:visible !important; } " + 
+               "overflow:visible !important; } " +
                "#posts .post .footer_links.with_tags span { " +
                "display:inline !important; overflow:visible !important; } " +
                "#posts .post .footer_links.with_tags .source_url { " +

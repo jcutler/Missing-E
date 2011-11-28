@@ -858,7 +858,7 @@ function requestBetterReblogsAsk(request) {
              getSetting("MissingE_betterReblogs_askRetries",MissingE.defaultRetries),
              {
                pid:request.pid,
-               icons:getSetting("MissingE_dashboardFixes_enabled",1) == 1 && 
+               icons:getSetting("MissingE_dashboardFixes_enabled",1) == 1 &&
                      getSetting("MissingE_dashboardFixes_replaceIcons",1) == 1
              });
    }
@@ -885,7 +885,7 @@ function requestReblogYourself(request) {
              getSetting("MissingE_reblogYourself_retries",MissingE.defaultRetries),
              {
                pid:request.pid,
-               icons:getSetting("MissingE_dashboardFixes_enabled",1) == 1 && 
+               icons:getSetting("MissingE_dashboardFixes_enabled",1) == 1 &&
                      getSetting("MissingE_dashboardFixes_replaceIcons",1) == 1
              });
    }
@@ -1205,7 +1205,7 @@ function handleRequest(request) {
                   dt.month = 12;
                }
                else if (/^sun(day)?$/i.test(stamp[i])) {
-                  dt.date = -dt.day; 
+                  dt.date = -dt.day;
                }
                else if (/^mon(day)?$/i.test(stamp[i])) {
                   dt.date = (1-dt.day-7)%7;

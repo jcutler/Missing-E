@@ -34,7 +34,7 @@ self.on('message', function(message) {
    var controls;
    if (div) { controls = div.getElementsByTagName("a"); }
    var noEdit = true;
-   
+
    if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href))) {
       noEdit = false;
    }
@@ -46,7 +46,7 @@ self.on('message', function(message) {
          }
       }
    }
-   
+
    if (noEdit) {
       var follow, like;
       var acct;

@@ -31,7 +31,7 @@ function MissingE_postingFixes_subEdit_doStartup() {
    var controls;
    if (div) { controls = div.getElementsByTagName("a"); }
    var noEdit = true;
-   
+
    if (!(/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href))) {
       noEdit = false;
    }

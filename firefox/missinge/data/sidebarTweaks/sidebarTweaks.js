@@ -57,7 +57,7 @@ function makeSidebar(tumblrAcctNum, retries) {
          }
          bloglist += '</ul>';
       }
-   
+
       var lang = jQuery('html').attr('lang');
       if (!lang) { lang = 'en'; }
       var sidebarList = [
@@ -101,7 +101,7 @@ function makeSidebar(tumblrAcctNum, retries) {
          '" class="mass_editor"><div class="hide_overflow">' +
          MissingE.getLocale(lang).sidebar.massEditor + '</div><div class="gradient">' +
          '</div></a></li></ul>';
-   
+
       var sidebar;
       var beforeguy = jQuery('#right_column a.likes');
       if (beforeguy.length === 0) {

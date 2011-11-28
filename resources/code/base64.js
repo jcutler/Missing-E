@@ -23,7 +23,7 @@
 
 var Base64 = {
    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-   
+
    encode: function(input) {
       var o = "";
       var c1, c2, c3, e1, e2, e3, e4;
@@ -108,10 +108,10 @@ var Base64 = {
       var i = 0;
       var c, c1, c2;
       c = c1 = c2 = 0;
-      
+
       while (i < utftext.length) {
          c = utftext.charCodeAt(i);
- 
+
          if (c < 128) {
             str += String.fromCharCode(c);
             i++;

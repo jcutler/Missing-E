@@ -24,7 +24,7 @@
 (function(){
 
 MissingE.utilities.versionCheck = {
-   
+
    run: function() {
       if (this.uptodate) {
          document.getElementById('uptodate').style.display = 'inline-block';

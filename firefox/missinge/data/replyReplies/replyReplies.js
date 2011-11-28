@@ -383,7 +383,7 @@ function replyRepliesSettings(message) {
                   .replace(/style="\s*"\s*/g,'')
                   .replace(/<\/?div[^>]*>/g,'');
    }
-   
+
    code = code.replace(/ {2,}/g,' ');
    reply_setValue(code);
    if (message.defaultTags !== '') {
@@ -474,7 +474,7 @@ function MissingE_replyReplies_doStartup(message) {
          addNoteReply(jQuery(this), overrideStyle);
       });
    });
-   
+
    jQuery('div.notification_type_icon, div.MissingE_notification_type')
          .live('mousedown', function(e) {
       if (e.shiftKey) { e.preventDefault(); }

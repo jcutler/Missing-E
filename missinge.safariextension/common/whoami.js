@@ -45,7 +45,7 @@
   MissingE_safeDash_doStartup,
   MissingE_sidebarTweaks_doStartup,
   MissingE_timestamps_doStartup,
-  safari */ 
+  safari */
 
 if ((window.top === window &&
     !(/http:\/\/missinge\.infraware\.ca/.test(location.href)) &&

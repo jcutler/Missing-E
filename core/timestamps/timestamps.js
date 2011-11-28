@@ -42,10 +42,10 @@ MissingE.packages.timestamps = {
          info.html(failHTML);
       }
    },
-   
+
    loadTimestamp: function(item) {
       var lang = $('html').attr('lang');
-   
+
       if (item.tagName === "LI" && $(item).hasClass("post") &&
           $(item).attr("id") !== "new_post" &&
           $(item).find('.private_label').length === 0) {

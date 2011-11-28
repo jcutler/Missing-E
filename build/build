@@ -13,7 +13,7 @@ elif [[ "$1" == "--noupload" ]]; then
 elif [[ "$1" == "--no-upload" ]]; then
    UPLOAD="-noupload"
    shift
-fi   
+fi
 
 until [ -z "$1" ]
 do
