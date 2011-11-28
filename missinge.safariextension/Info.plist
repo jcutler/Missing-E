@@ -58,7 +58,6 @@
 				<string>lib/jquery.ui.sortable.min.js</string>
 				<string>lib/jquery.ui.resizable.min.js</string>
 				<string>core/common/menuButton.js</string>
-				<string>common/storage.js</string>
 				<string>lib/facebox/facebox.js</string>
 				<string>askFixes/askFixes.js</string>
 				<string>core/betterReblogs/betterReblogs_dash.js</string>

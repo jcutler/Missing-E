@@ -92,7 +92,7 @@ MissingE.packages.bookmarker = {
       var i;
       var lang = $('html').attr('lang');
       var marks = MissingE.packages.bookmarker
-         .parseMarks(getStorage("MissingE_bookmarker_marks",""));
+         .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
       var marklist = $('#MissingE_marklist');
       if (marks.length === 0) {
          $('#posts a.MissingE_ismarked').removeClass("MissingE_ismarked");
@@ -161,7 +161,7 @@ MissingE.packages.bookmarker = {
 
    removeMark: function(post) {
       var marks = MissingE.packages.bookmarker
-         .parseMarks(getStorage("MissingE_bookmarker_marks",""));
+         .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
       var i;
       for (i=0; i<marks.length; i++) {
          if (marks[i][1] === post) {
@@ -169,7 +169,7 @@ MissingE.packages.bookmarker = {
          }
       }
       marks.splice(i,1);
-      setStorage("MissingE_bookmarker_marks",
+      MissingE.setStorage("MissingE_bookmarker_marks",
                  MissingE.packages.bookmarker.serializeMarks(marks));
       MissingE.packages.bookmarker.generateList();
    },
@@ -201,9 +201,9 @@ MissingE.packages.bookmarker = {
          ds = ans;
       }
       var marks = MissingE.packages.bookmarker
-         .parseMarks(getStorage("MissingE_bookmarker_marks",""));
+         .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
       marks.unshift([d.getTime(),post,ds]);
-      setStorage("MissingE_bookmarker_marks",
+      MissingE.setStorage("MissingE_bookmarker_marks",
                  MissingE.packages.bookmarker.serializeMarks(marks));
       MissingE.packages.bookmarker.generateList();
       return true;
@@ -274,7 +274,7 @@ MissingE.packages.bookmarker = {
          var ctrl = $(item).find('div.post_controls:not(.bookmarkAdded)');
          var j;
          var marks = MissingE.packages.bookmarker
-            .parseMarks(getStorage("MissingE_bookmarker_marks",""));
+            .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
          var heart = ctrl.find('a.like_button');
          var mag = ctrl.find('a.MissingE_magnify');
          var klass = 'MissingE_mark';
@@ -326,13 +326,13 @@ MissingE.packages.bookmarker = {
          if (newval !== oldval && newval !== "") {
             evt.target.value = newval;
             var marks = MissingE.packages.bookmarker
-               .parseMarks(getStorage("MissingE_bookmarker_marks",""));
+               .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
             var i;
             for (i=0; i<marks.length; i++) {
                if (marks[i][1] === post) { break; }
             }
             marks[i][2] = newval;
-            setStorage("MissingE_bookmarker_marks",
+            MissingE.setStorage("MissingE_bookmarker_marks",
                        MissingE.packages.bookmarker.serializeMarks(marks));
             par.find('span.mark_date').html(newval);
             $('#bookmarkbar_label_' + post).text(newval);
@@ -357,7 +357,7 @@ MissingE.packages.bookmarker = {
 
    refreshMarks: function() {
       var marks = MissingE.packages.bookmarker
-         .parseMarks(getStorage("MissingE_bookmarker_marks",""));
+         .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
       var i;
       $("#posts a.MissingE_ismarked").each(function(){
          var remove = true;
@@ -378,10 +378,10 @@ MissingE.packages.bookmarker = {
 
    doMove: function(f,t) {
       var marks = MissingE.packages.bookmarker
-         .parseMarks(getStorage("MissingE_bookmarker_marks",""));
+         .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
       var item = marks.splice(f,1)[0];
       marks.splice(t,0,item);
-      setStorage("MissingE_bookmarker_marks",
+      MissingE.setStorage("MissingE_bookmarker_marks",
                  MissingE.packages.bookmarker.serializeMarks(marks));
    },
 

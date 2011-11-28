@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,getStorage,safari,setStorage */
+/*global $,MissingE.getStorage,safari,MissingE.setStorage */
 
 var lock = safari.extension.baseURI + 'safeDash/lock.png';
 var lockicon = safari.extension.baseURI + 'safeDash/lockicon.png';
@@ -47,7 +47,7 @@ function doNSFW() {
 function doHide(item, retry) {
    var safe;
    if (!retry) { retry = 0; }
-   if (getStorage('MissingE_safeDash_state',0)===0) { safe = false; }
+   if (MissingE.getStorage('MissingE_safeDash_state',0)===0) { safe = false; }
    else { safe = true; }
    var node = $(item);
    if (item.tagName === 'LI') {
@@ -259,7 +259,7 @@ function doHide(item, retry) {
 
 function MissingE_safeDash_doStartup() {
    var opA;
-   if (getStorage('MissingE_safeDash_state',0) === 0) {
+   if (MissingE.getStorage('MissingE_safeDash_state',0) === 0) {
       opA = 1;
    }
    else {
@@ -281,7 +281,7 @@ function MissingE_safeDash_doStartup() {
 
    var sdlnk = '<ul class="controls_section" id="MissingE_safeDash">' +
                '<li class="' +
-               (getStorage('MissingE_safeDash_state',0) === 1 ?
+               (MissingE.getStorage('MissingE_safeDash_state',0) === 1 ?
                'selected' : '') + '"><a href="#" onclick="return false;" ' +
                'id="nsfwctrl">Safe Dash</a></li></ul>';
 
@@ -302,14 +302,14 @@ function MissingE_safeDash_doStartup() {
    $('.video_thumbnail div:empty').live('mouseover', function() {
       $(this).parent().find('.nsfwed').css('opacity','1');
    }).live('mouseout', function() {
-      if (getStorage('MissingE_safeDash_state',0)===1) {
+      if (MissingE.getStorage('MissingE_safeDash_state',0)===1) {
          $(this).parent().find('.nsfwed').css('opacity','0');
       }
    });
 
    $('#nsfwctrl').click(function() {
-      var state = 1-getStorage('MissingE_safeDash_state',0);
-      setStorage('MissingE_safeDash_state',state);
+      var state = 1-MissingE.getStorage('MissingE_safeDash_state',0);
+      MissingE.setStorage('MissingE_safeDash_state',state);
       if (state === 0) {
          undoNSFW();
       }
@@ -340,7 +340,7 @@ function MissingE_safeDash_doStartup() {
 
    window.addEventListener('storage',function(e) {
       if (e.key !== 'MissingE_safeDash_state') { return false; }
-      var state = getStorage('MissingE_safeDash_state',0);
+      var state = MissingE.getStorage('MissingE_safeDash_state',0);
       if (state === 0) {
          undoNSFW();
       }

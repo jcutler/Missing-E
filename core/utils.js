@@ -104,6 +104,21 @@ var utils = {
       }
    },
 
+   getStorage: function(key, defVal) {
+      var retval = localStorage[key];
+      if (retval === undefined || retval === null || retval === "") {
+         return defVal;
+      }
+      else {
+         if (/[^\d]/.test(retval)) {
+            return retval;
+         }
+         else {
+            return parseInt(retval, 10);
+         }
+      }
+   },
+
    isTumblrURL: function(fullURL, matches) {
       if (!/^http:\/\/www\.tumblr\.com\//.test(fullURL) ||
           !matches) {
@@ -127,6 +142,10 @@ var utils = {
 
    randomRange: function(from, to) {
       return Math.floor(Math.random() * (to - from + 1) + from);
+   },
+
+   setStorage: function(key, val) {
+      localStorage[key] = val;
    },
 
    unescapeHTML: function(str) {
