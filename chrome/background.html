@@ -1396,7 +1396,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           !MissingE.isTumblrURL(sender.tab.url,
                        ["post",
                         "reblog"])) {
-         chrome.tabs.insertCSS(sender.tab.id, {file: "common/endlessPages.css", allFrames:true});
+         // Fix issue with "endless pages" feature of FastestChrome
+         chrome.tabs.insertCSS(sender.tab.id, {code:
+            '.endless-pages-loaded-page iframe#tumblr_controls {' +
+               'display:none;' +
+            '}'
+         });
          if (getStorage("MissingE_gotoDashPost_enabled",1) == 1) {
             activeScripts.gotoDashPost = true;
             widenIframe = true;
