@@ -25,8 +25,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Missing e - Settings</title>
-<link type="image/x-icon" href="identity/missinge32.png" rel="shortcut icon" />
-<link type="image/x-icon" href="identity/missinge32.png" rel="icon" />
+<link type="image/x-icon" href="../identity/missinge32.png" rel="shortcut icon" />
+<link type="image/x-icon" href="../identity/missinge32.png" rel="icon" />
 <style type="text/css">
 #settingsframe {
 width:1px;
@@ -38,7 +38,7 @@ left:0;
 }
 
 body{
-background:#2c4762 url('core/images/background.png') top repeat-x;
+background:#2c4762 url('images/background.png') top repeat-x;
 font:normal 14px Arial,Helvetica,sans-serif;
 line-height:1.4;
 color:#444;
@@ -304,7 +304,7 @@ height:15px;
 position:absolute;
 left:-7px;
 top:25px;
-background:url('core/images/post_nipple.png') no-repeat transparent
+background:url('images/post_nipple.png') no-repeat transparent
 }
 
 #posts .post .post_info,#posts .post .post_controls{
@@ -367,7 +367,7 @@ bottom:-7px;
 left:7px;
 width:8px;
 height:7px;
-background:url('core/images/new_post_nipple.png') no-repeat transparent
+background:url('images/new_post_nipple.png') no-repeat transparent
 }
 
 form table td {
@@ -389,7 +389,7 @@ padding:10px 12px 10px 10px;
 }
 
 td.subopt, td.experimental.subopt {
-background:transparent url('core/images/subopt.png') no-repeat center center !important;
+background:transparent url('images/subopt.png') no-repeat center center !important;
 padding:0;
 width:32px;
 opacity:0.65;
@@ -447,7 +447,7 @@ height:20px;
 
 .options_table td.experimental {
 display:none;
-background-image:url('core/images/exp_bg.png');
+background-image:url('images/exp_bg.png');
 }
 
 td.input_left {
@@ -551,7 +551,7 @@ vertical-align:middle;
 }
 
 #inclusions a {
-margin:0 10px;
+margin:0 20px;
 }
 
 #devpage {
@@ -677,21 +677,49 @@ cursor:pointer;
 margin-right:-2px;
 }
 </style>
-<link rel="stylesheet" media="screen" type="text/css" href="lib/facebox/facebox.css" />
-<link rel="stylesheet" type="text/css" href="lib/checkbox/jquery.checkbox.css" />
-<link rel="stylesheet" type="text/css" href="dashboardFixes/replaceIcons.css" />
+<script type="text/javascript">
+var runScripts = ["../extension.js",
+                  "../common/jquery.min.js",
+                  "localizations.js",
+                  "utils.js",
+                  "../lib/facebox/facebox.js",
+                  "../lib/jquery-spin/jquery-spin.js",
+                  "../lib/checkbox/jquery.checkbox.min.js",
+                  "options.js"];
+
+function loadScripts() {
+   if (typeof chrome !== "undefined" ||
+       typeof safari !== "undefined") {
+
+      if (runScripts.length === 0) {
+         //startup();
+         return;
+      }
+      
+      var head = document.getElementsByTagName('head')[0];
+      var script = document.createElement('script');
+      script.onload = loadScripts;
+      script.setAttribute("type", "text/javascript");
+      script.src = runScripts.shift();
+      head.appendChild(script);
+   }
+}
+</script>
+<link rel="stylesheet" media="screen" type="text/css" href="../lib/facebox/facebox.css" />
+<link rel="stylesheet" type="text/css" href="../lib/checkbox/jquery.checkbox.css" />
+<link rel="stylesheet" type="text/css" href="../dashboardFixes/replaceIcons.css" />
 <style type="text/css">
 #posts .post .MissingE_post_control {
-background-image:url("dashboardFixes/icon_replacements.png");
+background-image:url("../dashboardFixes/icon_replacements.png");
 }
 </style>
 </head>
-<body id="MissingE_settings">
+<body id="MissingE_settings" onload="loadScripts();">
 <iframe id="settingsframe" name="settingsframe" src=""></iframe>
 <div id="container">
 <div id="header_container">
 <div id="header">
-<a id="home_nav" href="#" onclick="return false;"><img src="identity/missinge_logo.png" alt="Missing e" id="logo" /></a>
+<a id="home_nav" href="#" onclick="return false;"><img src="../identity/missinge_logo.png" alt="Missing e" id="logo" /></a>
 <div id="nav">
 <a href="#" class="nav_item active" id="about_nav" onclick="return false;">
 <div>About</div>
@@ -704,7 +732,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="nav_item_nipple_pixel nav_item_nipple_pixel_6"></div>
 </div>
 </a>
-<a target="_blank" class="nav_item" href="http://missinge.infraware.ca/faq">FAQ <img src="core/images/external_link.gif" alt="FAQ on external site" /></a>
+<a target="_blank" class="nav_item" href="http://missinge.infraware.ca/faq">FAQ <img src="images/external_link.gif" alt="FAQ on external site" /></a>
 <a href="#" class="nav_item" id="dashboard_nav" onclick="return false;">
 <div>Dashboard Features</div>
 <div class="nav_item_nipple">
@@ -739,7 +767,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 </a>
 <a href="#" class="nav_item" id="close_nav" onclick="return false;">
-<img src="core/images/close.png" alt="Close Settings" />
+<img src="images/close.png" alt="Close Settings" />
 </a>
 </div>
 <div id="new_post_notice_container">
@@ -750,7 +778,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div id="content">
 <div id="experimental_section">
 <form id="experimentalFeatures_options">
-<div class="experimental_title"><div class="experimental_switch"><input class="toggler" type="checkbox" name="active" value="1" /></div><img src="core/images/flask.png" alt="Experimental Features" title="Experimental Features" /></div>
+<div class="experimental_title"><div class="experimental_switch"><input class="toggler" type="checkbox" name="active" value="1" /></div><img src="images/flask.png" alt="Experimental Features" title="Experimental Features" /></div>
 <div class="clear"></div>
 </form>
 </div>
@@ -766,12 +794,12 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="instructions"><div><p class="first">Click on the tabs above to change <strong>Missing e</strong>'s behaviour.</p>
 <p class="smaller"><em>Follow the <a href="http://blog.missinge.infraware.ca/" target="_blank"><strong>Missing e</strong> Tumblr</a> to get news and information about this extension.</em></p></div></div>
 <p class="first">If you enjoy this extension, please consider <a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8">donating</a> to support future development<br />
-<a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8"><img src="core/images/pledgie.png" border="0" alt="Support development by donating to Missing e! [PayPal]"></a></p>
+<a target="_blank" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8"><img src="images/pledgie.png" border="0" alt="Support development by donating to Missing e! [PayPal]"></a></p>
 <p>Copyright 2011, Jeremy Cutler (<a target="_blank" href="http://cutlerish.tumblr.com">cutlerish.tumblr.com</a>)<br />Released under the <a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GPL Version 3 (or later) License</a></p><p class="first"><small><em>Missing e</em> is not endorsed or certified by Tumblr, Inc. nor is it affiliated with Tumblr in any way.<br />All Tumblr logos and trademarks displayed in this extension are the property of Tumblr, Inc.<br />By downloading and using this extension, you agree to the terms and conditions set forth in the<br /><a href="http://missinge.infraware.ca/EULA.txt" target="_blank">Missing e End User License Agreement</a></small></p>
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/cutlerish_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/cutlerish_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -781,26 +809,26 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="dashboardFixes_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dashboard Tweaks</div>
-<div class="post_thumb"><a href="dashboardFixes/screen.png" rel="facebox"><img src="dashboardFixes/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="../dashboardFixes/screen.png" rel="facebox"><img src="../dashboardFixes/thumb.png" /><br />Screenshot</a></div>
 <p>A few convenient interface tweaks for Tumblr dashboard pages.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Wrap tags for posts in the dashboard onto multiple lines</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Always display Tumblr's move to top of queue button on queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Expand/Minimize <strong>all</strong> thumbnail images in a dashboard post, together</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_expandAll" value="0" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Add mass deletion buttons to Drafts and Queue</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_massDelete" value="0" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Add <em>Shuffle</em> button to the Queue</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_randomQueue" value="0" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Enable sorting of notes in dashboard posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_sortableNotes" value="0" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Always display Tumblr's move to top of queue button on queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Expand/Minimize <strong>all</strong> thumbnail images in a dashboard post, together</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_expandAll" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Add mass deletion buttons to Drafts and Queue</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_massDelete" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Add <em>Shuffle</em> button to the Queue</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_randomQueue" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Enable sorting of notes in dashboard posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_sortableNotes" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="odd experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="odd experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" class="simple_setting" /></td></tr>
 </table>
 </form>
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/dashboardFixes_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/dashboardFixes_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -808,7 +836,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="sidebarTweaks_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Sidebar Tweaks</div>
-<div class="post_thumb"><a href="sidebarTweaks/screen.png" rel="facebox"><img src="sidebarTweaks/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="../sidebarTweaks/screen.png" rel="facebox"><img src="../sidebarTweaks/thumb.png" /><br />Screenshot</a></div>
 <p>Some useful interface tweaks for the Tumblr dashboard sidebar.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Add blog sidebar to <em>all</em> dashboard pages (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_sidebarTweaks_addSidebar" value="0" checked="checked" class="simple_setting" /></td></tr>
@@ -820,7 +848,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/sidebarTweaks_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/sidebarTweaks_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -828,11 +856,11 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="bookmarker_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Bookmarker</div>
-<div class="post_thumb"><a href="core/bookmarker/screen.png" rel="facebox"><img src="core/bookmarker/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="bookmarker/screen.png" rel="facebox"><img src="bookmarker/thumb.png" /><br />Screenshot</a></div>
 <p>Add bookmarks to posts on your dashboard so you can go back to them later! <em>Bookmarker</em> adds a small bookmark button to posts, and a list of current bookmarks in your sidebar.</p>
 <ul><li>Hold down the shift key when clicking on a bookmark icon to create a new bookmark with a custom name.</li><li>Hold down the shift key when clicking on an existing bookmark to rename it.</li></ul>
 <table class="options_table">
-<tr><td colspan="2" class="odd">Show simple labels above bookmarked posts</td><td class="odd"><input type="checkbox" name="MissingE_bookmarker_addBar" value="0" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Show simple labels above bookmarked posts</td><td class="odd"><input type="checkbox" name="MissingE_bookmarker_addBar" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Default bookmark label<br />
 <table class="subnotes">
 <tr><td class="label">%u</td><td class="desc">Poster's username</td></tr>
@@ -860,7 +888,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/bookmarker_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/bookmarker_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -868,17 +896,17 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="magnifier_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Magnifier</div>
-<div class="post_thumb"><a href="core/magnifier/screen.jpg" rel="facebox"><img src="core/magnifier/thumb.jpg" /><br />Screenshot</a></div>
-<p>Add a small <img src="core/magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.</p><p>This feature is not meant to replace the existing magnification feature on the Tumblr dash, only provide an alternative where the built-in feature cannot enlarge the image or does not display it at full resolution.</p><p><em>Magnifier</em> can also add a <img src="core/magnifier/magoverlay.png" style="vertical-align:top;" alt="Magnify Avatars Icon" /> icon to Tumblr avatars that, when clicked, allows you to view enlarged avatars!</p>
+<div class="post_thumb"><a href="magnifier/screen.jpg" rel="facebox"><img src="magnifier/thumb.jpg" /><br />Screenshot</a></div>
+<p>Add a small <img src="magnifier/magnifier-icon.png" alt="Magnifier Icon" /> icon to photo posts on the dashboard to view the full-size images without ever leaving the dashboard. <em>Magnifier</em> will resize the images to fit on your screen, but you can click on the enlarged image to open it in a new tab.</p><p>This feature is not meant to replace the existing magnification feature on the Tumblr dash, only provide an alternative where the built-in feature cannot enlarge the image or does not display it at full resolution.</p><p><em>Magnifier</em> can also add a <img src="magnifier/magoverlay.png" style="vertical-align:top;" alt="Magnify Avatars Icon" /> icon to Tumblr avatars that, when clicked, allows you to view enlarged avatars!</p>
 <table class="options_table">
-<tr><td colspan="2" class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="setting_retry numinput" size="1" type="text" name="MissingE_magnifier_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Number of retries on failure to load image URLs (default <span class="defRetries">4</span>)</td><td class="odd"><input class="setting_retry numinput" size="1" type="text" name="MissingE_magnifier_retries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Add magnify buttons to Tumblr avatars (on the dashboard and in follower/following lists)</td><td class="even"><input type="checkbox" name="MissingE_magnifier_magnifyAvatars" value="0" checked="checked" class="simple_setting" /></td></tr>
 </table>
 </form>
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/magnifier_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/magnifier_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -896,7 +924,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/dashLinksToTabs_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/dashLinksToTabs_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -904,7 +932,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="safeDash_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Safe Dash</div>
-<div class="post_thumb"><a href="safeDash/screen.png" rel="facebox"><img src="safeDash/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="../safeDash/screen.png" rel="facebox"><img src="../safeDash/thumb.png" /><br />Screenshot</a></div>
 <p>At work? Have kids about? <em>Safe Dash</em> will hide images in tumblr posts in case any of them are unsafe! Simply hover your mouse over the picture to reveal it. Turn <em>Safe Dash</em> on and off with a link in your dashboard sidebar! Turning <em>Safe Dash</em> off on this settings page will disable it completely.</p><p><strong>Note</strong>: Safe Dash is not effective for posts on a user's tumblr page, only on <strong>dashboard-like</strong> pages (ie. dashboard, blog, likes, queue and drafts).</p><p><strong>These images are hidden:</strong></p>
 <ul><li>All image posts</li><li>All photoset thumbnails</li><li>Photosets that have been clicked (enlarged)</li><li>Inline images in other types of posts</li><li>Album art in audio posts</li><li>All video thumbnails</li><li>All full-size videos (except videos from external sites)</li></ul>
 <p><strong>These images are NOT hidden:</strong></p>
@@ -913,7 +941,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/safeDash_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/safeDash_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -923,7 +951,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Timestamps</div>
 <p><em>Timestamps</em> will add the date and time of a post on your dashboard.</p><p><strong>Note</strong>: when Tumblr is suffering from errors, <em>Timestamps</em> will retry a number of times before failing to add the date and time to the post.</p>
 <table class="options_table">
-<tr><td colspan="2" class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput setting_retry" size="1" type="text" name="MissingE_timestamps_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Number of retries on failure (default <span class="defRetries">4</span>)</td><td class="odd"><input class="numinput setting_retry" size="1" type="text" name="MissingE_timestamps_retries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Timestamp format<br />
 <table class="subnotes">
 <tr><td class="label">%Y</td><td class="desc">Full year (i.e. 2011)</td></tr>
@@ -949,7 +977,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/timestamps_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/timestamps_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -959,21 +987,21 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="massEditor_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Mass Editor Tweaks</div>
-<div class="post_thumb"><a href="core/massEditor/screen.png" rel="facebox"><img src="core/massEditor/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="massEditor/screen.png" rel="facebox"><img src="massEditor/thumb.png" /><br />Screenshot</a></div>
 <p>Additional selection menu for the Tumblr mass editor.</p>
 </form></div><div class="clear"></div>
-<div><div class="post_avatar" style="background-image:url('core/icons/massEditor_avatar.png');"></div><span class="arrow"></span>
+<div><div class="post_avatar" style="background-image:url('icons/massEditor_avatar.png');"></div><span class="arrow"></span>
 </div></li>
 <li id="betterReblogs_section" class="post not_mine regular">
 <div class="post_content">
 <form id="betterReblogs_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Better Reblogs</div>
-<div class="post_thumb"><a href="core/betterReblogs/screen.png" rel="facebox"><img src="core/betterReblogs/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="betterReblogs/screen.png" rel="facebox"><img src="betterReblogs/thumb.png" /><br />Screenshot</a></div>
 <p>Additional features to make reblogging easier and more productive!</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Keep original post tags when reblogging</td><td class="odd"><input type="checkbox" name="MissingE_betterReblogs_passTags" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td class="subopt"></td><td class="even">Automatically add original tags to reblog post<br /><small><em>With this setting off, you can still click on the </em>"Reblog Tags"<em> button to add the tags manually</em></small></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_autoFillTags" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td class="subopt"></td><td class="odd">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td class="subopt"></td><td class="odd">Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_retries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td></tr>
 <tr><td colspan="2" class="even">Quick (1-click) reblogging <em>(see screenshot)</em></td><td class="even"><input type="checkbox" name="MissingE_betterReblogs_quickReblog" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Default Tumblr blog to use with quick reblogging<br /><small>You must have posting privileges on the account you select.</small></td>
 <td class="odd input_left"><input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" checked="checked" class="simple_setting" /> Main Blog<br />
@@ -993,7 +1021,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/betterReblogs_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/betterReblogs_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -1001,13 +1029,13 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="gotoDashPost_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Goto Dash Post</div>
-<div class="post_thumb"><a href="core/gotoDashPost/screen.png" rel="facebox"><img src="core/gotoDashPost/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="gotoDashPost/screen.png" rel="facebox"><img src="gotoDashPost/thumb.png" /><br />Screenshot</a></div>
 <p>If you are on a tumblr post page and you want to jump directly to it on your dashboard so you can reply to it (assuming that the tumblr user's setup allows you to), <em>Goto Dash Post</em> is your best bet. A "goto dash" control button is added to individual post pages for you to use.</p>
 </form>
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/gotoDashPost_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/gotoDashPost_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -1015,7 +1043,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="postingFixes_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Posting Tweaks</div>
-<div class="post_thumb"><a href="postingFixes/screen.png" rel="facebox"><img src="postingFixes/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="../postingFixes/screen.png" rel="facebox"><img src="../postingFixes/thumb.png" /><br />Screenshot</a></div>
 <p>A few convenient interface tweaks for new Tumblr posts.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Always enable photo replies (where possible)</td><td class="odd"><input type="checkbox" name="MissingE_postingFixes_photoReplies" value="0" checked="checked" class="simple_setting" /></td></tr>
@@ -1032,7 +1060,7 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/postingFixes_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/postingFixes_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -1045,13 +1073,13 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <table class="options_table">
 <tr><td colspan="2" class="odd">Add reblog button to individual post pages</td><td class="odd"><input type="checkbox" name="MissingE_reblogYourself_postPage" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Add reblog links to your posts on the dashboard</td><td class="even"><input type="checkbox" name="MissingE_reblogYourself_dashboard" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="setting_retry numinput" size="1" name="MissingE_reblogYourself_retries" value="4" />&nbsp;<span class="resetter retry_resetter" >Reset</span></td></tr>
+<tr><td colspan="2" class="odd">Number of retries on failure to add reblog link on dashboard posts (default <span class="defRetries">4</span>)</td><td class="odd"><input type="text" class="setting_retry numinput" size="1" name="MissingE_reblogYourself_retries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td></tr>
 </table>
 </form>
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/reblogYourself_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/reblogYourself_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -1061,35 +1089,35 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="askFixes_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Ask Tweaks</div>
-<div class="post_thumb"><a href="askFixes/screen.png" rel="facebox"><img src="askFixes/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="../askFixes/screen.png" rel="facebox"><img src="../askFixes/thumb.png" /><br />Screenshot</a></div>
 <p>Convenient interface tweaks for Tumblr <em>ask</em> posts.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Add scroll bars when typing long entries into Tumblr <em>ask</em> page text boxes</td><td class="odd"><input type="checkbox" name="MissingE_askFixes_scroll" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Add post options (draft, queue, private) and allow tags to be added when answering messages</td><td class="even"><input type="checkbox" name="MissingE_askFixes_betterAnswers" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td class="subopt"></td><td class="odd">Add asker's username as a tag when answering messages</td><td class="odd"><input type="checkbox" name="MissingE_askFixes_tagAsker" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td class="subopt"></td><td class="even">Other tags to add to all ask posts (separated by commas)</td><td class="even"><input type="text" name="MissingE_askFixes_defaultTags" style="width:250px;" value="" class="simple_setting blurable_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Open <em>Ask</em> boxes from a user menu (<img src="askFixes/usermenu_i.png" alt="User menu icon" />) without leaving the dashboard</td><td class="odd"><input type="checkbox" name="MissingE_askFixes_askDash" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Open <em>Ask</em> boxes from a user menu (<img src="../askFixes/usermenu_i.png" alt="User menu icon" />) without leaving the dashboard</td><td class="odd"><input type="checkbox" name="MissingE_askFixes_askDash" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="even">Add mass deletion buttons to inbox and messages pages</td><td class="even"><input type="checkbox" name="MissingE_askFixes_massDelete" value="0" checked="checked" class="simple_setting" /></td></tr>
 </table>
 </form>
 </div>
 <div class="clear"></div>
-<div><div class="post_avatar" style="background-image:url('core/icons/askFixes_avatar.png');"></div><span class="arrow"></span></div></li>
+<div><div class="post_avatar" style="background-image:url('icons/askFixes_avatar.png');"></div><span class="arrow"></span></div></li>
 <li id="postCrushes_section" class="post not_mine regular">
 <div class="post_content">
 <form id="postCrushes_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Post Crushes</div>
-<div class="post_thumb"><a href="core/postCrushes/screen.jpg" rel="facebox"><img src="core/postCrushes/thumb.jpg" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="postCrushes/screen.jpg" rel="facebox"><img src="postCrushes/thumb.jpg" /><br />Screenshot</a></div>
 <p>Automatically create posts showing your Tumblr crushes, straight from your following page with <em>Post Crushes</em>.</p>
 <table class="options_table">
 <tr><td colspan="2" class="odd">Avatar size</td><td class="odd input_left"><input id="MissingE_postCrushes_crushSize_small" type="radio" name="MissingE_postCrushes_crushSize" value="1" checked="checked" class="simple_setting" /> Small avatars (70x70, same as on your 'following' page)<br /><input id="MissingE_postCrushes_crushSize_large" type="radio" name="MissingE_postCrushes_crushSize" value="0" class="simple_setting" /> Large avatars (128x128)</td></tr>
 <tr><td colspan="2" class="even">Add crush names to post tags</td><td class="even"><input type="checkbox" name="MissingE_postCrushes_addTags" value="0" checked="checked" class="simple_setting" /></td></tr>
 <tr><td colspan="2" class="odd">Show crush percentages</td><td class="odd"><input type="checkbox" name="MissingE_postCrushes_showPercent" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" class="setting_prefix simple_setting" />&nbsp;<span id="prefix-resetter" class="resetter retry_resetter">Reset</span></td></tr></table></form>
+<tr><td colspan="2" class="even">Prefix text for crush list</td><td class="even"><input type="text" name="MissingE_postCrushes_prefix" style="width:80%;" maxlength="128" value="Tumblr Crushes:" class="setting_prefix simple_setting" />&nbsp;<span id="prefix-resetter" class="resetter">Reset</span></td></tr></table></form>
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/postCrushes_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/postCrushes_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
@@ -1097,9 +1125,8 @@ background-image:url("dashboardFixes/icon_replacements.png");
 <div class="post_content">
 <form id="replyReplies_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Reply Replies</div>
-<div class="post_thumb"><a href="replyReplies/screen.png" rel="facebox"><img src="replyReplies/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="../replyReplies/screen.png" rel="facebox"><img src="../replyReplies/thumb.png" /><br />Screenshot</a></div>
 <p>With <em>Reply Replies</em>, when you click on the icon of a notification in your dash, it'll open a new text post with that notification (and quoted reply, for post replies) in it, ready for you to comment on and post.</p><p>Although you can also reply to notes loaded by clicking on the "notes" button of a dashboard post, it is best if you have "<em>Show notifications</em>" turned on in your <a target="_blank" href="http://www.tumblr.com/preferences">Tumblr preferences</a>.</p>
-
 <p><strong>If you want to reply to multiple notifications in the same post, you can:</strong></p>
 <ol><li>Hold down the Shift key and click on the notification icons of each of the notifications you want to reply to.</li><li>Click (without Shift) on the notification icon of the last notification you want to include.</li><li>All the notifications will appear in a single post in chronological order!</li></ol>
 <p>If the setting is enabled, a tag is automatically added to your post for each user to whom you are replying!</p>
@@ -1114,18 +1141,18 @@ background-image:url("dashboardFixes/icon_replacements.png");
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('core/icons/replyReplies_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/replyReplies_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>
 </div>
 </ol>
 <div id="iodiv">
-<div id="exportdiv" title="Export settings to a file">Export<img id="export" alt="Export settings to a file" title="Export settings to a file" src="core/images/load.png"></div>
+<div id="exportdiv" title="Export settings to a file">Export<img id="export" alt="Export settings to a file" title="Export settings to a file" src="images/load.png"></div>
 <div id="iosep"></div>
-<div id="importdiv"><img src="core/images/save.png" alt="Import settings from a file">Import<form id="importform" enctype="multipart/form-data" target="settingsframe" method="post" action="http://tools.missinge.infraware.ca/settings"><input title="Import settings from a file" name="import" id="import" type="file" accept="text/xml" /></form></div>
+<div id="importdiv"><img src="images/save.png" alt="Import settings from a file">Import<form id="importform" enctype="multipart/form-data" target="settingsframe" method="post" action="http://tools.missinge.infraware.ca/settings"><input title="Import settings from a file" name="import" id="import" type="file" accept="text/xml" /></form></div>
 </div>
-<div id="devpage"><a target="_blank" href="http://missinge.infraware.ca">Go To Add-On Homepage</a></div>
+<div id="devpage"><a target="_blank" href="http://missinge.infraware.ca">Go To Extension Homepage</a></div>
 <div class="clear"></div>
 </div>
 </div>

@@ -29,7 +29,61 @@ if (typeof MissingE !== "undefined") { return; }
 
 MissingE = {
    packages: {},
-   utilities: {}
+   utilities: {
+      exportSettings: function(callback) {
+         extension.sendRequest("exportOptions", {}, callback);
+      },
+
+      importSettings: function(input, frame) {
+         var form = $(input).closest("form").get(0);
+         if (input.files[0]) {
+            var formData = new FormData(form);
+            formData.append("import", input.files[0]);
+            this._intervalCount = 0;
+            this._interval = setInterval(function() {
+               var xmlDoc = frame.contentDocument;
+               var importedSettings = {};
+               if (xmlDoc.childNodes[1] &&
+                   xmlDoc.childNodes[1].nodeName === "parsererror") {
+                  clearInterval(this._interval);
+                  frame.src = "";
+                  form.reset();
+                  alert("Imported settings file is not valid XML.");
+                  return;
+               }
+               else if (xmlDoc.readyState === "complete" &&
+                        xmlDoc.childNodes[0].nodeName === "missing-e") {
+                  clearInterval(this._interval);
+                  $('missing-e setting', xmlDoc).each(function(i) {
+                     importedSettings[$(this).find('name').text()] =
+                        $(this).find('value').text();
+                  });
+                  frame.src = "";
+                  form.reset();
+                  extension.sendRequest("importOptions",
+                                        {data: importedSettings},
+                                        function(response) {
+                     if (response.msg) { alert(response.msg); }
+                     if (response.success) { window.location.reload(); }
+                     else {
+                        form.reset();
+                     }
+                  });
+               }
+               else if (this._intervalCount++ > 15) {
+                  clearInterval(this._interval);
+                  frame.src = "";
+                  form.reset();
+                  alert("Problem uploading file. Please try again later.");
+               }
+            }, 1000);
+            form.submit();
+         }
+         else {
+            form.reset();
+         }
+      }
+   }
 };
 
 extension = {

@@ -179,11 +179,11 @@ function receiveOptions(request, sendResponse) {
    }
    if (set + changed + reset > 0) {
       alert("Import complete.\n\n" + (set+changed+reset) + " change(s) made.");
-      sendResponse({success:true});
+      sendResponse({greeting:"importOptions", success:true});
    }
    else {
       alert("No changes imported.");
-      sendResponse({success:false});
+      sendResponse({greeting:"importOptions", success:false});
    }
 }
 
@@ -893,7 +893,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       alert(request.text);
    }
    else if (request.greeting == "exportOptions") {
-      sendResponse({url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
+      sendResponse({greeting: "exportOptions", url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
    }
    else if (request.greeting == "importOptions") {
       receiveOptions(request, sendResponse);
@@ -940,7 +940,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                         getStorage("MissingE_version",'0')) > 0});
    }
    else if (request.greeting == "close-options") {
-      closeTab(chrome.extension.getURL('options.html'), sender.tab.id);
+      closeTab(chrome.extension.getURL('core/options.html'), sender.tab.id);
    }
    else if (request.greeting == "magnifier") {
       requestMagnifier(request, sender, sendResponse, tabs[sender.tab.id]);
@@ -1612,7 +1612,7 @@ function onStart(currVersion, prevVersion) {
    else if (!prevVersion) {
       console.log("Installed Missing e " + currVersion);
       setStorage('MissingE_compatCheck',0);
-      chrome.tabs.create({url:chrome.extension.getURL("options.html")});
+      chrome.tabs.create({url:chrome.extension.getURL("core/options.html")});
    }
    setStorage('MissingE_version',currVersion);
 }

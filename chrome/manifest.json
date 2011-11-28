@@ -11,7 +11,7 @@
       "http://*/*",
       "http://*/"
    ],
-   "options_page": "options.html",
+   "options_page": "core/options.html",
    "background_page": "background.html",
    "homepage_url": "http://missinge.infraware.ca",
    "content_scripts": [

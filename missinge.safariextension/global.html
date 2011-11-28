@@ -958,7 +958,7 @@ function closeTab(url, currentTab) {
 safari.application.addEventListener("command", performCommand, false);
 function performCommand(cmd) {
    if (cmd.command == "missinge-settings") {
-      cmd.target.browserWindow.openTab().url = safari.extension.baseURI + "options.html"
+      cmd.target.browserWindow.openTab().url = safari.extension.baseURI + "core/options.html"
    }
 }
 
@@ -1801,7 +1801,7 @@ function onStart(currVersion, prevVersion) {
    else if (!prevVersion) {
       console.log("Installed Missing e " + currVersion);
       var options = safari.application.activeBrowserWindow.openTab().url =
-         safari.extension.baseURI + "options.html";
+         safari.extension.baseURI + "core/options.html";
    }
    setStorage('MissingE_installedVersion',currVersion);
 }

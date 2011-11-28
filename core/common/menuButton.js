@@ -69,7 +69,7 @@ MissingE.packages.menuButton = {
          tab.className = "tab iconic";
          tab.id = "missinge_button";
          var elnk = document.createElement('a');
-         elnk.href = extension.getURL("options.html");
+         elnk.href = extension.getURL("core/options.html");
          elnk.setAttribute('target', '_blank');
          elnk.setAttribute('title', 'Missing e Settings');
          elnk.innerHTML = 'Missing e';

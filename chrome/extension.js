@@ -29,7 +29,52 @@ if (typeof MissingE !== "undefined") { return; }
 
 MissingE = {
    packages: {},
-   utilities: {}
+   utilities: {
+      exportSettings: function(callback) {
+         extension.sendRequest("exportOptions", {}, callback);
+      },
+
+      importSettings: function(input) {
+         var form = $(input).closest("form").get(0);
+         if (input.files[0]) {
+            var formData = new FormData(form);
+            formData.append("import", input.files[0]);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://tools.missinge.infraware.ca/settings',
+                     true);
+            xhr.onload = function() {
+               var importedSettings = {};
+               if (xhr.status === 200 && xhr.responseXML) {
+                  $('missing-e setting', xhr.responseXML).each(function(i) {
+                     importedSettings[$(this).find('name').text()] =
+                        $(this).find('value').text();
+                  });
+               }
+               else if (xhr.status === 200) {
+                  alert("Imported settings file is not valid XML.");
+                  form.reset();
+                  return;
+               }
+               else {
+                  alert("Problem uploading file. Please try again later.");
+                  form.reset();
+                  return;
+               }
+               extension.sendRequest("importOptions", {data: importedSettings},
+                                     function(response) {
+                  if (response.success) { window.location.reload(); }
+                  else {
+                     form.reset();
+                  }
+               });
+            };
+            xhr.send(formData);
+         }
+         else {
+            form.reset();
+         }
+      }
+   }
 };
 
 extension = {

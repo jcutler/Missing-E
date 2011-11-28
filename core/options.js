@@ -1,0 +1,428 @@
+(function($) {
+
+MissingE.utilities.options = {
+   all_settings: {},
+
+   exportSettings: function() {
+      MissingE.utilities.exportSettings(function(response) {
+         $('#settingsframe').get(0).src = response.url;
+      });
+   },
+
+   setupPage: function() {
+      $('input.toggler').checkbox();
+
+      $('#nav a.nav_item').live('click',function() {
+         if (this.id === 'close_nav') { window.close(); }
+         else {
+            MissingE.utilities.options.doshow(this.id.replace(/_nav$/,''));
+         }
+      });
+
+      $('#home_nav,#settings_nav').click(function() {
+         MissingE.utilities.options.doshow('about');
+      });
+
+      $('input.toggler').bind("change", function() {
+         MissingE.utilities.options.toggle(this);
+      }).click(function() {
+         MissingE.utilities.options.toggle(this);
+      });
+
+      $('.simple_setting').bind("change", function() {
+         MissingE.utilities.options.doSetting(this, false);
+      });
+
+      $('input.setting_prefix,input.setting_format,input.setting_text')
+            .bind("keyup", function(e) {
+         MissingE.utilities.options.doKeyUp(e, this, false);
+      });
+
+      $('input.blurable_setting').bind("blur", function() {
+         MissingE.utilities.options.doSetting(this, false);
+      });
+
+      $('input.setting_retry').bind("change", function() {
+         MissingE.utilities.options
+            .doSetting(this, true, MissingE.defaultRetries,
+                       MissingE.minRetries, MissingE.maxRetries);
+      }).spin({
+         min: MissingE.minRetries,
+         max: MissingE.maxRetries,
+         timeInterval: 100,
+         lock: true,
+         btnClass: 'spinner'
+      });
+
+      $('span.resetter').click(function() {
+         if (this.id === "prefix-resetter") {
+            MissingE.utilities.options.resetPrefix(this);
+         }
+         else if ($(this).hasClass('retry_resetter')) {
+            MissingE.utilities.options.resetRetries(this);
+         }
+      });
+   },
+
+   getStorage: function(key,defaultValue) {
+      if (extension.isFirefox ||
+          extension.isSafari) {
+         return MissingE.utilities.options.all_settings[key] == undefined ?
+            defaultValue : MissingE.utilities.options.all_settings[key];
+      }
+      else {
+         return localStorage[key] == undefined ? defaultValue : localStorage[key];
+      }
+   },
+
+   setStorage: function(key,value) {
+      if (extension.isFirefox ||
+          extension.isSafari) {
+         MissingE.utilities.options.all_settings[key] = value;
+         extension.sendRequest("change-setting", {name: key, val: value});
+      }
+      else {
+         localStorage[key] = value;
+      }
+   },
+
+   parseNames: function(st) {
+      if (!st || st.length === 0) {
+         return [];
+      }
+      return st.split(',').sort();
+   },
+
+   serializeNames: function(arr) {
+      return arr.sort().join(',');
+   },
+
+   trim: function(str) {
+      return str.replace(/^\s+/,'').replace(/\s+$/,'');
+   },
+
+   doKeyUp: function(e, obj, isNumber, defaultValue, min, max) {
+      var key = e.which;
+      if (key < 33 || key > 46) {
+         MissingE.utilities.options.doSetting(obj, isNumber, defaultValue,
+                                              min, max);
+      }
+   },
+
+   doSetting: function(obj, isNumber, defaultValue, min, max) {
+      if (obj.tagName.toLowerCase() == "select") {
+         MissingE.utilities.options.setStorage(obj.name, $(obj).val());
+      }
+      else if (obj.type == "checkbox") {
+         MissingE.utilities.options.setStorage(obj.name, (obj.checked ? 1 : 0));
+      }
+      else if (obj.type == "radio") {
+         var val = obj.value;
+         if (val === "1") { val = 1; }
+         else if (val === "0") { val = 0; }
+         MissingE.utilities.options.setStorage(obj.name, val);
+      }
+      else if (obj.type == "text") {
+         if (isNumber) {
+            obj.value = trim(obj.value);
+            if (/[^\d]/.test(obj.value)) {
+               obj.value = MissingE.utilities.options
+                              .getStorage(obj.name, defaultValue);
+            }
+            else {
+               var num;
+               if (obj.value == '') num = min;
+               else num = parseInt(obj.value, 10);
+               if (num < min) num = min;
+               if (num > max) num = max;
+               obj.value = num;
+               MissingE.utilities.options.setStorage(obj.name, num);
+            }
+         }
+         else if (obj.name === 'MissingE_askFixes_defaultTags' ||
+                  obj.name === 'MissingE_replyReplies_defaultTags' ||
+                  obj.name === 'MissingE_postingFixes_queueTags') {
+            var val = MissingE.utilities.options.trim(obj.value);
+            val = val.replace(/^\s*,/,'').replace(/,(\s*,)*/g,',')
+                     .replace(/\s*,\s*/g,', ').replace(/,\s*$/,'')
+                     .replace(/^\s*/,'').replace(/\s*$/,'');
+            obj.value = val;
+            MissingE.utilities.options.setStorage(obj.name, obj.value);
+         }
+         else {
+            MissingE.utilities.options.setStorage(obj.name, (obj.value));
+         }
+      }
+      if (obj.name === 'MissingE_bookmarker_format') {
+         $('#MissingE_bookmarker_format_sample')
+            .text(MissingE.getBookmarkerFormat(new Date(),
+                                               'missing-e', obj.value));
+      }
+      else if (obj.name === 'MissingE_timestamps_format') {
+         $('#MissingE_timestamps_format_sample')
+            .text(MissingE.getFormattedDate(new Date(), obj.value));
+      }
+   },
+
+   loadCheck: function(f, i, def) {
+      if (MissingE.utilities.options.getStorage(i,def) == 1) {
+         f[i].checked = true;
+      }
+      else { f[i].checked = false; }
+   },
+
+   loadSettings: function() {
+      var componentList = ["dashboardFixes",
+                        "bookmarker",
+                        "dashLinksToTabs",
+                        "safeDash",
+                        "timestamps",
+                        "magnifier",
+                        "betterReblogs",
+                        "gotoDashPost",
+                        "postingFixes",
+                        "reblogYourself",
+                        "askFixes",
+                        "postCrushes",
+                        "replyReplies",
+                        "massEditor",
+                        "sidebarTweaks"];
+      var i;
+      $('span.defRetries').text(MissingE.defaultRetries);
+      $('#versionnum').text(MissingE.utilities.options
+                              .getStorage('MissingE_version',''));
+      var exp = document.getElementById("experimentalFeatures_options").active;
+      if (MissingE.utilities.options
+            .getStorage('MissingE_experimentalFeatures_enabled', 0) == 1) {
+         exp.checked = true;
+         $('#posts td.experimental').show();
+      }
+      else {
+         exp.checked = false;
+         $('#posts td.experimental').hide();
+      }
+      for (i=0; i<componentList.length; i++) {
+         var v = componentList[i];
+         var frm = document.getElementById(v + "_options");
+         var active = frm.active;
+         if (MissingE.utilities.options
+               .getStorage('MissingE_' + v + '_enabled', 1) == 1) {
+            active.checked = true;
+         }
+         else {
+            active.checked = false;
+         }
+         if (v == "askFixes") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_scroll',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_betterAnswers',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_tagAsker',1);
+            frm.MissingE_askFixes_defaultTags.value = MissingE.utilities.options.getStorage('MissingE_askFixes_defaultTags','');
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_askDash',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_massDelete',1);
+         }
+         else if (v == "sidebarTweaks") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_slimSidebar',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_followingLink',0);
+            frm.MissingE_sidebarTweaks_retries.value = MissingE.utilities.options.getStorage('MissingE_sidebarTweaks_retries',MissingE.defaultRetries);
+         }
+         else if (v == "dashLinksToTabs") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashLinksToTabs_sidebar',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashLinksToTabs_reblogLinks',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashLinksToTabs_editLinks',0);
+         }
+         else if (v == "magnifier") {
+            frm.MissingE_magnifier_retries.value = MissingE.utilities.options.getStorage('MissingE_magnifier_retries',MissingE.defaultRetries);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_magnifier_magnifyAvatars',0);
+         }
+         else if (v == "bookmarker") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_bookmarker_addBar',1);
+            var bmFormat = MissingE.utilities.options.getStorage('MissingE_bookmarker_format',MissingE.defaultFormat);
+            frm.MissingE_bookmarker_format.value = bmFormat;
+            $('#MissingE_bookmarker_format_sample').text(MissingE.getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
+         }
+         else if (v == "timestamps") {
+            frm.MissingE_timestamps_retries.value = MissingE.utilities.options.getStorage('MissingE_timestamps_retries',MissingE.defaultRetries);
+            var tsFormat = MissingE.utilities.options.getStorage('MissingE_timestamps_format',MissingE.defaultFormat);
+            frm.MissingE_timestamps_format.value = tsFormat;
+            $('#MissingE_timestamps_format_sample').text(MissingE.getFormattedDate(new Date(), tsFormat));
+         }
+         else if (v == "postCrushes") {
+            if (MissingE.utilities.options.getStorage('MissingE_postCrushes_crushSize',1) == 1)
+               document.getElementById("MissingE_postCrushes_crushSize_small").checked = true;
+            else
+               document.getElementById("MissingE_postCrushes_crushSize_large").checked = true;
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postCrushes_addTags',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postCrushes_showPercent',1);
+            frm.MissingE_postCrushes_prefix.value = MissingE.utilities.options.getStorage('MissingE_postCrushes_prefix',"Tumblr Crushes:");
+         }
+         else if (v == "replyReplies") {
+            if (MissingE.utilities.options.getStorage('MissingE_replyReplies_smallAvatars',1) == 1)
+               document.getElementById("MissingE_replyReplies_smallAvatars_small").checked = true;
+            else
+               document.getElementById("MissingE_replyReplies_smallAvatars_large").checked = true;
+            MissingE.utilities.options.loadCheck(frm,'MissingE_replyReplies_showAvatars',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_replyReplies_addTags',1);
+            frm.MissingE_replyReplies_defaultTags.value = MissingE.utilities.options.getStorage('MissingE_replyReplies_defaultTags','');
+            MissingE.utilities.options.loadCheck(frm,'MissingE_replyReplies_newTab',1);
+         }
+         else if (v == "dashboardFixes") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_reblogQuoteFit',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_wrapTags',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_replaceIcons',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_massDelete',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_randomQueue',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_sortableNotes',1);
+         }
+         else if (v == "betterReblogs") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_passTags',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_autoFillTags',1);
+            frm.MissingE_betterReblogs_retries.value = MissingE.utilities.options.getStorage('MissingE_betterReblogs_retries',MissingE.defaultRetries);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_quickReblog',0);
+            if (MissingE.utilities.options.getStorage('MissingE_betterReblogs_quickReblogAcctType',0) == 1)
+               document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Secondary').checked = true;
+            else
+               document.getElementById('MissingE_betterReblogs_quickReblogAcctType_Primary').checked = true;
+            var qran = MissingE.utilities.options.getStorage('MissingE_betterReblogs_quickReblogAcctName','');
+            if (qran == '0') {
+               qran = '';
+            }
+            frm.MissingE_betterReblogs_quickReblogAcctName.value = qran;
+            $(frm.MissingE_betterReblogs_quickReblogForceTwitter).val(MissingE.utilities.options.getStorage('MissingE_betterReblogs_quickReblogForceTwitter','default'));
+            MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_fullText',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_reblogAsks',0);
+            frm.MissingE_betterReblogs_askRetries.value = MissingE.utilities.options.getStorage('MissingE_betterReblogs_askRetries',MissingE.defaultRetries);
+         }
+         else if (v == "postingFixes") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_uploaderToggle',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_addUploader',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_subEdit',1);
+            frm.MissingE_postingFixes_subEditRetries.value = MissingE.utilities.options.getStorage('MissingE_postingFixes_subEditRetries',MissingE.defaultRetries);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_tagQueuedPosts',0);
+            frm.MissingE_postingFixes_queueTags.value = MissingE.utilities.options.getStorage('MissingE_postingFixes_queueTags','');
+         }
+         else if (v == "reblogYourself") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_reblogYourself_postPage',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_reblogYourself_dashboard',1);
+            frm.MissingE_reblogYourself_retries.value = MissingE.utilities.options.getStorage('MissingE_reblogYourself_retries',MissingE.defaultRetries);
+         }
+      }
+   },
+
+   resetPrefix: function() {
+      var prefix = document.getElementById("postCrushes_options")
+                     .MissingE_postCrushes_prefix;
+      prefix.value = "Tumblr Crushes:";
+      MissingE.utilities.options.doSetting(prefix, false);
+   },
+
+   resetRetries: function(obj) {
+      var input = $(obj).siblings('input:text');
+      input.val(MissingE.defaultRetries);
+      MissingE.utilities.options
+         .doSetting(input.get(0), true, MissingE.defaultRetries,
+                    MissingE.minRetries, MissingE.maxRetries);
+   },
+
+   toggle: function(obj) {
+      if (obj.name !== "active") { return false; }
+      var frm = $(obj).closest("form");
+      var component = frm.attr("id").match(/^[a-zA-Z]+/)[0];
+      if (obj.checked) {
+         obj.checked = false;
+         MissingE.utilities.options
+               .setStorage('MissingE_' + component + '_enabled', 0);
+         if (component == 'experimentalFeatures') {
+            $('#posts td.experimental').hide();
+         }
+      }
+      else {
+         obj.checked = true;
+         MissingE.utilities.options
+               .setStorage('MissingE_' + component + '_enabled', 1);
+         if (component == 'experimentalFeatures') {
+            $('#posts td.experimental').show();
+         }
+      }
+   },
+
+   doshow: function(component) {
+      var itm;
+      if (component == 'about') {
+         document.getElementById('about_nav').className = 'nav_item active';
+         document.getElementById('about_posts').style.display = 'block';
+         document.getElementById('experimental_section').style.display = 'none';
+      }
+      else {
+         document.getElementById('about_nav').className = 'nav_item';
+         document.getElementById('about_posts').style.display = 'none';
+         document.getElementById('experimental_section').style.display = 'block';
+      }
+      if (component == 'dashboard') {
+         document.getElementById('dashboard_nav').className = 'nav_item active';
+         document.getElementById('dashboard_posts').style.display = 'block';
+      }
+      else {
+         document.getElementById('dashboard_nav').className = 'nav_item';
+         document.getElementById('dashboard_posts').style.display = 'none';
+      }
+      if (component == 'posting') {
+         document.getElementById('posting_nav').className = 'nav_item active';
+         document.getElementById('posting_posts').style.display = 'block';
+      }
+      else {
+         document.getElementById('posting_nav').className = 'nav_item';
+         document.getElementById('posting_posts').style.display = 'none';
+      }
+      if (component == 'social') {
+         document.getElementById('social_nav').className = 'nav_item active';
+         document.getElementById('social_posts').style.display = 'block';
+      }
+      else {
+         document.getElementById('social_nav').className = 'nav_item';
+         document.getElementById('social_posts').style.display = 'none';
+      }
+   },
+
+   init: function() {
+      extension.sendRequest("close-options");
+
+      $('a[rel*=facebox]').facebox({
+         loadingImage : '../lib/facebox/loading.gif',
+         closeImage   : '../lib/facebox/closelabel.png'
+      });
+
+      $("#exportdiv").click(MissingE.utilities.options.exportSettings);
+      $("#import").change(function() {
+         MissingE.utilities.importSettings(this, $('#settingsframe').get(0));
+      });
+
+      if (extension.isFirefox ||
+          extension.isSafari) {
+         extension.sendRequest("all-settings", {}, function(response) {
+            MissingE.utilities.options.all_settings = response;
+            MissingE.utilities.options.loadSettings();
+            MissingE.utilities.options.setupPage();
+         });
+      }
+      else {
+         MissingE.utilities.options.loadSettings();
+         MissingE.utilities.options.setupPage();
+      }
+   }
+};
+
+$(document).ready(function($) {
+   MissingE.utilities.options.init();
+});
+
+}(jQuery));

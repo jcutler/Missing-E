@@ -244,10 +244,10 @@ function closeTab(url) {
 }
 
 function openSettings() {
-   closeTab(data.url("options.html"));
+   closeTab(data.url("core/options.html"));
 
    tabs.open({
-      url: data.url("options.html"),
+      url: data.url("core/options.html"),
       onReady: function(tab) {
          tab.attach({
             contentScriptFile: [data.url("common/jquery-1.5.2.min.js"),
@@ -257,7 +257,7 @@ function openSettings() {
                                 data.url("lib/checkbox/jquery.checkbox.min.js"),
                                 data.url("lib/facebox/facebox.js"),
                                 data.url("lib/jquery-spin/jquery-spin.js"),
-                                data.url("options.js")],
+                                data.url("core/options.js")],
             onMessage: function(data) {
                handleMessage(data, this);
             }
@@ -1911,7 +1911,7 @@ pageMod.PageMod({
    include: ["http://missinge.infraware.ca/*"],
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("extension.js"),
-                       data.url("common/versionchk.js")],
+                       data.url("core/versionCheck.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {
          handleMessage(data, this);
