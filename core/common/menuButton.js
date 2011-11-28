@@ -55,7 +55,8 @@ MissingE.packages.menuButton = {
          var css = document.createElement('link');
          css.setAttribute('rel', 'stylesheet');
          css.setAttribute('type', 'text/css');
-         css.setAttribute('href', extension.getURL("core/menuButton.css"));
+         css.setAttribute('href',
+                          extension.getURL("core/common/menuButton.css"));
          var st = document.createElement('style');
          st.setAttribute('type', 'text/css');
          st.innerHTML = '#header #missinge_button { visibility:hidden; }' +
