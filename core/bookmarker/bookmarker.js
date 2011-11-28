@@ -464,7 +464,7 @@ MissingE.packages.bookmarker = {
          }, false);
       }
    },
-   
+
    init: function() {
       $('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
                                                                  function(e) {

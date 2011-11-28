@@ -32,7 +32,7 @@ MissingE.packages.reblogYourselfPost = {
       var controls;
       if (div) { controls = div.getElementsByTagName("a"); }
       var noReblog = true;
-      
+
       if (!MissingE.isTumblrURL(location.href, ["iframe"])) {
          noReblog = false;
       }
@@ -45,7 +45,7 @@ MissingE.packages.reblogYourselfPost = {
             }
          }
       }
-      
+
       if (noReblog) {
          var url, redir, i;
          var loc = location.href;
@@ -63,11 +63,11 @@ MissingE.packages.reblogYourselfPost = {
             url += loc.match(/&pid=(\d*)/)[1] + "/";
             url += loc.match(/&rk=(\w*)/)[1];
             url += '?redirect_to=' + redir;
-      
+
             var link = document.createElement('a');
             link.setAttribute('href', url);
             link.setAttribute('target', '_top');
-      
+
             var dashimg = null;
             for (i=controls.length-1; i>=0; i--) {
                if (controls[i].href === 'http://www.tumblr.com/dashboard') {
@@ -93,7 +93,7 @@ MissingE.packages.reblogYourselfPost = {
             else {
                suffix = '.png';
             }
-      
+
             var icon = document.createElement('img');
             icon.style.height='20px';
             icon.style.width='64px';

@@ -45,7 +45,7 @@ MissingE.packages.reblogYourself = {
          if (perm.length === 0) {
             return;
          }
-  
+
          extension.sendRequest("reblogYourself",
                                {pid: tid, url: perm.attr("href")},
                                MissingE.packages.reblogYourself.receiveReblog);
