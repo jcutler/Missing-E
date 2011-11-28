@@ -1213,7 +1213,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
       if (!MissingE.isTumblrURL(request.url, ["askForm"])) {
          chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery.min.js"});
-         chrome.tabs.executeScript(sender.tab.id, {file: "common/ajaxEvents.js"});
+         chrome.tabs.executeScript(sender.tab.id, {file: "core/common/ajaxEvents.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "common/storage.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "core/utils.js"});
       }

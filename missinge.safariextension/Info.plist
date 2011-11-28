@@ -48,7 +48,7 @@
 			<array>
 				<string>extension.js</string>
 				<string>common/jquery.min.js</string>
-				<string>common/ajaxEvents.js</string>
+				<string>core/common/ajaxEvents.js</string>
 				<string>core/localizations.js</string>
 				<string>core/utils.js</string>
 				<string>lib/jquery.ui.core.min.js</string>

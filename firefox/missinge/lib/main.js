@@ -1788,11 +1788,12 @@ function handleMessage(message, myWorker) {
          zindexFix = true;
          injectStyles.push(data.url("lib/facebox/facebox.css"));
          var pos = injectScripts.indexOf(data.url("core/utils.js"));
-         injectScripts.splice(pos, 0, data.url("lib/facebox/facebox.js"));
+         injectScripts.splice(pos+1, 0, data.url("lib/facebox/facebox.js"));
       }
 
       if (!MissingE.isTumblrURL(message.url, ["askForm"])) {
-         injectScripts.unshift(data.url("common/ajaxEvents.js"));
+         var pos = injectScripts.indexOf(data.url("core/utils.js"));
+         injectScripts.splice(pos+1, 0, data.url("core/common/ajaxEvents.js"));
       }
 
       // In reverse order of requirements
