@@ -25,6 +25,8 @@
 
 (function(){
 
+if (typeof MissingE === "undefined") { return false; }
+
 MissingE.packages.gotoDashPost = {
    run: function() {
       var i,j;
