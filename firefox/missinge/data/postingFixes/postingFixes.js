@@ -221,7 +221,6 @@ self.on('message', function(message) {
        jQuery('select#channel_id').length > 0) {
       var extrachan = jQuery('<select id="extra_channel"></select>')
                         .insertAfter('#preview_button');
-      extrachan.wrap('<div id="extra_channel_outer" />');
       extrachan.append(jQuery('#channel_id').html());
       extrachan.val(jQuery('#channel_id').val());
       extrachan.bind('change',function() {
