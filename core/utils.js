@@ -51,51 +51,14 @@ var utils = {
       "tagged":       /^tagged\/[^\/]+[\/]?.*$/
    },
 
-   isTumblrURL: function(fullURL, matches) {
-      if (!/^http:\/\/www\.tumblr\.com\//.test(fullURL) ||
-          !matches) {
-         return false;
-      }
-      var i;
-      var url = fullURL.replace(/^http:\/\/www\.tumblr\.com\//,'')
-                       .replace(/\?.*$/,'').replace(/#.*$/,'');
-      for (i=0; i<matches.length; i++) {
-         if (!this.urlPatterns.hasOwnProperty(matches[i])) {
-            debug("Invalid Tumblr URL pattern: '" + matches[i] + "'");
-         }
-         else {
-            if (this.urlPatterns[matches[i]].test(url)) {
-               return true;
-            }
-         }
-      }
-      return false;
+   escapeHTML: function(str) {
+      return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
+               .replace(/>/,'&gt;').replace(/</,'&lt;');
    },
 
-   zeroPad: function(num, len) {
-      var ret = "";
-      ret += num;
-      while (ret.length < len) { ret = "0" + ret; }
-      return ret;
-   },
-
-   getLocale: function(lang) {
-      if (typeof lang !== "string") {
-         lang = "en";
-      }
-      lang = lang.toLowerCase();
-      if (this.locale.hasOwnProperty(lang) &&
-          this.locale[lang] !== false) {
-         return this.locale[lang];
-      }
-      else {
-         if (!this.locale.hasOwnProperty(lang)) {
-             this.locale[lang] = false;
-            console.log("Warning: Localization not found for language '" +
-                        lang + "'");
-         }
-         return this.locale.en;
-      }
+   getBookmarkerFormat: function(d, user, format, lang) {
+      var ret = this.getFormattedDate(d, format, lang);
+      return ret.replace(/%u/g,user);
    },
 
    getFormattedDate: function(d, format, lang) {
@@ -122,14 +85,48 @@ var utils = {
       return ret;
    },
 
-   getBookmarkerFormat: function(d, user, format, lang) {
-      var ret = this.getFormattedDate(d, format, lang);
-      return ret.replace(/%u/g,user);
+   getLocale: function(lang) {
+      if (typeof lang !== "string") {
+         lang = "en";
+      }
+      lang = lang.toLowerCase();
+      if (this.locale.hasOwnProperty(lang) &&
+          this.locale[lang] !== false) {
+         return this.locale[lang];
+      }
+      else {
+         if (!this.locale.hasOwnProperty(lang)) {
+             this.locale[lang] = false;
+            console.log("Warning: Localization not found for language '" +
+                        lang + "'");
+         }
+         return this.locale.en;
+      }
    },
 
-   escapeHTML: function(str) {
-      return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
-               .replace(/>/,'&gt;').replace(/</,'&lt;');
+   isTumblrURL: function(fullURL, matches) {
+      if (!/^http:\/\/www\.tumblr\.com\//.test(fullURL) ||
+          !matches) {
+         return false;
+      }
+      var i;
+      var url = fullURL.replace(/^http:\/\/www\.tumblr\.com\//,'')
+                       .replace(/\?.*$/,'').replace(/#.*$/,'');
+      for (i=0; i<matches.length; i++) {
+         if (!this.urlPatterns.hasOwnProperty(matches[i])) {
+            debug("Invalid Tumblr URL pattern: '" + matches[i] + "'");
+         }
+         else {
+            if (this.urlPatterns[matches[i]].test(url)) {
+               return true;
+            }
+         }
+      }
+      return false;
+   },
+
+   randomRange: function(from, to) {
+      return Math.floor(Math.random() * (to - from + 1) + from);
    },
 
    unescapeHTML: function(str) {
@@ -143,8 +140,11 @@ var utils = {
                .replace(/&gt;/g,'>').replace(/&lt;/,'<');
    },
 
-   randomRange: function(from, to) {
-      return Math.floor(Math.random() * (to - from + 1) + from);
+   zeroPad: function(num, len) {
+      var ret = "";
+      ret += num;
+      while (ret.length < len) { ret = "0" + ret; }
+      return ret;
    }
 };
 
