@@ -1569,7 +1569,8 @@ function handleMessage(message, myWorker) {
          if (getStorage("extensions.MissingE.bookmarker.enabled",1) == 1) {
             needUI = true;
             needUIsortable = true;
-            injectScripts.push(data.url("bookmarker/bookmarker.js"));
+            injectStyles.push(data.url("core/bookmarker/bookmarker.css"));
+            injectScripts.push(data.url("core/bookmarker/bookmarker.js"));
             activeScripts.bookmarker = true;
          }
          else

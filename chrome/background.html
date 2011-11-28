@@ -1260,7 +1260,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getStorage("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "bookmarker/bookmarker.css"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/bookmarker/bookmarker.css"});
             if (!loadedUI) {
                loadedUI = true;
                loadUI(sender.tab.id, "core");
@@ -1269,7 +1269,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                loadedUIsortable = true;
                loadUI(sender.tab.id, "sortable");
             }
-            chrome.tabs.executeScript(sender.tab.id, {file: "bookmarker/bookmarker.js"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/bookmarker/bookmarker.js"});
          }
          else
             activeScripts.bookmarker = false;

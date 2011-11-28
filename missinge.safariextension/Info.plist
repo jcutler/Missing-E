@@ -64,7 +64,7 @@
 				<string>core/betterReblogs/betterReblogs_dash.js</string>
 				<string>core/betterReblogs/betterReblogs_fill.js</string>
 				<string>core/betterReblogs/betterReblogs_post.js</string>
-				<string>bookmarker/bookmarker.js</string>
+				<string>core/bookmarker/bookmarker.js</string>
 				<string>core/dashLinksToTabs/dashLinksToTabs.js</string>
 				<string>core/gotoDashPost/gotoDashPost.js</string>
 				<string>core/magnifier/magnifier.js</string>
@@ -90,7 +90,7 @@
 			<string>lib/facebox/facebox.css</string>
 			<string>askFixes/askFixes.css</string>
 			<string>core/betterReblogs/quickReblog.css</string>
-			<string>bookmarker/bookmarker.css</string>
+			<string>core/bookmarker/bookmarker.css</string>
 			<string>core/magnifier/magnifier.css</string>
 			<string>safeDash/safeDash.css</string>
 			<string>postingFixes/postingFixes.css</string>

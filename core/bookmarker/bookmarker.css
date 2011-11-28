@@ -44,21 +44,24 @@ border-bottom-left-radius:0 !important;
 
 #right_column #MissingE_marklist li.MissingE_marklist_title a {
 padding-left:8px !important;
-background:transparent;
+background:transparent !important;
 cursor:default;
 }
 
+#right_column #MissingE_marklist .MissingE_unmarker {
+display:none !important;
+}
+
 #right_column #MissingE_marklist .MissingE_unmarker, #right_column #MissingE_marklist #MissingE_bookmark_confirmedit {
-display:none;
 position:absolute !important;
 right:9px;
 top:0 !important;
 }
 
 #right_column #MissingE_marklist .MissingE_unmarker {
-background-repeat:no-repeat;
+background-repeat:no-repeat !important;
 padding:0 !important;
-background-position:center center;
+background-position:center center !important;
 width:8px;
 height:100%;
 opacity:0.69;
@@ -75,11 +78,11 @@ line-height:1 !important;
 }
 
 #right_column #MissingE_marklist li:hover .MissingE_unmarker {
-display:block;
+display:block !important;
 }
 
 #right_column #MissingE_marklist .MissingE_unmarker:hover, #right_column #MissingE_marklist #MissingE_bookmark_confirmedit:hover {
-color:white;
+color:white !important;
 opacity:1;
 }
 
@@ -102,18 +105,22 @@ a.MissingE_ismarked {
 background-position:-12px 0 !important;
 }
 
-#right_column #MissingE_bookmarker_edit {
-font:10px 'Helvetica Neue',Helvetica,Arial,sans-serif;
+#right_column #MissingE_marklist #MissingE_bookmarker_edit {
+font:10px 'Helvetica Neue',Helvetica,Arial,sans-serif !important;
 width:130px;
 border:0;
 padding:0 2px 0 6px;
 -webkit-border-radius:5px;
 -moz-border-radius:5px;
 border-radius:5px;
-margin:0 2px 0 0;
+margin:3px 2px 3px 26px;
+position:absolute;
+top:0;
+left:0;
+z-index:200;
 }
 
-#right_column .MissingE_bookmarker_forceHide {
+#right_column #MissingE_marklist .MissingE_bookmarker_forceHide, #right_column #MissingE_marklist li:hover .MissingE_bookmarker_forceHide {
 display:none !important;
 }
 
@@ -158,5 +165,5 @@ vertical-align:inherit;
 }
 
 #posts .MissingE_bookmark_bar a {
-color:rgba(255,255,255,0.69);
+color:rgba(255,255,255,0.69) !important;
 }
