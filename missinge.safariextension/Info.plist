@@ -73,8 +73,8 @@
 				<string>postingFixes/postingFixes.js</string>
 				<string>dashboardFixes/dashboardFixes.js</string>
 				<string>sidebarTweaks/sidebarTweaks.js</string>
-				<string>reblogYourself/reblogYourself_post.js</string>
-				<string>reblogYourself/reblogYourself_dash.js</string>
+				<string>core/reblogYourself/reblogYourself_post.js</string>
+				<string>core/reblogYourself/reblogYourself_dash.js</string>
 				<string>replyReplies/replyReplies.js</string>
 				<string>replyReplies/replyReplies_fill.js</string>
 				<string>safeDash/safeDash.js</string>

@@ -1770,7 +1770,7 @@ function handleMessage(message, myWorker) {
 
          if (getStorage("extensions.MissingE.reblogYourself.enabled",1) == 1 &&
              getStorage("extensions.MissingE.reblogYourself.dashboard",1) == 1) {
-            injectScripts.push(data.url("reblogYourself/reblogYourself_dash.js"));
+            injectScripts.push(data.url("core/reblogYourself/reblogYourself_dash.js"));
             activeScripts.reblogYourself = true;
          }
          else
@@ -1876,7 +1876,7 @@ pageMod.PageMod({
                        data.url("core/utils.js"),
                        data.url("core/betterReblogs/betterReblogs_post.js"),
                        data.url("core/gotoDashPost/gotoDashPost.js"),
-                       data.url("reblogYourself/reblogYourself_post.js"),
+                       data.url("core/reblogYourself/reblogYourself_post.js"),
                        data.url("postingFixes/subEdit.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {

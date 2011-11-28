@@ -1208,8 +1208,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "start") {
       addTab(sender.tab.id, sender.tab.url);
-      if (!MissingE.isTumblrURL(request.url)) {
-         chrome.tabs.executeScript(sender.tab.id, {file: "extension.js"});
+      if (MissingE.isTumblrURL(request.url, ["iframe"])) {
+         chrome.tabs.executeScript(sender.tab.id, {file: "extension.js",
+                                                   allFrames: true});
       }
       if (!MissingE.isTumblrURL(request.url, ["askForm"])) {
          chrome.tabs.executeScript(sender.tab.id, {file: "common/jquery.min.js"});
@@ -1409,7 +1410,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
              getStorage("MissingE_reblogYourself_postPage",1) == 1) {
             activeScripts.reblogYourself = true;
             widenIframe = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "reblogYourself/reblogYourself_post.js", allFrames: true});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/reblogYourself/reblogYourself_post.js", allFrames: true});
          }
          else
             activeScripts.reblogYourself = false;
@@ -1517,7 +1518,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getStorage("MissingE_reblogYourself_enabled",1) == 1 &&
              getStorage("MissingE_reblogYourself_dashboard",1) == 1) {
             activeScripts.reblogYourself = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "reblogYourself/reblogYourself_dash.js"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/reblogYourself/reblogYourself_dash.js"});
          }
          else
             activeScripts.reblogYourself = false;

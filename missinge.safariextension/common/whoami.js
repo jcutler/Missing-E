@@ -177,7 +177,7 @@ function doStartup(response) {
                                          {component: "askFixes"});
       }
       if (response.message.reblogYourself) {
-         MissingE_reblogYourself_dash_doStartup();
+         MissingE.packages.reblogYourself.init();
       }
       if (response.message.safeDash) {
          MissingE_safeDash_doStartup();
@@ -201,7 +201,7 @@ function doStartup(response) {
          MissingE.packages.gotoDashPost.init();
       }
       if (response.message.reblogYourself) {
-         MissingE_reblogYourself_post_doStartup();
+         MissingE.packages.reblogYourselfPost.init();
       }
       if (response.message.postingFixes) {
          MissingE_postingFixes_subEdit_doStartup();
