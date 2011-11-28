@@ -1526,7 +1526,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          chrome.tabs.executeScript(sender.tab.id, {file: "common/zindexFix.js"});
       }
       if (widenIframe) {
-         chrome.tabs.insertCSS(sender.tab.id, {file: "common/widenIframe.css"});
+         chrome.tabs.insertCSS(sender.tab.id, {file: "core/common/widenIframe.css"});
       }
 
       activeScripts.url = request.url;

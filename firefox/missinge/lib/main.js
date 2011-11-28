@@ -1779,7 +1779,7 @@ function handleMessage(message, myWorker) {
 
       if (message.isFrame &&
           (activeScripts.gotoDashPost || activeScripts.reblogYourself)) {
-         injectScripts.push(data.url("core/common/widenIframe.js"));
+         injectStyles.push(data.url("core/common/widenIframe.css"));
       }
 
       if (activeScripts.magnifier ||
