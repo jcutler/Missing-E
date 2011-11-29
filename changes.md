@@ -79,6 +79,7 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.3.0** (not yet released)
+**_+_** Add "delete" button option for sub-Tumblr permalink post pages  
 **_!_** Extend sidebar adding to paginated dashboard pages  
 **_!_** Re-run tags AJAX request when dequeueing it (Chrome-only bug)  
 **_!_** Fix bug that prevented retrying when initially failing to get reblog keys for Reblog Yourself or ask reblogging in Better Reblogs (Firefox-only bug)  
