@@ -30,7 +30,7 @@ MissingE.utilities.zindexFix = {
       $(item).val(val);
    },
 
-   embed: function(em) {
+   doEmbed: function(em) {
       var node = $(em).clone();
       node.attr('wmode','opaque').addClass('zindexfixed');
       $(em).replaceWith(node);
@@ -38,21 +38,21 @@ MissingE.utilities.zindexFix = {
 
    run: function() {
       $('#posts li.post embed').each(function() {
-         MissingE.utilities.embed(this);
+         MissingE.utilities.zindexFix.doEmbed(this);
       });
 
       $('#posts li.post div.video + input:hidden').each(function() {
-         MissingE.utilities.futureEmbed(this);
+         MissingE.utilities.zindexFix.futureEmbed(this);
       });
 
       extension.addAjaxListener(function(type,list) {
          if (type === 'notes') { return; }
          $.each(list, function(i,val) {
             $('#'+val).find('embed').each(function() {
-               MissingE.utilities.embed(this);
+               MissingE.utilities.zindexFix.doEmbed(this);
             });
             $('#'+val).find('div.video + input:hidden').each(function() {
-               MissingE.utilities.futureEmbed(this);
+               MissingE.utilities.zindexFix.futureEmbed(this);
             });
          });
       });
