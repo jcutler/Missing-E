@@ -1205,7 +1205,7 @@ function handleMessage(message, myWorker) {
          dt.day = today.getUTCDay();
          stamp = message.stamp.replace(/,/,'').split(" ");
          for (i=0; i<stamp.length; i++) {
-            if (/[0-9][0-9][0-9][0-9]$/.test(stamp[i])) {
+            if (/^[0-9][0-9][0-9][0-9]$/.test(stamp[i])) {
                dt.year = parseInt(stamp[i]);
             }
             else if (/[0-9][0-9]*:[0-9][0-9]$/.test(stamp[i])) {
