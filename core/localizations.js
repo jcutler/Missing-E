@@ -152,6 +152,7 @@ var locale = {
    "textTitle": "Text Reply"
   },
   "shuffle": "Shuffle Queue",
+  "deleteConfirm": "Are you sure you want to delete this post?",
   "massDelete": {
    "selectAll": "Select All",
    "deselectAll": "Deselect All",
@@ -326,6 +327,7 @@ var locale = {
    "textTitle": "Text Antwort"
   },
   "shuffle": "Warteschleife mischen",
+  "deleteConfirm": "Bist du sicher, dass du diesen Eintrag löchen willst?",
   "massDelete": {
    "selectAll": "Alle auswählen",
    "deselectAll": "Alle abwählen",
@@ -500,6 +502,7 @@ var locale = {
    "textTitle": "Respuesta en Texto"
   },
   "shuffle": "Barajar la cola",
+  "deleteConfirm": "¿Seguro que quieres borrar esta publicación?",
   "massDelete": {
    "selectAll": "Seleccionar Todos",
    "deselectAll": "Deseleccionar Todos",
@@ -674,6 +677,7 @@ var locale = {
    "textTitle": "Texte Réponse"
   },
   "shuffle": "Mélanger",
+  "deleteConfirm": "Souhaitez-vous vraiment supprimer ce billet?",
   "massDelete": {
    "selectAll": "Tout sélectionner",
    "deselectAll": "Tout désélectionner",
@@ -858,6 +862,7 @@ var locale = {
    "textTitle": "Rispondi con un testo"
   },
   "Shuffle": "Mischiare la coda",
+  "deleteConfirm": "Sei sicuro di voler eliminare questo post?",
   "massDelete": {
    "selectAll": "Seleziona tutto",
    "deselectAll": "Deseleziona tutto",
@@ -1032,6 +1037,7 @@ var locale = {
    "textTitle": "テキスト返信"
   },
   "shuffle": "シャッフルキュー",
+  "deleteConfirm": "本当に、この投稿を削除しますか?",
   "massDelete": {
    "selectAll": "すべて選択",
    "deselectAll": "すべて選択解除",
@@ -1199,6 +1205,7 @@ var locale = {
    "textTitle": "Odpowiedź tekst"
   },
   "shuffle": "Przetasuj kolejkę",
+  "deleteConfirm": "Czy na pewno chcesz usunąć ten post?",
   "massDelete": {
    "selectAll": "Zaznacz wszystkie",
    "deselectAll": "Odznacz wszystkie",
@@ -1391,6 +1398,7 @@ var locale = {
    "textTitle": "Ответить текстом"
   },
   "shuffle": "Смешайте очередь",
+  "deleteConfirm": "Действительно удалить этот пост?",
   "massDelete": {
    "selectAll": "Выбрать все",
    "deselectAll": "Отменить выбор",
@@ -1589,6 +1597,7 @@ var locale = {
    "textTitle": "Metin'le Cevapla"
   },
   "shuffle": "Sırasını karıştırmak",
+  "deleteConfirm": "Bu gönderiyi silmek istediğine emin misin?",
   "massDelete": {
    "selectAll": "Hepsini Seç",
    "deselectAll": "Seçimi Kaldır",

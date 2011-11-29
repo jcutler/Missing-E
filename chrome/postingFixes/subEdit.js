@@ -95,6 +95,29 @@ if (noEdit) {
                MissingE.getLocale(lang).dashFixesText.edit +
                '" style="display:block;float:left;" />';
             like.parentNode.insertBefore(edit, like.nextSibling);
+            var formKey = document.getElementById('form_key');
+            if (formKey) {
+               var del = document.createElement('form');
+               del.setAttribute('method','post');
+               del.setAttribute('action','/delete');
+               del.setAttribute('target','_top');
+               del.style.cssFloat = 'left';
+               del.style.paddingLeft = '3px';
+               del.onsubmit = function() {
+                  return confirm(MissingE.getLocale(lang).deleteConfirm);
+               };
+               del.innerHTML = '<input type="hidden" name="id" value="' +
+                  like.id.value + '" /><input type="hidden" ' +
+                  'name="redirect_to" value="' +
+                  decodeURIComponent(url.match(/http%3A%2F%2F[^%]*/i)[0]) +
+                  '" /><input type="hidden" name="form_key" value="' +
+                  formKey.value + '" /><input type="image" src="' +
+                  'http://assets.tumblr.com/images/iframe_delete_alpha' +
+                  suffix + '" alt="' +
+                  MissingE.getLocale(lang).dashFixesText.delete + '" ' +
+                  'style="height:20px;border-width:0;cursor:pointer;" />';
+               like.parentNode.insertBefore(del, edit.nextSibling);
+            }
          }
       });
    }
