@@ -519,7 +519,8 @@ MissingE.packages.betterReblogs = {
                     MissingE.getLocale(lang).reblogOptions[idx].item +
                     '" href="#" ' + doonclick + '>' +
                     '<div class="user_menu_list_item">' +
-                    MissingE.getLocale(lang).reblogOptions[idx].text + '</div></a>';
+                    MissingE.getLocale(lang).reblogOptions[idx].text +
+                    '</div></a>';
          }
          var node = extension.isFirefox ?
                ['<span class="MissingE_quick_reblog_field">',
@@ -530,8 +531,8 @@ MissingE.packages.betterReblogs = {
          txt +=  node[0] +
                   '<div class="user_menu_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_twitter">' +
-                  '<input type="checkbox" /> ' + MissingE.getLocale(lang).twitterText +
-                  '</div></div>' +
+                  '<input type="checkbox" /> ' +
+                  MissingE.getLocale(lang).twitterText + '</div></div>' +
                   node[1];
          var list = $('#user_channels li');
          if (list.length > 0) {
@@ -557,8 +558,8 @@ MissingE.packages.betterReblogs = {
          }
          txt += node[0] + '<div class="user_menu_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_tags">' +
-                  '<input type="text" /><br />' + MissingE.getLocale(lang).tagsText +
-                  '</div></div>' + node[1];
+                  '<input type="text" /><br />' +
+                  MissingE.getLocale(lang).tagsText + '</div></div>' + node[1];
          var qr = $(txt).appendTo('body');
          qr.find('#MissingE_quick_reblog_selector select').click(function(e) {
             e.stopPropagation();
