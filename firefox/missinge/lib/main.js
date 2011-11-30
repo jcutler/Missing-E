@@ -532,7 +532,7 @@ function startAjax(id) {
 }
 
 function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
-   var failMsg = {greeting:type, success:false};
+   var failMsg = {greeting:type, success:false, pid:pid};
    Request({
       url: url + pid,
       headers: {tryCount: count,
@@ -654,7 +654,7 @@ function checkPermission(user, count, myWorker, retries) {
 }
 
 function doTagsAjax(url, pid, count, myWorker, retries) {
-   var failMsg = {greeting:"tags", success:false};
+   var failMsg = {greeting:"tags", success:false, pid:pid};
    Request({
       url: url,
       headers: {tryCount: count,
@@ -719,7 +719,7 @@ function doTagsAjax(url, pid, count, myWorker, retries) {
 }
 
 function doReblogAjax(type, url, pid, count, myWorker, retries, additional) {
-   var failMsg = {greeting:type, success:false};
+   var failMsg = {greeting:type, success:false, pid:pid};
    if (additional) {
       for (i in additional) {
          if (additional.hasOwnProperty(i)) {
@@ -799,80 +799,6 @@ function doReblogAjax(type, url, pid, count, myWorker, retries, additional) {
       }
    }).get();
 }
-
-/*
-function doAjax(url, pid, count, myWorker, retries, type, doFunc, additional) {
-   var failMsg = {greeting:type, success:false};
-   if (additional) {
-      for (i in additional) {
-         if (additional.hasOwnProperty(i)) {
-            failMsg[i] = additional[i];
-         }
-      }
-   }
-   Request({
-      url: "http://api.tumblr.com/v2/blog/" +
-            url.replace(/^https?:\/\//,'') + "/posts?api_key=" + apiKey +
-            "&id=" + MissingE.escapeHTML(pid),
-      headers: {tryCount: count,
-                retryLimit: retries,
-                targetId: pid},
-      onComplete: function(response) {
-         var closed = false;
-         try {
-            var tab = myWorker.tab;
-         }
-         catch (err) {
-            closed = true;
-         }
-         if (response.status === 404) {
-            debug(type + " request (" + this.headers.targetId + ") not found");
-            dequeueAjax(this.headers.targetId);
-            myWorker.postMessage(failMsg);
-            return;
-         }
-         if (response.status != 200 ||
-             !(/^\s*var\s+tumblr_api_read/.test(response.text)) &&
-             !(/^\s*{\s*['"]meta['"]\s*:\s*{[^}]*['"]status['"]\s*:\s*200,/
-                .test(response.text))) {
-            if (closed) {
-               debug("Stop " + type + " request: Tab closed or changed.");
-               dequeueAjax(this.headers.targetId);
-               return;
-            }
-            if (cacheServe(type, this.headers.targetId, myWorker,
-                           doFunc, true)) {
-               return true;
-            }
-            else {
-               if (this.headers.tryCount <= this.headers.retryLimit) {
-                  debug("Retry " + type + " request (" + this.headers.targetId + ")");
-                  doAjax(this.url.replace(/\/api\/read\/json\?id=[0-9]*$/,''),
-                         this.headers.targetId, (this.headers.tryCount + 1),
-                         myWorker, this.headers.retryLimit, type, doFunc,
-                         additional);
-               }
-               else {
-                  debug("Retry " + type + " request (" + this.headers.targetId + ")");
-                  dequeueAjax(this.headers.targetId);
-                  myWorker.postMessage(failMsg);
-               }
-            }
-         }
-         else {
-            var txt = response.text.replace(/^\s*var\s+tumblr_api_read\s+=\s+/,'').replace(/;\s*$/,'');
-            var stamp = JSON.parse(txt);
-            var info = stamp.response.posts[0];
-            saveCache(this.headers.targetId, info);
-            dequeueAjax(this.headers.targetId);
-            if (!closed) {
-               doFunc(info, this.headers.targetId, myWorker);
-            }
-         }
-      }
-   }).get();
-}
-*/
 
 function startTags(message, myWorker) {
    try {

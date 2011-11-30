@@ -372,7 +372,7 @@ function startAjax(id) {
 function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
    debug("AJAX " + type + " request (" + request.pid + ")");
    startAjax(request.pid);
-   var failMsg = {success:false};
+   var failMsg = {greeting:type, success:false, pid:request.pid};
    $.ajax({
       type: "GET",
       url: request.url + request.pid,
@@ -508,7 +508,7 @@ function checkPermission(request, sender, sendResponse, hash, retries, tryCount)
 function doTagsAjax(request, sender, sendResponse, hash, retries) {
    debug("AJAX reblogYourself request (" + request.pid + ")");
    startAjax(request.pid);
-   var failMsg = {success:false};
+   var failMsg = {greeting:"reblogYourself", success:false, pid:request.pid};
    $.ajax({
       type: "GET",
       url: request.url + "/post/" + request.pid + "/rss",
@@ -595,7 +595,7 @@ function doReblogAjax(type, request, sender, sendResponse, hash, retries,
                               additional) {
    debug("AJAX " + type + " request (" + request.pid + ")");
    startAjax(request.pid);
-   var failMsg = {success:false};
+   var failMsg = {greeting:type, success:false, pid:request.pid};
    if (additional) {
       for (i in additional) {
          if (additional.hasOwnProperty(i)) {
