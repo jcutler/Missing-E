@@ -53,7 +53,7 @@ display:none;
 position:absolute;
 left:0;
 top:100%;
-padding:2px 0 3px 0;
+padding:1px 0 3px 0;
 visibility:hidden;
 z-index:1337;
 }
