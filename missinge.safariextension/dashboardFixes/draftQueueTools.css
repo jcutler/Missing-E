@@ -25,36 +25,20 @@
 opacity:0.7;
 }
 
-#right_column #MissingEdraftQueueTools li .select_all {
+#MissingEdraftQueueTools li .select_all {
 background-position:12px 11px !important;
 }
 
-#right_column #MissingEdraftQueueTools li .deselect_all {
+#MissingEdraftQueueTools li .deselect_all {
 background-position:12px -26px !important;
 }
 
-#right_column #MissingEdraftQueueTools li .delete_selected {
+#MissingEdraftQueueTools li .delete_selected {
 background-position:10px -62px !important;
 }
 
-#right_column #MissingEdraftQueueTools li .randomize {
+#MissingEdraftQueueTools li .randomize {
 background-position:10px -98px !important;
-}
-
-#right_column.MissingE_slim_sidebar #MissingEdraftQueueTools li .select_all {
-background-position:8px 7px !important;
-}
-
-#right_column.MissingE_slim_sidebar #MissingEdraftQueueTools li .deselect_all {
-background-position:8px -30px !important;
-}
-
-#right_column.MissingE_slim_sidebar #MissingEdraftQueueTools li .delete_selected {
-background-position:6px -66px !important;
-}
-
-#right_column.MissingE_slim_sidebar #MissingEdraftQueueTools li .randomize {
-background-position:6px -102px !important;
 }
 
 #posts li.post input.MissingEmassDeleteSelect {

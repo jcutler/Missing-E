@@ -280,11 +280,6 @@ self.on('message', function(message) {
       jQuery('#right_column a.following').attr('href','/following');
    }
    if (message.slimSidebar === 1) {
-      var style = document.createElement("link");
-      style.setAttribute('rel','stylesheet');
-      style.setAttribute('type','text/css');
-      style.href = extensionURL + "sidebarTweaks/slimSidebar.css";
-      document.getElementsByTagName('head')[0].appendChild(style);
       jQuery('#tag_contributors li.item, #tag_editors li.item, ' +
         '#recommended_tumblelogs li.item').each(function() {
          var bg = jQuery(this).css('background-image');

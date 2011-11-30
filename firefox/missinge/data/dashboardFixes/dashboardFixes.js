@@ -690,10 +690,7 @@ self.on('message', function(message) {
             beforeguy = jQuery('#search_form');
          }
       }
-      jQuery('head').append('<link type="text/css" rel="stylesheet" href="' +
-                        message.extensionURL +
-                        "dashboardFixes/draftQueueTools.css" +
-                        '" />').append('<style type="text/css">' +
+      jQuery('head').append('<style type="text/css">' +
                         '#right_column #MissingEdraftQueueTools a { ' +
                         'background-image:url("' +
                         message.extensionURL +

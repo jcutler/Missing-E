@@ -376,7 +376,7 @@ function startAjax(id) {
 }
 
 function doAskAjax(request, retries, type, doFunc) {
-   debug("AJAX " + type + " request (" + request.pid + ")");
+   debug("AJAX " + type + " request (" + request.message.pid + ")");
    startAjax(request.message.pid);
    var failMsg = {success:false};
    $.ajax({
@@ -1792,6 +1792,24 @@ function getExternalVersion() {
    });
 }
 
+function injectSlimSidebar(e) {
+   if (!e || e.key == "MissingE_sidebarTweaks_enabled" ||
+       e.key == "MissingE_sidebarTweaks_slimSidebar") {
+      if (getSetting("MissingE_sidebarTweaks_enabled",1) === 1 &&
+          getSetting("MissingE_sidebarTweaks_slimSidebar",0) === 1) {
+         debug("Adding slimSidebar CSS");
+         safari.extension.addContentStyleSheet(safari.extension.baseURI +
+                                         "sidebarTweaks/slimSidebar.css",
+                                         "http://www.tumblr.com/*");
+      }
+      else {
+         debug("Removimg slimSidebar CSS");
+         safari.extension.removeContentStyleSheet(safari.extension.baseURI +
+                                            "sidebarTweaks/slimSidebar.css");
+      }
+   }
+}
+
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
       console.log("Updated Missing e (" +
@@ -1804,19 +1822,22 @@ function onStart(currVersion, prevVersion) {
          safari.extension.baseURI + "core/options.html";
    }
    setSetting('MissingE_installedVersion',currVersion);
+   injectSlimSidebar();
+   safari.extension.settings.addEventListener("change", injectSlimSidebar, false);
+
 }
 
 safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
                                              "core/common/widenIframe.css",
                                              "http://*");
 
-onStart(currVersion, prevVersion);
-getExternalVersion();
-
 moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
 moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
 collapseSettings('MissingE_askFixes_betterAnswers','MissingE_askFixes_buttons','MissingE_askFixes_tags');
 invertSetting('MissingE_betterReblogs_noPassTags','MissingE_betterReblogs_passTags');
+
+onStart(currVersion, prevVersion);
+getExternalVersion();
 </script>
 </head>
 </html>

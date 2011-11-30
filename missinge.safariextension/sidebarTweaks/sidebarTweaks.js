@@ -271,12 +271,6 @@ function MissingE_sidebarTweaks_doStartup(retries, accountNum,
       $('#right_column a.following').attr('href','/following');
    }
    if (slimSidebar === 1) {
-      $('#right_column').addClass('MissingE_slim_sidebar');
-      var style = document.createElement("link");
-      style.setAttribute('rel','stylesheet');
-      style.setAttribute('type','text/css');
-      style.href = safari.extension.baseURI + "sidebarTweaks/slimSidebar.css";
-      document.getElementsByTagName('head')[0].appendChild(style);
       $('#tag_contributors li.item, #tag_editors li.item, ' +
         '#recommended_tumblelogs li.item').each(function() {
          var bg = $(this).css('background-image');

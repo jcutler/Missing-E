@@ -50,11 +50,11 @@ position:relative;
 
 .MissingE_askFixes_buttons .MissingE_postMenu {
 display:none;
-visibility:hidden;
 position:absolute;
 left:0;
 top:100%;
 padding:1px 0 3px 0;
+visibility:hidden;
 z-index:1337;
 }
 
@@ -78,7 +78,6 @@ display:block;
 visibility:visible !important;
 display:block;
 }
-
 
 #facebox .MissingE_askbox_loaded {
 width:500px !important;
@@ -107,28 +106,16 @@ margin:0 0 10px 0 !important;
 opacity:0.7;
 }
 
-#right_column #MissingEmassDeleter li .select_all {
+#MissingEmassDeleter li .select_all {
 background-position:12px 11px !important;
 }
 
-#right_column #MissingEmassDeleter li .deselect_all {
+#MissingEmassDeleter li .deselect_all {
 background-position:12px -26px !important;
 }
 
-#right_column #MissingEmassDeleter li .delete_selected {
+#MissingEmassDeleter li .delete_selected {
 background-position:10px -62px !important;
-}
-
-#right_column.MissingE_slim_sidebar #MissingEmassDeleter li .select_all {
-background-position:8px 7px !important;
-}
-
-#right_column.MissingE_slim_sidebar #MissingEmassDeleter li .deselect_all {
-background-position:8px -30px !important;
-}
-
-#right_column.MissingE_slim_sidebar #MissingEmassDeleter li .delete_selected {
-background-position:6px -66px !important;
 }
 
 #posts li.post input.MissingEmassDeleteSelect {

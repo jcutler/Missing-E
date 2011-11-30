@@ -25,24 +25,16 @@
 margin-top:0 !important;
 }
 
-#right_column #MissingE_safeDash li {
+#MissingE_safeDash li {
 border-radius:6px !important;
 }
 
-#right_column #MissingE_safeDash li a {
+#MissingE_safeDash li a {
 background-position:12px 0 !important;
 }
 
-#right_column #MissingE_safeDash li.selected a {
+#MissingE_safeDash li.selected a {
 background-position:12px -29px !important;
-}
-
-#right_column.MissingE_slim_sidebar #MissingE_safeDash li a {
-background-position:9px -4px !important;
-}
-
-#right_column.MissingE_slim_sidebar #MissingE_safeDash li.selected a {
-background-position:9px -33px !important;
 }
 
 #posts .post .post_controls img, #posts .post img:hover, .notification blockquote img:hover, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img, .editor_controls img {

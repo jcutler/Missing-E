@@ -102,15 +102,15 @@ margin:0 0 10px 0 !important;
 opacity:0.7;
 }
 
-#right_column #MissingEmassDeleter li .select_all {
+#MissingEmassDeleter li .select_all {
 background-position:12px 11px;
 }
 
-#right_column #MissingEmassDeleter li .deselect_all {
+#MissingEmassDeleter li .deselect_all {
 background-position:12px -26px;
 }
 
-#right_column #MissingEmassDeleter li .delete_selected {
+#MissingEmassDeleter li .delete_selected {
 background-position:10px -62px;
 }
 

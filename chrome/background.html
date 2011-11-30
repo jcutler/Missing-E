@@ -1240,6 +1240,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var loadedUI = false, loadedUIresizable = false, loadedUIsortable = false,
           loadedUIdraggable = false;
       var widenIframe = false;
+      var injectSlimSidebar = false;
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url, ["massEditor"])) {
          if (getSetting("MissingE_massEditor_enabled",1) == 1) {
@@ -1303,8 +1304,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.sidebarTweaks = true;
             chrome.tabs.insertCSS(sender.tab.id, {file: "sidebarTweaks/sidebarTweaks.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "sidebarTweaks/sidebarTweaks.js"});
-            if (getSetting("MissingE_sidebarTweaks_slimSidebar",0) == 1)
-               chrome.tabs.insertCSS(sender.tab.id, {file: "sidebarTweaks/slimSidebar.css"});
+            if (getSetting("MissingE_sidebarTweaks_slimSidebar",0) == 1) {
+               injectSlimSidebar = true;
+            }
          }
          else
             activeScripts.sidebarTweaks = false;
@@ -1549,6 +1551,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
       if (widenIframe) {
          chrome.tabs.insertCSS(sender.tab.id, {file: "core/common/widenIframe.css"});
+      }
+      if (injectSlimSidebar) {
+         chrome.tabs.insertCSS(sender.tab.id, {file: "sidebarTweaks/slimSidebar.css"});
       }
 
       activeScripts.url = request.url;

@@ -169,6 +169,30 @@ background-position:6px -395px !important;
 background-position:-445px -395px !important;
 }
 
+#MissingEmassDeleter li .select_all, #MissingEdraftQueueTools li .select_all {
+background-position:8px 7px !important;
+}
+
+#MissingEmassDeleter li .deselect_all, #MissingEdraftQueueTools li .deselect_all {
+background-position:8px -30px !important;
+}
+
+#MissingEmassDeleter li .delete_selected, #MissingEdraftQueueTools li .delete_selected {
+background-position:6px -66px !important;
+}
+
+#MissingEdraftQueueTools li .randomize {
+background-position:6px -102px !important;
+}
+
+#MissingE_safeDash li a {
+background-position:9px -4px !important;
+}
+
+#MissingE_safeDash li.selected a {
+background-position:9px -33px !important;
+}
+
 #content #search_query {
 padding:4px 40px 4px 9px !important;
 background-position:192px -545px !important;
@@ -211,12 +235,12 @@ top:5px !important;
 background-position:7px -1098px !important;
 }
 
-.MissingE_slim_sidebar #MissingE_sidebar_title a {
+#MissingE_sidebar_title a {
 background-position:7px 5px !important;
 padding:3px 13px 4px 34px !important;
 }
 
-.MissingE_slim_sidebar #MissingE_sidebar_menu li a {
+#MissingE_sidebar_menu li a {
 padding:3px 13px 4px 13px !important;
 }
 

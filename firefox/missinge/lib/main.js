@@ -1501,6 +1501,7 @@ function handleMessage(message, myWorker) {
       var zindexFix = false;
       var needUI = false, needUIresizable = false, needUIsortable = false,
           needUIdraggable = false;
+      var injectSlimSidebar = false;
       var injectScripts = [data.url("extension.js"),
                            data.url("core/localizations.js"),
                            data.url("core/utils.js")];
@@ -1576,6 +1577,9 @@ function handleMessage(message, myWorker) {
 
          if (getSetting("extensions.MissingE.sidebarTweaks.enabled",1) == 1) {
             injectScripts.push(data.url("sidebarTweaks/sidebarTweaks.js"));
+            if (getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0) == 1) {
+               injectSlimSidebar = true;
+            }
             activeScripts.sidebarTweaks = true;
          }
          else
@@ -1593,6 +1597,10 @@ function handleMessage(message, myWorker) {
             if (getSetting("extensions.MissingE.dashboardFixes.sortableNotes",1) == 1) {
                needUI = true;
                needUIsortable = true;
+            }
+            if (getSetting("extensions.MissingE.dashboardFixes.massDelete",1) == 1 ||
+                getSetting("extensions.MissingE.dashboardFixes.randomQueue",0) == 1) {
+               injectStyles.push(data.url("dashboardFixes/draftQueueTools.css"));
             }
             injectScripts.push(data.url("dashboardFixes/dashboardFixes.js"));
             activeScripts.dashboardFixes = true;
@@ -1818,6 +1826,9 @@ function handleMessage(message, myWorker) {
       activeScripts.isFrame = message.isFrame;
       activeScripts.greeting = "startup";
 
+      if (injectSlimSidebar) {
+         injectStyles.push(data.url("sidebarTweaks/slimSidebar.css"));
+      }
       var loadStyles = '';
       if (injectStyles.length > 0) {
          loadStyles = '(function($){' +

@@ -58,7 +58,7 @@ width:auto !important;
 
 #posts li.notification .hide_overflow {
 max-width:none !important;
-} 
+}
 
 li.new_post, #rescued_post, #facebook_notice {
 width:540px;
