@@ -87,12 +87,14 @@ MissingE.packages.dashLinksToTabs = {
       var rcol = document.getElementById('right_column');
 
       if (lcol) {
-         lcol.addEventListener('click', MissingE.packages.dashLinksToTabs
-                                          .dashClick, false);
+         lcol.addEventListener('click', function(e) {
+            MissingE.packages.dashLinksToTabs.dashClick(e);
+         }, false);
       }
       if (rcol && settings.sidebar === 1) {
-         rcol.addEventListener('click', MissingE.packages.dashLinksToTabs
-                                          .dashClick, false);
+         rcol.addEventListener('click', function(e) {
+            MissingE.packages.dashLinksToTabs.dashClick(e);
+         }, false);
       }
       if (settings.sidebar === 1) {
          $('#inbox_button a').bind('click', function() {
@@ -100,8 +102,9 @@ MissingE.packages.dashLinksToTabs = {
             return true;
          });
       }
-      $('#MissingE_quick_reblog a').live('click', MissingE.packages
-                                                   .dashLinksToTabs.dashClick);
+      $('#MissingE_quick_reblog a').live('click', function(e) {
+         MissingE.packages.dashLinksToTabs.dashClick(e);
+      });
    },
 
    init: function() {
