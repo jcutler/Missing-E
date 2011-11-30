@@ -76,7 +76,8 @@ MissingE.packages.postCrushesFill = {
                for (i in response) {
                   if (response.hasOwnProperty(i) &&
                       i !== "component") {
-                     MissingE.packages.postCrushesFill.settings[i] = response[i];
+                     MissingE.packages.postCrushesFill
+                        .settings[i] = response[i];
                   }
                }
                MissingE.packages.postCrushesFill.run();
