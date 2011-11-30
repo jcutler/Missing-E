@@ -176,7 +176,6 @@ MissingE.packages.safeDash = {
                         }
                      }
                      else if (!me.hasClass('inline_image')) {
-                        console.log(me);
                         extra += 'min-height:' + h + 'px;';
                         addClear = true;
                         extra += 'width:' + w + 'px;';
