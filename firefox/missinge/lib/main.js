@@ -1465,7 +1465,8 @@ function handleMessage(message, myWorker) {
              .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
          if (getSetting("extensions.MissingE.safeDash.enabled",1) == 1) {
-            injectScripts.push(data.url("safeDash/safeDash.js"));
+            injectStyles.push(data.url("core/safeDash/safeDash.css"));
+            injectScripts.push(data.url("core/safeDash/safeDash.js"));
             activeScripts.safeDash = true;
          }
          else

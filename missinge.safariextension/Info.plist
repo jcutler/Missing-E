@@ -76,7 +76,7 @@
 				<string>core/reblogYourself/reblogYourself_dash.js</string>
 				<string>replyReplies/replyReplies.js</string>
 				<string>replyReplies/replyReplies_fill.js</string>
-				<string>safeDash/safeDash.js</string>
+				<string>core/safeDash/safeDash.js</string>
 				<string>core/timestamps/timestamps.js</string>
 				<string>core/massEditor/massEditor.js</string>
 				<string>postingFixes/subEdit.js</string>
@@ -92,7 +92,7 @@
 			<string>core/betterReblogs/quickReblog.css</string>
 			<string>core/bookmarker/bookmarker.css</string>
 			<string>core/magnifier/magnifier.css</string>
-			<string>safeDash/safeDash.css</string>
+			<string>core/safeDash/safeDash.css</string>
 			<string>postingFixes/postingFixes.css</string>
 			<string>core/massEditor/massEditor.css</string>
 			<string>sidebarTweaks/sidebarTweaks.css</string>

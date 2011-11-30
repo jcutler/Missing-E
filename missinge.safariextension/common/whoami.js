@@ -173,7 +173,7 @@ function doStartup(response) {
          MissingE.packages.reblogYourself.init();
       }
       if (response.message.safeDash) {
-         MissingE_safeDash_doStartup();
+         MissingE.packages.safeDash.init();
       }
       if (response.message.timestamps) {
          MissingE.packages.timestamps.init();
