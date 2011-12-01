@@ -183,6 +183,11 @@ extension = {
       if (!request) {
          request = {};
       }
+      else if (typeof callback === "undefined" &&
+               typeof request === "function") {
+         callback = request;
+         request = {};
+      }
       request.greeting = name;
       chrome.extension.sendRequest(request, function(response) {
          callback(response);

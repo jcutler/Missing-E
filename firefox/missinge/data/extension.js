@@ -208,10 +208,15 @@ extension = {
    },
 
    sendRequest: function(name, request, callback) {
-      this.addListener(name, callback);
       if (!request) {
          request = {};
       }
+      else if (typeof callback === "undefined" &&
+               typeof request === "function") {
+         callback = request;
+         request = {};
+      }
+      this.addListener(name, callback);
       request.greeting = name;
       self.postMessage(request);
    }

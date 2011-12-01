@@ -176,6 +176,11 @@ var extension = {
    },
 
    sendRequest: function(name, request, callback) {
+      if (typeof callback === "undefined" &&
+          typeof request === "function") {
+         callback = request;
+         request = {};
+      }
       this.addListener(name, callback);
       safari.self.tab.dispatchMessage(name, request);
    }
