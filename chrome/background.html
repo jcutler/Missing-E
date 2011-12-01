@@ -920,7 +920,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          return true;
       }
       else {
-         debug("Building timestamp (" + message.pid + ")");
+         debug("Building timestamp (" + request.pid + ")");
          var ts = MissingE.buildTimestamp(request.stamp);
          if (ts !== null) {
             var info = {"timestamp":ts};
