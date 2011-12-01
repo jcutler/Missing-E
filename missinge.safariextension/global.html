@@ -61,8 +61,9 @@ var askerTableCopy = {};
 var askerTableClear;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var debugMode = true;//false;
+var debugMode = false;
 var lang = 'en';
+var initialStyleSheets = [];
 var hasSlimSidebar = false;
 
 function getSetting(key, defVal) {
@@ -1729,10 +1730,19 @@ function injectSlimSidebar(e) {
                                          "http://www.tumblr.com/*");
       }
       else if (hasSlimSidebar) {
+         var i;
          debug("Removing slimSidebar CSS");
          hasSlimSidebar = false;
          safari.extension.removeContentStyleSheet(safari.extension.baseURI +
                                             "core/sidebarTweaks/slimSidebar.css");
+         for (i=0; i<initialStyleSheets.length; i++) {
+            safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
+                                                         initialStyleSheets[i],
+                                                         "http://www.tumblr.com/*");
+            safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
+                                                         "core/common/widenIframe.css",
+                                                         "http://*");
+         }
       }
    }
 }
@@ -1744,6 +1754,29 @@ function fixupSettings() {
    moveSetting('MissingE_dashboardTweaks_followingLink','MissingE_sidebarTweaks_followingLink');
    collapseSettings('MissingE_askTweaks_betterAnswers','MissingE_askTweaks_buttons','MissingE_askTweaks_tags');
    invertSetting('MissingE_betterReblogs_noPassTags','MissingE_betterReblogs_passTags');
+}
+
+function getInitialStyleSheets() {
+   var xhr = new XMLHttpRequest();
+   xhr.open('GET', safari.extension.baseURI + 'Info.plist', false);
+   xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+         var node, i;
+         var list = xhr.responseXML.getElementsByTagName('key');
+         for (i=0; i<list.length; i++) {
+            if (list[i].firstChild.textContent === "Stylesheets") {
+               node = list[i];
+               break;
+            }
+         }
+         if (!node) { return; }
+         var arr = list[i].nextElementSibling.getElementsByTagName("string");
+         for (i=0; i<arr.length; i++) {
+            initialStyleSheets[i] = arr[i].firstChild.textContent;
+         }
+      }
+   };
+   xhr.send(null);
 }
 
 function onStart(currVersion, prevVersion) {
@@ -1758,6 +1791,7 @@ function onStart(currVersion, prevVersion) {
          safari.extension.baseURI + "core/options.html";
    }
    setSetting('MissingE_installedVersion',currVersion);
+   getInitialStyleSheets();
    injectSlimSidebar();
    safari.extension.settings.addEventListener("change", injectSlimSidebar, false);
 
