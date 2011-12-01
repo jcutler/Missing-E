@@ -1,0 +1,1 @@
+The `serverTools` directory contains all PHP scripts used in various subdomains of [missinge.infraware.ca](http://missinge.infraware.ca) to support the **Missing e** _Post Crushes_ feature, as well as settings exporting.
