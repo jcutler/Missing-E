@@ -53,6 +53,136 @@ var utils = {
       "upload":       /^upload(\/image)?/
    },
 
+   buildTimestamp: function(inStamp) {
+      var i, x, stamp, tmp, tz, d, dq;
+      var dt = {};
+      var today = new Date();
+      if (this.isEDTfromUTC(today)) {
+         today.setUTCHours(today.getUTCHours()-4);
+      }
+      else {
+         today.setUTCHours(today.getUTCHours()-5);
+      }
+      dt.day = today.getUTCDay();
+      stamp = inStamp.replace(/,/,'').split(" ");
+      for (i=0; i<stamp.length; i++) {
+         if (/^\d{4}$/.test(stamp[i])) {
+            dt.year = parseInt(stamp[i], 10);
+         }
+         else if (/\d{1,2}:\d{2}$/.test(stamp[i])) {
+            tmp = stamp[i].match(/(\d{1,2}):(\d{2})/);
+            dt.hours = parseInt(tmp[1], 10);
+            dt.minutes = parseInt(tmp[2].replace(/^0/,''), 10);
+         }
+         else if (/\d{1,2}:\d{2}(am|pm)/i.test(stamp[i])) {
+            tmp = stamp[i].match(/(\d{1,2}):(\d{2})/);
+            if (/pm$/i.test(stamp[i])) {
+               dt.hours = parseInt(tmp[1], 10)+12;
+               if (dt.hours === 24) { dt.hours = 12; }
+            }
+            else {
+               dt.hours = parseInt(tmp[1], 10);
+               if (dt.hours === 12) { dt.hours = 0; }
+            }
+            dt.minutes = parseInt(tmp[2].replace(/^0/,''), 10);
+         }
+         else if (/\d{1,2}\/\d{1,2}\/\d{4}/.test(stamp[i])) {
+            tmp = stamp[i].match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+            dt.date = parseInt(tmp[1], 10);
+            dt.month = parseInt(tmp[2], 10);
+            dt.year = parseInt(tmp[3], 10);
+         }
+         else if (/\d{1,2}(st|nd|rd|th)$/.test(stamp[i])) {
+            tmp = stamp[i].match(/(\d{1,2})/);
+            dt.date = parseInt(tmp[1], 10);
+         }
+         else if (/^[A-Za-z]+$/.test(stamp[i])) {
+            var found = false;
+            for (x=0; !found && x < this.getLocale("en")
+                                       .monthsLong.length; x++) {
+               if ((new RegExp(this.getLocale("en").monthsLong[x],"i"))
+                     .test(stamp[i]) ||
+                   (new RegExp(this.getLocale("en").monthsShort[x],"i"))
+                     .test(stamp[i])) {
+                  dt.month = x+1;
+                  found = true;
+               }
+            }
+            for (x=0; !found && x < this.getLocale("en")
+                                       .daysLong.length; x++) {
+               if ((new RegExp(this.getLocale("en").daysLong[x],"i"))
+                     .test(stamp[i]) ||
+                   (new RegExp(this.getLocale("en").daysShort[x], "i"))
+                     .test(stamp[i])) {
+                  dt.date = (x - dt.day - 7) % 7;
+                  found = true;
+               }
+            }
+         }
+      }
+      if (dt.year) {
+         tz = this.isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
+         d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
+                         dt.hours + ":" + dt.minutes + ":00 " + tz);
+         return Math.round(d.getTime()/1000);
+      }
+      if (!dt.year) {
+         if (dt.month) {
+            dq = new Date(dt.month + "/" + dt.date + "/" +
+                              today.getUTCFullYear() + " " + dt.hours +
+                              ":" + dt.minutes + ":00 UTC");
+            /* If more than a day ahead, month is in previous year */
+            if (dq > today + 86400000) {
+               dt.year = today.getUTCFullYear() - 1;
+            }
+            else {
+               dt.year = today.getUTCFullYear();
+            }
+            tz = this.isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" :
+                                                                     "EST";
+            d = new Date(dt.month + "/" + dt.date + "/" + dt.year +
+                             " " + dt.hours + ":" + dt.minutes + ":00 " +
+                             tz);
+            return Math.round(d.getTime()/1000);
+         }
+         else if (dt.date < 0) {
+            dq = new Date((today.getUTCMonth()+1) + "/" +
+                              today.getUTCDate() + "/" +
+                              today.getUTCFullYear() + " " + dt.hours +
+                              ":" + dt.minutes + ":00 UTC");
+            /* If more than a month ahead, wrapped backwards across year */
+            if (dq > today + 2764800000) {
+               today.setUTCFullYear(dt.year);
+            }
+            /* If more than a day ahead, wrapped backwards across month */
+            if (dq > today + 86400000) {
+               today.setUTCMonth(today.getUTCMonth()-1);
+            }
+            today = new Date(today.valueOf()+86400000*dt.date);
+            dt.date = today.getUTCDate();
+            dt.month = today.getUTCMonth()+1;
+            dt.year = today.getUTCFullYear();
+            tz = this.isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" :
+                                                                     "EST";
+            d = new Date(dt.month + "/" + dt.date + "/" + dt.year +
+                             " " + dt.hours + ":" + dt.minutes + ":00 " +
+                             tz);
+            return Math.round(d.getTime()/1000);
+         }
+         else if (!dt.date) {
+            dt.year = today.getUTCFullYear();
+            dt.month = today.getUTCMonth()+1;
+            dt.date = today.getUTCDate();
+            tz = this.isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" :
+                                                                     "EST";
+            d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
+                           dt.hours + ":" + dt.minutes + ":00 " + tz);
+            return Math.round(d.getTime()/1000);
+         }
+      }
+      return null;
+   },
+
    escapeHTML: function(str) {
       return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
                .replace(/>/,'&gt;').replace(/</,'&lt;');
@@ -119,6 +249,67 @@ var utils = {
             return parseInt(retval, 10);
          }
       }
+   },
+
+   isEDT: function(year, month, date, hours) {
+      var add;
+      var start = new Date("03/01/" + year + " 07:00:00 UTC");
+      var day = start.getDay();
+      if (day === 0) { add = 7; }
+      else { add = 14-day; }
+      start.setUTCDate(start.getUTCDate()+add);
+      var end = new Date("11/01/" + year + " 06:00:00 UTC");
+      day = end.getDay();
+      if (day === 0) { add = 0; }
+      else { add = 7-day; }
+      end.setUTCDate(end.getUTCDate()+add);
+      if (month>start.getUTCMonth()+1 && month<end.getUTCMonth()+1) {
+         return true;
+      }
+      else if (month === start.getUTCMonth()+1) {
+         if (date === start.getUTCDate()) {
+            if (hours >= 2) {
+               return true;
+            }
+            else {
+               return false;
+            }
+         }
+         else {
+            return date > start.getUTCDate();
+         }
+      }
+      else if (month === end.getUTCMonth()+1) {
+         if (date === end.getUTCDate()) {
+            if (hours >= 2) {
+               return false;
+            }
+            else {
+               return true;
+            }
+         }
+         else {
+            return date < end.getUTCDate();
+         }
+      }
+      else {
+         return false;
+      }
+   },
+
+   isEDTfromUTC: function(dt) {
+      var add;
+      var start = new Date("03/01/" + dt.getUTCFullYear() + " 07:00:00 UTC");
+      var day = start.getDay();
+      if (day === 0) { add = 7; }
+      else { add = 14-day; }
+      start.setUTCDate(start.getUTCDate()+add);
+      var end = new Date("11/01/" + dt.getUTCFullYear() + " 06:00:00 UTC");
+      day = end.getDay();
+      if (day === 0) { add = 0; }
+      else { add = 7-day; }
+      end.setUTCDate(end.getUTCDate()+add);
+      return (dt>=start && dt<end);
    },
 
    isTumblrURL: function(fullURL, matches) {

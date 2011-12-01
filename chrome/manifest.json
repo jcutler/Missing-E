@@ -20,7 +20,7 @@
          "js": ["extension.js",
                 "core/localizations.js",
                 "core/utils.js",
-                "common/whoami.js",
+                "whoami.js",
                 "core/common/menuButton.js"],
          "all_frames": true
       },

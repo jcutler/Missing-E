@@ -267,7 +267,7 @@ function openSettings() {
       url: data.url("core/options.html"),
       onReady: function(tab) {
          tab.attach({
-            contentScriptFile: [data.url("common/jquery-1.5.2.min.js"),
+            contentScriptFile: [data.url("jquery-1.5.2.min.js"),
                                 data.url("extension.js"),
                                 data.url("core/localizations.js"),
                                 data.url("core/utils.js"),
@@ -1046,73 +1046,6 @@ function inArray(entry, arr) {
    return -1;
 }
 
-function isEDTfromUTC(dt) {
-   var add;
-   var start = new Date("03/01/" + dt.getUTCFullYear() + " 07:00:00 UTC");
-   var day = start.getDay();
-   if (day === 0) { add = 7; }
-   else { add = 14-day; }
-   start.setUTCDate(start.getUTCDate()+add);
-   var end = new Date("11/01/" + dt.getUTCFullYear() + " 06:00:00 UTC");
-   day = end.getDay();
-   if (day === 0) { add = 0; }
-   else { add = 7-day; }
-   end.setUTCDate(end.getUTCDate()+add);
-   return (dt>=start && dt<end);
-}
-
-function isEDT(year,month,date,hours) {
-   var add;
-   var start = new Date("03/01/" + year + " 07:00:00 UTC");
-   var day = start.getDay();
-   if (day === 0) { add = 7; }
-   else { add = 14-day; }
-   start.setUTCDate(start.getUTCDate()+add);
-   var end = new Date("11/01/" + year + " 06:00:00 UTC");
-   day = end.getDay();
-   if (day === 0) { add = 0; }
-   else { add = 7-day; }
-   end.setUTCDate(end.getUTCDate()+add);
-   if (month>start.getUTCMonth()+1 && month<end.getUTCMonth()+1) {
-      return true;
-   }
-   else if (month === start.getUTCMonth()+1) {
-      if (date > start.getUTCDate()) {
-         return true;
-      }
-      else if (date < start.getUTCDate()) {
-         return false;
-      }
-      else {
-         if (hours >= 2) {
-            return true;
-         }
-         else {
-            return false;
-         }
-      }
-   }
-   else if (month === end.getUTCMonth()+1) {
-      if (date < end.getUTCDate()) {
-         return true;
-      }
-      else if (date > end.getUTCDate()) {
-         return false;
-      }
-      else {
-         if (hours >= 2) {
-            return false;
-         }
-         else {
-            return true;
-         }
-      }
-   }
-   else {
-      return false;
-   }
-}
-
 function handleMessage(message, myWorker) {
    var i;
    if (message.greeting === "addMenu") {
@@ -1177,183 +1110,14 @@ function handleMessage(message, myWorker) {
          return true;
       }
       else {
-         var sentStamp = false;
          debug("Building timestamp (" + message.pid + ")");
-         var dt = {};
-         var today = new Date();
-         if (isEDTfromUTC(today)) {
-            today.setUTCHours(today.getUTCHours()-4);
-         }
-         else {
-            today.setUTCHours(today.getUTCHours()-5);
-         }
-         dt.day = today.getUTCDay();
-         stamp = message.stamp.replace(/,/,'').split(" ");
-         for (i=0; i<stamp.length; i++) {
-            if (/^[0-9][0-9][0-9][0-9]$/.test(stamp[i])) {
-               dt.year = parseInt(stamp[i]);
-            }
-            else if (/[0-9][0-9]*:[0-9][0-9]$/.test(stamp[i])) {
-               var tmp = stamp[i].match(/([0-9]*):([0-9]*)/);
-               dt.hours = parseInt(tmp[1]);
-               dt.minutes = parseInt(tmp[2].replace(/^0/,''));
-            }
-            else if (/[0-9][0-9]*:[0-9][0-9](am|AM|pm|PM)/.test(stamp[i])) {
-               var tmp = stamp[i].match(/([0-9]*):([0-9]*)/);
-               if (/pm$/i.test(stamp[i])) {
-                  dt.hours = parseInt(tmp[1])+12;
-                  if (dt.hours === 24) { dt.hours = 12; }
-               }
-               else {
-                  dt.hours = parseInt(tmp[1]);
-                  if (dt.hours === 12) { dt.hours = 0; }
-               }
-               dt.minutes = parseInt(tmp[2].replace(/^0/,''));
-            }
-            else if (/[0-9][0-9]*\/[0-9][0-9]*\/[0-9][0-9]*/.test(stamp[i])) {
-               var tmp = stamp[i].match(/([0-9]*)\/([0-9]*)\/([0-9]*)/);
-               dt.date = parseInt(tmp[1]);
-               dt.month = parseInt(tmp[2]);
-               dt.year = parseInt(tmp[3]);
-            }
-            else if (/[0-9][0-9]*(st|nd|rd|th)$/.test(stamp[i])) {
-               var tmp = stamp[i].match(/([0-9]*)/);
-               dt.date = parseInt(tmp[1]);
-            }
-            else if (/^[A-Za-z]+$/.test(stamp[i])) {
-               if (/^jan(uary)?$/i.test(stamp[i])) {
-                  dt.month = 1;
-               }
-               else if (/^feb(ruary)?$/i.test(stamp[i])) {
-                  dt.month = 2;
-               }
-               else if (/^mar(ch)?$/i.test(stamp[i])) {
-                  dt.month = 3;
-               }
-               else if (/^apr(il)?$/i.test(stamp[i])) {
-                  dt.month = 4;
-               }
-               else if (/^may$/i.test(stamp[i])) {
-                  dt.month = 5;
-               }
-               else if (/^jun(e)?$/i.test(stamp[i])) {
-                  dt.month = 6;
-               }
-               else if (/^jul(y)?$/i.test(stamp[i])) {
-                  dt.month = 7;
-               }
-               else if (/^aug(ust)?$/i.test(stamp[i])) {
-                  dt.month = 8;
-               }
-               else if (/^sep(t|tember)?$/i.test(stamp[i])) {
-                  dt.month = 9;
-               }
-               else if (/^oct(ober)?$/i.test(stamp[i])) {
-                  dt.month = 10;
-               }
-               else if (/^nov(ember)?$/i.test(stamp[i])) {
-                  dt.month = 11;
-               }
-               else if (/^dec(ember)?$/i.test(stamp[i])) {
-                  dt.month = 12;
-               }
-               else if (/^sun(day)?$/i.test(stamp[i])) {
-                  dt.date = -dt.day;
-               }
-               else if (/^mon(day)?$/i.test(stamp[i])) {
-                  dt.date = (1-dt.day-7)%7;
-               }
-               else if (/^tue(s|sday)?$/i.test(stamp[i])) {
-                  dt.date = (2-dt.day-7)%7;
-               }
-               else if (/^wed(nesday)?$/i.test(stamp[i])) {
-                  dt.date = (3-dt.day-7)%7;
-               }
-               else if (/^thu(r|rs|rsday)?$/i.test(stamp[i])) {
-                  dt.date = (4-dt.day-7)%7;
-               }
-               else if (/^fri(day)?$/i.test(stamp[i])) {
-                  dt.date = (5-dt.day-7)%7;
-               }
-               else if (/^sat(urday)?$/i.test(stamp[i])) {
-                  dt.date = (6-dt.day-7)%7;
-               }
-            }
-         }
-         if (dt.year) {
-            var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
-            var d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
-                            dt.hours + ":" + dt.minutes + ":00 " + tz);
-            var ts = Math.round(d.getTime()/1000);
+         var ts = MissingE.buildTimestamp(message.stamp);
+         if (ts !== null) {
             var info = {"timestamp":ts};
             saveCache(message.pid,info);
-            sentStamp = true;
             doTimestamp(info, message.pid, myWorker);
          }
-         if (!dt.year) {
-            if (dt.month) {
-               var dq = new Date(dt.month + "/" + dt.date + "/" +
-                                 today.getUTCFullYear() + " " + dt.hours +
-                                 ":" + dt.minutes + ":00 UTC");
-               /* If more than a day ahead, month is in previous year */
-               if (dq > today + 86400000) {
-                  dt.year = today.getUTCFullYear() - 1;
-               }
-               else {
-                  dt.year = today.getUTCFullYear();
-               }
-               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT":"EST";
-               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year +
-                                " " + dt.hours + ":" + dt.minutes + ":00 " +
-                                tz);
-               var ts = Math.round(d.getTime()/1000);
-               var info = {"timestamp":ts};
-               saveCache(message.pid,info);
-               sentStamp = true;
-               doTimestamp(info, message.pid, myWorker);
-            }
-            else if (dt.date < 0) {
-               var dq = new Date((today.getUTCMonth()+1) + "/" +
-                                 today.getUTCDate() + "/" +
-                                 today.getUTCFullYear() + " " + dt.hours +
-                                 ":" + dt.minutes + ":00 UTC");
-               /* If more than a month ahead, wrapped backwards across year */
-               if (dq > today + 2764800000) {
-                  today.setUTCFullYear(dt.year);
-               }
-               /* If more than a day ahead, wrapped backwards across month */
-               if (dq > today + 86400000) {
-                  today.setUTCMonth(today.getUTCMonth()-1);
-               }
-               today = new Date(today.valueOf()+86400000*dt.date);
-               dt.date = today.getUTCDate();
-               dt.month = today.getUTCMonth()+1;
-               dt.year = today.getUTCFullYear();
-               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT":"EST";
-               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year +
-                                " " + dt.hours + ":" + dt.minutes + ":00 " +
-                                tz);
-               var ts = Math.round(d.getTime()/1000);
-               var info = {"timestamp":ts};
-               saveCache(message.pid,info);
-               sentStamp = true;
-               doTimestamp(info, message.pid, myWorker);
-            }
-            else if (!dt.date) {
-               dt.year = today.getUTCFullYear();
-               dt.month = today.getUTCMonth()+1;
-               dt.date = today.getUTCDate();
-               var tz = isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
-               var d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
-                              dt.hours + ":" + dt.minutes + ":00 " + tz);
-               var ts = Math.round(d.getTime()/1000);
-               var info = {"timestamp":ts};
-               saveCache(message.pid,info);
-               sentStamp = true;
-               doTimestamp(info, message.pid, myWorker);
-            }
-         }
-         if (!sentStamp) {
+         else {
             theWorker.postMessage({greeting: "timestamp", pid: id,
                                    success: false});
          }
@@ -1500,7 +1264,7 @@ function handleMessage(message, myWorker) {
       activeScripts.extensionURL = data.url("");
       activeScripts.version = currVersion;
       if (!message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/mega-editor\//.test(message.url)) {
+          MissingE.isTumblrURL(message.url, ["massEditor"])) {
             if (getSetting("extensions.MissingE.massEditor.enabled",1) == 1) {
                injectStyles.push({file: data.url("core/massEditor/massEditor.css")});
                injectScripts.push(data.url("core/massEditor/massEditor.js"));
@@ -1510,20 +1274,15 @@ function handleMessage(message, myWorker) {
                activeScripts.massEditor = false;
       }
       if (!message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/drafts/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/submissions/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/inbox/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
-          (/http:\/\/www\.tumblr\.com\/blog/.test(message.url) &&
-           !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//
-             .test(message.url)) &&
-           !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/processing/
-             .test(message.url))) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
+          MissingE.isTumblrURL(message.url,
+                               ["dashboard",
+                                "blog",
+                                "blogData",
+                                "drafts",
+                                "queue",
+                                "messages",
+                                "likes",
+                                "tagged"])) {
          if (getSetting("extensions.MissingE.safeDash.enabled",1) == 1) {
             injectStyles.push({file: data.url("core/safeDash/safeDash.css")});
             injectScripts.push(data.url("core/safeDash/safeDash.js"));
@@ -1531,20 +1290,7 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.safeDash = false;
-      }
-      if (!message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/drafts/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/submissions/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/inbox/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/queue/.test(message.url) ||
-          (/http:\/\/www\.tumblr\.com\/blog/.test(message.url) &&
-           !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//
-             .test(message.url))) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
+
          if (getSetting("extensions.MissingE.dashLinksToTabs.enabled",1) == 1) {
             injectScripts.push(data.url("core/dashLinksToTabs/dashLinksToTabs.js"));
             activeScripts.dashLinksToTabs = true;
@@ -1621,7 +1367,7 @@ function handleMessage(message, myWorker) {
          else
             activeScripts.askTweaks = false;
       }
-      if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(message.url)) {
+      if (MissingE.isTumblrURL(message.url, ["askForm"])) {
          if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
             /* Don't inject script. Taken care of by a page mod */
             activeScripts.askTweaks = true;
@@ -1630,17 +1376,11 @@ function handleMessage(message, myWorker) {
             activeScripts.askTweaks = false;
       }
       if (!message.isFrame &&
-          ((/http:\/\/www\.tumblr\.com\/new\//.test(message.url) ||
-            /http:\/\/www\.tumblr\.com\/blog\/[0-9A-Za-z\-\_]+\/new\//.test(message.url) ||
-            /http:\/\/www\.tumblr\.com\/reblog\//.test(message.url) ||
-            /http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(message.url)) ||
-         (/http:\/\/www\.tumblr\.com\/messages/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/inbox/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/messages/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/submissions/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/submissions/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/drafts/.test(message.url)) ||
-         (/http:\/\/www\.tumblr\.com\/share/.test(message.url)))) {
+          MissingE.isTumblrURL(message.url,
+                               ["post",
+                                "reblog",
+                                "messages",
+                                "drafts"])) {
          if (getSetting("extensions.MissingE.postingTweaks.enabled",1) == 1) {
             needUI = true;
             needUIresizable = true;
@@ -1652,7 +1392,7 @@ function handleMessage(message, myWorker) {
             activeScripts.postingTweaks = false;
       }
       if (!message.isFrame &&
-         /http:\/\/www\.tumblr\.com\/reblog\//.test(message.url)) {
+          MissingE.isTumblrURL(message.url, ["reblog"])) {
          if (getSetting("extensions.MissingE.betterReblogs.enabled",1) == 1) {
             injectScripts.push(data.url("core/betterReblogs/betterReblogs_fill.js"));
             activeScripts.betterReblogs = true;
@@ -1691,8 +1431,9 @@ function handleMessage(message, myWorker) {
             activeScripts.postingTweaks = false;
       }
       if (!message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
-           /http:\/\/www\.tumblr\.com\/blog/.test(message.url))) {
+          MissingE.isTumblrURL(message.url,
+                               ["dashboard",
+                                "blog"])) {
          if (getSetting("extensions.MissingE.replyReplies.enabled",1) == 1) {
             injectStyles.push({code: "#posts .notification .notification_type_icon { background-image:url('" + data.url('core/replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + data.url('core/replyReplies/notes_icons.png') + "') !important; }"}); 
             injectStyles.push({file: data.url("core/replyReplies/replyReplies.css")});
@@ -1704,8 +1445,7 @@ function handleMessage(message, myWorker) {
             activeScripts.replyReplies = false;
       }
       if (!message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/(blog\/[^\/]*\/)?new\/(text|photo)/
-            .test(message.url)) {
+          MissingE.isTumblrURL(message.url, ["reply"])) {
          if (getSetting("extensions.MissingE.replyReplies.enabled",1) == 1) {
             injectScripts.push(data.url("replyReplies/replyReplies_fill.js"));
             activeScripts.replyReplies = true;
@@ -1715,7 +1455,7 @@ function handleMessage(message, myWorker) {
             activeScripts.replyReplies = false;
       }
       if (!message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/following/.test(message.url)) {
+          MissingE.isTumblrURL(message.url, ["following"])) {
          if (getSetting("extensions.MissingE.postCrushes.enabled",1) == 1) {
             injectScripts.push(data.url("core/postCrushes/postCrushes.js"));
             activeScripts.postCrushes = true;
@@ -1734,7 +1474,7 @@ function handleMessage(message, myWorker) {
 
       }
       if (!message.isFrame &&
-          /http:\/\/www\.tumblr\.com\/new\/photo/.test(message.url)) {
+          MissingE.isTumblrURL(message.url, ["crushes"])) {
          if (getSetting("extensions.MissingE.postCrushes.enabled",1) == 1) {
             injectScripts.push(data.url("core/postCrushes/postCrushes_fill.js"));
             activeScripts.postCrushes = true;
@@ -1744,8 +1484,12 @@ function handleMessage(message, myWorker) {
             activeScripts.postCrushes = false;
       }
       if (!message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/(submissions|messages|inbox)/.test(message.url) ||
-           /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(submissions|messages)/.test(message.url))) {
+          MissingE.isTumblrURL(message.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged",
+                       "messages"])) {
          if (getSetting("extensions.MissingE.timestamps.enabled",1) == 1) {
             injectScripts.push(data.url("core/timestamps/timestamps.js"));
             activeScripts.timestamps = true;
@@ -1754,20 +1498,11 @@ function handleMessage(message, myWorker) {
             activeScripts.timestamps = false;
       }
       if (!message.isFrame &&
-          (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/blog/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/likes/.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/liked\/by\//.test(message.url) ||
-          /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/(submissions|messages|drafts|queue)/.test(message.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/new\//.test(message.url))) {
-         if (getSetting("extensions.MissingE.timestamps.enabled",1) == 1) {
-            injectScripts.push(data.url("core/timestamps/timestamps.js"));
-            activeScripts.timestamps = true;
-         }
-         else
-            activeScripts.timestamps = false;
-
+          MissingE.isTumblrURL(message.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged"])) {
          if (getSetting("extensions.MissingE.betterReblogs.enabled",1) == 1) {
             if (getSetting("extensions.MissingE.betterReblogs.quickReblog",0) == 1) {
                zindexFix = true;
@@ -1822,7 +1557,7 @@ function handleMessage(message, myWorker) {
          injectScripts.unshift(data.url("lib/jquery.ui.widget.min.js"));
          injectScripts.unshift(data.url("lib/jquery.ui.core.min.js"));
       }
-      injectScripts.unshift(data.url("common/jquery-1.5.2.min.js"));
+      injectScripts.unshift(data.url("jquery-1.5.2.min.js"));
       if (zindexFix) {
          injectScripts.push(data.url("core/common/zindexFix.js"));
       }
@@ -1866,7 +1601,7 @@ pageMod.PageMod({
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("extension.js"),
                        data.url("core/common/menuButton.js"),
-                       data.url("common/whoami.js")],
+                       data.url("whoami.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {
          handleMessage(data, this);

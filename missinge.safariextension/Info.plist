@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Jeremy Cutler</string>
 	<key>Builder Version</key>
-	<string>534.51.22</string>
+	<string>534.52.7</string>
 	<key>CFBundleDisplayName</key>
 	<string>Missing e</string>
 	<key>CFBundleIdentifier</key>
@@ -47,7 +47,7 @@
 			<key>End</key>
 			<array>
 				<string>extension.js</string>
-				<string>common/jquery.min.js</string>
+				<string>jquery.min.js</string>
 				<string>core/localizations.js</string>
 				<string>core/utils.js</string>
 				<string>core/common/ajaxEvents.js</string>
@@ -81,8 +81,8 @@
 				<string>core/massEditor/massEditor.js</string>
 				<string>core/postingTweaks/postingTweaks_post.js</string>
 				<string>core/common/zindexFix.js</string>
-                                <string>core/versionCheck.js</string>
-				<string>common/whoami.js</string>
+				<string>core/versionCheck.js</string>
+				<string>whoami.js</string>
 			</array>
 		</dict>
 		<key>Stylesheets</key>
