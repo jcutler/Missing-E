@@ -21,14 +21,22 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#posts .notification .notification_type_icon, #posts ol.notes .notification_type_icon {
+#posts .notification .notification_type_icon, #posts ol.notes .notification_type_icon,
+#posts .notification .MissingE_notification_type,  #posts ol.notes .MissingE_notification_type {
 cursor:pointer;
 display:block !important;
 visibility:visible !important;
 opacity:0.3 !important;
 }
 
-#posts ol.notes .notification_type_icon {
+#posts .notification .MissingE_notification_type {
+position:absolute;
+right:11px;
+top:10px;
+}
+
+#posts ol.notes .notification_type_icon,
+#posts ol.notes .MissingE_notification_type {
 position:absolute;
 right:9px;
 top:8px;
@@ -37,43 +45,53 @@ height:12px;
 opacity:0.6 !important;
 }
 
-#posts .notification .notification_type_icon:hover {
+#posts .notification .notification_type_icon:hover,
+#posts .notification .MissingE_notification_type:hover {
 opacity:0.8 !important;
 }
 
-#posts ol.notes .notification_type_icon:hover {
+#posts ol.notes .notification_type_icon:hover,
+#posts ol.notes .MissingE_notification_type:hover {
 opacity:1 !important;
 }
 
-#posts .notification .notification_type_icon.follow_icon {
+#posts .notification .notification_type_icon.follow_icon,
+#posts .notification .MissingE_notification_type.follow_icon {
 background-position:0 0 !important;
 right:10px !important;
+width:14px;
+height:13px;
 }
 
-#posts .notification .notification_type_icon.like_icon, #posts ol.notes .notification_type_icon.like_icon {
+#posts .notification .notification_type_icon.like_icon, #posts ol.notes .notification_type_icon.like_icon,
+#posts .notification .MissingE_notification_type.like_icon, #posts ol.notes .MissingE_notification_type.like_icon {
 background-position:0 -20px !important;
 width:13px;
 height:12px;
 }
 
-#posts ol.notes .notification_type_icon.like_icon {
+#posts ol.notes .notification_type_icon.like_icon,
+#posts ol.notes .MissingE_notification_type.like_icon {
 width:14px !important;
 right:8px !important;
 }
 
-#posts .notification .notification_type_icon.reblog_icon, #posts ol.notes .notification_type_icon.reblog_icon {
+#posts .notification .notification_type_icon.reblog_icon, #posts ol.notes .notification_type_icon.reblog_icon,
+#posts .notification .MissingE_notification_type.reblog_icon, #posts ol.notes .MissingE_notification_type.reblog_icon {
 background-position:0 -40px !important;
 width:14px;
 height:14px;
 }
 
-#posts .notification .notification_type_icon.answer_icon, #posts ol.notes .notification_type_icon.answer_icon {
+#posts .notification .notification_type_icon.answer_icon, #posts ol.notes .notification_type_icon.answer_icon,
+#posts .notification .MissingE_notification_type.answer_icon, #posts ol.notes .MissingE_notification_type.answer_icon {
 background-position:0 -60px !important;
 width:10px;
 height:16px;
 }
 
-#posts .notification .notification_type_icon.reply_icon, #posts ol.notes .notification_type_icon.reply_icon {
+#posts .notification .notification_type_icon.reply_icon, #posts ol.notes .notification_type_icon.reply_icon,
+#posts .notification .MissingE_notification_type.reply_icon, #posts ol.notes .MissingE_notification_type.reply_icon {
 background-position:0 -80px !important;
 width:14px;
 height:16px;
