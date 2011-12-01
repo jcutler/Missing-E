@@ -43,7 +43,7 @@ var utils = {
       "likes":        /^like(s(\/.*)?|d\/by\/[^\/]+(\/.*)?)$/,
       "massEditor":   /^mega-editor\/[^\/]+[\/]?$/,
       "messages":     /^(blog\/[^\/]+\/)?(messages|submissions|inbox)[\/]?.*$/,
-      "post":         /^((blog\/[^\/]+\/)?new\/[^\/]+|edit\/\d+|share(\/\w+))[\/]?$/,
+      "post":         /^((blog\/[^\/]+\/)?new\/[^\/]+|edit\/\d+|share(\/\w+)?)[\/]?$/,
       "queue":        /^blog\/[^\/]+\/queue[\/]?.*$/,
       "reblog":       /^reblog\/\d+\/\w+(\/\w+)?[\/]?$/,
       "reply":        /^(blog\/[^\/]+\/)?new\/(text|photo)[\/]?$/,
