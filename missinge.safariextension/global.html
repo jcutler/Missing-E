@@ -61,8 +61,9 @@ var askerTableCopy = {};
 var askerTableClear;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var debugMode = false;
+var debugMode = true;//false;
 var lang = 'en';
+var hasSlimSidebar = false;
 
 function getSetting(key, defVal) {
    var retval = safari.extension.settings[key];
@@ -1719,21 +1720,19 @@ function injectSlimSidebar(e) {
    if (!e || e.key == "MissingE_sidebarTweaks_enabled" ||
        e.key == "MissingE_sidebarTweaks_slimSidebar") {
       if (getSetting("MissingE_sidebarTweaks_enabled",1) === 1 &&
-          getSetting("MissingE_sidebarTweaks_slimSidebar",0) === 1) {
+          getSetting("MissingE_sidebarTweaks_slimSidebar",0) === 1 &&
+          !hasSlimSidebar) {
          debug("Adding slimSidebar CSS");
+         hasSlimSidebar = true;
          safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
                                          "core/sidebarTweaks/slimSidebar.css",
                                          "http://www.tumblr.com/*");
       }
-      else {
-         debug("Removimg slimSidebar CSS");
-         safari.extension.removeContentStyleSheet(safari.extension.baseURI +
-                                            "core/sidebarTweaks/sidebarTweaks.css");
+      else if (hasSlimSidebar) {
+         debug("Removing slimSidebar CSS");
+         hasSlimSidebar = false;
          safari.extension.removeContentStyleSheet(safari.extension.baseURI +
                                             "core/sidebarTweaks/slimSidebar.css");
-         safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
-                                         "core/sidebarTweaks/sidebarTweaks.css",
-                                         "http://www.tumblr.com/*");
       }
    }
 }
