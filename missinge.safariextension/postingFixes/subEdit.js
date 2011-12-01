@@ -97,7 +97,7 @@ function receivePermission(response) {
       edit.setAttribute('target','_top');
       edit.innerHTML = '<img src="http://assets.tumblr.com/images/' +
          'iframe_edit_alpha' + suffix + '" alt="' +
-         MissingE.getLocale(lang).dashFixesText.edit +
+         MissingE.getLocale(lang).dashTweaksText.edit +
          '" style="display:block;float:left;" />';
       like.parentNode.insertBefore(edit, like.nextSibling);
       var formKey = document.getElementById('form_key');
@@ -119,7 +119,7 @@ function receivePermission(response) {
             formKey.value + '" /><input type="image" src="' +
             'http://assets.tumblr.com/images/iframe_delete_alpha' +
             suffix + '" alt="' +
-            MissingE.getLocale(lang).dashFixesText.delete + '" ' +
+            MissingE.getLocale(lang).dashTweaksText.delete + '" ' +
             'style="height:20px;border-width:0;cursor:pointer;" />';
          like.parentNode.insertBefore(del, edit.nextSibling);
       }

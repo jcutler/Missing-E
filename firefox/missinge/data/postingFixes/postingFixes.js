@@ -151,7 +151,7 @@ self.on('message', function(message) {
       var queueTags = message.queueTags === '' ? [] : message.queueTags;
       jQuery('#posts div.post_controls a').live('click',function(){
          if (!jQuery(this).hasClass('MissingE_queue_control') &&
-             !(new RegExp(MissingE.getLocale(lang).dashFixesText.queue,"i"))
+             !(new RegExp(MissingE.getLocale(lang).dashTweaksText.queue,"i"))
                .test(jQuery(this).text())) {
             return;
          }

@@ -147,7 +147,7 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                         postingFixes_settings.queueTags;
       $('#posts div.post_controls a').live('click',function(){
          if (!$(this).hasClass('MissingE_queue_control') &&
-             !(new RegExp(MissingE.getLocale(lang).dashFixesText.queue,"i"))
+             !(new RegExp(MissingE.getLocale(lang).dashTweaksText.queue,"i"))
                .test($(this).text())) {
             return;
          }

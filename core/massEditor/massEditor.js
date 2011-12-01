@@ -50,7 +50,7 @@ MissingE.packages.massEditor = {
       var o;
       for (o in MissingE.locale) {
          if (MissingE.locale.hasOwnProperty(o) &&
-             MissingE.locale[o].dashFixesText.del === deltext) {
+             MissingE.locale[o].dashTweaksText.del === deltext) {
             lang = o;
             break;
          }
