@@ -57,7 +57,7 @@ function loadScripts() {
 <link rel="stylesheet" type="text/css" href="options.css" />
 <link rel="stylesheet" media="screen" type="text/css" href="../lib/facebox/facebox.css" />
 <link rel="stylesheet" type="text/css" href="../lib/checkbox/jquery.checkbox.css" />
-<link rel="stylesheet" type="text/css" href="../dashboardFixes/replaceIcons.css" />
+<link rel="stylesheet" type="text/css" href="dashboardTweaks/replaceIcons.css" />
 </head>
 <body id="MissingE_settings" onload="loadScripts();">
 <iframe id="settingsframe" name="settingsframe" src=""></iframe>
@@ -150,30 +150,30 @@ function loadScripts() {
 </li>
 </div>
 <div id="dashboard_posts">
-<li id="dashboardFixes_section" class="post not_mine regular">
+<li id="dashboardTweaks_section" class="post not_mine regular">
 <div class="post_content">
-<form id="dashboardFixes_options">
+<form id="dashboardTweaks_options">
 <div class="post_title"><input class="toggler" type="checkbox" name="active" checked="checked" value="1" /> Dashboard Tweaks</div>
-<div class="post_thumb"><a href="../dashboardFixes/screen.png" rel="facebox"><img src="../dashboardFixes/thumb.png" /><br />Screenshot</a></div>
+<div class="post_thumb"><a href="dashboardTweaks/screen.png" rel="facebox"><img src="dashboardTweaks/thumb.png" /><br />Screenshot</a></div>
 <p>A few convenient interface tweaks for Tumblr dashboard pages.</p>
 <table class="options_table">
-<tr><td colspan="2" class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_reblogQuoteFit" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Wrap tags for posts in the dashboard onto multiple lines</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_wrapTags" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_replaceIcons" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_postLinks" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_widescreen" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Always display Tumblr's move to top of queue button on queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_queueArrows" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Expand/Minimize <strong>all</strong> thumbnail images in a dashboard post, together</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_expandAll" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Add mass deletion buttons to Drafts and Queue</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_massDelete" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd">Add <em>Shuffle</em> button to the Queue</td><td class="odd"><input type="checkbox" name="MissingE_dashboardFixes_randomQueue" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="even">Enable sorting of notes in dashboard posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardFixes_sortableNotes" value="0" checked="checked" class="simple_setting" /></td></tr>
-<tr><td colspan="2" class="odd experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="odd experimental"><input type="checkbox" name="MissingE_dashboardFixes_reblogReplies" value="0" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Fit quoted reblog posts into a smaller area for easier reading (see screenshot)</td><td class="odd"><input type="checkbox" name="MissingE_dashboardTweaks_reblogQuoteFit" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Wrap tags for posts in the dashboard onto multiple lines</td><td class="even"><input type="checkbox" name="MissingE_dashboardTweaks_wrapTags" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Replace dashboard control text (notes, reply, delete, edit, reblog, queue) with icons:<br /><span class="MissingE_post_control MissingE_notes_control" style="vertical-align:-3px;"></span><span class="MissingE_post_control MissingE_reply_control"></span><span class="MissingE_post_control MissingE_delete_control"></span><span class="MissingE_post_control MissingE_edit_control"></span><span class="MissingE_post_control MissingE_reblog_control"></span><span class="MissingE_post_control MissingE_queue_control"></span></td><td class="odd"><input type="checkbox" name="MissingE_dashboardTweaks_replaceIcons" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Add post buttons to the top of secondary dashboard pages (ie. <em>/dashboard/2/*</em>)</td><td class="even"><input type="checkbox" name="MissingE_dashboardTweaks_postLinks" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Widescreen dashboard</td><td class="odd"><input type="checkbox" name="MissingE_dashboardTweaks_widescreen" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Always display Tumblr's move to top of queue button on queued posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardTweaks_queueArrows" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Expand/Minimize <strong>all</strong> thumbnail images in a dashboard post, together</td><td class="odd"><input type="checkbox" name="MissingE_dashboardTweaks_expandAll" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Add mass deletion buttons to Drafts and Queue</td><td class="even"><input type="checkbox" name="MissingE_dashboardTweaks_massDelete" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd">Add <em>Shuffle</em> button to the Queue</td><td class="odd"><input type="checkbox" name="MissingE_dashboardTweaks_randomQueue" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="even">Enable sorting of notes in dashboard posts</td><td class="even"><input type="checkbox" name="MissingE_dashboardTweaks_sortableNotes" value="0" checked="checked" class="simple_setting" /></td></tr>
+<tr><td colspan="2" class="odd experimental"><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br /><small><em><a href="http://missinge.infraware.ca/faq#experimental-reblogReplies">About this experimental feature</a></em></small></td><td class="odd experimental"><input type="checkbox" name="MissingE_dashboardTweaks_reblogReplies" value="0" class="simple_setting" /></td></tr>
 </table>
 </form>
 </div>
 <div class="clear"></div>
 <div>
-<div class="post_avatar" style="background-image:url('icons/dashboardFixes_avatar.png');"></div>
+<div class="post_avatar" style="background-image:url('icons/dashboardTweaks_avatar.png');"></div>
 <span class="arrow"></span>
 </div>
 </li>

@@ -96,7 +96,7 @@ function debug(msg) {
    }
 }
 
-var componentList = ["dashboardFixes",
+var componentList = ["dashboardTweaks",
                      "bookmarker",
                      "dashLinksToTabs",
                      "safeDash",
@@ -128,17 +128,17 @@ function getAllSettings() {
    settings.MissingE_askTweaks_massDelete = getSetting("extensions.MissingE.askTweaks.massDelete",1);
    settings.MissingE_bookmarker_format = getSetting("extensions.MissingE.bookmarker.format",MissingE.defaultFormat);
    settings.MissingE_bookmarker_addBar = getSetting("extensions.MissingE.bookmarker.addBar",1);
-   settings.MissingE_dashboardFixes_reblogQuoteFit = getSetting("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
-   settings.MissingE_dashboardFixes_wrapTags = getSetting("extensions.MissingE.dashboardFixes.wrapTags",1);
-   settings.MissingE_dashboardFixes_replaceIcons = getSetting("extensions.MissingE.dashboardFixes.replaceIcons",1);
-   settings.MissingE_dashboardFixes_postLinks = getSetting("extensions.MissingE.dashboardFixes.postLinks",1);
-   settings.MissingE_dashboardFixes_reblogReplies = getSetting("extensions.MissingE.dashboardFixes.reblogReplies",0);
-   settings.MissingE_dashboardFixes_widescreen = getSetting("extensions.MissingE.dashboardFixes.widescreen",0);
-   settings.MissingE_dashboardFixes_queueArrows = getSetting("extensions.MissingE.dashboardFixes.queueArrows",1);
-   settings.MissingE_dashboardFixes_expandAll = getSetting("extensions.MissingE.dashboardFixes.expandAll",1);
-   settings.MissingE_dashboardFixes_massDelete = getSetting("extensions.MissingE.dashboardFixes.massDelete",1);
-   settings.MissingE_dashboardFixes_randomQueue = getSetting("extensions.MissingE.dashboardFixes.randomQueue",0);
-   settings.MissingE_dashboardFixes_sortableNotes = getSetting("extensions.MissingE.dashboardFixes.sortableNotes",1);
+   settings.MissingE_dashboardTweaks_reblogQuoteFit = getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1);
+   settings.MissingE_dashboardTweaks_wrapTags = getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1);
+   settings.MissingE_dashboardTweaks_replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1);
+   settings.MissingE_dashboardTweaks_postLinks = getSetting("extensions.MissingE.dashboardTweaks.postLinks",1);
+   settings.MissingE_dashboardTweaks_reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
+   settings.MissingE_dashboardTweaks_widescreen = getSetting("extensions.MissingE.dashboardTweaks.widescreen",0);
+   settings.MissingE_dashboardTweaks_queueArrows = getSetting("extensions.MissingE.dashboardTweaks.queueArrows",1);
+   settings.MissingE_dashboardTweaks_expandAll = getSetting("extensions.MissingE.dashboardTweaks.expandAll",1);
+   settings.MissingE_dashboardTweaks_massDelete = getSetting("extensions.MissingE.dashboardTweaks.massDelete",1);
+   settings.MissingE_dashboardTweaks_randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0);
+   settings.MissingE_dashboardTweaks_sortableNotes = getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1);
    settings.MissingE_sidebarTweaks_retries = getSetting("extensions.MissingE.sidebarTweaks.retries",MissingE.defaultRetries);
    settings.MissingE_sidebarTweaks_addSidebar = getSetting("extensions.MissingE.sidebarTweaks.addSidebar",0);
    settings.MissingE_sidebarTweaks_slimSidebar = getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0);
@@ -420,8 +420,8 @@ function doReblogDash(stamp, id, theWorker, type) {
    }
    var key = stamp.reblog_key;
    var name = stamp.name;
-   var replaceIcons = getSetting("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
-                      getSetting("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1;
+   var replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1 &&
+                      getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1) == 1;
    theWorker.postMessage({greeting: type, pid: id, success: true, data: key, name: name, icons: replaceIcons});
    return true;
 }
@@ -933,8 +933,8 @@ function startBetterReblogsAsk(message, myWorker) {
              getSetting("extensions.MissingE.reblogYourself.askRetries",MissingE.defaultRetries),
              {
                pid:message.pid,
-               icons:getSetting("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
-                     getSetting("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1
+               icons:getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1 &&
+                     getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1) == 1
              });
    }
 }
@@ -965,8 +965,8 @@ function startReblogYourself(message, myWorker) {
              getSetting("extensions.MissingE.reblogYourself.retries",MissingE.defaultRetries),
              {
                pid:message.pid,
-               icons:getSetting("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
-                     getSetting("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1
+               icons:getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1 &&
+                     getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1) == 1
              });
    }
 }
@@ -1368,18 +1368,18 @@ function handleMessage(message, myWorker) {
             settings.format = getSetting("extensions.MissingE.bookmarker.format",MissingE.defaultFormat);
             settings.addBar = getSetting("extensions.MissingE.bookmarker.addBar",1);
             break;
-         case "dashboardFixes":
-            settings.reblogQuoteFit = getSetting("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
-            settings.wrapTags = getSetting("extensions.MissingE.dashboardFixes.wrapTags",1);
-            settings.replaceIcons = getSetting("extensions.MissingE.dashboardFixes.replaceIcons",1);
-            settings.postLinks = getSetting("extensions.MissingE.dashboardFixes.postLinks",1);
-            settings.reblogReplies = getSetting("extensions.MissingE.dashboardFixes.reblogReplies",0);
-            settings.widescreen = getSetting("extensions.MissingE.dashboardFixes.widescreen",0);
-            settings.queueArrows = getSetting("extensions.MissingE.dashboardFixes.queueArrows",1);
-            settings.expandAll = getSetting("extensions.MissingE.dashboardFixes.expandAll",1);
-            settings.massDelete = getSetting("extensions.MissingE.dashboardFixes.massDelete",1);
-            settings.randomQueue = getSetting("extensions.MissingE.dashboardFixes.randomQueue",0);
-            settings.sortableNotes = getSetting("extensions.MissingE.dashboardFixes.sortableNotes",1);
+         case "dashboardTweaks":
+            settings.reblogQuoteFit = getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1);
+            settings.wrapTags = getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1);
+            settings.replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1);
+            settings.postLinks = getSetting("extensions.MissingE.dashboardTweaks.postLinks",1);
+            settings.reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
+            settings.widescreen = getSetting("extensions.MissingE.dashboardTweaks.widescreen",0);
+            settings.queueArrows = getSetting("extensions.MissingE.dashboardTweaks.queueArrows",1);
+            settings.expandAll = getSetting("extensions.MissingE.dashboardTweaks.expandAll",1);
+            settings.massDelete = getSetting("extensions.MissingE.dashboardTweaks.massDelete",1);
+            settings.randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0);
+            settings.sortableNotes = getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getSetting("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
@@ -1428,8 +1428,8 @@ function handleMessage(message, myWorker) {
                settings.accountName = getSetting("extensions.MissingE.betterReblogs.quickReblogAcctName",'0');
             }
             settings.quickReblogForceTwitter = getSetting("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
-            settings.replaceIcons = (getSetting("extensions.MissingE.dashboardFixes.enabled",1) == 1 &&
-                                       getSetting("extensions.MissingE.dashboardFixes.replaceIcons",1) == 1) ? 1 : 0;
+            settings.replaceIcons = (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1 &&
+                                       getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getSetting("extensions.MissingE.betterReblogs.fullText",0);
             settings.tagQueuedPosts = (getSetting("extensions.MissingE.postingFixes.enabled",1) == 1 && getSetting("extensions.MissingE.postingFixes.tagQueuedPosts",0) == 1) ? 1 : 0;
             settings.queueTags = getSetting("extensions.MissingE.postingFixes.queueTags",'');
@@ -1539,20 +1539,35 @@ function handleMessage(message, myWorker) {
          else
             activeScripts.magnifier = false;
 
-         if (getSetting("extensions.MissingE.dashboardFixes.enabled",1) == 1) {
-            if (getSetting("extensions.MissingE.dashboardFixes.sortableNotes",1) == 1) {
+         if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
+            injectStyles.push(data.url("core/dashboardTweaks/replaceIcons.css"));
+            if (getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1) == 1) {
                needUI = true;
                needUIsortable = true;
+               injectStyles.push(data.url("core/dashboardTweaks/notesSorter.css"));
             }
-            if (getSetting("extensions.MissingE.dashboardFixes.massDelete",1) == 1 ||
-                getSetting("extensions.MissingE.dashboardFixes.randomQueue",0) == 1) {
-               injectStyles.push(data.url("dashboardFixes/draftQueueTools.css"));
+            if (getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1) == 1) {
+               injectStyles.push(data.url("core/dashboardTweaks/reblogQuoteFit.css"));
             }
-            injectScripts.push(data.url("dashboardFixes/dashboardFixes.js"));
-            activeScripts.dashboardFixes = true;
+            if (getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1) == 1) {
+               injectStyles.push(data.url("core/dashboardTweaks/wrapTags.css"));
+            }
+            if (getSetting("extensions.MissingE.dashboardTweaks.postLinks",1) == 1) {
+               injectStyles.push(data.url("core/dashboardTweaks/postLinks.css"));
+            }
+            if (getSetting("extensions.MissingE.dashboardTweaks.massDelete",1) == 1 ||
+                getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0) == 1) {
+               injectStyles.push(data.url("core/dashboardTweaks/draftQueueTools.css"));
+            }
+            if (getSetting("extensions.MissingE.dashboardTweaks.widescreen",0) == 1 &&
+                !MissingE.isTumblrURL(message.url, ["settings"])) {
+               injectStyles.push(data.url("core/dashboardTweaks/widescreen.css"));
+            }
+            injectScripts.push(data.url("core/dashboardTweaks/dashboardTweaks.js"));
+            activeScripts.dashboardTweaks = true;
          }
          else
-            activeScripts.dashboardFixes = false;
+            activeScripts.dashboardTweaks = false;
 
          if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
             needUI = true;
@@ -1899,9 +1914,10 @@ function fixupSettings() {
    setIntegerPrefType('extensions.MissingE.postCrushes.crushSize',1);
    setIntegerPrefType('extensions.MissingE.replyReplies.smallAvatars',1);
 
-   moveSetting('extensions.MissingE.dashboardFixes.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
-   moveSetting('extensions.MissingE.dashboardFixes.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
    moveAllSettings('askFixes','askTweaks');
+   moveAllSettings('dashboardFixes','dashboardTweaks');
+   moveSetting('extensions.MissingE.dashboardTweaks.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
+   moveSetting('extensions.MissingE.dashboardTweaks.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
    collapseSettings('extensions.MissingE.askTweaks.betterAnswers','extensions.MissingE.askTweaks.buttons','extensions.MissingE.askTweaks.tags');
    invertSetting('extensions.MissingE.betterReblogs.noPassTags','extensions.MissingE.betterReblogs.passTags');
 }

@@ -161,9 +161,8 @@ function doStartup(response) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "sidebarTweaks"});
       }
-      if (response.message.dashboardFixes) {
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "dashboardFixes"});
+      if (response.message.dashboardTweaks) {
+         MissingE.packages.dashboardTweaks.init();
       }
       if (response.message.askTweaks) {
          MissingE.packages.askTweaks.init();
@@ -217,22 +216,6 @@ function settings_startup(response) {
                                        response.message.slimSidebar,
                                        response.message.followingLink,
                                        response.message.addSidebar);
-   }
-   else if (response.message.component === "dashboardFixes") {
-      MissingE_dashboardFixes_doStartup(response.message.experimental,
-                                        response.message.reblogQuoteFit,
-                                        response.message.wrapTags,
-                                        response.message.replaceIcons,
-                                        response.message.timeoutAJAX,
-                                        response.message.timeoutLength,
-                                        response.message.postLinks,
-                                        response.message.reblogReplies,
-                                        response.message.widescreen,
-                                        response.message.queueArrows,
-                                        response.message.expandAll,
-                                        response.message.massDelete,
-                                        response.message.randomQueue,
-                                        response.message.sortableNotes);
    }
 }
 

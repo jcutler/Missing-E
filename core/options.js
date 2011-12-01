@@ -195,7 +195,7 @@ MissingE.utilities.options = {
    },
 
    loadSettings: function() {
-      var componentList = ["dashboardFixes",
+      var componentList = ["dashboardTweaks",
                         "bookmarker",
                         "dashLinksToTabs",
                         "safeDash",
@@ -290,18 +290,18 @@ MissingE.utilities.options = {
             frm.MissingE_replyReplies_defaultTags.value = MissingE.utilities.options.getStorage('MissingE_replyReplies_defaultTags','');
             MissingE.utilities.options.loadCheck(frm,'MissingE_replyReplies_newTab',1);
          }
-         else if (v == "dashboardFixes") {
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_reblogQuoteFit',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_wrapTags',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_replaceIcons',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_postLinks',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_reblogReplies',0);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_widescreen',0);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_queueArrows',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_expandAll',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_massDelete',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_randomQueue',0);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardFixes_sortableNotes',1);
+         else if (v == "dashboardTweaks") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_reblogQuoteFit',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_wrapTags',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_replaceIcons',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_postLinks',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_reblogReplies',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_widescreen',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_queueArrows',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_expandAll',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_massDelete',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_randomQueue',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_sortableNotes',1);
          }
          else if (v == "betterReblogs") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_passTags',1);

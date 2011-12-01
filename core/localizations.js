@@ -97,7 +97,7 @@ var locale = {
    "audio": "Audio",
    "video": "Video"
   },
-  "dashFixesText": {
+  "dashTweaksText": {
    "edit": "edit",
    "del": "delete",
    "reblog": "reblog",
@@ -272,7 +272,7 @@ var locale = {
    "audio": "Audio",
    "video": "Video"
   },
-  "dashFixesText": {
+  "dashTweaksText": {
    "edit": "bearbeiten",
    "del": "löschen",
    "reblog": "rebloggen",
@@ -447,7 +447,7 @@ var locale = {
    "audio": "Audio",
    "video": "Vídeo"
   },
-  "dashFixesText": {
+  "dashTweaksText": {
    "edit": "editar",
    "del": "borrar",
    "reblog": "rebloguear",
@@ -622,7 +622,7 @@ var locale = {
    "audio": "Audio",
    "video": "Vidéo"
   },
-  "dashFixesText": {
+  "dashTweaksText": {
    "edit": "éditer",
    "del": "supprimer",
    "reblog": "rebloguer",
@@ -797,7 +797,7 @@ var locale = {
    "audio": "Audio",
    "video": "Video"
   },
-  "dashFixesText": {
+  "dashTweaksText": {
    "edit": "modifica",
    "del": "elimina",
    "reblog": "reblogga",
@@ -982,7 +982,7 @@ var locale = {
    "audio": "音声",
    "video": "動画"
   },
-  "dashFixesText": {
+  "dashTweaksText": {
    "edit": "編集",
    "del": "削除",
    "reblog": "リブログ",
@@ -1150,7 +1150,7 @@ var locale = {
    "audio": "Audio",
    "video": "Wideo"
   },
-  "dashFixesText": {
+  "dashTweaksText": {
    "edit": "edytuj",
    "del": "usuń",
    "reblog": "rebloguj",
@@ -1325,7 +1325,7 @@ var locale = {
    "audio": "Аудио",
    "video": "Видео"
   },
-  "dashFixesText": {
+  "dashTweaksText": {
    "edit": "изменить",
    "del": "удалить",
    "reblog": "реблог",
@@ -1530,7 +1530,7 @@ var locale = {
    "audio": "Ses",
    "video": "Video"
   },
-  "dashFixesText": {
+  "dashTweaksText": {
    "edit": "düzenle",
    "del": "sil",
    "reblog": "yeniden blogla",

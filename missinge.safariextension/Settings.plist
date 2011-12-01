@@ -84,7 +84,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_enabled</string>
+		<string>MissingE_dashboardTweaks_enabled</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -294,7 +294,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_reblogQuoteFit</string>
+		<string>MissingE_dashboardTweaks_reblogQuoteFit</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -304,7 +304,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_wrapTags</string>
+		<string>MissingE_dashboardTweaks_wrapTags</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -314,7 +314,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_replaceIcons</string>
+		<string>MissingE_dashboardTweaks_replaceIcons</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -324,7 +324,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_postLinks</string>
+		<string>MissingE_dashboardTweaks_postLinks</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -334,7 +334,7 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_reblogReplies</string>
+		<string>MissingE_dashboardTweaks_reblogReplies</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -344,7 +344,7 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_widescreen</string>
+		<string>MissingE_dashboardTweaks_widescreen</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -354,7 +354,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_queueArrows</string>
+		<string>MissingE_dashboardTweaks_queueArrows</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -364,7 +364,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_expandAll</string>
+		<string>MissingE_dashboardTweaks_expandAll</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -374,7 +374,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_massDelete</string>
+		<string>MissingE_dashboardTweaks_massDelete</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -384,7 +384,7 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_randomQueue</string>
+		<string>MissingE_dashboardTweaks_randomQueue</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -394,7 +394,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_dashboardFixes_sortableNotes</string>
+		<string>MissingE_dashboardTweaks_sortableNotes</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

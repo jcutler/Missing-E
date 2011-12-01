@@ -70,7 +70,7 @@
 				<string>core/postCrushes/postCrushes.js</string>
 				<string>core/postCrushes/postCrushes_fill.js</string>
 				<string>postingFixes/postingFixes.js</string>
-				<string>dashboardFixes/dashboardFixes.js</string>
+				<string>core/dashboardTweaks/dashboardTweaks.js</string>
 				<string>sidebarTweaks/sidebarTweaks.js</string>
 				<string>core/reblogYourself/reblogYourself_post.js</string>
 				<string>core/reblogYourself/reblogYourself_dash.js</string>
@@ -96,8 +96,8 @@
 			<string>postingFixes/postingFixes.css</string>
 			<string>core/massEditor/massEditor.css</string>
 			<string>sidebarTweaks/sidebarTweaks.css</string>
-			<string>dashboardFixes/draftQueueTools.css</string>
-			<string>dashboardFixes/notesSorter.css</string>
+			<string>core/dashboardTweaks/draftQueueTools.css</string>
+			<string>core/dashboardTweaks/notesSorter.css</string>
 		</array>
 		<key>Whitelist</key>
 		<array>
