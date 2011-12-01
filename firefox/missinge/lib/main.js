@@ -1522,6 +1522,7 @@ function handleMessage(message, myWorker) {
             activeScripts.bookmarker = false;
 
          if (getSetting("extensions.MissingE.sidebarTweaks.enabled",1) == 1) {
+            injectStyles.push(data.url("sidebarTweaks/sidebarTweaks.css"));
             injectScripts.push(data.url("sidebarTweaks/sidebarTweaks.js"));
             if (getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0) == 1) {
                injectSlimSidebar = true;

@@ -262,9 +262,6 @@ self.on('message', function(message) {
       return false;
    }
    var extensionURL = message.extensionURL;
-   jQuery('head').append('<link type="text/css" rel="stylesheet" ' +
-                         'href="' + extensionURL +
-                         'sidebarTweaks/sidebarTweaks.css" />');
    jQuery('head').append('<style type="text/css">' +
                     '#MissingE_sidebar_title a {' +
                     'background-image:url("' +
