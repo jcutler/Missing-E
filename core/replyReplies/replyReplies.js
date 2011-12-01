@@ -21,86 +21,52 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global $,chrome,MissingE.getLocale */
+(function($){
 
-function reply_setValue(st) {
-   localStorage.setItem('trr_ReplyText',st);
-}
+MissingE.packages.replyReplies = {
 
-function tags_setValue(ar) {
-   localStorage.setItem('trr_ReplyTags',ar.join(","));
-}
+   reply_setValue: function(st) {
+      localStorage.setItem('trr_ReplyText',st);
+   },
 
-function addNoteReply(item) {
-   if (item.hasClass('MissingE_reply')) {
-      return true;
-   }
-   var klass = "";
-   if (item.hasClass('like')) { klass = "like"; }
-   else if (item.hasClass('reblog')) { klass = "reblog"; }
-   else if (item.hasClass('answer')) { klass = "answer"; }
-   else if (item.hasClass('reply')) { klass = "reply"; }
-   else if (item.hasClass('photo')) { klass = "reply"; }
+   tags_setValue: function(ar) {
+      localStorage.setItem('trr_ReplyTags',ar.join(","));
+   },
 
-   item.addClass('MissingE_reply');
-   if (klass === "" ||
-       (klass === "reblog" && item.find('a.tumblelog').length === 0) ||
-       (klass !== "reblog" && item.find('span.action a').length === 0)) {
-      return true;
-   }
-   else {
-      item.append('<div class="notification_type_icon ' +
-                  klass + '_icon"></div>');
-      item.css('background-image', 'none');
-   }
-}
+   addNoteReply: function(item, overrideStyle) {
+      if (item.hasClass('MissingE_reply')) {
+         return true;
+      }
+      var klass = "";
+      if (item.hasClass('like')) { klass = "like"; }
+      else if (item.hasClass('reblog')) { klass = "reblog"; }
+      else if (item.hasClass('answer')) { klass = "answer"; }
+      else if (item.hasClass('reply')) { klass = "reply"; }
+      else if (item.hasClass('photo')) { klass = "reply"; }
 
-$(document).bind('MissingEajax', function(e) {
-   if (e.originalEvent.data.type !== 'notes') { return; }
-   var node = $('#'+e.originalEvent.data.list[0]);
-   if (!node.hasClass('is_mine')) {
-      return false;
-   }
-   var list = node.find('ol.notes li');
-   list.each(function() {
-      addNoteReply($(this));
-   });
-});
-
-$('#posts li.is_mine ol.notes').live('mouseover', function() {
-   $(this).find('li:not(.MissingE_reply)').each(function() {
-      addNoteReply($(this));
-   });
-});
-
-$('div.notification_type_icon').live('mousedown', function(e) {
-   if (e.shiftKey) { e.preventDefault(); }
-}).live('click', function(e) {
-   var arr;
-   if (e.which !== 1) { return; }
-   if (e.shiftKey) {
-      $(this).toggleClass("MissingE_rt");
-      if ($(this).hasClass("MissingE_rt")) {
-         $(this).parent().addClass('MissingE_rt_box');
+      item.addClass('MissingE_reply');
+      if (klass === "" ||
+          (klass === "reblog" && item.find('a.tumblelog').length === 0) ||
+          (klass !== "reblog" && item.find('span.action a').length === 0)) {
+         return true;
       }
       else {
-         $(this).parent().removeClass('MissingE_rt_box');
+         klass = (overrideStyle ? "MissingE_notification_type" :
+                  "notification_type_icon") + " " + klass;
+         item.append('<div class="' + klass + '_icon"></div>');
+         item.css('background-image', 'none');
       }
-      return;
-   }
-   $(this).toggleClass("MissingE_rt",true);
-   chrome.extension.sendRequest({greeting: "settings",
-                                 component: "replyReplies"},
-                                 function(response) {
-      var i, n, img;
+   },
+
+   doReply: function(response) {
+      if (response.component !== "replyReplies") { return; }
+      var arr, i, n, img;
       var redir = "";
-      var replyReplies_settings = response;
+      var settings = response;
+      var size = settings.smallAvatars === 1 ? 16 : 64;
       var thecode = [];
       var tags = [];
       arr = $('.MissingE_rt');
-      var showAvatars = replyReplies_settings.showAvatars;
-      var addTags = replyReplies_settings.addTags;
-      var size = replyReplies_settings.smallAvatars === 1 ? 16 : 64;
       if ($(arr[0]).parent().hasClass('note')) {
          $(arr[0]).closest('li.post')
             .find('div.post_controls a').each(function() {
@@ -148,7 +114,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                   .replace(/\s*$/,"")
                   .replace(/\n/g, " ");
 
-         if (addTags === 1) {
+         if (settings.addTags === 1) {
             en = newcode.indexOf("</a>");
             nm = newcode.substr(0,en).match(/[\w\-]*$/g)[0];
             add = true;
@@ -163,11 +129,11 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             }
          }
 
-         if (showAvatars === 1) {
+         if (settings.showAvatars === 1) {
             newcode = img + newcode;
          }
 
-         st = newcode.indexOf("<div class=\"notification_type_icon");
+         st = newcode.search(/<div class="[^"]*(notification_type_icon|MissingE_notification_type)/);
          if (st >= 0) {
             en = newcode.indexOf("</div>",st)+6;
             newcode = newcode.substring(0,st) + newcode.substr(en);
@@ -208,6 +174,7 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             }
             posttxt = posttxt.replace(/\s+/g,' ')
                         .replace(/^\s/,'').replace(/\s$/,'');
+
             if (posttxt.length > 50) {
                if (/\s/.test(posttxt.charAt(50))) {
                   posttxt = posttxt.substr(0,50);
@@ -256,11 +223,11 @@ $('div.notification_type_icon').live('mousedown', function(e) {
             qt = "";
             reblnk = "";
             a = newcode.indexOf('</a>') + 4;
-            if (showAvatars) {
+            if (settings.showAvatars) {
                img = newcode.substring(0,a);
             }
             b = newcode.indexOf('</a>',a) + 4;
-            if (showAvatars) {
+            if (settings.showAvatars) {
                user = newcode.substring(a,b);
                user = user.replace(/^&nbsp;/,'').replace(/<span [^>]*>/,'');
             }
@@ -284,17 +251,19 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                qt = qt.replace(/<a href=[^>]*>/,'').replace(/<\/a>/,'');
             }
 
-            if (showAvatars) {
+            if (settings.showAvatars) {
                newcode = img;
             }
             else {
                newcode = '';
             }
-            for (x=0; x<MissingE.getLocale(lang).notifications[anstype].length; x++) {
+            for (x=0; x<MissingE.getLocale(lang)
+                           .notifications[anstype].length; x++) {
                if (anstype === 'reblog' &&
                    x === MissingE.getLocale(lang).notifications.reblogIndex &&
                    reblnk !== "") {
-                  var rebtxt = MissingE.getLocale(lang).notifications[anstype][x];
+                  var rebtxt = MissingE.getLocale(lang)
+                                 .notifications[anstype][x];
                   if (MissingE.getLocale(lang).notificationChanges &&
                       MissingE.getLocale(lang).notificationChanges[anstype] &&
                       MissingE.getLocale(lang).notificationChanges[anstype]
@@ -302,37 +271,41 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                      rebtxt = MissingE.getLocale(lang)
                                  .notificationChanges[anstype][rebtxt];
                   }
-                  newcode += ' <a href="' + reblnk + '">' +
-                     rebtxt + '</a>';
+                  newcode += ' <strong><a href="' + reblnk + '">' +
+                     rebtxt + '</a></strong>';
                }
-               else if (MissingE.getLocale(lang).notifications[anstype][x] === "U") {
+               else if (MissingE.getLocale(lang)
+                           .notifications[anstype][x] === "U") {
                   if (newcode !== '' && newcode !== img) {
                      newcode += ' ';
                   }
-                  newcode += '<strong>' + user;
+                  newcode += '<strong>' + user + '</strong>';
                }
-               else if (MissingE.getLocale(lang).notifications[anstype][x] === "U,") {
+               else if (MissingE.getLocale(lang)
+                           .notifications[anstype][x] === "U,") {
                   if (newcode !== '' && newcode !== img) {
                      newcode += ' ';
                   }
-                  newcode += '<strong>' + user + ',';
+                  newcode += '<strong>' + user + '</strong>,';
                }
-               else if (MissingE.getLocale(lang).notifications[anstype][x] === "P") {
+               else if (MissingE.getLocale(lang)
+                           .notifications[anstype][x] === "P") {
                   var y;
                   var postType = MissingE.getLocale(lang).posts[type];
                   for (y=0; y<postType.length; y++) {
                      var posttypetxt = postType[y];
                      newcode += ' ';
                      if (MissingE.getLocale(lang).notificationChanges &&
-                         MissingE.getLocale(lang).notificationChanges[anstype] &&
+                         MissingE.getLocale(lang)
+                           .notificationChanges[anstype] &&
                          MissingE.getLocale(lang).notificationChanges[anstype]
                            .hasOwnProperty(posttypetxt)) {
                         posttypetxt = MissingE.getLocale(lang)
                                     .notificationChanges[anstype][posttypetxt];
                      }
                      if (y === postType.length - 1) {
-                        newcode += '<a href="' + postlnk + '">' +
-                           posttypetxt + '</a>';
+                        newcode += '<strong><a href="' + postlnk + '">' +
+                           posttypetxt + '</a></strong>';
                      }
                      else {
                         newcode += posttypetxt;
@@ -340,7 +313,8 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                   }
                }
                else {
-                  var othertxt = MissingE.getLocale(lang).notifications[anstype][x];
+                  var othertxt = MissingE.getLocale(lang)
+                                    .notifications[anstype][x];
                   if (MissingE.getLocale(lang).notificationChanges &&
                       MissingE.getLocale(lang).notificationChanges[anstype] &&
                       MissingE.getLocale(lang).notificationChanges[anstype]
@@ -364,16 +338,13 @@ $('div.notification_type_icon').live('mousedown', function(e) {
                   }
                }
             }
-            if (posttxt === '') {
-               newcode += '</strong> ';
+            if (posttxt !== '' && anstype === "reblog"  && reblnk !== '') {
+               newcode += ': <em><strong><a href="' + reblnk + '">' + posttxt +
+                           '</a></strong></em> ';
             }
-            else if (anstype === "reblog"  && reblnk !== '') {
-               newcode += ':</strong> <em><a href="' + reblnk + '">' + posttxt +
-                           '</a></em> ';
-            }
-            else {
-               newcode += ':</strong> <em><a href="' + postlnk + '">' +
-                           posttxt + '</a></em> ';
+            else if (posttxt !== '') {
+               newcode += ': <em><strong><a href="' + postlnk + '">' +
+                           posttxt + '</a></strong></em> ';
             }
             if (qt !== '') { newcode += qt; }
             else if (anstxt !== '') {
@@ -415,11 +386,11 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       }
 
       code = code.replace(/ {2,}/g,' ');
-      reply_setValue(code);
-      if (replyReplies_settings.defaultTags !== '') {
-         tags = replyReplies_settings.defaultTags.concat(tags);
+      MissingE.packages.replyReplies.reply_setValue(code);
+      if (settings.defaultTags !== '') {
+         tags = settings.defaultTags.concat(tags);
       }
-      tags_setValue(tags);
+      MissingE.packages.replyReplies.tags_setValue(tags);
 
       var urlPref = location.href
          .match(/http:\/\/www\.tumblr\.com\/blog\/([^\/]*)/);
@@ -429,8 +400,14 @@ $('div.notification_type_icon').live('mousedown', function(e) {
       else {
          urlPref = '';
       }
-      if (replyReplies_settings.newTab === 1) {
-         window.open("http://www.tumblr.com" + urlPref + "/new/text");
+      if (settings.newTab === 1) {
+         var urlDest = "http://www.tumblr.com" + urlPref + "/new/text";
+         if (extension.isSafari || extension.isFirefox) {
+            extension.sendRequest("open", {url: urlDest});
+         }
+         else {
+            window.open(urlDest);
+         }
       }
       else {
          var url = "http://www.tumblr.com" + urlPref + "/new/text";
@@ -439,5 +416,102 @@ $('div.notification_type_icon').live('mousedown', function(e) {
          }
          location.href = url;
       }
-   });
-});
+   },
+
+   run: function() {
+      var settings = this.settings;
+
+      if (extension.isSafari) {
+         $('head').append('<style type="text/css">' +
+                 '#posts .notification .notification_type_icon {' +
+                 'background-image:url("' +
+                 extension.getURL("core/replyReplies/notification_icons.png") +
+                 '") !important; } #posts ol.notes .notification_type_icon { ' +
+                 'background-image:url("' +
+                 extension.getURL("core/replyReplies/notes_icons.png") + '") ' +
+                 '!important; }</style>');
+         $('head').append('<link rel="stylesheet" type="text/css" href="' +
+                 extension.getURL("core/replyReplies/replyReplies.css") +
+                 '" />');
+      }
+
+      var overrideStyle = false;
+      if (extension.isFirefox) {
+         if ($('#posts').length > 0) {
+            var tester = $('<li class="notification">' +
+                           '<div class="notification_type_icon"></div></li>')
+                              .appendTo('#posts');
+            var testerIcon = tester.find('.notification_type_icon');
+            if (testerIcon.css('display') === "none" ||
+                testerIcon.css('visibility') === "hidden" ||
+                testerIcon.css('opacity') === "0") {
+               overrideStyle = true;
+            }
+            tester.remove();
+         }
+      }
+
+      extension.addAjaxListener(function(type,thelist) {
+         if (type !== 'notes') { return; }
+         var node = $('#' + thelist[0]);
+         if (!node.hasClass('is_mine')) {
+            return false;
+         }
+         var list = node.find('ol.notes li');
+         list.each(function() {
+            MissingE.packages.replyReplies.addNoteReply($(this),
+                                                        overrideStyle);
+         });
+         if (overrideStyle) {
+            $('#posts div.notification_type_icon').each(function() {
+               $(this).removeClass('notification_type_icon')
+                      .addClass('MissingE_notification_type');
+            });
+         }
+      });
+
+      $('#posts li.is_mine ol.notes').live('mouseover', function() {
+         $(this).find('li:not(.MissingE_reply)').each(function() {
+            MissingE.packages.replyReplies.addNoteReply($(this), overrideStyle);
+         });
+      });
+
+      $('div.notification_type_icon, div.MissingE_notification_type')
+            .live('mousedown', function(e) {
+         if (e.shiftKey) { e.preventDefault(); }
+      }).live('click', function(e) {
+         if (e.which !== 1) { return; }
+         if (e.shiftKey) {
+            $(this).toggleClass("MissingE_rt");
+            if ($(this).hasClass("MissingE_rt")) {
+               $(this).parent().addClass('MissingE_rt_box');
+            }
+            else {
+               $(this).parent().removeClass('MissingE_rt_box');
+            }
+            return;
+         }
+         $(this).toggleClass("MissingE_rt",true);
+         extension.sendRequest("settings", {component: "replyReplies"},
+                                MissingE.packages.replyReplies.doReply);
+      });
+
+      if (overrideStyle) {
+         $('#posts div.notification_type_icon').each(function() {
+            $(this).removeClass('notification_type_icon')
+                   .addClass('MissingE_notification_type');
+         });
+      }
+   },
+
+   init: function() {
+      MissingE.packages.replyReplies.run();
+   }
+};
+
+if (extension.isChrome ||
+    extension.isFirefox) {
+   MissingE.packages.replyReplies.init();
+}
+
+}(jQuery));

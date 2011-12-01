@@ -76,7 +76,7 @@ MissingE.packages.menuButton = {
          if (extension.isFirefox) {
             elnk.addEventListener('mouseup', function(e) {
                if (e.which === 1 || e.which === 2) {
-                  self.postMessage({greeting: "open", url: "OPTIONS"});
+                  extension.sendRequest("open", {url: "OPTIONS"});
                }
             }, false);
          }

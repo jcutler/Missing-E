@@ -1502,7 +1502,7 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
           /http:\/\/www\.tumblr\.com\/mega-editor\//.test(message.url)) {
             if (getSetting("extensions.MissingE.massEditor.enabled",1) == 1) {
-               injectStyles.push(data.url("core/massEditor/massEditor.css"));
+               injectStyles.push({file: data.url("core/massEditor/massEditor.css")});
                injectScripts.push(data.url("core/massEditor/massEditor.js"));
                activeScripts.massEditor = true;
             }
@@ -1525,7 +1525,7 @@ function handleMessage(message, myWorker) {
              .test(message.url))) ||
           /http:\/\/www\.tumblr\.com\/tagged\//.test(message.url))) {
          if (getSetting("extensions.MissingE.safeDash.enabled",1) == 1) {
-            injectStyles.push(data.url("core/safeDash/safeDash.css"));
+            injectStyles.push({file: data.url("core/safeDash/safeDash.css")});
             injectScripts.push(data.url("core/safeDash/safeDash.js"));
             activeScripts.safeDash = true;
          }
@@ -1555,7 +1555,7 @@ function handleMessage(message, myWorker) {
          if (getSetting("extensions.MissingE.bookmarker.enabled",1) == 1) {
             needUI = true;
             needUIsortable = true;
-            injectStyles.push(data.url("core/bookmarker/bookmarker.css"));
+            injectStyles.push({file: data.url("core/bookmarker/bookmarker.css")});
             injectScripts.push(data.url("core/bookmarker/bookmarker.js"));
             activeScripts.bookmarker = true;
          }
@@ -1563,7 +1563,7 @@ function handleMessage(message, myWorker) {
             activeScripts.bookmarker = false;
 
          if (getSetting("extensions.MissingE.sidebarTweaks.enabled",1) == 1) {
-            injectStyles.push(data.url("core/sidebarTweaks/sidebarTweaks.css"));
+            injectStyles.push({file: data.url("core/sidebarTweaks/sidebarTweaks.css")});
             injectScripts.push(data.url("core/sidebarTweaks/sidebarTweaks.js"));
             if (getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0) == 1) {
                injectSlimSidebar = true;
@@ -1574,7 +1574,7 @@ function handleMessage(message, myWorker) {
             activeScripts.sidebarTweaks = false;
 
          if (getSetting("extensions.MissingE.magnifier.enabled",1) == 1) {
-            injectStyles.push(data.url("core/magnifier/magnifier.css"));
+            injectStyles.push({file: data.url("core/magnifier/magnifier.css")});
             injectScripts.push(data.url("core/magnifier/magnifier.js"));
             activeScripts.magnifier = true;
          }
@@ -1582,28 +1582,28 @@ function handleMessage(message, myWorker) {
             activeScripts.magnifier = false;
 
          if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
-            injectStyles.push(data.url("core/dashboardTweaks/replaceIcons.css"));
+            injectStyles.push({file: data.url("core/dashboardTweaks/replaceIcons.css")});
             if (getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1) == 1) {
                needUI = true;
                needUIsortable = true;
-               injectStyles.push(data.url("core/dashboardTweaks/notesSorter.css"));
+               injectStyles.push({file: data.url("core/dashboardTweaks/notesSorter.css")});
             }
             if (getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1) == 1) {
-               injectStyles.push(data.url("core/dashboardTweaks/reblogQuoteFit.css"));
+               injectStyles.push({file: data.url("core/dashboardTweaks/reblogQuoteFit.css")});
             }
             if (getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1) == 1) {
-               injectStyles.push(data.url("core/dashboardTweaks/wrapTags.css"));
+               injectStyles.push({file: data.url("core/dashboardTweaks/wrapTags.css")});
             }
             if (getSetting("extensions.MissingE.dashboardTweaks.postLinks",1) == 1) {
-               injectStyles.push(data.url("core/dashboardTweaks/postLinks.css"));
+               injectStyles.push({file: data.url("core/dashboardTweaks/postLinks.css")});
             }
             if (getSetting("extensions.MissingE.dashboardTweaks.massDelete",1) == 1 ||
                 getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0) == 1) {
-               injectStyles.push(data.url("core/dashboardTweaks/draftQueueTools.css"));
+               injectStyles.push({file: data.url("core/dashboardTweaks/draftQueueTools.css")});
             }
             if (getSetting("extensions.MissingE.dashboardTweaks.widescreen",0) == 1 &&
                 !MissingE.isTumblrURL(message.url, ["settings"])) {
-               injectStyles.push(data.url("core/dashboardTweaks/widescreen.css"));
+               injectStyles.push({file: data.url("core/dashboardTweaks/widescreen.css")});
             }
             injectScripts.push(data.url("core/dashboardTweaks/dashboardTweaks.js"));
             activeScripts.dashboardTweaks = true;
@@ -1614,7 +1614,7 @@ function handleMessage(message, myWorker) {
          if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
             needUI = true;
             needUIdraggable = true;
-            injectStyles.push(data.url("core/askTweaks/askTweaks.css"));
+            injectStyles.push({file: data.url("core/askTweaks/askTweaks.css")});
             injectScripts.push(data.url("core/askTweaks/askTweaks.js"));
             activeScripts.askTweaks = true;
          }
@@ -1644,7 +1644,7 @@ function handleMessage(message, myWorker) {
          if (getSetting("extensions.MissingE.postingTweaks.enabled",1) == 1) {
             needUI = true;
             needUIresizable = true;
-            injectStyles.push(data.url("core/postingTweaks/postingTweaks.css"));
+            injectStyles.push({file: data.url("core/postingTweaks/postingTweaks.css")});
             injectScripts.push(data.url("core/postingTweaks/postingTweaks.js"));
             activeScripts.postingTweaks = true;
          }
@@ -1694,7 +1694,9 @@ function handleMessage(message, myWorker) {
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(message.url) ||
            /http:\/\/www\.tumblr\.com\/blog/.test(message.url))) {
          if (getSetting("extensions.MissingE.replyReplies.enabled",1) == 1) {
-            injectScripts.push(data.url("replyReplies/replyReplies.js"));
+            injectStyles.push({code: "#posts .notification .notification_type_icon { background-image:url('" + data.url('core/replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + data.url('core/replyReplies/notes_icons.png') + "') !important; }"}); 
+            injectStyles.push({file: data.url("core/replyReplies/replyReplies.css")});
+            injectScripts.push(data.url("core/replyReplies/replyReplies.js"));
             activeScripts.replyReplies = true;
             activeScripts.replyReplies_fill = false;
          }
@@ -1724,7 +1726,7 @@ function handleMessage(message, myWorker) {
 
          if (getSetting("extensions.MissingE.magnifier.enabled",1) == 1) {
             activeScripts.magnifier = true;
-            injectStyles.push(data.url("core/magnifier/magnifier.css"));
+            injectStyles.push({file: data.url("core/magnifier/magnifier.css")});
             injectScripts.push(data.url("core/magnifier/magnifier.js"));
          }
          else
@@ -1770,7 +1772,7 @@ function handleMessage(message, myWorker) {
             if (getSetting("extensions.MissingE.betterReblogs.quickReblog",0) == 1) {
                zindexFix = true;
             }
-            injectStyles.push(data.url("core/betterReblogs/quickReblog.css"));
+            injectStyles.push({file: data.url("core/betterReblogs/quickReblog.css")});
             injectScripts.push(data.url("core/betterReblogs/betterReblogs_dash.js"));
             activeScripts.betterReblogs = true;
          }
@@ -1788,14 +1790,14 @@ function handleMessage(message, myWorker) {
 
       if (message.isFrame &&
           (activeScripts.gotoDashPost || activeScripts.reblogYourself)) {
-         injectStyles.push(data.url("core/common/widenIframe.css"));
+         injectStyles.push({file: data.url("core/common/widenIframe.css")});
       }
 
       if (activeScripts.magnifier ||
           (activeScripts.askTweaks &&
            getSetting("extensions.MissingE.askTweaks.askDash",0) == 1)) {
          zindexFix = true;
-         injectStyles.push(data.url("lib/facebox/facebox.css"));
+         injectStyles.push({file: data.url("lib/facebox/facebox.css")});
          var pos = injectScripts.indexOf(data.url("core/utils.js"));
          injectScripts.splice(pos+1, 0, data.url("lib/facebox/facebox.js"));
       }
@@ -1829,15 +1831,21 @@ function handleMessage(message, myWorker) {
       activeScripts.greeting = "startup";
 
       if (injectSlimSidebar) {
-         injectStyles.push(data.url("core/sidebarTweaks/slimSidebar.css"));
+         injectStyles.push({file: data.url("core/sidebarTweaks/slimSidebar.css")});
       }
       var loadStyles = '';
       if (injectStyles.length > 0) {
          loadStyles = '(function($){' +
             'var head = $("head");';
          for (i=0; i<injectStyles.length; i++) {
-            loadStyles += 'head.append(\'<link rel="stylesheet" ' +
-               'type="text/css" href="' + injectStyles[i] + '" />\');';
+            if (injectStyles[i].file) {
+               loadStyles += 'head.append(\'<link rel="stylesheet" ' +
+                  'type="text/css" href="' + injectStyles[i].file + '" />\');';
+            }
+            else if (injectStyles[i].code) {
+               loadStyles += 'head.append(\'<style type="text/css">' +
+                  injectStyles[i].code.replace(/'/g,"\\'") + '</style>\');';
+            }
          }
          loadStyles += '})(jQuery);';
       }

@@ -121,10 +121,10 @@ function doStartup(response) {
       }
       if (response.message.replyReplies) {
          if (response.message.replyReplies_fill) {
-            MissingE_replyReplies_fill_doStartup();
+            MissingE.packages.replyRepliesFill.init();
          }
          else {
-            MissingE_replyReplies_doStartup();
+            MissingE.packages.replyReplies.init();
          }
       }
       if (response.message.postingTweaks) {

@@ -1458,9 +1458,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                        "blog"])) {
          if (getSetting("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
-            chrome.tabs.insertCSS(sender.tab.id, {code: "#posts .notification .notification_type_icon { background-image:url('" + chrome.extension.getURL('replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + chrome.extension.getURL('replyReplies/notes_icons.png') + "') !important; }"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "replyReplies/replyReplies.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "replyReplies/replyReplies.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {code: "#posts .notification .notification_type_icon { background-image:url('" + chrome.extension.getURL('core/replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + chrome.extension.getURL('core/replyReplies/notes_icons.png') + "') !important; }"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/replyReplies/replyReplies.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/replyReplies/replyReplies.js"});
          }
          else
             activeScripts.replyReplies = false;
@@ -1469,7 +1469,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           MissingE.isTumblrURL(sender.tab.url, ["reply"])) {
          if (getSetting("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "replyReplies/replyReplies_fill.js"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/replyReplies/replyReplies_fill.js"});
          }
          else
             activeScripts.replyReplies = false;

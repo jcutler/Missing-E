@@ -944,7 +944,14 @@ function isEDT(year,month,date,hours) {
 safari.application.addEventListener("message", handleRequest, false);
 function handleRequest(request) {
    if (request.name == "open") {
-      request.target.browserWindow.openTab().url = request.message;
+      var theurl;
+      if (typeof request.message === "string") {
+         theurl = request.message;
+      }
+      else {
+         theurl = request.message.url;
+      }
+      request.target.browserWindow.openTab().url = theurl;
    }
    else if (request.name == "version") {
       request.target.page.dispatchMessage("version",
