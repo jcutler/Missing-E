@@ -1721,7 +1721,7 @@ function injectSlimSidebar(e) {
       if (getSetting("MissingE_sidebarTweaks_enabled",1) === 1 &&
           getSetting("MissingE_sidebarTweaks_slimSidebar",0) === 1) {
          debug("Adding slimSidebar CSS");
-         safari.extension.addContentStyleSheet(safari.extension.baseURI +
+         safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
                                          "sidebarTweaks/slimSidebar.css",
                                          "http://www.tumblr.com/*");
       }
