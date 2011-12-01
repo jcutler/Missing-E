@@ -72,7 +72,7 @@ function getSetting(key, defVal) {
       return defVal;
    }
    else {
-      if (/[^0-9]/.test(retval)) {
+      if (/[^\d]/.test(retval)) {
          return retval;
       }
       else {
@@ -1591,6 +1591,16 @@ function onStart(currVersion, prevVersion) {
 safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
                                              "core/common/widenIframe.css",
                                              "http://*");
+
+safari.extension.addContentScriptFromURL(safari.extension.baseURI +
+                                         "extension.js",
+                                         "http://*", null, true);
+safari.extension.addContentScriptFromURL(safari.extension.baseURI +
+                                         "core/utils.js",
+                                         "http://*", null, true);
+safari.extension.addContentScriptFromURL(safari.extension.baseURI +
+                                         "core/betterReblogs/betterReblogs_post.js",
+                                         "http://*", null, true);
 
 onStart(currVersion, prevVersion);
 getExternalVersion();

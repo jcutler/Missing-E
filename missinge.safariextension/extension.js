@@ -23,7 +23,11 @@
 
 /*global safari */
 
-var MissingE = {
+(function(){
+
+if (typeof MissingE !== "undefined") { return; }
+
+MissingE = {
    packages: {},
    utilities: {
       exportSettings: function(callback) {
@@ -73,7 +77,7 @@ var MissingE = {
    }
 };
 
-var extension = {
+extension = {
    isChrome: false,
    isFirefox: false,
    isOpera: false,
@@ -185,3 +189,5 @@ var extension = {
       safari.self.tab.dispatchMessage(name, request);
    }
 };
+
+}());

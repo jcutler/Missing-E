@@ -166,6 +166,7 @@ MissingE.packages.betterReblogsPost = {
    run: function(frameURL) {
       if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) &&
           location.href === frameURL) {
+         var settings = this.settings;
          var st = document.createElement('style');
          st.type = 'text/css';
          st.innerHTML = '.MissingE_reblog { ' +
@@ -179,10 +180,107 @@ MissingE.packages.betterReblogsPost = {
                         '.MissingE_reblog_fail .half ' +
                         '{ background-position:-50px 0; }';
          document.getElementsByTagName('head')[0].appendChild(st);
+         var acct, i;
+         for (i=0; i<document.forms.length; i++) {
+            if (/\/(un)?follow/
+                  .test(document.forms[i].getAttribute('action'))) {
+               acct = document.forms[i].id.value;
+               break;
+            }
+         }
+         if (acct && settings.reblogAsks === 1) {
+            extension.sendRequest("tumblrPermission", {user: acct},
+                                  function(response) {
+               if (!response.allow) {
+                  var div = document.getElementsByTagName("div")[0];
+                  var controls;
+                  if (div) { controls = div.getElementsByTagName("a"); }
+                  var noReblog = true;
+                  for (i=0; i<controls.length; i++) {
+                     if (/\/reblog\//.test(controls[i].href)) {
+                        noReblog = false;
+                        break;
+                     }
+                  }
+                  if (noReblog) {
+                     var url, redir;
+                     var loc = location.href;
+                     var last = controls[controls.length-1];
+                     var gdp = document
+                                 .getElementById('MissingE_gotoDashPost_link');
+                     if (gdp) {
+                        last = gdp;
+                     }
+                     loc = loc.substring(loc.indexOf("src=")+4);
+                     redir = loc.substring(0,loc.indexOf("&"));
+                     loc = loc.replace(/%3A/gi,":")
+                              .replace(/%2F/gi,"/");
+                     url = "/reblog/";
+                     if (/&pid=(\d*)/.test(loc)) {
+                        url += loc.match(/&pid=(\d*)/)[1] + "/";
+                        url += loc.match(/&rk=(\w*)/)[1];
+                        url += '?redirect_to=' + redir;
+                        
+                        var link = document.createElement('a');
+                        link.setAttribute('href', url);
+                        link.setAttribute('target', '_top');
+
+                        var dashimg = null;
+                        for (i=controls.length-1; i>=0; i--) {
+                           if (controls[i].href ===
+                                 'http://www.tumblr.com/dashboard') {
+                              dashimg = controls[i]
+                                          .getElementsByTagName('img')[0];
+                              break;
+                           }
+                        }
+                        var suffix = '';
+                        var lang = 'en';
+                        if (dashimg) {
+                           suffix = dashimg.src.match(/alpha([^\.]*)(.*)/);
+                           if (suffix !== null && suffix.length > 2) {
+                              lang = suffix[1].match(/[a-z]+/);
+                              if (lang === null || lang.length === 0) {
+                                 lang = 'en';
+                              }
+                              else {
+                                 lang = lang[0];
+                              }
+                              suffix = suffix[1] + suffix[2];
+                           }
+                        }
+                        else {
+                           suffix = '.png';
+                        }
+
+                        var icon = document.createElement('img');
+                        icon.style.height='20px';
+                        icon.style.width='64px';
+                        icon.style.borderWidth='0';
+                        icon.style.display='block';
+                        icon.style.cssFloat='left';
+                        icon.style.cursor='pointer';
+                        icon.alt=MissingE.getLocale(lang).reblog;
+                        icon.src = 'http://assets.tumblr.com/images/' +
+                           'iframe_reblog_alpha' + suffix;
+                        link.appendChild(icon);
+                        div.insertBefore(link,last);
+                        var evt = document.createEvent("HTMLEvents");
+                        evt.initEvent("MissingEaddReblog", true, true);
+                        link.dispatchEvent(evt);
+                     }
+                  }
+               }
+            });
+         }
          extension.addListener("sendAsker", MissingE.packages.betterReblogsPost
                                                 .receiveAsker);
-         if (extension.isSafari ||
-             extension.isFirefox) {
+         if (extension.isChrome) {
+            extension.sendRequest("getAsker",
+                                  MissingE.packages
+                                    .betterReblogsPost.receiveAsker);
+         }
+         else {
             extension.sendRequest("getAsker");
          }
          if (!MissingE.packages.betterReblogsPost.addTags()) {
@@ -229,22 +327,25 @@ MissingE.packages.betterReblogsPost = {
 
    init: function() {
       if (MissingE.isTumblrURL(location.href, ["iframe"])) {
-         if (extension.isFirefox) {
-            extension.sendRequest("settings",
-                                  {component: "betterReblogs",
-                                   subcomponent: "post"},
-                                  function(response) {
-               if (response.component !== "betterReblogs") {
-                  return;
+         extension.sendRequest("settings",
+                               {component: "betterReblogs",
+                                subcomponent: "post"},
+                               function(response) {
+            if (response.component === "betterReblogs") {
+               var i;
+               MissingE.packages.betterReblogsPost.settings = {};
+               for (i in response) {
+                  if (response.hasOwnProperty(i) &&
+                      i !== "component") {
+                     MissingE.packages.betterReblogsPost
+                        .settings[i] = response[i];
+                  }
                }
                MissingE.packages.betterReblogsPost.run(location.href);
-            });
-         }
-         else {
-            MissingE.packages.betterReblogsPost.run(location.href);
-         }
+            }
+         })
       }
-      else {
+      else if (document.getElementById("tumblr_controls")) {
          MissingE.packages.betterReblogsPost.runPermalink();
       }
    }

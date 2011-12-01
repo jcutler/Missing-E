@@ -40,6 +40,10 @@ var cache = {};
 var cacheElements = 0;
 var cacheClear;
 var clearQueues;
+var askerTable = {};
+var askerWaiters = {};
+var askerTableCopy = {};
+var askerTableClear;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
@@ -85,6 +89,22 @@ chrome.tabs.onRemoved.addListener(function(id, removeInfo) {
       debug("Removing tab (" + id + ")");
    }
 });
+
+askerTableClear = setInterval(function() {
+   var i;
+   for (i in askerTableCopy) {
+      if (askerTableCopy.hasOwnProperty(i) &&
+          askerTable.hasOwnProperty(i)) {
+         delete askerTable[i];
+      }
+   }
+   askerTableCopy = {};
+   for (i in askerTable) {
+      if (askerTable.hasOwnProperty(i)) {
+         askerTableCopy[i] = true;
+      }
+   }
+}, fiveMinutes);
 
 cacheClear = setInterval(function() {
    cache = {};
@@ -856,9 +876,53 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "importOptions") {
       receiveOptions(request, sendResponse);
    }
+   else if (request.greeting == "getAsker") {
+      if (askerTable[sender.tab.url]) {
+         debug("Found saved asker for '" + sender.tab.url + "'");
+         var name = askerTable[sender.tab.url].asker;
+         var isSure = askerTable[sender.tab.url].isSure;
+         if (--askerTable[sender.tab.url].count == 0) {
+            debug("Deleting saved asker for '" + sender.tab.url + "'");
+            delete askerTable[sender.tab.url];
+         }
+         if (name && name !== "") {
+            sendResponse({name: name, isSure: isSure, url: sender.tab.url});
+         }
+      }
+      else {
+         if (askerWaiters[sender.tab.url]) {
+            debug("Creating new askerWaiter for '" + sender.tab.url + "'");
+            askerWaiters[sender.tab.url].push(sendResponse);
+         }
+         else {
+            debug("Adding askerWaiter for '" + sender.tab.url + "'");
+            askerWaiters[sender.tab.url] = [sendResponse];
+         }
+      }
+   }
    else if (request.greeting == "sendAsker") {
-      chrome.tabs.sendRequest(sender.tab.id, {greeting: "sendAsker",
-         name: request.name, url: request.url, isSure: request.isSure});
+      if (askerWaiters[sender.tab.url]) {
+         debug("Found existing askerWaiter for '" + sender.tab.url + "'");
+         var callback = askerWaiters[sender.tab.url].pop();
+         if (askerWaiters[sender.tab.url].length === 0) {
+            debug("Deleting existing askerWaiter queue for '" + sender.tab.url + "'");
+            delete askerWaiters[sender.tab.url];
+         }
+         if (request.name && request.name !== "") {
+            callback({name: request.name, isSure: request.isSure, url: sender.tab.url});
+         }
+      }
+      else {
+         if (askerTable[sender.tab.url]) {
+            debug("Found existing askerTable entry for '" + sender.tab.url + "'");
+            askerTable[sender.tab.url].count++;
+         }
+         else {
+            debug("Creating askerTable entry for '" + sender.tab.url + "'");
+            askerTable[sender.tab.url] = {asker: request.name,
+                                          isSure: request.isSure, count:1};
+         }
+      }
    }
    else if (request.greeting == "uploader") {
       $.ajax({
