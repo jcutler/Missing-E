@@ -1722,13 +1722,18 @@ function injectSlimSidebar(e) {
           getSetting("MissingE_sidebarTweaks_slimSidebar",0) === 1) {
          debug("Adding slimSidebar CSS");
          safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
-                                         "sidebarTweaks/slimSidebar.css",
+                                         "core/sidebarTweaks/slimSidebar.css",
                                          "http://www.tumblr.com/*");
       }
       else {
          debug("Removimg slimSidebar CSS");
          safari.extension.removeContentStyleSheet(safari.extension.baseURI +
-                                            "sidebarTweaks/slimSidebar.css");
+                                            "core/sidebarTweaks/sidebarTweaks.css");
+         safari.extension.removeContentStyleSheet(safari.extension.baseURI +
+                                            "core/sidebarTweaks/slimSidebar.css");
+         safari.extension.addContentStyleSheetFromURL(safari.extension.baseURI +
+                                         "core/sidebarTweaks/sidebarTweaks.css",
+                                         "http://www.tumblr.com/*");
       }
    }
 }
