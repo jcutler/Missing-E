@@ -90,6 +90,8 @@ width:110px;
 }
 
 .ui-resizable {
+display:block;
+width:100% !important;
 position:relative;
 padding-bottom:12px !important;
 background-color:#FFF !important;
