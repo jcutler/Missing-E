@@ -165,9 +165,8 @@ function doStartup(response) {
          safari.self.tab.dispatchMessage("settings",
                                          {component: "dashboardFixes"});
       }
-      if (response.message.askFixes) {
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "askFixes"});
+      if (response.message.askTweaks) {
+         MissingE.packages.askTweaks.init();
       }
       if (response.message.reblogYourself) {
          MissingE.packages.reblogYourself.init();
@@ -186,9 +185,8 @@ function doStartup(response) {
       if (response.message.betterReblogs) {
          MissingE.packages.betterReblogsPost.init();
       }
-      if (response.message.askFixes) {
-         MissingE_askFixes_scroll_doStartup();
-         MissingE_askFixes_domain_doStartup();
+      if (response.message.askTweaks) {
+         MissingE.packages.askTweaks.init();
       }
       if (response.message.gotoDashPost) {
          MissingE.packages.gotoDashPost.init();
@@ -212,13 +210,6 @@ function settings_startup(response) {
                                       response.message.blogSelect,
                                       response.message.tagQueuedPosts,
                                       response.message.queueTags);
-   }
-   else if (response.message.component === "askFixes") {
-      MissingE_askFixes_doStartup(response.message.tagAsker,
-                                  response.message.defaultTags,
-                                  response.message.betterAnswers,
-                                  response.message.askDash,
-                                  response.message.massDelete);
    }
    else if (response.message.component === "sidebarTweaks") {
       MissingE_sidebarTweaks_doStartup(response.message.retries,

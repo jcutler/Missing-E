@@ -162,7 +162,7 @@ MissingE.utilities.options = {
                MissingE.utilities.options.setStorage(obj.name, num);
             }
          }
-         else if (obj.name === 'MissingE_askFixes_defaultTags' ||
+         else if (obj.name === 'MissingE_askTweaks_defaultTags' ||
                   obj.name === 'MissingE_replyReplies_defaultTags' ||
                   obj.name === 'MissingE_postingFixes_queueTags') {
             var val = MissingE.utilities.options.trim(obj.value);
@@ -205,7 +205,7 @@ MissingE.utilities.options = {
                         "gotoDashPost",
                         "postingFixes",
                         "reblogYourself",
-                        "askFixes",
+                        "askTweaks",
                         "postCrushes",
                         "replyReplies",
                         "massEditor",
@@ -235,13 +235,13 @@ MissingE.utilities.options = {
          else {
             active.checked = false;
          }
-         if (v == "askFixes") {
-            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_scroll',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_betterAnswers',0);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_tagAsker',1);
-            frm.MissingE_askFixes_defaultTags.value = MissingE.utilities.options.getStorage('MissingE_askFixes_defaultTags','');
-            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_askDash',0);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_askFixes_massDelete',1);
+         if (v == "askTweaks") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_scroll',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_betterAnswers',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_tagAsker',1);
+            frm.MissingE_askTweaks_defaultTags.value = MissingE.utilities.options.getStorage('MissingE_askTweaks_defaultTags','');
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_askDash',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_massDelete',1);
          }
          else if (v == "sidebarTweaks") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);

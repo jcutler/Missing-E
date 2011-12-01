@@ -48,9 +48,9 @@
 			<array>
 				<string>extension.js</string>
 				<string>common/jquery.min.js</string>
-				<string>core/common/ajaxEvents.js</string>
 				<string>core/localizations.js</string>
 				<string>core/utils.js</string>
+				<string>core/common/ajaxEvents.js</string>
 				<string>lib/jquery.ui.core.min.js</string>
 				<string>lib/jquery.ui.widget.min.js</string>
 				<string>lib/jquery.ui.mouse.min.js</string>
@@ -59,7 +59,7 @@
 				<string>lib/jquery.ui.resizable.min.js</string>
 				<string>core/common/menuButton.js</string>
 				<string>lib/facebox/facebox.js</string>
-				<string>askFixes/askFixes.js</string>
+				<string>core/askTweaks/askTweaks.js</string>
 				<string>core/betterReblogs/betterReblogs_dash.js</string>
 				<string>core/betterReblogs/betterReblogs_fill.js</string>
 				<string>core/betterReblogs/betterReblogs_post.js</string>
@@ -88,7 +88,7 @@
 		<key>Stylesheets</key>
 		<array>
 			<string>lib/facebox/facebox.css</string>
-			<string>askFixes/askFixes.css</string>
+			<string>core/askTweaks/askTweaks.css</string>
 			<string>core/betterReblogs/quickReblog.css</string>
 			<string>core/bookmarker/bookmarker.css</string>
 			<string>core/magnifier/magnifier.css</string>

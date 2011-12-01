@@ -174,7 +174,7 @@
                 <key>DefaultValue</key>
                 <real>1</real>
                 <key>Key</key>
-                <string>MissingE_askFixes_enabled</string>
+                <string>MissingE_askTweaks_enabled</string>
                 <key>Title</key>
                 <string></string>
                 <key>Type</key>
@@ -234,7 +234,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_askFixes_scroll</string>
+		<string>MissingE_askTweaks_scroll</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -244,7 +244,7 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_askFixes_betterAnswers</string>
+		<string>MissingE_askTweaks_betterAnswers</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -254,7 +254,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_askFixes_tagAsker</string>
+		<string>MissingE_askTweaks_tagAsker</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -264,7 +264,7 @@
 		<key>DefaultValue</key>
 		<string></string>
 		<key>Key</key>
-		<string>MissingE_askFixes_defaultTags</string>
+		<string>MissingE_askTweaks_defaultTags</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -274,7 +274,7 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_askFixes_askDash</string>
+		<string>MissingE_askTweaks_askDash</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -284,7 +284,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_askFixes_massDelete</string>
+		<string>MissingE_askTweaks_massDelete</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -315,26 +315,6 @@
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashboardFixes_replaceIcons</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>1</real>
-		<key>Key</key>
-		<string>MissingE_dashboardFixes_timeoutAJAX</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>15</real>
-		<key>Key</key>
-		<string>MissingE_dashboardFixes_timeoutLength</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

@@ -196,6 +196,7 @@ function receiveOptions(request, sendResponse) {
       }
    }
    if (set + changed + reset > 0) {
+      fixupSettings();
       alert("Import complete.\n\n" + (set+changed+reset) + " change(s) made.");
       sendResponse({greeting:"importOptions", success:true});
    }
@@ -1133,16 +1134,17 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       settings.experimental = getSetting("MissingE_experimentalFeatures_enabled",0);
       settings.component = request.component;
       switch(request.component) {
-         case "askFixes":
-            settings.scroll = getSetting("MissingE_askFixes_scroll",1);
-            settings.betterAnswers = getSetting("MissingE_askFixes_betterAnswers",0);
-            settings.tagAsker = getSetting("MissingE_askFixes_tagAsker",1);
-            settings.defaultTags = getSetting("MissingE_askFixes_defaultTags",'');
+         case "askTweaks":
+            settings.scroll = getSetting("MissingE_askTweaks_scroll",1);
+            settings.betterAnswers = getSetting("MissingE_askTweaks_betterAnswers",0);
+            settings.tagAsker = getSetting("MissingE_askTweaks_tagAsker",1);
+            settings.defaultTags = getSetting("MissingE_askTweaks_defaultTags",'');
             if (settings.defaultTags !== '') {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
-            settings.askDash = getSetting("MissingE_askFixes_askDash",0);
-            settings.massDelete = getSetting("MissingE_askFixes_massDelete",1);
+            settings.askDash = getSetting("MissingE_askTweaks_askDash",0);
+            settings.massDelete = getSetting("MissingE_askTweaks_massDelete",1);
+            settings.adjustDomain = MissingE.isTumblrURL(sender.tab.url, ["messages"]);
             break;
          case "sidebarTweaks":
             settings.retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
@@ -1293,8 +1295,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.bookmarker = false;
 
          if (getSetting("MissingE_magnifier_enabled",1) == 1 ||
-             (getSetting("MissingE_askFixes_enabled",1) == 1 &&
-              getSetting("MissingE_askFixes_askDash",0) == 1)) {
+             (getSetting("MissingE_askTweaks_enabled",1) == 1 &&
+              getSetting("MissingE_askTweaks_askDash",0) == 1)) {
             zindexFix = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "lib/facebox/facebox.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "lib/facebox/facebox.css"});
@@ -1350,8 +1352,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.dashboardFixes = false;
 
-         if (getSetting("MissingE_askFixes_enabled",1) == 1) {
-            activeScripts.askFixes = true;
+         if (getSetting("MissingE_askTweaks_enabled",1) == 1) {
+            activeScripts.askTweaks = true;
             if (!loadedUI) {
                loadedUI = true;
                loadUI(sender.tab.id, "core");
@@ -1360,25 +1362,20 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                loadedUIdraggable = true;
                loadUI(sender.tab.id, "draggable");
             }
-            chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askFixes.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askFixes.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/askTweaks/askTweaks.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/askTweaks/askTweaks.js"});
          }
          else {
-            activeScripts.askFixes = false;
+            activeScripts.askTweaks = false;
          }
       }
       if (MissingE.isTumblrURL(request.url, ["askForm"])) {
-         if (getSetting("MissingE_askFixes_enabled",1) == 1 &&
-             getSetting("MissingE_askFixes_scroll",1) == 1) {
-            activeScripts.askFixes = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "askFixes/askboxScroll.css", allFrames: true});
+         if (getSetting("MissingE_askTweaks_enabled",1)) {
+            activeScripts.askTweaks = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/askTweaks/askTweaks.js", allFrames: true});
          }
          else
-            activeScripts.askFixes = false;
-
-         if (MissingE.isTumblrURL(sender.tab.url, ["messages"])) {
-            chrome.tabs.executeScript(sender.tab.id, {file: "askFixes/askboxDomain.js", allFrames: true});
-         }
+            activeScripts.askTweaks = false;
       }
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url,
@@ -1591,6 +1588,21 @@ function moveSetting(oldpref, newpref) {
    }
 }
 
+function moveAllSettings(oldgroup, newgroup) {
+   var re = new RegExp("^MissingE_" + oldgroup + "_");
+   for (i in localStorage) {
+      if (localStorage.hasOwnProperty(i) &&
+          re.test(i)) {
+         var newpref = i.replace(re,'MissingE_' + newgroup + '_');
+         console.log('"' + i + '" depracated. Moving setting to "' + newpref + '"');
+         if (localStorage.getItem(newpref) === null) {
+            localStorage[newpref] = localStorage[i];
+         }
+         localStorage.removeItem(i);
+      }
+   }
+}
+
 function invertSetting(oldpref, newpref) {
    var pref;
    if ((pref = localStorage[oldpref])) {
@@ -1624,6 +1636,14 @@ function getExternalVersion() {
 
 currVersion = getVersion();
 
+function fixupSettings() {
+   moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
+   moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
+   moveAllSettings('askFixes','askTweaks');
+   collapseSettings('MissingE_askTweaks_betterAnswers','MissingE_askTweaks_buttons','MissingE_askTweaks_tags');
+   invertSetting('MissingE_betterReblogs_noPassTags','MissingE_betterReblogs_passTags');
+}
+
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
       console.log("Updated Missing e (" +
@@ -1641,11 +1661,7 @@ function onStart(currVersion, prevVersion) {
 
 onStart(currVersion, getSetting('MissingE_version',null));
 getExternalVersion();
-
-moveSetting('MissingE_dashboardFixes_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
-moveSetting('MissingE_dashboardFixes_followingLink','MissingE_sidebarTweaks_followingLink');
-collapseSettings('MissingE_askFixes_betterAnswers','MissingE_askFixes_buttons','MissingE_askFixes_tags');
-invertSetting('MissingE_betterReblogs_noPassTags','MissingE_betterReblogs_passTags');
+fixupSettings();
 
 var fivedays = 432000000;
 var now = (new Date()).valueOf();

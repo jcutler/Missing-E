@@ -24,7 +24,7 @@
 (function($){
 
 if (typeof MissingE === "undefined") { return; }
-if (location.pathname === "/upload/image") { return; }
+if (window.top !== window) { return; }
 
 MissingE.utilities.ajaxEvents = {
 

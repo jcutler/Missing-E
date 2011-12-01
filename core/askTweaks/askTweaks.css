@@ -21,34 +21,34 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#posts li.post .MissingE_askFixes_group {
+#posts li.post .MissingE_askTweaks_group {
 padding-top:15px;
 font-size:11px;
 }
 
-#posts li.post .MissingE_askFixes_group div {
+#posts li.post .MissingE_askTweaks_group div {
 display:inline-block;
 margin-right:5px;
 }
 
-#posts li.post .MissingE_askFixes_tags {
+#posts li.post .MissingE_askTweaks_tags {
 border:1px solid #BBB;
 width:200px;
 }
 
-#posts li.post .MissingE_askFixes_twitter {
+#posts li.post .MissingE_askTweaks_twitter {
 vertical-align:middle;
 }
 
-#posts li.post .MissingE_askFixes_extraBtn {
+#posts li.post .MissingE_askTweaks_extraBtn {
 margin-right:5px;
 }
 
-.MissingE_askFixes_buttons {
+.MissingE_askTweaks_buttons {
 position:relative;
 }
 
-.MissingE_askFixes_buttons .MissingE_postMenu {
+.MissingE_askTweaks_buttons .MissingE_postMenu {
 display:none;
 position:absolute;
 left:0;
@@ -58,19 +58,23 @@ visibility:hidden;
 z-index:1337;
 }
 
-.MissingE_askFixes_buttons .MissingE_postMenu button {
+.MissingE_askTweaks_buttons .MissingE_postMenu button {
 font-size:12px !important;
 line-height:normal !important;
 height:auto !important;
 width:100% !important;
 }
 
-.MissingE_askFixes_buttons button[name=publish]:hover + .MissingE_postMenu {
+.MissingE_askTweaks_buttons .MissingE_postMenu .chrome_button {
+width:auto !important;
+}
+
+.MissingE_askTweaks_buttons button[name=publish]:hover + .MissingE_postMenu {
 visibility:visible;
 display:block;
 }
 
-.MissingE_askFixes_buttons .MissingE_postMenu:hover {
+.MissingE_askTweaks_buttons .MissingE_postMenu:hover {
 visibility:visible !important;
 display:block;
 }
@@ -128,10 +132,10 @@ opacity:0.5;
 opacity:1;
 }
 
-.MissingE_askFixes_buttons .ask_publish_button, .MissingE_askFixes_buttons .ask_queue_button, .MissingE_askFixes_buttons .ask_draft_button {
+.MissingE_askTweaks_buttons .ask_publish_button, .MissingE_askTweaks_buttons .ask_queue_button, .MissingE_askTweaks_buttons .ask_draft_button {
 display:none !important;
 }
 
-.MissingE_askFixes_buttons .private_answer_button {
+.MissingE_askTweaks_buttons .private_answer_button {
 display:inline-block !important;
 }

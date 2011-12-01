@@ -106,7 +106,7 @@ var componentList = ["dashboardFixes",
                      "gotoDashPost",
                      "postingFixes",
                      "reblogYourself",
-                     "askFixes",
+                     "askTweaks",
                      "postCrushes",
                      "replyReplies",
                      "massEditor",
@@ -120,12 +120,12 @@ function getAllSettings() {
       settings["MissingE_" + componentList[i] + "_enabled"] =
          getSetting("extensions.MissingE." + componentList[i] + ".enabled", 1);
    }
-   settings.MissingE_askFixes_scroll = getSetting("extensions.MissingE.askFixes.scroll",1);
-   settings.MissingE_askFixes_betterAnswers = getSetting("extensions.MissingE.askFixes.betterAnswers",0);
-   settings.MissingE_askFixes_tagAsker = getSetting("extensions.MissingE.askFixes.tagAsker",1);
-   settings.MissingE_askFixes_defaultTags = getSetting("extensions.MissingE.askFixes.defaultTags",'');
-   settings.MissingE_askFixes_askDash = getSetting("extensions.MissingE.askFixes.askDash",0);
-   settings.MissingE_askFixes_massDelete = getSetting("extensions.MissingE.askFixes.massDelete",1);
+   settings.MissingE_askTweaks_scroll = getSetting("extensions.MissingE.askTweaks.scroll",1);
+   settings.MissingE_askTweaks_betterAnswers = getSetting("extensions.MissingE.askTweaks.betterAnswers",0);
+   settings.MissingE_askTweaks_tagAsker = getSetting("extensions.MissingE.askTweaks.tagAsker",1);
+   settings.MissingE_askTweaks_defaultTags = getSetting("extensions.MissingE.askTweaks.defaultTags",'');
+   settings.MissingE_askTweaks_askDash = getSetting("extensions.MissingE.askTweaks.askDash",0);
+   settings.MissingE_askTweaks_massDelete = getSetting("extensions.MissingE.askTweaks.massDelete",1);
    settings.MissingE_bookmarker_format = getSetting("extensions.MissingE.bookmarker.format",MissingE.defaultFormat);
    settings.MissingE_bookmarker_addBar = getSetting("extensions.MissingE.bookmarker.addBar",1);
    settings.MissingE_dashboardFixes_reblogQuoteFit = getSetting("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
@@ -210,6 +210,23 @@ function moveSetting(oldpref,newpref) {
    }
    else if (ps.isSet(oldpref)) {
       ps.reset(oldpref);
+   }
+}
+
+function moveAllSettings(oldgroup, newgroup) {
+   var allsettings = getAllSettings();
+   var re = new RegExp("^MissingE_" + oldgroup + "_");
+   for (i in allsettings) {
+      if (allsettings.hasOwnProperty(i) &&
+          re.test(i)) {
+         var oldpref = 'extensions.' + i.replace(/_/g,'.');
+         var newpref = 'extensions.' + i.replace(re,'MissingE_' + newgroup + '_').replace(/_/g,'.');
+         console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+         if (!ps.isSet(newpref)) {
+            ps.set(newpref, ps.get(oldpref,0));
+         }
+         ps.reset(oldpref);
+      }
    }
 }
 
@@ -357,6 +374,7 @@ function receiveOptions(message, theWorker) {
       }
    }
    if (set + changed + reset > 0) {
+      fixupSettings();
       theWorker.postMessage({greeting:"importOptions",success:true,
          msg:"Import complete.\n\n" + (set+changed+reset) + " change(s) made."});
    }
@@ -1327,16 +1345,17 @@ function handleMessage(message, myWorker) {
       settings.experimental = getSetting("extensions.MissingE.experimentalFeatures.enabled",0);
       settings.extensionURL = data.url("");
       switch(message.component) {
-         case "askFixes":
-            settings.scroll = getSetting("extensions.MissingE.askFixes.scroll",1);
-            settings.betterAnswers = getSetting("extensions.MissingE.askFixes.betterAnswers",0);
-            settings.tagAsker = getSetting("extensions.MissingE.askFixes.tagAsker",1);
-            settings.defaultTags = getSetting("extensions.MissingE.askFixes.defaultTags",'');
+         case "askTweaks":
+            settings.scroll = getSetting("extensions.MissingE.askTweaks.scroll",1);
+            settings.betterAnswers = getSetting("extensions.MissingE.askTweaks.betterAnswers",0);
+            settings.tagAsker = getSetting("extensions.MissingE.askTweaks.tagAsker",1);
+            settings.defaultTags = getSetting("extensions.MissingE.askTweaks.defaultTags",'');
             if (settings.defaultTags !== '') {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
-            settings.askDash = getSetting("extensions.MissingE.askFixes.askDash",0);
-            settings.massDelete = getSetting("extensions.MissingE.askFixes.massDelete",1);
+            settings.askDash = getSetting("extensions.MissingE.askTweaks.askDash",0);
+            settings.massDelete = getSetting("extensions.MissingE.askTweaks.massDelete",1);
+            settings.adjustDomain = MissingE.isTumblrURL(myWorker.tab.url, ["messages"]);
             break;
          case "sidebarTweaks":
             settings.retries = getSetting("extensions.MissingE.sidebarTweaks.retries",MissingE.defaultRetries);
@@ -1535,23 +1554,23 @@ function handleMessage(message, myWorker) {
          else
             activeScripts.dashboardFixes = false;
 
-         if (getSetting("extensions.MissingE.askFixes.enabled",1) == 1) {
+         if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
             needUI = true;
             needUIdraggable = true;
-            injectScripts.push(data.url("askFixes/askFixes.js"));
-            activeScripts.askFixes = true;
+            injectStyles.push(data.url("core/askTweaks/askTweaks.css"));
+            injectScripts.push(data.url("core/askTweaks/askTweaks.js"));
+            activeScripts.askTweaks = true;
          }
          else
-            activeScripts.askFixes = false;
+            activeScripts.askTweaks = false;
       }
       if (/http:\/\/www\.tumblr\.com\/ask_form\//.test(message.url)) {
-         if (getSetting("extensions.MissingE.askFixes.enabled",1) == 1 &&
-             getSetting("extensions.MissingE.askFixes.scroll",1) == 1) {
+         if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
             /* Don't inject script. Taken care of by a page mod */
-            activeScripts.askFixes = true;
+            activeScripts.askTweaks = true;
          }
          else
-            activeScripts.askFixes = false;
+            activeScripts.askTweaks = false;
       }
       if (!message.isFrame &&
           ((/http:\/\/www\.tumblr\.com\/new\//.test(message.url) ||
@@ -1584,10 +1603,8 @@ function handleMessage(message, myWorker) {
          else
             activeScripts.betterReblogs = false;
       }
-      if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(message.url) &&
-          !(/http:\/\/www\.tumblr\.com\/edit\/[0-9]+/.test(myWorker.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/new\//.test(myWorker.tab.url)) &&
-          !(/http:\/\/www\.tumblr\.com\/new\//.test(myWorker.tab.url))) {
+      if (MissingE.isTumblrURL(message.url, ["iframe"]) &&
+          !MissingE.isTumblrURL(myWorker.tab.url, ["post", "reblog"])) {
          if (getSetting("extensions.MissingE.gotoDashPost.enabled",1) == 1) {
             activeScripts.gotoDashPost = true;
          }
@@ -1717,8 +1734,8 @@ function handleMessage(message, myWorker) {
       }
 
       if (activeScripts.magnifier ||
-          (activeScripts.askFixes &&
-           getSetting("extensions.MissingE.askFixes.askDash",0) == 1)) {
+          (activeScripts.askTweaks &&
+           getSetting("extensions.MissingE.askTweaks.askDash",0) == 1)) {
          zindexFix = true;
          injectStyles.push(data.url("lib/facebox/facebox.css"));
          var pos = injectScripts.indexOf(data.url("core/utils.js"));
@@ -1794,12 +1811,12 @@ pageMod.PageMod({
 pageMod.PageMod({
    include: ["http://www.tumblr.com/ask_form/*"],
    contentScriptWhen: 'ready',
-   contentScriptFile: [data.url("askFixes/askFixes.js"),
-                       data.url("askFixes/askboxDomain.js")],
+   contentScriptFile: [data.url("extension.js"),
+                       data.url("core/utils.js"),
+                       data.url("core/askTweaks/askTweaks.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {
-         if (getSetting("extensions.MissingE.askFixes.enabled",1) == 1 &&
-             getSetting("extensions.MissingE.askFixes.scroll",1) == 1) {
+         if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
             handleMessage(data, this);
          }
       });
@@ -1877,6 +1894,18 @@ function getExternalVersion() {
    }).get();
 }
 
+function fixupSettings() {
+   setIntegerPrefType('extensions.MissingE.betterReblogs.quickReblogAcctType',0);
+   setIntegerPrefType('extensions.MissingE.postCrushes.crushSize',1);
+   setIntegerPrefType('extensions.MissingE.replyReplies.smallAvatars',1);
+
+   moveSetting('extensions.MissingE.dashboardFixes.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
+   moveSetting('extensions.MissingE.dashboardFixes.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
+   moveAllSettings('askFixes','askTweaks');
+   collapseSettings('extensions.MissingE.askTweaks.betterAnswers','extensions.MissingE.askTweaks.buttons','extensions.MissingE.askTweaks.tags');
+   invertSetting('extensions.MissingE.betterReblogs.noPassTags','extensions.MissingE.betterReblogs.passTags');
+}
+
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
       console.log("Updated Missing e (" +
@@ -1892,14 +1921,6 @@ function onStart(currVersion, prevVersion) {
 
 onStart(currVersion, prevVersion);
 getExternalVersion();
-
-setIntegerPrefType('extensions.MissingE.betterReblogs.quickReblogAcctType',0);
-setIntegerPrefType('extensions.MissingE.postCrushes.crushSize',1);
-setIntegerPrefType('extensions.MissingE.replyReplies.smallAvatars',1);
-
-moveSetting('extensions.MissingE.dashboardFixes.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
-moveSetting('extensions.MissingE.dashboardFixes.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
-collapseSettings('extensions.MissingE.askFixes.betterAnswers','extensions.MissingE.askFixes.buttons','extensions.MissingE.askFixes.tags');
-invertSetting('extensions.MissingE.betterReblogs.noPassTags','extensions.MissingE.betterReblogs.passTags');
+fixupSettings();
 
 console.log("Missing e is running.");
