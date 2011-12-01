@@ -16,3 +16,11 @@ _By downloading and using this extension, you agree to the terms and conditions 
 
 If you enjoy this extension, please consider [donating](http://www.pledgie.com/campaigns/14406) to support future development.  
 <a href="http://www.pledgie.com/campaigns/14406">![](http://missinge.infraware.ca/images/pledgie.png)</a>
+
+***
+
+###Developers
+
+The **Missing e** code has been reorganized as of version 2.3.0 so that most of the extension is platform-agnostic.
+
+As such, I have included a [`setenvironment.sh`](https://github.com/jcutler/Missing-E/blob/master/setenvironment.sh) script that sets up Windows junctions and hard links so that shared folders and files can be added to all platform builds. This script was written for MINGW32 on a system with the Microsoft `junction` utility (which you can [get here](http://technet.microsoft.com/en-us/sysinternals/bb896768)). On a *nix/OSX filesystem, you can simply replace all the `junction` and `fsutil hardlink` commands with `ln -s` for creating symbolic links.
