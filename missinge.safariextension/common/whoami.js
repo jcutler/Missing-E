@@ -158,8 +158,7 @@ function doStartup(response) {
                                          {component: "postingFixes"});
       }
       if (response.message.sidebarTweaks) {
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "sidebarTweaks"});
+         MissingE.packages.sidebarTweaks.init();
       }
       if (response.message.dashboardTweaks) {
          MissingE.packages.dashboardTweaks.init();
@@ -209,13 +208,6 @@ function settings_startup(response) {
                                       response.message.blogSelect,
                                       response.message.tagQueuedPosts,
                                       response.message.queueTags);
-   }
-   else if (response.message.component === "sidebarTweaks") {
-      MissingE_sidebarTweaks_doStartup(response.message.retries,
-                                       response.message.accountNum,
-                                       response.message.slimSidebar,
-                                       response.message.followingLink,
-                                       response.message.addSidebar);
    }
 }
 

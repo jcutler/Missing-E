@@ -1123,7 +1123,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "sidebarTweaks") {
       setSetting("MissingE_sidebarTweaks_accountNum", request.accountNum);
-      sendResponse();
    }
    else if (request.greeting == "tumblrPermission") {
       checkPermission(request, sender, sendResponse, tabs[sender.tab.id],
@@ -1304,8 +1303,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getSetting("MissingE_sidebarTweaks_enabled",1) == 1) {
             activeScripts.sidebarTweaks = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "sidebarTweaks/sidebarTweaks.css"});
-            chrome.tabs.executeScript(sender.tab.id, {file: "sidebarTweaks/sidebarTweaks.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/sidebarTweaks/sidebarTweaks.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/sidebarTweaks/sidebarTweaks.js"});
             if (getSetting("MissingE_sidebarTweaks_slimSidebar",0) == 1) {
                injectSlimSidebar = true;
             }
@@ -1550,7 +1549,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          chrome.tabs.insertCSS(sender.tab.id, {file: "core/common/widenIframe.css"});
       }
       if (injectSlimSidebar) {
-         chrome.tabs.insertCSS(sender.tab.id, {file: "sidebarTweaks/slimSidebar.css"});
+         chrome.tabs.insertCSS(sender.tab.id, {file: "core/sidebarTweaks/slimSidebar.css"});
       }
 
       activeScripts.url = request.url;

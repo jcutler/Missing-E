@@ -1522,8 +1522,8 @@ function handleMessage(message, myWorker) {
             activeScripts.bookmarker = false;
 
          if (getSetting("extensions.MissingE.sidebarTweaks.enabled",1) == 1) {
-            injectStyles.push(data.url("sidebarTweaks/sidebarTweaks.css"));
-            injectScripts.push(data.url("sidebarTweaks/sidebarTweaks.js"));
+            injectStyles.push(data.url("core/sidebarTweaks/sidebarTweaks.css"));
+            injectScripts.push(data.url("core/sidebarTweaks/sidebarTweaks.js"));
             if (getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0) == 1) {
                injectSlimSidebar = true;
             }
@@ -1787,7 +1787,7 @@ function handleMessage(message, myWorker) {
       activeScripts.greeting = "startup";
 
       if (injectSlimSidebar) {
-         injectStyles.push(data.url("sidebarTweaks/slimSidebar.css"));
+         injectStyles.push(data.url("core/sidebarTweaks/slimSidebar.css"));
       }
       var loadStyles = '';
       if (injectStyles.length > 0) {
