@@ -185,7 +185,7 @@ MissingE.packages.sidebarTweaks = {
                         .match(/<span class="count">([^<]*)/);
                      if (followerNum && followerNum.length >= 2) {
                         msb.find('a.followers').append('<span class="count">' +
-                                   MissingE.escapeHTMLfollowerNum[1]) +
+                                   MissingE.escapeHTML(followerNum[1]) +
                                    '</span>');
                      }
                   }
