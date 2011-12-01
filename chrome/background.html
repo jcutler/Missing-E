@@ -40,6 +40,7 @@ var cache = {};
 var cacheElements = 0;
 var cacheClear;
 var clearQueues;
+var permissionCache = {};
 var askerTable = {};
 var askerWaiters = {};
 var askerTableCopy = {};
@@ -109,6 +110,7 @@ askerTableClear = setInterval(function() {
 cacheClear = setInterval(function() {
    cache = {};
    cacheElements = 0;
+   permissionCache = {};
 }, fiveMinutes);
 
 clearQueues = setInterval(function() {
@@ -494,6 +496,10 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
 }
 
 function checkPermission(request, sender, sendResponse, hash, retries, tryCount) {
+   if (permissionCache.hasOwnProperty(request.user)) {
+      sendResponse({allow: permissionCache[request.user]});
+      return;
+   }
    var ajax = new XMLHttpRequest();
    ajax.open("HEAD", "http://www.tumblr.com/blog/" + request.user, true);
    ajax.tabHash = hash;
@@ -505,9 +511,11 @@ function checkPermission(request, sender, sendResponse, hash, retries, tryCount)
       }
       else if (this.readyState == 4) {
          if (this.status == 200) {
+            permissionCache[request.user] = true;
             sendResponse({allow: true});
          }
          else if (this.status < 500) {
+            permissionCache[request.user] = false;
             sendResponse({allow:false});
          }
          else {
@@ -527,9 +535,9 @@ function checkPermission(request, sender, sendResponse, hash, retries, tryCount)
 }
 
 function doTagsAjax(request, sender, sendResponse, hash, retries) {
-   debug("AJAX reblogYourself request (" + request.pid + ")");
+   debug("AJAX tags request (" + request.pid + ")");
    startAjax(request.pid);
-   var failMsg = {greeting:"reblogYourself", success:false, pid:request.pid};
+   var failMsg = {greeting:"tags", success:false, pid:request.pid};
    $.ajax({
       type: "GET",
       url: request.url + "/post/" + request.pid + "/rss",

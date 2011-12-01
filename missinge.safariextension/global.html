@@ -55,6 +55,7 @@ var cache = {};
 var cacheElements = 0;
 var cacheClear;
 var clearQueues;
+var permissionCache = {};
 var askerTable = {};
 var askerWaiters = {};
 var askerTableCopy = {};
@@ -111,6 +112,7 @@ askerTableClear = setInterval(function() {
 cacheClear = setInterval(function() {
    cache = {};
    cacheElements = 0;
+   permissionCache = {};
 }, fiveMinutes);
 clearQueues = setInterval(function() {
    if (activeAjax == 0) {
@@ -479,6 +481,11 @@ function doAskAjax(request, retries, type, doFunc) {
 }
 
 function checkPermission(request, retries, tryCount) {
+   if (permissionCache.hasOwnProperty(request.message.user)) {
+      request.target.page.dispatchMessage("tumblrPermission",
+                              {allow: permissionCache[request.message.user]});
+      return;
+   }
    var ajax = new XMLHttpRequest();
    ajax.open("HEAD", "http://www.tumblr.com/blog/" +
              request.message.user, true);
@@ -489,10 +496,12 @@ function checkPermission(request, retries, tryCount) {
       }
       else if (this.readyState == 4) {
          if (this.status == 200) {
+            permissionCache[request.message.user] = true;
             request.target.page.dispatchMessage("tumblrPermission",
                                                 {allow: true});
          }
          else if (this.status < 500) {
+            permissionCache[request.message.user] = false;
             request.target.page.dispatchMessage("tumblrPermission",
                                                 {allow:false});
          }

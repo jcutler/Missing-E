@@ -43,6 +43,7 @@ var cache = {};
 var cacheElements = 0;
 var cacheClear;
 var clearQueues;
+var permissionCache = {};
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var MissingE = require("utils").utils;
@@ -78,7 +79,9 @@ var prevVersion = getSetting('extensions.MissingE.version',null);
 cacheClear = timer.setInterval(function() {
    cache = {};
    cacheElements = 0;
+   permissionCache = {};
 }, fiveMinutes);
+
 clearQueues = timer.setInterval(function() {
    if (activeAjax == 0) {
       if (numSleeping !== 0) {
@@ -633,6 +636,11 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
 }
 
 function checkPermission(user, count, myWorker, retries) {
+   if (permissionCache.hasOwnProperty(user)) {
+      myWorker.postMessage({greeting: "tumblrPermission",
+                            allow: false});
+      return;
+   }
    Request({
       url: "http://www.tumblr.com/blog/" + user,
       headers: {tryCount: count,
@@ -646,6 +654,7 @@ function checkPermission(user, count, myWorker, retries) {
             closed = true;
          }
          if (response.status != 200 && response.status < 500) {
+            permissionCache[user] = false;
             myWorker.postMessage({greeting: "tumblrPermission",
                                   allow: false});
             return;
@@ -662,6 +671,7 @@ function checkPermission(user, count, myWorker, retries) {
          }
          else {
             var allow = /<\s*body\s*id="dashboard_index"/.test(response.text);
+            permissionCache[user] = allow;
             if (!closed) {
                myWorker.postMessage({greeting: "tumblrPermission",
                                      allow: allow});
