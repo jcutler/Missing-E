@@ -31,6 +31,7 @@ var utils = {
 
    urlPatterns: {
       "askForm":      /^ask_form\/[^\/]+(\/success)?[\/]?$/,
+      "bookmarklet":  /^share(\/\w+)?[\/]?$/,
       "blog":         /^blog\/[^\/]+(\/search\/[^\/]+)?(\/\d+)?[\/]?$/,
       "blogData":     /^blog\/[^\/]+\/((members|followers)(\/page\/\d+)?|settings)[\/]?$/,
       "crushes":      /^(blog\/[^\/]+\/)?new\/photo[\/]?$/,
@@ -48,7 +49,8 @@ var utils = {
       "reblog":       /^reblog\/\d+\/\w+(\/\w+)?[\/]?$/,
       "reply":        /^(blog\/[^\/]+\/)?new\/(text|photo)[\/]?$/,
       "settings":     /^blog\/[^\/]+\/settings[\/]?$/,
-      "tagged":       /^tagged\/[^\/]+[\/]?.*$/
+      "tagged":       /^tagged\/[^\/]+[\/]?.*$/,
+      "upload":       /^upload(\/image)?/
    },
 
    escapeHTML: function(str) {

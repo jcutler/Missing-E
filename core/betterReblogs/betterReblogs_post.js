@@ -228,7 +228,7 @@ MissingE.packages.betterReblogsPost = {
    },
 
    init: function() {
-      if (/http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href)) {
+      if (MissingE.isTumblrURL(location.href, ["iframe"])) {
          if (extension.isFirefox) {
             extension.sendRequest("settings",
                                   {component: "betterReblogs",

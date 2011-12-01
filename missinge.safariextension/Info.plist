@@ -69,7 +69,7 @@
 				<string>core/magnifier/magnifier.js</string>
 				<string>core/postCrushes/postCrushes.js</string>
 				<string>core/postCrushes/postCrushes_fill.js</string>
-				<string>postingFixes/postingFixes.js</string>
+				<string>core/postingTweaks/postingTweaks.js</string>
 				<string>core/dashboardTweaks/dashboardTweaks.js</string>
 				<string>core/sidebarTweaks/sidebarTweaks.js</string>
 				<string>core/reblogYourself/reblogYourself_post.js</string>
@@ -79,7 +79,7 @@
 				<string>core/safeDash/safeDash.js</string>
 				<string>core/timestamps/timestamps.js</string>
 				<string>core/massEditor/massEditor.js</string>
-				<string>postingFixes/subEdit.js</string>
+				<string>core/postingTweaks/postingTweaks_post.js</string>
 				<string>core/common/zindexFix.js</string>
                                 <string>core/versionCheck.js</string>
 				<string>common/whoami.js</string>
@@ -93,7 +93,7 @@
 			<string>core/bookmarker/bookmarker.css</string>
 			<string>core/magnifier/magnifier.css</string>
 			<string>core/safeDash/safeDash.css</string>
-			<string>postingFixes/postingFixes.css</string>
+			<string>core/postingTweaks/postingTweaks.css</string>
 			<string>core/massEditor/massEditor.css</string>
 			<string>core/sidebarTweaks/sidebarTweaks.css</string>
 			<string>core/dashboardTweaks/draftQueueTools.css</string>

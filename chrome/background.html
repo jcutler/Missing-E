@@ -935,11 +935,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                   $.ajax(this);
                }
                else {
-                  sendResponse({success: false});
+                  sendResponse({greeting: "uploader", success: false});
                }
             }
             else {
-               sendResponse({success: true, data: key[1]});
+               sendResponse({greeting: "uploader", success: true, data: key[1]});
             }
          },
          error:function() {
@@ -948,7 +948,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                $.ajax(this);
             }
             else {
-               sendResponse({success: false});
+               sendResponse({greeting: "uploader", success: false});
             }
          }
       });
@@ -1126,7 +1126,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "tumblrPermission") {
       checkPermission(request, sender, sendResponse, tabs[sender.tab.id],
-                      getSetting("MissingE_postingFixes_subEditRetries",MissingE.defaultRetries));
+                      getSetting("MissingE_postingTweaks_subEditRetries",MissingE.defaultRetries));
    }
    else if (request.greeting == "settings") {
       var settings = {};
@@ -1189,14 +1189,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.addTags = getSetting("MissingE_postCrushes_addTags",1);
             settings.showPercent = getSetting("MissingE_postCrushes_showPercent",1);
             break;
-         case "postingFixes":
-            settings.photoReplies = getSetting("MissingE_postingFixes_photoReplies",1);
-            settings.uploaderToggle = getSetting("MissingE_postingFixes_uploaderToggle",1);
-            settings.addUploader = getSetting("MissingE_postingFixes_addUploader",1);
-            settings.quickButtons = getSetting("MissingE_postingFixes_quickButtons",1);
-            settings.blogSelect = getSetting("MissingE_postingFixes_blogSelect",0);
-            settings.tagQueuedPosts = getSetting("MissingE_postingFixes_tagQueuedPosts",0);
-            settings.queueTags = getSetting("MissingE_postingFixes_queueTags",'');
+         case "postingTweaks":
+            settings.photoReplies = getSetting("MissingE_postingTweaks_photoReplies",1);
+            settings.uploaderToggle = getSetting("MissingE_postingTweaks_uploaderToggle",1);
+            settings.addUploader = getSetting("MissingE_postingTweaks_addUploader",1);
+            settings.quickButtons = getSetting("MissingE_postingTweaks_quickButtons",1);
+            settings.blogSelect = getSetting("MissingE_postingTweaks_blogSelect",0);
+            settings.tagQueuedPosts = getSetting("MissingE_postingTweaks_tagQueuedPosts",0);
+            settings.queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
@@ -1215,8 +1215,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.quickReblogForceTwitter = getSetting("MissingE_betterReblogs_quickReblogForceTwitter","default");
             settings.replaceIcons = (getSetting("MissingE_dashboardTweaks_enabled",1) == 1 && getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getSetting("MissingE_betterReblogs_fullText",0);
-            settings.tagQueuedPosts = (getSetting("MissingE_postingFixes_enabled",1) == 1 && getSetting("MissingE_postingFixes_tagQueuedPosts",0) == 1) ? 1: 0;
-            settings.queueTags = getSetting("MissingE_postingFixes_queueTags",'');
+            settings.tagQueuedPosts = (getSetting("MissingE_postingTweaks_enabled",1) == 1 && getSetting("MissingE_postingTweaks_tagQueuedPosts",0) == 1) ? 1: 0;
+            settings.queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
@@ -1382,8 +1382,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                        "reblog",
                        "messages",
                        "drafts"])) {
-         if (getSetting("MissingE_postingFixes_enabled",1) == 1) {
-            activeScripts.postingFixes = true;
+         if (getSetting("MissingE_postingTweaks_enabled",1) == 1) {
+            activeScripts.postingTweaks = true;
             if (!loadedUI) {
                loadedUI = true;
                loadUI(sender.tab.id, "core");
@@ -1392,11 +1392,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                loadedUIresizable = true;
                loadUI(sender.tab.id, "resizable");
             }
-            chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/postingFixes.js"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "postingFixes/postingFixes.css"});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/postingTweaks/postingTweaks.js"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/postingTweaks/postingTweaks.css"});
          }
          else
-            activeScripts.postingFixes = false;
+            activeScripts.postingTweaks = false;
       }
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url, ["reblog"])) {
@@ -1443,14 +1443,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.betterReblogs = false;
 
-         if (getSetting("MissingE_postingFixes_enabled",1) == 1 &&
-             getSetting("MissingE_postingFixes_subEdit",1) == 1) {
-            activeScripts.postingFixes = true;
+         if (getSetting("MissingE_postingTweaks_enabled",1) == 1 &&
+             getSetting("MissingE_postingTweaks_subEdit",1) == 1) {
+            activeScripts.postingTweaks = true;
             widenIframe = true;
-            chrome.tabs.executeScript(sender.tab.id, {file: "postingFixes/subEdit.js", allFrames: true});
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/postingTweaks/postingTweaks_post.js", allFrames: true});
          }
          else
-            activeScripts.postingFixes = false;
+            activeScripts.postingTweaks = false;
       }
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url,
@@ -1638,6 +1638,7 @@ currVersion = getVersion();
 function fixupSettings() {
    moveAllSettings('askFixes','askTweaks');
    moveAllSettings('dashboardFixes','dashboardTweaks');
+   moveAllSettings('postingFixes','postingTweaks');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
    moveSetting('MissingE_dashboardTweaks_followingLink','MissingE_sidebarTweaks_followingLink');
    collapseSettings('MissingE_askTweaks_betterAnswers','MissingE_askTweaks_buttons','MissingE_askTweaks_tags');

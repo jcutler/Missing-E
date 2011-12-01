@@ -21,32 +21,6 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*global doZindexFix,MissingE.getLocale,
-  MissingE_askFixes_doStartup,
-  MissingE_askFixes_domain_doStartup,
-  MissingE_askFixes_scroll_doStartup,
-  MissingE_betterReblogs_dash_doStartup,
-  MissingE_betterReblogs_fill_doStartup,
-  MissingE_betterReblogs_post_doStartup,
-  MissingE_bookmarker_doStartup,
-  MissingE_dashboardFixes_doStartup,
-  MissingE_dashLinksToTabs_doStartup,
-  MissingE_gotoDashPost_doStartup,
-  MissingE_magnifier_doStartup,
-  MissingE_massEditor_doStartup,
-  MissingE_postCrushes_doStartup,
-  MissingE_postCrushes_fill_doStartup,
-  MissingE_postingFixes_doStartup,
-  MissingE_postingFixes_subEdit_doStartup,
-  MissingE_reblogYourself_dash_doStartup,
-  MissingE_reblogYourself_post_doStartup,
-  MissingE_replyReplies_doStartup,
-  MissingE_replyReplies_fill_doStartup,
-  MissingE_safeDash_doStartup,
-  MissingE_sidebarTweaks_doStartup,
-  MissingE_timestamps_doStartup,
-  safari */
-
 if ((window.top === window &&
     !(/http:\/\/missinge\.infraware\.ca/.test(location.href)) &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
@@ -153,9 +127,8 @@ function doStartup(response) {
             MissingE_replyReplies_doStartup();
          }
       }
-      if (response.message.postingFixes) {
-         safari.self.tab.dispatchMessage("settings",
-                                         {component: "postingFixes"});
+      if (response.message.postingTweaks) {
+         MissingE.packages.postingTweaks.init();
       }
       if (response.message.sidebarTweaks) {
          MissingE.packages.sidebarTweaks.init();
@@ -192,26 +165,12 @@ function doStartup(response) {
       if (response.message.reblogYourself) {
          MissingE.packages.reblogYourselfPost.init();
       }
-      if (response.message.postingFixes) {
-         MissingE_postingFixes_subEdit_doStartup();
+      if (response.message.postingTweaks) {
+         MissingE.packages.postingTweaksPost.init();
       }
-   }
-}
-
-function settings_startup(response) {
-   if (response.name !== "settings") { return; }
-   else if (response.message.component === "postingFixes") {
-      MissingE_postingFixes_doStartup(response.message.photoReplies,
-                                      response.message.uploaderToggle,
-                                      response.message.addUploader,
-                                      response.message.quickButtons,
-                                      response.message.blogSelect,
-                                      response.message.tagQueuedPosts,
-                                      response.message.queueTags);
    }
 }
 
 safari.self.addEventListener("message", updateCheck, false);
 safari.self.addEventListener("message", doStartup, false);
-safari.self.addEventListener("message", settings_startup, false);
 safari.self.addEventListener("message", versionCheck, false);

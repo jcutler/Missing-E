@@ -37,7 +37,7 @@ var componentList = ["dashboardTweaks",
                      "magnifier",
                      "betterReblogs",
                      "gotoDashPost",
-                     "postingFixes",
+                     "postingTweaks",
                      "reblogYourself",
                      "askTweaks",
                      "postCrushes",
@@ -1008,6 +1008,43 @@ function handleRequest(request) {
          }
       }
    }
+   else if (request.name == "uploader") {
+      debug("Getting form key");
+      $.ajax({
+         url: "http://www.tumblr.com/upload/image",
+         dataType:"html",
+         retries:4,
+         tryCount:0,
+         success:function(data) {
+            var key = data.match(/<input[^>]*name="form_key"[^>]*value="([^"]*)"[^>]*>/);
+            if (!key || key.length < 2) {
+               debug("Retrying form key retrieval");
+               if (this.tryCount < this.retries) {
+                  this.tryCount++;
+                  $.ajax(this);
+               }
+               else {
+                  debug("Form key retrieval failed");
+                  request.target.page.dispatchMessage("uploader",{success: false});
+               }
+            }
+            else {
+               request.target.page.dispatchMessage("uploader",{success: true, data: key[1]});
+            }
+         },
+         error:function() {
+            if (this.tryCount < this.retries) {
+               debug("Retrying form key retrieval");
+               this.tryCount++;
+               $.ajax(this);
+            }
+            else {
+               debug("Failed form key retrieval");
+               request.target.page.dispatchMessage("uploader",{success: false});
+            }
+         }
+      });
+   }
    else if (request.name == "update") {
       request.target.page.dispatchMessage("update",
          {update:versionCompare(getSetting("MissingE_externalVersion",'0'),
@@ -1261,15 +1298,15 @@ function handleRequest(request) {
       settings.MissingE_dashLinksToTabs_editLinks = getSetting("MissingE_dashLinksToTabs_editLinks",0);
       settings.MissingE_timestamps_retries = getSetting("MissingE_timestamps_retries",MissingE.defaultRetries);
       settings.MissingE_timestamps_format = getSetting("MissingE_timestamps_format",MissingE.defaultFormat);
-      settings.MissingE_postingFixes_photoReplies = getSetting("MissingE_postingFixes_photoReplies",1);
-      settings.MissingE_postingFixes_uploaderToggle = getSetting("MissingE_postingFixes_uploaderToggle",1);
-      settings.MissingE_postingFixes_addUploader = getSetting("MissingE_postingFixes_addUploader",1);
-      settings.MissingE_postingFixes_quickButtons = getSetting("MissingE_postingFixes_quickButtons",1);
-      settings.MissingE_postingFixes_blogSelect = getSetting("MissingE_postingFixes_blogSelect",0);
-      settings.MissingE_postingFixes_subEdit = getSetting("MissingE_postingFixes_subEdit",1);
-      settings.MissingE_postingFixes_subEditRetries = getSetting("MissingE_postingFixes_subEditRetries",MissingE.defaultRetries);
-      settings.MissingE_postingFixes_tagQueuedPosts = getSetting("MissingE_postingFixes_tagQueuedPosts",0);
-      settings.MissingE_postingFixes_queueTags = getSetting("MissingE_postingFixes_queueTags",'');
+      settings.MissingE_postingTweaks_photoReplies = getSetting("MissingE_postingTweaks_photoReplies",1);
+      settings.MissingE_postingTweaks_uploaderToggle = getSetting("MissingE_postingTweaks_uploaderToggle",1);
+      settings.MissingE_postingTweaks_addUploader = getSetting("MissingE_postingTweaks_addUploader",1);
+      settings.MissingE_postingTweaks_quickButtons = getSetting("MissingE_postingTweaks_quickButtons",1);
+      settings.MissingE_postingTweaks_blogSelect = getSetting("MissingE_postingTweaks_blogSelect",0);
+      settings.MissingE_postingTweaks_subEdit = getSetting("MissingE_postingTweaks_subEdit",1);
+      settings.MissingE_postingTweaks_subEditRetries = getSetting("MissingE_postingTweaks_subEditRetries",MissingE.defaultRetries);
+      settings.MissingE_postingTweaks_tagQueuedPosts = getSetting("MissingE_postingTweaks_tagQueuedPosts",0);
+      settings.MissingE_postingTweaks_queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
       settings.MissingE_reblogYourself_postPage = getSetting("MissingE_reblogYourself_postPage",1);
       settings.MissingE_reblogYourself_dashboard = getSetting("MissingE_reblogYourself_dashboard",1);
       settings.MissingE_reblogYourself_retries = getSetting("MissingE_reblogYourself_retries",MissingE.defaultRetries);
@@ -1301,7 +1338,7 @@ function handleRequest(request) {
    }
    else if (request.name == "tumblrPermission") {
       checkPermission(request,
-                      getSetting("MissingE_postingFixes_subEditRetries",MissingE.defaultRetries));
+                      getSetting("MissingE_postingTweaks_subEditRetries",MissingE.defaultRetries));
    }
    else if (request.name == "settings") {
       var settings = {};
@@ -1366,14 +1403,14 @@ function handleRequest(request) {
             settings.addTags = getSetting("MissingE_postCrushes_addTags",1);
             settings.showPercent = getSetting("MissingE_postCrushes_showPercent",1);
             break;
-         case "postingFixes":
-            settings.photoReplies = getSetting("MissingE_postingFixes_photoReplies",1);
-            settings.uploaderToggle = getSetting("MissingE_postingFixes_uploaderToggle",1);
-            settings.addUploader = getSetting("MissingE_postingFixes_addUploader",1);
-            settings.quickButtons = getSetting("MissingE_postingFixes_quickButtons",1);
-            settings.blogSelect = getSetting("MissingE_postingFixes_blogSelect",0);
-            settings.tagQueuedPosts = getSetting("MissingE_postingFixes_tagQueuedPosts",0);
-            settings.queueTags = getSetting("MissingE_postingFixes_queueTags",'');
+         case "postingTweaks":
+            settings.photoReplies = getSetting("MissingE_postingTweaks_photoReplies",1);
+            settings.uploaderToggle = getSetting("MissingE_postingTweaks_uploaderToggle",1);
+            settings.addUploader = getSetting("MissingE_postingTweaks_addUploader",1);
+            settings.quickButtons = getSetting("MissingE_postingTweaks_quickButtons",1);
+            settings.blogSelect = getSetting("MissingE_postingTweaks_blogSelect",0);
+            settings.tagQueuedPosts = getSetting("MissingE_postingTweaks_tagQueuedPosts",0);
+            settings.queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
@@ -1392,8 +1429,8 @@ function handleRequest(request) {
             settings.quickReblogForceTwitter = getSetting("MissingE_betterReblogs_quickReblogForceTwitter","default");
             settings.replaceIcons = (getSetting("MissingE_dashboardTweaks_enabled",1) == 1 && getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getSetting("MissingE_betterReblogs_fullText",0);
-            settings.tagQueuedPosts = (getSetting("MissingE_postingFixes_enabled",1) == 1 && getSetting("MissingE_postingFixes_tagQueuedPosts",0) == 1) ? 1: 0;
-            settings.queueTags = getSetting("MissingE_postingFixes_queueTags",'');
+            settings.tagQueuedPosts = (getSetting("MissingE_postingTweaks_enabled",1) == 1 && getSetting("MissingE_postingTweaks_tagQueuedPosts",0) == 1) ? 1: 0;
+            settings.queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
@@ -1506,11 +1543,11 @@ function handleRequest(request) {
           /http:\/\/www\.tumblr\.com\/blog\/[A-Za-z0-9\-\_]+\/submissions/.test(request.message.url) ||
           /http:\/\/www\.tumblr\.com\/blog\/[^\/]*\/drafts/.test(request.message.url)) ||
          (/http:\/\/www\.tumblr\.com\/share/.test(request.message.url)))) {
-         if (getSetting("MissingE_postingFixes_enabled",1) == 1) {
-            activeScripts.postingFixes = true;
+         if (getSetting("MissingE_postingTweaks_enabled",1) == 1) {
+            activeScripts.postingTweaks = true;
          }
          else
-            activeScripts.postingFixes = false;
+            activeScripts.postingTweaks = false;
       }
       if (!request.message.isFrame &&
           /http:\/\/www\.tumblr\.com\/reblog\//.test(request.message.url)) {
@@ -1543,12 +1580,12 @@ function handleRequest(request) {
          else
             activeScripts.betterReblogs = false;
 
-         if (getSetting("MissingE_postingFixes_enabled",1) == 1 &&
-             getSetting("MissingE_postingFixes_subEdit",1) == 1) {
-            activeScripts.postingFixes = true;
+         if (getSetting("MissingE_postingTweaks_enabled",1) == 1 &&
+             getSetting("MissingE_postingTweaks_subEdit",1) == 1) {
+            activeScripts.postingTweaks = true;
          }
          else
-            activeScripts.postingFixes = false;
+            activeScripts.postingTweaks = false;
       }
       if (!request.message.isFrame &&
           (/http:\/\/www\.tumblr\.com\/dashboard/.test(request.message.url) ||
@@ -1750,6 +1787,7 @@ function injectSlimSidebar(e) {
 function fixupSettings() {
    moveAllSettings('askFixes','askTweaks');
    moveAllSettings('dashboardFixes','dashboardTweaks');
+   moveAllSettings('postingFixes','postingTweaks');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
    moveSetting('MissingE_dashboardTweaks_followingLink','MissingE_sidebarTweaks_followingLink');
    collapseSettings('MissingE_askTweaks_betterAnswers','MissingE_askTweaks_buttons','MissingE_askTweaks_tags');

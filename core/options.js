@@ -164,7 +164,7 @@ MissingE.utilities.options = {
          }
          else if (obj.name === 'MissingE_askTweaks_defaultTags' ||
                   obj.name === 'MissingE_replyReplies_defaultTags' ||
-                  obj.name === 'MissingE_postingFixes_queueTags') {
+                  obj.name === 'MissingE_postingTweaks_queueTags') {
             var val = MissingE.utilities.options.trim(obj.value);
             val = val.replace(/^\s*,/,'').replace(/,(\s*,)*/g,',')
                      .replace(/\s*,\s*/g,', ').replace(/,\s*$/,'')
@@ -203,7 +203,7 @@ MissingE.utilities.options = {
                         "magnifier",
                         "betterReblogs",
                         "gotoDashPost",
-                        "postingFixes",
+                        "postingTweaks",
                         "reblogYourself",
                         "askTweaks",
                         "postCrushes",
@@ -322,16 +322,16 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_reblogAsks',0);
             frm.MissingE_betterReblogs_askRetries.value = MissingE.utilities.options.getStorage('MissingE_betterReblogs_askRetries',MissingE.defaultRetries);
          }
-         else if (v == "postingFixes") {
-            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_photoReplies',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_uploaderToggle',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_addUploader',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_quickButtons',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_blogSelect',0);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_subEdit',1);
-            frm.MissingE_postingFixes_subEditRetries.value = MissingE.utilities.options.getStorage('MissingE_postingFixes_subEditRetries',MissingE.defaultRetries);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_postingFixes_tagQueuedPosts',0);
-            frm.MissingE_postingFixes_queueTags.value = MissingE.utilities.options.getStorage('MissingE_postingFixes_queueTags','');
+         else if (v == "postingTweaks") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_photoReplies',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_uploaderToggle',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_addUploader',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_quickButtons',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_blogSelect',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_subEdit',1);
+            frm.MissingE_postingTweaks_subEditRetries.value = MissingE.utilities.options.getStorage('MissingE_postingTweaks_subEditRetries',MissingE.defaultRetries);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_tagQueuedPosts',0);
+            frm.MissingE_postingTweaks_queueTags.value = MissingE.utilities.options.getStorage('MissingE_postingTweaks_queueTags','');
          }
          else if (v == "reblogYourself") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_reblogYourself_postPage',1);
@@ -431,7 +431,7 @@ MissingE.utilities.options = {
 
       if (extension.isFirefox ||
           extension.isSafari) {
-         extension.sendRequest("all-settings", {}, function(response) {
+         extension.sendRequest("all-settings", function(response) {
             MissingE.utilities.options.all_settings = response;
             MissingE.utilities.options.loadSettings();
             MissingE.utilities.options.setupPage();

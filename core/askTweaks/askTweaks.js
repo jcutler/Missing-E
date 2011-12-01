@@ -213,8 +213,8 @@ MissingE.packages.askTweaks = {
       if (betterAnswers === 1) {
          var allbtns = "";
          var suffix;
-         for (i in MissingE.getLocale(lang).postingFixes.submitText) {
-            if (MissingE.getLocale(lang).postingFixes.submitText
+         for (i in MissingE.getLocale(lang).postingTweaks.submitText) {
+            if (MissingE.getLocale(lang).postingTweaks.submitText
                   .hasOwnProperty(i)) {
                if (i === 'publish') { continue; }
                if (i === 'queue' || i === 'draft') {
@@ -227,7 +227,7 @@ MissingE.packages.askTweaks = {
                   suffix + id + '" onclick="return false;">' +
                   '<div class="chrome_button">' +
                   '<div class="chrome_button_left"></div>' +
-                  MissingE.getLocale(lang).postingFixes.submitText[i] +
+                  MissingE.getLocale(lang).postingTweaks.submitText[i] +
                   '<div class="chrome_button_right"></div></div></button>' +
                   '<br />';
             }

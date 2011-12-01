@@ -112,7 +112,7 @@ var locale = {
   "bookmarksTitle": "Bookmarks",
   "postUnavailable": "Post Unavailable",
   "magnify": "magnify",
-  "postingFixes": {
+  "postingTweaks": {
    "submitText": {
     "publish": "Publish post",
     "queue": "Queue Post",
@@ -287,7 +287,7 @@ var locale = {
   "bookmarksTitle": "Lesezeichen",
   "postUnavailable": "Beitrag nicht verfügbar",
   "magnify": "vergrößern",
-  "postingFixes": {
+  "postingTweaks": {
    "submitText": {
     "publish": "Eintrag publizieren",
     "queue": "in die Warteschleife stellen",
@@ -462,7 +462,7 @@ var locale = {
   "bookmarksTitle": "Marcadores",
   "postUnavailable": "Publicación no disponible",
   "magnify": "agrandar",
-  "postingFixes": {
+  "postingTweaks": {
    "submitText": {
     "publish": "Crear publicación",
     "queue": "Poner publicación en cola",
@@ -637,7 +637,7 @@ var locale = {
   "bookmarksTitle": "Signets",
   "postUnavailable": "Billet Indisponible",
   "magnify": "agrandir",
-  "postingFixes": {
+  "postingTweaks": {
    "submitText": {
     "publish": "Publier le billet",
     "queue": "Ajouter à la file d'attente",
@@ -812,7 +812,7 @@ var locale = {
   "bookmarksTitle": "Segnalibri",
   "postUnavailable": "Post Indisponibile",
   "magnify": "ingrandire",
-  "postingFixes": {
+  "postingTweaks": {
    "submitText": {
     "publish": "Pubblica post",
     "queue": "Metti post in coda",
@@ -997,7 +997,7 @@ var locale = {
   "bookmarksTitle": "ブックマーク",
   "postUnavailable": "できない見つけること投稿",
   "magnify": "拡大する",
-  "postingFixes": {
+  "postingTweaks": {
    "submitText": {
     "publish": "投稿を公開",
     "queue": "キューに追加",
@@ -1165,7 +1165,7 @@ var locale = {
   "bookmarksTitle": "Zakładki",
   "postUnavailable": "Post niedostępny",
   "magnify": "powiększ",
-  "postingFixes": {
+  "postingTweaks": {
    "submitText": {
     "publish": "Publikuj",
     "queue": "Kolejkuj",
@@ -1340,7 +1340,7 @@ var locale = {
   "bookmarksTitle": "Закладки",
   "postUnavailable": "Запись недоступна",
   "magnify": "увеличить",
-  "postingFixes": {
+  "postingTweaks": {
    "submitText": {
     "publish": "Опубликовать пост",
     "queue": "Добавить в очередь",
@@ -1545,7 +1545,7 @@ var locale = {
   "bookmarksTitle": "Yer imleri",
   "postUnavailable": "Gönderi Kullanılamıyor",
   "magnify": "büyüt",
-  "postingFixes": {
+  "postingTweaks": {
    "submitText": {
     "publish": "Gönderi yayınla",
     "queue": "Gönderiyi sıraya koy",

@@ -154,7 +154,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_postingFixes_enabled</string>
+		<string>MissingE_postingTweaks_enabled</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -554,7 +554,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_postingFixes_photoReplies</string>
+		<string>MissingE_postingTweaks_photoReplies</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -564,7 +564,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_postingFixes_uploaderToggle</string>
+		<string>MissingE_postingTweaks_uploaderToggle</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -574,7 +574,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_postingFixes_addUploader</string>
+		<string>MissingE_postingTweaks_addUploader</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -584,7 +584,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_postingFixes_quickButtons</string>
+		<string>MissingE_postingTweaks_quickButtons</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -594,7 +594,7 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_postingFixes_blogSelect</string>
+		<string>MissingE_postingTweaks_blogSelect</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -604,7 +604,7 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_postingFixes_tagQueuedPosts</string>
+		<string>MissingE_postingTweaks_tagQueuedPosts</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -614,7 +614,7 @@
 		<key>DefaultValue</key>
 		<string></string>
 		<key>Key</key>
-		<string>MissingE_postingFixes_queueTags</string>
+		<string>MissingE_postingTweaks_queueTags</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -624,7 +624,7 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_postingFixes_subEdit</string>
+		<string>MissingE_postingTweaks_subEdit</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -634,7 +634,7 @@
 		<key>DefaultValue</key>
 		<real>4</real>
 		<key>Key</key>
-		<string>MissingE_postingFixes_subEditRetries</string>
+		<string>MissingE_postingTweaks_subEditRetries</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
