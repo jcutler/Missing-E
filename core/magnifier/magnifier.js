@@ -131,8 +131,8 @@ MissingE.packages.magnifier = {
          if (str) {
             var mi = $('<a title="' + MissingE.getLocale(lang).loading + '" ' +
                        'class="MissingE_magnify MissingE_magnify_hide" ' +
-                       'id="magnify_' + tid + '" href="#" ' +
-                       'onclick="return false;"></a>');
+                       'id="magnify_' + MissingE.escapeHTML(tid) + '" ' +
+                       'href="#" onclick="return false;"></a>');
             mi.click(MissingE.packages.magnifier.magClick);
             if (bm.length > 0) {
                bm.before(mi);

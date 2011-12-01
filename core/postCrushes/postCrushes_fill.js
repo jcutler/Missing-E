@@ -41,8 +41,9 @@ MissingE.packages.postCrushesFill = {
             document.getElementById('post_tags').value = tags;
             for (i=0; i<tagarr.length; i++) {
                if (tagarr[i] !== null && tagarr[i] !== '') {
-                  txt += '<div class="token"><span class="tag">' + tagarr[i] +
-                         '</span><a title="Remove tag" ' +
+                  txt += '<div class="token"><span class="tag">' +
+                         MissingE.escapeHTML(tagarr[i]) + '</span>' +
+                         '<a title="Remove tag" ' +
                          'onclick="tag_editor_remove_tag($(this).up()); ' +
                          'return false;" href="#">x</a></div>';
                }
