@@ -267,7 +267,11 @@ function MissingE_postingFixes_doStartup(photoReplies, uploaderToggle,
                         '</span></button></div>';
          }
       }
-      var newbtns = $('<div id="MissingE_postMenu">' + allbtns + '</div>')
+      console.log(btn.css('margin-left'));
+      var newbtns = $('<div id="MissingE_postMenu"' +
+                      (isShare ? ' style="margin-left:' +
+                       btn.css('margin-left') + ';"' : '') + '>' + allbtns +
+                      '</div>')
                      .insertAfter(btn);
       if (isShare) {
          $('#MissingE_postMenu').css('bottom',bottom + 'px');

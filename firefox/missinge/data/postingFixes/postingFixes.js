@@ -280,7 +280,10 @@ self.on('message', function(message) {
                         '</span></button></div>';
          }
       }
-      var newbtns = jQuery('<div id="MissingE_postMenu">' + allbtns + '</div>')
+      var newbtns = jQuery('<div id="MissingE_postMenu"' +
+                           (isShare ? ' style="margin-left:' +
+                            btn.css('margin-left') + ';"' : '') + '>' +
+                           allbtns + '</div>')
                      .insertAfter(btn);
       if (isShare) {
          jQuery('#MissingE_postMenu').css('bottom',bottom + 'px');

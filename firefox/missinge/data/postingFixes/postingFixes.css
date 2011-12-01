@@ -47,7 +47,7 @@ margin-bottom:0;
 }
 
 #bookmarklet_index #MissingE_postMenu button {
-margin:1px 2px 1px 0 !important;
+margin:1px 0 !important;
 height:auto !important;
 line-height:normal !important;
 }
@@ -76,7 +76,7 @@ margin-left:15px;
 font:14px Arial,Helvetica !important;
 color:#666 !important;
 padding:5px;
-height: 36px!important;
+height:36px !important;
 line-height:30px !important;
 vertical-align:bottom;
 border-radius:5px;

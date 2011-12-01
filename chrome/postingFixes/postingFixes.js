@@ -269,7 +269,8 @@ chrome.extension.sendRequest({greeting: "settings", component: "postingFixes"},
                      .insertAfter(btn);
 
       if (isShare) {
-         $('#MissingE_postMenu').css('bottom',bottom + 'px');
+         newbtns.css('bottom', bottom + 'px')
+                .css('margin-left', btn.css('margin-left'));
       }
       $('#post_state').bind('change', function() {
          showHideButtons(newbtns, this.value);
