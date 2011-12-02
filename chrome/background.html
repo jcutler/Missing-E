@@ -839,14 +839,14 @@ function requestMagnifier(request, sender, sendResponse, hash) {
          url = [];
          for (i=0; i<request.num; i++) {
             url.push("http://www.tumblr.com/photo/1280/" + request.pid + "/" +
-                     (i+1) + "/" + request.code);
+                     request.revs[i] + "/" + request.code);
             url.push(request.captions[i]);
          }
          url = JSON.stringify(url);
       }
       else {
-         url = "http://www.tumblr.com/photo/1280/" + request.pid + "/1/" +
-            request.code;
+         url = "http://www.tumblr.com/photo/1280/" + request.pid + "/" +
+            request.revs[0] + "/" + request.code;
       }
       sendResponse({pid: request.pid, success: true, data: url});
    }

@@ -824,7 +824,8 @@ function requestMagnifier(request) {
          url = [];
          for (i=0; i<request.message.num; i++) {
             url.push("http://www.tumblr.com/photo/1280/" +
-                     request.message.pid + "/" + (i+1) + "/" +
+                     request.message.pid + "/" +
+                     request.message.revs[i] + "/" +
                      request.message.code);
             url.push(request.message.captions[i]);
          }
@@ -832,7 +833,7 @@ function requestMagnifier(request) {
       }
       else {
          url = "http://www.tumblr.com/photo/1280/" + request.message.pid +
-            "/1/" + request.message.code;
+            "/" + request.message.revs[0] + "/" + request.message.code;
       }
       request.target.page.dispatchMessage("magnifier", {pid: request.message.pid,
                                                         success: true,

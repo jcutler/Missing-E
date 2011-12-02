@@ -869,14 +869,14 @@ function startMagnifier(message, myWorker) {
       url = [];
       for (i=0; i<message.num; i++) {
          url.push("http://www.tumblr.com/photo/1280/" + message.pid + "/" +
-                  (i+1) + "/" + message.code);
+                  message.revs[i] + "/" + message.code);
          url.push(message.captions[i]);
       }
       url = JSON.stringify(url);
    }
    else {
-      url = "http://www.tumblr.com/photo/1280/" + message.pid + "/1/" +
-         message.code;
+      url = "http://www.tumblr.com/photo/1280/" + message.pid + "/" +
+         message.revs[0] + "/" + message.code;
    }
    myWorker.postMessage({greeting: "magnifier", pid: message.pid, success: true,
                          data: url});
