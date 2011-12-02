@@ -80,6 +80,7 @@ color:#4183c4;
 
 ##**2.3.0** (not yet released)
 **_+_** Add "delete" button option for sub-Tumblr permalink post pages  
+**_+_** Enable photo magnification for drafts and queued posts  
 **_!_** Add reblog button to ask post permalink pages when Better Reblogs ask reblogging option is on but Reblog Yourself is off  
 **_!_** Load correct images with Magnifier for posts that have had images replaced  
 **_!_** Extend sidebar adding to paginated dashboard pages  
