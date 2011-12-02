@@ -95,12 +95,19 @@ MissingE.packages.magnifier = {
          var ctrl = $(item).find('div.post_controls');
          var bm = ctrl.find('a.MissingE_mark');
          var heart = ctrl.find('a.like_button');
+         var publish;
          var count = 1;
          var caps;
          var tid = $(item).attr("id").match(/[0-9]*$/)[0];
          var str, img, imgnum;
          var set = $('#photoset_' + tid);
          var revisions = [];
+
+         if (MissingE.isTumblrURL(location.href, ["drafts", "queue"])) {
+            publish = ctrl.find('a').filter(function() {
+               return /publish_post_/.test($(this).attr('onclick'));
+            }).first();
+         }
 
          if (set.length > 0) {
             var imgs = set.find('img');
@@ -149,7 +156,10 @@ MissingE.packages.magnifier = {
                        'id="magnify_' + MissingE.escapeHTML(tid) + '" ' +
                        'href="#" onclick="return false;"></a>');
             mi.click(MissingE.packages.magnifier.magClick);
-            if (bm.length > 0) {
+            if (publish && publish.length > 0) {
+               publish.before(mi);
+            }
+            else if (bm.length > 0) {
                bm.before(mi);
             }
             else if (heart.length > 0) {
@@ -197,8 +207,8 @@ MissingE.packages.magnifier = {
                        '.MissingE_magnify_avatar { ' +
                        'background-image:url("' + overlay + '"); }</style>');
 
-      if (!MissingE.isTumblrURL(location.href, ["drafts", "queue", "messages",
-                                       "followers", "following"])) {
+      if (!MissingE.isTumblrURL(location.href, ["messages", "followers",
+                                                "following"])) {
          $('#facebox .turner_left, #facebox .turner_right')
                .live('click', function() {
             var curr = $(this).siblings('div.image:visible:last');

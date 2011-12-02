@@ -134,7 +134,6 @@ MissingE.packages.dashboardTweaks = {
          var klass = "MissingE_post_control ";
          if (!MissingE.isTumblrURL(location.href, ["messages"]) &&
              (/delete_post_/.test(a.attr('onclick')) ||
-              /^delete_post_/.test(a.prev().attr('id')) ||
               /^post_delete_/.test(a.attr('id')) ||
               (new RegExp(MissingE.getLocale(lang).dashTweaksText.del, "i")
                .test(a.text())))) {
