@@ -1,4 +1,5 @@
 TESTER_LIST
+syncDirs.sh
 temporary
 chrome/core
 missinge.safariextension/core
