@@ -69,6 +69,9 @@ MissingE.packages.magnifier = {
    insertAvatarMagnifier: function(item) {
       var it = $(item);
       var mag;
+      if (it.find('div.MissingE_magnify_avatar').length > 0) {
+         return;
+      }
       if (item.tagName === "LI" && it.hasClass("notification")) {
          mag = $('<div class="MissingE_magnify_avatar"></div>')
             .appendTo(it.find('a.avatar_frame'));
@@ -93,6 +96,9 @@ MissingE.packages.magnifier = {
           $(item).hasClass("photo")) {
          var lang = $('html').attr('lang');
          var ctrl = $(item).find('div.post_controls');
+         if (ctrl.find('.MissingE_magnify').length > 0) {
+            return;
+         }
          var bm = ctrl.find('a.MissingE_mark');
          var heart = ctrl.find('a.like_button');
          var publish;
