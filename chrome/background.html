@@ -1110,13 +1110,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "start") {
       addTab(sender.tab.id, sender.tab.url);
-      if (!MissingE.isTumblrURL(request.url)) {
-         chrome.tabs.executeScript(sender.tab.id, {file: "extension.js"});
-      }
+      chrome.tabs.executeScript(sender.tab.id, {file: "extension.js", allFrames: true});
+      chrome.tabs.executeScript(sender.tab.id, {file: "core/utils.js", allFrames: true});
       if (!MissingE.isTumblrURL(request.url, ["askForm"])) {
          chrome.tabs.executeScript(sender.tab.id, {file: "jquery.min.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "core/common/ajaxEvents.js"});
-         chrome.tabs.executeScript(sender.tab.id, {file: "core/utils.js"});
       }
       var activeScripts = {};
       activeScripts.version = currVersion;
