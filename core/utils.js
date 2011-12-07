@@ -313,9 +313,11 @@ var utils = {
    },
 
    isTumblrURL: function(fullURL, matches) {
-      if (!/^http:\/\/www\.tumblr\.com\//.test(fullURL) ||
-          !matches) {
+      if (!/^http:\/\/www\.tumblr\.com\//.test(fullURL)) {
          return false;
+      }
+      else if (!matches) {
+         return true;
       }
       var i;
       var url = fullURL.replace(/^http:\/\/www\.tumblr\.com\//,'')
@@ -364,8 +366,10 @@ if (typeof require === "function" &&
     require("api-utils/xul-app")) {
    exports.utils = utils;
 }
-else {
+else if (!MissingE.hasOwnProperty("_utilsLoaded") ||
+         !MissingE._utilsLoaded) {
    var i;
+   MissingE._utilsLoaded = true;
    for (i in utils) {
       if (utils.hasOwnProperty(i)) {
          MissingE[i] = utils[i];
