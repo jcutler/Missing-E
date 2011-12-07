@@ -561,11 +561,14 @@ MissingE.packages.askTweaks = {
                   MissingE.packages.askTweaks.settings[i] = response[i];
                }
             }
-            if (MissingE.isTumblrURL(location.href, ["askForm"])) {
-               MissingE.packages.askTweaks.runAskForm();
-            }
-            else {
-               MissingE.packages.askTweaks.run();
+            if (!MissingE.packages.askTweaks._hasRun) {
+               if (MissingE.isTumblrURL(location.href, ["askForm"])) {
+                  MissingE.packages.askTweaks.runAskForm();
+               }
+               else if (MissingE.isTumblrURL(location.href)) {
+                  MissingE.packages.askTweaks.run();
+               }
+               MissingE.packages.askTweaks._hasRun = true;
             }
          }
       });
