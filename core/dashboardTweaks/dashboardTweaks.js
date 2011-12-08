@@ -79,9 +79,10 @@ MissingE.packages.dashboardTweaks = {
       npl.html(pltxt);
       var bg = npl.css('background-image');
       var bgc = npl.css('background-color');
-      np.css('cssText', 'background:' +
-             ((!bg || bg === 'none') ? 'transparent' : bgc) +
-             'none !important');
+      npl.css('cssText','background-image:none !important;' +
+                        'background-color:' +
+                        ((!bg || bg === 'none') ? 'transparent' : bgc) +
+                        ' !important;');
    },
 
    doReplies: function(item) {
