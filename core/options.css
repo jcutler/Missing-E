@@ -32,7 +32,7 @@ left:0;
 
 body {
 background:#2c4762 url('images/background.png') top repeat-x;
-font:normal 14px Arial,Helvetica,sans-serif;
+font:normal 14px "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
 line-height:1.4;
 color:#444;
 margin:0;
@@ -75,7 +75,7 @@ overflow:hidden
 }
 
 input, select {
-font:normal 13px 'Lucida Grande',Helvetica,Arial,sans-serif;
+font:normal 13px 'Lucida Grande',"Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
 color:#444
 }
 
@@ -278,7 +278,7 @@ margin-bottom:0!important
 }
 
 #posts .post .post_title {
-font:bold 22px Arial,Helvetica;
+font:bold 22px "Helvetica Neue","HelveticaNeue",Helvetica,Arial,sans-serif;
 line-height:40px;
 height:40px;
 margin-bottom:10px
