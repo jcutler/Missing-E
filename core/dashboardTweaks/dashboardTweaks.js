@@ -590,6 +590,13 @@ MissingE.packages.dashboardTweaks = {
                });
             });
          }
+         $('.move_to_top').live('click', function() {
+            if ($('#posts li:first').attr('id') === "new_post" &&
+                $('#posts li.post').length > 1) {
+               $('#posts').find('li[id^="photo_reply_container"]').detach()
+                  .insertAfter('#posts li.post:not(#new_post):first');
+            }
+         });
          $('#MissingEdraftQueueTools a').click(function() {
             var btn = $(this);
             if (btn.hasClass('randomize')) {
