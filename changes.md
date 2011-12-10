@@ -74,7 +74,7 @@ color:#4183c4;
 
 #_Missing e_ Change History
 
-    + indicates added features or functionliaty  
+    + indicates added features or functionality  
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
