@@ -120,7 +120,7 @@ left:0;
 }
 
 #bookmarklet_index #container > form {
-margin-bottom:15px;
+margin-bottom:15px !important;
 }
 
 #bookmarklet_index #container textarea {
