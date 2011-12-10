@@ -154,7 +154,7 @@ MissingE.packages.massEditor = {
    init: function() {
       if (extension.isFirefox) {
          extension.sendRequest("settings", {component: "massEditor"},
-                               function() {
+                               function(response) {
             if (response.component === "massEditor") {
                MissingE.packages.massEditor.run();
             }
