@@ -118,3 +118,11 @@ position:absolute;
 top:0;
 left:0;
 }
+
+#bookmarklet_index #container > form {
+margin-bottom:15px;
+}
+
+#bookmarklet_index #container textarea {
+max-width:100%;
+}

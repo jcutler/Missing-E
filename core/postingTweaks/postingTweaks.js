@@ -26,6 +26,12 @@
 MissingE.packages.postingTweaks = {
 
    resizeTinyMCE: function(post) {
+      if (MissingE.isTumblrURL(location.href, ["bookmarklet"])) {
+         var container = $('#container');
+         var high = container.height();
+         container.css({'height':'auto',
+                        'min-height':high+'px'});
+      }
       $('head').append('<style type="text/css">' +
          '.ui-icon-gripsmall-diagonal-se { background-image:url("' +
          extension.getURL("core/postingTweaks/handle.png") + '") !important;' +
@@ -40,6 +46,10 @@ MissingE.packages.postingTweaks = {
             minHeight:h,
             create:function() {
                $(this).prepend('<div class="resize_overlay"></div>');
+            },
+            resize: function() {
+               $('#bookmarklet_index #post_controls')
+                  .css('top', ($('#container').height() + 37) + 'px');
             },
             start:function() {
                $(this).find('.resize_overlay').show();
@@ -107,7 +117,8 @@ MissingE.packages.postingTweaks = {
       var settings = this.settings;
       var lang = $('html').attr('lang');
       var i,tag;
-      if (MissingE.isTumblrURL(location.href, ["post", "reblog"])) {
+      if (MissingE.isTumblrURL(location.href, ["post", "reblog"]) &&
+          !MissingE.isTumblrURL(location.href, ["bookmarklet"])) {
          var txt="";
          var ctags;
          var posttags = document.getElementById('post_tags');
@@ -126,6 +137,7 @@ MissingE.packages.postingTweaks = {
                         'return false;" href="#">x</a></div>';
             }
          }
+         
          document.getElementById('tokens').innerHTML = txt;
       }
 
