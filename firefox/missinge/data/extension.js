@@ -64,7 +64,9 @@ MissingE = {
                                         {data: importedSettings},
                                         function(response) {
                      if (response.msg) { alert(response.msg); }
-                     if (response.success) { window.location.reload(); }
+                     if (response.success) {
+                        extension.sendRequest("open", {url: "OPTIONS"});
+                     }
                      else {
                         form.reset();
                      }
