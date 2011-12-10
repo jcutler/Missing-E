@@ -638,7 +638,7 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
 function checkPermission(user, count, myWorker, retries) {
    if (permissionCache.hasOwnProperty(user)) {
       myWorker.postMessage({greeting: "tumblrPermission",
-                            allow: false});
+                            allow: permissionCache[user]});
       return;
    }
    Request({
