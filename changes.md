@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.3.0** (not yet released)
+##**2.3.0** (12/10/2011)
 **_+_** Add "delete" button option for sub-Tumblr permalink post pages  
 **_+_** Enable photo magnification for drafts and queued posts  
 **_!_** Add reblog button to ask post permalink pages when Better Reblogs ask reblogging option is on but Reblog Yourself is off  
@@ -86,7 +86,9 @@ color:#4183c4;
 **_!_** Extend sidebar adding to paginated dashboard pages  
 **_!_** Re-run tags AJAX request when dequeueing it (Chrome-only bug)  
 **_!_** Fix bug that prevented retrying when initially failing to get reblog keys for Reblog Yourself or ask reblogging in Better Reblogs (Firefox-only bug)  
+**_!_** Fix resizable rich-text editor (Firefox-only bug)  
 **_!_** Prevent multiple sortable notes buttons being added to posts after sending an ask using the ask box on dashboard feature (Chrome/Firefox bug)  
+**_!_** Prevent multiple added elements from being injected into page  
 **_!_** Move to common source code base for all platforms
 
 ##**2.2.18** (11/22/2011)
