@@ -8,7 +8,7 @@ num=`grep -A 1 CFBundleVersion ../missinge.safariextension/Info.plist | grep str
 if [[ ! -f "safari-build/missinge.safariextz" ]]; then
    exit 1
 else
-   scp safari-build/missinge.safariextz ciw@infraware.ca:webapps/missinge/safari/
-   ssh ciw@infraware.ca "webapps/missinge/safari/changeVersion.sh $num $str"
+   scp safari-build/missinge.safariextz ciw@direct.infraware.ca:webapps/missinge/safari/
+   ssh ciw@direct.infraware.ca "webapps/missinge/safari/changeVersion.sh $num $str"
 fi
 

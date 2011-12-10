@@ -1,2 +1,2 @@
-ssh ciw@infraware.ca "webapps/missinge/addVersionPost.sh $1"
+ssh ciw@direct.infraware.ca "webapps/missinge/addVersionPost.sh $1"
 

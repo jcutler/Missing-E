@@ -4,5 +4,5 @@ if [[ -n "$1" ]]; then
 ver=$1;
 fi
 
-ssh ciw@infraware.ca "webapps/missinge/changeUpdateVersion.sh $ver"
+ssh ciw@direct.infraware.ca "webapps/missinge/changeUpdateVersion.sh $ver"
 
