@@ -81,7 +81,8 @@ MissingE.packages.postingTweaksPost = {
              (acct = follow.id.value)) {
             extension.sendRequest("tumblrPermission", {user: acct},
                                   function(response) {
-               if (response.allow) {
+               if (response.allow &&
+                   !document.getElementById('MissingE_addedEdit')) {
                   var url = location.search.match(/[\?&]src=([^&]*)/);
                   if (url && url.length > 1) { url = url[1]; }
                   else { url = ''; }
@@ -89,6 +90,7 @@ MissingE.packages.postingTweaksPost = {
                   var href = "/edit/" + like.id.value;
                   if (url !== '') { href += "?redirect_to=" + url; }
                   edit.href = href;
+                  edit.id = "MissingE_addedEdit";
                   edit.setAttribute('target','_top');
                   edit.innerHTML = '<img src="http://assets.tumblr.com/' +
                      'images/iframe_edit_alpha' + suffix + '" alt="' +
@@ -98,6 +100,7 @@ MissingE.packages.postingTweaksPost = {
                   var formKey = document.getElementById('form_key');
                   if (formKey) {
                      var del = document.createElement('form');
+                     del.id = "MissingE_addedDelete";
                      del.setAttribute('method','post');
                      del.setAttribute('action','/delete');
                      del.setAttribute('target','_top');
