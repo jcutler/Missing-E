@@ -1457,7 +1457,7 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
           MissingE.isTumblrURL(message.url, ["reply"])) {
          if (getSetting("extensions.MissingE.replyReplies.enabled",1) == 1) {
-            injectScripts.push(data.url("replyReplies/replyReplies_fill.js"));
+            injectScripts.push(data.url("core/replyReplies/replyReplies_fill.js"));
             activeScripts.replyReplies = true;
             activeScripts.replyReplies_fill = true;
          }
