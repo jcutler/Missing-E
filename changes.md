@@ -78,8 +78,11 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.3.1** (12/10/2011)
+**_!_** Fix issue with Firefox settings for Ask Fixes, Dashboard Fixes and Posting Fixes being reset
+
 ##**2.3.0** (12/10/2011)
-**_+_** Add "delete" button option for sub-Tumblr permalink post pages  
+**_+_** Add "delete" button option for secondary Tumblr permalink post pages  
 **_+_** Enable photo magnification for drafts and queued posts  
 **_!_** Add reblog button to ask post permalink pages when Better Reblogs ask reblogging option is on but Reblog Yourself is off  
 **_!_** Load correct images with Magnifier for posts that have had images replaced  
