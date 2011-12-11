@@ -282,8 +282,9 @@ MissingE.packages.safeDash = {
          extension.getURL("core/safeDash/lockicon.png") + '") !important; } ' +
          '.nsfwoff { background:#FFFFFF !important; }</style>');
 
-      if ($('#new_post').css('background-image') !== "none") {
-         $('#new_post img').css('opacity','0 !important');
+      var npBG = $('#new_post').css('background-image');
+      if (npBG && npBG !== "none") {
+         $('#new_post img').css('cssText','opacity:0 !important;');
       }
 
       var sdlnk = '<ul class="controls_section" id="MissingE_safeDash">' +
