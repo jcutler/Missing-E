@@ -14,13 +14,13 @@ mv $FF.new $FF
 sed -e 's/"version":     "[^"]*"/"version":     "'$1'"/' $CH > $CH.new
 mv $CH.new $CH
 
-sed -e '/CFBundleShortVersionString<\/key>/{
+sed -E -e '/CFBundleShortVersionString<\/key>/{
 N
-s/CFBundleShortVersionString<\/key>\n\t<string>[^<]*/CFBundleShortVersionString<\/key>\n\t<string>'$1'/
+s/(CFBundleShortVersionString<\/key>[^<]*<string>)[^<]*/\1'$1'/
 }' $SF > $SF.new
-sed -e '/CFBundleVersion<\/key>/{
+sed -E -e '/CFBundleVersion<\/key>/{
 N
-s/CFBundleVersion<\/key>\n\t<string>[^<]*/CFBundleVersion<\/key>\n\t<string>'$2'/
+s/(CFBundleVersion<\/key>[^<]*<string>)[^<]*/\1'$2'/
 }' $SF.new > $SF
 rm $SF.new
 sed -e 's/<string>MISSINGEVERSION<\/string>/<string>'$1'<\/string>/' $SFst.template > $SFst
