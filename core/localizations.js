@@ -1623,7 +1623,8 @@ var locale = {
  }
 };
 
-if (typeof require === "function" &&
+if (typeof window === "undefined" &&
+    typeof require === "function" &&
     require("api-utils/xul-app")) {
    exports.locale = locale;
 }
