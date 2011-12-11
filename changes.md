@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.3.2** (12/10/2011)
+**_!_** Fix non-functioning extension on RockMelt browser
+
 ##**2.3.1** (12/10/2011)
 **_!_** Fix issue with Firefox settings for Ask Fixes, Dashboard Fixes and Posting Fixes being reset
 
