@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.3.3** (not yet released)
+**_!_** Fix transparent text problem in quick reblog menu tag input box
+
 ##**2.3.2** (12/10/2011)
 **_!_** Fix non-functioning extension on RockMelt browser  
 **_!_** Fix hiding of new post icons for custom themes using Stylish (Firefox-only bug)
