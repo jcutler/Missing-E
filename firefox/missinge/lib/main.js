@@ -115,7 +115,7 @@ var componentList = ["dashboardTweaks",
                      "massEditor",
                      "sidebarTweaks"];
 
-function getAllSettings() {
+function getAllSettings(getStale) {
    var settings = {};
    settings.greeting = "all-settings";
    settings.MissingE_experimentalFeatures_enabled = getSetting("extensions.MissingE.experimentalFeatures.enabled",0);
@@ -186,6 +186,34 @@ function getAllSettings() {
    settings.MissingE_betterReblogs_reblogAsks = getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
    settings.MissingE_version = getSetting("extensions.MissingE.version",'');
    settings.MissingE_betterReblogs_askRetries = getSetting("extensions.MissingE.betterReblogs.askRetries",MissingE.defaultRetries);
+   if (getStale) {
+      settings.MissingE_askFixes_scroll = getSetting("extensions.MissingE.askFixes.scroll",1);
+      settings.MissingE_askFixes_betterAnswers = getSetting("extensions.MissingE.askFixes.betterAnswers",0);
+      settings.MissingE_askFixes_tagAsker = getSetting("extensions.MissingE.askFixes.tagAsker",1);
+      settings.MissingE_askFixes_defaultTags = getSetting("extensions.MissingE.askFixes.defaultTags",'');
+      settings.MissingE_askFixes_askDash = getSetting("extensions.MissingE.askFixes.askDash",0);
+      settings.MissingE_askFixes_massDelete = getSetting("extensions.MissingE.askFixes.massDelete",1);
+      settings.MissingE_dashboardFixes_reblogQuoteFit = getSetting("extensions.MissingE.dashboardFixes.reblogQuoteFit",1);
+      settings.MissingE_dashboardFixes_wrapTags = getSetting("extensions.MissingE.dashboardFixes.wrapTags",1);
+      settings.MissingE_dashboardFixes_replaceIcons = getSetting("extensions.MissingE.dashboardFixes.replaceIcons",1);
+      settings.MissingE_dashboardFixes_postLinks = getSetting("extensions.MissingE.dashboardFixes.postLinks",1);
+      settings.MissingE_dashboardFixes_reblogReplies = getSetting("extensions.MissingE.dashboardFixes.reblogReplies",0);
+      settings.MissingE_dashboardFixes_widescreen = getSetting("extensions.MissingE.dashboardFixes.widescreen",0);
+      settings.MissingE_dashboardFixes_queueArrows = getSetting("extensions.MissingE.dashboardFixes.queueArrows",1);
+      settings.MissingE_dashboardFixes_expandAll = getSetting("extensions.MissingE.dashboardFixes.expandAll",1);
+      settings.MissingE_dashboardFixes_massDelete = getSetting("extensions.MissingE.dashboardFixes.massDelete",1);
+      settings.MissingE_dashboardFixes_randomQueue = getSetting("extensions.MissingE.dashboardFixes.randomQueue",0);
+      settings.MissingE_dashboardFixes_sortableNotes = getSetting("extensions.MissingE.dashboardFixes.sortableNotes",1);
+      settings.MissingE_postingFixes_photoReplies = getSetting("extensions.MissingE.postingFixes.photoReplies",1);
+      settings.MissingE_postingFixes_uploaderToggle = getSetting("extensions.MissingE.postingFixes.uploaderToggle",1);
+      settings.MissingE_postingFixes_addUploader = getSetting("extensions.MissingE.postingFixes.addUploader",1);
+      settings.MissingE_postingFixes_quickButtons = getSetting("extensions.MissingE.postingFixes.quickButtons",1);
+      settings.MissingE_postingFixes_blogSelect = getSetting("extensions.MissingE.postingFixes.blogSelect",0);
+      settings.MissingE_postingFixes_subEdit = getSetting("extensions.MissingE.postingFixes.subEdit",1);
+      settings.MissingE_postingFixes_subEditRetries = getSetting("extensions.MissingE.postingFixes.subEditRetries",MissingE.defaultRetries);
+      settings.MissingE_postingFixes_tagQueuedPosts = getSetting("extensions.MissingE.postingFixes.tagQueuedPosts",0);
+      settings.MissingE_postingFixes_queueTags = getSetting("extensions.MissingE.postingFixes.queueTags",'');
+   }
    return settings;
 }
 
@@ -217,18 +245,20 @@ function moveSetting(oldpref,newpref) {
 }
 
 function moveAllSettings(oldgroup, newgroup) {
-   var allsettings = getAllSettings();
+   var allsettings = getAllSettings(true);
    var re = new RegExp("^MissingE_" + oldgroup + "_");
    for (i in allsettings) {
       if (allsettings.hasOwnProperty(i) &&
           re.test(i)) {
          var oldpref = 'extensions.' + i.replace(/_/g,'.');
-         var newpref = 'extensions.' + i.replace(re,'MissingE_' + newgroup + '_').replace(/_/g,'.');
-         console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
-         if (!ps.isSet(newpref)) {
-            ps.set(newpref, ps.get(oldpref,0));
+         if (ps.isSet(oldpref)) {
+            var newpref = 'extensions.' + i.replace(re,'MissingE_' + newgroup + '_').replace(/_/g,'.');
+            console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+            if (!ps.isSet(newpref)) {
+               ps.set(newpref, ps.get(oldpref,0));
+            }
+            ps.reset(oldpref);
          }
-         ps.reset(oldpref);
       }
    }
 }
@@ -327,8 +357,8 @@ function receiveOptions(message, theWorker) {
    var changed, set, reset;
    changed = set = reset = 0;
    var settings = message.data;
-   var allSettings = getAllSettings();
-   var currSettings = getAllSettings();
+   var allSettings = getAllSettings(true);
+   var currSettings = getAllSettings(true);
    for (i in currSettings) {
       if (currSettings.hasOwnProperty(i) &&
           !ps.isSet("extensions." + i.replace(/_/g,"."))) {
