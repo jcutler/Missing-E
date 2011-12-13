@@ -25,14 +25,6 @@
 
 MissingE.packages.replyReplies = {
 
-   reply_setValue: function(st) {
-      localStorage.setItem('trr_ReplyText',st);
-   },
-
-   tags_setValue: function(ar) {
-      localStorage.setItem('trr_ReplyTags',ar.join(","));
-   },
-
    addNoteReply: function(item, overrideStyle) {
       if (item.hasClass('MissingE_reply')) {
          return true;
@@ -375,6 +367,7 @@ MissingE.packages.replyReplies = {
       }
 
       var code = thecode.join("\n") + "\n\n<p><br /></p>";
+
       if (/nsfwdone/.test(code) || /nsfwed/.test(code)) {
          code = code.replace(/opacity:\s*[01]\s*;/g,'')
                      .replace(/class="nsfwdone"/g,'')
@@ -386,11 +379,10 @@ MissingE.packages.replyReplies = {
       }
 
       code = code.replace(/ {2,}/g,' ');
-      MissingE.packages.replyReplies.reply_setValue(code);
+
       if (settings.defaultTags !== '') {
          tags = settings.defaultTags.concat(tags);
       }
-      MissingE.packages.replyReplies.tags_setValue(tags);
 
       var urlPref = location.href
          .match(/http:\/\/www\.tumblr\.com\/blog\/([^\/]*)/);
@@ -400,22 +392,9 @@ MissingE.packages.replyReplies = {
       else {
          urlPref = '';
       }
-      if (settings.newTab === 1) {
-         var urlDest = "http://www.tumblr.com" + urlPref + "/new/text";
-         if (extension.isSafari || extension.isFirefox) {
-            extension.sendRequest("open", {url: urlDest});
-         }
-         else {
-            window.open(urlDest);
-         }
-      }
-      else {
-         var url = "http://www.tumblr.com" + urlPref + "/new/text";
-         if (redir !== '') {
-            url += "?" + redir;
-         }
-         location.href = url;
-      }
+      var urlDest = "http://www.tumblr.com" + urlPref + "/new/text";
+      extension.sendRequest("sendReply", {url: urlDest, newReply: true,
+                                          reply: code, tags: tags});
    },
 
    run: function() {

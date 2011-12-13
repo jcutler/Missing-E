@@ -63,6 +63,8 @@ var askerTableClear;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
+var replies = [];
+var repliesClear;
 var lang = 'en';
 var initialStyleSheets = [];
 var hasSlimSidebar = false;
@@ -92,6 +94,16 @@ var prevVersion = getSetting('MissingE_installedVersion',null);
 function setSetting(key, val) {
    safari.extension.settings[key] = val;
 }
+
+repliesClear = setInterval(function() {
+   var i;
+   for (i=0; i<replies.length; i++) {
+      if (replies[i].tab.page === undefined) {
+         replies.splice(i,1);
+         i--;
+      }
+   }
+}, fiveMinutes);
 
 askerTableClear = setInterval(function() {
    var i;
@@ -877,6 +889,25 @@ function closeTab(url, currentTab) {
    }
 }
 
+function getTabLocation(tab) {
+   var i, winIdx = -1, tabIdx = -1;
+   for (i=0; i<safari.application.browserWindows.length; i++) {
+      if (safari.application.browserWindows[i] === tab.browserWindow) {
+         winIdx = i;
+         break;
+      }
+   }
+   if (winIdx < 0) { return {windowId: -1, tabId: -1}; }
+   for (i=0; i<safari.application.browserWindows[winIdx].tabs.length; i++) {
+      if (safari.application.browserWindows[winIdx].tabs[i] === tab) {
+         tabIdx = i;
+         break;
+      }
+   }
+   if (tabIdx < 0) { return {windowId: winIdx, tabId: -1}; }
+   return {windowId: winIdx, tabId: tabIdx};
+}
+
 safari.application.addEventListener("command", performCommand, false);
 function performCommand(cmd) {
    if (cmd.command == "missinge-settings") {
@@ -1039,6 +1070,34 @@ function handleRequest(request) {
    else if (request.name == "tags") {
       requestTags(request);
    }
+   else if (request.name == "sendReply") {
+      if (request.message.newReply &&
+          getSetting("MissingE_replyReplies_newTab",1) === 1) {
+            var tabLoc = getTabLocation(request.target);
+            var newTab = safari.application.browserWindows[tabLoc.windowId]
+                           .openTab("foreground", (tabLoc.tabId+1));
+            replies.push({tab: newTab, reply: request.message.reply,
+                          tags: request.message.tags});
+            newTab.url = request.message.url;
+      }
+      else {
+         replies.push({tab: request.target, reply: request.message.reply,
+                       tags: request.message.tags});
+         request.target.url = request.message.url;
+      }
+   }
+   else if (request.name == "getReply") {
+      var i;
+      for (i=0; i<replies.length; i++) {
+         if (replies[i].tab === request.target) {
+            request.target.page.dispatchMessage("getReply",
+                                                {reply: replies[i].reply,
+                                                 tags: replies[i].tags});
+            replies.splice(i,1);
+            break;
+         }
+      }
+   }
    else if (request.name == "change-setting") {
       setSetting(request.message.name, request.message.val);
    }
@@ -1176,7 +1235,6 @@ function handleRequest(request) {
             if (settings.defaultTags !== '') {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
-            settings.newTab = getSetting("MissingE_replyReplies_newTab",1);
             break;
          case "postCrushes":
             settings.prefix = getSetting("MissingE_postCrushes_prefix","Tumblr Crushes:");

@@ -49,6 +49,8 @@ var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
 var tabs = {};
+var replies = {};
+var repliesClear;
 var lang = 'en';
 
 function getSetting(key, defVal) {
@@ -90,6 +92,17 @@ chrome.tabs.onRemoved.addListener(function(id, removeInfo) {
       debug("Removing tab (" + id + ")");
    }
 });
+
+repliesClear = setInterval(function() {
+   var i;
+   for (i in replies) {
+      if (replies.hasOwnProperty(i)) {
+         if (!tabs.hasOwnProperty(i)) {
+            delete replies[i];
+         }
+      }
+   }
+}, fiveMinutes);
 
 askerTableClear = setInterval(function() {
    var i;
@@ -1011,6 +1024,26 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       checkPermission(request, sender, sendResponse, tabs[sender.tab.id],
                       getSetting("MissingE_postingTweaks_subEditRetries",MissingE.defaultRetries));
    }
+   else if (request.greeting == "sendReply") {
+      if (request.newReply &&
+          getSetting("MissingE_replyReplies_newTab",1) === 1) {
+         chrome.tabs.create({windowId: sender.tab.windowId,
+                             index: (sender.tab.index+1),
+                             url: request.url}, function(tab) {
+            replies[tab.id] = {reply: request.reply, tags: request.tags};
+         });
+      }
+      else {
+         replies[sender.tab.id] = {reply: request.reply, tags: request.tags};
+         chrome.tabs.update(sender.tab.id, {url: request.url, selected: true});
+      }
+   }
+   else if (request.greeting == "getReply") {
+      if (replies.hasOwnProperty(sender.tab.id)) {
+         sendResponse(replies[sender.tab.id]);
+         delete replies[sender.tab.id];
+      }
+   }
    else if (request.greeting == "settings") {
       var settings = {};
       settings.experimental = getSetting("MissingE_experimentalFeatures_enabled",0);
@@ -1064,7 +1097,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (settings.defaultTags !== '') {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
-            settings.newTab = getSetting("MissingE_replyReplies_newTab",1);
             break;
          case "postCrushes":
             settings.prefix = getSetting("MissingE_postCrushes_prefix","Tumblr Crushes:");

@@ -44,6 +44,8 @@ var cacheElements = 0;
 var cacheClear;
 var clearQueues;
 var permissionCache = {};
+var replies = [];
+var repliesClear;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var MissingE = require("utils").utils;
@@ -75,6 +77,20 @@ function setSetting(key, val) {
 
 var currVersion = getVersion();
 var prevVersion = getSetting('extensions.MissingE.version',null);
+
+repliesClear = timer.setInterval(function() {
+   var i;
+   for (i=0; i<replies.length; i++) {
+      console.log(replies[i].tab);
+      try {
+         var url = replies[i].tab.url;
+      }
+      catch(err) {
+         replies.splice(i,1);
+         i--;
+      }
+   }
+}, fiveMinutes);
 
 cacheClear = timer.setInterval(function() {
    cache = {};
@@ -1182,6 +1198,34 @@ function handleMessage(message, myWorker) {
       checkPermission(message.user, 0, myWorker,
                       getSetting("extensions.MissingE.postingTweaks.subEditRetries",MissingE.defaultRetries));
    }
+   else if (message.greeting == "sendReply") {
+      if (message.newReply &&
+          getSetting("extensions.MissingE.replyReplies.newTab",1) === 1) {
+         tabs.open({
+            url: message.url,
+            onOpen: function(tab) {
+               replies.push({tab: tab, reply: message.reply,
+                             tags: message.tags});
+            }
+         });
+      }
+      else {
+         replies.push({tab: myWorker.tab, reply: message.reply,
+                       tags: message.tags});
+         myWorker.tab.url = message.url;
+      }
+   }
+   else if (message.greeting == "getReply") {
+      var i;
+      for (i=0; i<replies.length; i++) {
+         if (replies[i].tab === myWorker.tab) {
+            myWorker.postMessage({greeting: "getReply", reply: replies[i].reply,
+                                  tags: replies[i].tags});
+            replies.splice(i,1);
+            break;
+         }
+      }
+   }
    else if (message.greeting == "settings") {
       var settings = {};
       settings.greeting = "settings";
@@ -1240,7 +1284,6 @@ function handleMessage(message, myWorker) {
             if (settings.defaultTags !== '') {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
-            settings.newTab = getSetting("extensions.MissingE.replyReplies.newTab",1);
             break;
          case "postCrushes_fill":
          case "postCrushes":
