@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.3.3** (not yet released)
+##**2.3.3** (12/13/2011)
 **_!_** Fix Reply Replies issue on Firefox with post body showing up as 'null'  
 **_!_** Improve performance of Reply Replies and Post Crushes feature when opening multiple tabs at the same time  
 **_!_** Fix transparent text problem in quick reblog menu tag input box
