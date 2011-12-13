@@ -45,7 +45,8 @@ var cacheClear;
 var clearQueues;
 var permissionCache = {};
 var replies = [];
-var repliesClear;
+var crushes = [];
+var repliesAndCrushesClear;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var MissingE = require("utils").utils;
@@ -78,15 +79,23 @@ function setSetting(key, val) {
 var currVersion = getVersion();
 var prevVersion = getSetting('extensions.MissingE.version',null);
 
-repliesClear = timer.setInterval(function() {
+repliesAndCrushesClear = timer.setInterval(function() {
    var i;
    for (i=0; i<replies.length; i++) {
-      console.log(replies[i].tab);
       try {
          var url = replies[i].tab.url;
       }
       catch(err) {
          replies.splice(i,1);
+         i--;
+      }
+   }
+   for (i=0; i<crushes.length; i++) {
+      try {
+         var url = crushes[i].tab.url;
+      }
+      catch(err) {
+         crushes.splice(i,1);
          i--;
       }
    }
@@ -186,6 +195,7 @@ function getAllSettings(getStale) {
    settings.MissingE_postCrushes_crushSize = getSetting("extensions.MissingE.postCrushes.crushSize",1);
    settings.MissingE_postCrushes_addTags = getSetting("extensions.MissingE.postCrushes.addTags",1);
    settings.MissingE_postCrushes_showPercent = getSetting("extensions.MissingE.postCrushes.showPercent",1);
+   settings.MissingE_postCrushes_newTab = getSetting("extensions.MissingE.postCrushes.newTab",1);
    settings.MissingE_replyReplies_showAvatars = getSetting("extensions.MissingE.replyReplies.showAvatars",1);
    settings.MissingE_replyReplies_smallAvatars = getSetting("extensions.MissingE.replyReplies.smallAvatars",1);
    settings.MissingE_replyReplies_addTags = getSetting("extensions.MissingE.replyReplies.addTags",1);
@@ -1197,6 +1207,32 @@ function handleMessage(message, myWorker) {
    else if (message.greeting == "tumblrPermission") {
       checkPermission(message.user, 0, myWorker,
                       getSetting("extensions.MissingE.postingTweaks.subEditRetries",MissingE.defaultRetries));
+   }
+   else if (message.greeting == "sendCrushes") {
+      if (getSetting("extensions.MissingE.postCrushes.newTab",1) === 1) {
+         tabs.open({
+            url: message.url,
+            onOpen: function(tab) {
+               crushes.push({tab: tab, img: message.img, tags: message.tags});
+            }
+         });
+      }
+      else {
+         crushes.push({tab: myWorker.tab, img: message.img,
+                       tags: message.tags});
+         myWorker.tab.url = message.url;
+      }
+   }
+   else if (message.greeting == "getCrushes") {
+      var i;
+      for (i=0; i<crushes.length; i++) {
+         if (crushes[i].tab === myWorker.tab) {
+            myWorker.postMessage({greeting: "getCrushes", img: crushes[i].img,
+                                  tags: crushes[i].tags});
+            crushes.splice(i,1);
+            break;
+         }
+      }
    }
    else if (message.greeting == "sendReply") {
       if (message.newReply &&

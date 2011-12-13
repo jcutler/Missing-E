@@ -49,7 +49,7 @@ var locale = {
    "Dec"
   ],
   "update": "Update Missing e",
-  "postCrushes": "Post your crushes",
+  "postCrushes": "Post Your Crushes",
   "sidebar": {
    "posts": "Posts",
    "followers": "Followers",

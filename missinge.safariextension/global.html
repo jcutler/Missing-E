@@ -64,7 +64,8 @@ var fiveMinutes = 300000;
 var tenSeconds = 10000;
 var debugMode = false;
 var replies = [];
-var repliesClear;
+var crushes = [];
+var repliesAndCrushesClear;
 var lang = 'en';
 var initialStyleSheets = [];
 var hasSlimSidebar = false;
@@ -95,11 +96,17 @@ function setSetting(key, val) {
    safari.extension.settings[key] = val;
 }
 
-repliesClear = setInterval(function() {
+repliesAndCrushesClear = setInterval(function() {
    var i;
    for (i=0; i<replies.length; i++) {
       if (replies[i].tab.page === undefined) {
          replies.splice(i,1);
+         i--;
+      }
+   }
+   for (i=0; i<crushes.length; i++) {
+      if (crushes[i].tab.page === undefined) {
+         crushes.splice(i,1);
          i--;
       }
    }
@@ -1070,15 +1077,42 @@ function handleRequest(request) {
    else if (request.name == "tags") {
       requestTags(request);
    }
+   else if (request.name == "sendCrushes") {
+      if (getSetting("MissingE_postCrushes_newTab",1) === 1) {
+         var tabLoc = getTabLocation(request.target);
+         var newTab = safari.application.browserWindows[tabLoc.windowId]
+                        .openTab("foreground", (tabLoc.tabId+1));
+         crushes.push({tab: newTab, img: request.message.img,
+                       tags: request.message.tags});
+         newTab.url = request.message.url;
+      }
+      else {
+         crushes.push({tab: request.target, img: request.message.img,
+                       tags: request.message.tags});
+         request.target.url = request.message.url;
+      }
+   }
+   else if (request.name == "getCrushes") {
+      var i;
+      for (i=0; i<crushes.length; i++) {
+         if (crushes[i].tab === request.target) {
+            request.target.page.dispatchMessage("getCrushes",
+                                                {img: crushes[i].img,
+                                                 tags: crushes[i].tags});
+            crushes.splice(i,1);
+            break;
+         }
+      }
+   }
    else if (request.name == "sendReply") {
       if (request.message.newReply &&
           getSetting("MissingE_replyReplies_newTab",1) === 1) {
-            var tabLoc = getTabLocation(request.target);
-            var newTab = safari.application.browserWindows[tabLoc.windowId]
-                           .openTab("foreground", (tabLoc.tabId+1));
-            replies.push({tab: newTab, reply: request.message.reply,
-                          tags: request.message.tags});
-            newTab.url = request.message.url;
+         var tabLoc = getTabLocation(request.target);
+         var newTab = safari.application.browserWindows[tabLoc.windowId]
+                        .openTab("foreground", (tabLoc.tabId+1));
+         replies.push({tab: newTab, reply: request.message.reply,
+                        tags: request.message.tags});
+         newTab.url = request.message.url;
       }
       else {
          replies.push({tab: request.target, reply: request.message.reply,
@@ -1154,6 +1188,7 @@ function handleRequest(request) {
       settings.MissingE_postCrushes_crushSize = getSetting("MissingE_postCrushes_crushSize",1);
       settings.MissingE_postCrushes_addTags = getSetting("MissingE_postCrushes_addTags",1);
       settings.MissingE_postCrushes_showPercent = getSetting("MissingE_postCrushes_showPercent",1);
+      settings.MissingE_postCrushes_newTab = getSetting("MissingE_postCrushes_newTab",1);
       settings.MissingE_replyReplies_showAvatars = getSetting("MissingE_replyReplies_showAvatars",1);
       settings.MissingE_replyReplies_smallAvatars = getSetting("MissingE_replyReplies_smallAvatars",1);
       settings.MissingE_replyReplies_addTags = getSetting("MissingE_replyReplies_addTags",1);

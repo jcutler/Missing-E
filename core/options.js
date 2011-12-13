@@ -279,6 +279,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_postCrushes_addTags',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_postCrushes_showPercent',1);
             frm.MissingE_postCrushes_prefix.value = MissingE.utilities.options.getStorage('MissingE_postCrushes_prefix',"Tumblr Crushes:");
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postCrushes_newTab',1);
          }
          else if (v == "replyReplies") {
             if (MissingE.utilities.options.getStorage('MissingE_replyReplies_smallAvatars',1) == 1)

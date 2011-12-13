@@ -105,12 +105,13 @@ MissingE.packages.postCrushes = {
             txt = txt.replace(from[j],to[j]);
          }
 
-         localStorage.setItem('tcp_crushTags', crushname.join(','));
-         localStorage.setItem('tcp_crushURL', MissingE.packages.postCrushes
-                                                .missingeServer + '/?' + get);
-         extension.openWindow('http://www.tumblr.com/new/photo?' +
-                             'post%5Bone%5D=&post%5Btwo%5D=' + txt +
-                             '&post%5Bthree%5D=');
+         extension.sendRequest("sendCrushes",
+                               {url: 'http://www.tumblr.com/new/photo?' +
+                                     'post%5Bone%5D=&post%5Btwo%5D=' + txt +
+                                     '&post%5Bthree%5D=',
+                                img: MissingE.packages.postCrushes
+                                       .missingeServer + '/?' + get,
+                                tags:crushname});
       }, true);
       newdiv.appendChild(innerdiv);
       infodiv.appendChild(newdiv);

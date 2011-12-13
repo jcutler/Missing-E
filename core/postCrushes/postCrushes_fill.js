@@ -28,17 +28,24 @@ MissingE.packages.postCrushesFill = {
    run: function() {
       var settings = this.settings;
       var tagarr, i;
-      var url = localStorage.getItem("tcp_crushURL");
+      var url = this._img;
       if (url !== undefined && url !== null && url !== "") {
-         localStorage.removeItem("tcp_crushURL");
+         var lang = document.getElementsByTagName("html")[0]
+                        .getAttribute("lang");
+         var lcol = document.getElementById('left_column');
+         if (lcol) {
+            var header = lcol.getElementsByTagName('h1');
+            if (header.length > 0) {
+               header[0].innerHTML = MissingE.getLocale(lang).postCrushes;
+            }
+         }
          var notlarge = settings.crushSize;
          var showPercent = settings.showPercent;
          var addTags = settings.addTags;
          if (addTags === 1) {
-            var tags = localStorage.getItem('tcp_crushTags');
-            tagarr = tags.split(',');
+            var tagarr = this._tags;
             var txt = "";
-            document.getElementById('post_tags').value = tags;
+            document.getElementById('post_tags').value = tagarr.join(",");
             for (i=0; i<tagarr.length; i++) {
                if (tagarr[i] !== null && tagarr[i] !== '') {
                   txt += '<div class="token"><span class="tag">' +
@@ -54,7 +61,6 @@ MissingE.packages.postCrushesFill = {
                label.parentNode.removeChild(label);
             }
          }
-         localStorage.removeItem('tcp_crushTags');
          if (notlarge !== 1) {
             url += '&large=1';
          }
@@ -81,7 +87,13 @@ MissingE.packages.postCrushesFill = {
                         .settings[i] = response[i];
                   }
                }
-               MissingE.packages.postCrushesFill.run();
+               extension.sendRequest("getCrushes", function(response) {
+                  if (response.hasOwnProperty("img")) {
+                     MissingE.packages.postCrushesFill._img = response.img;
+                     MissingE.packages.postCrushesFill._tags = response.tags;
+                     MissingE.packages.postCrushesFill.run();
+                  }
+               });
             }
          });
       }

@@ -50,7 +50,8 @@ var tenSeconds = 10000;
 var debugMode = false;
 var tabs = {};
 var replies = {};
-var repliesClear;
+var crushes = {};
+var repliesAndCrushesClear;
 var lang = 'en';
 
 function getSetting(key, defVal) {
@@ -93,12 +94,19 @@ chrome.tabs.onRemoved.addListener(function(id, removeInfo) {
    }
 });
 
-repliesClear = setInterval(function() {
+repliesAndCrushesClear = setInterval(function() {
    var i;
    for (i in replies) {
       if (replies.hasOwnProperty(i)) {
          if (!tabs.hasOwnProperty(i)) {
             delete replies[i];
+         }
+      }
+   }
+   for (i in crushes) {
+      if (crushes.hasOwnProperty(i)) {
+         if (!tabs.hasOwnProperty(i)) {
+            delete crushes[i];
          }
       }
    }
@@ -1023,6 +1031,25 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "tumblrPermission") {
       checkPermission(request, sender, sendResponse, tabs[sender.tab.id],
                       getSetting("MissingE_postingTweaks_subEditRetries",MissingE.defaultRetries));
+   }
+   else if (request.greeting == "sendCrushes") {
+      if (getSetting("MissingE_postCrushes_newTab",1) === 1) {
+         chrome.tabs.create({windowId: sender.tab.windowId,
+                             index: (sender.tab.index+1),
+                             url: request.url}, function(tab) {
+            crushes[tab.id] = {img: request.img, tags: request.tags};
+         });
+      }
+      else {
+         crushes[sender.tab.id] = {img: request.img, tags: request.tags};
+         chrome.tabs.update(sender.tab.id, {url: request.url, selected: true});
+      }
+   }
+   else if (request.greeting == "getCrushes") {
+      if (crushes.hasOwnProperty(sender.tab.id)) {
+         sendResponse(crushes[sender.tab.id]);
+         delete crushes[sender.tab.id];
+      }
    }
    else if (request.greeting == "sendReply") {
       if (request.newReply &&
