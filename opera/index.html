@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+var MissingE = {};
+</script>
+<script type="text/javascript" src="core/localizations.js"></script>
+<script type="text/javascript" src="core/utils.js"></script>
 <script>
 
 var imageCache = {};
@@ -93,6 +98,17 @@ function getFiles(files, callback) {
    }
 }
 
+function handleRequest(e) {
+   var msg = "", i;
+   msg = "\"" + e.data.greeting + "\" message from: " + e.origin;
+   for (i in e.data) {
+      if (e.data.hasOwnProperty(i) && i !== "greeting") {
+         msg += "\n   " + i + " = " + e.data[i];
+      }
+   }
+   console.log(msg);
+}
+
 opera.extension.onmessage = function(e) {
    if (e.data.greeting === "initialize" &&
        /http:\/\/www\.tumblr\.com/.test(e.data.url)) {
@@ -104,6 +120,7 @@ opera.extension.onmessage = function(e) {
          "js":  ["extension.js",
                  "core/localizations.js",
                  "core/utils.js",
+                 "whoami.js",
                  "core/common/menuButton.js"]
       };
       getFiles(files, function(result) {
@@ -120,6 +137,9 @@ opera.extension.onmessage = function(e) {
             e.source.postMessage({greeting: "addMenu"});
          });
       });
+   }
+   else {
+      handleRequest(e);
    }
 };
 
