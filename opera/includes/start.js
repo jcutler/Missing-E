@@ -4,9 +4,12 @@
 
 window.addEventListener("DOMContentLoaded", function() {
    var i;
-   var channel = new MessageChannel();
 
-   channel.port1.onmessage = function(evt) {
+   document.addEventListener("sendOperaMessage", function(e) {
+      opera.extension.postMessage(e.data);
+   }, false);
+
+   opera.extension.addEventListener("message", function(evt) {
       if (evt.data.greeting === "initialize") {
          var head = document.getElementsByTagName("head")[0];
          var headChild = head.firstChild;
@@ -22,9 +25,14 @@ window.addEventListener("DOMContentLoaded", function() {
             head.appendChild(y);
          }
       }
-   };
+      else {
+         var msgEvt = document.createEvent("MessageEvent");
+         msgEvt.initMessageEvent("receiveOperaMessage", true, true, evt.data,
+                                 window.location.origin, 0, window, null);
+         document.dispatchEvent(msgEvt);
+      }
+   }, false);
 
    opera.extension.postMessage({greeting: "initialize",
-                                url: window.location.href},
-                               [channel.port2]);
+                                url: window.location.href});
 }, false);

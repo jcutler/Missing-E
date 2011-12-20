@@ -15,18 +15,19 @@ function getImages(imgs, callback) {
          callback(result);
       }
    }
-   for (i=0; i<imgs; i++) {
-      if (typeof imageCache[img[i]] === "undefined") {
+   for (i=0; i<imgs.length; i++) {
+      if (typeof imageCache[imgs[i]] === "undefined") {
          var canvas = document.createElement("canvas");
          var img = document.createElement("img");
+         img.setAttribute("relSrc", imgs[i]);
          img.onload = function(){
-            var idx;
+            var source = img.getAttribute("relSrc");
             canvas.height = img.height;
             canvas.width = img.width;
             var context = canvas.getContext("2d");
             context.drawImage(img, 0, 0, img.width, img.height);
-            imageCache[img.src] = canvas.toDataURL();
-            result[img.src] = imageCache[img.src];
+            imageCache[source] = canvas.toDataURL();
+            result[source] = imageCache[source];
             imgCount++;
             onComplete();
          };
@@ -46,6 +47,9 @@ function getFiles(files, callback) {
       "css": [],
       "js": []
    };
+   if (!files) { files = {}; }
+   if (!files.hasOwnProperty("js")) { files.js = []; }
+   if (!files.hasOwnProperty("css")) { files.css = []; }
    var cssCount = 0, jsCount = 0;
    function onComplete(){
       if (jsCount >= files.js.length && cssCount >= files.css.length) {
@@ -97,24 +101,23 @@ opera.extension.onmessage = function(e) {
          "js": []
       };
       var files = {
-         "css": [],
          "js":  ["extension.js",
                  "core/localizations.js",
                  "core/utils.js",
                  "core/common/menuButton.js"]
       };
       getFiles(files, function(result) {
-         e.ports[0].postMessage({greeting: "initialize",
-                                 files: result});
+         e.source.postMessage({greeting: "initialize", files: result});
       });
    }
    else if (e.data.greeting === "addMenu") {
       getFiles({"css": ["core/common/menuButton.css"]}, function(result) {
-         e.ports[0].postMessage({greeting: "sendFiles",
-                                 {"core/common/menuButton.css":
-                                    result.css[0]}});
+         e.source.postMessage({greeting: "sendFiles",
+                              files: {"core/common/menuButton.css":
+                                       result.css[0]}});
          getImages(["identity/missinge_dash.png"], function(result) {
-            e.ports[0].postMessage({greeting: "sendImages", imgs: result});
+            e.source.postMessage({greeting: "sendImages", imgs: result});
+            e.source.postMessage({greeting: "addMenu"});
          });
       });
    }

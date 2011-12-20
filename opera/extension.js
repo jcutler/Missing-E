@@ -44,45 +44,149 @@ extension = {
    isOpera: true,
    isSafari: false,
    _ajaxListeners: null,
+   _fileCache: {},
    _listeners: null,
 
    _hasAjaxListener: function(func) {
+      return this._ajaxListeners.indexOf(func) >= 0;
    },
 
    _hasListener: function(name, func) {
+      return this._listeners[name].indexOf(func) >= 0;
    },
 
    _registerAjaxListener: function() {
+      this._ajaxListeners = [];
+      document.addEventListener('MissingEajax', function(e) {
+         var i;
+         for (i=0; i<extension._ajaxListeners.length; i++) {
+            extension._ajaxListeners[i](e.data.type, e.data.list);
+         }
+      }, false);
    },
 
    _registerListener: function() {
+      this._listeners = {};
+      document.addEventListener("receiveOperaMessage", function(evt) {
+         var i;
+         if (evt.data.greeting === "sendFiles") {
+            for (i in evt.data.files) {
+               if (evt.data.files.hasOwnProperty(i)) {
+                  extension._fileCache[i] = evt.data.files[i];
+               }
+            }
+         }
+         else if (evt.data.greeting === "sendImages") {
+            for (i in evt.data.imgs) {
+               if (evt.data.imgs.hasOwnProperty(i)) {
+                  extension._fileCache[i] = evt.data.imgs[i];
+               }
+            }
+         }
+         else if (extension._listeners.hasOwnProperty(evt.data.greeting)) {
+            for (i=0; i<extension._listeners[evt.data.greeting].length; i++) {
+               extension._listeners[evt.data.greeting][i](evt.data);
+            }
+         }
+      }, false);
+   },
+
+   _sendMessage: function(request) {
+      var msgEvt = document.createEvent("MessageEvent");
+      msgEvt.initMessageEvent("sendOperaMessage", true, true,
+                              request, location.origin, 0,
+                              window, null);
+      document.dispatchEvent(msgEvt);
    },
 
    addAjaxListener: function(func) {
+      if (typeof func !== "function") { return false; }
+      if (this._ajaxListeners === null) {
+         this._registerAjaxListener();
+      }
+      if (!this._hasAjaxListener(func)) {
+         this._ajaxListeners.push(func);
+      }
    },
 
    addListener: function(name, func) {
+      if (typeof func !== "function") { return false; }
+      if (this._listeners === null) {
+         this._registerListener();
+      }
+      if (!this._listeners.hasOwnProperty(name)) {
+         this._listeners[name] = [];
+      }
+      if (!this._hasListener(name, func)) {
+         this._listeners[name].push(func);
+      }
    },
 
    getURL: function(rel) {
+      if (this._fileCache.hasOwnProperty(rel)) {
+         return this._fileCache[rel];
+      }
+      else {
+         return null;
+      }
    },
 
    hasBaseURL: function() {
+      return true;
    },
 
-   insertStyleSheet: function() {
+   insertStyleSheet: function(url) {
+      var ss = document.createElement("style");
+      ss.setAttribute("type","text/css");
+      ss.textContent = extension.getURL(url);
+      document.getElementsByTagName("head")[0].appendChild(ss);
    },
 
    openWindow: function(addr) {
+      window.open(addr);
    },
 
    removeAjaxListener: function(func) {
+      var idx;
+      if (this._ajaxListeners === null) {
+         return null;
+      }
+      idx = this._ajaxListeners.indexOf(func);
+      if (idx >= 0) {
+         return this._ajaxListeners.splice(idx, 1);
+      }
+      else {
+         return false;
+      }
    },
 
    removeListener: function(name, func) {
+      var idx;
+      if (this._listeners === null ||
+          !this._listeners.hasOwnProperty(name)) {
+         return null;
+      }
+      idx = this._listeners[name].indexOf(func);
+      if (idx >= 0) {
+         return this._listeners[name].splice(idx, 1);
+      }
+      else {
+         return null;
+      }
    },
 
    sendRequest: function(name, request, callback) {
+      if (!request) {
+         request = {};
+      }
+      if (typeof callback === "undefined" &&
+          typeof request === "function") {
+         callback = request;
+         request = {};
+      }
+      request.greeting = name;
+      this.addListener(name, callback);
+      this._sendMessage(request);
    }
 };
 
