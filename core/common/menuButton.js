@@ -52,11 +52,6 @@ MissingE.packages.menuButton = {
 
       if (bar && logout) {
          var head = document.getElementsByTagName('head')[0];
-         var css = document.createElement('link');
-         css.setAttribute('rel', 'stylesheet');
-         css.setAttribute('type', 'text/css');
-         css.setAttribute('href',
-                          extension.getURL("core/common/menuButton.css"));
          var st = document.createElement('style');
          st.setAttribute('type', 'text/css');
          st.innerHTML = '#header #missinge_button { visibility:hidden; }' +
@@ -64,7 +59,7 @@ MissingE.packages.menuButton = {
                         extension.getURL('identity/missinge_dash.png') +
                         '") !important;}';
          head.appendChild(st);
-         head.appendChild(css);
+         extension.insertStyleSheet("core/common/menuButton.css");
          var tab = document.createElement('div');
          tab.className = "tab iconic";
          tab.id = "missinge_button";
@@ -92,7 +87,7 @@ MissingE.packages.menuButton = {
    },
 
    init: function() {
-      if (extension.isFirefox) {
+      if (extension.isFirefox || extension.isOpera) {
          extension.sendRequest("addMenu", null, function() {
             MissingE.packages.menuButton.run();
          });

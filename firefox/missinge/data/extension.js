@@ -176,6 +176,14 @@ extension = {
       return (typeof this._baseURL !== "undefined");
    },
 
+   insertStyleSheet: function(url) {
+      var ss = document.createElement("link");
+      ss.setAttribute("type","text/css");
+      ss.setAttribute("rel","stylesheet");
+      ss.setAttribute("href",this.getURL(url));
+      document.getElementsByTagName("head")[0].appendChild(ss);
+   },
+
    openWindow: function(addr) {
       self.postMessage({greeting: "open", url: addr});
    },

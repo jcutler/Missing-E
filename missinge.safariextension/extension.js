@@ -146,6 +146,14 @@ extension = {
       return true;
    },
 
+   insertStyleSheet: function(url) {
+      var ss = document.createElement("link");
+      ss.setAttribute("type","text/css");
+      ss.setAttribute("rel","stylesheet");
+      ss.setAttribute("href",this.getURL(url));
+      document.getElementsByTagName("head")[0].appendChild(ss);
+   },
+
    openWindow: function(addr) {
       safari.self.tab.dispatchMessage("open", addr);
    },
