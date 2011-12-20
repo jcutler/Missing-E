@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://missinge.infraware.ca" version="3.0">
+   <name short="missing-e">Missing e</name>
+   <description>Useful features and customizations for Tumblr.</description>
+   <author href="http://missinge.infraware.ca" email="missinge@infraware.ca">Jeremy Cutler</author>
+   <icon src="identity/missinge128.png"/>
+   <icon src="identity/missinge64.png"/>
+   <icon src="identity/missinge32.png"/>
+   <license href="http://www.gnu.org/licenses/gpl-3.0-standalone.html">
+      Licensed under the GNU General Public License version 3 or higher
+   </license>
+   <access origin = "*" />
+</widget>

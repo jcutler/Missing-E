@@ -16,6 +16,10 @@ for i in $COMMON; do
       echo "Creating junction for Firefox: $i"
       junction $CWD/firefox/missinge/data/$i $CWD/$i
    fi
+   if [[ ! -e "$CWD/opera/$i" ]]; then
+      echo "Creating junction for Opera: $i"
+      junction $CWD/opera/$i $CWD/$i
+   fi
 done
 
 if [[ ! -f "$CWD/firefox/missinge/lib/localizations.js" ]]; then

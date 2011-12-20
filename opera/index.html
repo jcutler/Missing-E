@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery.min.js"></script>
+<script>
+
+var imageCache = {};
+
+function getImages(imgs, callback) {
+   var i;
+   var result = {};
+   var imgCount = 0;
+   function onComplete(){
+      if (imgCount >= imgs.length) {
+         callback(result);
+      }
+   }
+   for (i=0; i<imgs; i++) {
+      if (typeof imageCache[img[i]] === "undefined") {
+         var canvas = document.createElement("canvas");
+         var img = document.createElement("img");
+         img.onload = function(){
+            var idx;
+            canvas.height = img.height;
+            canvas.width = img.width;
+            var context = canvas.getContext("2d");
+            context.drawImage(img, 0, 0, img.width, img.height);
+            imageCache[img.src] = canvas.toDataURL();
+            result[img.src] = imageCache[img.src];
+            imgCount++;
+            onComplete();
+         };
+         img.src = imgs[i];
+      }
+      else {
+         result[imgs[i]] = imageCache[imgs[i]];
+         imgCount++;
+         onComplete();
+      }
+   }
+}
+
+function getFiles(files, callback) {
+   var i;
+   var result = {
+      "css": [],
+      "js": []
+   };
+   var cssCount = 0, jsCount = 0;
+   function onComplete(){
+      if (jsCount >= files.js.length && cssCount >= files.css.length) {
+         callback(result);
+      }
+   }
+
+   for (i=0; i<files.css.length; i++) {
+      $.ajax({
+         url: files.css[i],
+         context: files.css[i],
+         dataType: "text",
+         success: function(data) {
+            var idx = $.inArray(this.toString(), files.css);
+            if (idx >= 0) {
+               result.css[idx] = data;
+            }
+         },
+         complete: function() {
+            cssCount++;
+            onComplete();
+         }
+      });
+   }
+   for (i=0; i<files.js.length; i++) {
+      $.ajax({
+         url: files.js[i],
+         context: files.js[i],
+         dataType: "text",
+         success: function(data) {
+            var idx = $.inArray(this.toString(), files.js);
+            if (idx >= 0) {
+               result.js[idx] = data;
+            }
+         },
+         complete: function() {
+            jsCount++;
+            onComplete();
+         }
+      });
+   }
+}
+
+opera.extension.onmessage = function(e) {
+   if (e.data.greeting === "initialize" &&
+       /http:\/\/www\.tumblr\.com/.test(e.data.url)) {
+      var result = {
+         "css": [],
+         "js": []
+      };
+      var files = {
+         "css": [],
+         "js":  ["extension.js",
+                 "core/localizations.js",
+                 "core/utils.js",
+                 "core/common/menuButton.js"]
+      };
+      getFiles(files, function(result) {
+         e.ports[0].postMessage({greeting: "initialize",
+                                 files: result});
+      });
+   }
+   else if (e.data.greeting === "addMenu") {
+      getFiles({"css": ["core/common/menuButton.css"]}, function(result) {
+         e.ports[0].postMessage({greeting: "sendFiles",
+                                 {"core/common/menuButton.css":
+                                    result.css[0]}});
+         getImages(["identity/missinge_dash.png"], function(result) {
+            e.ports[0].postMessage({greeting: "sendImages", imgs: result});
+         });
+      });
+   }
+};
+
+</script>
+</head>
+<body></body>
+</html>
