@@ -78,7 +78,21 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.3.0** (not yet released)
+##**2.3.4** (12/21/2011)
+**_!_** Replace assignments to DOM node innerHTML properties with more efficient/secure alternatives
+
+##**2.3.3** (12/10/2011)
+**_!_** Fix unreadable tags in quick (1-click) reblogging menu observed by some users  
+**_!_** Directly pass data to new windows opened for Post Crushes and Reply Replies to avoid DOM Local Storage corruption on Firefox and improve efficiency
+
+##**2.3.2** (12/10/2011)
+**_!_** Fix problem with extension not running on RockMelt browsers due to changes in version 2.3.0  
+**_!_** Fix issue with custom new post icons on secondary dashboard pages not being hidden correctly on Firefox version
+
+##**2.3.1** (12/10/2011)
+**_!_** Fix issue with Dashboard Tweaks, Ask Tweaks and Posting Tweaks preferences being reset in Firefox version
+
+##**2.3.0** (12/10/2011)
 **_+_** Add "delete" button option for sub-Tumblr permalink post pages  
 **_+_** Enable photo magnification for drafts and queued posts  
 **_!_** Add reblog button to ask post permalink pages when Better Reblogs ask reblogging option is on but Reblog Yourself is off  
