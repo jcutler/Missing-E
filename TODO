@@ -1,3 +1,5 @@
 Cache settings check for Quick Reblogging
 
 Change all features that pass info to new tabs to no longer use localStorage
+
+IMMEDIATE: Fixes to remove assignments to innerHTML should be tested in all browsers

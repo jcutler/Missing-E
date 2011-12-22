@@ -92,10 +92,14 @@ MissingE.packages.postingTweaksPost = {
                   edit.href = href;
                   edit.id = "MissingE_addedEdit";
                   edit.setAttribute('target','_top');
-                  edit.innerHTML = '<img src="http://assets.tumblr.com/' +
-                     'images/iframe_edit_alpha' + suffix + '" alt="' +
-                     MissingE.getLocale(lang).dashTweaksText.edit +
-                     '" style="display:block;float:left;" />';
+                  var editImg = document.createElement('img');
+                  editImg.src = "http://assets.tumblr.com/images/" +
+                                 "iframe_edit_alpha" + suffix;
+                  editImg.setAttribute("alt", MissingE.getLocale(lang)
+                                                .dashTweaksText.edit);
+                  editImg.style.display = "block";
+                  editImg.style.cssFloat = "left";
+                  edit.appendChild(editImg);
                   like.parentNode.insertBefore(edit, like.nextSibling);
                   var formKey = document.getElementById('form_key');
                   if (formKey) {
@@ -109,17 +113,31 @@ MissingE.packages.postingTweaksPost = {
                      del.onsubmit = function() {
                         return confirm(MissingE.getLocale(lang).deleteConfirm);
                      };
-                     del.innerHTML = '<input type="hidden" name="id" value="' +
-                        like.id.value + '" /><input type="hidden" ' +
-                        'name="redirect_to" value="' +
-                        decodeURIComponent(url
-                                           .match(/http%3A%2F%2F[^%]*/i)[0]) +
-                        '" /><input type="hidden" name="form_key" value="' +
-                        formKey.value + '" /><input type="image" src="' +
-                        'http://assets.tumblr.com/images/iframe_delete_alpha' +
-                        suffix + '" alt="' +
-                        MissingE.getLocale(lang).dashTweaksText.delete + '" ' +
-                        'style="height:20px;border-width:0;cursor:pointer;" />';
+                     var idInput = document.createElement('input');
+                     var redirectInput = document.createElement('input');
+                     var keyInput = document.createElement('input');
+                     var imgInput = document.createElement('input');
+                     idInput.type = "hidden";
+                     idInput.name = "id";
+                     idInput.value = like.id.value;
+                     redirectInput.type = "hidden";
+                     redirectInput.name = "redirect_to";
+                     redirectInput.value = decodeURIComponent(url.match(/http%3A%2F%2F[^%]*/i)[0]);
+                     keyInput.type = "hidden";
+                     keyInput.name = "form_key";
+                     keyInput.value = formKey.value;
+                     imgInput.type = "image";
+                     imgInput.src = "http://assets.tumblr.com/images/" +
+                                    "iframe_delete_alpha" + suffix;
+                     imgInput.setAttribute('alt', MissingE.getLocale(lang)
+                                                      .dashTweaksText.delete);
+                     imgInput.style.height = "20px";
+                     imgInput.style.borderWidth = "0";
+                     imgInput.style.cursor = "pointer";
+                     del.appendChild(idInput);
+                     del.appendChild(redirectInput);
+                     del.appendChild(keyInput);
+                     del.appendChild(imgInput);
                      like.parentNode.insertBefore(del, edit.nextSibling);
                   }
                }

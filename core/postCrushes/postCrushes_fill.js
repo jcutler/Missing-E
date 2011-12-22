@@ -36,7 +36,7 @@ MissingE.packages.postCrushesFill = {
          if (lcol) {
             var header = lcol.getElementsByTagName('h1');
             if (header.length > 0) {
-               header[0].innerHTML = MissingE.getLocale(lang).postCrushes;
+               header[0].textContent = MissingE.getLocale(lang).postCrushes;
             }
          }
          var notlarge = settings.crushSize;
@@ -44,19 +44,37 @@ MissingE.packages.postCrushesFill = {
          var addTags = settings.addTags;
          if (addTags === 1) {
             var tagarr = this._tags;
+            var tagnodes = [];
             var txt = "";
             document.getElementById('post_tags').value = tagarr.join(",");
             for (i=0; i<tagarr.length; i++) {
                if (tagarr[i] !== null && tagarr[i] !== '') {
-                  txt += '<div class="token"><span class="tag">' +
-                         MissingE.escapeHTML(tagarr[i]) + '</span>' +
-                         '<a title="Remove tag" ' +
-                         'onclick="tag_editor_remove_tag($(this).up()); ' +
-                         'return false;" href="#">x</a></div>';
+                  var newtag = document.createElement("div");
+                  newtag.className = "token";
+                  var newspan = document.createElement("span");
+                  newspan.className = "tag";
+                  newspan.textContent = MissingE.escapeHTML(tagarr[i]);
+                  newtag.appendChild(newspan);
+                  var newa = document.createElement("a");
+                  newa.title = MissingE.getLocale(lang).removeTag;
+                  newa.href = "#";
+                  newa.textContent = "x";
+                  newa.addEventListener("click", function(){
+                     var x, newtags;
+                     var atag = this.parentNode;
+                     var tagbox = atag.parentNode;
+                     tagbox.removeChild(atag);
+                     document.getElementById("tag_editor_input").blur();
+                  }, false);
+                  newtag.appendChild(newa);
+                  tagnodes.push(newtag);
                }
             }
-            if (txt !== '') {
-               document.getElementById('tokens').innerHTML = txt;
+            if (tagnodes.length > 0) {
+               var tokenList = document.getElementById('tokens');
+               for (i=0; i<tagnodes.length; i++) {
+                  tokenList.appendChild(tagnodes[i]);
+               }
                var label = document.getElementById('post_tags_label');
                label.parentNode.removeChild(label);
             }

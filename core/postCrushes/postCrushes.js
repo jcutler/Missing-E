@@ -44,13 +44,21 @@ MissingE.packages.postCrushes = {
       var innerdiv = document.createElement('div');
       innerdiv.style.cursor="pointer";
       innerdiv.style.verticalAlign="middle";
-      innerdiv.innerHTML = '<img src="' +
-                           extension.getURL('core/postCrushes/heart.png') +
-                           '" style="opacity:0.6;height:28px;width:29px;" />' +
-                           '<div style="position:absolute;top:15%;width:100%;' +
-                           'color:#2D4159;font:italic bold 12px/1.4 Arial,' +
-                           'Helvetica,sans-serif;">' +
-                           MissingE.getLocale(lang).postCrushes + '</div>';
+      var heart = document.createElement("img");
+      heart.src = extension.getURL('core/postCrushes/heart.png');
+      heart.style.opacity = "0.6";
+      heart.style.height = "28px";
+      heart.style.width = "29px";
+      innerdiv.appendChild(heart);
+      var textDiv = document.createElement("div");
+      textDiv.textContent = MissingE.getLocale(lang).postCrushes;
+      textDiv.style.position = "absolute";
+      textDiv.style.top = "15%";
+      textDiv.style.width = "100%";
+      textDiv.style.color = "#2D4159";
+      textDiv.style.font = "italic normal bold 12px/1.4 Arial,Helvetica," +
+                           "ans-serif";
+      innerdiv.appendChild(textDiv);
 
       innerdiv.addEventListener('click', function() {
          var i,j;

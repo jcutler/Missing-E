@@ -56,13 +56,21 @@ MissingE.packages.betterReblogsPost = {
          var h = this.height;
 
          var block = document.createElement('div');
-         block.innerHTML = '<div class="half" style="height:' + h + 'px;">' +
-            '</div><div class="remhalf" style="width:' + (w-24) +
-            'px;height:' + h + 'px;background:transparent url(\'' + img.src +
-            '\') no-repeat -24px 0;float:right;"></div>';
+         var halfblock = document.createElement('div');
+         var remhalf = document.createElement('div')
          block.className = 'MissingE_reblog';
          block.style.height = h + 'px';
          block.style.width = (w+1) + 'px';
+         halfblock.className = "half";
+         halfblock.style.height = h + "px";
+         remhalf.className = "remhalf";
+         remhalf.style.width = (w-24) + "px";
+         remhalf.style.height = h + "px";
+         remhalf.style.background = "transparent url('" + img.src +
+                                    "') -24px 0 no-repeat";
+         remhalf.style.cssFloat = "right";
+         block.appendChild(halfblock);
+         block.appendChild(remhalf);
          link.replaceChild(block, img);
          var host, pid;
          var loc = location.href;

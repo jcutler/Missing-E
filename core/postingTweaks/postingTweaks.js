@@ -138,16 +138,17 @@ MissingE.packages.postingTweaks = {
             }
          }
          
-         document.getElementById('tokens').innerHTML = txt;
+         $('#tokens').html(txt);
       }
 
       $('#set_tags').append('<div style="text-align:right;">' +
            '<a class="clear_tags" style="color:#666;font-size:10px;" ' +
-           'href="#" onclick="document.getElementById(\'tokens\')' +
-            '.innerHTML=\'\';document.getElementById(\'post_tags\').value = ' +
-            '\'\';return false;">' +
-            MissingE.getLocale(lang).postingTweaks.clearTagsText +
-            '</a></div>');
+           'href="#" onclick="var tok=document.getElementById(\'tokens\');' +
+           'while(tok.firstChild){tok.removeChild(tok.firstChild);}' +
+           'document.getElementById(\'post_tags\').value = ' +
+           '\'\';return false;">' +
+           MissingE.getLocale(lang).postingTweaks.clearTagsText +
+           '</a></div>');
 
       $('#photo_src').keyup(function(){
          if (/^http:\/\/https?:\/\//.test(this.value)) {
@@ -344,11 +345,11 @@ MissingE.packages.postingTweaks = {
              lnk !== null && lnk !== undefined) {
             var uil = lnk.cloneNode(true);
             uil.id = "use_img_link";
-            uil.innerHTML = '<a href="#" ' +
+            $(uil).html('<a href="#" ' +
                'onclick="Element.hide(\'photo_url\');' +
                '$(\'photo_src\').value = \'\';Element.show(\'photo_upload\');' +
                'return false;">' +
-               MissingE.getLocale(lang).postingTweaks.uploadImagesText + '</a>';
+               MissingE.getLocale(lang).postingTweaks.uploadImagesText + '</a>');
             uil.style.marginTop = "7px";
             url.appendChild(uil);
          }
