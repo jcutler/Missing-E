@@ -54,7 +54,7 @@ MissingE.packages.menuButton = {
          var head = document.getElementsByTagName('head')[0];
          var st = document.createElement('style');
          st.setAttribute('type', 'text/css');
-         st.innerHTML = '#header #missinge_button { visibility:hidden; }' +
+         st.textContent = '#header #missinge_button { visibility:hidden; }' +
                         '#header #missinge_button a { background-image:url("' +
                         extension.getURL('identity/missinge_dash.png') +
                         '") !important;}';
@@ -67,7 +67,7 @@ MissingE.packages.menuButton = {
          elnk.href = extension.getURL("core/options.html");
          elnk.setAttribute('target', '_blank');
          elnk.setAttribute('title', 'Missing e Settings');
-         elnk.innerHTML = 'Missing e';
+         elnk.textContent = 'Missing e';
          if (extension.isFirefox) {
             elnk.addEventListener('mouseup', function(e) {
                if (e.which === 1 || e.which === 2) {

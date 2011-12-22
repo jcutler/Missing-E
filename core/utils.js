@@ -183,6 +183,28 @@ var utils = {
       return null;
    },
 
+   createTag: function(lang, txt) {
+      var theTag = document.createElement("div");
+      var theSpan = document.createElement("span");
+      var theA = document.createElement("a");
+      theTag.className = "token";
+      theSpan.className = "tag";
+      theSpan.textContent = txt;
+      theTag.appendChild(theSpan);
+      theA.title = MissingE.getLocale(lang).removeTag;
+      theA.href = "#";
+      theA.textContent = "x";
+      theA.addEventListener("click", function(e){
+         var atag = this.parentNode;
+         var tagbox = atag.parentNode;
+         tagbox.removeChild(atag);
+         document.getElementById("tag_editor_input").blur();
+         e.preventDefault();
+      }, false);
+      theTag.appendChild(theA);
+      return theTag;
+   },
+
    escapeHTML: function(str) {
       return str.replace(/&/g,'&amp;').replace(/"/g,'&quot;')
                .replace(/>/,'&gt;').replace(/</,'&lt;');

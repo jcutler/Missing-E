@@ -177,7 +177,7 @@ MissingE.packages.betterReblogsPost = {
          var settings = this.settings;
          var st = document.createElement('style');
          st.type = 'text/css';
-         st.innerHTML = '.MissingE_reblog { ' +
+         st.textContent = '.MissingE_reblog { ' +
                         'float:left;margin-left:3px;display:inline-block;}' +
                         '.MissingE_reblog .half { ' +
                         'float:left;width:25px;background:transparent url("' +

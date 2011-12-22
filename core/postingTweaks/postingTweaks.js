@@ -121,6 +121,7 @@ MissingE.packages.postingTweaks = {
           !MissingE.isTumblrURL(location.href, ["bookmarklet"])) {
          var txt="";
          var ctags;
+         var newtags = [];
          var posttags = document.getElementById('post_tags');
          if (posttags) {
             ctags = posttags.value;
@@ -130,15 +131,14 @@ MissingE.packages.postingTweaks = {
          }
          for (i=0; i<ctags.length; i++) {
             if (ctags[i] !== "") {
-               txt += '<div class="token"><span class="tag">' +
-                        MissingE.escapeHTML(ctags[i]) +
-                        '</span><a title="Remove tag" ' +
-                        'onclick="tag_editor_remove_tag($(this).up()); ' +
-                        'return false;" href="#">x</a></div>';
+               newtags.push(MissingE.createTag(lang, ctags[i]));
             }
          }
-         
-         $('#tokens').html(txt);
+         var tokenList = $('#tokens');
+         tokenList.empty();
+         for (i=0; i<newtags.length; i++) {
+            tokenList.append(newtags[i]);
+         }
       }
 
       $('#set_tags').append('<div style="text-align:right;">' +

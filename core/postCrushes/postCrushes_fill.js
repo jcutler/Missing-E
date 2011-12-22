@@ -49,25 +49,7 @@ MissingE.packages.postCrushesFill = {
             document.getElementById('post_tags').value = tagarr.join(",");
             for (i=0; i<tagarr.length; i++) {
                if (tagarr[i] !== null && tagarr[i] !== '') {
-                  var newtag = document.createElement("div");
-                  newtag.className = "token";
-                  var newspan = document.createElement("span");
-                  newspan.className = "tag";
-                  newspan.textContent = MissingE.escapeHTML(tagarr[i]);
-                  newtag.appendChild(newspan);
-                  var newa = document.createElement("a");
-                  newa.title = MissingE.getLocale(lang).removeTag;
-                  newa.href = "#";
-                  newa.textContent = "x";
-                  newa.addEventListener("click", function(){
-                     var x, newtags;
-                     var atag = this.parentNode;
-                     var tagbox = atag.parentNode;
-                     tagbox.removeChild(atag);
-                     document.getElementById("tag_editor_input").blur();
-                  }, false);
-                  newtag.appendChild(newa);
-                  tagnodes.push(newtag);
+                  tagnodes.push(MissingE.createTag(lang, tagarr[i]));
                }
             }
             if (tagnodes.length > 0) {

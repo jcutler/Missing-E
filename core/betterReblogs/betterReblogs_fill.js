@@ -89,8 +89,8 @@ MissingE.packages.betterReblogsFill = {
       var addHeight = 0;
       var lang = $('html').attr('lang');
       if (MissingE.packages.betterReblogsFill.isTagOverride()) {
-         document.getElementById('post_tags').value = "";
-         document.getElementById('tokens').innerHTML = "";
+         $('#post_tags').val("");
+         $('#tokens').empty();
          MissingE.packages.betterReblogsFill.clearTagOverride();
       }
       var tags = MissingE.packages.betterReblogsFill.getReblogTags();
@@ -220,6 +220,7 @@ MissingE.packages.betterReblogsFill = {
             if (func !== 'var tags=[];') {
                func += 'var posttags=document.getElementById(\'post_tags\');' +
                        'var currtags=posttags.value.split(\',\');' +
+                       'if (currtags[0] === \'\') { currtags.splice(0,1); }' +
                        'var addtags=[];' +
                        'for(i=0;i<tags.length;i++){' +
                         'var f=false;' +
@@ -241,10 +242,10 @@ MissingE.packages.betterReblogsFill = {
                          'newtoken.className=\'token\';' +
                          'var span=document.createElement(\'span\');' +
                          'span.className=\'tag\';' +
-                         'span.innerHTML=addtags[i];' +
+                         'span.textContent=addtags[i];' +
                          'newtoken.appendChild(span);' +
                          'var rem=document.createElement(\'a\');' +
-                         'rem.href=\'#\';rem.innerHTML=\'x\';' +
+                         'rem.href=\'#\';rem.textContent=\'x\';' +
                          'rem.onclick=' +
                            'function(){tag_editor_remove_tag($(this).up());' +
                             'return false;};' +
@@ -273,8 +274,8 @@ MissingE.packages.betterReblogsFill = {
                }
             }
             if (settings.passTags === 0 || settings.autoFillTags === 0) {
-               document.getElementById('post_tags').value = "";
-               document.getElementById('tokens').innerHTML = "";
+               $('#post_tags').val("");
+               $('#tokens').empty();
             }
             else {
                $('head').append('<script type="text/javascript">' +

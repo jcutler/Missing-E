@@ -95,25 +95,7 @@ MissingE.packages.replyRepliesFill = {
             for (i=0; i<tags.length; i++) {
                if (tags[i] !== undefined && tags[i] !== null &&
                    tags[i] !== '') {
-                  var newtag = document.createElement("div");
-                  newtag.className = "token";
-                  var newspan = document.createElement("span");
-                  newspan.className = "tag";
-                  newspan.textContent = MissingE.escapeHTML(tags[i]);
-                  newtag.appendChild(newspan);
-                  var newa = document.createElement("a");
-                  newa.title = MissingE.getLocale(lang).removeTag;
-                  newa.href = "#";
-                  newa.textContent = "x";
-                  newa.addEventListener("click", function(){
-                     var x, newtags;
-                     var atag = this.parentNode;
-                     var tagbox = atag.parentNode;
-                     tagbox.removeChild(atag);
-                     document.getElementById("tag_editor_input").blur();
-                  }, false);
-                  newtag.appendChild(newa);
-                  tagnodes.push(newtag);
+                  tagnodes.push(MissingE.createTag(lang, tags[i]));
                }
             }
             if (tagnodes.length > 0) {
