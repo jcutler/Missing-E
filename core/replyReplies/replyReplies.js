@@ -409,9 +409,7 @@ MissingE.packages.replyReplies = {
                  'background-image:url("' +
                  extension.getURL("core/replyReplies/notes_icons.png") + '") ' +
                  '!important; }</style>');
-         $('head').append('<link rel="stylesheet" type="text/css" href="' +
-                 extension.getURL("core/replyReplies/replyReplies.css") +
-                 '" />');
+         extension.insertStyleSheet("core/replyReplies/replyReplies.css");
       }
 
       var overrideStyle = false;
