@@ -8,6 +8,7 @@ Better sanitization of HMTL injection:
    - Bookmarker
    - Common
    - Dashboard Tweaks
+      - does experimental reply work on all browsers?
    - Dash Links To Tabs
    - Goto Dash Post
    - Magnifier

@@ -26,10 +26,13 @@
 MissingE.packages.dashboardTweaks = {
 
    setupMassDeletePost: function(item) {
-      $('<span class="MissingEmassDeleteSpan">' +
-        '<input type="checkbox" val="0" id="' + item.id + '_select" ' +
-        'class="MissingEmassDeleteSelect" /></span>')
-            .appendTo($(item).find('div.post_controls'));
+      $('<span />', {class: "MissingEmassDeleteSpan"})
+         .append($('<input />',
+                   {type: "checkbox",
+                    val: "0",
+                    id: item.id + "_select",
+                    class: "MissingEmassDeleteSelect"}))
+         .appendTo($(item).find('div.post_controls'));
    },
 
    deletePosts: function(key, lang) {
@@ -107,18 +110,23 @@ MissingE.packages.dashboardTweaks = {
       }
       key = MissingE.escapeHTML(key[1]);
       id = MissingE.escapeHTML(id);
+      notes.after($('<a />',
+                    {class: "MissingE_experimental_reply",
+                     href: "#",
+                     click: function(){
+                        $.globalEval('display_reply_pane([' + id + ',"' +
+                                                          key + '"]);');
+                        return false;
+                     },
+                     id: "post_control_reply_" + id,
+                     title: MissingE.getLocale(lang).dashTweaksText.reply +
+                        " [" + MissingE.getLocale(lang).dashTweaksText.experimental + "]",
+                     text: "[" + MissingE.getLocale(lang).dashTweaksText.reply + "]"}));
 
-      notes.after('<a class="MissingE_experimental_reply" href="#" onclick="' +
-                  'display_reply_pane([' + id + ', \'' + key + '\']);' +
-                  'return false;" id="post_control_reply_' + id + '" title="' +
-                  MissingE.getLocale(lang).dashTweaksText.reply + ' [' +
-                  MissingE.getLocale(lang).dashTweaksText.experimental + ']">' +
-                  '[' + MissingE.getLocale(lang).dashTweaksText.reply + ']' +
-                  '</small></a>');
-
-      notes.after('<span class="MissingE_post_control ' +
-                  'MissingE_experimental_reply_wait" id="reply_fail_' + id +
-                  '"></span>');
+      notes.after($('<span />',
+                    {class: "MissingE_post_control " +
+                            "MissingE_experimental_reply_wait",
+                     id: "reply_fail_" + id}));
    },
 
    doIcons: function(item) {
