@@ -28,10 +28,10 @@ if (typeof MissingE.packages.askTweaks !== "undefined") { return; }
 MissingE.packages.askTweaks = {
 
    setupMassDeleteAsk: function(item) {
-      $('<span>', {class: "MissingEmassDeleteSpan"})
-         .append($('<input>', {type: "checkbox", val: "0",
-                               id: item.id + "_select",
-                               class: "MissingEmassDeleteSelect"}))
+      $('<span />', {class: "MissingEmassDeleteSpan"})
+         .append($('<input />', {type: "checkbox", val: "0",
+                                 id: item.id + "_select",
+                                 class: "MissingEmassDeleteSelect"}))
          .appendTo($(item).find('div.post_controls'));
    },
 
@@ -209,14 +209,15 @@ MissingE.packages.askTweaks = {
          return false;
       }
       var lang = $('html').attr("lang");
-      var id = MissingE.escapeHTML($(item).attr('id').match(/\d*$/)[0]);
+      var id = $(item).attr('id').match(/\d*$/)[0];
 
       if (betterAnswers === 1) {
-         var allbtns = "";
+         var allbtns = [];
          var suffix;
          for (i in MissingE.getLocale(lang).postingTweaks.submitText) {
             if (MissingE.getLocale(lang).postingTweaks.submitText
                   .hasOwnProperty(i)) {
+               var newbtn;
                if (i === 'publish') { continue; }
                if (i === 'queue' || i === 'draft') {
                   suffix = 'also_';
@@ -224,27 +225,46 @@ MissingE.packages.askTweaks = {
                else {
                   suffix = '';
                }
-               allbtns += '<button class="chrome" id="ask_' + i + '_button_' +
-                  suffix + id + '" onclick="return false;">' +
-                  '<div class="chrome_button">' +
-                  '<div class="chrome_button_left"></div>' +
-                  MissingE.getLocale(lang).postingTweaks.submitText[i] +
-                  '<div class="chrome_button_right"></div></div></button>' +
-                  '<br />';
+               newbtn = $('<button />',
+                          {class: "chrome",
+                           id: "ask_" + i + "_button_" + suffix + id,
+                           click: function(){ return false; }})
+                           .append($('<div />',
+                                     {class: "chrome_button",
+                                      text: MissingE.getLocale(lang)
+                                             .postingTweaks.submitText[i]})
+                              .prepend($('<div />',
+                                         {class: "chrome_button_left"}))
+                              .append($('<div />',
+                                        {class: "chrome_button_right"})));
+               allbtns.push(newbtn);
+               allbtns.push($('<br />'));
             }
          }
-         allbtns = allbtns.replace(/<br \/>$/,'');
          var btn = $('#ask_publish_button_' + id);
-         var postbtn = $('<button class="chrome blue" ' +
-                         'id="ask_publish_button_also_' + id + '" ' +
-                         'name="publish" type="submit" ' +
-                         'onclick="return false;"><div class="chrome_button">' +
-                         '<div class="chrome_button_left"></div>' + btn.text() +
-                         '<div class="chrome_button_right"></div>' +
-                         '</div></button>');
+         var postbtn = $('<button />',
+                         {class: "chrome blue",
+                          id: "ask_publish_button_also_" + id,
+                          name: "publish",
+                          type: "submit",
+                          click: function() { return false; }})
+                          .append($('<div />',
+                                    {class: "chrome_button",
+                                     text: btn.text()})
+                                    .prepend($('<div />',
+                                               {class: "chrome_button_left"}))
+                                    .append($('<div />',
+                                              {class: "chrome_button_right"})));
          btn.after(postbtn);
-         $('<div class="MissingE_postMenu">' + allbtns + '</div>')
-            .insertAfter(postbtn);
+
+         if (allbtns.length >= 2) {
+            allbtns.splice(allbtns.length-1,1);
+         }
+         var postMenu = $('<div class="MissingE_postMenu" />');
+         for (i=0; i<allbtns.length; i++) {
+            postMenu.append(allbtns[i]);
+         }
+         postMenu.insertAfter(postbtn);
          btn.hide();
          $('#ask_publish_button_also_' + id).click(function() {
             MissingE.packages.askTweaks.doManualAnswering(id, 'publish');
@@ -279,13 +299,20 @@ MissingE.packages.askTweaks = {
          else {
             startTags = '';
          }
-         var adding = '<div class="MissingE_askTweaks_group">';
-         adding += '<div>' + MissingE.getLocale(lang).tagsText + ': <input ' +
-                     'type="text" class="MissingE_askTweaks_tags" value="' +
-                     startTags + '"/></div>';
-         adding += '<div>' + MissingE.getLocale(lang).twitterText + ': ' +
-                     '<input type="checkbox" ' +
-                     'class="MissingE_askTweaks_twitter" /></div></div>';
+         var adding = $('<div />', {class: "MissingE_askTweaks_group"})
+                        .append($('<div />',
+                                  {text: MissingE.getLocale(lang).tagsText +
+                                         ": "})
+                                 .append($('<input />',
+                                           {type: "text",
+                                            class: "MissingE_askTweaks_tags",
+                                            val: startTags})))
+                        .append($('<div />',
+                                  {text: MissingE.getLocale(lang).twitterText +
+                                          ": "})
+                                 .append($('<input />',
+                                           {type: "checkbox",
+                                            class: "MissingE_askTweaks_twitter"})));
          answer.find('div:first').css('padding-top','10px')
             .addClass('MissingE_askTweaks_buttons').before(adding);
          $(item).find('input.MissingE_askTweaks_tags').keydown(function(e) {
@@ -320,9 +347,9 @@ MissingE.packages.askTweaks = {
                           'width="100%" height="149" /></div>');
          $('#posts div.user_menu_list a[href$="/ask"]').live('click',
                                                              function() {
-            var user = MissingE.escapeHTML($(this).closest('div.user_menu_list')
-                           .find('a[following]').attr('href').match(/[^\/]*$/)
-                           .join(''));
+            var user = $(this).closest('div.user_menu_list')
+                          .find('a[following]').attr('href').match(/[^\/]*$/)
+                          .join(''));
             var avatar = $(this).closest('li.post')
                            .find('div.avatar_and_i a.post_avatar')
                            .css('background-image');
@@ -350,8 +377,8 @@ MissingE.packages.askTweaks = {
                }
                if (!skipRender) {
                   $('#MissingE_askbox .MissingE_askPerson')
-                     .html('<a href="' + encodeURI(url[1]) + '">' + user +
-                           '</a>');
+                     .html('<a href="' + encodeURI(url[1]) + '">' +
+                           MissingE.escapeHTML(user) + '</a>');
                   $('#MissingE_askbox .MissingE_askPerson_avatar')
                      .attr('href',encodeURI(url[1]))
                      .css('background-image',avatar);
@@ -539,11 +566,7 @@ MissingE.packages.askTweaks = {
 
    runAskForm: function() {
       if (this.settings.scroll) {
-         var style = document.createElement("link");
-         style.setAttribute('rel','stylesheet');
-         style.setAttribute('type','text/css');
-         style.href = extension.getURL("core/askTweaks/askboxScroll.css");
-         document.getElementsByTagName('head')[0].appendChild(style);
+         MissingE.insertStyleSheet("core/askTweaks/askboxScroll.css");
       }
       if (this.settings.adjustDomain) {
          document.domain = "tumblr.com";
