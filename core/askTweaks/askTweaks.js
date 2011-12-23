@@ -349,7 +349,7 @@ MissingE.packages.askTweaks = {
                                                              function() {
             var user = $(this).closest('div.user_menu_list')
                           .find('a[following]').attr('href').match(/[^\/]*$/)
-                          .join(''));
+                          .join('');
             var avatar = $(this).closest('li.post')
                            .find('div.avatar_and_i a.post_avatar')
                            .css('background-image');
