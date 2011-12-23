@@ -78,8 +78,13 @@ MissingE.packages.menuButton = {
          var upnote = document.createElement('div');
          upnote.id = "missinge_updatenotice";
          upnote.className = "tab_notice";
-         upnote.innnerHTML = '<span class="tab_notice_value">Update</span>' +
-                             '<span class="tab_notice_nipple"></span>';
+         var noticeVal = document.createElement('span');
+         noticeVal.className = "tab_notice_value";
+         noticeVal.textContent = "Update";
+         upnote.appendChild(noticeVal);
+         var noticeNip = document.createElement('span');
+         noticeNip.className = "tab_notice_nipple";
+         upnote.appendChild(noticeNip);
          tab.appendChild(elnk);
          tab.appendChild(upnote);
          bar.insertBefore(tab, logout);
