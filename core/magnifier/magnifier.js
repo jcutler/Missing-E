@@ -157,10 +157,11 @@ MissingE.packages.magnifier = {
          }
          
          if (str) {
-            var mi = $('<a title="' + MissingE.getLocale(lang).loading + '" ' +
-                       'class="MissingE_magnify MissingE_magnify_hide" ' +
-                       'id="magnify_' + MissingE.escapeHTML(tid) + '" ' +
-                       'href="#" onclick="return false;"></a>');
+            var mi = $('<a />',
+                       {title: MissingE.getLocale(lang).loading,
+                        class: "MissingE_magnify MissingE_magnify_hide",
+                        id: "magnify_" + tid, href: "#",
+                        click: function() { return false; }});
             mi.click(MissingE.packages.magnifier.magClick);
             if (publish && publish.length > 0) {
                publish.before(mi);
@@ -199,19 +200,21 @@ MissingE.packages.magnifier = {
 
    run: function() {
       var settings = this.settings;
-      var magimg = extension.getURL('core/magnifier/magnifier.png');
       var turnimg = extension.getURL('core/magnifier/turners.png');
-      var overlay = extension.getURL('core/magnifier/magoverlay.png');
       var turnload = new Image();
       turnload.src = turnimg;
       $('head').append('<style id="MissingE_magnifier_style" type="text/css">' +
                        'a.MissingE_magnify { ' +
-                       'background-image:url("' + magimg + '"); } ' +
+                       'background-image:url("' +
+                          extension.getURL('core/magnifier/magnifier.png') +
+                       '"); } ' +
                        '#facebox .slideshow .turner_left, ' +
                        '#facebox .slideshow .turner_right { ' +
                        'background-image:url("' + turnimg + '"); } ' +
                        '.MissingE_magnify_avatar { ' +
-                       'background-image:url("' + overlay + '"); }</style>');
+                       'background-image:url("' +
+                          extension.getURL('core/magnifier/magoverlay.png') +
+                       '"); }</style>');
 
       if (!MissingE.isTumblrURL(location.href, ["messages", "followers",
                                                 "following"])) {
