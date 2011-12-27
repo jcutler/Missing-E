@@ -50,41 +50,51 @@ MissingE.packages.bookmarker = {
 
    getMarkText: function(dt, post, name) {
       var pid = Number(post)+1;
-      dt = MissingE.escapeHTML(dt);
-      post = MissingE.escapeHTML(post);
-      name = MissingE.escapeHTML(name);
-      return '<li post="' + post + '" id="mark_' + post + '">' +
-             '<a href="/dashboard/1000/' + pid + '?lite" post="' + post +
-             '" class="MissingE_bookmarker_marklink">' +
-             '<div class="hide_overflow"><span class="mark_date" timestamp="' +
-             dt + '">' + name + '</span></div></a>' +
-             '<a id="unmark_' + post + '" class="MissingE_unmarker" ' +
-             'onclick="return false;" href="#"></a></li>';
+      var mark = $('<li />', {id: "mark_" + post}).attr("post", post);
+      mark.append($('<a />',
+                    {href: "/dashboard/1000/" + pid + "?lite",
+                     class: "MissingE_bookmarker_marklink"}).attr("post", post)
+                     .append($('<div />', {class: "hide_overflow"})
+                              .append($('<span />',
+                                        {class: "mark_date",
+                                         text: name}).attr("timestamp",dt))));
+      mark.append($('<a />', {id: "unmark_" + post, class: "MissingE_unmarker",
+                              href: "#", click: function() { return false; }}));
+      return mark;
    },
 
    addBar: function(mark, lang, altPost) {
       var post;
-      var markid = MissingE.escapeHTML(mark[1]);
-      var marktxt = MissingE.escapeHTML(mark[2]);
+      var markid = mark[1];
+      var marktxt = mark[2];
       if (altPost) { post = $(altPost); }
       else { post = $('#post_' + mark[1]); }
       if ($('#bookmarkbar_' + mark[1]).length === 0) {
-         post.before('<div id="bookmarkbar_' + markid + '" ' +
-               'class="MissingE_bookmark_bar"><div ' +
-               'class="MissingE_bookmark_line"></div><div ' +
-               'class="MissingE_bookmark_text">' +
-               MissingE.getLocale(lang).bookmarkNoun +
-               ' - <em id="bookmarkbar_label_' +
-               markid + '">' + marktxt + '</em>' + (altPost ? '<span ' +
-               'class="MissingE_bookmark_missing ' +
-               'MissingE_bookmark_missing_' + lang + '"> (' +
-               '<a href="http://missinge.infraware.ca/faq#bookmark-issue" ' +
-               'target="_blank">' + MissingE.getLocale(lang).postUnavailable +
-               '</a>)</span>' : '') + '</div></div>');
+         var bar = $('<div />', {id: "bookmarkbar_" + markid,
+                                 class: "MissingE_bookmark_bar"});
+         bar.append($('<div />', {class: "MissingE_bookmark_line"}));
+         var bartxt = $('<div />',
+                        {class: "MissingE_bookmark_text",
+                         text: MissingE.getLocale(lang).bookmarkNoun + " - "});
+         bartxt.append($('<em />', {id: "bookmarkbar_label_" + markid,
+                                    text: marktxt}));
+         if (altPost) {
+            var label = $('<span />', {class: "MissingE_bookmark_missing " +
+                                          "MissingE_bookmark_missing_" + lang,
+                                       text: " ("});
+            label.append($('<a />',
+                           {target: "_blank",
+                            href: "http://missinge.infraware.ca/faq#bookmark-issue",
+                            text: MissingE.getLocale(lang).postUnavailable}));
+            label.append(")");
+            bartxt.append(label);
+         }
+         bar.append(bartxt);
+         post.before(bar);
       }
       else {
          $('#bookmarkbar_' + markid).removeData('toremove');
-         $('#bookmarkbar_label_' + markid).html(marktxt);
+         $('#bookmarkbar_label_' + markid).text(marktxt);
       }
    },
 
@@ -292,10 +302,9 @@ MissingE.packages.bookmarker = {
                MissingE.packages.bookmarker.addBar(marks[j], lang, item);
             }
          }
-         var node = $('<a class="' + klass + '" id="bookmark_' +
-                      MissingE.escapeHTML(post) + '" title="' +
-                      MissingE.getLocale(lang).bookmarkVerb +
-                      '" href="#" onclick="return false;"></a>');
+         var node = $('<a />', {class: klass, id: "bookmark_" + post,
+                                title: MissingE.getLocale(lang).bookmarkVerb,
+                                href: "#", click: function(){ return false}});
          node.click(MissingE.packages.bookmarker.markClick);
          ctrl.addClass('bookmarkAdded');
          if (mag.length > 0) {
@@ -320,7 +329,6 @@ MissingE.packages.bookmarker = {
          end = true;
          var oldval = evt.target.getAttribute("value");
          var newval = evt.target.value;
-
          newval = newval.replace(/^\s*/,'').replace(/\s*$/,'')
                                              .replace(/[;,]/g,'.');
          if (newval !== oldval && newval !== "") {
@@ -334,7 +342,7 @@ MissingE.packages.bookmarker = {
             marks[i][2] = newval;
             MissingE.setStorage("MissingE_bookmarker_marks",
                        MissingE.packages.bookmarker.serializeMarks(marks));
-            par.find('span.mark_date').html(newval);
+            par.find('span.mark_date').text(newval);
             $('#bookmarkbar_label_' + post).text(newval);
          }
       }
@@ -421,11 +429,14 @@ MissingE.packages.bookmarker = {
             }
          }
          var lang = $('html').attr('lang');
-         var list = $('<ul id="MissingE_marklist" class="controls_section">' +
-                      '<li class="MissingE_marklist_title recessed">' +
-                      '<a href="#" onclick="return false;">' +
-                      MissingE.getLocale(lang).bookmarksTitle +
-                      '</a></li></ul>');
+         var list = $('<ul />', {id: "MissingE_marklist",
+                                 class: "controls_section"});
+         var title = $('<li />', {class: "MissingE_marklist_title recessed"});
+         title.append($('<a />',
+                        {href: "#", click: function(){ return false },
+                         text: MissingE.getLocale(lang).bookmarksTitle}));
+         list.append(title);
+
          $(function() {
             $('#MissingE_marklist').sortable({
                items: "li[post]",
@@ -475,9 +486,9 @@ MissingE.packages.bookmarker = {
             $(this).closest('li').data('editmode','EDIT');
             var title = $(this).find('span.mark_date');
             var ds = title.text();
-            var inp = $('<input name="MissingE_bookmarker_edit" type="text" ' +
-                        'size="10" value="' + ds +
-                        '" id="MissingE_bookmarker_edit">');
+            var inp = $('<input />',
+                        {type: "text", name: "MissingE_bookmarker_edit",
+                         size: "10", val: ds, id: "MissingE_bookmarker_edit"});
             inp.blur(function(e) {
                MissingE.packages.bookmarker.handleEdit('focusout',e);
             }).keyup(function(e) {
@@ -491,9 +502,11 @@ MissingE.packages.bookmarker = {
                e.stopPropagation();
             });
             title.closest('li').append(inp);
-            var check = $('<a id="MissingE_bookmark_confirmedit" ' +
-                          'onclick="return false;" style="display:inline;" ' +
-                          'href="#"></a>').html('&#10004;').insertAfter(this);
+            var check = $('<a />', {id: "MissingE_bookmark_confirmedit",
+                                    click: function() { return false },
+                                    href: "#"});
+            check.css('display', 'inline').html('&#10004;');
+            check.insertAfter(this);
             check.click(function() { inp.get(0).blur(); });
             inp.get(0).focus();
             title.css('visibility','hidden');

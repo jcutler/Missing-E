@@ -5,7 +5,7 @@ Change all features that pass info to new tabs to no longer use localStorage
 Better sanitization of HMTL injection:
    - Ask Tweaks (DONE)
    - Better Reblogs (DONE)
-   - Bookmarker
+   - Bookmarker (DONE)
    - Common
    - Dashboard Tweaks
       - does experimental reply work on all browsers?
