@@ -69,15 +69,18 @@ MissingE.packages.postingTweaks = {
          }
          var aid = obj.id.match(/\d+$/)[0];
          var it = document.getElementById('ask_answer_form_container_' + aid);
-         $(it).css('padding-top','0')
-            .prepend('<div style="min-height:15px;">' +
-                     '<div style="float:right;padding:3px 0;">' +
-                     '<iframe src="/upload/image?from_assets" ' +
-                     'id="regular_form_inline_image_iframe_' + aid +
-                     '" width="130" height="16" border="0" scrolling="no" ' +
-                     'allowtransparency="true" frameborder="0" ' +
-                     'style="background-color:transparent; overflow:hidden;">' +
-                     '</iframe></div><div class="clear"></div></div>');
+         var div = $('<div style="min-height:15px;" />');
+         div.append($('<div style="float:right;padding:3px 0;" />')
+                     .append($('<iframe />',
+                               {src: "/upload/image?from_assets",
+                                id: "regular_form_inline_image_iframe_" + aid,
+                                width: "130", height: "16", border: "0",
+                                scrolling: "no", allowtransparency: "true",
+                                frameborder: "0"})
+                                 .css({"background-color": "transparent",
+                                       "overflow": "hidden"})));
+         div.append('<div class="clear" />');
+         $(it).css('padding-top','0').prepend(div);
       }
       else {
          return true;
@@ -459,47 +462,50 @@ MissingE.packages.postingTweaks = {
             var ta = $(this);
             var textarea = ta.attr('id');
             var h2 = ta.prevAll('h2:first');
-            var uploader = '<iframe id="regular_form_inline_image_iframe_' +
-                           textarea + '" src="/upload/image?from_assets" ' +
-                           'width="130" height="16" border="0" ' +
-                           'scrolling="no" allowtransparency="true" ' +
-                           'frameborder="0" ' +
-                           'style="background-color:transparent; ' +
-                           'overflow:hidden;"></iframe>';
-            var wrap = ['<div style="float:right;' +
-                        (/regular_/.test(this.id) ? 'margin-bottom:5px;' :
-                         'padding-top:3px;') + '">',
-                        '</div><div style="clear:both;"></div>'];
-            var adjwrap = ['<div style="position:absolute;right:0;top:-20px;">',
-                           '</div>'];
-            var imgwrap = ['<div style="text-align:right;margin-top:-19px;' +
-                           'margin-bottom:3px;">','</div>'];
+            var uploader = $('<iframe />',
+                             {id: "regular_form_inline_image_iframe_" + textarea,
+                              src: "/upload/image?from_assets",
+                              width: "130", height: "16", border: "0",
+                              scrolling: "no", allowtransparency: "true",
+                              frameborder: "0"})
+                              .css({"background-color": "transparent",
+                                    "overflow": "hidden"});
+            var wrap = '<div style="float:right;' +
+                       (/regular_/.test(this.id) ? 'margin-bottom:5px;' :
+                        'padding-top:3px;') + '" />';
+            var adjwrap = '<div style="position:absolute;right:0;top:-20px;" />';
+            var imgwrap = '<div style="text-align:right;margin-top:-19px;' +
+                          'margin-bottom:3px;" />';
 
             var frm = ta.closest('form');
             var adjust = frm.attr('id') === "photo_form" ||
                (frm.attr('id') === "video_form" &&
                 frm.find('input[name="post[one]"]').attr('type') === "hidden");
+console.log(this);
 
+            var insert;
             if (h2.length > 0) {
-               h2.before('<div style="height:' + h2.css("margin-top") +
-                         ';"></div>').css({"float":"left","margin-top":"0"})
-                           .after(wrap[0] + uploader + wrap[1]);
+               h2.before('<div style="height:' + h2.css("margin-top") + ';" />')
+                 .css({"float":"left","margin-top":"0"});
+               insert = $(wrap).append(uploader);
+               h2.after(insert);
+               insert.after('<div style="clear:both;" />');
             }
             else if (adjust) {
                ta.parent().css('position','relative');
-               uploader = adjwrap[0] + uploader + adjwrap[1];
-               ta.parent().prepend(uploader);
+               ta.parent().prepend($(adjwrap).append(uploader));
             }
             else {
                if (frm.attr('id') === 'photo_form' &&
                    ta.parent().prevAll('img').length > 0) {
                   //Single image share bookmarklet looks different
-                  uploader = imgwrap[0] + uploader + imgwrap[1];
+                  ta.parent().prepend($(imgwrap).append(uploader));
                }
                else {
-                  uploader = wrap[0] + uploader + wrap[1];
+                  insert = $(wrap).append(uploader);
+                  ta.parent().prepend(insert);
+                  insert.after('<div style="clear:both;" />');
                }
-               ta.parent().prepend(uploader);
             }
             if (ta.parent().find('div.editor_note:contains("markdown")')
                            .length !== 0) {
