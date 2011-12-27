@@ -53,13 +53,15 @@ MissingE.packages.bookmarker = {
       var mark = $('<li />', {id: "mark_" + post}).attr("post", post);
       mark.append($('<a />',
                     {href: "/dashboard/1000/" + pid + "?lite",
-                     class: "MissingE_bookmarker_marklink"}).attr("post", post)
-                     .append($('<div />', {class: "hide_overflow"})
+                     "class": "MissingE_bookmarker_marklink"})
+                     .attr("post", post)
+                     .append($('<div />', {"class": "hide_overflow"})
                               .append($('<span />',
-                                        {class: "mark_date",
+                                        {"class": "mark_date",
                                          text: name}).attr("timestamp",dt))));
-      mark.append($('<a />', {id: "unmark_" + post, class: "MissingE_unmarker",
-                              href: "#", click: function() { return false; }}));
+      mark.append($('<a />', {id: "unmark_" + post,
+                              "class": "MissingE_unmarker", href: "#",
+                              click: function() { return false; }}));
       return mark;
    },
 
@@ -71,15 +73,15 @@ MissingE.packages.bookmarker = {
       else { post = $('#post_' + mark[1]); }
       if ($('#bookmarkbar_' + mark[1]).length === 0) {
          var bar = $('<div />', {id: "bookmarkbar_" + markid,
-                                 class: "MissingE_bookmark_bar"});
-         bar.append($('<div />', {class: "MissingE_bookmark_line"}));
+                                 "class": "MissingE_bookmark_bar"});
+         bar.append($('<div />', {"class": "MissingE_bookmark_line"}));
          var bartxt = $('<div />',
-                        {class: "MissingE_bookmark_text",
+                        {"class": "MissingE_bookmark_text",
                          text: MissingE.getLocale(lang).bookmarkNoun + " - "});
          bartxt.append($('<em />', {id: "bookmarkbar_label_" + markid,
                                     text: marktxt}));
          if (altPost) {
-            var label = $('<span />', {class: "MissingE_bookmark_missing " +
+            var label = $('<span />', {"class": "MissingE_bookmark_missing " +
                                           "MissingE_bookmark_missing_" + lang,
                                        text: " ("});
             label.append($('<a />',
@@ -302,7 +304,7 @@ MissingE.packages.bookmarker = {
                MissingE.packages.bookmarker.addBar(marks[j], lang, item);
             }
          }
-         var node = $('<a />', {class: klass, id: "bookmark_" + post,
+         var node = $('<a />', {"class": klass, id: "bookmark_" + post,
                                 title: MissingE.getLocale(lang).bookmarkVerb,
                                 href: "#", click: function(){ return false}});
          node.click(MissingE.packages.bookmarker.markClick);
@@ -430,8 +432,8 @@ MissingE.packages.bookmarker = {
          }
          var lang = $('html').attr('lang');
          var list = $('<ul />', {id: "MissingE_marklist",
-                                 class: "controls_section"});
-         var title = $('<li />', {class: "MissingE_marklist_title recessed"});
+                                 "class": "controls_section"});
+         var title = $('<li />', {"class": "MissingE_marklist_title recessed"});
          title.append($('<a />',
                         {href: "#", click: function(){ return false },
                          text: MissingE.getLocale(lang).bookmarksTitle}));

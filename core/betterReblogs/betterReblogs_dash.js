@@ -98,7 +98,7 @@ MissingE.packages.betterReblogs = {
                           MissingE.escapeHTML(question) + "&MissingEaskName=" +
                           response.name + "&MissingEaskPost=" +
                           encodeURIComponent(perm.attr("href")),
-                    class: klass});
+                    "class": klass});
          if (before.length === 0) {
             rblnk.prependTo(item.find('div.post_controls')).after(' ');
          }
@@ -116,7 +116,7 @@ MissingE.packages.betterReblogs = {
          rblnk = $('<a />',
                    {title: reblog_err,
                     href: "#",
-                    class: "MissingE_betterReblogs_retryAsk " + klass,
+                    "class": "MissingE_betterReblogs_retryAsk " + klass,
                     click: function() { return false; }});
          if (!response.icons) {
             rblnk.append($('<del />', {text: reblog_text}));

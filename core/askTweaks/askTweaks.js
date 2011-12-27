@@ -28,10 +28,10 @@ if (typeof MissingE.packages.askTweaks !== "undefined") { return; }
 MissingE.packages.askTweaks = {
 
    setupMassDeleteAsk: function(item) {
-      $('<span />', {class: "MissingEmassDeleteSpan"})
+      $('<span />', {"class": "MissingEmassDeleteSpan"})
          .append($('<input />', {type: "checkbox", val: "0",
                                  id: item.id + "_select",
-                                 class: "MissingEmassDeleteSelect"}))
+                                 "class": "MissingEmassDeleteSelect"}))
          .appendTo($(item).find('div.post_controls'));
    },
 
@@ -226,35 +226,35 @@ MissingE.packages.askTweaks = {
                   suffix = '';
                }
                newbtn = $('<button />',
-                          {class: "chrome",
+                          {"class": "chrome",
                            id: "ask_" + i + "_button_" + suffix + id,
                            click: function(){ return false; }})
                            .append($('<div />',
-                                     {class: "chrome_button",
+                                     {"class": "chrome_button",
                                       text: MissingE.getLocale(lang)
                                              .postingTweaks.submitText[i]})
                               .prepend($('<div />',
-                                         {class: "chrome_button_left"}))
+                                         {"class": "chrome_button_left"}))
                               .append($('<div />',
-                                        {class: "chrome_button_right"})));
+                                        {"class": "chrome_button_right"})));
                allbtns.push(newbtn);
                allbtns.push($('<br />'));
             }
          }
          var btn = $('#ask_publish_button_' + id);
          var postbtn = $('<button />',
-                         {class: "chrome blue",
+                         {"class": "chrome blue",
                           id: "ask_publish_button_also_" + id,
                           name: "publish",
                           type: "submit",
                           click: function() { return false; }})
                           .append($('<div />',
-                                    {class: "chrome_button",
+                                    {"class": "chrome_button",
                                      text: btn.text()})
                                     .prepend($('<div />',
-                                               {class: "chrome_button_left"}))
+                                               {"class": "chrome_button_left"}))
                                     .append($('<div />',
-                                              {class: "chrome_button_right"})));
+                                              {"class": "chrome_button_right"})));
          btn.after(postbtn);
 
          if (allbtns.length >= 2) {
@@ -299,20 +299,20 @@ MissingE.packages.askTweaks = {
          else {
             startTags = '';
          }
-         var adding = $('<div />', {class: "MissingE_askTweaks_group"})
+         var adding = $('<div />', {"class": "MissingE_askTweaks_group"})
                         .append($('<div />',
                                   {text: MissingE.getLocale(lang).tagsText +
                                          ": "})
                                  .append($('<input />',
                                            {type: "text",
-                                            class: "MissingE_askTweaks_tags",
+                                            "class": "MissingE_askTweaks_tags",
                                             val: startTags})))
                         .append($('<div />',
                                   {text: MissingE.getLocale(lang).twitterText +
                                           ": "})
                                  .append($('<input />',
                                            {type: "checkbox",
-                                            class: "MissingE_askTweaks_twitter"})));
+                                            "class": "MissingE_askTweaks_twitter"})));
          answer.find('div:first').css('padding-top','10px')
             .addClass('MissingE_askTweaks_buttons').before(adding);
          $(item).find('input.MissingE_askTweaks_tags').keydown(function(e) {

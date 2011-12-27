@@ -26,12 +26,12 @@
 MissingE.packages.dashboardTweaks = {
 
    setupMassDeletePost: function(item) {
-      $('<span />', {class: "MissingEmassDeleteSpan"})
+      $('<span />', {"class": "MissingEmassDeleteSpan"})
          .append($('<input />',
                    {type: "checkbox",
                     val: "0",
                     id: item.id + "_select",
-                    class: "MissingEmassDeleteSelect"}))
+                    "class": "MissingEmassDeleteSelect"}))
          .appendTo($(item).find('div.post_controls'));
    },
 
@@ -111,7 +111,7 @@ MissingE.packages.dashboardTweaks = {
       key = MissingE.escapeHTML(key[1]);
       id = MissingE.escapeHTML(id);
       notes.after($('<a />',
-                    {class: "MissingE_experimental_reply",
+                    {"class": "MissingE_experimental_reply",
                      href: "#",
                      click: function(){
                         $.globalEval('display_reply_pane([' + id + ',"' +
@@ -124,7 +124,7 @@ MissingE.packages.dashboardTweaks = {
                      text: "[" + MissingE.getLocale(lang).dashTweaksText.reply + "]"}));
 
       notes.after($('<span />',
-                    {class: "MissingE_post_control " +
+                    {"class": "MissingE_post_control " +
                             "MissingE_experimental_reply_wait",
                      id: "reply_fail_" + id}));
    },
