@@ -74,11 +74,11 @@ MissingE.packages.reblogYourself = {
                      .replace(/\//g,'%2F').replace(/\?/g,'%3F')
                      .replace(/&/g,'%26');
 
-         var nr = $('<a title="' + reblog_text + '" href="/reblog/' +
-                    MissingE.escapeHTML(response.pid) + '/' +
-                    MissingE.escapeHTML(response.data) + '?redirect_to=' +
-                    redir + '" class="' + klass + '">' + txt + '</a>')
-            .insertAfter(edit).before(' ');
+         var nr = $('<a />',
+                    {title: reblog_text, "class": klass,
+                     href: "/reblog/" + response.pid + "/" + response.data +
+                           "?redirect_to=" + redir, text: txt})
+                     .insertAfter(edit).before(' ');
          nr.trigger('MissingEaddReblog');
       }
       else {
@@ -92,10 +92,14 @@ MissingE.packages.reblogYourself = {
                       'MissingE_reblog_control ' +
                      'MissingE_reblog_control_retry' : '');
          txt = (response.icons ? '' : '<del>' + reblog_text + '</del>');
-         edit.after(' <a title="' + reblog_err + '" href="#" ' +
-                         'class="MissingE_reblogYourself_retry ' +
-                         klass + '" onclick="return false;">' +
-                         txt + '</a>');
+         var nre = $('<a />',
+                     {title: reblog_err, href: "#",
+                      "class": "MissingE_reblogYourself_retry " + klass,
+                      click: function() { return false; }});
+         if (!response.icons) {
+            nre.append($('<del />', {text: reblog_text}));
+         }
+         nre.insertAfter(edit).before(' ');
       }
    },
 
