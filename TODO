@@ -2,21 +2,21 @@ Cache settings check for Quick Reblogging
 
 Change all features that pass info to new tabs to no longer use localStorage
 
-Better sanitization of HMTL injection:
-   - Ask Tweaks (DONE)
-   - Better Reblogs (DONE)
-   - Bookmarker (DONE)
-   - Common (DONE)
-   - Dashboard Tweaks (DONE)
+Testing of sanitization changes for HMTL injection:
+   - Ask Tweaks
+   - Better Reblogs
+   - Bookmarker
+   - Common
+   - Dashboard Tweaks
       - does experimental reply work on all browsers?
-   - Dash Links To Tabs (DONE)
-   - Goto Dash Post (DONE)
-   - Magnifier (DONE)
-   - Mass Editor (DONE)
-   - Post Crushes (DONE)
-   - Posting Tweaks (DONE)
-   - Reblog Yourself (DONE)
-   - Reply Replies (DONE)
-   - Safe Dash (DONE)
-   - Sidebar Tweaks (DONE)
-   - Timestamps (DONE)
+   - Dash Links To Tabs
+   - Goto Dash Post
+   - Magnifier
+   - Mass Editor
+   - Post Crushes
+   - Posting Tweaks
+   - Reblog Yourself
+   - Reply Replies
+   - Safe Dash
+   - Sidebar Tweaks
+   - Timestamps
