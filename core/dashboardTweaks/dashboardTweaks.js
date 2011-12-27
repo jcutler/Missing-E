@@ -65,21 +65,21 @@ MissingE.packages.dashboardTweaks = {
 
    addPostLinks: function() {
       var i;
-      var plwrap = '<li class="short_new_post post new_post" id="new_post">' +
-                     '</li>';
-      var pltxt = '<div class="short_post_labels">';
+      var plbody = $('<div class="short_post_labels" />');
       var lang = $('html').attr('lang');
       for (i in MissingE.getLocale(lang).postTypeNames) {
          if (MissingE.getLocale(lang).postTypeNames.hasOwnProperty(i)) {
-            pltxt += '<div class="short_label">' +
-                     '<a href="/new/' + i + '" class="new_post_label">' +
-                     MissingE.getLocale(lang).postTypeNames[i] + '</a></div>';
+            var plitem = $('<a />',
+                           {"class": "new_post_label", href: "/new/" + i,
+                            text: MissingE.getLocale(lang).postTypeNames[i]});
+            plbody.append($('<div class="short_label" />').append(plitem));
          }
       }
-      pltxt += '<div class="clear"></div></div>';
+      plbody.append($('<div class="clear" />'));
 
-      var npl = $(plwrap).prependTo('#posts');
-      npl.html(pltxt);
+      var npl = $('<li />', {"class": "short_new_post post new_post",
+                             id: "new_post"}).prependTo('#posts');
+      npl.append(plbody);
       var bg = npl.css('background-image');
       var bgc = npl.css('background-color');
       npl.css('cssText','background-image:none !important;' +
@@ -558,21 +558,40 @@ MissingE.packages.dashboardTweaks = {
                  'background-image:url("' +
                  extension.getURL("core/dashboardTweaks/draftQueueTools.png") +
                  '") !important; }</style>');
-         $('<ul class="controls_section" id="MissingEdraftQueueTools">' +
-           (doRandomQueue ? '<li><a href="#" class="randomize">' +
-            '<div class="hide_overflow">' +
-            MissingE.getLocale(lang).shuffle + '</div></a></li>' : '') +
-           (doMassDelete ? '<li><a href="#" class="select_all">' +
-            '<div class="hide_overflow">' +
-            MissingE.getLocale(lang).massDelete.selectAll + '</div></a></li>' +
-            '<li><a href="#" class="deselect_all">' +
-            '<div class="hide_overflow">' +
-            MissingE.getLocale(lang).massDelete.deselectAll +
-            '</div></a></li>' +
-            '<li><a href="#" class="delete_selected">' +
-            '<div class="hide_overflow">' +
-            MissingE.getLocale(lang).massDelete.deleteSelected +
-            '</div></a></li>' : '') + '</ul>').insertBefore(beforeguy);
+         var btns = $('<ul />', {"class": "controls_section",
+                                 id: "MissingEdraftQueueTools"});
+
+         if (doRandomQueue) {
+            btns.append($('<li />')
+                           .append($('<a />',
+                                     {href: "#", "class": "randomize"})
+                                       .append($('<div />',
+                                                 {"class": "hide_overflow",
+                                                  text: MissingE.getLocale(lang).shuffle}))));
+         }
+         if (doMassDelete) {
+            console.log(MissingE.getLocale(lang));
+            btns.append($('<li />')
+                           .append($('<a />',
+                                     {href: "#", "class": "select_all"})
+                                       .append($('<div />',
+                                                 {"class": "hide_overflow",
+                                                  text: MissingE.getLocale(lang).massDelete.selectAll}))));
+            btns.append($('<li />')
+                           .append($('<a />',
+                                     {href: "#", "class": "deselect_all"})
+                                       .append($('<div />',
+                                                 {"class": "hide_overflow",
+                                                  text: MissingE.getLocale(lang).massDelete.deselectAll}))));
+            btns.append($('<li />')
+                           .append($('<a />',
+                                     {href: "#", "class": "delete_selected"})
+                                       .append($('<div />',
+                                                 {"class": "hide_overflow",
+                                                  text: MissingE.getLocale(lang).massDelete.deleteSelected}))));
+         }
+         btns.insertBefore(beforeguy);
+
          if (doMassDelete) {
             $('#posts li.post').each(function() {
                MissingE.packages.dashboardTweaks.setupMassDeletePost(this);
