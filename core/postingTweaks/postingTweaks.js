@@ -481,7 +481,6 @@ MissingE.packages.postingTweaks = {
             var adjust = frm.attr('id') === "photo_form" ||
                (frm.attr('id') === "video_form" &&
                 frm.find('input[name="post[one]"]').attr('type') === "hidden");
-console.log(this);
 
             var insert;
             if (h2.length > 0) {
