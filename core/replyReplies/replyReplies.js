@@ -45,7 +45,7 @@ MissingE.packages.replyReplies = {
       else {
          klass = (overrideStyle ? "MissingE_notification_type" :
                   "notification_type_icon") + " " + klass;
-         item.append($('<div />', {"class": klass + '_icon'});
+         item.append($('<div />', {"class": klass + '_icon'}));
          item.css('background-image', 'none');
       }
    },
