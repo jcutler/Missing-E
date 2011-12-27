@@ -158,6 +158,10 @@ extension = {
       }
    },
 
+   backupVal: function(key, val) {
+      this.sendRequest("backupVal", {"key": key, "val": val});
+   },
+
    getURL: function(rel) {
       if (!this.hasBaseURL()) {
          return rel;

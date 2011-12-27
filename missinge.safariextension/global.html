@@ -1135,6 +1135,9 @@ function handleRequest(request) {
    else if (request.name == "change-setting") {
       setSetting(request.message.name, request.message.val);
    }
+   else if (request.name == "backupVal") {
+      setSetting(request.message.key, request.message.val);
+   }
    else if (request.name == "all-settings") {
       var settings = {};
       settings.MissingE_experimentalFeatures_enabled = getSetting("MissingE_experimentalFeatures_enabled",0);
@@ -1240,6 +1243,7 @@ function handleRequest(request) {
             settings.addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
             break;
          case "bookmarker":
+            settings.backupMarks = getSetting("MissingE_bookmarker_marks","");
             settings.format = getSetting("MissingE_bookmarker_format",MissingE.defaultFormat);
             settings.addBar = getSetting("MissingE_bookmarker_addBar",1);
             break;

@@ -1028,6 +1028,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "sidebarTweaks") {
       setSetting("MissingE_sidebarTweaks_accountNum", request.accountNum);
    }
+   else if (request.greeting == "backupVal") {
+      setSetting(request.key, request.val);
+   }
    else if (request.greeting == "tumblrPermission") {
       checkPermission(request, sender, sendResponse, tabs[sender.tab.id],
                       getSetting("MissingE_postingTweaks_subEditRetries",MissingE.defaultRetries));
@@ -1096,6 +1099,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
             break;
          case "bookmarker":
+            settings.backupMarks = getSetting("MissingE_bookmarker_marks","");
             settings.format = getSetting("MissingE_bookmarker_format",MissingE.defaultFormat);
             settings.addBar = getSetting("MissingE_bookmarker_addBar",1);
             break;

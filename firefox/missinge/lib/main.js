@@ -1196,6 +1196,10 @@ function handleMessage(message, myWorker) {
       var key = 'extensions.' + message.name.replace(/_/g,'.');
       setSetting(key, message.val);
    }
+   else if (message.greeting == "backupVal") {
+      var key = 'extensions.' + message.key.replace(/_/g,'.');
+      setSetting(key, message.val);
+   }
    else if (message.greeting == "all-settings") {
       var settings = getAllSettings();
       myWorker.postMessage(settings);
@@ -1290,6 +1294,7 @@ function handleMessage(message, myWorker) {
             settings.addSidebar = getSetting("extensions.MissingE.sidebarTweaks.addSidebar",0);
             break;
          case "bookmarker":
+            settings.backupMarks = getSetting("extensions.MissingE.bookmarker.marks","");
             settings.format = getSetting("extensions.MissingE.bookmarker.format",MissingE.defaultFormat);
             settings.addBar = getSetting("extensions.MissingE.bookmarker.addBar",1);
             break;

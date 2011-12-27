@@ -138,6 +138,10 @@ extension = {
       }
    },
 
+   backupVal: function(key, val) {
+      this.sendRequest("backupVal", {"key": key, "val": val});
+   },
+
    getURL: function(rel) {
       return chrome.extension.getURL(rel);
    },
@@ -195,6 +199,9 @@ extension = {
                typeof request === "function") {
          callback = request;
          request = {};
+      }
+      if (typeof callback !== "function") {
+         callback = function() { return; };
       }
       request.greeting = name;
       chrome.extension.sendRequest(request, function(response) {

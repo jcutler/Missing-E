@@ -60,8 +60,7 @@ MissingE.packages.bookmarker = {
                                         {"class": "mark_date",
                                          text: name}).attr("timestamp",dt))));
       mark.append($('<a />', {id: "unmark_" + post,
-                              "class": "MissingE_unmarker", href: "#",
-                              click: function() { return false; }}));
+                              "class": "MissingE_unmarker", href: "#"}));
       return mark;
    },
 
@@ -181,8 +180,9 @@ MissingE.packages.bookmarker = {
          }
       }
       marks.splice(i,1);
-      MissingE.setStorage("MissingE_bookmarker_marks",
-                 MissingE.packages.bookmarker.serializeMarks(marks));
+      var allMarks = MissingE.packages.bookmarker.serializeMarks(marks);
+      MissingE.setStorage("MissingE_bookmarker_marks", allMarks);
+      extension.backupVal("MissingE_bookmarker_marks", allMarks);
       MissingE.packages.bookmarker.generateList();
    },
 
@@ -215,8 +215,9 @@ MissingE.packages.bookmarker = {
       var marks = MissingE.packages.bookmarker
          .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
       marks.unshift([d.getTime(),post,ds]);
-      MissingE.setStorage("MissingE_bookmarker_marks",
-                 MissingE.packages.bookmarker.serializeMarks(marks));
+      var allMarks = MissingE.packages.bookmarker.serializeMarks(marks);
+      MissingE.setStorage("MissingE_bookmarker_marks", allMarks);
+      extension.backupVal("MissingE_bookmarker_marks", allMarks);
       MissingE.packages.bookmarker.generateList();
       return true;
    },
@@ -342,8 +343,9 @@ MissingE.packages.bookmarker = {
                if (marks[i][1] === post) { break; }
             }
             marks[i][2] = newval;
-            MissingE.setStorage("MissingE_bookmarker_marks",
-                       MissingE.packages.bookmarker.serializeMarks(marks));
+            var allMarks = MissingE.packages.bookmarker.serializeMarks(marks);
+            MissingE.setStorage("MissingE_bookmarker_marks", allMarks);
+            extension.backupVal("MissingE_bookmarker_marks", allMarks);
             par.find('span.mark_date').text(newval);
             $('#bookmarkbar_label_' + post).text(newval);
          }
@@ -391,8 +393,9 @@ MissingE.packages.bookmarker = {
          .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
       var item = marks.splice(f,1)[0];
       marks.splice(t,0,item);
-      MissingE.setStorage("MissingE_bookmarker_marks",
-                 MissingE.packages.bookmarker.serializeMarks(marks));
+      var allMarks = MissingE.packages.bookmarker.serializeMarks(marks);
+      MissingE.setStorage("MissingE_bookmarker_marks", allMarks);
+      extension.backupVal("MissingE_bookmarker_marks", allMarks);
    },
 
    run: function() {
@@ -536,6 +539,15 @@ MissingE.packages.bookmarker = {
                    i !== "component") {
                   MissingE.packages.bookmarker.settings[i] = response[i];
                }
+            }
+            var allMarks = MissingE.getStorage("MissingE_bookmarker_marks","");
+            if (allMarks === "" && response.hasOwnProperty("backupMarks") &&
+                response.backupMarks !== "") {
+               MissingE.setStorage("MissingE_bookmarker_marks",
+                                   response.backupMarks);
+            }
+            else {
+               extension.backupVal("MissingE_bookmarker_marks", allMarks);
             }
             MissingE.packages.bookmarker.run();
          }
