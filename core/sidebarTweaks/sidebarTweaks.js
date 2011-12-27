@@ -28,7 +28,6 @@ MissingE.packages.sidebarTweaks = {
    makeSidebar: function(tumblrAcctNum, retries) {
       var tumblrAcct = '';
       var tumblrText = '';
-      var sidebartxt = '';
       if ($('#right_column a.posts').length === 0) {
          var i;
          var list = [];
@@ -43,22 +42,21 @@ MissingE.packages.sidebarTweaks = {
             tumblrAcctNum = 0;
          }
          if (list.length > 0) {
-            bloglist = '<ul id="MissingE_sidebar_menu" ' +
-               'class="controls_section">';
+            bloglist = $('<ul id="MissingE_sidebar_menu" ' +
+                         'class="controls_section">');
             for (i=0; i<list.length; i++) {
                var klass = '';
                if (i === tumblrAcctNum) {
-                  tumblrAcct = MissingE.escapeHTML(list[i][0]);
-                  tumblrText = MissingE.escapeHTML(list[i][1]);
-                  klass = 'class="current_sidebar"';
+                  tumblrAcct = list[i][0];
+                  tumblrText = list[i][1];
+                  klass = 'current_sidebar';
                }
-               bloglist += '<li ' + klass + '><a tumblr="' +
-                  MissingE.escapeHTML(list[i][0]) +
-                  '" href="#" onclick="return false;">' +
-                  '<div class="hide_overflow">' +
-                  MissingE.escapeHTML(list[i][1]) + '</div></a></li>';
+               var bbtn = $('<a href="#" />').attr("tumblr", list[i][0]);
+               bbtn.append($('<div />', {"class": "hide_overflow",
+                                         text: list[i][1]}));
+               bloglist.append($('<li />', {"class": klass})
+                                 .append(bbtn));
             }
-            bloglist += '</ul>';
          }
    
          var lang = $('html').attr('lang');
@@ -84,40 +82,50 @@ MissingE.packages.sidebarTweaks = {
             klass: "queue"
             }
          ];
-         sidebartxt = '<ul account="' + tumblrAcctNum + '" ' +
-            'class="controls_section" id="MissingE_sidebar">' +
-            '<li id="MissingE_sidebar_title" class="recessed selected">' +
-               '<a href="#" onclick="return false;">' + tumblrText + '</a>' +
-               '<a href="http://' + tumblrAcct + '.tumblr.com/" id="' +
-               'MissingE_sidebar_bloglink" target="_blank"></a>' +
-               bloglist + '</li>';
-         for (i=0; i<sidebarList.length; i++) {
-            sidebartxt += '<li><a href="/blog/' + tumblrAcct +
-               (sidebarList[i].klass !== 'posts' ? '/' +
-                sidebarList[i].klass : '') + '" class="' +
-               sidebarList[i].klass + '">' + '<div class="hide_overflow">' +
-               sidebarList[i].label + '</div></a></li>';
-         }
-         sidebartxt += '<li class="recessed"><a href="/mega-editor/' +
-            MissingE.escapeHTML(tumblrAcct) + '" class="mass_editor">' +
-            '<div class="hide_overflow">' +
-            MissingE.getLocale(lang).sidebar.massEditor + '</div>' +
-            '<div class="gradient"></div></a></li></ul>';
-   
          var sidebar;
+         sidebar = $('<ul />', {"class": "controls_section",
+                                id: "MissingE_sidebar"});
+         sidebar.attr("account", tumblrAcctNum);
+         var stitle = $('<li />', {id: "MissingE_sidebar_title",
+                                   "class": "recessed selected"});
+         stitle.append($('<a />', {href: "#", text: tumblrText}));
+         stitle.append($('<a />',
+                         {href: "http://" + tumblrAcct + ".tumblr.com/",
+                          id: "MissingE_sidebar_bloglink",
+                          target: "_blank"}));
+         stitle.append(bloglist);
+         sidebar.append(stitle);
+         for (i=0; i<sidebarList.length; i++) {
+            var aitem = $('<a />',
+                          {href: "/blog/" + tumblrAcct +
+                                 (sidebarList[i].klass !== 'posts' ?
+                                  '/' + sidebarList[i].klass : ''),
+                           "class": sidebarList[i].klass})
+                           .append($('<div />',
+                                     {"class": "hide_overflow",
+                                      text: sidebarList[i].label}));
+            sidebar.append($('<li />').append(aitem));
+         }
+         var melnk = $('<a />', {href: "/mega-editor/" + tumblrAcct,
+                                 "class": "mass_editor"});
+         melnk.append($('<div />',
+                        {"class": "hide_overflow",
+                         text: MissingE.getLocale(lang).sidebar.massEditor}));
+         melnk.append($('<div class="gradient" />'));
+         sidebar.append($('<li class="recessed" />').append(melnk));
+
          var beforeguy = $('#right_column a.likes');
          if (beforeguy.length === 0) {
             beforeguy = $('#right_column a.following');
          }
          if (beforeguy.length > 0) {
-            sidebar = $(sidebartxt)
-               .insertAfter(beforeguy.closest('.controls_section'));
+            sidebar.insertAfter(beforeguy.closest('.controls_section'));
          }
          else if ($('#search_form').length > 0) {
-            sidebar = $(sidebartxt).insertBefore('#search_form');
+            sidebar.insertBefore('#search_form');
          }
          else {
-            sidebar = $(sidebartxt).prependTo('#right_column');
+            sidebar.prependTo('#right_column');
          }
          if (sidebar) {
             $.ajax({
@@ -177,37 +185,41 @@ MissingE.packages.sidebarTweaks = {
                   var postNum = data.substring(postIdx, followerIdx)
                      .match(/<span class="count">([^<]*)/);
                   if (postNum && postNum.length >= 2) {
-                     msb.find('a.posts').append('<span class="count">' +
-                                MissingE.escapeHTML(postNum[1]) + '</span>');
+                     msb.find('a.posts')
+                        .append($('<span />',
+                                  {"class": "count", text: postNum[1]}));
                   }
                   if (followerIdx !== len) {
                      var followerNum = data.substring(followerIdx, msgsIdx)
                         .match(/<span class="count">([^<]*)/);
                      if (followerNum && followerNum.length >= 2) {
-                        msb.find('a.followers').append('<span class="count">' +
-                                   MissingE.escapeHTML(followerNum[1]) +
-                                   '</span>');
+                        msb.find('a.followers')
+                           .append($('<span />',
+                                     {"class": "count", text: followerNum[1]}));
                      }
                   }
                   if (msgsIdx !== len) {
                      var msgsNum = data.substring(msgsIdx, draftIdx)
                         .match(/<span class="count">([^<]*)/);
                      if (msgsNum && msgsNum.length >= 2) {
-                        msb.find('a.messages').append('<span class="count">' +
-                                   MissingE.escapeHTML(msgsNum[1]) + '</span>');
+                        msb.find('a.messages')
+                           .append($('<span />',
+                                     {"class": "count", text: msgsNum[1]}));
                      }
                   }
                   var draftNum = data.substring(draftIdx, queueIdx)
                      .match(/<span class="count">([^<]*)/);
                   if (draftNum && draftNum.length >= 2) {
-                     msb.find('a.drafts').append('<span class="count">' +
-                                MissingE.escapeHTML(draftNum[1]) + '</span>');
+                     msb.find('a.drafts')
+                        .append($('<span />',
+                                  {"class": "count", text: draftNum[1]}));
                   }
                   var queueNum = data.substring(queueIdx, endIdx)
                      .match(/<span class="count">([^<]*)/);
                   if (queueNum && queueNum.length >= 2) {
-                     msb.find('a.queue').append('<span class="count">' +
-                                MissingE.escapeHTML(queueNum[1]) + '</span>');
+                     msb.find('a.queue')
+                        .append($('<span />',
+                                  {"class": "count", text: queueNum[1]}));
                   }
                   msb.trigger('load.sidebar', this.tumblrAcct);
                }
@@ -243,6 +255,7 @@ MissingE.packages.sidebarTweaks = {
                      menu.show();
                   }
                }
+               return false;
             });
             $('#MissingE_sidebar_menu a').click(function() {
                var newAcctNum = $('#MissingE_sidebar_menu a').index(this);
@@ -250,6 +263,7 @@ MissingE.packages.sidebarTweaks = {
                $('#overlay_for_active_menu').hide();
                extension.sendRequest("sidebarTweaks", {accountNum: newAcctNum});
                MissingE.packages.sidebarTweaks.makeSidebar(newAcctNum,retries);
+               return false;
             });
             $('#overlay_for_active_menu').live('click', function() {
                if ($('#MissingE_sidebar_menu').is(':visible')) {
