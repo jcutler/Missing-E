@@ -27,12 +27,19 @@
 
 MissingE.packages.massEditor = {
    generateButton: function(type,text,islast) {
-      return '<div id="MissingE_selecttype_' + type + '" class="header_button' +
-         (islast ? ' last_header_button' : '') + '">' +
-         '<button id="MissingE_' + type + '" type="button" ' +
-         'class="chrome big_dark"><div class="chrome_button">' +
-         '<div class="chrome_button_left"></div>' + text + '<div ' +
-         'class="chrome_button_right"></div></div></button></div>';
+      var div = $('<div />',
+                  {id: "MissingE_selecttype_" + type,
+                   "class": "header_button" +
+                            (islast ? " last_header_button" : "")});
+      var btn = $('<button />',
+                  {id: "MissingE_" + type, type: "button",
+                   "class": "chrome big_dark"});
+      btn.append($('<div />', {"class": "chrome_button",
+                               "text": text})
+                  .prepend($('<div class="chrome_button_left" />'))
+                  .append($('<div class="chrome_button_right" />')));
+      div.append(btn);
+      return div;
    },
 
    moveSelectList: function(s,list) {
@@ -67,37 +74,42 @@ MissingE.packages.massEditor = {
                 extension.getURL('core/massEditor/border.png') +
                 '") !important; }</style>');
 
-      $('#nav .header_button:last')
-         .after('<div id="MissingE_selecttype_btn" class="header_button">' +
-                 '<button id="MissingE_selecttype" type="button" ' +
-                 'class="chrome big_dark"><div class="chrome_button">' +
-                 '<div class="chrome_button_left"></div>' +
-                 MissingE.getLocale(lang).select + ' ' +
-                 '<img src="http://assets.tumblr.com/images/archive_header_' +
-                 'button_arrow.png" width="9" height="6" ' +
-                 'style="vertical-align:2px; margin:0 0 0 3px;" />' +
-                 '<div class="chrome_button_right"></div></div></button>' +
-                 '</div>');
+      var selmenu = $('<div />', {id: "MissingE_selecttype_btn",
+                                  "class": "header_button"});
+      var selbtn = $('<button />', {id: "MissingE_selecttype", type: "button",
+                                    "class": "chrome big_dark"});
+      selbtn.append($('<div />', {"class": "chrome_button",
+                                  text: MissingE.getLocale(lang).select})
+                     .prepend($('<div class="chrome_button_left" />'))
+                     .append($('<img src="http://assets.tumblr.com/images/' +
+                               'archive_header_button_arrow.png" width="9" ' +
+                               'height="6" style="vertical-align:2px;' +
+                               'margin:0 0 0 3px;" />'))
+                     .append($('<div class="chrome_button_right" />')));
+      selmenu.append(selbtn);
+      $('#nav .header_button:last').after(selmenu);
 
       var i;
       var sbt = $('#MissingE_selecttype_btn');
-      var sbtlisttext = '<div id="MissingE_selecttype_list">';
-      sbtlisttext += '<div id="MissingE_select_btn" class="header_button">' +
-                 '<button id="MissingE_select" type="button" ' +
-                 'class="chrome big_dark"><div class="chrome_button">' +
-                 '<div class="chrome_button_left"></div>' +
-                 MissingE.getLocale(lang).first100 + '<div ' +
-                 'class="chrome_button_right"></div></div></button></div>';
+      sbtlist = $('<div id="MissingE_selecttype_list" />');
+      sbtlistdiv = $('<div id="MissingE_select_btn" class="header_button" />');
+      sbtlistbtn = $('<button />', {id: "MissingE_select", type: "button",
+                                    "class": "chrome big_dark"});
+      sbtlistbtn.append($('<div />', {"class": "chrome_button",
+                                      text: MissingE.getLocale(lang).first100})
+                           .prepend($('<div class="chrome_button_left" />'))
+                           .append($('<div class="chrome_button_right" />')));
+      sbtlistdiv.append(sbtlistbtn);
+      sbtlist.append(sbtlistdiv);
       for (i in MissingE.getLocale(lang).postTypeNames) {
          if (MissingE.getLocale(lang).postTypeNames.hasOwnProperty(i)) {
-            sbtlisttext += MissingE.packages.massEditor
-               .generateButton(i,MissingE.getLocale(lang).postTypeNames[i]);
+            sbtlist.append(MissingE.packages.massEditor
+               .generateButton(i,MissingE.getLocale(lang).postTypeNames[i]));
          }
       }
-      sbtlisttext += MissingE.packages.massEditor
-         .generateButton('note', MissingE.getLocale(lang).askPost, true);
-      sbtlisttext += '</div>';
-      var sbtlist = $(sbtlisttext).insertAfter(sbt);
+      sbtlist.append(MissingE.packages.massEditor
+         .generateButton('note', MissingE.getLocale(lang).askPost, true));
+      sbtlist.insertAfter(sbt);
 
       extension.addAjaxListener(function() {
          MissingE.packages.massEditor.moveSelectList(sbt,sbtlist);
