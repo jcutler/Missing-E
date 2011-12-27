@@ -67,10 +67,9 @@ MissingE.packages.safeDash = {
                }
                var h = me.height();
                var w = me.width();
-               var extra = '';
-               var s = '<div class="nsfwdiv ' + klass + '" style="min-height:' +
-                        h + 'px;' + 'min-width:' + w + 'px;' + extra + '" />';
-
+               var myst = {"min-height": h + "px",
+                           "min-width": w + "px"};
+               var s = $('<div />', {"class": "nsfwdiv " + klass}).css(myst);
                me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
             });
          }
@@ -134,6 +133,7 @@ MissingE.packages.safeDash = {
                var album = me.hasClass('album_art') ||
                               me.hasClass('image_thumbnail');
                var s;
+               var myst;
                if (album) {
                   me.click(function() {
                      var adiv = $(this).parent();
@@ -151,46 +151,51 @@ MissingE.packages.safeDash = {
                   });
                   if (h === undefined || h === null || h === 0) { h = 150; }
                   if (w === undefined || w === null || w === 0) { w = 150; }
-                  s = '<div class="nsfwdiv album_nsfwdiv ' + klass + '" ' +
-                        'style="margin-right:' + me.css('margin-right') +
-                        ';float:left;" />';
+                  myst = {"margin-right": me.css('margin-right'),
+                          "float": "left"};
+                  s = $('<div />', {"class": "nsfwdiv album_nsfwdiv " + klass});
+                  s.css(myst);
                }
                else {
-                  var extra = '';
+                  var extra = false;
+                  myst = {}; 
                   if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/.test(me.attr('src')))) {
                      var row = me.closest('div');
                      if (row.length > 0 && row.hasClass("photoset_row")) {
+                        extra = true;
                         var rh = row.innerHeight();
                         if (rh && rh > 0) {
-                           extra += 'height:' + rh + 'px;';
+                           myst.height = rh + "px";
                         }
                         else {
-                           extra += 'min-height:' + h + 'px;';
+                           myst["min-height"] = h + "px";
                         }
                         if (w && w > 0) {
-                           extra += 'width:' + w + 'px;';
+                           myst.width = w + "px";
                         }
                         else {
-                           extra += 'width:' + me.css('width').replace('px','')+
-                                    'px;';
+                           myst.width = me.css('width').replace('px','') + 'px';
                         }
                      }
                      else if (!me.hasClass('inline_image')) {
-                        extra += 'min-height:' + h + 'px;';
+                        extra = true;
+                        myst["min-height"] = h + "px";
                         addClear = true;
-                        extra += 'width:' + w + 'px;';
+                        myst.width = w + "px";
                      }
                      if (me.parent().hasClass('photoset_photo')) {
                         var mt = me.attr('style')
                                     .match(/margin-top:\s*([^;]*)/);
                         if (mt && mt.length > 1) {
-                           extra += 'margin-top:' + mt[1];
+                           extra = true;
+                           myst["margin-top"] = mt[1];
                         }
                      }
                   }
-                  s = '<div class="nsfwdiv ' + klass + '" ' +
-                        (extra !== '' ? 'style="' + extra + '" ' : '') +
-                        '/>';
+                  s = $('<div />', {"class": "nsfwdiv " + klass});
+                  if (extra) {
+                     s.css(myst);
+                  }
                }
                if (me.parent().hasClass('video_thumbnail')) {
                   me.next().addClass('nsfwed');
@@ -200,7 +205,6 @@ MissingE.packages.safeDash = {
                if (addClear) {
                   me.parent().before('<div class="clear"></div>');
                }
-
             });
          }
       }
@@ -259,10 +263,10 @@ MissingE.packages.safeDash = {
             }
             var h = me.height();
             var w = me.width();
-            var extra = '';
-            var s = '<div class="nsfwdiv ' + klass + '" style="min-height:' +
-                  h + 'px;' + 'min-width:' + w + 'px;' + extra + '" />';
-
+            var myst = {"min-height": h + "px",
+                        "min-width": w + "px"};
+            var s = $('<div />', {"class": "nsfwdiv " + klass});
+            s.css(myst);
             me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
          });
       }
