@@ -134,10 +134,12 @@ MissingE.packages.postingTweaks = {
                newtags.push(MissingE.createTag(lang, ctags[i]));
             }
          }
-         var tokenList = $('#tokens');
-         tokenList.empty();
-         for (i=0; i<newtags.length; i++) {
-            tokenList.append(newtags[i]);
+         if (newtags.length > 0) {
+            var tokenList = $('#tokens');
+            tokenList.empty();
+            for (i=0; i<newtags.length; i++) {
+               tokenList.append(newtags[i]);
+            }
          }
       }
 
