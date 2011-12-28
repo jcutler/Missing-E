@@ -35,14 +35,20 @@ MissingE.packages.replyRepliesFill = {
          urlPref = '';
       }
       var othertype = (type==='text' ? 'photo' : 'text');
-      return MissingE.getLocale(lang).replyType[type+"Title"] + "\n" +
+      return MissingE.escapeHTML(MissingE.getLocale(lang)
+                                    .replyType[type+"Title"]) + "\n" +
          '<span class="as_links"><a href="#" id="the_as_link" ' +
          'onclick="Element.hide(this);Element.show(\'the_as_links\');' +
          'return false;" style="font-weight:bold;" >' +
-         MissingE.getLocale(lang).replyType.as + '</a>' +
+         MissingE.escapeHTML(MissingE.getLocale(lang).replyType.as) + '</a>' +
          '<span id="the_as_links" style="display:none;"><a id="as_switch" ' +
          'href="' + urlPref + '/new/' + othertype + '">' +
-         MissingE.getLocale(lang).replyType[othertype] + '</a>' +
+         MissingE.escapeHTML(MissingE.getLocale(lang).replyType[othertype][0]) +
+         '<strong>' +
+         MissingE.escapeHTML(MissingE.getLocale(lang).replyType[othertype][1]) +
+         '</strong>' +
+         MissingE.escapeHTML(MissingE.getLocale(lang).replyType[othertype][2]) +
+         '</a>' +
          '<a href="#" onclick="Element.hide(\'the_as_links\');' +
          'Element.show(\'the_as_link\');return false;">x</a></span></span>';
    },

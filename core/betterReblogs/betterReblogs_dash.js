@@ -68,7 +68,7 @@ MissingE.packages.betterReblogs = {
             question += asker;
          }
          else {
-            question += MissingE.getLocale(lang).asked[i];
+            question += MissingE.escapeHTML(MissingE.getLocale(lang).asked[i]);
          }
       }
       question += ": " + $(item).find("div.post_question").text()
@@ -522,10 +522,12 @@ MissingE.packages.betterReblogs = {
             }
             txt += '<a class="MissingE_quick_reblog_button" ' +
                     'id="MissingE_quick_reblog_' +
-                    MissingE.getLocale(lang).reblogOptions[idx].item +
+                    MissingE.escapeHTML(MissingE.getLocale(lang)
+                                          .reblogOptions[idx].item) +
                     '" href="#" ' + doonclick + '>' +
                     '<div class="user_menu_list_item">' +
-                    MissingE.getLocale(lang).reblogOptions[idx].text +
+                    MissingE.escapeHTML(MissingE.getLocale(lang)
+                                          .reblogOptions[idx].text) +
                     '</div></a>';
          }
          var node = extension.isFirefox ?
@@ -538,8 +540,8 @@ MissingE.packages.betterReblogs = {
                   '<div class="user_menu_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_twitter">' +
                   '<input type="checkbox" /> ' +
-                  MissingE.getLocale(lang).twitterText + '</div></div>' +
-                  node[1];
+                  MissingE.escapeHTML(MissingE.getLocale(lang).twitterText) +
+                  '</div></div>' + node[1];
          var list = $('#user_channels li');
          if (list.length > 0) {
             txt +=  node[0] +
@@ -565,7 +567,8 @@ MissingE.packages.betterReblogs = {
          txt += node[0] + '<div class="user_menu_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_tags">' +
                   '<input type="text" /><br />' +
-                  MissingE.getLocale(lang).tagsText + '</div></div>' + node[1];
+                  MissingE.escapeHTML(MissingE.getLocale(lang).tagsText) +
+                  '</div></div>' + node[1];
          var qr = $(txt).appendTo('body');
          qr.find('#MissingE_quick_reblog_selector select').click(function(e) {
             e.stopPropagation();

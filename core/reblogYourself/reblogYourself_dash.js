@@ -91,7 +91,6 @@ MissingE.packages.reblogYourself = {
          klass = (response.icons ? 'MissingE_post_control ' +
                       'MissingE_reblog_control ' +
                      'MissingE_reblog_control_retry' : '');
-         txt = (response.icons ? '' : '<del>' + reblog_text + '</del>');
          var nre = $('<a />',
                      {title: reblog_err, href: "#",
                       "class": "MissingE_reblogYourself_retry " + klass,

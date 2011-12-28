@@ -172,7 +172,8 @@ MissingE.packages.betterReblogsFill = {
                      question += askerName[1];
                   }
                   else {
-                     question += MissingE.getLocale(lang).asked[i];
+                     question += MissingE.escapeHTML(MissingE.getLocale(lang)
+                                                      .asked[i]);
                   }
                }
                question += ": " + postone;
@@ -181,7 +182,9 @@ MissingE.packages.betterReblogsFill = {
             var title = $('#left_column h1:first');
             title.find('span.as_links').remove();
             title.html(title.html()
-                        .replace(/[^<]*/, MissingE.getLocale(lang).reblogAsk));
+                        .replace(/[^<]*/,
+                                 MissingE.escapeHTML(MissingE.getLocale(lang)
+                                                      .reblogAsk)));
             $('head').append('<script type="text/javascript">' +
                           'var ta = document.getElementById("post_two");' +
                           'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
@@ -260,7 +263,8 @@ MissingE.packages.betterReblogsFill = {
                                  '<a class="reblog_tags" style="color:#666;' +
                                  'font-size:10px;" href="#" ' +
                                  'onclick="' + func + '">' +
-                                 MissingE.getLocale(lang).reblogTags +
+                                 MissingE.escapeHTML(MissingE.getLocale(lang)
+                                                      .reblogTags) +
                                  '</a></div>')
                   .prependTo(set_tags).outerHeight();
                label = $('#post_tags_label');

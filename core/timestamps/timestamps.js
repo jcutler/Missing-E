@@ -71,7 +71,7 @@ MissingE.packages.timestamps = {
                   .after('<div class="post_info">' +
                          '<span class="MissingE_timestamp" ' +
                          'style="font-weight:normal;">' +
-                         MissingE.getLocale(lang).loading +
+                         MissingE.escapeHTML(MissingE.getLocale(lang).loading) +
                          '</span></div>');
          }
          else {
@@ -79,7 +79,8 @@ MissingE.packages.timestamps = {
             if (spn.length === 0) {
                div.append('<br><span class="MissingE_timestamp" ' +
                           'style="font-weight:normal;">' +
-                          MissingE.getLocale(lang).loading + '</span>');
+                          MissingE.escapeHTML(MissingE.getLocale(lang).loading)+
+                          '</span>');
             }
             else {
                spn.text(MissingE.getLocale(lang).loading);

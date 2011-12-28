@@ -260,8 +260,8 @@ MissingE.packages.replyReplies = {
                       MissingE.getLocale(lang).notificationChanges[anstype] &&
                       MissingE.getLocale(lang).notificationChanges[anstype]
                         .hasOwnProperty(rebtxt)) {
-                     rebtxt = MissingE.getLocale(lang)
-                                 .notificationChanges[anstype][rebtxt];
+                     rebtxt = MissingE.escapeHTML(MissingE.getLocale(lang)
+                                 .notificationChanges[anstype][rebtxt]);
                   }
                   newcode += ' <strong><a href="' + reblnk + '">' +
                      rebtxt + '</a></strong>';
@@ -292,8 +292,9 @@ MissingE.packages.replyReplies = {
                            .notificationChanges[anstype] &&
                          MissingE.getLocale(lang).notificationChanges[anstype]
                            .hasOwnProperty(posttypetxt)) {
-                        posttypetxt = MissingE.getLocale(lang)
-                                    .notificationChanges[anstype][posttypetxt];
+                        posttypetxt = MissingE.escapeHTML(MissingE
+                                                            .getLocale(lang)
+                                    .notificationChanges[anstype][posttypetxt]);
                      }
                      if (y === postType.length - 1) {
                         newcode += '<strong><a href="' + postlnk + '">' +
@@ -314,7 +315,7 @@ MissingE.packages.replyReplies = {
                      othertxt = MissingE.getLocale(lang)
                                  .notificationChanges[anstype][othertxt];
                   }
-                  newcode += ' ' + othertxt;
+                  newcode += ' ' + MissingE.escapeHTML(othertxt);
                }
             }
             if (MissingE.getLocale(lang).postNotificationChanges &&
@@ -325,8 +326,8 @@ MissingE.packages.replyReplies = {
                   if (MissingE.getLocale(lang).postNotificationChanges[anstype]
                         .hasOwnProperty(findtxt)) {
                      newcode = newcode.replace(findtxt,
-                        MissingE.getLocale(lang)
-                           .postNotificationChanges[anstype][findtxt]);
+                        MissingE.escapeHTML(MissingE.getLocale(lang)
+                           .postNotificationChanges[anstype][findtxt]));
                   }
                }
             }

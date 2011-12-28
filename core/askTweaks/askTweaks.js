@@ -337,7 +337,8 @@ MissingE.packages.askTweaks = {
                askLabel += '<span class="MissingE_askPerson"></span>';
             }
             else {
-               askLabel += MissingE.getLocale(lang).askPerson[i];
+               askLabel += MissingE.escapeHTML(MissingE.getLocale(lang)
+                                                   .askPerson[i]);
             }
          }
          askLabel += ':';
@@ -460,15 +461,18 @@ MissingE.packages.askTweaks = {
             $('<ul class="controls_section" id="MissingEmassDeleter">' +
               '<li><a href="#" class="select_all">' +
               '<div class="hide_overflow">' +
-              MissingE.getLocale(lang).massDelete.selectAll +
+              MissingE.escapeHTML(MissingE.getLocale(lang)
+                                    .massDelete.selectAll) +
               '</div></a></li>' +
               '<li><a href="#" class="deselect_all">' +
               '<div class="hide_overflow">' +
-              MissingE.getLocale(lang).massDelete.deselectAll +
+              MissingE.escapeHTML(MissingE.getLocale(lang)
+                                    .massDelete.deselectAll) +
               '</div></a></li>' +
               '<li><a href="#" class="delete_selected">' +
               '<div class="hide_overflow">' +
-              MissingE.getLocale(lang).massDelete.deleteSelected +
+              MissingE.escapeHTML(MissingE.getLocale(lang)
+                                    .massDelete.deleteSelected) +
               '</div></a></li></ul>')
                   .insertBefore(beforeguy);
             $('#posts li.post').each(function() {

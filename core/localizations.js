@@ -146,9 +146,9 @@ var locale = {
   },
   "replyType": {
    "as": "as ...",
-   "photo": "as <strong>photo</strong>",
+   "photo": ["as ", "photo", ""],
    "photoTitle": "Photo Reply",
-   "text": "as <strong>text</strong>",
+   "text": ["as ", "text", ""],
    "textTitle": "Text Reply"
   },
   "shuffle": "Shuffle Queue",
@@ -321,9 +321,9 @@ var locale = {
   },
   "replyType": {
    "as": "als ...",
-   "photo": "als <strong>Foto</strong>",
+   "photo": ["als ", "Foto", ""],
    "photoTitle": "Foto Antwort",
-   "text": "als <strong>Text</strong>",
+   "text": ["als ", "Text", ""],
    "textTitle": "Text Antwort"
   },
   "shuffle": "Warteschleife mischen",
@@ -496,9 +496,9 @@ var locale = {
   },
   "replyType": {
    "as": "como ...",
-   "photo": "como <strong>una foto</strong>",
+   "photo": ["como ", "una foto", ""],
    "photoTitle": "Respuesta en Foto",
-   "text": "como <strong>texto</strong>",
+   "text": ["como ", "texto", ""],
    "textTitle": "Respuesta en Texto"
   },
   "shuffle": "Barajar la cola",
@@ -671,9 +671,9 @@ var locale = {
   },
   "replyType": {
    "as": "changer le type de billet",
-   "photo": "<strong>photo</strong>",
+   "photo": ["", "photo", ""],
    "photoTitle": "Photo Réponse",
-   "text": "<strong>texte</strong>",
+   "text": ["", "texte", ""],
    "textTitle": "Texte Réponse"
   },
   "shuffle": "Mélanger",
@@ -856,9 +856,9 @@ var locale = {
   },
   "replyType": {
    "as": "come ...",
-   "photo": "come <strong>foto</strong>",
+   "photo": ["come ", "foto", ""],
    "photoTitle": "Rispondi con una foto",
-   "text": "come <strong>testo</strong>",
+   "text": ["come ", "testo", ""],
    "textTitle": "Rispondi con un testo"
   },
   "Shuffle": "Mischiare la coda",
@@ -1031,9 +1031,9 @@ var locale = {
   },
   "replyType": {
    "as": "返信種別を選択",
-   "photo": "<strong>画像</strong>",
+   "photo": ["", "画像", ""],
    "photoTitle": "画像返信",
-   "text": "<strong>テキスト</strong>",
+   "text": ["", "テキスト", ""],
    "textTitle": "テキスト返信"
   },
   "shuffle": "シャッフルキュー",
@@ -1199,9 +1199,9 @@ var locale = {
   },
   "replyType": {
    "as": "jako ...",
-   "photo": "jak <strong>zdjęcie</strong>",
+   "photo": ["jak ", "zdjęcie", ""],
    "photoTitle": "Odpowiedź zdjęcie",
-   "text": "jako <strong>tekst</strong>",
+   "text": ["jako ", "tekst", ""],
    "textTitle": "Odpowiedź tekst"
   },
   "shuffle": "Przetasuj kolejkę",
@@ -1392,9 +1392,9 @@ var locale = {
   },
   "replyType": {
    "as": "как...",
-   "photo": "как <strong>фото</strong>",
+   "photo": ["как ", "фото", ""],
    "photoTitle": "Ответить фото",
-   "text": "как <strong>текста</strong>",
+   "text": ["как ", "текста", ""],
    "textTitle": "Ответить текстом"
   },
   "shuffle": "Смешайте очередь",
@@ -1591,9 +1591,9 @@ var locale = {
   },
   "replyType": {
    "as": "gibi ...",
-   "photo": "<strong>fotoğraf</strong> olarak",
+   "photo": ["", "fotoğraf", " olarak"],
    "photoTitle": "Fotoğraf'la Cevapla",
-   "text": "<strong>metin</strong> olarak",
+   "text": ["", "metin", " olarak"],
    "textTitle": "Metin'le Cevapla"
   },
   "shuffle": "Sırasını karıştırmak",

@@ -152,8 +152,8 @@ MissingE.packages.postingTweaks = {
            'while(tok.firstChild){tok.removeChild(tok.firstChild);}' +
            'document.getElementById(\'post_tags\').value = ' +
            '\'\';return false;">' +
-           MissingE.getLocale(lang).postingTweaks.clearTagsText +
-           '</a></div>');
+           MissingE.escapeHTML(MissingE.getLocale(lang).postingTweaks
+                                 .clearTagsText) + '</a></div>');
 
       $('#photo_src').keyup(function(){
          if (/^http:\/\/https?:\/\//.test(this.value)) {
@@ -291,8 +291,9 @@ MissingE.packages.postingTweaks = {
                allbtns += '<div><button id="MissingE_' + i + 'Post" ' +
                            'type="submit" class="positive" ' +
                            'onclick="' + doOnClick + '"><span>' +
-                           MissingE.getLocale(lang).postingTweaks
-                              .submitText[i] + '</span></button></div>';
+                           MissingE.escapeHTML(MissingE.getLocale(lang)
+                                                .postingTweaks.submitText[i]) +
+                           '</span></button></div>';
             }
          }
          var newbtns = $('<div id="MissingE_postMenu">' + allbtns + '</div>')
@@ -354,7 +355,8 @@ MissingE.packages.postingTweaks = {
                'onclick="Element.hide(\'photo_url\');' +
                '$(\'photo_src\').value = \'\';Element.show(\'photo_upload\');' +
                'return false;">' +
-               MissingE.getLocale(lang).postingTweaks.uploadImagesText + '</a>');
+               MissingE.escapeHTML(MissingE.getLocale(lang).postingTweaks
+                                    .uploadImagesText) + '</a>');
             uil.style.marginTop = "7px";
             url.appendChild(uil);
          }

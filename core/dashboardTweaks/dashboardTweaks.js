@@ -700,20 +700,24 @@ MissingE.packages.dashboardTweaks = {
             var div = container.find('#' + thelist[0]
                                      .replace(/post/,"notes_container"));
             div.prepend('<div class="MissingE_notesSorter">' +
-                     MissingE.getLocale(lang).sorting.sort + ': ' +
+                     MissingE.escapeHTML(MissingE.getLocale(lang)
+                                          .sorting.sort) + ': ' +
                      '<div class="MissingE_sorterContainer">' +
                      '<div class="MissingE_sorterButton MissingE_typeSort">' +
-                     MissingE.getLocale(lang).sorting.type + ' ' +
+                     MissingE.escapeHTML(MissingE.getLocale(lang)
+                                          .sorting.type) + ' ' +
                      '<span class="MissingE_upArrow">&uArr;</span>' +
                      '<span class="MissingE_downArrow">&dArr;</span>' +
                      '</div>' +
                      '<div class="MissingE_sorterButton MissingE_userSort">' +
-                     MissingE.getLocale(lang).sorting.user + ' ' +
+                     MissingE.escapeHTML(MissingE.getLocale(lang)
+                                          .sorting.user) + ' ' +
                      '<span class="MissingE_upArrow">&uArr;</span>' +
                      '<span class="MissingE_downArrow">&dArr;</span>' +
                      '</div></div>' +
                      '<div class="MissingE_sorterButton MissingE_unsort">' +
-                      MissingE.getLocale(lang).sorting.reset +
+                      MissingE.escapeHTML(MissingE.getLocale(lang)
+                                             .sorting.reset) +
                      '</div></div>');
             var node = container.find('ol.notes');
             var list = node.find('li').not('.more_notes_link_container');
