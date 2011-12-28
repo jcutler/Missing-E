@@ -228,7 +228,7 @@ MissingE.packages.betterReblogsPost = {
                         url += loc.match(/&pid=(\d*)/)[1] + "/";
                         url += loc.match(/&rk=(\w*)/)[1];
                         url += '?redirect_to=' + redir;
-                        
+
                         var link = document.createElement('a');
                         link.setAttribute('href', url);
                         link.setAttribute('target', '_top');

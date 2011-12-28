@@ -58,7 +58,7 @@ MissingE.packages.sidebarTweaks = {
                                  .append(bbtn));
             }
          }
-   
+
          var lang = $('html').attr('lang');
          var sidebarList = [
             {
@@ -275,7 +275,7 @@ MissingE.packages.sidebarTweaks = {
          }
       }
    },
-   
+
    run: function() {
       var settings = this.settings;
       $('head').append('<style type="text/css">' +
@@ -286,7 +286,7 @@ MissingE.packages.sidebarTweaks = {
                        'background-image:url("' +
                        extension.getURL('core/sidebarTweaks/to_blog.png') +
                        '") !important; }</style>');
-   
+
       if (settings.followingLink === 1) {
          $('#right_column a.following').attr('href','/following');
       }

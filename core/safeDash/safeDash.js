@@ -158,7 +158,7 @@ MissingE.packages.safeDash = {
                }
                else {
                   var extra = false;
-                  myst = {}; 
+                  myst = {};
                   if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/.test(me.attr('src')))) {
                      var row = me.closest('div');
                      if (row.length > 0 && row.hasClass("photoset_row")) {
