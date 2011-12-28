@@ -3,8 +3,6 @@ Cache settings check for Quick Reblogging
 Change all features that pass info to new tabs to no longer use localStorage
 
 Testing of sanitization changes for HMTL injection:
-   - Ask Tweaks
-   - Better Reblogs
    - Bookmarker
    - Common
    - Dashboard Tweaks

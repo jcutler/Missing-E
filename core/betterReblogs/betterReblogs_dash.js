@@ -607,7 +607,6 @@ MissingE.packages.betterReblogs = {
          });
          qr.find('#MissingE_quick_reblog_tags input').focus(function() {
             qr.addClass('MissingE_quick_reblog_tags_inputting');
-            console.log(this);
             var taginput = this;
             if (extension.isSafari || extension.isFirefox) {
                $(document).bind('keydown.MissingEqr', function(e) {
