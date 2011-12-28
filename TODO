@@ -3,14 +3,9 @@ Cache settings check for Quick Reblogging
 Change all features that pass info to new tabs to no longer use localStorage
 
 Testing of sanitization changes for HMTL injection:
-   - Dash Links To Tabs
-   - Goto Dash Post
-   - Magnifier
    - Mass Editor
-   - Post Crushes
    - Posting Tweaks
    - Reblog Yourself
    - Reply Replies
    - Safe Dash
    - Sidebar Tweaks
-   - Timestamps

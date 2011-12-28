@@ -155,7 +155,7 @@ MissingE.packages.magnifier = {
                str = null;
             }
          }
-         
+
          if (str) {
             var mi = $('<a />',
                        {title: MissingE.getLocale(lang).loading,
