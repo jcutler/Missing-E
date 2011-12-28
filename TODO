@@ -3,10 +3,6 @@ Cache settings check for Quick Reblogging
 Change all features that pass info to new tabs to no longer use localStorage
 
 Testing of sanitization changes for HMTL injection:
-   - Bookmarker
-   - Common
-   - Dashboard Tweaks
-      - does experimental reply work on all browsers?
    - Dash Links To Tabs
    - Goto Dash Post
    - Magnifier

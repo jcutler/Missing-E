@@ -570,7 +570,6 @@ MissingE.packages.dashboardTweaks = {
                                                   text: MissingE.getLocale(lang).shuffle}))));
          }
          if (doMassDelete) {
-            console.log(MissingE.getLocale(lang));
             btns.append($('<li />')
                            .append($('<a />',
                                      {href: "#", "class": "select_all"})
