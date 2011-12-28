@@ -566,7 +566,7 @@ MissingE.packages.askTweaks = {
 
    runAskForm: function() {
       if (this.settings.scroll) {
-         MissingE.insertStyleSheet("core/askTweaks/askboxScroll.css");
+         extension.insertStyleSheet("core/askTweaks/askboxScroll.css");
       }
       if (this.settings.adjustDomain) {
          document.domain = "tumblr.com";
