@@ -78,7 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.3.5** (not yet released)
+##**2.3.6** (12/27/2011)
+**_!_** Improved sanitization of injected HTML
+
+##**2.3.5** (12/27/2011)
 **_!_** 'Missing e' bookmarks now preserved when clearing browser cache and local storage data  
 **_!_** Compatibility fix for interaction with Tumblr Helper extension  
 **_!_** Improved sanitization of injected HTML
