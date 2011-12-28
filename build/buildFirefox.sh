@@ -1,4 +1,5 @@
-CWD=$PWD
+CWD=${PWD/#d:/\/d}
+cd $CWD
 BUILDDIR=$PWD/firefox-build
 JETPACK=`find ../../ -maxdepth 1 -name "addon-sdk*" -type d`
 FF=$PWD/../firefox/missinge
@@ -103,5 +104,5 @@ SYS=`uname`
 if [[ "$SYS" == "Darwin" ]]; then
    open -a Firefox "https://addons.mozilla.org/en-US/developers/addon/missing-e/versions/#version-upload"
 else
-   "c:/Program Files/Mozilla Firefox/firefox.exe" "https://addons.mozilla.org/en-US/developers/addon/missing-e/versions/#version-upload"
+   "c:/Program Files/Mozilla Firefox/firefox.exe" "https://addons.mozilla.org/en-US/developers/addon/missing-e/versions/#version-upload" &
 fi
