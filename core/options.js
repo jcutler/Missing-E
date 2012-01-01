@@ -20,7 +20,6 @@
  * You should have received a copy of the GNU General Public License
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
-
 (function($) {
 
 MissingE.utilities.options = {
@@ -297,6 +296,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_replaceIcons',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_postLinks',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_reblogReplies',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_disableAlert',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_widescreen',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_queueArrows',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_expandAll',1);

@@ -161,6 +161,7 @@ function getAllSettings(getStale) {
    settings.MissingE_dashboardTweaks_replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1);
    settings.MissingE_dashboardTweaks_postLinks = getSetting("extensions.MissingE.dashboardTweaks.postLinks",1);
    settings.MissingE_dashboardTweaks_reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
+   settings.MissingE_dashboardTweaks_disableAlert = getSetting("extensions.MissingE.dashboardTweaks.disableAlert",0);
    settings.MissingE_dashboardTweaks_widescreen = getSetting("extensions.MissingE.dashboardTweaks.widescreen",0);
    settings.MissingE_dashboardTweaks_queueArrows = getSetting("extensions.MissingE.dashboardTweaks.queueArrows",1);
    settings.MissingE_dashboardTweaks_expandAll = getSetting("extensions.MissingE.dashboardTweaks.expandAll",1);
@@ -1304,6 +1305,7 @@ function handleMessage(message, myWorker) {
             settings.replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1);
             settings.postLinks = getSetting("extensions.MissingE.dashboardTweaks.postLinks",1);
             settings.reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
+            settings.disableAlert = getSetting("extensions.MissingE.dashboardTweaks.disableAlert",0);
             settings.widescreen = getSetting("extensions.MissingE.dashboardTweaks.widescreen",0);
             settings.queueArrows = getSetting("extensions.MissingE.dashboardTweaks.queueArrows",1);
             settings.expandAll = getSetting("extensions.MissingE.dashboardTweaks.expandAll",1);

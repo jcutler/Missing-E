@@ -388,6 +388,16 @@ MissingE.packages.dashboardTweaks = {
    run: function() {
       var settings = this.settings
       var lang = $('html').attr('lang');
+	  
+      if (settings.experimental === 1 &&
+          settings.disableAlert === 1 &&
+          document.body.id === "dashboard_index") {
+			if($("#detection_alert").length) { //Popup exists
+				$("#overlay").hide();
+				$("#detection_alert").hide();
+				$('body').css("overflow","visible");
+			}
+	  }
 
       if (extension.isSafari) {
          extension.insertStyleSheet("core/dashboardTweaks/replaceIcons.css");
