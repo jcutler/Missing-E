@@ -78,6 +78,11 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.3.7** (not yet released)
+**_+_** Add option for 40x40 pixel avatar size in Reply Replies  
+**_!_** Remove deprecated Magnifier retries setting  
+**_!_** Remove Posting Tweaks photo URL / upload photo toggler (now implemented in standard Tumblr interface)
+
 ##**2.3.6** (12/27/2011)
 **_!_** Improved sanitization of injected HTML
 
