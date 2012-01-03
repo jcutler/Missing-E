@@ -1137,7 +1137,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             break;
          case "postingTweaks":
             settings.photoReplies = getSetting("MissingE_postingTweaks_photoReplies",1);
-            settings.uploaderToggle = getSetting("MissingE_postingTweaks_uploaderToggle",1);
             settings.addUploader = getSetting("MissingE_postingTweaks_addUploader",1);
             settings.quickButtons = getSetting("MissingE_postingTweaks_quickButtons",1);
             settings.blogSelect = getSetting("MissingE_postingTweaks_blogSelect",0);
@@ -1518,6 +1517,10 @@ function collapseSettings(toPref, oldA, oldB) {
    }
 }
 
+function clearSetting(pref) {
+   localStorage.removeItem(pref);
+}
+
 function moveSetting(oldpref, newpref) {
    var pref;
    if ((pref = localStorage[oldpref])) {
@@ -1581,6 +1584,7 @@ function fixupSettings() {
    moveAllSettings('askFixes','askTweaks');
    moveAllSettings('dashboardFixes','dashboardTweaks');
    moveAllSettings('postingFixes','postingTweaks');
+   clearSetting('MissingE_postingTweaks_uploaderToggle');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
    moveSetting('MissingE_dashboardTweaks_followingLink','MissingE_sidebarTweaks_followingLink');
    collapseSettings('MissingE_askTweaks_betterAnswers','MissingE_askTweaks_buttons','MissingE_askTweaks_tags');

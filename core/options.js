@@ -324,7 +324,6 @@ MissingE.utilities.options = {
          }
          else if (v == "postingTweaks") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_photoReplies',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_uploaderToggle',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_addUploader',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_quickButtons',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_blogSelect',0);

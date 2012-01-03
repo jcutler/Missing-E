@@ -179,7 +179,6 @@ function getAllSettings(getStale) {
    settings.MissingE_timestamps_retries = getSetting("extensions.MissingE.timestamps.retries",MissingE.defaultRetries);
    settings.MissingE_timestamps_format = getSetting("extensions.MissingE.timestamps.format",MissingE.defaultFormat);
    settings.MissingE_postingTweaks_photoReplies = getSetting("extensions.MissingE.postingTweaks.photoReplies",1);
-   settings.MissingE_postingTweaks_uploaderToggle = getSetting("extensions.MissingE.postingTweaks.uploaderToggle",1);
    settings.MissingE_postingTweaks_addUploader = getSetting("extensions.MissingE.postingTweaks.addUploader",1);
    settings.MissingE_postingTweaks_quickButtons = getSetting("extensions.MissingE.postingTweaks.quickButtons",1);
    settings.MissingE_postingTweaks_blogSelect = getSetting("extensions.MissingE.postingTweaks.blogSelect",0);
@@ -230,7 +229,6 @@ function getAllSettings(getStale) {
       settings.MissingE_dashboardFixes_randomQueue = getSetting("extensions.MissingE.dashboardFixes.randomQueue",0);
       settings.MissingE_dashboardFixes_sortableNotes = getSetting("extensions.MissingE.dashboardFixes.sortableNotes",1);
       settings.MissingE_postingFixes_photoReplies = getSetting("extensions.MissingE.postingFixes.photoReplies",1);
-      settings.MissingE_postingFixes_uploaderToggle = getSetting("extensions.MissingE.postingFixes.uploaderToggle",1);
       settings.MissingE_postingFixes_addUploader = getSetting("extensions.MissingE.postingFixes.addUploader",1);
       settings.MissingE_postingFixes_quickButtons = getSetting("extensions.MissingE.postingFixes.quickButtons",1);
       settings.MissingE_postingFixes_blogSelect = getSetting("extensions.MissingE.postingFixes.blogSelect",0);
@@ -255,6 +253,12 @@ function collapseSettings(toPref, oldA, oldB) {
    else if (ps.isSet(oldA) || ps.isSet(oldB)) {
       ps.reset(oldA);
       ps.reset(oldB);
+   }
+}
+
+function clearSetting(pref) {
+   if (ps.isSet(pref)) {
+      ps.reset(pref);
    }
 }
 
@@ -1334,7 +1338,6 @@ function handleMessage(message, myWorker) {
             break;
          case "postingTweaks":
             settings.photoReplies = getSetting("extensions.MissingE.postingTweaks.photoReplies",1);
-            settings.uploaderToggle = getSetting("extensions.MissingE.postingTweaks.uploaderToggle",1);
             settings.addUploader = getSetting("extensions.MissingE.postingTweaks.addUploader",1);
             settings.quickButtons = getSetting("extensions.MissingE.postingTweaks.quickButtons",1);
             settings.blogSelect = getSetting("extensions.MissingE.postingTweaks.blogSelect",0);
@@ -1826,6 +1829,7 @@ function fixupSettings() {
    moveAllSettings('askFixes','askTweaks');
    moveAllSettings('dashboardFixes','dashboardTweaks');
    moveAllSettings('postingFixes','postingTweaks');
+   clearSetting('extensions.MissingE.postingTweaks.uploaderToggle');
    moveSetting('extensions.MissingE.dashboardTweaks.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
    moveSetting('extensions.MissingE.dashboardTweaks.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
    collapseSettings('extensions.MissingE.askTweaks.betterAnswers','extensions.MissingE.askTweaks.buttons','extensions.MissingE.askTweaks.tags');

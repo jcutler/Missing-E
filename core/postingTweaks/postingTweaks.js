@@ -343,25 +343,6 @@ MissingE.packages.postingTweaks = {
          if (apr !== null && apr !== undefined) { apr.checked = true; }
       }
 
-      if (settings.uploaderToggle === 1) {
-         var url = document.getElementById("photo_url");
-         var lnk = document.getElementById("use_url_link");
-
-         if (url !== null && url !== undefined &&
-             lnk !== null && lnk !== undefined) {
-            var uil = lnk.cloneNode(true);
-            uil.id = "use_img_link";
-            $(uil).html('<a href="#" ' +
-               'onclick="Element.hide(\'photo_url\');' +
-               '$(\'photo_src\').value = \'\';Element.show(\'photo_upload\');' +
-               'return false;">' +
-               MissingE.escapeHTML(MissingE.getLocale(lang).postingTweaks
-                                    .uploadImagesText) + '</a>');
-            uil.style.marginTop = "7px";
-            url.appendChild(uil);
-         }
-      }
-
       if (settings.addUploader === 1 &&
           !MissingE.isTumblrURL(location.href, ["drafts", "messages",
                                                 "bookmarklet"]) &&
@@ -413,7 +394,7 @@ MissingE.packages.postingTweaks = {
          else {
             startframe = extension.getURL(iframeurl);
          }
-         h2.before('<div style="height:' + h2.css("margin-top") + ';"></div>')
+         h2.before('<div style="height:0;margin-top:' + h2.css("margin-top") + ';"></div>')
             .css({"float":"left","margin-top":"0"})
             .after('<div style="float:right;padding-top:3px;"><iframe ' +
                    'src="' + startframe + '" ' +
