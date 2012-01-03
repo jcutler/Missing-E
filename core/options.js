@@ -281,10 +281,15 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_postCrushes_newTab',1);
          }
          else if (v == "replyReplies") {
-            if (MissingE.utilities.options.getStorage('MissingE_replyReplies_smallAvatars',1) == 1)
+            if (MissingE.utilities.options.getStorage('MissingE_replyReplies_smallAvatars',1) == 1) {
                document.getElementById("MissingE_replyReplies_smallAvatars_small").checked = true;
-            else
+            }
+            else if (MissingE.utilities.options.getStorage('MissingE_replyReplies_smallAvatars',1) == 0) {
                document.getElementById("MissingE_replyReplies_smallAvatars_large").checked = true;
+            }
+            else if (MissingE.utilities.options.getStorage('MissingE_replyReplies_smallAvatars',1) == 2) {
+               document.getElementById("MissingE_replyReplies_smallAvatars_medium").checked = true;
+            }
             MissingE.utilities.options.loadCheck(frm,'MissingE_replyReplies_showAvatars',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_replyReplies_addTags',1);
             frm.MissingE_replyReplies_defaultTags.value = MissingE.utilities.options.getStorage('MissingE_replyReplies_defaultTags','');

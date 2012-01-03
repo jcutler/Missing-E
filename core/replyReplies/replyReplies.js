@@ -55,7 +55,9 @@ MissingE.packages.replyReplies = {
       var arr, i, n, img;
       var redir = "";
       var settings = response;
-      var size = settings.smallAvatars === 1 ? 16 : 64;
+      var size = 16;
+      if (settings.smallAvatars === 0) { size = 64; }
+      else if (settings.smallAvatars === 2) { size = 40; }
       var thecode = [];
       var tags = [];
       arr = $('.MissingE_rt');
