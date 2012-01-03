@@ -256,7 +256,6 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashLinksToTabs_editLinks',0);
          }
          else if (v == "magnifier") {
-            frm.MissingE_magnifier_retries.value = MissingE.utilities.options.getStorage('MissingE_magnifier_retries',MissingE.defaultRetries);
             MissingE.utilities.options.loadCheck(frm,'MissingE_magnifier_magnifyAvatars',0);
          }
          else if (v == "bookmarker") {

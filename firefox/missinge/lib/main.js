@@ -171,7 +171,6 @@ function getAllSettings(getStale) {
    settings.MissingE_sidebarTweaks_addSidebar = getSetting("extensions.MissingE.sidebarTweaks.addSidebar",0);
    settings.MissingE_sidebarTweaks_slimSidebar = getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0);
    settings.MissingE_sidebarTweaks_followingLink = getSetting("extensions.MissingE.sidebarTweaks.followingLink",0);
-   settings.MissingE_magnifier_retries = getSetting("extensions.MissingE.magnifier.retries",MissingE.defaultRetries);
    settings.MissingE_magnifier_magnifyAvatars = getSetting("extensions.MissingE.magnifier.magnifyAvatars",0);
    settings.MissingE_dashLinksToTabs_newPostTabs = getSetting("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
    settings.MissingE_dashLinksToTabs_sidebar = getSetting("extensions.MissingE.dashLinksToTabs.sidebar",0);
