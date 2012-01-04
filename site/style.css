@@ -628,6 +628,13 @@ border-bottom:1px solid #44546b;
 text-decoration:underline;
 }
 
+#faq .response hr {
+border:0;
+border-top:1px solid #CCC;
+width:60%;
+margin:24px auto;
+}
+
 #faq .experimental-details {
 padding:5px 0;
 background-color:#FF4;
