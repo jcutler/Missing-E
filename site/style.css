@@ -206,6 +206,11 @@ margin:2px 0;
 margin:0 8px;
 }
 
+#home #map a.square_mapimg {
+border-radius:8px;
+padding:3px !important;
+}
+
 #about #map a, #features #map a, #faq #map a {
 padding:6px 8px 4px 8px;
 }
