@@ -224,13 +224,18 @@ MissingE.packages.bookmarker = {
 
    markClick: function(e) {
       if (e.which === 1) {
-         var post, pid, oldPos, scrollTo;
+         var post, pid, oldPos, scrollTo, moveWin;
          if ($(this).hasClass("MissingE_ismarked")) {
             post = $(this).closest('li.post');
             pid = this.id.match(/\d*$/)[0];
-            var moveWin = $('#bookmarkbar_' + pid).offset().top -
+            try {
+               moveWin = $('#bookmarkbar_' + pid).offset().top -
                            $(window).scrollTop() <= 34;
-            oldPos = post.offset().top;
+               oldPos = post.offset().top;
+            }
+            catch (e) {
+               moveWin = false;
+            }
             $(this).removeClass("MissingE_ismarked");
             MissingE.packages.bookmarker.removeMark(this.id.match(/\d*$/)[0]);
             if (moveWin) {
@@ -261,9 +266,16 @@ MissingE.packages.bookmarker = {
             }
             pid = this.id.match(/\d*$/)[0];
             oldPos = post.offset().top;
+
             if (MissingE.packages.bookmarker.addMark(pid,user,e.shiftKey)) {
-               if ($('#bookmarkbar_' + pid).offset().top -
-                     $(window).scrollTop() <= 34) {
+               try {
+                  moveWin = $('#bookmarkbar_' + pid).offset().top -
+                              $(window).scrollTop() <= 34;
+               }
+               catch (e) {
+                  moveWin = false;
+               }
+               if (moveWin) {
                   scrollTo = $(window).scrollTop() + post.offset().top -
                                  oldPos;
                   $(window).scrollTop(scrollTo);
