@@ -1,0 +1,38 @@
+#MissingE-compactWarning {
+font-size:13px;
+line-height:13px;
+min-width:11px;
+padding:2px 4px 4px 4px;
+cursor:pointer;
+color:white;
+font-weight:bold;
+text-align:center;
+background-color:#D93023;
+box-shadow:0 1px 3px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.41);
+border-radius:4px;
+position:absolute;
+top:5px;
+left:180px;
+display:none;
+z-index:1;
+}
+
+#MissingE-compactWarning:hover {
+text-decoration:underline;
+}
+
+html.compactMissingeWarning #MissingE-compactWarning {
+display:block;
+}
+
+html.compactMissingeWarning #overlay {
+display:none;
+}
+
+html.compactMissingeWarning #detection_alert {
+display:none;
+}
+
+html.compactMissingeWarning body {
+overflow:scroll !important;
+}

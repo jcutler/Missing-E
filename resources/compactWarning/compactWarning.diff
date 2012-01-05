@@ -1,0 +1,201 @@
+diff --git a/chrome/manifest.json b/chrome/manifest.json
+index b5427fe..5e2df94 100644
+--- a/chrome/manifest.json
++++ b/chrome/manifest.json
+@@ -17,6 +17,19 @@
+    "content_scripts": [
+       {
+          "matches": ["http://www.tumblr.com/*"],
++         "css": ["core/common/warning.css"],
++         "js": ["extension.js",
++                "core/common/warning.js"],
++         "run_at": "document_start"
++      },
++      {
++         "matches": ["http://www.tumblr.com/*"],
++         "js": ["core/localizations.js",
++                "core/utils.js",
++                "core/common/warning.js"]
++      },
++      {
++         "matches": ["http://www.tumblr.com/*"],
+          "js": ["extension.js",
+                 "core/localizations.js",
+                 "core/utils.js",
+diff --git a/core/localizations.js b/core/localizations.js
+index fa8f832..879c430 100644
+--- a/core/localizations.js
++++ b/core/localizations.js
+@@ -174,7 +174,8 @@ var locale = {
+    "type": "Type",
+    "user": "User",
+    "reset": "Reset"
+-  }
++  },
++  "warning": "Warning!"
+  },
+  "de": {
+   "daysLong": [
+@@ -349,7 +350,8 @@ var locale = {
+    "type": "Art",
+    "user": "Benutzer",
+    "reset": "Zurücksetzen"
+-  }
++  },
++  "warning": "Warnung!"
+  },
+  "es": {
+   "daysLong": [
+@@ -524,7 +526,8 @@ var locale = {
+    "type": "Tipo",
+    "user": "Usuario",
+    "reset": "Restablecer"
+-  }
++  },
++  "warning": "¡Advertencia!"
+  },
+  "fr": {
+    "daysLong": [
+@@ -699,7 +702,8 @@ var locale = {
+    "type": "Type",
+    "user": "Utilisateur",
+    "reset": "Réinitialiser"
+-  }
++  },
++  "warning": "Attention!"
+  },
+  "it": {
+   "daysLong": [
+@@ -884,7 +888,8 @@ var locale = {
+    "type": "Tipo",
+    "user": "Utente",
+    "reset": "Resetta"
+-  }
++  },
++  "warning": "Attenzione!"
+  },
+  "ja": {
+   "daysLong": [
+@@ -1052,7 +1057,8 @@ var locale = {
+    "type": "タイプ",
+    "user": "ユーザ",
+    "reset": "リセット"
+-  }
++  },
++  "warning": "警告!"
+  },
+  "pl": {
+   "daysLong": [
+@@ -1227,7 +1233,8 @@ var locale = {
+    "type": "Typ",
+    "user": "Użytkownik",
+    "reset": "Resetuj"
+-  }
++  },
++  "warning": "Uwaga!"
+  },
+  "ru": {
+   "daysLong": [
+@@ -1432,7 +1439,8 @@ var locale = {
+    "type": "тип",
+    "user": "пользователь",
+    "reset": "Сброс"
+-  }
++  },
++  "warning": "Внимание!"
+  },
+  "tr": {
+   "daysLong": [
+@@ -1619,7 +1627,8 @@ var locale = {
+    "type": "Tipi",
+    "user": "Kullanıcı",
+    "reset": "Sıfırla"
+-  }
++  },
++  "warning": "Uyarı!"
+  }
+ };
+ 
+diff --git a/firefox/missinge/data/extension.js b/firefox/missinge/data/extension.js
+index ac803aa..bbba965 100644
+--- a/firefox/missinge/data/extension.js
++++ b/firefox/missinge/data/extension.js
+@@ -180,12 +180,17 @@ extension = {
+       return (typeof this._baseURL !== "undefined");
+    },
+ 
+-   insertStyleSheet: function(url) {
++   insertStyleSheet: function(url, node) {
+       var ss = document.createElement("link");
+       ss.setAttribute("type","text/css");
+       ss.setAttribute("rel","stylesheet");
+       ss.setAttribute("href",this.getURL(url));
+-      document.getElementsByTagName("head")[0].appendChild(ss);
++      if (node) {
++         node.appendChild(ss);
++      }
++      else {
++         document.getElementsByTagName("head")[0].appendChild(ss);
++      }
+    },
+ 
+    openWindow: function(addr) {
+diff --git a/firefox/missinge/lib/main.js b/firefox/missinge/lib/main.js
+index 8274625..3f1fcad 100644
+--- a/firefox/missinge/lib/main.js
++++ b/firefox/missinge/lib/main.js
+@@ -1382,7 +1382,8 @@ function handleMessage(message, myWorker) {
+       var injectSlimSidebar = false;
+       var injectScripts = [data.url("extension.js"),
+                            data.url("core/localizations.js"),
+-                           data.url("core/utils.js")];
++                           data.url("core/utils.js"),
++                           data.url("core/common/warning.js")];
+       var injectStyles = [];
+       myWorker.tab.attach({
+          contentScript: 'document.body' +
+@@ -1726,6 +1727,16 @@ function handleMessage(message, myWorker) {
+ 
+ pageMod.PageMod({
+    include: ["http://www.tumblr.com/*"],
++   contentScriptWhen: "start",
++   contentScriptFile: [data.url("extension.js"),
++                       data.url("core/common/warning.js")],
++   contentScript: 'extension.insertStyleSheet("' +
++                  data.url("core/common/warning.css") + '", ' +
++                  'document.documentElement);'
++});
++
++pageMod.PageMod({
++   include: ["http://www.tumblr.com/*"],
+    contentScriptWhen: 'ready',
+    contentScriptFile: [data.url("extension.js"),
+                        data.url("core/common/menuButton.js"),
+diff --git a/missinge.safariextension/Info.plist b/missinge.safariextension/Info.plist
+index 5709a0e..b5ef021 100644
+--- a/missinge.safariextension/Info.plist
++++ b/missinge.safariextension/Info.plist
+@@ -58,6 +58,7 @@
+ 				<string>lib/jquery.ui.sortable.min.js</string>
+ 				<string>lib/jquery.ui.resizable.min.js</string>
+ 				<string>core/common/menuButton.js</string>
++				<string>core/common/warning.js</string>
+ 				<string>lib/facebox/facebox.js</string>
+ 				<string>core/askTweaks/askTweaks.js</string>
+ 				<string>core/betterReblogs/betterReblogs_dash.js</string>
+@@ -84,9 +85,15 @@
+ 				<string>core/versionCheck.js</string>
+ 				<string>whoami.js</string>
+ 			</array>
++			<key>Start</key>
++			<array>
++				<string>extension.js</string>
++				<string>core/common/warning.js</string>
++			</array>
+ 		</dict>
+ 		<key>Stylesheets</key>
+ 		<array>
++			<string>core/common/warning.css</string>
+ 			<string>lib/facebox/facebox.css</string>
+ 			<string>core/askTweaks/askTweaks.css</string>
+ 			<string>core/betterReblogs/quickReblog.css</string>
