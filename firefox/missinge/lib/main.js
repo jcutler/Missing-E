@@ -1204,8 +1204,10 @@ function handleMessage(message, myWorker) {
       setSetting(key, message.val);
    }
    else if (message.greeting == "all-settings") {
-      var settings = getAllSettings();
-      myWorker.postMessage(settings);
+      if (myWorker.tab.url === data.url("core/options.html")) {
+         var settings = getAllSettings();
+         myWorker.postMessage(settings);
+      }
    }
    else if (message.greeting == "sidebarTweaks") {
       setSetting('extensions.MissingE.sidebarTweaks.accountNum',
