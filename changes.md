@@ -80,6 +80,11 @@ color:#4183c4;
 
 ##**2.3.7** (not yet released)
 **_+_** Add option for 40x40 pixel avatar size in Reply Replies  
+**_!_** Improve loading speed for page style changes  
+**_!_** Fix bug in Sidebar Tweaks default account when importing 'Missing e' settings in Firefox  
+**_!_** Prevent error output when using a tab in which 'Missing e' settings have been loaded to navigate to other pages  
+**_!_** Fix bug with some Firefox users unable to add/remove bookmarks  
+**_!_** Fix alignment issue for close button on 'Missing e' modal boxes  
 **_!_** Remove deprecated Magnifier retries setting  
 **_!_** Remove Posting Tweaks photo URL / upload photo toggler (now implemented in standard Tumblr interface)
 
