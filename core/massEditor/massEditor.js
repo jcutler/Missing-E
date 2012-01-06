@@ -108,7 +108,9 @@ MissingE.packages.massEditor = {
          }
       }
       sbtlist.append(MissingE.packages.massEditor
-         .generateButton('note', MissingE.getLocale(lang).askPost, true));
+         .generateButton('note', MissingE.getLocale(lang).askPost));
+      sbtlist.append(MissingE.packages.massEditor
+         .generateButton('private', MissingE.getLocale(lang).private, true));
       sbtlist.insertAfter(sbt);
 
       extension.addAjaxListener(function() {
@@ -140,27 +142,34 @@ MissingE.packages.massEditor = {
          }
       });
 
-      $.globalEval('document.getElementById("MissingE_select_btn")' +
-                   '.addEventListener("click",function(){ ' +
-                   '$$("a.brick.highlighted").each(function(obj){' +
-                   '$(obj).removeClassName("highlighted");});' +
-                   '$$("a.brick:not(highlighted)").each(function(obj,i){' +
-                   'if (i<100) {$(obj).addClassName("highlighted");}});' +
-                   'get_selected_post_ids();},false);' +
-                   'var MissingE_list=document.getElementById("' +
-                   'MissingE_selecttype_list").childNodes; for(var i in ' +
-                   'MissingE_list){if(MissingE_list.hasOwnProperty(i) && ' +
-                   'MissingE_list[i].tagName=="DIV") { MissingE_list[i]' +
-                   '.addEventListener("click",function(){ ' +
-                   'var type = this.id.match(/[a-z]*$/);' +
-                   'if (type && type.length > 0) { type = type[0]; }' +
-                   'else { return; }' +
-                   'if (type == "text") { type = "regular"; }' +
-                   'else if (type == "chat") { type = "conversation"; }' +
-                   'var max = 100-$$("a.brick.highlighted").size();' +
-                   '$$("a.brick." + type).each(function(obj,i){' +
-                   'if (i<max){$(obj).addClassName("highlighted");}}); ' +
-                   'get_selected_post_ids();},false);}}');
+      $('#MissingE_selecttype_list > div').click(function() {
+         if (this.id === "MissingE_select_btn") {
+            $('a.brick.highlighted').removeClass('highlighted');
+            $('a.brick:not(.highlighted):lt(100)').addClass('highlighted');
+         }
+         else if (this.id === "MissingE_selecttype_private") {
+            var count = $('a.brick.highlighted').length;
+            $('a.brick:not(.highlighted) ' +
+              '.private_overlay:lt(' + (100-count) +')')
+               .closest('a.brick').addClass('highlighted');
+         }
+         else {
+            var count = $('a.brick.highlighted').length;
+            var type = this.id.match(/MissingE_selecttype_(.*)/);
+            if (!type || type.length < 2) {
+               return false;
+            }
+            else {
+               type = type[1];
+            }
+            if (type === "text") { type = "regular"; }
+            else if (type === "chat") { type = "conversation"; }
+            $('a.brick.' + type + ':not(.highlighted):lt(' + (100-count) + ')')
+               .addClass('highlighted');
+         }
+         $.globalEval('get_selected_post_ids();');
+         return false;
+      });
    },
 
    init: function() {

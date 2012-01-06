@@ -80,6 +80,7 @@ var locale = {
     "text": "Reblog manually"
    }
   ],
+  "private": "Private",
   "tagsText": "Tags",
   "twitterText": "Send to Twitter",
   "askPost": "Ask",
@@ -255,6 +256,7 @@ var locale = {
     "text": "manuell rebloggen"
    }
   ],
+  "private": "Privat",
   "tagsText": "Tags",
   "twitterText": "auf Twitter posten",
   "askPost": "Fragen",
@@ -430,6 +432,7 @@ var locale = {
     "text": "Rebloguear manualmente"
    }
   ],
+  "private": "Privado",
   "tagsText": "Etiquetas",
   "twitterText": "Enviar a Twitter",
   "askPost": "Preguntar",
@@ -605,6 +608,7 @@ var locale = {
     "text": "Rebloguer manuellement"
    }
   ],
+  "private": "Privé",
   "tagsText": "Tags",
   "twitterText": "Publier sur Twitter",
   "askPost": "Question",
@@ -780,6 +784,7 @@ var locale = {
     "text": "Reblogga manualmente"
    }
   ],
+  "private": "Privato",
   "tagsText": "Tag",
   "twitterText": "Posta su Twitter",
   "askPost": "Chiedi",
@@ -965,6 +970,7 @@ var locale = {
     "text": "手動でリブログ"
    }
   ],
+  "private": "プライベート",
   "tagsText": "タグ",
   "twitterText": "投稿を Twitter にも送信",
   "askPost": "質問",
@@ -1133,6 +1139,7 @@ var locale = {
     "text": "Rebloguj ręcznie"
    }
   ],
+  "private": "Private",
   "tagsText": "tagi",
   "twitterText": "Wyślij na Twittera",
   "askPost": "Pytanie",
@@ -1308,6 +1315,7 @@ var locale = {
     "text": "Реблог вручную"
    }
   ],
+  "private": "Личное",
   "tagsText": "теги",
   "twitterText": "Отправить в Twitter",
   "askPost": "Спросить",
@@ -1513,6 +1521,7 @@ var locale = {
     "text": "Yeniden blogla düzenleyerek"
    }
   ],
+  "private": "Özel",
   "tagsText": "Etiketler",
   "twitterText": "Twitter'a gönder",
   "askPost": "Sor",
