@@ -1159,7 +1159,7 @@ function handleRequest(request) {
       settings.MissingE_dashboardTweaks_reblogReplies = getSetting("MissingE_dashboardTweaks_reblogReplies",0);
       settings.MissingE_dashboardTweaks_widescreen = getSetting("MissingE_dashboardTweaks_widescreen",0);
       settings.MissingE_dashboardTweaks_queueArrows = getSetting("MissingE_dashboardTweaks_queueArrows",1);
-      settings.MissingE_dashboardTweaks_expandAll = getSetting("MissingE_dashboardTweaks_expandAll",1);
+      settings.MissingE_dashboardTweaks_noExpandAll = getSetting("MissingE_dashboardTweaks_queueArrows",0);
       settings.MissingE_dashboardTweaks_massDelete = getSetting("MissingE_dashboardTweaks_massDelete",1);
       settings.MissingE_dashboardTweaks_randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
       settings.MissingE_dashboardTweaks_sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
@@ -1253,7 +1253,7 @@ function handleRequest(request) {
             settings.reblogReplies = getSetting("MissingE_dashboardTweaks_reblogReplies",0);
             settings.widescreen = getSetting("MissingE_dashboardTweaks_widescreen",0);
             settings.queueArrows = getSetting("MissingE_dashboardTweaks_queueArrows",1);
-            settings.expandAll = getSetting("MissingE_dashboardTweaks_expandAll",1);
+            settings.noExpandAll = getSetting("MissingE_dashboardTweaks_queueArrows",0);
             settings.massDelete = getSetting("MissingE_dashboardTweaks_massDelete",1);
             settings.randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
             settings.sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
@@ -1700,6 +1700,7 @@ function fixupSettings() {
    moveAllSettings('dashboardFixes','dashboardTweaks');
    moveAllSettings('postingFixes','postingTweaks');
    clearSetting('MissingE_postingTweaks_uploaderToggle');
+   invertSetting('MissingE_dashboardTweaks_expandAll','MissingE_dashboardTweaks_noExpandAll');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
    moveSetting('MissingE_dashboardTweaks_followingLink','MissingE_sidebarTweaks_followingLink');
    collapseSettings('MissingE_askTweaks_betterAnswers','MissingE_askTweaks_buttons','MissingE_askTweaks_tags');

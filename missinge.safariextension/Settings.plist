@@ -362,9 +362,9 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>1</real>
+		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_dashboardTweaks_expandAll</string>
+		<string>MissingE_dashboardTweaks_noExpandAll</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

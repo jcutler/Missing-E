@@ -412,18 +412,35 @@ MissingE.packages.dashboardTweaks = {
          e.preventDefault();
       });
 
-      if (settings.expandAll === 1) {
-         $('#posts .post').each(function(){
-            MissingE.packages.dashboardTweaks.addExpandAllHandler(this);
-         });
-         extension.addAjaxListener(function(type,list) {
-            if (type === 'notes') { return; }
-            $.each(list, function(i,val) {
-               MissingE.packages.dashboardTweaks
-                  .addExpandAllHandler($('#'+val).get(0));
-            });
+      if (settings.noExpandAll === 1) {
+         $('head').append('<style type="text/css">' +
+                          '#posts .post img.inline_external_image_off {' +
+                          'cursor:pointer; }' +
+                          '#posts .post img.inline_external_image_off' +
+                             '.enlarged {' +
+                          'cursor:default; width:auto !important;' +
+                          'height:auto !important; }');
+         $('#posts .post img.inline_external_image, ' +
+           '#posts .post img.toggle_inline_image').mousedown(function() {
+            var me = $(this);
+            var cont = me.closest('.post_content');
+            cont.find('.inline_external_image')
+               .removeClass('inline_external_image')
+               .addClass('inline_external_image_off');
+            cont.find('.toggle_inline_image')
+               .removeClass('toggle_inline_image')
+               .addClass('toggle_inline_image_off');
+            if (me.hasClass('inline_external_image_off')) {
+               me.removeClass('inline_external_image_off')
+                  .addClass('inline_external_image');
+            }
+            if (me.hasClass('toggle_inline_image_off')) {
+               me.removeClass('toggle_inline_image_off')
+                  .addClass('toggle_inline_image');
+            }
          });
       }
+
       if (settings.widescreen === 1 &&
           !MissingE.isTumblrURL(location.href, ["settings"])) {
          var w = $('#right_column').width() + 20;

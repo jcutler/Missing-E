@@ -163,7 +163,7 @@ function getAllSettings(getStale) {
    settings.MissingE_dashboardTweaks_reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
    settings.MissingE_dashboardTweaks_widescreen = getSetting("extensions.MissingE.dashboardTweaks.widescreen",0);
    settings.MissingE_dashboardTweaks_queueArrows = getSetting("extensions.MissingE.dashboardTweaks.queueArrows",1);
-   settings.MissingE_dashboardTweaks_expandAll = getSetting("extensions.MissingE.dashboardTweaks.expandAll",1);
+   settings.MissingE_dashboardTweaks_noExpandAll = getSetting("extensions.MissingE.dashboardTweaks.noExpandAll",0);
    settings.MissingE_dashboardTweaks_massDelete = getSetting("extensions.MissingE.dashboardTweaks.massDelete",1);
    settings.MissingE_dashboardTweaks_randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0);
    settings.MissingE_dashboardTweaks_sortableNotes = getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1);
@@ -225,7 +225,6 @@ function getAllSettings(getStale) {
       settings.MissingE_dashboardFixes_reblogReplies = getSetting("extensions.MissingE.dashboardFixes.reblogReplies",0);
       settings.MissingE_dashboardFixes_widescreen = getSetting("extensions.MissingE.dashboardFixes.widescreen",0);
       settings.MissingE_dashboardFixes_queueArrows = getSetting("extensions.MissingE.dashboardFixes.queueArrows",1);
-      settings.MissingE_dashboardFixes_expandAll = getSetting("extensions.MissingE.dashboardFixes.expandAll",1);
       settings.MissingE_dashboardFixes_massDelete = getSetting("extensions.MissingE.dashboardFixes.massDelete",1);
       settings.MissingE_dashboardFixes_randomQueue = getSetting("extensions.MissingE.dashboardFixes.randomQueue",0);
       settings.MissingE_dashboardFixes_sortableNotes = getSetting("extensions.MissingE.dashboardFixes.sortableNotes",1);
@@ -1312,7 +1311,7 @@ function handleMessage(message, myWorker) {
             settings.reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
             settings.widescreen = getSetting("extensions.MissingE.dashboardTweaks.widescreen",0);
             settings.queueArrows = getSetting("extensions.MissingE.dashboardTweaks.queueArrows",1);
-            settings.expandAll = getSetting("extensions.MissingE.dashboardTweaks.expandAll",1);
+            settings.noExpandAll = getSetting("extensions.MissingE.dashboardTweaks.noExpandAll",0);
             settings.massDelete = getSetting("extensions.MissingE.dashboardTweaks.massDelete",1);
             settings.randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0);
             settings.sortableNotes = getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1);
@@ -1918,6 +1917,7 @@ function fixupSettings() {
    moveAllSettings('dashboardFixes','dashboardTweaks');
    moveAllSettings('postingFixes','postingTweaks');
    clearSetting('extensions.MissingE.postingTweaks.uploaderToggle');
+   invertSetting('extensions.MissingE.dashboardTweaks.expandAll','extensions.MissingE.dashboardTweaks.noExpandAll');
    moveSetting('extensions.MissingE.dashboardTweaks.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
    moveSetting('extensions.MissingE.dashboardTweaks.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
    collapseSettings('extensions.MissingE.askTweaks.betterAnswers','extensions.MissingE.askTweaks.buttons','extensions.MissingE.askTweaks.tags');
