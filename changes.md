@@ -80,7 +80,7 @@ color:#4183c4;
 
 ##**2.3.7** (not yet released)
 **_+_** Add option for 40x40 pixel avatar size in Reply Replies  
-**_+_** Add selection button for private posts in Mass Editor Tweaks  
+**_+_** Add selection button for private posts and next 100 posts in Mass Editor Tweaks  
 **_!_** Change option for expanding all inline images in a post togethre to an opt-out of now default Tumblr interface behaviour  
 **_!_** Improve loading speed for page style changes  
 **_!_** Fix bug in Sidebar Tweaks default account when importing 'Missing e' settings in Firefox  
