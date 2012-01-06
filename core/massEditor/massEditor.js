@@ -29,14 +29,15 @@ MissingE.packages.massEditor = {
    generateButton: function(type,text,islast) {
       var div = $('<div />',
                   {id: "MissingE_selecttype_" + type,
-                   "class": "header_button" +
-                            (islast ? " last_header_button" : "")});
+                   "class": "MissingE_selectmenu_btn" +
+                     (islast ? " last_header_button" : "")});
       var btn = $('<button />',
                   {id: "MissingE_" + type, type: "button",
                    "class": "chrome big_dark"});
-      btn.append($('<div />', {"class": "chrome_button",
-                               "text": text})
-                  .prepend($('<div class="chrome_button_left" />'))
+      btn.append($('<div />', {"class": "chrome_button"})
+                  .append($('<div class="chrome_button_left" />'))
+                  .append($('<div />', {text: text,
+                                        "class": "MissingE_select_label"}))
                   .append($('<div class="chrome_button_right" />')));
       div.append(btn);
       return div;
@@ -44,10 +45,18 @@ MissingE.packages.massEditor = {
 
    moveSelectList: function(s,list) {
       var pos = s.position();
+      var offset = 0;
+      if (list.width() > s.width()) {
+         offset = (list.width() - s.width()) >> 1;
+         list.addClass("round_top");
+      }
+      else {
+         list.removeClass("round_top");
+      }
       list.css({
-         'left':pos.left + 'px',
-         'top':(pos.top + s.height() + 4) + 'px',
-         'width':s.width() + 'px'
+         'left':-offset + 'px',
+         'top':(s.height() + 4) + 'px',
+         'min-width':s.width() + 'px'
       });
    },
 
@@ -91,16 +100,16 @@ MissingE.packages.massEditor = {
 
       var i;
       var sbt = $('#MissingE_selecttype_btn');
+      sbtmenu = $('<div />',
+                  {id: "MissingE_selecttype_menu",
+                   "class": "header_button"});
       sbtlist = $('<div id="MissingE_selecttype_list" />');
-      sbtlistdiv = $('<div id="MissingE_select_btn" class="header_button" />');
-      sbtlistbtn = $('<button />', {id: "MissingE_select", type: "button",
-                                    "class": "chrome big_dark"});
-      sbtlistbtn.append($('<div />', {"class": "chrome_button",
-                                      text: MissingE.getLocale(lang).first100})
-                           .prepend($('<div class="chrome_button_left" />'))
-                           .append($('<div class="chrome_button_right" />')));
-      sbtlistdiv.append(sbtlistbtn);
-      sbtlist.append(sbtlistdiv);
+      sbtlist.append(MissingE.packages.massEditor
+                        .generateButton('first',
+                                        MissingE.getLocale(lang).first100));
+      sbtlist.append(MissingE.packages.massEditor
+                        .generateButton('next',
+                                        MissingE.getLocale(lang).next100));
       for (i in MissingE.getLocale(lang).postTypeNames) {
          if (MissingE.getLocale(lang).postTypeNames.hasOwnProperty(i)) {
             sbtlist.append(MissingE.packages.massEditor
@@ -111,7 +120,7 @@ MissingE.packages.massEditor = {
          .generateButton('note', MissingE.getLocale(lang).askPost));
       sbtlist.append(MissingE.packages.massEditor
          .generateButton('private', MissingE.getLocale(lang).private, true));
-      sbtlist.insertAfter(sbt);
+      sbtmenu.append(sbtlist).insertAfter(sbt);
 
       extension.addAjaxListener(function() {
          MissingE.packages.massEditor.moveSelectList(sbt,sbtlist);
@@ -143,29 +152,36 @@ MissingE.packages.massEditor = {
       });
 
       $('#MissingE_selecttype_list > div').click(function() {
-         if (this.id === "MissingE_select_btn") {
-            $('a.brick.highlighted').removeClass('highlighted');
-            $('a.brick:not(.highlighted):lt(100)').addClass('highlighted');
-         }
-         else if (this.id === "MissingE_selecttype_private") {
-            var count = $('a.brick.highlighted').length;
-            $('a.brick:not(.highlighted) ' +
-              '.private_overlay:lt(' + (100-count) +')')
-               .closest('a.brick').addClass('highlighted');
+         var count = $('a.brick.highlighted').length;
+         var type = this.id.match(/MissingE_selecttype_(.*)/);
+         if (!type || type.length < 2) {
+            return false;
          }
          else {
-            var count = $('a.brick.highlighted').length;
-            var type = this.id.match(/MissingE_selecttype_(.*)/);
-            if (!type || type.length < 2) {
-               return false;
-            }
-            else {
-               type = type[1];
-            }
-            if (type === "text") { type = "regular"; }
-            else if (type === "chat") { type = "conversation"; }
+            type = type[1];
+         }
+         if (type === "text") { type = "regular"; }
+         else if (type === "chat") { type = "conversation"; }
+
+         if (type === "first") {
+            $('a.brick.highlighted').removeClass('highlighted');
+            $('a.brick:lt(100)').addClass('highlighted');
+         }
+         else if (type === "next") {
+            var last = $('a.brick.highlighted:last').get(0);
+            var lastIdx = $('a.brick').index(last);
+            $('a.brick.highlighted').removeClass('highlighted');
+            $('a.brick:gt(' + lastIdx + '):lt(' + (100) + ')')
+              .addClass('highlighted');
+         }
+         else if (type === "private") {
+            $('a.brick:not(.highlighted) ' +
+              '.private_overlay:lt(' + (100-count) +')')
+              .closest('a.brick').addClass('highlighted');
+         }
+         else {
             $('a.brick.' + type + ':not(.highlighted):lt(' + (100-count) + ')')
-               .addClass('highlighted');
+              .addClass('highlighted');
          }
          $.globalEval('get_selected_post_ids();');
          return false;

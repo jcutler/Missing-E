@@ -51,14 +51,17 @@ background-position:0 -31px !important;
 background-position:-10px -31px !important;
 }
 
-#MissingE_selecttype_list .header_button {
-float:none !important;
-margin:0 !important;
+#MissingE_selecttype_list div.MissingE_selectmenu_btn {
 width:100% !important;
 }
 
+#MissingE_selecttype_list div.MissingE_select_label {
+width:auto !important;
+}
+
 #MissingE_selecttype_list button {
-width:100% !important;
+width:auto !important;
+min-width:100%;
 height:20px !important;
 }
 
@@ -86,4 +89,26 @@ background-position:0 -71px !important;
 
 #MissingE_selecttype_list .last_header_button .chrome_button_right {
 background-position:-10px -71px !important;
+}
+
+#MissingE_selecttype_list.round_top div.MissingE_selectmenu_btn:first-child .chrome_button {
+padding:3px 0 2px !important;
+background-position:0 -93px !important;
+}
+
+#MissingE_selecttype_list.round_top #MissingE_selecttype_first .chrome_button_left, #MissingE_selecttype_list.round_top .chrome_button_right {
+padding:11px 5px !important;
+}
+
+#MissingE_selecttype_list.round_top div.MissingE_selectmenu_btn:first-child .chrome_button_left {
+background-position:0 -146px !important;
+}
+
+#MissingE_selecttype_list.round_top div.MissingE_selectmenu_btn:first-child .chrome_button_right {
+background-position:-10px -146px !important;
+}
+
+#MissingE_selecttype_menu {
+position:relative;
+margin:0 !important;
 }

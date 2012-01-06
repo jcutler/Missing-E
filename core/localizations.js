@@ -89,6 +89,7 @@ var locale = {
   "reblogAsk": "Reblog Ask Post",
   "select": "Select",
   "first100": "First 100",
+  "next100": "Next 100",
   "postTypeNames": {
    "text": "Text",
    "photo": "Photo",
@@ -265,6 +266,7 @@ var locale = {
   "reblogAsk": "Frage Eintrag rebloggen",
   "select": "Selektieren",
   "first100": "ersten 100",
+  "next100": "nächsten 100",
   "postTypeNames": {
    "text": "Text",
    "photo": "Foto",
@@ -441,6 +443,7 @@ var locale = {
   "reblogAsk": "Rebloguear Pregunta",
   "select": "Seleccionar",
   "first100": "Primeros 100",
+  "next100": "Próximos 100",
   "postTypeNames": {
    "text": "Texto",
    "photo": "Foto",
@@ -617,6 +620,7 @@ var locale = {
   "reblogAsk": "Rebloguer la question",
   "select": "Sélectionner",
   "first100": "Première 100",
+  "next100": "Prochaine 100",
   "postTypeNames": {
    "text": "Texte",
    "photo": "Photo",
@@ -793,6 +797,7 @@ var locale = {
   "reblogAsk": "Reblogga domanda",
   "select": "Seleziona",
   "first100": "Primi 100",
+  "next100": "Successivi 100",
   "postTypeNames": {
    "text": "Testo",
    "photo": "Foto",
@@ -978,7 +983,8 @@ var locale = {
   "asked": ["U", "は尋ねた"],
   "reblogAsk": "質問をリブログ",
   "select": "選択",
-  "first100": "最新100",
+  "first100": "最初100",
+  "next100": "今後100",
   "postTypeNames": {
    "text": "テキスト",
    "photo": "画像",
@@ -1148,6 +1154,7 @@ var locale = {
   "reblogAsk": "Rebloguj pytanie",
   "select": "Zaznacz",
   "first100": "Pierwsze 100",
+  "next100": "Następne 100",
   "postTypeNames": {
    "text": "Tekst",
    "photo": "Zdjęcie",
@@ -1324,6 +1331,7 @@ var locale = {
   "reblogAsk": "Реблог вопрос",
   "select": "Выбрать",
   "first100": "Первые 100",
+  "next100": "Следующие 100",
   "postTypeNames": {
    "text": "Текст",
    "photo": "Фото",
@@ -1529,7 +1537,8 @@ var locale = {
   "asked": ["U", "sordu"],
   "reblogAsk": "Soru Yeniden Blogla",
   "select": "Seç",
-  "first100": "Ilk 100",
+  "first100": "İlk 100",
+  "next100": "Sonraki 100",
   "postTypeNames": {
    "text": "Metin",
    "photo": "Fotoğraf",
