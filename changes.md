@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.3.7** (not yet released)
+##**2.3.7** (01/06/2012)
 **_+_** Add option for 40x40 pixel avatar size in Reply Replies  
 **_+_** Add selection button for private posts and next 100 posts in Mass Editor Tweaks  
 **_!_** Change option for expanding all inline images in a post togethre to an opt-out of now default Tumblr interface behaviour  
