@@ -389,9 +389,6 @@ MissingE.packages.dashboardTweaks = {
       var settings = this.settings
       var lang = $('html').attr('lang');
 
-      if (extension.isSafari) {
-         extension.insertStyleSheet("core/dashboardTweaks/replaceIcons.css");
-      }
       var icons = extension
                      .getURL('core/dashboardTweaks/icon_replacements.png');
       $('head').append('<style type="text/css">' +
@@ -415,17 +412,6 @@ MissingE.packages.dashboardTweaks = {
          e.preventDefault();
       });
 
-      if (extension.isSafari) {
-         // Safari needs to inject reblogQuoteFit and wrapTags here
-         // Chrome and Safari do it from the background process
-         if (settings.reblogQuoteFit === 1) {
-            extension
-               .insertStyleSheet("core/dashboardTweaks/reblogQuoteFit.css");
-         }
-         if (settings.wrapTags === 1) {
-            extension.insertStyleSheet("core/dashboardTweaks/wrapTags.css");
-         }
-      }
       if (settings.expandAll === 1) {
          $('#posts .post').each(function(){
             MissingE.packages.dashboardTweaks.addExpandAllHandler(this);
@@ -440,9 +426,6 @@ MissingE.packages.dashboardTweaks = {
       }
       if (settings.widescreen === 1 &&
           !MissingE.isTumblrURL(location.href, ["settings"])) {
-         if (extension.isSafari) {
-            extension.insertStyleSheet("core/dashboardTweaks/widescreen.css");
-         }
          var w = $('#right_column').width() + 20;
          $('head').append('<style type="text/css">' +
                           '#pagination { margin-right:-' + w + 'px; } ' +
@@ -465,9 +448,6 @@ MissingE.packages.dashboardTweaks = {
       if (settings.postLinks === 1 &&
           MissingE.isTumblrURL(location.href, ["dashboardOnly"]) &&
           $('#new_post').length === 0) {
-         if (extension.isSafari) {
-            extension.insertStyleSheet("core/dashboardTweaks/postLinks.css");
-         }
          MissingE.packages.dashboardTweaks.addPostLinks();
       }
 
@@ -511,11 +491,6 @@ MissingE.packages.dashboardTweaks = {
          $('#posts li.post').each(function() {
             MissingE.packages.dashboardTweaks.doReplies(this);
          });
-      }
-
-      if (settings.queueArrows === 1 &&
-          MissingE.isTumblrURL(location.href, ["queue"])) {
-         extension.insertStyleSheet("core/dashboardTweaks/queueArrows.css");
       }
 
       if (settings.replaceIcons === 1 &&

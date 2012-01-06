@@ -31,6 +31,16 @@ width:auto !important;
 min-width:900px;
 }
 
+#container #header {
+width:100% !important;
+}
+
+#header #tabs_outter_container {
+left:auto !important;
+right:17px !important;
+width:auto !important;
+}
+
 #content {
 padding-right:255px !important;
 }
@@ -41,10 +51,6 @@ width:100% !important;
 
 #pagination {
 margin-right:-235px;
-}
-
-#container #header {
-width:100% !important;
 }
 
 #header #user_tools + #tabs_container {

@@ -33,7 +33,8 @@ MissingE.packages.sidebarTweaks = {
          var list = [];
          var bloglist = '';
          $('#all_blogs_menu li[id]').each(function() {
-            list.push([this.id.match(/menuitem-(.*)/)[1], $(this).text()]);
+            list.push([this.id.match(/menuitem-(.*)/)[1],
+                      $(this).text().replace(/^\s*/,'').replace(/\s*$/,'')]);
          });
          if (list.length === 0) {
             return false;

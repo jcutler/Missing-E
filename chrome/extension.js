@@ -150,12 +150,29 @@ extension = {
       return true;
    },
 
+   insertStyle: function(code) {
+      var ss = document.createElement("style");
+      ss.setAttribute("type","text/css");
+      ss.textContent = code;
+      if (document.getElementsByTagName("head").length > 0) {
+         document.getElementsByTagName("head")[0].appendChild(ss);
+      }
+      else {
+         document.documentElement.appendChild(ss);
+      }
+   },
+
    insertStyleSheet: function(url) {
       var ss = document.createElement("link");
       ss.setAttribute("type","text/css");
       ss.setAttribute("rel","stylesheet");
       ss.setAttribute("href",this.getURL(url));
-      document.getElementsByTagName("head")[0].appendChild(ss);
+      if (document.getElementsByTagName("head").length > 0) {
+         document.getElementsByTagName("head")[0].appendChild(ss);
+      }
+      else {
+         document.documentElement.appendChild(ss);
+      }
    },
 
    openWindow: function(addr) {

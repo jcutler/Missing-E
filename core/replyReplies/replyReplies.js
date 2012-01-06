@@ -403,18 +403,6 @@ MissingE.packages.replyReplies = {
    run: function() {
       var settings = this.settings;
 
-      if (extension.isSafari) {
-         $('head').append('<style type="text/css">' +
-                 '#posts .notification .notification_type_icon {' +
-                 'background-image:url("' +
-                 extension.getURL("core/replyReplies/notification_icons.png") +
-                 '") !important; } #posts ol.notes .notification_type_icon { ' +
-                 'background-image:url("' +
-                 extension.getURL("core/replyReplies/notes_icons.png") + '") ' +
-                 '!important; }</style>');
-         extension.insertStyleSheet("core/replyReplies/replyReplies.css");
-      }
-
       var overrideStyle = false;
       if (extension.isFirefox) {
          if ($('#posts').length > 0) {

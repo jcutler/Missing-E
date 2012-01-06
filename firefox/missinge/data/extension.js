@@ -121,11 +121,14 @@ extension = {
       self.on("message", function(response) {
          var i;
          if ((response.greeting === "settings" ||
-              response.greeting === "addMenu") &&
+              response.greeting === "addMenu" ||
+              response.greeting === "earlyStyles") &&
              !extension._baseURL) {
             extension._baseURL = response.extensionURL;
-            document.body.setAttribute("data-MissingE-extensionURL",
-                                       response.extensionURL);
+            if (document.body) {
+               document.body.setAttribute("data-MissingE-extensionURL",
+                                          response.extensionURL);
+            }
          }
          if (extension._listeners.hasOwnProperty(response.greeting)) {
             for (i=0; i<extension._listeners[response.greeting].length; i++) {
@@ -180,12 +183,29 @@ extension = {
       return (typeof this._baseURL !== "undefined");
    },
 
+   insertStyle: function(code) {
+      var ss = document.createElement("style");
+      ss.setAttribute("type","text/css");
+      ss.textContent = code;
+      if (document.getElementsByTagName("head").length > 0) {
+         document.getElementsByTagName("head")[0].appendChild(ss);
+      }
+      else {
+         document.documentElement.appendChild(ss);
+      }
+   },
+
    insertStyleSheet: function(url) {
       var ss = document.createElement("link");
       ss.setAttribute("type","text/css");
       ss.setAttribute("rel","stylesheet");
       ss.setAttribute("href",this.getURL(url));
-      document.getElementsByTagName("head")[0].appendChild(ss);
+      if (document.getElementsByTagName("head").length > 0) {
+         document.getElementsByTagName("head")[0].appendChild(ss);
+      }
+      else {
+         document.documentElement.appendChild(ss);
+      }
    },
 
    openWindow: function(addr) {

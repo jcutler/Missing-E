@@ -18,6 +18,12 @@
       {
          "matches": ["http://www.tumblr.com/*"],
          "js": ["extension.js",
+                "core/common/earlyCSS.js"],
+         "run_at": "document_start"
+      },
+      {
+         "matches": ["http://www.tumblr.com/*"],
+         "js": ["extension.js",
                 "core/localizations.js",
                 "core/utils.js",
                 "whoami.js",

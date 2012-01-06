@@ -84,6 +84,11 @@
 				<string>core/versionCheck.js</string>
 				<string>whoami.js</string>
 			</array>
+			<key>Start</key>
+			<array>
+				<string>extension.js</string>
+				<string>core/common/earlyCSS.js</string>
+			</array>
 		</dict>
 		<key>Stylesheets</key>
 		<array>

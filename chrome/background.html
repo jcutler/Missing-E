@@ -1170,6 +1170,109 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
       sendResponse(settings);
    }
+   else if (request.greeting == "earlyStyles") {
+      var injectSlimSidebar = false;
+
+      if (MissingE.isTumblrURL(sender.tab.url,
+                      ["dashboard",
+                       "blog",
+                       "blogData",
+                       "drafts",
+                       "queue",
+                       "messages",
+                       "likes",
+                       "tagged"])) {
+
+         if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/replaceIcons.css"});
+            if (getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/reblogQuoteFit.css"});
+            if (getSetting("MissingE_dashboardTweaks_wrapTags",1) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/wrapTags.css"});
+            if (getSetting("MissingE_dashboardTweaks_postLinks",1) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/postLinks.css"});
+            if (getSetting("MissingE_dashboardTweaks_massDelete",1) == 1 ||
+                getSetting("MissingE_dashboardTweaks_randomQueue",0) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/draftQueueTools.css"});
+            if (getSetting("MissingE_dashboardTweaks_sortableNotes",1) == 1)
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/notesSorter.css"});
+            if (getSetting("MissingE_dashboardTweaks_widescreen",0) == 1 &&
+                !MissingE.isTumblrURL(sender.tab.url, ["settings"]))
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/widescreen.css"});
+            if (getSetting("MissingE_dashboardTweaks_queueArrows",1) == 1 &&
+                MissingE.isTumblrURL(sender.tab.url, ["queue"]))
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/queueArrows.css"});
+         }
+
+         if (getSetting("MissingE_safeDash_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/safeDash/safeDash.css"});
+         }
+
+         if (getSetting("MissingE_bookmarker_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/bookmarker/bookmarker.css"});
+         }
+
+         if (getSetting("MissingE_sidebarTweaks_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/sidebarTweaks/sidebarTweaks.css"});
+            if (getSetting("MissingE_sidebarTweaks_slimSidebar",0) == 1) {
+               injectSlimSidebar = true;
+            }
+         }
+
+         if (getSetting("MissingE_magnifier_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/magnifier/magnifier.css"});
+         }
+
+         if (getSetting("MissingE_askTweaks_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/askTweaks/askTweaks.css"});
+         }
+      }
+
+      if (MissingE.isTumblrURL(sender.tab.url, ["massEditor"])) {
+        if (getSetting("MissingE_massEditor_enabled",1) == 1) {
+           chrome.tabs.insertCSS(sender.tab.id, {file: "core/massEditor/massEditor.css"});
+        }
+      }
+
+      if (MissingE.isTumblrURL(sender.tab.url,
+                      ["post",
+                       "reblog",
+                       "messages",
+                       "drafts"])) {
+         if (getSetting("MissingE_postingTweaks_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/postingTweaks/postingTweaks.css"});
+         }
+      }
+
+      if (MissingE.isTumblrURL(sender.tab.url,
+                      ["dashboard",
+                       "blog"])) {
+         if (getSetting("MissingE_replyReplies_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {code: "#posts .notification .notification_type_icon { background-image:url('" + chrome.extension.getURL('core/replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + chrome.extension.getURL('core/replyReplies/notes_icons.png') + "') !important; }"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/replyReplies/replyReplies.css"});
+         }
+      }
+
+      if (MissingE.isTumblrURL(sender.tab.url, ["following"])) {
+         if (getSetting("MissingE_magnifier_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/magnifier/magnifier.css"});
+         }
+      }
+
+      if (MissingE.isTumblrURL(sender.tab.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged"])) {
+         if (getSetting("MissingE_betterReblogs_enabled",1) == 1) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/betterReblogs/quickReblog.css"});
+         }
+      }
+
+      if (injectSlimSidebar) {
+         chrome.tabs.insertCSS(sender.tab.id, {file: "core/sidebarTweaks/slimSidebar.css"});
+      }
+   }
    else if (request.greeting == "start") {
       addTab(sender.tab.id, sender.tab.url);
       chrome.tabs.executeScript(sender.tab.id, {file: "extension.js", allFrames: true});
@@ -1184,12 +1287,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var loadedUI = false, loadedUIresizable = false, loadedUIsortable = false,
           loadedUIdraggable = false;
       var widenIframe = false;
-      var injectSlimSidebar = false;
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url, ["massEditor"])) {
          if (getSetting("MissingE_massEditor_enabled",1) == 1) {
             activeScripts.massEditor = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/massEditor/massEditor.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "core/massEditor/massEditor.js"});
          }
          else
@@ -1207,7 +1308,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                        "tagged"])) {
          if (getSetting("MissingE_safeDash_enabled",1) == 1) {
             activeScripts.safeDash = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/safeDash/safeDash.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "core/safeDash/safeDash.js"});
          }
          else
@@ -1222,7 +1322,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getSetting("MissingE_bookmarker_enabled",1) == 1) {
             activeScripts.bookmarker = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/bookmarker/bookmarker.css"});
             if (!loadedUI) {
                loadedUI = true;
                loadUI(sender.tab.id, "core");
@@ -1246,11 +1345,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getSetting("MissingE_sidebarTweaks_enabled",1) == 1) {
             activeScripts.sidebarTweaks = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/sidebarTweaks/sidebarTweaks.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "core/sidebarTweaks/sidebarTweaks.js"});
-            if (getSetting("MissingE_sidebarTweaks_slimSidebar",0) == 1) {
-               injectSlimSidebar = true;
-            }
          }
          else
             activeScripts.sidebarTweaks = false;
@@ -1258,14 +1353,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          if (getSetting("MissingE_magnifier_enabled",1) == 1) {
             activeScripts.magnifier = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "core/magnifier/magnifier.js"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/magnifier/magnifier.css"});
          }
          else
             activeScripts.magnifier = false;
 
          if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1) {
             activeScripts.dashboardTweaks = true;
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/replaceIcons.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "core/dashboardTweaks/dashboardTweaks.js"});
             if (getSetting("MissingE_dashboardTweaks_sortableNotes",1) == 1) {
                if (!loadedUI) {
@@ -1276,20 +1369,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                   loadedUIsortable = true;
                   loadUI(sender.tab.id, "sortable");
                }
-               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/notesSorter.css"});
             }
-            if (getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1) == 1)
-               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/reblogQuoteFit.css"});
-            if (getSetting("MissingE_dashboardTweaks_wrapTags",1) == 1)
-               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/wrapTags.css"});
-            if (getSetting("MissingE_dashboardTweaks_postLinks",1) == 1)
-               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/postLinks.css"});
-            if (getSetting("MissingE_dashboardTweaks_massDelete",1) == 1 ||
-                getSetting("MissingE_dashboardTweaks_randomQueue",0) == 1)
-               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/draftQueueTools.css"});
-            if (getSetting("MissingE_dashboardTweaks_widescreen",0) == 1 &&
-                !MissingE.isTumblrURL(sender.tab.url, ["settings"]))
-               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/widescreen.css"});
          }
          else
             activeScripts.dashboardTweaks = false;
@@ -1304,7 +1384,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                loadedUIdraggable = true;
                loadUI(sender.tab.id, "draggable");
             }
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/askTweaks/askTweaks.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "core/askTweaks/askTweaks.js"});
          }
          else {
@@ -1336,7 +1415,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                loadUI(sender.tab.id, "resizable");
             }
             chrome.tabs.executeScript(sender.tab.id, {file: "core/postingTweaks/postingTweaks.js"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/postingTweaks/postingTweaks.css"});
          }
          else
             activeScripts.postingTweaks = false;
@@ -1399,8 +1477,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                        "blog"])) {
          if (getSetting("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
-            chrome.tabs.insertCSS(sender.tab.id, {code: "#posts .notification .notification_type_icon { background-image:url('" + chrome.extension.getURL('core/replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + chrome.extension.getURL('core/replyReplies/notes_icons.png') + "') !important; }"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/replyReplies/replyReplies.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "core/replyReplies/replyReplies.js"});
          }
          else
@@ -1430,7 +1506,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             chrome.tabs.executeScript(sender.tab.id, {file: "lib/facebox/facebox.js"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "lib/facebox/facebox.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "core/magnifier/magnifier.js"});
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/magnifier/magnifier.css"});
          }
          else
             activeScripts.magnifier = false;
@@ -1469,7 +1544,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (getSetting("MissingE_betterReblogs_quickReblog",0) == 1) {
                zindexFix = true;
             }
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/betterReblogs/quickReblog.css"});
             chrome.tabs.executeScript(sender.tab.id, {file: "core/betterReblogs/betterReblogs_dash.js"});
          }
          else
@@ -1488,9 +1562,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
       if (widenIframe) {
          chrome.tabs.insertCSS(sender.tab.id, {file: "core/common/widenIframe.css"});
-      }
-      if (injectSlimSidebar) {
-         chrome.tabs.insertCSS(sender.tab.id, {file: "core/sidebarTweaks/slimSidebar.css"});
       }
 
       activeScripts.url = request.url;
