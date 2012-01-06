@@ -303,7 +303,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_reblogReplies',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_widescreen',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_queueArrows',1);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_expandAll',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_noExpandAll',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_massDelete',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_randomQueue',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_sortableNotes',1);
