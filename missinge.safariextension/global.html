@@ -1431,7 +1431,7 @@ function handleRequest(request) {
          else
             activeScripts.askTweaks = false;
       }
-      if (MissingE.isTumblrURL(request.message.url, ["askForm"])) {
+      if (MissingE.isTumblrURL(request.message.url, ["askForm", "fanMail"])) {
          if (getSetting("MissingE_askTweaks_enabled",1)) {
             activeScripts.askTweaks = true;
          }

@@ -38,6 +38,7 @@ var utils = {
       "dashboard":    /^(dashboard|show\/[^\/]*)([\/].*)?/,
       "dashboardOnly":/^dashboard([\/].*)?/,
       "drafts":       /^blog\/[^\/]+\/drafts[\/]?.*$/,
+      "fanMail":      /^send(_confirmation)?$/,
       "followers":    /^blog\/[^\/]+\/followers[\/]?.*$/,
       "following":    /^following(\/page\/\d+)?[\/]?$/,
       "iframe":       /^dashboard\/iframe/,

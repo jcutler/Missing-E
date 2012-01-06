@@ -1390,7 +1390,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.askTweaks = false;
          }
       }
-      if (MissingE.isTumblrURL(request.url, ["askForm"])) {
+      if (MissingE.isTumblrURL(request.url, ["askForm", "fanMail"])) {
          if (getSetting("MissingE_askTweaks_enabled",1)) {
             activeScripts.askTweaks = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "core/askTweaks/askTweaks.js", allFrames: true});

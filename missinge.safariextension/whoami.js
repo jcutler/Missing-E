@@ -25,10 +25,13 @@ if ((window.top === window &&
     !(/http:\/\/missinge\.infraware\.ca/.test(location.href)) &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
-    /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href)) {
+    /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href) ||
+    /http:\/\/www\.tumblr\.com\/send(_confirmation)?/.test(location.href)) {
    var fr = /http:\/\/www\.tumblr\.com\/dashboard\/iframe/
                .test(location.href) ||
-            /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href);
+            /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href) ||
+            /http:\/\/www\.tumblr\.com\/send(_confirmation)?/
+               .test(location.href);
    safari.self.tab.dispatchMessage("start", {isFrame: fr, url: location.href,
                                              bodyId: document.body.id});
    safari.self.tab.dispatchMessage("update");

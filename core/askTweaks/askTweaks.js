@@ -590,7 +590,8 @@ MissingE.packages.askTweaks = {
                }
             }
             if (!MissingE.packages.askTweaks._hasRun) {
-               if (MissingE.isTumblrURL(location.href, ["askForm"])) {
+               if (MissingE.isTumblrURL(location.href, ["askForm",
+                                                        "fanMail"])) {
                   MissingE.packages.askTweaks.runAskForm();
                }
                else if (MissingE.isTumblrURL(location.href)) {
@@ -606,7 +607,7 @@ MissingE.packages.askTweaks = {
 if (extension.isChrome ||
     extension.isFirefox) {
    if (window.top === window ||
-       MissingE.isTumblrURL(location.href, ["askForm"])) {
+       MissingE.isTumblrURL(location.href, ["askForm", "fanMail"])) {
       MissingE.packages.askTweaks.init();
    }
 }
