@@ -122,6 +122,12 @@ background-position:10px -62px !important;
 margin-left:0;
 }
 
+#posts li.post.fan_mail .MissingEmassDeleteSpan {
+position:absolute;
+top:15px;
+right:20px;
+}
+
 #posts li.post .MissingEmassDeleteSpan {
 vertical-align:-1px;
 margin-left:8px;

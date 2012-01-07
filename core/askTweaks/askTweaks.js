@@ -28,11 +28,16 @@ if (typeof MissingE.packages.askTweaks !== "undefined") { return; }
 MissingE.packages.askTweaks = {
 
    setupMassDeleteAsk: function(item) {
-      $('<span />', {"class": "MissingEmassDeleteSpan"})
-         .append($('<input />', {type: "checkbox", val: "0",
-                                 id: item.id + "_select",
-                                 "class": "MissingEmassDeleteSelect"}))
-         .appendTo($(item).find('div.post_controls'));
+      var mds = $('<span />', {"class": "MissingEmassDeleteSpan"})
+                  .append($('<input />',{type: "checkbox", val: "0",
+                                         id: item.id + "_select",
+                                         "class": "MissingEmassDeleteSelect"}));
+      if ($(item).hasClass("fan_mail")) {
+         mds.appendTo($(item));
+      }
+      else {
+         mds.appendTo($(item).find('div.post_controls'));
+      }
    },
 
    deleteMessages: function(key, lang) {
