@@ -29,6 +29,11 @@ margin-top:12px !important;
 margin:0 !important;
 }
 
+.send_fan_mail {
+padding:2px 0 !important;
+margin:12px 0 !important;
+}
+
 .controls_section li a {
 padding:4px 13px 4px 34px !important;
 }
