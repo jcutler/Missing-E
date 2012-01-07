@@ -47,6 +47,7 @@ MissingE.packages.timestamps = {
       var lang = $('html').attr('lang');
 
       if (item.tagName === "LI" && $(item).hasClass("post") &&
+          !$(item).hasClass("fan_mail") &&
           $(item).attr("id") !== "new_post" &&
           $(item).find('.private_label').length === 0) {
          var tid = $(item).attr("id").match(/\d*$/)[0];
