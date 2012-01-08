@@ -553,13 +553,19 @@ MissingE.packages.askTweaks = {
             $('input.MissingEmassDeleteSelect').live('change', function() {
                var item = $(this).closest('li.post');
                if (this.checked) {
+                  var blog;
                   item.addClass('MissingEmdSelected');
                   if (!item.data('blog')) {
-                     if (item.find('div.post_controls a').length <= 1) {
+                     if (item.hasClass('fan_mail')) {
+                        blog = item.find('a.reply_link').attr('href');
+                        blog = blog.match(/\/from\/([^\/]*)\/reply/)[1];
+                        item.data('blog',blog);
+                     }
+                     else if (item.find('div.post_controls a').length <= 1) {
                         item.data('blog','private');
                      }
                      else {
-                        var blog = item.find('a.permalink').attr('href');
+                        blog = item.find('a.permalink').attr('href');
                         blog = blog.replace(/^[^\/]*\/\//,'')
                                     .replace(/\/.*/,'');
                         item.data('blog',blog);
