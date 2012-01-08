@@ -330,7 +330,6 @@ MissingE.packages.askTweaks = {
    },
 
    run: function() {
-      extension.insertStyleSheet("core/askTweaks/smallFanMail.css");
       var settings = this.settings;
       var lang = $('html').attr('lang');
 

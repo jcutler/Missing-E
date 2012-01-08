@@ -154,6 +154,7 @@ function getAllSettings(getStale) {
    settings.MissingE_askTweaks_defaultTags = getSetting("extensions.MissingE.askTweaks.defaultTags",'');
    settings.MissingE_askTweaks_askDash = getSetting("extensions.MissingE.askTweaks.askDash",0);
    settings.MissingE_askTweaks_massDelete = getSetting("extensions.MissingE.askTweaks.massDelete",1);
+   settings.MissingE_askTweaks_smallFanMail = getSetting("extensions.MissingE.askTweaks.smallFanMail",0);
    settings.MissingE_bookmarker_format = getSetting("extensions.MissingE.bookmarker.format",MissingE.defaultFormat);
    settings.MissingE_bookmarker_addBar = getSetting("extensions.MissingE.bookmarker.addBar",1);
    settings.MissingE_dashboardTweaks_reblogQuoteFit = getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1);
@@ -1377,6 +1378,12 @@ function handleMessage(message, myWorker) {
    else if (message.greeting == "earlyStyles") {
       var injectSlimSidebar = false;
       var injectStyles = [];
+
+      if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1 &&
+          getSetting("extensions.MissingE.askTweaks.smallFanMail",0) == 1 &&
+          MissingE.isTumblrURL(message.url, ["fanMail", "messages"])) {
+         injectStyles.push({file: "core/askTweaks/smallFanMail.css"});
+      }
 
       if (MissingE.isTumblrURL(message.url,
                       ["dashboard",

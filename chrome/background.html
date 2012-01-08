@@ -1173,6 +1173,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "earlyStyles") {
       var injectSlimSidebar = false;
 
+      if (getSetting("MissingE_askTweaks_smallFanMail",0) == 1) {
+         if (MissingE.isTumblrURL(request.url, ["fanMail"])) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/askTweaks/smallFanMail.css", allFrames: true});
+         }
+         if (MissingE.isTumblrURL(sender.tab.url, ["messages"])) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/askTweaks/smallFanMail.css", allFrames: true});
+         }
+      }
+
       if (MissingE.isTumblrURL(sender.tab.url,
                       ["dashboard",
                        "blog",
@@ -1277,7 +1286,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       addTab(sender.tab.id, sender.tab.url);
       chrome.tabs.executeScript(sender.tab.id, {file: "extension.js", allFrames: true});
       chrome.tabs.executeScript(sender.tab.id, {file: "core/utils.js", allFrames: true});
-      if (!MissingE.isTumblrURL(request.url, ["askForm"])) {
+      if (!MissingE.isTumblrURL(request.url, ["askForm", "fanMail"])) {
          chrome.tabs.executeScript(sender.tab.id, {file: "jquery.min.js"});
          chrome.tabs.executeScript(sender.tab.id, {file: "core/common/ajaxEvents.js"});
       }
@@ -1395,8 +1404,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             activeScripts.askTweaks = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "core/askTweaks/askTweaks.js", allFrames: true});
          }
-         else
-            activeScripts.askTweaks = false;
+         else { activeScripts.askTweaks = false; }
       }
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url,

@@ -45,3 +45,15 @@ margin-top:-17px;
 #posts li.post.fan_mail > div.avatar_and_i, #posts li.post.fan_mail > div.message {
 margin-top:0;
 }
+
+#fan_mail #message {
+font-size:14px !important;
+line-height:20px !important;
+margin-top:-4px !important;
+height:273px !important;
+}
+
+#fan_mail #select_tumblelog_from {
+font-size:14px !important;
+padding-bottom:0 !important;
+}

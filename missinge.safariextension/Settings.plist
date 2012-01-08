@@ -52,7 +52,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>2.3.8</string>
+		<string>2.3.9</string>
 		<key>Key</key>
 		<string>MissingE_version</string>
 		<key>Title</key>
@@ -285,6 +285,16 @@
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_askTweaks_massDelete</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_askTweaks_smallFanMail</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

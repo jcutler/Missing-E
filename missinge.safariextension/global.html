@@ -1150,6 +1150,7 @@ function handleRequest(request) {
       settings.MissingE_askTweaks_defaultTags = getSetting("MissingE_askTweaks_defaultTags",'');
       settings.MissingE_askTweaks_askDash = getSetting("MissingE_askTweaks_askDash",0);
       settings.MissingE_askTweaks_massDelete = getSetting("MissingE_askTweaks_massDelete",1);
+      settings.MissingE_askTweaks_smallFanMail = getSetting("MissingE_askTweaks_smallFanMail",0);
       settings.MissingE_bookmarker_format = getSetting("MissingE_bookmarker_format",MissingE.defaultFormat);
       settings.MissingE_bookmarker_addBar = getSetting("MissingE_bookmarker_addBar",1);
       settings.MissingE_dashboardTweaks_reblogQuoteFit = getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1);
@@ -1316,6 +1317,12 @@ function handleRequest(request) {
    }
    else if (request.name == "earlyStyles") {
       var injectStyles = [];
+
+      if (getSetting("MissingE_askTweaks_enabled",1) == 1 &&
+          getSetting("MissingE_askTweaks_smallFanMail",0) == 1 &&
+          MissingE.isTumblrURL(request.message.url, ["fanMail", "messages"])) {
+         injectStyles.push({file: "core/askTweaks/smallFanMail.css"});
+      }
 
       if (MissingE.isTumblrURL(request.message.url,
                       ["dashboard",
