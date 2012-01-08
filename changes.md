@@ -80,6 +80,7 @@ color:#4183c4;
 
 ##**2.3.9** (not yet released)
 **_+_** Add option to reduce size of Fan Mail messages in the Tumblr inbox  
+**_!_** Fix for reply to Fan Mail popup unable to close  
 **_!_** Fix problem with mass deletion of Fan Mail messages sent to multiple blogs
 
 ##**2.3.8** (01/07/2012)
