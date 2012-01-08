@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.3.9</string>
+	<string>2.3.10</string>
 	<key>CFBundleVersion</key>
-	<string>23009</string>
+	<string>23010</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -87,6 +87,7 @@
 			<key>Start</key>
 			<array>
 				<string>extension.js</string>
+				<string>core/utils.js</string>
 				<string>core/common/earlyCSS.js</string>
 			</array>
 		</dict>

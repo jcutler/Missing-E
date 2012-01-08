@@ -1379,6 +1379,11 @@ function handleMessage(message, myWorker) {
       var injectSlimSidebar = false;
       var injectStyles = [];
 
+      if (myWorker.tab.url !== message.url &&
+          !MissingE.isTumblrURL(message.url, ["askForm", "fanMail"])) {
+         return;
+      }
+
       if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1 &&
           getSetting("extensions.MissingE.askTweaks.smallFanMail",0) == 1 &&
           MissingE.isTumblrURL(message.url, ["fanMail", "messages"])) {
@@ -1807,6 +1812,7 @@ pageMod.PageMod({
    include: ["http://www.tumblr.com/*"],
    contentScriptWhen: "start",
    contentScriptFile: [data.url("extension.js"),
+                       data.url("core/utils.js"),
                        data.url("core/common/earlyCSS.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {

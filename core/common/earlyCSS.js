@@ -22,18 +22,21 @@
  */
 
 (function(){
-   extension.sendRequest("earlyStyles", {url: location.href},
-                         function(response) {
-      var i;
-      if (response.hasOwnProperty("styles")) {
-         for (i=0; i<response.styles.length; i++) {
-            if (response.styles[i].file) {
-               extension.insertStyleSheet(response.styles[i].file);
-            }
-            if (response.styles[i].code) {
-               extension.insertStyle(response.styles[i].code);
+   if (window.top === window ||
+       MissingE.isTumblrURL(location.href, ["askForm", "fanMail"])) {
+      extension.sendRequest("earlyStyles", {url: location.href},
+                            function(response) {
+         var i;
+         if (response.hasOwnProperty("styles")) {
+            for (i=0; i<response.styles.length; i++) {
+               if (response.styles[i].file) {
+                  extension.insertStyleSheet(response.styles[i].file);
+               }
+               if (response.styles[i].code) {
+                  extension.insertStyle(response.styles[i].code);
+               }
             }
          }
-      }
-   });
+      });
+   }
 }());
