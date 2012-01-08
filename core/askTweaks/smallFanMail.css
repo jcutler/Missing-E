@@ -26,6 +26,22 @@ background-size:540px 20px !important;
 font-size:14px !important;
 line-height:20px !important;
 padding:0 36px 49px 30px !important;
-padding-top:0 !important;
-padding-bottom:49px !important;
+padding-top:1px !important;
+padding-bottom:29px !important;
+}
+
+#posts li.post.fan_mail div.message br:last-of-type {
+display:none;
+}
+
+#posts li.post.fan_mail {
+padding-top:17px;
+}
+
+#posts li.post.fan_mail > div {
+margin-top:-17px;
+}
+
+#posts li.post.fan_mail > div.avatar_and_i, #posts li.post.fan_mail > div.message {
+margin-top:0;
 }
