@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.3.9** (not yet released)
+**_+_** Add option to reduce size of Fan Mail messages in the Tumblr inbox  
+**_!_** Fix problem with mass deletion of Fan Mail messages sent to multiple blogs
+
 ##**2.3.8** (01/07/2012)
 **_!_** Fix for Fan Mail popup unable to close on Tumblr inbox page  
 **_!_** Add Ask Tweaks mass deletion support for Fan Mail messages  
