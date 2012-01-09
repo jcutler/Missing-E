@@ -1,0 +1,16 @@
+Options +FollowSymLinks +MultiViews
+<Files ~ "^\.ht">
+	Order allow,deny
+	Deny from all
+</Files>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^/]+)/$ $1.php
+</IfModule>
+
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf|txt)$">
+Header set Cache-control "max-age=604800"
+</FilesMatch>

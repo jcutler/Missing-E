@@ -8,9 +8,12 @@ if ($_FILES["import"]) {
        is_uploaded_file($_FILES["import"]["tmp_name"])) {
       echo file_get_contents($_FILES["import"]["tmp_name"]);
    }
+   if (is_file($_FILES["import"]["tmp_name"])) {
+      unlink($_FILES["import"]["tmp_name"]);
+   }
 }
 else {
-   header("Content-Disposition: attachment; filename=missinge.xml");
+   header("Content-Disposition: attachment; filename=settings.xml");
    echo "<?xml version=\"1.0\"?>\n";
    echo "<missing-e>\n";
    $patterns = array();
@@ -33,4 +36,5 @@ else {
    
    echo "</missing-e>";
 }
+exit(0);
 ?>
