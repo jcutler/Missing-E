@@ -77,7 +77,11 @@ color:#4183c4;
     + indicates added features or functionality  
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
-    
+
+##**2.3.11** (01/10/2012)
+**_+_** Add option for always showing "Let people answer this" checkbox in new posts  
+**_!_** Change internal URL references from http://missinge.infraware.ca to http://missing-e.com
+
 ##**2.3.10** (01/08/2012)
 **_!_** Add Mass Editor Tweaks select button to specific-month pages of the Mass Editor  
 **_!_** Fix bug introduced in version 2.3.7 that slows down endless scrolling dashboard
