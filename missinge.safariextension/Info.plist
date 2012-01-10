@@ -78,6 +78,7 @@
 				<string>core/replyReplies/replyReplies_fill.js</string>
 				<string>core/safeDash/safeDash.js</string>
 				<string>core/timestamps/timestamps.js</string>
+				<string>core/blockNotes/blockNotes.js</string>
 				<string>core/massEditor/massEditor.js</string>
 				<string>core/postingTweaks/postingTweaks_post.js</string>
 				<string>core/common/zindexFix.js</string>

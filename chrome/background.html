@@ -1120,6 +1120,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.reblogLinks = getSetting("MissingE_dashLinksToTabs_reblogLinks",0);
             settings.editLinks = getSetting("MissingE_dashLinksToTabs_editLinks",0);
             break;
+		 case "blockNotes":
+			settings.blocked = getSetting("MissingE_blockNotes_blocked",'{}');
+			break;
          case "replyReplies":
             settings.showAvatars = getSetting("MissingE_replyReplies_showAvatars",1);
             settings.smallAvatars = getSetting("MissingE_replyReplies_smallAvatars",1);
@@ -1541,6 +1544,20 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.timestamps = false;
       }
+      if (sender.tab.url == request.url &&
+          MissingE.isTumblrURL(sender.tab.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged",
+                       "messages"])) {
+         if (getSetting("MissingE_blockNotes_enabled",1) == 1) {
+            activeScripts.blockNotes = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/blockNotes/blockNotes.js"});
+         }
+         else
+            activeScripts.blockNotes = false;
+	  }
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url,
                       ["dashboard",
