@@ -188,6 +188,7 @@ function getAllSettings(getStale) {
    settings.MissingE_postingTweaks_subEditRetries = getSetting("extensions.MissingE.postingTweaks.subEditRetries",MissingE.defaultRetries);
    settings.MissingE_postingTweaks_tagQueuedPosts = getSetting("extensions.MissingE.postingTweaks.tagQueuedPosts",0);
    settings.MissingE_postingTweaks_queueTags = getSetting("extensions.MissingE.postingTweaks.queueTags",'');
+   settings.MissingE_postingTweaks_showAnswers = getSetting("extensions.MissingE.postingTweaks.showAnswers",0);
    settings.MissingE_reblogYourself_postPage = getSetting("extensions.MissingE.reblogYourself.postPage",1);
    settings.MissingE_reblogYourself_dashboard = getSetting("extensions.MissingE.reblogYourself.dashboard",1);
    settings.MissingE_reblogYourself_retries = getSetting("extensions.MissingE.reblogYourself.retries",MissingE.defaultRetries);
@@ -1349,6 +1350,7 @@ function handleMessage(message, myWorker) {
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
+            settings.showAnswers = getSetting("extensions.MissingE.postingTweaks.showAnswers",0);
             break;
          case "magnifier":
             settings.magnifyAvatars = getSetting("extensions.MissingE.magnifier.magnifyAvatars",0);

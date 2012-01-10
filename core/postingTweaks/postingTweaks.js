@@ -161,6 +161,13 @@ MissingE.packages.postingTweaks = {
          }
       });
 
+      if (settings.showAnswers === 1) {
+         $('head').append('<style type="text/css">' +
+                          '#enable_answers_container { ' +
+                          'display:block !important; ' +
+                          'opacity:1 !important; }</style>');
+      }
+
       if (settings.tagQueuedPosts === 1) {
          var queueTags = settings.queueTags === '' ? [] :
                            settings.queueTags;

@@ -337,6 +337,7 @@ MissingE.utilities.options = {
             frm.MissingE_postingTweaks_subEditRetries.value = MissingE.utilities.options.getStorage('MissingE_postingTweaks_subEditRetries',MissingE.defaultRetries);
             MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_tagQueuedPosts',0);
             frm.MissingE_postingTweaks_queueTags.value = MissingE.utilities.options.getStorage('MissingE_postingTweaks_queueTags','');
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_showAnswers',0);
          }
          else if (v == "reblogYourself") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_reblogYourself_postPage',1);
