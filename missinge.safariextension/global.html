@@ -151,7 +151,7 @@ function debug(msg) {
 }
 
 function exportOptionsXML(request) {
-   request.target.page.dispatchMessage("exportOptions", {url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
+   request.target.page.dispatchMessage("exportOptions", {url: "http://tools.missing-e.com/settings?" + $.param(createOptionParams())});
 }
 
 function isInternalSetting(setting) {
@@ -1657,7 +1657,7 @@ function invertSetting(oldpref, newpref) {
 function getExternalVersion() {
    $.ajax({
       type: "GET",
-      url: 'http://missinge.infraware.ca/version',
+      url: 'http://missing-e.com/version',
       dataType: "text",
       success: function(data, textStatus, xhr) {
          var versionInfo = data.split(" ");

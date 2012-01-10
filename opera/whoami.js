@@ -63,7 +63,7 @@ if ((window.top === window &&
             post = 'post/' + response.link;
          }
          up.onclick = function() {
-            window.open('http://missinge.infraware.ca/update?b=chrome');
+            window.open('http://missing-e.com/update?b=chrome');
          };
          up.style.display = 'block';
       }

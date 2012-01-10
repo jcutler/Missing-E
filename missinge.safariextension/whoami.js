@@ -22,7 +22,7 @@
  */
 
 if ((window.top === window &&
-    !(/http:\/\/missinge\.infraware\.ca/.test(location.href)) &&
+    !(/http:\/\/missing-e\.com/.test(location.href)) &&
     !(/http:\/\/www\.tumblr\.com\/customize/.test(location.href))) ||
     /http:\/\/www\.tumblr\.com\/dashboard\/iframe/.test(location.href) ||
     /http:\/\/www\.tumblr\.com\/ask_form\//.test(location.href) ||
@@ -50,7 +50,7 @@ function updateCheck(response) {
          post = 'post/' + response.message.link;
       }
       up.onclick = function() {
-         window.open('http://missinge.infraware.ca/update?b=safari');
+         window.open('http://missing-e.com/update?b=safari');
       };
       up.style.display = 'block';
    }

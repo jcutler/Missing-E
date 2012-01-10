@@ -40,7 +40,7 @@ MissingE = {
             var formData = new FormData(form);
             formData.append("import", input.files[0]);
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://tools.missinge.infraware.ca/settings',
+            xhr.open('POST', 'http://tools.missing-e.com/settings',
                      true);
             xhr.onload = function() {
                var importedSettings = {};

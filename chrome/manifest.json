@@ -13,7 +13,7 @@
    ],
    "options_page": "core/options.html",
    "background_page": "background.html",
-   "homepage_url": "http://missinge.infraware.ca",
+   "homepage_url": "http://missing-e.com",
    "content_scripts": [
       {
          "matches": ["http://www.tumblr.com/*"],
@@ -33,7 +33,7 @@
          "all_frames": true
       },
       {
-         "matches": ["http://missinge.infraware.ca/*"],
+         "matches": ["http://missing-e.com/*"],
          "js": ["extension.js",
                 "core/versionCheck.js"]
       }

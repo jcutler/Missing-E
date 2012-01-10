@@ -39,7 +39,7 @@ jQuery(document).ready(function($) {
          var versionInfo = data.split(" ");
          versionInfo[versionInfo.length-1] = versionInfo[versionInfo.length-1].replace(/\s*$/m,'');
          if (versionInfo.length > 1) {
-            $('#readlink').append('<a href="http://blog.missinge.infraware.ca/post/' + versionInfo[1] + '">' +
+            $('#readlink').append('<a href="http://blog.missing-e.com/post/' + versionInfo[1] + '">' +
                                   'Read about the new version ' + versionInfo[0] + '</a>').show();
          }
          else if (versionInfo.length === 1) {
@@ -54,7 +54,7 @@ jQuery(document).ready(function($) {
 </head>
 <body id="faq">
 <div id="logo"><a name="top"></a><a href="/"><img src="/images/missinge.png" alt="Missing e" /></a></div>
-<div id="map"><a href="/">GET</a><a href="/about">ABOUT</a><a href="/features">FEATURES</a><a href="/faq">FAQ</a><a href="http://blog.missinge.infraware.ca">BLOG</a></div><div id="content">
+<div id="map"><a href="/">GET</a><a href="/about">ABOUT</a><a href="/features">FEATURES</a><a href="/faq">FAQ</a><a href="http://blog.missing-e.com">BLOG</a></div><div id="content">
 <div class="clear"></div>
 <h1>There's a new version of <em>Missing e</em>!</h1>
 <h2 id="readlink" style="display:none;text-align:center;background-color:transparent;"></h2>

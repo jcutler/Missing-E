@@ -108,7 +108,7 @@
 		<key>Whitelist</key>
 		<array>
 			<string>http://www.tumblr.com/*</string>
-			<string>http://missinge.infraware.ca/*</string>
+			<string>http://missing-e.com/*</string>
 		</array>
 	</dict>
 	<key>Description</key>
@@ -126,8 +126,8 @@
 		</dict>
 	</dict>
 	<key>Update Manifest URL</key>
-	<string>http://missinge.infraware.ca/safari/missinge-version.plist</string>
+	<string>http://missing-e.com/safari/missinge-version.plist</string>
 	<key>Website</key>
-	<string>http://missinge.infraware.ca</string>
+	<string>http://missing-e.com</string>
 </dict>
 </plist>

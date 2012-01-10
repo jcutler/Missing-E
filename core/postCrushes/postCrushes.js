@@ -25,7 +25,7 @@
 
 MissingE.packages.postCrushes = {
 
-   missingeServer: 'http://crush.missinge.infraware.ca',
+   missingeServer: 'http://crush.missing-e.com',
 
    run: function() {
       var crushdiv = document.getElementById("crushes");

@@ -360,7 +360,7 @@ if (!getSetting("extensions.MissingE.hideWidget",false)) {
 }
 
 function exportOptionsXML(theWorker) {
-   theWorker.postMessage({greeting: "exportOptions", url: "http://tools.missinge.infraware.ca/settings?" + parameterize(createOptionParams())});
+   theWorker.postMessage({greeting: "exportOptions", url: "http://tools.missing-e.com/settings?" + parameterize(createOptionParams())});
 }
 
 function isInternalSetting(setting) {
@@ -1891,7 +1891,7 @@ pageMod.PageMod({
 });
 
 pageMod.PageMod({
-   include: ["http://missinge.infraware.ca/*"],
+   include: ["http://missing-e.com/*"],
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("extension.js"),
                        data.url("core/versionCheck.js")],
@@ -1904,7 +1904,7 @@ pageMod.PageMod({
 
 function getExternalVersion() {
    Request({
-      url: 'http://missinge.infraware.ca/version',
+      url: 'http://missing-e.com/version',
       onComplete: function(response) {
          if (response.status == 200) {
             var versionInfo = response.text.split(" ");

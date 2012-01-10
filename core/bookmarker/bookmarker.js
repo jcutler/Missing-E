@@ -85,7 +85,7 @@ MissingE.packages.bookmarker = {
                                        text: " ("});
             label.append($('<a />',
                            {target: "_blank",
-                            href: "http://missinge.infraware.ca/faq#bookmark-issue",
+                            href: "http://missing-e.com/faq#bookmark-issue",
                             text: MissingE.getLocale(lang).postUnavailable}));
             label.append(")");
             bartxt.append(label);

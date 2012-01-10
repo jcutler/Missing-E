@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="http://missinge.infraware.ca" version="3.0">
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://missing-e.com" version="3.0">
    <name short="missing-e">Missing e</name>
    <description>Useful features and customizations for Tumblr.</description>
-   <author href="http://missinge.infraware.ca" email="missinge@infraware.ca">Jeremy Cutler</author>
+   <author href="http://missing-e.com" email="jeremy@missing-e.com">Jeremy Cutler</author>
    <icon src="identity/missinge128.png"/>
    <icon src="identity/missinge64.png"/>
    <icon src="identity/missinge32.png"/>

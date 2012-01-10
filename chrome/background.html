@@ -900,7 +900,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       alert(request.text);
    }
    else if (request.greeting == "exportOptions") {
-      sendResponse({greeting: "exportOptions", url: "http://tools.missinge.infraware.ca/settings?" + $.param(createOptionParams())});
+      sendResponse({greeting: "exportOptions", url: "http://tools.missing-e.com/settings?" + $.param(createOptionParams())});
    }
    else if (request.greeting == "importOptions") {
       receiveOptions(request, sendResponse);
@@ -1641,7 +1641,7 @@ function invertSetting(oldpref, newpref) {
 function getExternalVersion() {
    $.ajax({
       type: "GET",
-      url: 'http://missinge.infraware.ca/version',
+      url: 'http://missing-e.com/version',
       dataType: "text",
       success: function(data, textStatus, xhr) {
          var versionInfo = data.split(" ");
@@ -1725,7 +1725,7 @@ if (now >= parseInt(getSetting("MissingE_compatCheck",0)) + fivedays) {
                    "Using them may cause compatibility problems.\n\n" +
                    " - " + repl.join("\n - ") +
                    "\n\nDo you want to disable them?\n\nYou can re-enable or uninstall them later in your " +
-                   "Extensions menu.\n\nSee http://missinge.infraware.ca/faq for more information.";
+                   "Extensions menu.\n\nSee http://missing-e.com/faq for more information.";
          var answer = confirm(msg);
          if (answer) {
             for (i=0; i<ids.length; i++) {
