@@ -77,6 +77,20 @@ color:#4183c4;
     + indicates added features or functionality  
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
+    
+##**2.3.10** (01/08/2012)
+**_!_** Add Mass Editor Tweaks select button to specific-month pages of the Mass Editor  
+**_!_** Fix bug introduced in version 2.3.7 that slows down endless scrolling dashboard
+
+##**2.3.9** (01/08/2012)
+**_+_** Add option to reduce size of Fan Mail messages in the Tumblr inbox  
+**_!_** Fix for reply to Fan Mail popup unable to close  
+**_!_** Fix problem with mass deletion of Fan Mail messages sent to multiple blogs
+
+##**2.3.8** (01/07/2012)
+**_!_** Fix for Fan Mail popup unable to close on Tumblr inbox page  
+**_!_** Add Ask Tweaks mass deletion support for Fan Mail messages  
+**_!_** Widescreen, slim sidebar adjustments for Tumblr Fan Mail button
 
 ##**2.3.7** (01/06/2012)
 **_+_** Add option for 40x40 pixel avatar size in Reply Replies  
