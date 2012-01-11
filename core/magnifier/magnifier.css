@@ -25,7 +25,8 @@ a.MissingE_magnify {
 border-width:0;
 height:14px;
 width:14px;
-vertical-align:-3px;
+padding-bottom:2px;
+vertical-align:bottom;
 display:inline-block;
 background-repeat:no-repeat;
 background-attachment:scroll;

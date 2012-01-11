@@ -389,13 +389,6 @@ MissingE.packages.dashboardTweaks = {
       var settings = this.settings
       var lang = $('html').attr('lang');
 
-      var icons = extension
-                     .getURL('core/dashboardTweaks/icon_replacements.png');
-      $('head').append('<style type="text/css">' +
-                       '#posts .post .post_controls .MissingE_post_control {' +
-                       'background-image:url("' + icons + '"); }' +
-                       '</style>');
-
       extension.addAjaxListener(function(type,list) {
          if (type === 'notes') { return; }
          $.each(list, function (i,val) {
@@ -510,7 +503,7 @@ MissingE.packages.dashboardTweaks = {
          });
       }
 
-      if (settings.replaceIcons === 1 &&
+      if (false && settings.replaceIcons === 1 &&
           document.body.id !== "tinymce" &&
           document.body.id !== "dashboard_edit_post") {
 
