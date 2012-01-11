@@ -79,7 +79,8 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.3.12** (not yet released)
-**_!_** Improve speed of post loading by performing icon replacement faster
+**_!_** Improve speed of post loading by performing icon replacement faster  
+**_!_** Display timestamps for unanswered and privately-answered asks in correct timezone
 
 ##**2.3.11** (01/10/2012)
 **_+_** Add option for always showing "Let people answer this" checkbox in new posts  
