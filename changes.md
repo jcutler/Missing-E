@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.3.12** (not yet released)
+**_!_** Improve speed of post loading by performing icon replacement faster
+
 ##**2.3.11** (01/10/2012)
 **_+_** Add option for always showing "Let people answer this" checkbox in new posts  
 **_!_** Change internal URL references from http://missinge.infraware.ca to http://missing-e.com
