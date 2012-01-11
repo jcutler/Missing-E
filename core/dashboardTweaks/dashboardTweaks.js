@@ -456,6 +456,10 @@ MissingE.packages.dashboardTweaks = {
                item.attr('title', MissingE.getLocale(lang).dashTweaksText
                                     .reblog);
             }
+            else if (/^ask_answer_link_/.test(item.attr('id'))) {
+               item.attr('title', MissingE.getLocale(lang).dashTweaksText
+                                    .answer);
+            }
             else if (/^post_control_reply_/.test(item.attr('id'))) {
                item.attr('title',
                          MissingE.getLocale(lang).dashTweaksText.reply +

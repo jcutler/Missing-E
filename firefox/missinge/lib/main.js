@@ -1402,6 +1402,7 @@ function handleMessage(message, myWorker) {
                injectStyles.push({code:
                   '#posts .post .post_controls a[href^="/reblog"], ' +
                   '#posts .post .post_controls a[id^="post_control_reply"], ' +
+                  '#posts .post .post_controls a[id^="ask_answer_link"], ' +
                   '#posts .post .post_controls a.MissingE_experimental_reply, ' +
                   '#posts .post .post_controls .MissingE_experimental_reply_wait, ' +
                   '#posts .post .post_controls .MissingE_experimental_reply_fail, ' +

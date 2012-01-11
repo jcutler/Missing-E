@@ -100,6 +100,7 @@ var locale = {
    "video": "Video"
   },
   "dashTweaksText": {
+   "answer": "answer",
    "edit": "edit",
    "del": "delete",
    "reblog": "reblog",
@@ -277,6 +278,7 @@ var locale = {
    "video": "Video"
   },
   "dashTweaksText": {
+   "answer": "antworten",
    "edit": "bearbeiten",
    "del": "löschen",
    "reblog": "rebloggen",
@@ -454,6 +456,7 @@ var locale = {
    "video": "Vídeo"
   },
   "dashTweaksText": {
+   "answer": "responder",
    "edit": "editar",
    "del": "borrar",
    "reblog": "rebloguear",
@@ -631,6 +634,7 @@ var locale = {
    "video": "Vidéo"
   },
   "dashTweaksText": {
+   "answer": "répondre",
    "edit": "éditer",
    "del": "supprimer",
    "reblog": "rebloguer",
@@ -808,6 +812,7 @@ var locale = {
    "video": "Video"
   },
   "dashTweaksText": {
+   "answer": "rispondi",
    "edit": "modifica",
    "del": "elimina",
    "reblog": "reblogga",
@@ -995,6 +1000,7 @@ var locale = {
    "video": "動画"
   },
   "dashTweaksText": {
+   "answer": "回答する",
    "edit": "編集",
    "del": "削除",
    "reblog": "リブログ",
@@ -1165,6 +1171,7 @@ var locale = {
    "video": "Wideo"
   },
   "dashTweaksText": {
+   "answer": "odpowiedz",
    "edit": "edytuj",
    "del": "usuń",
    "reblog": "rebloguj",
@@ -1342,6 +1349,7 @@ var locale = {
    "video": "Видео"
   },
   "dashTweaksText": {
+   "answer": "ответить",
    "edit": "изменить",
    "del": "удалить",
    "reblog": "реблог",
@@ -1549,6 +1557,7 @@ var locale = {
    "video": "Video"
   },
   "dashTweaksText": {
+   "answer": "yanıtla",
    "edit": "düzenle",
    "del": "sil",
    "reblog": "yeniden blogla",
