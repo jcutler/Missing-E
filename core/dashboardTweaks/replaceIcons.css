@@ -31,6 +31,7 @@ vertical-align:top !important;
 #posts .post .post_controls .MissingE_experimental_reply_wait,
 #posts .post .post_controls .MissingE_experimental_reply_fail,
 #posts .post .post_controls .MissingE_experimental_reply_success,
+#posts .post .post_controls a.MissingE_reblogYourself_retry,
 #posts .post .post_controls a[id^="post_control_reply"],
 #posts .post .post_controls a[href^="/reblog"],
 #posts .post .post_controls a[href^="/edit"],
@@ -47,6 +48,7 @@ background-repeat:no-repeat;
 #posts .post .post_controls .MissingE_experimental_reply_wait,
 #posts .post .post_controls .MissingE_experimental_reply_fail,
 #posts .post .post_controls .MissingE_experimental_reply_success,
+#posts .post .post_controls a.MissingE_reblogYourself_retry,
 #posts .post .post_controls a[id^="post_control_reply"],
 #posts .post .post_controls a[href^="/reblog"],
 #posts .post .post_controls a[href^="/edit"],
@@ -128,8 +130,10 @@ width:13px;
 background-position:-75px 0;
 }
 
-#posts .post .MissingE_reblog_control_retry {
+#posts .post .post_controls .MissingE_reblogYourself_retry,
+#posts .post .post_controls .MissingE_betterReblogs_retryAsk {
 opacity:1;
+width:12px;
 background-position:-63px 0;
 }
 
@@ -150,4 +154,9 @@ background-position:-100px 0;
 #posts .post .MissingE_experimental_reply_success {
 width:12px;
 background-position:-88px 0;
+}
+
+#posts .post .post_controls a.MissingE_quick_reblogging,
+#posts .post .post_controls a.MissingE_quick_reblogging_success {
+background-position:0 0;
 }

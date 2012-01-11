@@ -269,9 +269,7 @@ function doReblogDash(stamp, id, request) {
    }
    var key = stamp.reblog_key;
    var name = stamp.name;
-   var replaceIcons = getSetting("MissingE_dashboardTweaks_enabled",1) == 1 &&
-                      getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1;
-   request.target.page.dispatchMessage(request.name,{pid: id, success: true, data: key, name: name, icons: replaceIcons});
+   request.target.page.dispatchMessage(request.name,{pid: id, success: true, data: key, name: name});
    return true;
 }
 
@@ -796,11 +794,7 @@ function requestBetterReblogsAsk(request) {
    else {
       doReblogAjax("betterReblogs",request,
              getSetting("MissingE_betterReblogs_askRetries",MissingE.defaultRetries),
-             {
-               pid:request.pid,
-               icons:getSetting("MissingE_dashboardTweaks_enabled",1) == 1 &&
-                     getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1
-             });
+             { pid:request.pid });
    }
 }
 
@@ -823,11 +817,7 @@ function requestReblogYourself(request) {
    else {
       doReblogAjax("reblogYourself", request,
              getSetting("MissingE_reblogYourself_retries",MissingE.defaultRetries),
-             {
-               pid:request.pid,
-               icons:getSetting("MissingE_dashboardTweaks_enabled",1) == 1 &&
-                     getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1
-             });
+             { pid:request.pid });
    }
 }
 
@@ -1305,7 +1295,6 @@ function handleRequest(request) {
                settings.accountName = getSetting("MissingE_betterReblogs_quickReblogAcctName",'0');
             }
             settings.quickReblogForceTwitter = getSetting("MissingE_betterReblogs_quickReblogForceTwitter","default");
-            settings.replaceIcons = (getSetting("MissingE_dashboardTweaks_enabled",1) == 1 && getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1) ? 1 : 0;
             settings.fullText = getSetting("MissingE_betterReblogs_fullText",0);
             settings.tagQueuedPosts = (getSetting("MissingE_postingTweaks_enabled",1) == 1 && getSetting("MissingE_postingTweaks_tagQueuedPosts",0) == 1) ? 1: 0;
             settings.queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
@@ -1345,13 +1334,26 @@ function handleRequest(request) {
                   '#posts .post .post_controls .MissingE_experimental_reply_wait, ' +
                   '#posts .post .post_controls .MissingE_experimental_reply_fail, ' +
                   '#posts .post .post_controls .MissingE_experimental_reply_success, ' +
+                  '#posts .post .post_controls .MissingE_reblogYourself_retry, ' +
+                  '#posts .post .post_controls .MissingE_betterReblogs_retryAsk, ' +
                   '#posts .post .post_controls a[href^="/edit"], ' +
                   '#posts .post .post_controls a[onclick*="delete_post_"], ' +
                   '#posts .post .post_controls a[onclick*="queue_post_"], ' +
                   '#posts .post .post_controls a[id^="show_notes"] { ' +
                      'background-image:url("' +
                         safari.extension.baseURI  + "core/dashboardTweaks/icon_replacements.png" +
-                     '"); }'});
+                     '"); ' +
+                  '} ' +
+                  '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
+                     'background-image:url("' +
+                        safari.extension.baseURI + "core/betterReblogs/reblog_animated.gif" +
+                     '") !important; ' +
+                  '} ' +
+                  '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
+                     'background-image:url("' +
+                        safari.extension.baseURI + "core/betterReblogs/reblog_success.png" +
+                     '") !important; ' +
+                  '}'});
                injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
             }
             if (getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1) == 1)

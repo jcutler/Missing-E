@@ -503,19 +503,52 @@ MissingE.packages.dashboardTweaks = {
          });
       }
 
-      if (false && settings.replaceIcons === 1 &&
+      if (settings.replaceIcons === 1 &&
           document.body.id !== "tinymce" &&
           document.body.id !== "dashboard_edit_post") {
 
-         extension.addAjaxListener(function(type,list) {
-            if (type === 'notes') { return; }
-            $.each(list, function (i,val) {
-               MissingE.packages.dashboardTweaks.doIcons($('#'+val).get(0));
-            });
-         });
-
-         $("#posts li.post").each(function() {
-            MissingE.packages.dashboardTweaks.doIcons(this);
+         $('#posts .post .post_controls a').live('mouseover', function() {
+            var item = $(this);
+            if (item.attr('title')) { return; }
+            if (!MissingE.isTumblrURL(location.href, ["messages"]) &&
+                (/delete_post_/.test(item.attr('onclick')) ||
+                 /^post_delete_/.test(item.attr('id')) ||
+                 (new RegExp(MissingE.getLocale(lang).dashTweaksText.del, "i")
+                  .test(item.text())))) {
+               item.attr('title', MissingE.getLocale(lang).dashTweaksText.del);
+            }
+            else if (/queue_post_/.test(item.attr('onclick')) ||
+                     (new RegExp(MissingE.getLocale(lang).dashTweaksText.queue,
+                                 "i")).test(item.text())) {
+               item.attr('title', MissingE.getLocale(lang)
+                                    .dashTweaksText.queue);
+            }
+            else if (/^\/edit/.test(item.attr('href'))) {
+               item.attr('title', MissingE.getLocale(lang).dashTweaksText
+                                    .edit);
+            }
+            else if (/^\/reblog/.test(item.attr('href')) ||
+                     /http[s]?:\/\/www\.tumblr\.com\/register\?referer=soft_reblog/
+                        .test(item.attr('href'))) {
+               item.attr('title', MissingE.getLocale(lang).dashTweaksText
+                                    .reblog);
+            }
+            else if (/^post_control_reply_/.test(item.attr('id'))) {
+               item.attr('title',
+                         MissingE.getLocale(lang).dashTweaksText.reply +
+                         (item.hasClass("MissingE_experimental_reply") ?
+                          " [" + MissingE.getLocale(lang).dashTweaksText
+                                    .experimental + "]" : ""));
+            }
+            else if (/^show_notes_/.test(item.attr('id')) &&
+                     item.children().length === 0) {
+               item.attr('title', MissingE.getLocale(lang).dashTweaksText
+                                    .notes);
+            }
+            else if (item.hasClass('reblog_count')) {
+               item.attr('title', MissingE.getLocale(lang).dashTweaksText
+                                    .notes);
+            }
          });
       }
 

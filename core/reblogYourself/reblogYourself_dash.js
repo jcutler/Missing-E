@@ -57,15 +57,10 @@ MissingE.packages.reblogYourself = {
       var lang = $('html').attr("lang");
       var reblog_text = MissingE.getLocale(lang).reblog;
       if (response.success) {
-         klass = (response.icons ? 'MissingE_post_control ' +
-                      'MissingE_reblog_control' : '');
-         txt = (response.icons ? '' : reblog_text);
+         txt = reblog_text;
          var redir = location.href;
          edit = $('#post_' + response.pid)
             .find('div.post_controls a[href^="/edit"]');
-         if (edit.length === 0) {
-            edit = $(item).find('div.post_controls a.MissingE_edit_control');
-         }
          if (MissingE.isTumblrURL(redir, ["dashboard"])) {
             redir = "http://www.tumblr.com/dashboard/1000/" +
                      (Number(response.pid)+1) + "?lite";
@@ -85,19 +80,11 @@ MissingE.packages.reblogYourself = {
          var reblog_err = MissingE.getLocale(lang).error;
          edit = $('#post_' + response.pid)
             .find('div.post_controls a[href^="/edit"]');
-         if (edit.length === 0) {
-            edit = $(item).find('div.post_controls a.MissingE_edit_control');
-         }
-         klass = (response.icons ? 'MissingE_post_control ' +
-                      'MissingE_reblog_control ' +
-                     'MissingE_reblog_control_retry' : '');
          var nre = $('<a />',
                      {title: reblog_err, href: "#",
-                      "class": "MissingE_reblogYourself_retry " + klass,
+                      "class": "MissingE_reblogYourself_retry",
                       click: function() { return false; }});
-         if (!response.icons) {
-            nre.append($('<del />', {text: reblog_text}));
-         }
+         nre.append($('<del />', {text: reblog_text}));
          nre.insertAfter(edit).before(' ');
       }
    },
