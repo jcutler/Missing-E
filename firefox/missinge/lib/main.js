@@ -1403,7 +1403,23 @@ function handleMessage(message, myWorker) {
                        "tagged"])) {
 
          if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
-            injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1) == 1) {
+               injectStyles.push({code:
+                  '#posts .post .post_controls a[href^="/reblog"], ' +
+                  '#posts .post .post_controls a[id^="post_control_reply"], ' +
+                  '#posts .post .post_controls a.MissingE_experimental_reply, ' +
+                  '#posts .post .post_controls .MissingE_experimental_reply_wait, ' +
+                  '#posts .post .post_controls .MissingE_experimental_reply_fail, ' +
+                  '#posts .post .post_controls .MissingE_experimental_reply_success, ' +
+                  '#posts .post .post_controls a[href^="/edit"], ' +
+                  '#posts .post .post_controls a[onclick*="delete_post_"], ' +
+                  '#posts .post .post_controls a[onclick*="queue_post_"], ' +
+                  '#posts .post .post_controls a[id^="show_notes"] { ' +
+                     'background-image:url("' +
+                        data.url("core/dashboardTweaks/icon_replacements.png") +
+                     '"); }'});
+               injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
+            }
             if (getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/reblogQuoteFit.css"});
             if (getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1) == 1)

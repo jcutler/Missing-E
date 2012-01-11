@@ -21,6 +21,12 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#posts .post .post_controls a,
+#posts .post .post_controls span,
+#posts .post .post_controls iframe {
+vertical-align:top !important;
+}
+
 #posts .post .post_controls a.MissingE_experimental_reply,
 #posts .post .post_controls .MissingE_experimental_reply_wait,
 #posts .post .post_controls .MissingE_experimental_reply_fail,
@@ -33,7 +39,6 @@
 #posts .post .post_controls a[id^="show_notes"] {
 height:14px;
 padding-bottom:2px;
-vertical-align:bottom;
 display:inline-block;
 background-repeat:no-repeat;
 }
@@ -53,32 +58,28 @@ font-size:0;
 }
 
 #posts .post .post_controls a[id^="show_notes"] {
-background-position:76px -16px;
-border-right:16px solid transparent;
+position:relative;
+background-position:3px -16px;
+border-right:15px solid transparent;
 background-clip:border-box;
 line-height:14px;
-width:72px;
+width:0;
+word-spacing:-0.5ex;
+text-indent:10px;
 text-align:right;
-overflow:hidden;
+overflow:visible;
 }
 
 #posts .post .post_controls a[id^="show_notes"] span {
+position:absolute;
+right:0;
 overflow:hidden;
 height:16px;
 display:inline-block;
-word-spacing:1000px;
 white-space:pre-wrap;
 }
 
-html[lang="ja"] #posts .post .post_controls a[id^="show_notes"] {
-width:1px;
-overflow:visible;
-position:relative;
-}
-
 html[lang="ja"] #posts .post .post_controls a[id^="show_notes"] span {
-position:absolute;
-right:0;
 overflow:visible;
 overflow-y:hidden;
 }
@@ -86,11 +87,6 @@ overflow-y:hidden;
 #posts .post .post_controls a.MissingE_mark,
 #posts .post .post_controls a.like_button {
 padding-bottom:2px;
-vertical-align:bottom !important;
-}
-
-#posts .post .post_controls iframe[id^="photo_reply"] {
-vertical-align:bottom !important;
 }
 
 #posts .post .post_controls a.MissingE_experimental_reply:hover,
@@ -104,7 +100,7 @@ opacity:1;
 }
 
 #posts .post .post_controls a[id^="show_notes"]:hover {
-background-position:76px 0;
+background-position:3px 0;
 }
 
 #posts .post .post_controls a[href^="/edit"] {
@@ -154,12 +150,4 @@ background-position:-100px 0;
 #posts .post .MissingE_experimental_reply_success {
 width:12px;
 background-position:-88px 0;
-}
-
-html[lang="ja"] #posts .post .post_controls a[id^="show_notes"] {
-background-position:5px -16px !important;
-}
-
-html[lang="ja"] #posts .post .post_controls a[id^="show_notes"]:hover {
-background-position:5px 0 !important;
 }
