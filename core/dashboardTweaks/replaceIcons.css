@@ -27,6 +27,10 @@
 vertical-align:top !important;
 }
 
+#dashboard_inbox .post .post_controls a[id^="post_delete_"] {
+line-height:9px !important;
+}
+
 #posts .post .post_controls a.MissingE_experimental_reply,
 #posts .post .post_controls .MissingE_experimental_reply_wait,
 #posts .post .post_controls .MissingE_experimental_reply_fail,
@@ -66,7 +70,7 @@ position:relative;
 background-position:3px -16px;
 border-right:15px solid transparent;
 background-clip:border-box;
-line-height:14px;
+line-height:15px;
 width:0;
 word-spacing:-0.5ex;
 text-indent:10px;
