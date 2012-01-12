@@ -28,7 +28,8 @@ vertical-align:top !important;
 }
 
 #dashboard_inbox .post .post_controls a[id^="post_delete_"] {
-line-height:9px !important;
+line-height:14px !important;
+display:inline-block;
 }
 
 #posts .post .post_controls a.MissingE_experimental_reply,
