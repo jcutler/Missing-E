@@ -77,9 +77,11 @@ word-spacing:-0.5ex;
 text-indent:10px;
 text-align:right;
 overflow:visible;
+font-size:0 !important;
 }
 
 #posts .post .post_controls a[id^="show_notes"] span {
+font-size:13px !important;
 position:absolute;
 right:0;
 overflow:hidden;
