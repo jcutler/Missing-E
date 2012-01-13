@@ -362,7 +362,6 @@ MissingE.packages.postingTweaks = {
             h2 = headings.eq(-2);
          }
 
-         //This will probably break at some point
          if (h2.length === 0) {
             var par = $('a.post_question_asker');
             if (par.length > 0) {
@@ -401,7 +400,8 @@ MissingE.packages.postingTweaks = {
          else {
             startframe = extension.getURL(iframeurl);
          }
-         h2.before('<div style="height:0;margin-top:' + h2.css("margin-top") + ';"></div>')
+         h2.before('<div style="height:0;margin-top:' + h2.css("margin-top") +
+                   ';clear:both;"></div>')
             .css({"float":"left","margin-top":"0"})
             .after('<div style="float:right;padding-top:3px;"><iframe ' +
                    'src="' + startframe + '" ' +
