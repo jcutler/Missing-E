@@ -21,6 +21,16 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#posts .post .post_controls {
+position:relative;
+}
+
+#posts .post .post_controls a.block_link {
+position:absolute;
+right:0;
+bottom:-15px;
+}
+
 #posts .post .post_controls a,
 #posts .post .post_controls span,
 #posts .post .post_controls iframe {
