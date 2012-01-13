@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.3.15** (not yet released)
+**_!_** Fix layout problem with "block" button running into count of number of notes on posts in tag search result pages
+
 ##**2.3.14** (01/13/2012)
 **_!_** Fix issue in which updating to version 2.3.12/2.3.13 temporarily caused issue with incorrectly displayed dashboard button replacement icons
 
