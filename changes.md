@@ -78,7 +78,13 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.3.12** (not yet released)
+##**2.3.14** (01/13/2012)
+**_!_** Fix issue in which updating to version 2.3.12/2.3.13 temporarily caused issue with incorrectly displayed dashboard button replacement icons
+
+##**2.3.13** (01/12/2012)
+**_!_** Fix bug introduced in 2.3.12 that turned Safe Dash on always for photo post images
+
+##**2.3.12** (01/12/2012)
 **_!_** Improve speed of post loading by performing icon replacement faster  
 **_!_** Display timestamps for unanswered and privately-answered asks in correct timezone
 
