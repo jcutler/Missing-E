@@ -1414,7 +1414,7 @@ function handleMessage(message, myWorker) {
                   '#posts .post .post_controls a[onclick*="queue_post_"], ' +
                   '#posts .post .post_controls a[id^="show_notes"] { ' +
                      'background-image:url("' +
-                        data.url("core/dashboardTweaks/icon_replacements.png") +
+                        data.url("core/dashboardTweaks/replaceIcons.png") +
                      '"); ' +
                   '} ' +
                   '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
