@@ -69,7 +69,7 @@ background-repeat:no-repeat;
 #posts .post .post_controls a[onclick*="queue_post_"] {
 opacity:0.65;
 margin-left:10px;
-font-size:0;
+font-size:0 !important;
 }
 
 #posts .post .post_controls a[id^="show_notes"] {
