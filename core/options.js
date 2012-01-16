@@ -231,9 +231,11 @@ MissingE.utilities.options = {
          if (MissingE.utilities.options
                .getStorage('MissingE_' + v + '_enabled', 1) == 1) {
             active.checked = true;
+            $(frm).closest('li').css('opacity','1');
          }
          else {
             active.checked = false;
+            $(frm).closest('li').css('opacity','0.65');
          }
          if (v == "askTweaks") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_scroll',1);
@@ -373,6 +375,9 @@ MissingE.utilities.options = {
          if (component == 'experimentalFeatures') {
             $('#posts td.experimental').hide();
          }
+         else {
+            frm.closest('li').css('opacity','0.65');
+         }
       }
       else {
          obj.checked = true;
@@ -380,6 +385,9 @@ MissingE.utilities.options = {
                .setStorage('MissingE_' + component + '_enabled', 1);
          if (component == 'experimentalFeatures') {
             $('#posts td.experimental').show();
+         }
+         else {
+            frm.closest('li').css('opacity','1');
          }
       }
    },
