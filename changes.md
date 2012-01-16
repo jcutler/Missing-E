@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.3.16** (01/16/2012)
+**_!_** Fix pre-loading of "don't expand/minimize all thumbnail" option on Safari  
+**_!_** Update Mass Editor Tweaks screenshot
+
 ##**2.3.15** (01/16/2012)
 **_!_** Fix layout problem with "block" button running into count of number of notes on posts in tag search result pages
 
