@@ -368,6 +368,7 @@ function isInternalSetting(setting) {
           setting === "MissingE_version" ||
           /MissingE_externalVersion/.test(setting) ||
           setting === "MissingE_compatCheck" ||
+          setting === "MissingE_lastUpdateCheck" ||
           !/^[a-zA-Z0-9_]*$/.test(setting);
 }
 
@@ -1932,6 +1933,7 @@ function getExternalVersion() {
       url: 'http://missing-e.com/version',
       onComplete: function(response) {
          if (response.status == 200) {
+            setSetting('extensions.MissingE.lastUpdateCheck', ((new Date()).valueOf()).toString());
             var versionInfo = response.text.split(" ");
             versionInfo[versionInfo.length-1] =
                versionInfo[versionInfo.length-1].replace(/\s*$/m,'');
@@ -1978,7 +1980,11 @@ function onStart(currVersion, prevVersion) {
 }
 
 onStart(currVersion, prevVersion);
-getExternalVersion();
+if (!MissingE.isSameDay(getSetting('extensions.MissingE.lastUpdateCheck',0))) {
+   console.log("Checking current available version.");
+   getExternalVersion();
+}
+
 fixupSettings();
 
 console.log("Missing e is running.");

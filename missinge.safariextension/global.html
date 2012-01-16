@@ -160,6 +160,7 @@ function isInternalSetting(setting) {
           setting === "MissingE_installedVersion" ||
           /MissingE_externalVersion/.test(setting) ||
           setting === "MissingE_compatCheck" ||
+          setting === "MissingE_lastUpdateCheck" ||
           !/^[a-zA-Z0-9_]*$/.test(setting);
 }
 
@@ -1686,6 +1687,7 @@ function getExternalVersion() {
       url: 'http://missing-e.com/version',
       dataType: "text",
       success: function(data, textStatus, xhr) {
+         setSetting('MissingE_lastUpdateCheck', (new Date()).valueOf());
          var versionInfo = data.split(" ");
          versionInfo[versionInfo.length-1] =
             versionInfo[versionInfo.length-1].replace(/\s*$/m,'');
@@ -1798,7 +1800,11 @@ safari.extension.addContentScriptFromURL(safari.extension.baseURI +
                                          "http://*", null, true);
 
 onStart(currVersion, prevVersion);
-getExternalVersion();
+
+if (!MissingE.isSameDay(getSetting('MissingE_lastUpdateCheck',0))) {
+   console.log("Checking current available version.");
+   getExternalVersion();
+}
 fixupSettings();
 </script>
 </head>

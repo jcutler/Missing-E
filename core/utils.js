@@ -335,6 +335,20 @@ var utils = {
       return (dt>=start && dt<end);
    },
 
+   isSameDay: function(dt) {
+      if (typeof dt === "string") {
+         dt = parseInt(dt,10);
+      }
+      var now = new Date();
+      var then = new Date(dt);
+      if (now > then + 86400000) {
+         return false;
+      }
+      return now.getFullYear() === then.getFullYear() &&
+             now.getMonth() === then.getMonth() &&
+             now.getDate() === then.getDate();
+   },
+
    isTumblrURL: function(fullURL, matches) {
       if (!/^http:\/\/www\.tumblr\.com\//.test(fullURL)) {
          return false;
