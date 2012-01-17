@@ -200,6 +200,7 @@ MissingE.utilities.options = {
                         "dashLinksToTabs",
                         "safeDash",
                         "timestamps",
+                        "blockNotes",
                         "magnifier",
                         "betterReblogs",
                         "gotoDashPost",
@@ -252,6 +253,31 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_followingLink',0);
             frm.MissingE_sidebarTweaks_retries.value = MissingE.utilities.options.getStorage('MissingE_sidebarTweaks_retries',MissingE.defaultRetries);
          }
+         else if (v == "blockNotes") {
+			var blocked = JSON.parse(MissingE.utilities.options.getStorage('MissingE_blockNotes_blocked','{}'));
+			var even = 0;
+			for( var key in blocked ) {
+				if( blocked.hasOwnProperty(key) ) {
+					$('#blockNotes_options .options_table').append(
+						$('<tr></tr>')
+							.attr('id','blockNotes_row_'+key)
+							.addClass((even ? 'even' : 'odd'))
+							.html('<td colspan="2" class="desc"><a href="' + blocked[key]['link'] + '">' + blocked[key]['text'] + '</a></td><td><a href="#" class="blockNotes_unblock" id="blockNotes_unblock_' + key + '">Unblock</td>')
+						);
+					even = (even + 1) % 2;
+				}
+			}
+			$('body').delegate(".blockNotes_unblock","click",function(event) {
+				var fields = $(this).attr("id").split("_");
+				var key = fields[fields.length - 1];
+				$('#blockNotes_row_'+key).hide();
+				var blocked = JSON.parse(MissingE.utilities.options.getStorage('MissingE_blockNotes_blocked','{}'));
+				if( blocked.hasOwnProperty(key) ) {
+					delete blocked[key];
+					MissingE.utilities.options.setStorage('MissingE_blockNotes_blocked',JSON.stringify(blocked));
+				}
+			});
+		 }
          else if (v == "dashLinksToTabs") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashLinksToTabs_sidebar',0);

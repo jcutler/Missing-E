@@ -129,6 +129,7 @@ var componentList = ["dashboardTweaks",
                      "dashLinksToTabs",
                      "safeDash",
                      "timestamps",
+                     "blockNotes",
                      "magnifier",
                      "betterReblogs",
                      "gotoDashPost",
@@ -180,6 +181,7 @@ function getAllSettings(getStale) {
    settings.MissingE_dashLinksToTabs_editLinks = getSetting("extensions.MissingE.dashLinksToTabs.editLinks",0);
    settings.MissingE_timestamps_retries = getSetting("extensions.MissingE.timestamps.retries",MissingE.defaultRetries);
    settings.MissingE_timestamps_format = getSetting("extensions.MissingE.timestamps.format",MissingE.defaultFormat);
+   settings.MissingE_blockNotes_blocked = getSetting("extensions.MissingE.blockNotes.blocked",'{}');
    settings.MissingE_postingTweaks_photoReplies = getSetting("extensions.MissingE.postingTweaks.photoReplies",1);
    settings.MissingE_postingTweaks_addUploader = getSetting("extensions.MissingE.postingTweaks.addUploader",1);
    settings.MissingE_postingTweaks_quickButtons = getSetting("extensions.MissingE.postingTweaks.quickButtons",1);
@@ -1331,6 +1333,9 @@ function handleMessage(message, myWorker) {
                settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
             }
             break;
+		case "blockNotes":
+			settings.blocked = getSetting("extensions.MissingE.blockNotes.blocked",'{}');
+			break;
          case "postCrushes_fill":
          case "postCrushes":
             settings.prefix = getSetting("extensions.MissingE.postCrushes.prefix","Tumblr Crushes:");
@@ -1638,6 +1643,20 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.postingTweaks = false;
+      }
+      if (!message.isFrame &&
+          MissingE.isTumblrURL(message.url,
+                               ["dashboard",
+                                "blog",
+                                "likes",
+                                "tagged",
+                                "messages"])) {
+         if (getSetting("extensions.MissingE.blockNotes.enabled",1) == 1) {
+            injectScripts.push(data.url("core/blockNotes/blockNotes.js"));
+            activeScripts.blockNotes = true;
+         }
+         else
+            activeScripts.blockNotes = false;
       }
       if (!message.isFrame &&
           MissingE.isTumblrURL(message.url, ["reblog"])) {

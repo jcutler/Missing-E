@@ -34,6 +34,7 @@ var componentList = ["dashboardTweaks",
                      "dashLinksToTabs",
                      "safeDash",
                      "timestamps",
+                     "blockNotes",
                      "magnifier",
                      "betterReblogs",
                      "gotoDashPost",
@@ -1173,6 +1174,7 @@ function handleRequest(request) {
       settings.MissingE_dashLinksToTabs_editLinks = getSetting("MissingE_dashLinksToTabs_editLinks",0);
       settings.MissingE_timestamps_retries = getSetting("MissingE_timestamps_retries",MissingE.defaultRetries);
       settings.MissingE_timestamps_format = getSetting("MissingE_timestamps_format",MissingE.defaultFormat);
+      settings.MissingE_blockNotes_blocked = getSetting("MissingE_timestamps_format",'{}');
       settings.MissingE_postingTweaks_photoReplies = getSetting("MissingE_postingTweaks_photoReplies",1);
       settings.MissingE_postingTweaks_addUploader = getSetting("MissingE_postingTweaks_addUploader",1);
       settings.MissingE_postingTweaks_quickButtons = getSetting("MissingE_postingTweaks_quickButtons",1);
@@ -1258,6 +1260,9 @@ function handleRequest(request) {
             settings.randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
             settings.sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
             break;
+		 case "blockNotes":
+			settings.blocked = getSetting("MissingE_blockNotes_blocked",'{}');
+			break;
          case "dashLinksToTabs":
             settings.newPostTabs = getSetting("MissingE_dashLinksToTabs_newPostTabs",1);
             settings.sidebar = getSetting("MissingE_dashLinksToTabs_sidebar",0);
@@ -1590,6 +1595,19 @@ function handleRequest(request) {
          }
          else
             activeScripts.timestamps = false;
+      }
+      if (!request.message.isFrame &&
+          MissingE.isTumblrURL(request.message.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged",
+                       "messages"])) {
+         if (getSetting("MissingE_blockNotes_enabled",1) == 1) {
+            activeScripts.blockNotes = true;
+         }
+         else
+            activeScripts.blockNotes = false;
       }
       if (!request.message.isFrame &&
           MissingE.isTumblrURL(request.message.url,
