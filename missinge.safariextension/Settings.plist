@@ -402,9 +402,9 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>0</real>
+		<real>1</real>
 		<key>Key</key>
-		<string>MissingE_sidebarTweaks_accountNum</string>
+		<string>MissingE_dashboardTweaks_notePreview</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -412,9 +412,9 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<real>4</real>
+		<real>0</real>
 		<key>Key</key>
-		<string>MissingE_sidebarTweaks_retries</string>
+		<string>MissingE_sidebarTweaks_accountNum</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -515,16 +515,6 @@
 		<string>%Y-%m-%D %H:%i</string>
 		<key>Key</key>
 		<string>MissingE_bookmarker_format</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>4</real>
-		<key>Key</key>
-		<string>MissingE_timestamps_retries</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -645,16 +635,6 @@
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_reblogYourself_dashboard</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>4</real>
-		<key>Key</key>
-		<string>MissingE_reblogYourself_retries</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
@@ -805,16 +785,6 @@
 		<string>default</string>
 		<key>Key</key>
 		<string>MissingE_betterReblogs_quickReblogForceTwitter</string>
-		<key>Title</key>
-		<string></string>
-		<key>Type</key>
-		<string>Hidden</string>
-	</dict>
-	<dict>
-		<key>DefaultValue</key>
-		<real>4</real>
-		<key>Key</key>
-		<string>MissingE_betterReblogs_retries</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

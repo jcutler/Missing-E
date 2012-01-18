@@ -248,6 +248,20 @@ function doTags(stamp, id, request) {
    return true;
 }
 
+function doPreview(stamp, id, request) {
+   var i;
+   if (!stamp.photos) {
+      debug("Cache entry does not have photos");
+      return false;
+   }
+   var photos = [];
+   for (i=0; i<stamp.photos.length; i++) {
+      photos.push(stamp.photos[i].replace(/\d+\.([a-z]+)$/,"100.$1"));
+   }
+   request.target.page.dispatchMessage("preview",{success: true, pid: id, data: photos});
+   return true;
+}
+
 function doTimestamp(stamp, id, request) {
    if (!stamp.timestamp) {
       debug("Cache entry does not have timestamp");
@@ -293,6 +307,9 @@ function runItem(call) {
    }
    else if (call.type === "tags") {
       requestTags(call.request);
+   }
+   else if (call.type === "preview") {
+      requestPreview(call.request);
    }
 }
 
@@ -548,6 +565,35 @@ function checkPermission(request, retries, tryCount) {
    ajax.send();
 }
 
+function parseRSS(data) {
+   var info = {};
+   var i;
+   var tags = data.match(/<category>[^<]*<\/category>/g);
+   if (!tags) { tags = []; }
+   for (i=0; i<tags.length; i++) {
+      tags[i] = tags[i].replace(/^<category>/,'')
+                     .replace(/<\/category>$/,'');
+   }
+   info.tags = tags;
+
+   var photos = [];
+   var desc = data.match(/<description>&lt;img[^<]*/);
+   if (desc) {
+      desc = desc[0].replace(/^<description>/,'');
+      while (/^&lt;img/.test(desc)) {
+         var img = desc.match(/src="([^"]*)"/);
+         if (img && img.length > 1) {
+            photos.push(img[1].replace(/http:\/\/[0-9]+\./,'http://'));
+         }
+         desc = desc.replace(/^&lt;img[^&]*(&gt;|[^&]+)+/,'');
+         desc = desc.replace(/^(&lt;br\/&gt;|\s)+/,'');
+      }
+   }
+   info.photos = photos;
+
+   return info;
+}
+
 function doTagsAjax(request, retries) {
    debug("AJAX tags request (" + request.message.pid + ")");
    startAjax(request.message.pid);
@@ -613,18 +659,87 @@ function doTagsAjax(request, retries) {
             }
          }
          else {
-            var i;
-            var tags = data.match(/<category>[^<]*<\/category>/g);
-            if (!tags) { tags = []; }
-            for (i=0; i<tags.length; i++) {
-               tags[i] = tags[i].replace(/^<category>/,'')
-                              .replace(/<\/category>$/,'');
-            }
-            var info = {"tags":tags};
+            var info = parseRSS(data);
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (request.target.page !== undefined) {
                doTags(info, this.targetId, request);
+            }
+         }
+      }
+   });
+}
+
+function doPreviewAjax(request, retries) {
+   debug("AJAX preview request (" + request.message.pid + ")");
+   startAjax(request.message.pid);
+   var failMsg = {success:false, pid:request.message.pid};
+   $.ajax({
+      type: "GET",
+      url: request.message.url + "/post/" + request.message.pid + "/rss",
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.message.pid,
+      error: function(xhr, textStatus) {
+         if (xhr.status === 404) {
+            debug("preview request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            request.target.page.dispatchMessage("preview",failMsg);
+            return;
+         }
+         if (request.target.page === undefined) {
+            debug("Stop tags request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         if (cacheServe("preview", request.message.pid, request, doPreview, true)) {
+            return true;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry preview request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug("preview request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               request.target.page.dispatchMessage("preview",failMsg);
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         if (!(/<guid>[^<]*<\/guid>/.test(data))) {
+            if (request.target.page === undefined) {
+               debug("Stop preview request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (cacheServe("preview", request.message.pid, request, doPreview, true)) {
+               return true;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry preview request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug("preview request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  request.target.page.dispatchMessage("preview",failMsg);
+               }
+            }
+         }
+         else {
+            var info = parseRSS(data);
+            saveCache(this.targetId, info);
+            dequeueAjax(this.targetId);
+            if (request.target.page !== undefined) {
+               doPreview(info, this.targetId, request);
             }
          }
       }
@@ -751,6 +866,28 @@ function requestTags(request) {
    else {
       doTagsAjax(request,
              getSetting("MissingE_betterReblogs_retries",MissingE.defaultRetries));
+   }
+}
+
+function requestPreview(request) {
+   if (request.target.page === undefined) {
+      debug("Stop preview request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (cacheServe("preview", request.message.pid, request, doPreview,
+                  false)) {
+      return true;
+   }
+   else if (isRequested({type: "preview", request: request})) {
+      return true;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "preview", request: request});
+   }
+   else {
+      doPreviewAjax(request,
+             getSetting("MissingE_dashboardTweaks_previewRetries",MissingE.defaultRetries));
    }
 }
 
@@ -1043,6 +1180,9 @@ function handleRequest(request) {
    else if (request.name == "magnifier") {
       requestMagnifier(request);
    }
+   else if (request.name == "preview") {
+      requestPreview(request);
+   }
    else if (request.name == "reblogYourself") {
       requestReblogYourself(request);
    }
@@ -1162,6 +1302,8 @@ function handleRequest(request) {
       settings.MissingE_dashboardTweaks_massDelete = getSetting("MissingE_dashboardTweaks_massDelete",1);
       settings.MissingE_dashboardTweaks_randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
       settings.MissingE_dashboardTweaks_sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
+      settings.MissingE_dashboardTweaks_notePreview = getSetting("MissingE_dashboardTweaks_notePreview",1);
+      settings.MissingE_dashboardTweaks_previewRetries = getSetting("MissingE_dashboardTweaks_previewRetries",MissingE.defaultRetries);
       settings.MissingE_sidebarTweaks_retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
       settings.MissingE_sidebarTweaks_slimSidebar = getSetting("MissingE_sidebarTweaks_slimSidebar",0);
@@ -1256,6 +1398,7 @@ function handleRequest(request) {
             settings.massDelete = getSetting("MissingE_dashboardTweaks_massDelete",1);
             settings.randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
             settings.sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
+            settings.notePreview = getSetting("MissingE_dashboardTweaks_notePreview",1);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getSetting("MissingE_dashLinksToTabs_newPostTabs",1);
@@ -1333,6 +1476,20 @@ function handleRequest(request) {
                        "tagged"])) {
 
          if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1) {
+            if (getSetting("MissingE_dashboardTweaks_notePreview",1) == 1) {
+               injectStyles.push({file: "core/dashboardTweaks/preview.css"});
+               injectStyles.push({code:
+                  '#MissingE_preview.MissingE_preview_loading { ' +
+                     'background-image:url("' +
+                     safari.extension.baseURI + "core/dashboardTweaks/loader.gif" +
+                     '");' +
+                  '}' +
+                  '#MissingE_preview.MissingE_preview_fail { ' +
+                     'background-image:url("' +
+                     safari.extension.baseURI + "core/dashboardTweaks/prevFail.png" +
+                     '");' +
+                  '}'});
+            }
             if (getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1) {
                injectStyles.push({code:
                   '#posts .post .post_controls a[href^="/reblog"], ' +
