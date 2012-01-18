@@ -316,7 +316,7 @@ MissingE.packages.dashboardTweaks = {
       if (response.success) {
          if (preWin.attr('post') === response.pid) {
             var i;
-            for (i=0; i<2; i++) {
+            for (i=0; i<2 && i<response.data.length; i++) {
                var prevImg = document.createElement('img');
                prevImg.setAttribute('post', response.pid);
                prevImg.style.display = "none";
@@ -804,8 +804,17 @@ MissingE.packages.dashboardTweaks = {
                  text === MissingE.getLocale(lang).posts.photoset[len-1])) {
                preWin.attr('post',tid);
                preWin.empty().addClass('MissingE_preview_loading');
+               var exPhotoset = $('#photoset_' + tid);
                var exPost = $('#post_' + tid);
-               if (exPost.length > 0) {
+               if (exPhotoset.length > 0) {
+                  var exImgs = [];
+                  exPhotoset.find('img').each(function() {
+                     exImgs.push(this.src.replace(/http:\/\/\d+\./,'http://'));
+                  });
+                  MissingE.packages.dashboardTweaks
+                     .receivePreview({success: true, pid: tid, data: exImgs});
+               }
+               else if (exPost.length > 0) {
                   var exImg = exPost.find('div.post_content img:first')
                                  .attr('src');
                   exImg = exImg.replace(/http:\/\/\d+\./,'http://');
