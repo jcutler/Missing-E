@@ -459,6 +459,7 @@ function doTags(stamp, id, theWorker) {
    }
    theWorker.postMessage({greeting: "tags", success: true, data: tags,
                           extensionURL: data.url("")});
+   return true;
 }
 
 function doTimestamp(stamp, id, theWorker) {

@@ -260,6 +260,7 @@ function doTags(stamp, id, sendResponse) {
       tags = [];
    }
    sendResponse({success: true, data: tags});
+   return true;
 }
 
 function doTimestamp(stamp, id, sendResponse) {

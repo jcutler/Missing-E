@@ -245,6 +245,7 @@ function doTags(stamp, id, request) {
       tags = [];
    }
    request.target.page.dispatchMessage("tags",{success: true, data: tags});
+   return true;
 }
 
 function doTimestamp(stamp, id, request) {
