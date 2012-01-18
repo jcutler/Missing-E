@@ -30,7 +30,7 @@ background-color:#FFF;
 background-position:center center;
 background-repeat:no-repeat;
 margin-top:2px;
-border-radius:8px;
+border-radius:6px;
 box-shadow:rgb(0,0,0) 0 0 10px;
 }
 
@@ -39,13 +39,13 @@ display:block !important;
 }
 
 #MissingE_preview img:first-child {
-border-top-right-radius:8px;
-border-top-left-radius:8px;
+border-top-right-radius:6px;
+border-top-left-radius:6px;
 }
 
 #MissingE_preview img:last-child {
-border-bottom-right-radius:8px;
-border-bottom-left-radius:8px;
+border-bottom-right-radius:6px;
+border-bottom-left-radius:6px;
 }
 
 #MissingE_preview img + img {
