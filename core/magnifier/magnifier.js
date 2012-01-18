@@ -104,7 +104,7 @@ MissingE.packages.magnifier = {
          var publish;
          var count = 1;
          var caps;
-         var tid = $(item).attr("id").match(/[0-9]*$/)[0];
+         var tid = $(item).attr("id").match(/\d*$/)[0];
          var str, img, imgnum;
          var set = $('#photoset_' + tid);
          var revisions = [];

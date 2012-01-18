@@ -263,6 +263,20 @@ function doTags(stamp, id, sendResponse) {
    return true;
 }
 
+function doPreview(stamp, id, sendResponse) {
+   var i;
+   if (!stamp.photos) {
+      debug("Cache entry does not have photos");
+      return false;
+   }
+   var photos = [];
+   for (i=0; i<stamp.photos.length; i++) {
+      photos.push(stamp.photos[i].replace(/[0-9]*\.([a-z]+)$/,"100.$1"));
+   }
+   sendResponse({success: true, pid: id, data: photos});
+   return true;
+}
+
 function doTimestamp(stamp, id, sendResponse) {
    if (!stamp.timestamp) {
       debug("Cache entry does not have timestamp");
@@ -369,6 +383,9 @@ function runItem(call) {
    }
    else if (call.type === "tags") {
       requestTags(call.request, call.sender, call.sendResponse, call.hash);
+   }
+   else if (call.type === "preview") {
+      requestPreview(call.request, call.sender, call.sendResponse, call.hash);
    }
 }
 
@@ -562,6 +579,35 @@ function checkPermission(request, sender, sendResponse, hash, retries, tryCount)
    ajax.send();
 }
 
+function parseRSS(id, data) {
+   var info = {};
+   var i;
+   var tags = data.match(/<category>[^<]*<\/category>/g);
+   if (!tags) { tags = []; }
+   for (i=0; i<tags.length; i++) {
+      tags[i] = tags[i].replace(/^<category>/,'')
+                     .replace(/<\/category>$/,'');
+   }
+   info.tags = tags;
+
+   var photos = [];
+   var desc = data.match(/<description>&lt;img[^<]*/);
+   if (desc) {
+      desc = desc[0].replace(/^<description>/,'');
+      while (/^&lt;img/.test(desc)) {
+         var img = desc.match(/src="([^"]*)"/);
+         if (img && img.length > 1) {
+            photos.push(img[1].replace(/http:\/\/[0-9]+\./,'http://'));
+         }
+         desc = desc.replace(/^&lt;img[^&]*(&gt;|[^&]+)+/,'');
+         desc = desc.replace(/^(&lt;br\/&gt;|\s)+/,'');
+      }
+   }
+   info.photos = photos;
+
+   return info;
+}
+
 function doTagsAjax(request, sender, sendResponse, hash, retries) {
    debug("AJAX tags request (" + request.pid + ")");
    startAjax(request.pid);
@@ -630,18 +676,90 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
             }
          }
          else {
-            var i;
-            var tags = data.match(/<category>[^<]*<\/category>/g);
-            if (!tags) { tags = []; }
-            for (i=0; i<tags.length; i++) {
-               tags[i] = tags[i].replace(/^<category>/,'')
-                              .replace(/<\/category>$/,'');
-            }
-            var info = {"tags":tags};
+            var info = parseRSS(this.targetId, data);
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (!closed) {
                doTags(info, this.targetId, sendResponse);
+            }
+         }
+      }
+   });
+}
+
+function doPreviewAjax(request, sender, sendResponse, hash, retries) {
+   debug("AJAX preview request (" + request.pid + ")");
+   startAjax(request.pid);
+   var failMsg = {greeting:"preview", success:false, pid:request.pid};
+   $.ajax({
+      type: "GET",
+      url: request.url + "/post/" + request.pid + "/rss",
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.pid,
+      tabId: sender.tab.id,
+      tabHash: hash,
+      error: function(xhr, textStatus) {
+         if (xhr.status === 404) {
+            debug("preview request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            sendResponse(failMsg);
+            return;
+         }
+         if (this.tabHash !== tabs[this.tabId]) {
+            debug("Stop preview request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         if (cacheServe("preview", request.pid, sendResponse, doPreview, true)) {
+            return true;
+         }
+         else {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry preview request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug("preview request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               sendResponse(failMsg);
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         var closed = (this.tabHash !== tabs[this.tabId]);
+         if (!(/<guid>[^<]*<\/guid>/.test(data))) {
+            if (closed) {
+               debug("Stop preview request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (cacheServe("preview", request.pid, sendResponse, doPreview, true)) {
+               return true;
+            }
+            else {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry preview request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug("preview request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  sendResponse(failMsg);
+               }
+            }
+         }
+         else {
+            var info = parseRSS(this.targetId, data);
+            saveCache(this.targetId, info);
+            dequeueAjax(this.targetId);
+            if (!closed) {
+               doPreview(info, this.targetId, sendResponse);
             }
          }
       }
@@ -847,6 +965,27 @@ function requestTags(request, sender, sendResponse, hash) {
    }
 }
 
+function requestPreview(request, sender, sendResponse, hash) {
+   if (hash !== tabs[sender.tab.id]) {
+      debug("Stop preview request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (cacheServe("preview", request.pid, sendResponse, doPreview, false)) {
+      return true;
+   }
+   else if (isRequested({type: "preview", request: request, sender: sender, sendResponse: sendResponse, hash: hash})) {
+      return true;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "preview", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
+   }
+   else {
+      doPreviewAjax(request, sender, sendResponse, hash,
+                    getSetting("MissingE_dashboardTweaks_previewRetries",MissingE.defaultRetries));
+   }
+}
+
 function requestMagnifier(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop magnifier request: Tab closed or changed.");
@@ -995,6 +1134,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "magnifier") {
       requestMagnifier(request, sender, sendResponse, tabs[sender.tab.id]);
    }
+   else if (request.greeting == "preview") {
+      requestPreview(request, sender, sendResponse, tabs[sender.tab.id]);
+   }
    else if (request.greeting == "reblogYourself") {
       requestReblogYourself(request, sender, sendResponse, tabs[sender.tab.id]);
    }
@@ -1111,6 +1253,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.massDelete = getSetting("MissingE_dashboardTweaks_massDelete",1);
             settings.randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
             settings.sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
+            settings.notePreview = getSetting("MissingE_dashboardTweaks_notePreview",1);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getSetting("MissingE_dashLinksToTabs_newPostTabs",1);
@@ -1191,6 +1334,15 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                        "tagged"])) {
 
          if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1) {
+            if (getSetting("MissingE_dashboardTweaks_notePreview",1) == 1) {
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/preview.css"});
+               chrome.tabs.insertCSS(sender.tab.id, {code:
+                  '#MissingE_preview.MissingE_preview_loading { ' +
+                     'background-image:url("' +
+                     chrome.extension.getURL("core/dashboardTweaks/loader.gif") +
+                     '");' +
+                  '}'});
+            }
             if (getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1) {
                chrome.tabs.insertCSS(sender.tab.id, {code:
                   '#posts .post .post_controls a[href^="/reblog"], ' +
