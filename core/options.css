@@ -454,29 +454,3 @@ text-align:center;
 font-size:12px;
 font-style:italic;
 }
-
-
-
-
-
-
-div.post_thumb {
-float:right;
-margin:-40px 5px 10px 2px;
-font-weight:bold;
-font-size:80%;
-text-align:center;
-background-color:#CCC;
-padding:4px 4px 2px;
-min-width:66px;
-}
-
-div.post_thumb a {
-display:block;
-width:100%;
-text-decoration:none;
-}
-
-div.post_thumb a:hover {
-font-style:italic;
-}
