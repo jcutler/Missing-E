@@ -271,7 +271,7 @@ function doPreview(stamp, id, sendResponse) {
    }
    var photos = [];
    for (i=0; i<stamp.photos.length; i++) {
-      photos.push(stamp.photos[i].replace(/[0-9]*\.([a-z]+)$/,"100.$1"));
+      photos.push(stamp.photos[i].replace(/\d+\.([a-z]+)$/,"100.$1"));
    }
    sendResponse({success: true, pid: id, data: photos});
    return true;
@@ -579,7 +579,7 @@ function checkPermission(request, sender, sendResponse, hash, retries, tryCount)
    ajax.send();
 }
 
-function parseRSS(id, data) {
+function parseRSS(data) {
    var info = {};
    var i;
    var tags = data.match(/<category>[^<]*<\/category>/g);
@@ -676,7 +676,7 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
             }
          }
          else {
-            var info = parseRSS(this.targetId, data);
+            var info = parseRSS(data);
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (!closed) {
@@ -755,7 +755,7 @@ function doPreviewAjax(request, sender, sendResponse, hash, retries) {
             }
          }
          else {
-            var info = parseRSS(this.targetId, data);
+            var info = parseRSS(data);
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (!closed) {
