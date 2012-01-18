@@ -1341,6 +1341,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                      'background-image:url("' +
                      chrome.extension.getURL("core/dashboardTweaks/loader.gif") +
                      '");' +
+                  '}' +
+                  '#MissingE_preview.MissingE_preview_fail { ' +
+                     'background-image:url("' +
+                     chrome.extension.getURL("core/dashboardTweaks/prevFail.png") +
+                     '");' +
                   '}'});
             }
             if (getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1) {

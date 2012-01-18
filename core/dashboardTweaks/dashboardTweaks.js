@@ -335,6 +335,8 @@ MissingE.packages.dashboardTweaks = {
          }
       }
       else {
+         preWin.removeAttr('post').removeClass('MissingE_preview_loading')
+            .addClass('MissingE_preview_fail');
       }
    },
 
@@ -803,7 +805,8 @@ MissingE.packages.dashboardTweaks = {
                 (text === MissingE.getLocale(lang).posts.photo[len-1] ||
                  text === MissingE.getLocale(lang).posts.photoset[len-1])) {
                preWin.attr('post',tid);
-               preWin.empty().addClass('MissingE_preview_loading');
+               preWin.empty().removeClass('MissingE_preview_fail')
+                  .addClass('MissingE_preview_loading');
                var exPhotoset = $('#photoset_' + tid);
                var exPost = $('#post_' + tid);
                if (exPhotoset.length > 0) {

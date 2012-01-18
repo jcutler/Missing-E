@@ -48,7 +48,7 @@ border-bottom-left-radius:6px;
 margin-top:2px;
 }
 
-#MissingE_preview.MissingE_preview_loading {
+#MissingE_preview.MissingE_preview_loading, #MissingE_preview.MissingE_preview_fail {
 min-height:40px;
 opacity:0.9;
 }
