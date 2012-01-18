@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.3.17** (not yet released)
+**_!_** Restyling settings page
+
 ##**2.3.16** (01/16/2012)
 **_!_** Fix pre-loading of "don't expand/minimize all thumbnail" option on Safari  
 **_!_** Update Mass Editor Tweaks screenshot
