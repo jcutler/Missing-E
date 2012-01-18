@@ -1074,7 +1074,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "settings") {
       var settings = {};
-      settings.experimental = getSetting("MissingE_experimentalFeatures_enabled",0);
       settings.component = request.component;
       switch(request.component) {
          case "askTweaks":
@@ -1693,6 +1692,7 @@ function fixupSettings() {
    moveAllSettings('dashboardFixes','dashboardTweaks');
    moveAllSettings('postingFixes','postingTweaks');
    clearSetting('MissingE_postingTweaks_uploaderToggle');
+   clearSetting('MissingE_experimentalFeatures_enabled');
    invertSetting('MissingE_dashboardTweaks_expandAll','MissingE_dashboardTweaks_noExpandAll');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
    moveSetting('MissingE_dashboardTweaks_followingLink','MissingE_sidebarTweaks_followingLink');

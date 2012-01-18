@@ -1138,7 +1138,6 @@ function handleRequest(request) {
    }
    else if (request.name == "all-settings") {
       var settings = {};
-      settings.MissingE_experimentalFeatures_enabled = getSetting("MissingE_experimentalFeatures_enabled",0);
       for (i=0; i<componentList.length; i++) {
          settings["MissingE_" + componentList[i] + "_enabled"] = getSetting("MissingE_" + componentList[i] + "_enabled", 1);
       }
@@ -1219,7 +1218,6 @@ function handleRequest(request) {
    else if (request.name == "settings") {
       var settings = {};
       settings.component = request.message.component;
-      settings.experimental = getSetting("MissingE_experimentalFeatures_enabled",0);
       switch(request.message.component) {
          case "askTweaks":
             settings.scroll = getSetting("MissingE_askTweaks_scroll",1);
@@ -1737,6 +1735,7 @@ function fixupSettings() {
    moveAllSettings('dashboardFixes','dashboardTweaks');
    moveAllSettings('postingFixes','postingTweaks');
    clearSetting('MissingE_postingTweaks_uploaderToggle');
+   clearSetting('MissingE_experimentalFeatures_enabled');
    invertSetting('MissingE_dashboardTweaks_expandAll','MissingE_dashboardTweaks_noExpandAll');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
    moveSetting('MissingE_dashboardTweaks_followingLink','MissingE_sidebarTweaks_followingLink');

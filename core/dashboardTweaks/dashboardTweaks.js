@@ -384,8 +384,7 @@ MissingE.packages.dashboardTweaks = {
          MissingE.packages.dashboardTweaks.addPostLinks();
       }
 
-      if (settings.experimental === 1 &&
-          settings.reblogReplies === 1 &&
+      if (settings.reblogReplies === 1 &&
           document.body.id !== "tinymce" &&
           document.body.id !== "dashboard_edit_post") {
 

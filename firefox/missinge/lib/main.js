@@ -143,7 +143,6 @@ var componentList = ["dashboardTweaks",
 function getAllSettings(getStale) {
    var settings = {};
    settings.greeting = "all-settings";
-   settings.MissingE_experimentalFeatures_enabled = getSetting("extensions.MissingE.experimentalFeatures.enabled",0);
    for (i=0; i<componentList.length; i++) {
       settings["MissingE_" + componentList[i] + "_enabled"] =
          getSetting("extensions.MissingE." + componentList[i] + ".enabled", 1);
@@ -1276,7 +1275,6 @@ function handleMessage(message, myWorker) {
       settings.greeting = "settings";
       settings.component = message.component;
       settings.subcomponent = message.subcomponent;
-      settings.experimental = getSetting("extensions.MissingE.experimentalFeatures.enabled",0);
       settings.extensionURL = data.url("");
       switch(message.component) {
          case "askTweaks":
@@ -1959,6 +1957,7 @@ function fixupSettings() {
    moveAllSettings('dashboardFixes','dashboardTweaks');
    moveAllSettings('postingFixes','postingTweaks');
    clearSetting('extensions.MissingE.postingTweaks.uploaderToggle');
+   clearSetting('extensions.MissingE.experimentalFeatures.enabled');
    invertSetting('extensions.MissingE.dashboardTweaks.expandAll','extensions.MissingE.dashboardTweaks.noExpandAll');
    moveSetting('extensions.MissingE.dashboardTweaks.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
    moveSetting('extensions.MissingE.dashboardTweaks.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
