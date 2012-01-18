@@ -35,15 +35,11 @@ MissingE.utilities.options = {
    setupPage: function() {
       $('input.toggler').checkbox();
 
-      $('#nav a.nav_item').live('click',function() {
+      $('#nav a.nav_item').click(function() {
          if (this.id === 'close_nav') { window.close(); }
          else {
             MissingE.utilities.options.doshow(this.id.replace(/_nav$/,''));
          }
-      });
-
-      $('#home_nav,#settings_nav').click(function() {
-         MissingE.utilities.options.doshow('about');
       });
 
       $('input.toggler').bind("change", function() {
@@ -52,7 +48,9 @@ MissingE.utilities.options = {
          MissingE.utilities.options.toggle(this);
       });
 
-      $('.simple_setting').bind("change", function() {
+      $('.section_options input.simple, .section_options input:checkbox, ' +
+        '.section_options input:radio, .section_options select')
+            .bind("change", function() {
          MissingE.utilities.options.doSetting(this, false);
       });
 
@@ -143,11 +141,12 @@ MissingE.utilities.options = {
          var val = obj.value;
          if (val === "1") { val = 1; }
          else if (val === "0") { val = 0; }
+         else if (val === "2") { val = 2; }
          MissingE.utilities.options.setStorage(obj.name, val);
       }
       else if (obj.type == "text") {
          if (isNumber) {
-            obj.value = trim(obj.value);
+            obj.value = MissingE.utilities.options.trim(obj.value);
             if (/[^\d]/.test(obj.value)) {
                obj.value = MissingE.utilities.options
                               .getStorage(obj.name, defaultValue);
@@ -188,7 +187,10 @@ MissingE.utilities.options = {
    },
 
    loadCheck: function(f, i, def) {
-      if (MissingE.utilities.options.getStorage(i,def) == 1) {
+      if (!f || !f[i]) {
+         console.log("Problem finding '" + f.id + "' option '" + i + "'.");
+      }
+      else if (MissingE.utilities.options.getStorage(i,def) == 1) {
          f[i].checked = true;
       }
       else { f[i].checked = false; }
@@ -214,28 +216,23 @@ MissingE.utilities.options = {
       $('span.defRetries').text(MissingE.defaultRetries);
       $('#versionnum').text(MissingE.utilities.options
                               .getStorage('MissingE_version',''));
-      var exp = document.getElementById("experimentalFeatures_options").active;
-      if (MissingE.utilities.options
-            .getStorage('MissingE_experimentalFeatures_enabled', 0) == 1) {
-         exp.checked = true;
-         $('#posts td.experimental').show();
-      }
-      else {
-         exp.checked = false;
-         $('#posts td.experimental').hide();
-      }
+
       for (i=0; i<componentList.length; i++) {
          var v = componentList[i];
          var frm = document.getElementById(v + "_options");
+         if (!frm) {
+            console.log("Unable to find '" + v + "' form.");
+            continue;
+         }
          var active = frm.active;
          if (MissingE.utilities.options
                .getStorage('MissingE_' + v + '_enabled', 1) == 1) {
             active.checked = true;
-            $(frm).closest('li').css('opacity','1');
+            $(frm).find('.section_main').css('opacity','1');
          }
          else {
             active.checked = false;
-            $(frm).closest('li').css('opacity','0.65');
+            $(frm).find('.section_main').css('opacity','0.5');
          }
          if (v == "askTweaks") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_scroll',1);
@@ -372,23 +369,13 @@ MissingE.utilities.options = {
          obj.checked = false;
          MissingE.utilities.options
                .setStorage('MissingE_' + component + '_enabled', 0);
-         if (component == 'experimentalFeatures') {
-            $('#posts td.experimental').hide();
-         }
-         else {
-            frm.closest('li').css('opacity','0.65');
-         }
+         frm.find('.section_main').css('opacity','0.5');
       }
       else {
          obj.checked = true;
          MissingE.utilities.options
                .setStorage('MissingE_' + component + '_enabled', 1);
-         if (component == 'experimentalFeatures') {
-            $('#posts td.experimental').show();
-         }
-         else {
-            frm.closest('li').css('opacity','1');
-         }
+         frm.find('.section_main').css('opacity','1');
       }
    },
 
@@ -396,37 +383,35 @@ MissingE.utilities.options = {
       var itm;
       if (component == 'about') {
          document.getElementById('about_nav').className = 'nav_item active';
-         document.getElementById('about_posts').style.display = 'block';
-         document.getElementById('experimental_section').style.display = 'none';
+         document.getElementById('about_container').style.display = 'block';
       }
       else {
          document.getElementById('about_nav').className = 'nav_item';
-         document.getElementById('about_posts').style.display = 'none';
-         document.getElementById('experimental_section').style.display = 'block';
+         document.getElementById('about_container').style.display = 'none';
       }
       if (component == 'dashboard') {
          document.getElementById('dashboard_nav').className = 'nav_item active';
-         document.getElementById('dashboard_posts').style.display = 'block';
+         document.getElementById('dashboard_container').style.display = 'block';
       }
       else {
          document.getElementById('dashboard_nav').className = 'nav_item';
-         document.getElementById('dashboard_posts').style.display = 'none';
+         document.getElementById('dashboard_container').style.display = 'none';
       }
       if (component == 'posting') {
          document.getElementById('posting_nav').className = 'nav_item active';
-         document.getElementById('posting_posts').style.display = 'block';
+         document.getElementById('posting_container').style.display = 'block';
       }
       else {
          document.getElementById('posting_nav').className = 'nav_item';
-         document.getElementById('posting_posts').style.display = 'none';
+         document.getElementById('posting_container').style.display = 'none';
       }
       if (component == 'social') {
          document.getElementById('social_nav').className = 'nav_item active';
-         document.getElementById('social_posts').style.display = 'block';
+         document.getElementById('social_container').style.display = 'block';
       }
       else {
          document.getElementById('social_nav').className = 'nav_item';
-         document.getElementById('social_posts').style.display = 'none';
+         document.getElementById('social_container').style.display = 'none';
       }
    },
 
@@ -438,7 +423,7 @@ MissingE.utilities.options = {
          closeImage   : '../lib/facebox/closelabel.png'
       });
 
-      $("#exportdiv").click(MissingE.utilities.options.exportSettings);
+      $("#export_button").click(MissingE.utilities.options.exportSettings);
       $("#import").change(function() {
          MissingE.utilities.importSettings(this, $('#settingsframe').get(0));
       });

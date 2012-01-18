@@ -66,6 +66,7 @@ MissingE = {
                      if (response.msg) { alert(response.msg); }
                      if (response.success) {
                         extension.sendRequest("open", {url: "OPTIONS"});
+                        window.close();
                      }
                      else {
                         form.reset();
