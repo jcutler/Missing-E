@@ -167,6 +167,8 @@ function getAllSettings(getStale) {
    settings.MissingE_dashboardTweaks_massDelete = getSetting("extensions.MissingE.dashboardTweaks.massDelete",1);
    settings.MissingE_dashboardTweaks_randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0);
    settings.MissingE_dashboardTweaks_sortableNotes = getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1);
+   settings.MissingE_dashboardTweaks_notePreview = getSetting("extensions.MissingE.dashboardTweaks.notePreview",1);
+   settings.MissingE_dashboardTweaks_previewRetries = getSetting("extensions.MissingE.dashboardTweaks.previewRetries",MissingE.defaultRetries);
    settings.MissingE_sidebarTweaks_retries = getSetting("extensions.MissingE.sidebarTweaks.retries",MissingE.defaultRetries);
    settings.MissingE_sidebarTweaks_addSidebar = getSetting("extensions.MissingE.sidebarTweaks.addSidebar",0);
    settings.MissingE_sidebarTweaks_slimSidebar = getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0);
@@ -462,6 +464,20 @@ function doTags(stamp, id, theWorker) {
    return true;
 }
 
+function doPreview(stamp, id, theWorker) {
+   var i;
+   if (!stamp.photos) {
+      debug("Cache entry does not have photos");
+      return false;
+   }
+   var photos = [];
+   for (i=0; i<stamp.photos.length; i++) {
+      photos.push(stamp.photos[i].replace(/\d+\.([a-z]+)$/,"100.$1"));
+   }
+   theWorker.postMessage({greeting: "preview", success: true, pid: id, data: photos});
+   return true;
+}
+
 function doTimestamp(stamp, id, theWorker) {
    if (!stamp.timestamp) {
       debug("Cache entry does not have timestamp");
@@ -568,6 +584,9 @@ function runItem(call) {
    }
    else if (call.type === "tags") {
       startTags(call.message, call.worker);
+   }
+   else if (call.type === "preview") {
+      startPreview(call.message, call.worker);
    }
 }
 
@@ -748,6 +767,34 @@ function checkPermission(user, count, myWorker, retries) {
    }).get();
 }
 
+function parseRSS(data) {
+   var info = {};
+   var i;
+   var tags = data.match(/<category>[^<]*<\/category>/g);
+   if (!tags) { tags = []; }
+   for (i=0; i<tags.length; i++) {
+      tags[i] = tags[i].replace(/^<category>/,'')
+                     .replace(/<\/category>$/,'');
+   }
+   info.tags = tags;
+
+   var photos = [];
+   var desc = data.match(/<description>&lt;img[^<]*/);
+   if (desc) {
+      desc = desc[0].replace(/^<description>/,'');
+      while (/^&lt;img/.test(desc)) {
+         var img = desc.match(/src="([^"]*)"/);
+         if (img && img.length > 1) {
+            photos.push(img[1].replace(/http:\/\/[0-9]+\./,'http://'));
+         }
+         desc = desc.replace(/^&lt;img[^&]*(&gt;|[^&]+)+/,'');
+         desc = desc.replace(/^(&lt;br\/&gt;|\s)+/,'');
+      }
+   }
+   info.photos = photos;
+   return info;
+}
+
 function doTagsAjax(url, pid, count, myWorker, retries) {
    var failMsg = {greeting:"tags", success:false, pid:pid};
    Request({
@@ -795,18 +842,69 @@ function doTagsAjax(url, pid, count, myWorker, retries) {
             }
          }
          else {
-            var i;
-            var tags = response.text.match(/<category>[^<]*<\/category>/g);
-            if (!tags) { tags = []; }
-            for (i=0; i<tags.length; i++) {
-               tags[i] = tags[i].replace(/^<category>/,'')
-                              .replace(/<\/category>$/,'');
-            }
-            var info = {"tags":tags};
+            var info = parseRSS(response.text);
             saveCache(this.headers.targetId, info);
             dequeueAjax(this.headers.targetId);
             if (!closed) {
                doTags(info, this.headers.targetId, myWorker);
+            }
+         }
+      }
+   }).get();
+}
+
+function doPreviewAjax(url, pid, count, myWorker, retries) {
+   var failMsg = {greeting:"preview", success:false, pid:pid};
+   Request({
+      url: url,
+      headers: {tryCount: count,
+                retryLimit: retries,
+                targetId: pid},
+      onComplete: function(response) {
+         var goodData = /<guid>[^<]*<\/guid>/.test(response.text);
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
+         if (response.status === 404) {
+            debug("preview request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         if (response.status != 200 || !goodData) {
+            if (closed) {
+               debug("Stop preview request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
+            if (cacheServe("preview", this.headers.targetId, myWorker,
+                           doPreview, true)) {
+               return true;
+            }
+            else {
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  debug("Retry preview request (" + this.headers.targetId + ")");
+                  doPreviewAjax(this.url,
+                         this.headers.targetId, (this.headers.tryCount + 1),
+                         myWorker, this.headers.retryLimit);
+               }
+               else {
+                  debug("preview request (" + this.headers.targetId + ") failed");
+                  dequeueAjax(this.headers.targetId);
+                  myWorker.postMessage(failMsg);
+               }
+            }
+         }
+         else {
+            var info = parseRSS(response.text);
+            saveCache(this.headers.targetId, info);
+            dequeueAjax(this.headers.targetId);
+            if (!closed) {
+               doPreview(info, this.headers.targetId, myWorker);
             }
          }
       }
@@ -919,6 +1017,33 @@ function startTags(message, myWorker) {
       startAjax(message.pid);
       doTagsAjax(url, message.pid, 0, myWorker,
              getSetting("extensions.MissingE.betterReblogs.retries",MissingE.defaultRetries));
+   }
+}
+
+function startPreview(message, myWorker) {
+   try {
+      var tab = myWorker.tab;
+   }
+   catch (err) {
+      debug("Stop preview request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   if (cacheServe("preview", message.pid, myWorker, doPreview, false)) {
+      return true;
+   }
+   else if (isRequested({type: "preview", message: message, worker: myWorker})) {
+      return true;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "preview", message: message, worker: myWorker});
+   }
+   else {
+      var url = message.url + "/post/" + message.pid + "/rss";
+      debug("AJAX preview request (" + message.pid + ")");
+      startAjax(message.pid);
+      doPreviewAjax(url, message.pid, 0, myWorker,
+             getSetting("extensions.MissingE.dashboardTweaks.previewRetries",MissingE.defaultRetries));
    }
 }
 
@@ -1165,6 +1290,9 @@ function handleMessage(message, myWorker) {
    else if (message.greeting == "betterReblogs") {
       startBetterReblogsAsk(message, myWorker);
    }
+   else if (message.greeting == "preview") {
+      startPreview(message, myWorker);
+   }
    else if (message.greeting == "magnifier") {
       startMagnifier(message, myWorker);
    }
@@ -1314,6 +1442,7 @@ function handleMessage(message, myWorker) {
             settings.massDelete = getSetting("extensions.MissingE.dashboardTweaks.massDelete",1);
             settings.randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0);
             settings.sortableNotes = getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1);
+            settings.notePreview = getSetting("extensions.MissingE.dashboardTweaks.notePreview",1);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getSetting("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
@@ -1398,6 +1527,20 @@ function handleMessage(message, myWorker) {
                        "tagged"])) {
 
          if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
+            if (getSetting("extensions.MissingE.dashboardTweaks.notePreview",1) == 1) {
+               injectStyles.push({file: "core/dashboardTweaks/preview.css"});
+               injectStyles.push({code:
+                  '#MissingE_preview.MissingE_preview_loading { ' +
+                     'background-image:url("' +
+                     data.url("core/dashboardTweaks/loader.gif") +
+                     '");' +
+                  '}' +
+                  '#MissingE_preview.MissingE_preview_fail { ' +
+                     'background-image:url("' +
+                     data.url("core/dashboardTweaks/prevFail.png") +
+                     '");' +
+                  '}'});
+            }
             if (getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1) == 1) {
                injectStyles.push({code:
                   '#posts .post .post_controls a[href^="/reblog"], ' +
