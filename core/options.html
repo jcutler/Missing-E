@@ -166,7 +166,11 @@ function loadScripts() {
         <td>Show small preview thumbnail for reblog/like/reply notifications of photo posts</td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_notePreview" /></td>
        </tr>
-       <tr class="alt experimental">
+       <tr class="alt subopt">
+        <td>Number of retries on failure to load photo URL (default <span class="defRetries">4</span>)</td>
+        <td style="white-space:nowrap;"><input class="setting_retry numinput" type="text" name="MissingE_dashboardTweaks_previewRetries" value="4" size="1" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
+       </tr>
+       <tr class="experimental">
         <td><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br />
          <small><em><a target="_blank" href="http://missing-e.com/faq#experimental-reblogReplies">About this experimental feature</a></em></small>
         </td>

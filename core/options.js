@@ -308,6 +308,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_randomQueue',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_sortableNotes',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_notePreview',1);
+            frm.MissingE_dashboardTweaks_previewRetries.value = MissingE.utilities.options.getStorage('MissingE_dashboardTweaks_previewRetries',MissingE.defaultRetries);
          }
          else if (v == "betterReblogs") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_passTags',1);
