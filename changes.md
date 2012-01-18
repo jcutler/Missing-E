@@ -78,7 +78,8 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.3.17** (not yet released)
+##**2.3.17** (01/18/2012)
+**_+_** Photo post notification preview added to Dashboard Tweaks  
 **_!_** Restyling settings page
 
 ##**2.3.16** (01/16/2012)
