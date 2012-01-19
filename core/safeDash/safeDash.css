@@ -49,7 +49,7 @@ body.MissingE_safeDash #posts li.post.photo .flipcard img,
 body.MissingE_safeDash #posts li.post .post_content p img,
 body.MissingE_safeDash #posts li.post .post_content img.album_art,
 body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"] {
-display:inline-block !important;
+display:inline-block;
 background-color:#BFBFBF !important;
 background-repeat:no-repeat !important;
 background-position:top right !important;
