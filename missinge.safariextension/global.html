@@ -1541,6 +1541,7 @@ function handleRequest(request) {
          }
 
          if (getSetting("MissingE_safeDash_enabled",1) == 1) {
+            injectStyles.push({file: "core/safeDash/safeDash.css"});
             if (getSetting("MissingE_safeDash_photosetAll",0) == 1) {
                injectStyles.push({file: "core/safeDash/photosetAll.css"});
             }
