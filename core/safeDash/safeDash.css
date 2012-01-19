@@ -125,7 +125,8 @@ body.MissingE_safeDash #posts li.notification blockquote[style] img:hover {
 opacity:1;
 }
 
-body.MissingE_safeDash #posts li.post:not(#new_post) {
+/* THIS SCREWS UP AVATAR_AND_I */
+body.MissingE_safeDash #posts li.post:not(#new_post):not(.fan_mail) {
 overflow:hidden;
 padding-left:0 !important;
 border-left:20px solid transparent !important;

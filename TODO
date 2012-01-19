@@ -4,3 +4,6 @@ Change all features that pass info to new tabs to no longer use localStorage
 
 Test preview on Mac
 Upload new features page
+
+Fix new Safe Dash implementation
+- friggin overflow weird behaviour
