@@ -78,8 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.3.17** (not yet released)
+##**2.4.0** (not yet released)
 **_+_** Photo post notification preview added to Dashboard Tweaks  
+**_+_** Add Safe Dash setting to enable revealing photosets all at once  
+**_!_** Improve performance of Safe Dash  
 **_!_** Restyling settings page
 
 ##**2.3.16** (01/16/2012)
