@@ -22,7 +22,7 @@
  */
 
 #MissingE_preview {
-display:block;
+display:none;
 position:absolute;
 width:100px;
 min-height:20px;
