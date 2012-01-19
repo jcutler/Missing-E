@@ -26,19 +26,13 @@
 MissingE.packages.safeDash = {
 
    undoNSFW: function() {
-      $('#posts .nsfwed, img.nsfw_overlay').css('opacity','1');
-      $('#posts div.nsfwembed span.nsfwed, ' +
-        '#posts div.nsfwembed .nsfwvid').css('visibility','visible');
+      $('body').removeClass('MissingE_safeDash');
       $('#MissingE_safeDash li:first').removeClass('selected');
-      $('#posts li div.nsfwdiv').addClass('nsfwoff');
    },
 
    doNSFW: function() {
-      $('#posts .nsfwed, img.nsfw_overlay').css('opacity','0');
-      $('#posts div.nsfwembed span.nsfwed, ' +
-        '#posts div.nsfwembed .nsfwvid').css('visibility','hidden');
+      $('body').addClass('MissingE_safeDash');
       $('#MissingE_safeDash li:first').addClass('selected');
-      $('#posts li div.nsfwdiv').removeClass('nsfwoff');
    },
 
    doHide: function(item, retry) {
@@ -274,21 +268,8 @@ MissingE.packages.safeDash = {
 
    run: function() {
       this.lock = extension.getURL("core/safeDash/lock.png");
-      $('head').prepend('<style type="text/css">' +
-         '#posts .post img, .notification blockquote img, ' +
-         '.video_thumbnail .nsfwdiv + div { opacity:' +
-         (MissingE.getStorage('MissingE_safeDash_state', 0) === 0 ? '1' : '0') +
-         '; } #posts #new_post img { opacity:1; } ' +
-         '.nsfwdiv { background:#BFBFBF url("' + this.lock + '") no-repeat ' +
-         'scroll center center !important; } #right_column ' +
-         '#MissingE_safeDash li a {' +
-         'background-image:url("' +
-         extension.getURL("core/safeDash/lockicon.png") + '") !important; } ' +
-         '.nsfwoff { background:#FFFFFF !important; }</style>');
-
-      var npBG = $('#new_post').css('background-image');
-      if (npBG && npBG !== "none") {
-         $('#new_post img').css('cssText','opacity:0 !important;');
+      if (MissingE.getStorage('MissingE_safeDash_state', 0) === 1) {
+         $('body').addClass('MissingE_safeDash');
       }
 
       var sdlnk = '<ul class="controls_section" id="MissingE_safeDash">' +
@@ -311,14 +292,6 @@ MissingE.packages.safeDash = {
          $('#right_column').append(sdlnk);
       }
 
-      $('.video_thumbnail div:empty').live('mouseover', function() {
-         $(this).parent().find('.nsfwed').css('opacity','1');
-      }).live('mouseout', function() {
-         if (MissingE.getStorage('MissingE_safeDash_state',0)===1) {
-            $(this).parent().find('.nsfwed').css('opacity','0');
-         }
-      });
-
       $('#nsfwctrl').click(function() {
          var state = 1-MissingE.getStorage('MissingE_safeDash_state',0);
          MissingE.setStorage('MissingE_safeDash_state',state);
@@ -328,27 +301,6 @@ MissingE.packages.safeDash = {
          else {
             MissingE.packages.safeDash.doNSFW();
          }
-      });
-
-      extension.addAjaxListener(function(type,list){
-         if (type === 'notes') {
-            MissingE.packages.safeDash
-               .doHide($('#' + list[0] + ' ol.notes').get(0));
-         }
-         else {
-            $.each(list, function(i,val) {
-               MissingE.packages.safeDash.doHide($('#'+val).get(0));
-            });
-            $('#posts li.notification').filter(function(){
-               return $('blockquote img:not(.nsfwdone)',this).length !== 0;
-            }).each(function() {
-               MissingE.packages.safeDash.doHide(this);
-            });
-         }
-      });
-
-      $('#posts li.post ol.notes').live('mouseover', function() {
-         MissingE.packages.safeDash.doHide(this);
       });
 
       window.addEventListener('storage', function(e) {
@@ -361,15 +313,6 @@ MissingE.packages.safeDash = {
             MissingE.packages.safeDash.doNSFW();
          }
       }, false);
-
-      $('#posts li.post, #posts li.notification, ol.notes').each(function(){
-         MissingE.packages.safeDash.doHide(this);
-      });
-
-      $('#posts a.video_thumbnail').live('click', function() {
-         MissingE.packages.safeDash.doHide($(this).parent()
-                .find('div.video_embed object,div.video_embed iframe').get(0));
-      });
    },
 
    init: function() {

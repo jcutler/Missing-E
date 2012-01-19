@@ -38,89 +38,131 @@ background-position:12px 0 !important;
 background-position:12px -29px !important;
 }
 
-#posts .post .post_controls img, #posts .post img:hover, .notification blockquote img:hover, #posts .post .post_question_nipple+div img, #posts .post .footer_links .source_url img, .notes .note a img, .video_thumbnail .nsfwdiv + div:hover, .video_thumbnail .nsfwdiv:hover, .nsfwphotoset:hover .nsfwdiv img, .editor_controls img {
-opacity:1 !important;
-}
-
-.nsfwphotoset .nsfwdiv {
-width:60px;
-height:60px;
-}
-
-.nsfwphotoset:hover .nsfwdiv {
-background:transparent !important;
-}
-
-.nsfwphotoset {
-border-radius:5px;
-}
-
-.nsfwphotoset .nsfwphotoset1 {
-border-top-right-radius:5px;
-}
-
-.nsfwphotoset .nsfwphotoset2 {
-border-bottom-right-radius:5px;
-}
-
-.nsfwphotoset .nsfwphotoset3 {
-border-bottom-left-radius:5px;
-}
-
-.nsfwphotoset .nsfwphotoset4 {
-border-top-left-radius:5px;
-}
-
-.nsfwdiv {
+body.MissingE_safeDash #posts li.post.photo .post_content > div:first-child,
+body.MissingE_safeDash #posts li.post.photo .photoset_photo,
+body.MissingE_safeDash #posts li.post.photo img.image_thumbnail,
+body.MissingE_safeDash #posts li.post.video .video_thumbnail,
+body.MissingE_safeDash #posts li.post.video .video_embed,
+body.MissingE_safeDash #posts li.post.video span[id^="video_player"],
+body.MissingE_safeDash #posts li.notification blockquote[style],
+body.MissingE_safeDash #posts li.post.photo .flipcard img,
+body.MissingE_safeDash #posts li.post .post_content p img,
+body.MissingE_safeDash #posts li.post .post_content img.album_art,
+body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"] {
 display:inline-block !important;
-max-width:100%;
+background-color:#BFBFBF !important;
+background-repeat:no-repeat !important;
+background-position:top right !important;
+border-clip:content-box;
+box-shadow:none !important;
 }
 
-.nsfwdiv:hover, .nsfwoff {
-background:#FFFFFF !important
+body.MissingE_safeDash #posts li.post.photo .post_content > div.flipcard {
+display:block !important;
 }
 
-.nsfwphotoset .nsfwoff {
-background:transparent !important;
-}
-
-#posts .post .video_thumbnail .nsfwdiv {
-position:static !important;
-}
-
-#right_column .dashboard_nav_item ul.dashboard_subpages li a .icon.dashboard_controls_nsfw {
-background-position:0px 0px;
-}
-
-.video.nsfwembed:hover .nsfwvid {
-visibility:visible !important;
-}
-
-.nsfwembed:hover .nsfwed {
-opacity:1 !important;
-visibility:visible !important;
-}
-
-.nsfwembed {
-clear:both;
+body.MissingE_safeDash #posts li.post.photo .post_content > div:first-child a,
+body.MissingE_safeDash #posts li.post.photo .flipcard a,
+body.MissingE_safeDash #posts li.post.photo .photoset {
 display:inline-block;
 }
 
-.video.nsfwembed {
-display:block;
+body.MissingE_safeDash #posts li.post.photo .photoset_photo {
+height:100%;
 }
 
-.nsfwdiv img.album_art, .nsfwdiv img.image_thumbnail {
-margin-right:0px !important;
+body.MissingE_safeDash #posts li.notification blockquote[style] {
+display:inline-block;
+position:relative;
+width:auto !important;
+background-clip:content-box;
 }
 
-.album_nsfwdiv {
-margin-right:20px;
+body.MissingE_safeDash #posts li.notification blockquote[style] img {
+box-sizing:border-box;
 float:left;
+opacity:0;
 }
 
-.album_nsfwdiv_enlarged {
-margin-bottom:20px;
-margin-right:0 !important;
-float:none !important;
+body.MissingE_safeDash #posts li.post.photo .post_content > div:first-child:not(.flipcard) img,
+body.MissingE_safeDash #posts li.post.photo .photoset_photo img {
+-webkit-transform:scaleX(0);
+-moz-transform:scaleX(0);
+}
+
+body.MissingE_safeDash #posts li.post.photo .post_content > div.flipcard,
+body.MissingE_safeDash #posts li.post.photo .post_content div:hover,
+body.MissingE_safeDash #posts li.post.photo .photoset:hover .photoset_photo,
+body.MissingE_safeDash #posts li.post.photo img.image_thumbnail:hover,
+body.MissingE_safeDash #posts li.post.video .video_thumbnail:hover,
+body.MissingE_safeDash #posts li.post.video .video_embed:hover,
+body.MissingE_safeDash #posts li.post.video span[id^="video_player"]:hover,
+body.MissingE_safeDash #posts li.post.photo .flipcard img:hover,
+body.MissingE_safeDash #posts li.post .post_content p img:hover,
+body.MissingE_safeDash #posts li.post .post_content img.album_art:hover,
+body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"]:hover {
+background:transparent !important;
+}
+
+body.MissingE_safeDash #posts li.post.photo .post_content div:hover img,
+body.MissingE_safeDash #posts li.post.photo .photoset:hover img {
+-webkit-transform:scaleX(1) !important;
+-moz-transform:scaleX(1) !important;
+}
+
+body.MissingE_safeDash #posts li.post.video .video_thumbnail img,
+body.MissingE_safeDash #posts li.post.video .video_thumbnail div,
+body.MissingE_safeDash #posts li.post.video .video_embed iframe,
+body.MissingE_safeDash #posts li.post.video span[id^="video_player"] embed {
+opacity:0;
+}
+
+body.MissingE_safeDash #posts li.post.video .video_thumbnail:hover img,
+body.MissingE_safeDash #posts li.post.video .video_thumbnail:hover div,
+body.MissingE_safeDash #posts li.post.video .video_embed:hover iframe,
+body.MissingE_safeDash #posts li.post.video span[id^="video_player"]:hover embed,
+body.MissingE_safeDash #posts li.notification blockquote[style] img:hover {
+opacity:1;
+}
+
+body.MissingE_safeDash #posts li.post {
+overflow:hidden;
+         padding-left:0 !important;
+         border-left:20px solid transparent !important;
+}
+
+body.MissingE_safeDash #posts li.post .post_content p {
+overflow:hidden;
+}
+
+body.MissingE_safeDash #posts li.post .post_content p:empty {
+overflow:visible;
+}
+
+body.MissingE_safeDash #posts li.post.photo .image_thumbnail:not(.enlarged) ~ .caption p:first-child:empty,
+body.MissingE_safeDash #posts li.post.photo .image_thumbnail:not(.enlarged) ~ .caption p:first-child *:only-child:empty {
+display:block !important;
+margin-top:-10px !important;
+}
+
+body.MissingE_safeDash #posts li.post .post_content p:empty {
+display:none !important;
+}
+
+body.MissingE_safeDash #posts li.post.photo .flipcard img,
+body.MissingE_safeDash #posts li.post .post_content p img,
+body.MissingE_safeDash #posts li.post.photo img.image_thumbnail,
+body.MissingE_safeDash #posts li.post .post_content img.album_art,
+body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"] {
+padding-right:100% !important;
+margin-left:-100% !important;
+}
+
+body.MissingE_safeDash #posts li.post.photo .flipcard img:hover,
+body.MissingE_safeDash #posts li.post .post_content p img:hover,
+body.MissingE_safeDash #posts li.post.photo img.image_thumbnail:hover,
+body.MissingE_safeDash #posts li.post .post_content img.album_art:hover,
+body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"]:hover {
+padding-right:0 !important;
+margin-left:0 !important;
 }
