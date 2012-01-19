@@ -86,13 +86,13 @@ opacity:0;
 
 body.MissingE_safeDash #posts li.post.photo .post_content > div:first-child:not(.flipcard) img,
 body.MissingE_safeDash #posts li.post.photo .photoset_photo img {
--webkit-transform:scaleX(0);
--moz-transform:scaleX(0);
+-webkit-transform:scaleX(0) !important;
+-moz-transform:scaleX(0) !important;
 }
 
 body.MissingE_safeDash #posts li.post.photo .post_content > div.flipcard,
 body.MissingE_safeDash #posts li.post.photo .post_content div:hover,
-body.MissingE_safeDash #posts li.post.photo .photoset:hover .photoset_photo,
+body.MissingE_safeDash #posts li.post.photo .photoset .photoset_photo:hover,
 body.MissingE_safeDash #posts li.post.photo img.image_thumbnail:hover,
 body.MissingE_safeDash #posts li.post.video .video_thumbnail:hover,
 body.MissingE_safeDash #posts li.post.video .video_embed:hover,
@@ -105,9 +105,14 @@ background:transparent !important;
 }
 
 body.MissingE_safeDash #posts li.post.photo .post_content div:hover img,
-body.MissingE_safeDash #posts li.post.photo .photoset:hover img {
+body.MissingE_safeDash #posts li.post.photo .post_content .photoset .photoset_photo:hover img {
 -webkit-transform:scaleX(1) !important;
 -moz-transform:scaleX(1) !important;
+}
+
+body.MissingE_safeDash #posts li.post.photo .post_content .photoset:hover img {
+-webkit-transform:scaleX(0) !important;
+-moz-transform:scaleX(0) !important;
 }
 
 body.MissingE_safeDash #posts li.post.video .video_thumbnail img,
@@ -125,25 +130,15 @@ body.MissingE_safeDash #posts li.notification blockquote[style] img:hover {
 opacity:1;
 }
 
-/* THIS SCREWS UP AVATAR_AND_I */
-body.MissingE_safeDash #posts li.post:not(#new_post):not(.fan_mail) {
-overflow:hidden;
-padding-left:0 !important;
-border-left:20px solid transparent !important;
-}
-
+body.MissingE_safeDash #posts li.post .post_content,
 body.MissingE_safeDash #posts li.post .post_content p {
 overflow:hidden;
 }
 
+body.MissingE_safeDash #posts li.post.video .post_content,
+body.MissingE_safeDash #posts li.post.regular .post_content,
 body.MissingE_safeDash #posts li.post .post_content p:empty {
 overflow:visible;
-}
-
-body.MissingE_safeDash #posts li.post.photo .image_thumbnail:not(.enlarged) ~ .caption p:first-child:empty,
-body.MissingE_safeDash #posts li.post.photo .image_thumbnail:not(.enlarged) ~ .caption p:first-child *:only-child:empty {
-display:block !important;
-margin-top:-10px !important;
 }
 
 body.MissingE_safeDash #posts li.post .post_content p:empty {

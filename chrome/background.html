@@ -1399,6 +1399,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
          if (getSetting("MissingE_safeDash_enabled",1) == 1) {
             chrome.tabs.insertCSS(sender.tab.id, {file: "core/safeDash/safeDash.css"});
+            if (getSetting("MissingE_safeDash_photosetAll",0) == 1) {
+               console.log("photoset");
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/safeDash/photosetAll.css"});
+            }
             chrome.tabs.insertCSS(sender.tab.id, {code:
                '#right_column #MissingE_safeDash li a {' +
                   'background-image:url("' +

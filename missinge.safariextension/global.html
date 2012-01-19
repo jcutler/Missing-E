@@ -1281,6 +1281,7 @@ function handleRequest(request) {
       for (i=0; i<componentList.length; i++) {
          settings["MissingE_" + componentList[i] + "_enabled"] = getSetting("MissingE_" + componentList[i] + "_enabled", 1);
       }
+      settings.MissingE_safeDash_photosetAll = getSetting("MissingE_safeDash_photosetAll",0);
       settings.MissingE_askTweaks_scroll = getSetting("MissingE_askTweaks_scroll",1);
       settings.MissingE_askTweaks_betterAnswers = getSetting("MissingE_askTweaks_betterAnswers",0);
       settings.MissingE_askTweaks_tagAsker = getSetting("MissingE_askTweaks_tagAsker",1);
@@ -1540,6 +1541,9 @@ function handleRequest(request) {
          }
 
          if (getSetting("MissingE_safeDash_enabled",1) == 1) {
+            if (getSetting("MissingE_safeDash_photosetAll",0) == 1) {
+               injectStyles.push({file: "core/safeDash/photosetAll.css"});
+            }
             injectStyles.push({code:
                '#right_column #MissingE_safeDash li a {' +
                   'background-image:url("' +

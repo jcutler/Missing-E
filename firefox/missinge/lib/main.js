@@ -147,6 +147,7 @@ function getAllSettings(getStale) {
       settings["MissingE_" + componentList[i] + "_enabled"] =
          getSetting("extensions.MissingE." + componentList[i] + ".enabled", 1);
    }
+   settings.MissingE_safeDash_photosetAll = getSetting("extensions.MissingE.safeDash.photosetAll",0);
    settings.MissingE_askTweaks_scroll = getSetting("extensions.MissingE.askTweaks.scroll",1);
    settings.MissingE_askTweaks_betterAnswers = getSetting("extensions.MissingE.askTweaks.betterAnswers",0);
    settings.MissingE_askTweaks_tagAsker = getSetting("extensions.MissingE.askTweaks.tagAsker",1);
@@ -1593,6 +1594,9 @@ function handleMessage(message, myWorker) {
 
          if (getSetting("extensions.MissingE.safeDash.enabled",1) == 1) {
             injectStyles.push({file: "core/safeDash/safeDash.css"});
+            if (getSetting("extensions.MissingE.safeDash.photosetAll",0) == 1) {
+               injectStyles.push({file: "core/safeDash/photosetAll.css"});
+            }
             injectStyles.push({code:
                '#right_column #MissingE_safeDash li a {' +
                   'background-image:url("' +

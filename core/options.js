@@ -310,6 +310,9 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_notePreview',1);
             frm.MissingE_dashboardTweaks_previewRetries.value = MissingE.utilities.options.getStorage('MissingE_dashboardTweaks_previewRetries',MissingE.defaultRetries);
          }
+         else if (v == "safeDash") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_safeDash_photosetAll',0);
+         }
          else if (v == "betterReblogs") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_passTags',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_autoFillTags',1);
