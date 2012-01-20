@@ -84,7 +84,7 @@ color:#4183c4;
 **_!_** Improve performance of Safe Dash  
 **_!_** Restyling settings page
 
-##**2.3.16** (01/16/2012)
+##**2.3.16** (01/20/2012)
 **_!_** Fix pre-loading of "don't expand/minimize all thumbnail" option on Safari  
 **_!_** Update Mass Editor Tweaks screenshot
 
