@@ -7,3 +7,4 @@ Upload new features page
 
 Fix new Safe Dash implementation
 - friggin overflow weird behaviour
+- instead, will have to wrap inline images. STUPID CSS.
