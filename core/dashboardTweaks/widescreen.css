@@ -35,6 +35,10 @@ min-width:900px;
 width:100% !important;
 }
 
+#posts li.post .post_content {
+width:100% !important;
+}
+
 #header #tabs_outter_container {
 left:auto !important;
 right:17px !important;
