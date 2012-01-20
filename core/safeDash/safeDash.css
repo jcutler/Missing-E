@@ -110,6 +110,7 @@ background:transparent !important;
 }
 
 body.MissingE_safeDash #posts li.post.photo .post_content div:hover img,
+body.MissingE_safeDash #posts li.post.photo .post_content > div:first-child:not(.flipcard):hover img,
 body.MissingE_safeDash #posts li.post.photo .post_content .photoset .photoset_photo:hover img {
 -webkit-transform:scaleX(1) !important;
 -moz-transform:scaleX(1) !important;
