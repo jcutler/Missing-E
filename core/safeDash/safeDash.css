@@ -78,6 +78,7 @@ display:inline-block;
 position:relative;
 width:auto !important;
 background-clip:content-box;
+max-width:100%;
 }
 
 body.MissingE_safeDash #posts li.notification blockquote[style] img,
