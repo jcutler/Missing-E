@@ -35,235 +35,14 @@ MissingE.packages.safeDash = {
       $('#MissingE_safeDash li:first').addClass('selected');
    },
 
-   doHide: function(item, retry) {
-      var safe;
-      if (!retry) { retry = 0; }
-      safe = (MissingE.getStorage('MissingE_safeDash_state', 0) !== 0);
-      var node = $(item);
-      if (item.tagName === 'LI') {
-         if (node.hasClass('notification')) {
-            $('blockquote img:not(.nsfwdone)',node).each(function(){
-               var klass = "";
-               var me=$(this);
-               me.unbind('readystatechange.MissingE_sd');
-               if (me.get(0).readyState === 'uninitialized') {
-                  me.bind('readystatechange.MissingE_sd', function() {
-                     MissingE.packages.safeDash.doHide(item);
-                  });
-                  return;
-               }
-               else if (!safe) {
-                  me.css('opacity','1');
-                  klass = 'nsfwoff';
-               }
-               else {
-                  me.css('opacity','0');
-               }
-               var h = me.height();
-               var w = me.width();
-               var myst = {"min-height": h + "px",
-                           "min-width": w + "px"};
-               var s = $('<div />', {"class": "nsfwdiv " + klass}).css(myst);
-               me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
-            });
-         }
-         else if (node.hasClass('post') && node.attr('id') !== 'new_post') {
-            var pid = node.attr('id').match(/\d*$/)[0];
-            var vid = node.find('#video_player_' + pid);
-            if (vid.length > 0 && vid.find('embed').length === 0) {
-               if (retry < 4) {
-                  setTimeout(function(){
-                     MissingE.packages.safeDash.doHide(node.get(0), retry+1);
-                  }, 500);
-               }
-            }
-            $('img:not(.nsfwdone),embed.video_player:not(.nsfwdone)',node)
-                  .each(function(){
-               var addClear = false;
-               var klass = "";
-               var me = $(this);
-               if (me.parents('#new_post').size()>0 ||
-                   me.parents('.post_controls').size()>0 ||
-                   me.parents('.footer_links').size()>0) {
-                  me.addClass('nsfwdone');
-                  return;
-               }
-               if (/^audio_node_\d*$/.test(me.prev().attr('id')) ||
-                   me.parents('.so_ie_doesnt_treat_this_as_inline').size()>0) {
-                  me.css('opacity','1').addClass('nsfwdone');
-                  return;
-               }
-               if (!me.hasClass('video_player') &&
-                   me.get(0).readyState === 'uninitialized') {
-                  me.bind('readystatechange.MissingE_sd', function() {
-                     MissingE.packages.safeDash.doHide(item);
-                  });
-                  return;
-               }
-               else if (me.hasClass('video_player')) {
-                  me.addClass('nsfwvid').addClass('nsfwdone').parent()
-                     .addClass('nsfwed').parent().addClass('nsfwembed')
-                     .css('background',
-                          'url("' + MissingE.packages.safeDash.lock + '") ' +
-                          'no-repeat scroll center center #BFBFBF');
-
-                  if (!safe) {
-                     me.parent().css('visibility','visible');
-                  }
-                  else {
-                     me.parent().css('visibility','hidden');
-                  }
-                  return;
-               }
-               else if (!safe) {
-                  me.css('opacity','1');
-                  klass = 'nsfwoff';
-               }
-               else {
-                  me.css('opacity','0');
-               }
-               var h = me.height();
-               var w = me.width();
-               var album = me.hasClass('album_art') ||
-                              me.hasClass('image_thumbnail');
-               var s;
-               var myst;
-               if (album) {
-                  me.click(function() {
-                     var adiv = $(this).parent();
-                     var mb = this.style.marginBottom;
-                     if (!mb || mb === '') {
-                        mb = '0px';
-                     }
-                     if (!adiv.hasClass('album_nsfwdiv_enlarged')) {
-                        adiv.css('margin-bottom',mb);
-                     }
-                     else {
-                        adiv.css('margin-bottom','');
-                     }
-                     adiv.toggleClass('album_nsfwdiv_enlarged');
-                  });
-                  if (h === undefined || h === null || h === 0) { h = 150; }
-                  if (w === undefined || w === null || w === 0) { w = 150; }
-                  myst = {"margin-right": me.css('margin-right'),
-                          "float": "left"};
-                  s = $('<div />', {"class": "nsfwdiv album_nsfwdiv " + klass});
-                  s.css(myst);
-               }
-               else {
-                  var extra = false;
-                  myst = {};
-                  if (!(/http:\/\/assets\.tumblr\.com\/images\/inline_photo\.png/.test(me.attr('src')))) {
-                     var row = me.closest('div');
-                     if (row.length > 0 && row.hasClass("photoset_row")) {
-                        extra = true;
-                        var rh = row.innerHeight();
-                        if (rh && rh > 0) {
-                           myst.height = rh + "px";
-                        }
-                        else {
-                           myst["min-height"] = h + "px";
-                        }
-                        if (w && w > 0) {
-                           myst.width = w + "px";
-                        }
-                        else {
-                           myst.width = me.css('width').replace('px','') + 'px';
-                        }
-                     }
-                     else if (!me.hasClass('inline_image')) {
-                        extra = true;
-                        myst["min-height"] = h + "px";
-                        addClear = true;
-                        myst.width = w + "px";
-                     }
-                     if (me.parent().hasClass('photoset_photo')) {
-                        var mt = me.attr('style')
-                                    .match(/margin-top:\s*([^;]*)/);
-                        if (mt && mt.length > 1) {
-                           extra = true;
-                           myst["margin-top"] = mt[1];
-                        }
-                     }
-                  }
-                  s = $('<div />', {"class": "nsfwdiv " + klass});
-                  if (extra) {
-                     s.css(myst);
-                  }
-               }
-               if (me.parent().hasClass('video_thumbnail')) {
-                  me.next().addClass('nsfwed');
-               }
-
-               me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
-               if (addClear) {
-                  me.parent().before('<div class="clear"></div>');
-               }
-            });
-         }
-      }
-      else if (item.tagName === 'EMBED' &&
-               node.hasClass('video_player') &&
-               !node.hasClass('nsfwdone')) {
-         node.addClass('nsfwvid').addClass('nsfwdone').parent()
-               .addClass('nsfwed').parent().addClass('nsfwembed')
-               .css('background','url("' + MissingE.packages.safeDash.lock +
-                    '") no-repeat scroll center center #BFBFBF');
-
-         if (!safe) {
-            node.parent().css('visibility','visible');
-         }
-         else {
-            node.parent().css('visibility','hidden');
-         }
-      }
-      else if ((item.tagName === 'OBJECT' ||
-                item.tagName === 'IFRAME') &&
-               node.parent().hasClass('video_embed') &&
-               !node.hasClass('nsfwdone')) {
-         node.addClass('nsfwvid').addClass('nsfwdone').parent()
-               .css('background','url("' + MissingE.packages.safeDash.lock +
-                    '") no-repeat scroll center center #BFBFBF')
-               .parent().addClass('nsfwembed');
-
-         if (!safe) {
-            node.css('visibility','visible');
-         }
-         else {
-            node.css('visibility','hidden');
-         }
-      }
-      else if ((item.tagName === 'OL' && node.hasClass('notes')) ||
-               (item.tagName === 'LI' && node.parent().hasClass('notes'))) {
-         $('img:not(.nsfwdone)',node).each(function(){
-            var klass = "";
-            var me = $(this);
-            if (me.hasClass('avatar')) {
-               me.addClass('nsfwdone');
-               return;
-            }
-            if (me.get(0).readyState === 'uninitialized') {
-               me.get(0).bind('readystatechange.MissingE_sd', function() {
-                  MissingE.packages.safeDash.doHide(item);
-               });
-               return;
-            }
-            else if (!safe) {
-               me.css('opacity','1');
-               klass = 'nsfwoff';
-            }
-            else {
-               me.css('opacity','0');
-            }
-            var h = me.height();
-            var w = me.width();
-            var myst = {"min-height": h + "px",
-                        "min-width": w + "px"};
-            var s = $('<div />', {"class": "nsfwdiv " + klass});
-            s.css(myst);
-            me.addClass('nsfwed').addClass('nsfwdone').wrap(s);
-         });
-      }
+   doHide: function(item) {
+      $(item).find('div.post_content p img').wrap('<span class="nsfw_span" />');
+      $(item).find('div.post_content p strong:empty,' +
+                   'div.post_content p em:empty,' +
+                   'div.post_content p big:empty').remove();
+      var p = $(item).find('p:first');
+      p.nextUntil('p:not(:empty)').remove();
+      p.remove();
    },
 
    run: function() {
@@ -271,6 +50,16 @@ MissingE.packages.safeDash = {
       if (MissingE.getStorage('MissingE_safeDash_state', 0) === 1) {
          $('body').addClass('MissingE_safeDash');
       }
+
+      $('#posts li.post').each(function() {
+         MissingE.packages.safeDash.doHide(this);
+      });
+      extension.addAjaxListener(function(type, list) {
+         if (type === 'notes') { return; }
+         $.each(list, function(i,val) {
+            MissingE.packages.safeDash.doHide($('#'+val));
+         });
+      });
 
       var sdlnk = '<ul class="controls_section" id="MissingE_safeDash">' +
             '<li class="' +

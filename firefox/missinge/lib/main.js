@@ -1611,7 +1611,8 @@ function handleMessage(message, myWorker) {
                'body.MissingE_safeDash #posts li.post.video .video_embed, ' +
                'body.MissingE_safeDash #posts li.post.video span[id^="video_player"], ' +
                'body.MissingE_safeDash #posts li.notification blockquote[style], ' +
-               'body.MissingE_safeDash #posts li.post .post_content p img, ' +
+               'body.MissingE_safeDash #posts li.post ol.notes blockquote.photo_container, ' +
+               'body.MissingE_safeDash #posts li.post .post_content p .nsfw_span, ' +
                'body.MissingE_safeDash #posts li.post .post_content img.album_art, ' +
                'body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"]  { ' +
                   'background-image:url("' +
