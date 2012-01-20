@@ -78,7 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.4.0** (not yet released)
+##**2.4.1** (01/20/2011)
+**_+_** Fix widescreen issue with new Safe Dash implementation (paragraphs not using up whole post width)
+
+##**2.4.0** (01/20/2011)
 **_+_** Photo post notification preview added to Dashboard Tweaks  
 **_+_** Add Safe Dash setting to enable revealing photosets all at once  
 **_!_** Improve performance of Safe Dash  
