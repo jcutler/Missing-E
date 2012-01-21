@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.4.4</string>
+	<string>2.4.5</string>
 	<key>CFBundleVersion</key>
-	<string>24004</string>
+	<string>24005</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
