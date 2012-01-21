@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.4.4** (01/20/2011)
+**_!_** Fix a number of issues relating to new Safe Dash implementation
+
 ##**2.4.1** (01/20/2011)
 **_+_** Fix widescreen issue with new Safe Dash implementation (paragraphs not using up whole post width)
 
