@@ -36,6 +36,7 @@ MissingE.packages.safeDash = {
    },
 
    doHide: function(item) {
+      if (item.attr('id') === "new_post") { return; }
       $(item).find('div.post_content p img').wrap('<span class="nsfw_span" />');
       $(item).find('div.post_content p strong:empty,' +
                    'div.post_content p em:empty,' +
