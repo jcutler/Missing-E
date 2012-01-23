@@ -43,7 +43,7 @@ MissingE.packages.safeDash = {
                    'div.post_content p big:empty').remove();
       item = $(item).find('div.post_content');
       var p = $(item).find('*:first');
-      if (p.is(':empty')) {
+      if (p.is('p,ul,ol,blockquote') && p.is(':empty')) {
          p.nextUntil('*:not(:empty)').remove();
          p.remove();
       }
