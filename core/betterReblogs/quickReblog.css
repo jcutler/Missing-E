@@ -29,6 +29,10 @@ position:absolute;
 width:150px !important;
 }
 
+#MissingE_quick_reblog .user_menu .user_menu_list span {
+font-size:10px !important;
+}
+
 #MissingE_quick_reblog .user_menu_list a .user_menu_list_item {
 padding:5px 8px 5px 8px !important;
 }
