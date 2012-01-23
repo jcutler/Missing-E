@@ -303,7 +303,7 @@ width:100%;
 }
 
 .section_options td {
-background-color:#D8D8D8;
+background-color:#E8E8E8;
 color:#333;
 vertical-align:middle;
 padding:6px 8px;
@@ -322,7 +322,7 @@ color:#333;
 }
 
 .section_options tr.alt td {
-background-color:#C8C8C8;
+background-color:#D0D0D0;
 }
 
 .section_options tr.experimental td {
