@@ -78,27 +78,27 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.4.8** (not yet released)
+##**2.4.8** (01/23/2012)
 **_+_** Add option in Firefox to hide 'Missing e' button in Firefox Add-On bar  
 **_!_** Ensure correct styling for Quick Reblogging menu entries on Firefox
 
-##**2.4.7** (01/23/2011)
+##**2.4.7** (01/23/2012)
 **_!_** Fix Ask Tweaks issue with extra post buttons not showing when hovering over "Publish" button
 
-##**2.4.6** (01/23/2011)
+##**2.4.6** (01/23/2012)
 **_!_** Fix Safe Dash issues with removing top bar in lined-paper Fan Mail and album art in audio posts  
 **_!_** Enhance readability in settings page
 
-##**2.4.5** (01/21/2011)
+##**2.4.5** (01/21/2012)
 **_!_** Enhance readability of settings page
 
-##**2.4.4** (01/20/2011)
+##**2.4.4** (01/20/2012)
 **_!_** Fix a number of issues relating to new Safe Dash implementation
 
-##**2.4.1** (01/20/2011)
+##**2.4.1** (01/20/2012)
 **_+_** Fix widescreen issue with new Safe Dash implementation (paragraphs not using up whole post width)
 
-##**2.4.0** (01/20/2011)
+##**2.4.0** (01/20/2012)
 **_+_** Photo post notification preview added to Dashboard Tweaks  
 **_+_** Add Safe Dash setting to enable revealing photosets all at once  
 **_!_** Improve performance of Safe Dash  
