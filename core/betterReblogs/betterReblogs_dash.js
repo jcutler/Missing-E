@@ -450,27 +450,6 @@ MissingE.packages.betterReblogs = {
       if (settings.quickReblog === 1) {
          var idx;
 
-         if (extension.isFirefox) {
-            var r,s;
-            var spanStyle = "";
-            for (s=0; s<document.styleSheets.length; s++) {
-               try {
-                  for (r=0; r<document.styleSheets[s].cssRules.length; r++) {
-                     if (/\.user_menu \.user_menu_list a/
-                           .test(document.styleSheets[s].cssRules[r]
-                                 .selectorText)) {
-                        spanStyle += document.styleSheets[s].cssRules[r].cssText
-                                    .replace(/\.user_menu \.user_menu_list a/g,
-                                             '#MissingE_quick_reblog ' +
-                                             '.user_menu_list span');
-                     }
-                  }
-               } catch(e){}
-            }
-            $('head').append('<style type="text/css">' + spanStyle +
-                             '</style>');
-         }
-
          var txt = '<div class="user_menu" id="MissingE_quick_reblog">' +
                     '<div class="user_menu_nipple"></div>' +
                     '<div class="user_menu_list">';
