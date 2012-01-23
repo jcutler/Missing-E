@@ -3,3 +3,5 @@ Cache settings check for Quick Reblogging
 Change all features that pass info to new tabs to no longer use localStorage
 
 Add screenshot links to the settings page
+
+Add Firefox setting to hide add-on bar
