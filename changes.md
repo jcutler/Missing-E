@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.4.7** (01/23/2011)
+**_!_** Fix Ask Tweaks issue with extra post buttons not showing when hovering over "Publish" button  
+**_!_** Ensure correct font size for Quick Reblogging menu entries on Firefox
+
 ##**2.4.6** (01/23/2011)
 **_!_** Fix Safe Dash issues with removing top bar in lined-paper Fan Mail and album art in audio posts  
 **_!_** Enhance readability in settings page
