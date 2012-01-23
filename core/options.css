@@ -21,6 +21,16 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#firefox_section {
+display:none;
+line-height:1;
+}
+
+#firefox_section #firefox_options {
+margin-left:5px;
+vertical-align:middle;
+}
+
 #settingsframe {
 width:1px;
 height:1px;

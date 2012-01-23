@@ -143,6 +143,7 @@ var componentList = ["dashboardTweaks",
 function getAllSettings(getStale) {
    var settings = {};
    settings.greeting = "all-settings";
+   settings["MissingE_hideWidget"] = getSetting("extensions.MissingE.hideWidget", 0);
    for (i=0; i<componentList.length; i++) {
       settings["MissingE_" + componentList[i] + "_enabled"] =
          getSetting("extensions.MissingE." + componentList[i] + ".enabled", 1);
@@ -318,6 +319,15 @@ function setIntegerPrefType(pref,defVal) {
    }
 }
 
+function boolSettingToInt(pref) {
+   if (ps.isSet(pref) &&
+       typeof ps.get(pref, false) === "boolean") {
+      var val = ps.get(pref, false) ? 1 : 0;
+      ps.reset(pref);
+      ps.set(pref,val);
+   }
+}
+
 function closeTab(url) {
    for each (var tab in tabs) {
       if (tab.url === url) {
@@ -349,7 +359,8 @@ function openSettings() {
    });
 }
 
-if (!getSetting("extensions.MissingE.hideWidget",false)) {
+if (getSetting("extensions.MissingE.hideWidget",0) === false ||
+    getSetting("extensions.MissingE.hideWidget",0) === 0) {
    widget = widgets.Widget({
       label: "Missing e",
       id: "missinge",
@@ -2122,6 +2133,8 @@ function fixupSettings() {
    setIntegerPrefType('extensions.MissingE.postCrushes.crushSize',1);
    setIntegerPrefType('extensions.MissingE.replyReplies.smallAvatars',1);
    setIntegerPrefType('extensions.MissingE.sidebarTweaks.accountNum',0);
+
+   boolSettingToInt('extensions.MissingE.hideWidget');
 
    moveAllSettings('askFixes','askTweaks');
    moveAllSettings('dashboardFixes','dashboardTweaks');

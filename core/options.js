@@ -49,7 +49,8 @@ MissingE.utilities.options = {
       });
 
       $('.section_options input.simple, .section_options input:checkbox, ' +
-        '.section_options input:radio, .section_options select')
+        '.section_options input:radio, .section_options select, ' +
+        '#firefox_options input:checkbox')
             .bind("change", function() {
          MissingE.utilities.options.doSetting(this, false);
       });
@@ -216,7 +217,14 @@ MissingE.utilities.options = {
       $('span.defRetries').text(MissingE.defaultRetries);
       $('#versionnum').text(MissingE.utilities.options
                               .getStorage('MissingE_version',''));
-
+      if (extension.isFirefox) {
+         var hwSec = document.getElementById('firefox_section');
+         var hwFrm = document.getElementById('firefox_options');
+         if (hwSec && hwFrm) {
+            hwSec.style.display = "block";
+            MissingE.utilities.options.loadCheck(hwFrm, 'MissingE_hideWidget', 0);
+         }
+      }
       for (i=0; i<componentList.length; i++) {
          var v = componentList[i];
          var frm = document.getElementById(v + "_options");
