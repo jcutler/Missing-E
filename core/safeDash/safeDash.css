@@ -144,7 +144,8 @@ overflow:hidden;
 }
 
 body.MissingE_safeDash #posts li.post.video .post_content,
-body.MissingE_safeDash #posts li.post.regular .post_content {
+body.MissingE_safeDash #posts li.post.regular .post_content,
+body#dashboard_inbox.MissingE_safeDash #posts li.post.note .post_content  {
 overflow:visible;
 }
 
