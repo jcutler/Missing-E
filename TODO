@@ -4,4 +4,6 @@ Change all features that pass info to new tabs to no longer use localStorage
 
 Add screenshot links to the settings page
 
-Add Firefox setting to hide add-on bar
+-Immediately destroy/re-create widget for FF option
+-encode URLs being used for GETs
+-Timestamps on asks need to be removed?
