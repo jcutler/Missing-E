@@ -150,13 +150,14 @@ MissingE.packages.replyReplies = {
             var ans = $(arr[i]).parent();
             var type, chk, anstype;
             var posttxt = "";
+            var titletxt = "";
             var anstxt = "";
             var postlnk = main.find('a.permalink').attr('href');
             if (main.find('div.post_question').length > 0) {
                posttxt = main.find('div.post_question').text();
             }
             else if (main.find('div.post_title').length > 0) {
-               posttxt = main.find('div.post_title').text();
+               titletxt = main.find('div.post_title').text();
             }
             else if (main.find('div.caption').length > 0) {
                posttxt = main.find('div.caption').text();
@@ -169,6 +170,11 @@ MissingE.packages.replyReplies = {
             posttxt = posttxt.replace(/\s+/g,' ')
                         .replace(/^\s/,'').replace(/\s$/,'');
 
+            if (!main.hasClass('regular') &&
+                titletxt.length > 0) {
+               posttxt = titletxt;
+               titletxt = "";
+            }
             if (posttxt.length > 50) {
                if (/\s/.test(posttxt.charAt(50))) {
                   posttxt = posttxt.substr(0,50);
@@ -181,6 +187,9 @@ MissingE.packages.replyReplies = {
                   }
                }
                posttxt += '...';
+            }
+            if (posttxt === "" && titletxt.length > 0) {
+               posttxt = titletxt;
             }
 
             if (ans.find('span.answer_content').length > 0) {
