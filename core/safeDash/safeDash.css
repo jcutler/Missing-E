@@ -38,6 +38,10 @@ background-position:12px 0 !important;
 background-position:12px -29px !important;
 }
 
+#posts li.post .post_content {
+width:100%;
+}
+
 body.MissingE_safeDash #posts li.post.photo .post_content > div:first-child,
 body.MissingE_safeDash #posts li.post.photo .photoset_photo,
 body.MissingE_safeDash #posts li.post.photo img.image_thumbnail,
