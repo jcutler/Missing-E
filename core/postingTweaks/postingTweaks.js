@@ -521,7 +521,8 @@ MissingE.packages.postingTweaks = {
          $('#posts li.post a[id^="ask_answer_link_"]').live('click',
                                                             function() {
             var post = $(this).closest("li.post");
-            if (post.length > 0) {
+            if (post.length > 0 &&
+                post.find('iframe[src*="upload/image"]').length === 0) {
                MissingE.packages.postingTweaks.addAskUploader(post.get(0));
             }
          });
