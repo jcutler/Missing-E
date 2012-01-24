@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.4.9** (01/24/2012)
+**_!_** Fix display of post note counts higher than 1000 for Spanish, Russian and Polish dashboard users
+
 ##**2.4.8** (01/23/2012)
 **_+_** Add option in Firefox to hide 'Missing e' button in Firefox Add-On bar  
 **_!_** Ensure correct styling for Quick Reblogging menu entries on Firefox
