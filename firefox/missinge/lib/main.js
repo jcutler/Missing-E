@@ -30,7 +30,7 @@ var url = require("url");
 var data = require("self").data;
 var Request = require("request").Request;
 var timer = require("timer");
-var widget;
+var widget = null;
 
 var maxActiveAjax = 15;
 
@@ -359,17 +359,25 @@ function openSettings() {
    });
 }
 
-if (getSetting("extensions.MissingE.hideWidget",0) === false ||
-    getSetting("extensions.MissingE.hideWidget",0) === 0) {
-   widget = widgets.Widget({
-      label: "Missing e",
-      id: "missinge",
-      tooltip: "Missing e Settings",
-      contentURL: data.url("identity/missinge32.png"),
-      onClick: function() {
-         openSettings();
+function toggleWidget() {
+   if (getSetting("extensions.MissingE.hideWidget",0) === false ||
+       getSetting("extensions.MissingE.hideWidget",0) === 0) {
+      if (!widget) {
+         widget = widgets.Widget({
+            label: "Missing e",
+            id: "missinge",
+            tooltip: "Missing e Settings",
+            contentURL: data.url("identity/missinge32.png"),
+            onClick: function() {
+               openSettings();
+            }
+         });
       }
-   });
+   }
+   else if (widget) {
+      widget.destroy();
+      widget = null;
+   }
 }
 
 function exportOptionsXML(theWorker) {
@@ -453,6 +461,7 @@ function receiveOptions(message, theWorker) {
    }
    if (set + changed + reset > 0) {
       fixupSettings();
+      toggleWidget();
       theWorker.postMessage({greeting:"importOptions",success:true,
          msg:"Import complete.\n\n" + (set+changed+reset) + " change(s) made."});
    }
@@ -1338,10 +1347,16 @@ function handleMessage(message, myWorker) {
    else if (message.greeting == "change-setting") {
       var key = 'extensions.' + message.name.replace(/_/g,'.');
       setSetting(key, message.val);
+      if (key === 'extensions.MissingE.hideWidget') {
+         toggleWidget();
+      }
    }
    else if (message.greeting == "backupVal") {
       var key = 'extensions.' + message.key.replace(/_/g,'.');
       setSetting(key, message.val);
+      if (key === 'extensions.MissingE.hideWidget') {
+         toggleWidget();
+      }
    }
    else if (message.greeting == "all-settings") {
       if (myWorker.tab.url === data.url("core/options.html")) {
@@ -2167,5 +2182,6 @@ if (!MissingE.isSameDay(getSetting('extensions.MissingE.lastUpdateCheck',0))) {
 }
 
 fixupSettings();
+toggleWidget();
 
 console.log("Missing e is running.");
