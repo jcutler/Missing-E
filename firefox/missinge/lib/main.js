@@ -1912,8 +1912,7 @@ function handleMessage(message, myWorker) {
                       ["dashboard",
                        "blog",
                        "likes",
-                       "tagged",
-                       "messages"])) {
+                       "tagged"])) {
          if (getSetting("extensions.MissingE.timestamps.enabled",1) == 1) {
             injectScripts.push(data.url("core/timestamps/timestamps.js"));
             activeScripts.timestamps = true;

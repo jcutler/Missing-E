@@ -1742,8 +1742,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                       ["dashboard",
                        "blog",
                        "likes",
-                       "tagged",
-                       "messages"])) {
+                       "tagged"])) {
          if (getSetting("MissingE_timestamps_enabled",1) == 1) {
             activeScripts.timestamps = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "core/timestamps/timestamps.js"});
