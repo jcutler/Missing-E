@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.4.11** (not yet released)
+**_!_** No longer truncate text post titles when creating Reply Replies post for notes on text posts
+
 ##**2.4.10** (01/24/2012)
 **_-_** Remove timestamps on inbox messages (no longer implementable due to Tumblr interface changes)  
 **_-_** Remove inline image uploader for answering asks, now being implemented by Tumblr  
