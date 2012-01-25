@@ -170,11 +170,6 @@ MissingE.packages.replyReplies = {
             posttxt = posttxt.replace(/\s+/g,' ')
                         .replace(/^\s/,'').replace(/\s$/,'');
 
-            if (!main.hasClass('regular') &&
-                titletxt.length > 0) {
-               posttxt = titletxt;
-               titletxt = "";
-            }
             if (posttxt.length > 50) {
                if (/\s/.test(posttxt.charAt(50))) {
                   posttxt = posttxt.substr(0,50);
