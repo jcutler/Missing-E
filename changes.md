@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.4.11** (not yet released)
+##**2.4.11** (01/24/2012)
 **_!_** No longer truncate text post titles when creating Reply Replies post for notes on text posts
 
 ##**2.4.10** (01/24/2012)
