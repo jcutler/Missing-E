@@ -26,7 +26,7 @@ display:none;
 position:absolute;
 width:100px;
 min-height:20px;
-background-color:#FFF;
+background-color:#2C4762;
 background-position:center center;
 background-repeat:no-repeat;
 margin-top:2px;
@@ -36,6 +36,11 @@ box-shadow:rgb(0,0,0) 0 0 10px;
 
 #MissingE_preview:hover {
 display:block !important;
+}
+
+#MissingE_preview img {
+width:100px;
+background-color:white;
 }
 
 #MissingE_preview img:first-child {
@@ -53,7 +58,6 @@ border-top:2px solid #2C4762;
 }
 
 #MissingE_preview.MissingE_preview_loading, #MissingE_preview.MissingE_preview_fail {
-background-color:#2C4762;
 min-height:40px;
 opacity:0.9;
 }
