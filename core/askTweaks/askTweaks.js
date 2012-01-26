@@ -333,6 +333,12 @@ MissingE.packages.askTweaks = {
       var settings = this.settings;
       var lang = $('html').attr('lang');
 
+      /*
+      $('#posts li.fan_mail .controls_link.to_name').live('click', function() {
+         extension.sendRequest('fanMail');
+      });
+      */
+
       if (settings.askDash === 1) {
          var i;
          var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';

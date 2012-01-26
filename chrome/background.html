@@ -1042,6 +1042,20 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "importOptions") {
       receiveOptions(request, sendResponse);
    }
+   else if (request.greeting == "fanMail") {
+      chrome.tabs.captureVisibleTab(sender.tab.windowId, {format: "png"},
+                                    function(dataURL) {
+         dataURL = dataURL.replace(/^data:image\/png;base64,/,'');
+         chrome.tabs.create({url: 'http://tools.missing-e.com/fanmail'},
+                            function(tab) {
+                               console.log(tab.id);
+            chrome.tabs.executeScript(tab.id, {code:
+               'document.getElementById("ss").value = "' + dataURL + '"; ' +
+               'document.getElementById("theform").submit();'
+            });
+         });
+      });
+   }
    else if (request.greeting == "getAsker") {
       if (askerTable[sender.tab.url]) {
          debug("Found saved asker for '" + sender.tab.url + "'");
