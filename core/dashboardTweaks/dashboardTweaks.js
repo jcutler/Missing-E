@@ -308,17 +308,51 @@ MissingE.packages.dashboardTweaks = {
       notes.prepend($(sorted));
    },
 
+   videoThumbnailCycle: function() {
+      var preWin = $('#MissingE_preview');
+      if (!preWin.is('.MissingE_videoPreview:visible') ||
+          preWin.find('img.MissingE_videoThumb').length <= 1) {
+         return;
+      }
+      var currThumb = preWin.find('img.MissingE_visibleThumb');
+      if (currThumb.next().length > 0) {
+         currThumb.next('.MissingE_videoThumb:first')
+            .addClass('MissingE_visibleThumb');
+      }
+      else {
+         preWin.find('img.MissingE_videoThumb:first')
+            .addClass('MissingE_visibleThumb');
+      }
+      currThumb.removeClass('MissingE_visibleThumb');
+   },
+
    receivePreview: function(response) {
       var preWin = $('#MissingE_preview');
       if (preWin.length === 0) {
          return;
       }
       if (response.success) {
+         if (MissingE.packages.dashboardTweaks.videoThumbnailCycleId) {
+            window.clearInterval(MissingE.packages.dashboardTweaks
+                                    .videoThumbnailCycleId);
+         }
          if (preWin.attr('post') === response.pid) {
-            var i;
-            for (i=0; i<2 && i<response.data.length; i++) {
+            var i, limit = 2;
+            if (response.type === "video") {
+               preWin.addClass("MissingE_videoPreview");
+               MissingE.packages.dashboardTweaks.videoThumbnailCycleId =
+                  window.setInterval(MissingE.packages.dashboardTweaks
+                                       .videoThumbnailCycle, 600);
+               limit = response.data.length;
+            }
+            for (i=0; i<limit && i<response.data.length; i++) {
                var prevImg = document.createElement('img');
                prevImg.setAttribute('post', response.pid);
+               if (response.type === "video") {
+                  var klass = "MissingE_videoThumb";
+                  if (i==0) { klass += " MissingE_visibleThumb"; }
+                  prevImg.className = klass;
+               }
                prevImg.style.display = "none";
                preWin.append(prevImg);
                prevImg.onload = function() {
@@ -827,25 +861,73 @@ MissingE.packages.dashboardTweaks = {
                  text === MissingE.getLocale(lang).posts.photoset[len-1] ||
                  text === MissingE.getLocale(lang).posts.video[len-1])) {
                preWin.attr('post',tid);
-               preWin.empty().removeClass('MissingE_preview_fail')
+               preWin.empty()
+                  .removeClass('MissingE_videoPreview MissingE_preview_fail')
                   .addClass('MissingE_preview_loading');
                var exPhotoset = $('#photoset_' + tid);
                var exPost = $('#post_' + tid);
+               var meta = [];
                if (exPhotoset.length > 0) {
                   var exImgs = [];
                   exPhotoset.find('img').each(function() {
                      exImgs.push(this.src.replace(/http:\/\/\d+\./,'http://'));
+                     meta.push(true);
                   });
                   MissingE.packages.dashboardTweaks
-                     .receivePreview({success: true, pid: tid, data: exImgs});
+                     .receivePreview({success: true, pid: tid, data: exImgs,
+                                      metadata: meta, type: "photo"});
                }
                else if (exPost.length > 0 &&
-                        text !== MissingE.getLocale(lang).posts.video[len-1]) {
+                        exPost.hasClass('photo')) {
                   var exImg = exPost.find('div.post_content img:first')
                                  .attr('src');
+                  meta.push(true);
                   exImg = exImg.replace(/http:\/\/\d+\./,'http://');
                   MissingE.packages.dashboardTweaks
-                     .receivePreview({success: true, pid: tid, data: [exImg]});
+                     .receivePreview({success: true, pid: tid, data: [exImg],
+                                      metadata: meta, type: "photo"});
+               }
+               else if (exPost.length > 0 &&
+                        exPost.hasClass('video')) {
+                  var screenshots;
+                  var exSS = exPost.find('#video_thumbnail_' + tid);
+                  var embedSS = exPost.find('#video_player_' + tid + ' embed');
+                  if (exSS.length > 0 && exSS.attr('thumbnails')) {
+                     screenshots = exSS.attr('thumbnails')
+                                       .replace(/\s*\|\s*/g,'|').split('|');
+                  }
+                  else if (exSS.length > 0) {
+                     screenshots = [exSS.attr('src')];
+                  }
+                  else if (embedSS.length > 0) {
+                     var flashVars = embedSS.attr('flashvars');
+                     if (flashVars) {
+                        var posters = flashVars.match(/poster=([^&]*)/);
+                        if (posters && posters.length > 0) {
+                           screenshots = posters[0].replace(/%3A/gi,':')
+                                                   .replace(/%2F/gi,'/')
+                                                   .split(',');
+                        }
+                     }
+                  }
+                  if (!screenshots || screenshots.length === 0) {
+                     screenshots =
+                        [extension.getURL('core/dashboardTweaks/black.png')];
+                  }
+                  for (i=0; i<screenshots.length; i++) {
+                     meta.push(false);
+                  }
+                  if (screenshots.length === 1 &&
+                      /black_100\.png$/.test(screenshots[0])) {
+                     extension.sendRequest("preview", {pid: tid, url: url},
+                            MissingE.packages.dashboardTweaks.receivePreview);
+                  }
+                  else {
+                     MissingE.packages.dashboardTweaks
+                        .receivePreview({success: true, pid: tid,
+                                         data: screenshots, metadata: meta,
+                                         type: "video"});
+                  }
                }
                else {
                   extension.sendRequest("preview", {pid: tid, url: url},

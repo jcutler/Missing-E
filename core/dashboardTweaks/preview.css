@@ -61,3 +61,20 @@ border-top:2px solid #2C4762;
 min-height:40px;
 opacity:0.9;
 }
+
+#MissingE_preview.MissingE_videoPreview img.MissingE_videoThumb {
+position:absolute;
+top:0;
+left:0;
+visibility:hidden;
+border-radius:6px;
+border-top:0 !important;
+}
+
+#MissingE_preview.MissingE_videoPreview img.MissingE_videoThumb:first-child {
+position:static;
+}
+
+#MissingE_preview.MissingE_videoPreview img.MissingE_videoThumb.MissingE_visibleThumb {
+visibility:visible;
+}
