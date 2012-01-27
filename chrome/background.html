@@ -266,7 +266,7 @@ function doTags(stamp, id, sendResponse) {
 function doVimeoPreview(stamp, id, sendResponse) {
    var failMsg = {success: true, pid: id,
                   data: [chrome.extension.getURL('core/dashboardTweaks/black.png')],
-                  metadata: [false], type: video};
+                  type: "video"};
    if (!stamp.videoThumbs ||
        stamp.videoThumbs.length !== 1 ||
        !/vimeo:/.test(stamp.videoThumbs[0])) {
@@ -306,7 +306,7 @@ function doVimeoPreview(stamp, id, sendResponse) {
             isNew = false;
          }
          else {
-            debug("Saving vimeo thumb " + id + " to cache (HIT)");
+            debug("Saving vimeo thumb " + id + " to cache (MISS)");
             cacheElements++;
             theEntry = {};
             isNew = false;
@@ -316,8 +316,7 @@ function doVimeoPreview(stamp, id, sendResponse) {
             cache[id] = theEntry;
          }
          sendResponse({success: true, pid: id,
-                       data: [data.thumbnail_small], metadata: [false],
-                       type: "video"});
+                       data: [data.thumbnail_small], type: "video"});
          return;
       }
    });
@@ -331,18 +330,15 @@ function doPreview(stamp, id, sendResponse) {
    }
    if (stamp.photos) { type = "photo"; }
    else if (stamp.videoThumbs) { type = "video"; }
-   var photos = [], meta = [];
+   var photos = [];
    for (i=0; stamp.photos && i<stamp.photos.length; i++) {
       photos.push(stamp.photos[i].replace(/\d+\.([a-z]+)$/,"100.$1"));
-      meta.push(true);
    }
    for (i=0; stamp.videoThumbs && i<stamp.videoThumbs.length; i++) {
       photos.push(stamp.videoThumbs[i]);
-      meta.push(false);
    }
    if (photos.length === 0) {
       photos.push(chrome.extension.getURL('core/dashboardTweaks/black.png'));
-      meta.push(false);
    }
    if (/vimeo:/.test(photos[0])) {
       debug("Preview image is " + photos[0] + ". Accessing Vimeo API.");
@@ -350,7 +346,7 @@ function doPreview(stamp, id, sendResponse) {
       return true;
    }
    else {
-      sendResponse({success: true, pid: id, data: photos, metadata: meta, type: type});
+      sendResponse({success: true, pid: id, data: photos, type: type});
       return true;
    }
 }
@@ -661,7 +657,7 @@ function checkPermission(request, sender, sendResponse, hash, retries, tryCount)
    ajax.send();
 }
 
-function parseRSS(data) {
+function parseRSS(data, forceType) {
    var info = {};
    var i;
    var tags = data.match(/<category>[^<]*<\/category>/g);
@@ -691,11 +687,11 @@ function parseRSS(data) {
 
    var videoThumbs = [];
    var youtube = data.match(/<description>&lt;iframe[^&]*src="http:\/\/www\.youtube\.com\/embed\/([^\/\?]*)/);
-   var vimeo = data.match(/<description>&lt;iframe[^&]*src="http:\/\/player.vimeo.com\/video\/([^\/\?]*)/);
+   var vimeo = data.match(/<description>&lt;iframe[^&]*src="http:\/\/player.vimeo.com\/video\/([^\/\?"'%]*)/);
    var tumblr;
    if (/<description>&lt;span id="video_player/.test(data)) {
-      tumblr = data.match(/'poster=([^']*)/);
-      tumblr = tumblr[0].replace(/'poster=/,'').split(',');
+      tumblr = data.match(/poster=(http[^'"\(\)&]*)/);
+      tumblr = tumblr[0].replace(/poster=/,'').split(',');
    }
    if (youtube && youtube.length > 1) {
       for (i=0; i<=3; i++) {
@@ -711,7 +707,7 @@ function parseRSS(data) {
          videoThumbs.push(tumblr[i].replace(/%3A/gi,':').replace(/%2F/gi,'/'));
       }
    }
-   if (videoThumbs.length > 0) {
+   if (videoThumbs.length > 0 || forceType === "video") {
       info.videoThumbs = videoThumbs;
    }
 
@@ -865,7 +861,7 @@ function doPreviewAjax(request, sender, sendResponse, hash, retries) {
             }
          }
          else {
-            var info = parseRSS(data);
+            var info = parseRSS(data, request.type);
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (!closed) {
@@ -1159,7 +1155,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          dataURL = dataURL.replace(/^data:image\/png;base64,/,'');
          chrome.tabs.create({url: 'http://tools.missing-e.com/fanmail'},
                             function(tab) {
-                               console.log(tab.id);
             chrome.tabs.executeScript(tab.id, {code:
                'document.getElementById("ss").value = "' + dataURL + '"; ' +
                'document.getElementById("theform").submit();'

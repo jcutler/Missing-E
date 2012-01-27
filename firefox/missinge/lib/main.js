@@ -488,7 +488,7 @@ function doTags(stamp, id, theWorker) {
 function doVimeoPreview(stamp, id, theWorker) {
    var failMsg = {greeting: "preview", success: true, pid: id,
                   data: [data.url('core/dashboardTweaks/black.png')],
-                  metadata: [false], type: "video"};
+                  type: "video"};
    if (!stamp.videoThumbs ||
        stamp.videoThumbs.length !== 1 ||
        !/vimeo:/.test(stamp.videoThumbs[0])) {
@@ -535,19 +535,19 @@ function doVimeoPreview(stamp, id, theWorker) {
             isNew = false;
          }
          else {
-            debug("Saving vimeo thumb " + id + " to cache (HIT)");
+            debug("Saving vimeo thumb " + id + " to cache (MISS)");
             cacheElements++;
             theEntry = {};
             isNew = false;
          }
-         theEntry.videoThumbs = [data.thumbnail_small];
+         theEntry.videoThumbs = [data];
          if (isNew) {
             cache[id] = theEntry;
          }
          if (!closed) {
             theWorker.postMessage({greeting: "preview", success: true,
                                    pid: this.headers.targetId, data: [data],
-                                   metadata: [false], type: "video"});
+                                   type: "video"});
          }
          return;
       }
@@ -562,18 +562,15 @@ function doPreview(stamp, id, theWorker) {
    }
    if (stamp.photos) { type = "photo"; }
    else if (stamp.videoThumbs) { type = "video"; }
-   var photos = [], meta = [];
+   var photos = [];
    for (i=0; stamp.photos && i<stamp.photos.length; i++) {
       photos.push(stamp.photos[i].replace(/\d+\.([a-z]+)$/,"100.$1"));
-      meta.push(true);
    }
    for (i=0; stamp.videoThumbs && i<stamp.videoThumbs.length; i++) {
       photos.push(stamp.videoThumbs[i]);
-      meta.push(false);
    }
    if (photos.length === 0) {
       photos.push(data.url('core/dashboardTweaks/black.png'));
-      meta.push(false);
    }
    if (/vimeo:/.test(photos[0])) {
       debug("Preview image is " + photos[0] + ". Accessing Vimeo API.");
@@ -581,7 +578,7 @@ function doPreview(stamp, id, theWorker) {
       return true;
    }
    else {
-      theWorker.postMessage({greeting: "preview", success: true, pid: id, data: photos, metadata: meta, type: type});
+      theWorker.postMessage({greeting: "preview", success: true, pid: id, data: photos, type: type});
       return true;
    }
 
@@ -881,7 +878,7 @@ function checkPermission(user, count, myWorker, retries) {
    }).get();
 }
 
-function parseRSS(data) {
+function parseRSS(data, forceType) {
    var info = {};
    var i;
    var tags = data.match(/<category>[^<]*<\/category>/g);
@@ -911,11 +908,11 @@ function parseRSS(data) {
 
    var videoThumbs = [];
    var youtube = data.match(/<description>&lt;iframe[^&]*src="http:\/\/www\.youtube\.com\/embed\/([^\/\?]*)/);
-   var vimeo = data.match(/<description>&lt;iframe[^&]*src="http:\/\/player.vimeo.com\/video\/([^\/\?"]*)/);
+   var vimeo = data.match(/<description>&lt;iframe[^&]*src="http:\/\/player.vimeo.com\/video\/([^\/\?"'%]*)/);
    var tumblr;
    if (/<description>&lt;span id="video_player/.test(data)) {
-      tumblr = data.match(/'poster=([^']*)/);
-      tumblr = tumblr[0].replace(/'poster=/,'').split(',');
+      tumblr = data.match(/poster=(http[^'"\(\)&]*)/);
+      tumblr = tumblr[0].replace(/poster=/,'').split(',');
    }
    if (youtube && youtube.length > 1) {
       for (i=0; i<=3; i++) {
@@ -931,7 +928,7 @@ function parseRSS(data) {
          videoThumbs.push(tumblr[i].replace(/%3A/gi,':').replace(/%2F/gi,'/'));
       }
    }
-   if (videoThumbs.length > 0) {
+   if (videoThumbs.length > 0 || forceType === "video") {
       info.videoThumbs = videoThumbs;
    }
 
@@ -996,13 +993,14 @@ function doTagsAjax(url, pid, count, myWorker, retries) {
    }).get();
 }
 
-function doPreviewAjax(url, pid, count, myWorker, retries) {
+function doPreviewAjax(url, pid, count, type, myWorker, retries) {
    var failMsg = {greeting:"preview", success:false, pid:pid};
    Request({
       url: url,
       headers: {tryCount: count,
                 retryLimit: retries,
-                targetId: pid},
+                targetId: pid,
+                type: type},
       onComplete: function(response) {
          var goodData = /<guid>[^<]*<\/guid>/.test(response.text);
          var closed = false;
@@ -1033,7 +1031,7 @@ function doPreviewAjax(url, pid, count, myWorker, retries) {
                   debug("Retry preview request (" + this.headers.targetId + ")");
                   doPreviewAjax(this.url,
                          this.headers.targetId, (this.headers.tryCount + 1),
-                         myWorker, this.headers.retryLimit);
+                         this.headers.type, myWorker, this.headers.retryLimit);
                }
                else {
                   debug("preview request (" + this.headers.targetId + ") failed");
@@ -1043,7 +1041,7 @@ function doPreviewAjax(url, pid, count, myWorker, retries) {
             }
          }
          else {
-            var info = parseRSS(response.text);
+            var info = parseRSS(response.text, this.headers.type);
             saveCache(this.headers.targetId, info);
             dequeueAjax(this.headers.targetId);
             if (!closed) {
@@ -1185,7 +1183,7 @@ function startPreview(message, myWorker) {
       var url = message.url + "/post/" + message.pid + "/rss";
       debug("AJAX preview request (" + message.pid + ")");
       startAjax(message.pid);
-      doPreviewAjax(url, message.pid, 0, myWorker,
+      doPreviewAjax(url, message.pid, 0, message.type, myWorker,
              getSetting("extensions.MissingE.dashboardTweaks.previewRetries",MissingE.defaultRetries));
    }
 }

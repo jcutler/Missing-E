@@ -248,18 +248,100 @@ function doTags(stamp, id, request) {
    return true;
 }
 
+function doVimeoPreview(stamp, id, request) {
+   var failMsg = {success: true, pid: id,
+                  data: [safari.extension.baseURI +
+                           'core/dashboardTweaks/black.png'], type: "video"};
+   if (!stamp.videoThumbs ||
+       stamp.videoThumbs.length !== 1 ||
+       !/vimeo:/.test(stamp.videoThumbs[0])) {
+      request.target.page.dispatchMessage("preview",failMsg);
+      return true;
+   }
+
+   var vimeoId = stamp.videoThumbs[0].match(/vimeo:(.*)/)[1];
+   $.ajax({
+      type: "GET",
+      url: "http://vimeo.com/api/v2/video/" + vimeoId + ".json",
+      dataType: "json",
+      targetId: id,
+      error: function(xhr, textStatus) {
+         if (xhr.status == 404) {
+            debug("vimeo request (" + this.targetId + ") not found");
+            if (request.target.page !== undefined) {
+               request.target.page.dispatchMessage("preview",failMsg);
+            }
+            return;
+         }
+         else {
+            debug("vimeo request (" + this.targetId + ") failed");
+            if (request.target.page !== undefined) {
+               request.target.page.dispatchMessage("preview",failMsg);
+            }
+            return;
+         }
+      },
+      success: function(data, textStatus) {
+         var theEntry, isNew;
+         if (data && data.length > 0) {
+            data = data[0];
+         }
+         if (!data.hasOwnProperty("thumbnail_small")) {
+            if (request.target.page !== undefined) {
+               request.target.page.dispatchMessage("preview",failMsg);
+            }
+            return;
+         }
+         if ((theEntry = cache[id])) {
+            debug("Saving vimeo thumb " + id + " to cache (HIT)");
+            isNew = false;
+         }
+         else {
+            debug("Saving vimeo thumb " + id + " to cache (MISS)");
+            cacheElements++;
+            theEntry = {};
+            isNew = false;
+         }
+         theEntry.videoThumbs = [data.thumbnail_small];
+         if (isNew) {
+            cache[id] = theEntry;
+         }
+         if (request.target.page !== undefined) {
+            request.target.page.dispatchMessage("preview",
+               {success: true, pid: id, data: [data.thumbnail_small],
+                type: "video"});
+         }
+         return;
+      }
+   });
+}
+
 function doPreview(stamp, id, request) {
-   var i;
-   if (!stamp.photos) {
+   var i, type;
+   if (!stamp.photos && !stamp.videoThumbs) {
       debug("Cache entry does not have photos");
       return false;
    }
    var photos = [];
-   for (i=0; i<stamp.photos.length; i++) {
+   for (i=0; stamp.photos && i<stamp.photos.length; i++) {
       photos.push(stamp.photos[i].replace(/\d+\.([a-z]+)$/,"100.$1"));
    }
-   request.target.page.dispatchMessage("preview",{success: true, pid: id, data: photos});
-   return true;
+   for (i=0; stamp.videoThumbs && i<stamp.videoThumbs.length; i++) {
+      photos.push(stamp.videoThumbs[i]);
+   }
+   if (photos.length === 0) {
+      photos.push(safari.extension.baseURI + 'core/dashboardTweaks/black.png');
+   }
+   if (/vimeo:/.test(photos[0])) {
+      debug("Preview image is " + photos[0] + ". Accessing Vimeo API.");
+      doVimeoPreview(stamp, id, request);
+      return true;
+   }
+   else {
+      request.target.page.dispatchMessage("preview",
+         {success: true, pid: id, data: photos, type: request.message.type});
+      return true;
+   }
 }
 
 function doTimestamp(stamp, id, request) {
@@ -349,6 +431,10 @@ function saveCache(id, entry) {
              i == "tags" ||
              i == "type" ||
              (i == "name" && entry[i] != "")) {
+            theEntry[i] = entry[i];
+         }
+         else if (i == "videoThumbs" &&
+                  !theEntry.hasOwnProperty(i)) {
             theEntry[i] = entry[i];
          }
       }
@@ -565,7 +651,7 @@ function checkPermission(request, retries, tryCount) {
    ajax.send();
 }
 
-function parseRSS(data) {
+function parseRSS(data, forceType) {
    var info = {};
    var i;
    var tags = data.match(/<category>[^<]*<\/category>/g);
@@ -589,7 +675,36 @@ function parseRSS(data) {
          desc = desc.replace(/^(&lt;br\/&gt;|\s)+/,'');
       }
    }
-   info.photos = photos;
+   if (photos.length > 0) {
+      info.photos = photos;
+   }
+
+   var videoThumbs = [];
+   var youtube = data.match(/<description>&lt;iframe[^&]*src="http:\/\/www\.youtube\.com\/embed\/([^\/\?]*)/);
+   var vimeo = data.match(/<description>&lt;iframe[^&]*src="http:\/\/player.vimeo.com\/video\/([^\/\?"'%]*)/);
+   var tumblr;
+   if (/<description>&lt;span id="video_player/.test(data)) {
+      tumblr = data.match(/poster=(http[^'"\(\)&]*)/);
+      tumblr = tumblr[0].replace(/poster=/,'').split(',');
+   }
+   if (youtube && youtube.length > 1) {
+      for (i=0; i<=3; i++) {
+         videoThumbs.push('http://img.youtube.com/vi/' + youtube[1] + '/' +
+                               i + '.jpg');
+      }
+   }
+   else if (vimeo && vimeo.length > 1) {
+      videoThumbs.push('vimeo:' + vimeo[1]);
+   }
+   else if (tumblr && tumblr.length > 1) {
+      for (i=1; i<tumblr.length; i++) {
+         videoThumbs.push(tumblr[i].replace(/%3A/gi,':').replace(/%2F/gi,'/'));
+      }
+   }
+   if (videoThumbs.length > 0 || forceType === "video") {
+      info.videoThumbs = videoThumbs;
+   }
+
    return info;
 }
 
@@ -672,7 +787,8 @@ function doTagsAjax(request, retries) {
 function doPreviewAjax(request, retries) {
    debug("AJAX preview request (" + request.message.pid + ")");
    startAjax(request.message.pid);
-   var failMsg = {success:false, pid:request.message.pid};
+   var failMsg = {success:false, pid:request.message.pid,
+                  type: request.message.type};
    $.ajax({
       type: "GET",
       url: request.message.url + "/post/" + request.message.pid + "/rss",
@@ -734,7 +850,7 @@ function doPreviewAjax(request, retries) {
             }
          }
          else {
-            var info = parseRSS(data);
+            var info = parseRSS(data, request.message.type);
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (request.target.page !== undefined) {

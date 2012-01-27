@@ -363,7 +363,7 @@ MissingE.packages.dashboardTweaks = {
                      .removeClass('MissingE_preview_loading');
                   this.style.display = "inline";
                };
-               if (response.metadata[i]) {
+               if (response.type === "photo") {
                   prevImg.src = response.data[i]
                                     .replace(/\d*\.([a-z]+)$/,"100.$1");
                }
@@ -851,6 +851,7 @@ MissingE.packages.dashboardTweaks = {
                .live('mouseover', function() {
             var item = $(this);
             var text = item.text();
+            var type;
             var tid = this.href.match(/^(http[s]?:\/\/[^\/]*)\/post\/(\d+)/);
             if (!tid || tid.length < 3) { return; }
             var url = tid[1];
@@ -866,29 +867,28 @@ MissingE.packages.dashboardTweaks = {
                   .addClass('MissingE_preview_loading');
                var exPhotoset = $('#photoset_' + tid);
                var exPost = $('#post_' + tid);
-               var meta = [];
+               if (exPost.hasClass("photo")) { type = "photo"; }
+               else if (exPost.hasClass("video")) { type = "video"; }
                if (exPhotoset.length > 0) {
                   var exImgs = [];
                   exPhotoset.find('img').each(function() {
                      exImgs.push(this.src.replace(/http:\/\/\d+\./,'http://'));
-                     meta.push(true);
                   });
                   MissingE.packages.dashboardTweaks
                      .receivePreview({success: true, pid: tid, data: exImgs,
-                                      metadata: meta, type: "photo"});
+                                      type: "photo"});
                }
                else if (exPost.length > 0 &&
-                        exPost.hasClass('photo')) {
+                        type === 'photo') {
                   var exImg = exPost.find('div.post_content img:first')
                                  .attr('src');
-                  meta.push(true);
                   exImg = exImg.replace(/http:\/\/\d+\./,'http://');
                   MissingE.packages.dashboardTweaks
                      .receivePreview({success: true, pid: tid, data: [exImg],
-                                      metadata: meta, type: "photo"});
+                                      type: "photo"});
                }
-               else if (exPost.length > 0 &&
-                        exPost.hasClass('video')) {
+               else if (false && exPost.length > 0 &&
+                        type === 'video') {
                   var screenshots;
                   var exSS = exPost.find('#video_thumbnail_' + tid);
                   var embedSS = exPost.find('#video_player_' + tid + ' embed');
@@ -902,9 +902,9 @@ MissingE.packages.dashboardTweaks = {
                   else if (embedSS.length > 0) {
                      var flashVars = embedSS.attr('flashvars');
                      if (flashVars) {
-                        var posters = flashVars.match(/poster=([^&]*)/);
+                        var posters = flashVars.match(/poster=(http[^'"\(\)&]*)/);
                         if (posters && posters.length > 0) {
-                           screenshots = posters[0].replace(/%3A/gi,':')
+                           screenshots = posters[1].replace(/%3A/gi,':')
                                                    .replace(/%2F/gi,'/')
                                                    .split(',');
                         }
@@ -914,23 +914,21 @@ MissingE.packages.dashboardTweaks = {
                      screenshots =
                         [extension.getURL('core/dashboardTweaks/black.png')];
                   }
-                  for (i=0; i<screenshots.length; i++) {
-                     meta.push(false);
-                  }
                   if (screenshots.length === 1 &&
                       /black_100\.png$/.test(screenshots[0])) {
-                     extension.sendRequest("preview", {pid: tid, url: url},
+                     extension.sendRequest("preview",
+                            {pid: tid, url: url, type: type},
                             MissingE.packages.dashboardTweaks.receivePreview);
                   }
                   else {
                      MissingE.packages.dashboardTweaks
                         .receivePreview({success: true, pid: tid,
-                                         data: screenshots, metadata: meta,
-                                         type: "video"});
+                                         data: screenshots, type: type});
                   }
                }
                else {
-                  extension.sendRequest("preview", {pid: tid, url: url},
+                  extension.sendRequest("preview",
+                            {pid: tid, url: url, type: type},
                             MissingE.packages.dashboardTweaks.receivePreview);
                }
             }
