@@ -78,6 +78,11 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.4.12** (01/27/2012)
+**_+_** Add video post notification previews for Tumblr, Vimeo and YouTube videos  
+**_+_** Restore timestamps for inbox messages  
+**_!_** Fix timestamp displays now that Tumblr implements local timestamps
+
 ##**2.4.11** (01/24/2012)
 **_!_** No longer truncate text post titles when creating Reply Replies post for notes on text posts
 
