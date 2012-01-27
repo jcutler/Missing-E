@@ -58,13 +58,7 @@ var utils = {
       var i, x, stamp, tmp, tz, d, dq;
       var dt = {};
       var today = new Date();
-      if (this.isEDTfromUTC(today)) {
-         today.setUTCHours(today.getUTCHours()-4);
-      }
-      else {
-         today.setUTCHours(today.getUTCHours()-5);
-      }
-      dt.day = today.getUTCDay();
+      dt.day = today.getDay();
       stamp = inStamp.replace(/,/,'').split(" ");
       for (i=0; i<stamp.length; i++) {
          if (/^\d{4}$/.test(stamp[i])) {
@@ -122,62 +116,53 @@ var utils = {
          }
       }
       if (dt.year) {
-         tz = this.isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" : "EST";
          d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
-                         dt.hours + ":" + dt.minutes + ":00 " + tz);
+                         dt.hours + ":" + dt.minutes + ":00");
          return Math.round(d.getTime()/1000);
       }
       if (!dt.year) {
          if (dt.month) {
             dq = new Date(dt.month + "/" + dt.date + "/" +
-                              today.getUTCFullYear() + " " + dt.hours +
-                              ":" + dt.minutes + ":00 UTC");
+                              today.getFullYear() + " " + dt.hours +
+                              ":" + dt.minutes + ":00");
             /* If more than a day ahead, month is in previous year */
             if (dq > today + 86400000) {
-               dt.year = today.getUTCFullYear() - 1;
+               dt.year = today.getFullYear() - 1;
             }
             else {
-               dt.year = today.getUTCFullYear();
+               dt.year = today.getFullYear();
             }
-            tz = this.isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" :
-                                                                     "EST";
             d = new Date(dt.month + "/" + dt.date + "/" + dt.year +
-                             " " + dt.hours + ":" + dt.minutes + ":00 " +
-                             tz);
+                             " " + dt.hours + ":" + dt.minutes + ":00");
             return Math.round(d.getTime()/1000);
          }
          else if (dt.date < 0) {
-            dq = new Date((today.getUTCMonth()+1) + "/" +
-                              today.getUTCDate() + "/" +
-                              today.getUTCFullYear() + " " + dt.hours +
+            dq = new Date((today.getMonth()+1) + "/" +
+                              today.getDate() + "/" +
+                              today.getFullYear() + " " + dt.hours +
                               ":" + dt.minutes + ":00 UTC");
             /* If more than a month ahead, wrapped backwards across year */
             if (dq > today + 2764800000) {
-               today.setUTCFullYear(dt.year);
+               today.setFullYear(dt.year);
             }
             /* If more than a day ahead, wrapped backwards across month */
             if (dq > today + 86400000) {
-               today.setUTCMonth(today.getUTCMonth()-1);
+               today.setMonth(today.getMonth()-1);
             }
             today = new Date(today.valueOf()+86400000*dt.date);
-            dt.date = today.getUTCDate();
-            dt.month = today.getUTCMonth()+1;
-            dt.year = today.getUTCFullYear();
-            tz = this.isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" :
-                                                                     "EST";
+            dt.date = today.getDate();
+            dt.month = today.getMonth()+1;
+            dt.year = today.getFullYear();
             d = new Date(dt.month + "/" + dt.date + "/" + dt.year +
-                             " " + dt.hours + ":" + dt.minutes + ":00 " +
-                             tz);
+                             " " + dt.hours + ":" + dt.minutes + ":00");
             return Math.round(d.getTime()/1000);
          }
          else if (!dt.date) {
-            dt.year = today.getUTCFullYear();
-            dt.month = today.getUTCMonth()+1;
-            dt.date = today.getUTCDate();
-            tz = this.isEDT(dt.year,dt.month,dt.date,dt.hours) ? "EDT" :
-                                                                     "EST";
+            dt.year = today.getFullYear();
+            dt.month = today.getMonth()+1;
+            dt.date = today.getDate();
             d = new Date(dt.month + "/" + dt.date + "/" + dt.year + " " +
-                           dt.hours + ":" + dt.minutes + ":00 " + tz);
+                           dt.hours + ":" + dt.minutes + ":00");
             return Math.round(d.getTime()/1000);
          }
       }

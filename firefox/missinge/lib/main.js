@@ -810,15 +810,6 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
                return;
             }
 
-            /*** I think it used to be UTC
-            var m = txt.match(/([A-Za-z]+) (\d+)[^,]*, (\d+) (\d+):(\d+)([aApP][mM])/);
-            var d = new Date(m[1] + ' ' + m[2] + ', ' + m[3] + ' ' +
-                             (m[6]=='pm' && m[4] !== '12' ? parseInt(m[4])+12 : m[4]) +
-                             ':' + m[5] + ':00 GMT');
-            var stamp = Math.round(d.getTime()/1000);
-            ***/
-
-            /*** Now it is EST/EDT ***/
             var stamp = MissingE.buildTimestamp(txt);
 
             var info = {"timestamp":stamp};
@@ -2047,6 +2038,7 @@ function handleMessage(message, myWorker) {
                       ["dashboard",
                        "blog",
                        "likes",
+                       "messages",
                        "tagged"])) {
          if (getSetting("extensions.MissingE.timestamps.enabled",1) == 1) {
             injectScripts.push(data.url("core/timestamps/timestamps.js"));
