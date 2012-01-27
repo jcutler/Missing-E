@@ -329,8 +329,13 @@ MissingE.packages.dashboardTweaks = {
                      .removeClass('MissingE_preview_loading');
                   this.style.display = "inline";
                };
-               prevImg.src = response.data[i]
-                                 .replace(/\d*\.([a-z]+)$/,"100.$1");
+               if (response.metadata[i]) {
+                  prevImg.src = response.data[i]
+                                    .replace(/\d*\.([a-z]+)$/,"100.$1");
+               }
+               else {
+                  prevImg.src = response.data[i];
+               }
             }
          }
       }
@@ -819,7 +824,8 @@ MissingE.packages.dashboardTweaks = {
             var preWin = $('#MissingE_preview');
             if (preWin.attr('post') !== tid &&
                 (text === MissingE.getLocale(lang).posts.photo[len-1] ||
-                 text === MissingE.getLocale(lang).posts.photoset[len-1])) {
+                 text === MissingE.getLocale(lang).posts.photoset[len-1] ||
+                 text === MissingE.getLocale(lang).posts.video[len-1])) {
                preWin.attr('post',tid);
                preWin.empty().removeClass('MissingE_preview_fail')
                   .addClass('MissingE_preview_loading');
@@ -833,7 +839,8 @@ MissingE.packages.dashboardTweaks = {
                   MissingE.packages.dashboardTweaks
                      .receivePreview({success: true, pid: tid, data: exImgs});
                }
-               else if (exPost.length > 0) {
+               else if (exPost.length > 0 &&
+                        text !== MissingE.getLocale(lang).posts.video[len-1]) {
                   var exImg = exPost.find('div.post_content img:first')
                                  .attr('src');
                   exImg = exImg.replace(/http:\/\/\d+\./,'http://');

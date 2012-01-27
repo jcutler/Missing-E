@@ -491,11 +491,20 @@ function doPreview(stamp, id, theWorker) {
       debug("Cache entry does not have photos");
       return false;
    }
-   var photos = [];
+   var photos = [], meta = [];
    for (i=0; i<stamp.photos.length; i++) {
       photos.push(stamp.photos[i].replace(/\d+\.([a-z]+)$/,"100.$1"));
+      meta.push(true);
    }
-   theWorker.postMessage({greeting: "preview", success: true, pid: id, data: photos});
+   for (i=0; i<stamp.videoScreenshots.length; i++) {
+      photos.push(stamp.videoScreenshots[i]);
+      meta.push(false);
+   }
+   if (photos.length === 0) {
+      photos.push(chrome.extension.getURL('core/dashboardTweaks/black.png'));
+      meta.push(false);
+   } 
+   theWorker.postMessage({greeting: "preview", success: true, pid: id, data: photos, metadata: meta});
    return true;
 }
 
@@ -813,6 +822,27 @@ function parseRSS(data) {
       }
    }
    info.photos = photos;
+
+   var videoScreenshots = [];
+   var youtube = data.match(/<description>&lt;iframe[^&]*src="http:\/\/www\.youtube\.com\/embed\/([\w]*)/);
+   var tumblr;
+   if (/<description>&lt;span id="video_player/.test(data)) {
+      tumblr = data.match(/'poster=([^']*)/);
+      tumblr = tumblr[0].replace(/'poster=/,'').split(',');
+   }
+   if (youtube && youtube.length > 1) {
+      for (i=0; i<4; i++) {
+         videoScreenshots.push('http://img.youtube.com/vi/' + youtube[1] + '/' +
+                               i + '.jpg');
+      }
+   }
+   else if (tumblr && tumblr.length > 1) {
+      for (i=1; i<tumblr.length; i++) {
+         videoScreenshots.push(tumblr[i].replace(/%3A/gi,':').replace(/%2F/gi,'/'));
+      }
+   }
+   info.videoScreenshots = videoScreenshots;
+
    return info;
 }
 
