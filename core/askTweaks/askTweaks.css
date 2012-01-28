@@ -53,16 +53,21 @@ display:none;
 position:absolute;
 left:0;
 top:100%;
-padding:1px 0 3px 0;
+padding:3px 0;
 visibility:hidden;
 z-index:1337;
 }
 
+.MissingE_askTweaks_buttons button {
+cursor:pointer;
+}
+
 .MissingE_askTweaks_buttons .MissingE_postMenu button {
 font-size:12px !important;
-line-height:normal !important;
+line-height:12px !important;
 height:auto !important;
 width:100% !important;
+margin-left:2px !important;
 }
 
 .MissingE_askTweaks_buttons .MissingE_postMenu .chrome_button {

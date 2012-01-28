@@ -416,6 +416,12 @@ MissingE.packages.askTweaks = {
       }
       if (MissingE.isTumblrURL(location.href, ["messages"])) {
          if (settings.betterAnswers === 1) {
+            $('#posts div.MissingE_postMenu .chrome')
+               .live('mouseover', function() {
+               $(this).addClass('blue');
+            }).live('mouseout', function() {
+               $(this).removeClass('blue');
+            });
             $('head').append('<script type="text/javascript">' +
                'document.addEventListener(\'mouseup\', function(e) {' +
                'if (e.which !== 1) { return; }' +
