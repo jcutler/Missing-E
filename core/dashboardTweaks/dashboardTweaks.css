@@ -24,3 +24,14 @@
 #posts div.reply_pane .chrome:not(:disabled) {
 cursor:pointer;
 }
+
+#posts .post_controls .button {
+height:14px !important;
+padding:0 !important;
+min-width:14px !important;
+display:inline;
+}
+
+#posts .post_controls .button[id^="promote_button_loading_"] {
+height:16px !important;
+}
