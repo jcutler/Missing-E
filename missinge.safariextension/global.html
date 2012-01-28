@@ -1583,6 +1583,7 @@ function handleRequest(request) {
                        "tagged"])) {
 
          if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1) {
+            injectStyles.push({file: "core/dashboardTweaks/dashboardTweaks.css"});
             if (getSetting("MissingE_dashboardTweaks_notePreview",1) == 1) {
                injectStyles.push({file: "core/dashboardTweaks/preview.css"});
                injectStyles.push({code:

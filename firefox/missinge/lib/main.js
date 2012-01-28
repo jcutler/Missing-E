@@ -1665,6 +1665,7 @@ function handleMessage(message, myWorker) {
                        "tagged"])) {
 
          if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
+            injectStyles.push({file: "core/dashboardTweaks/dashboardTweaks.css"});
             if (getSetting("extensions.MissingE.dashboardTweaks.notePreview",1) == 1) {
                injectStyles.push({file: "core/dashboardTweaks/preview.css"});
                injectStyles.push({code:
