@@ -56,6 +56,10 @@ MissingE.packages.reblogYourself = {
       var edit, txt, klass;
       var lang = $('html').attr("lang");
       var reblog_text = MissingE.getLocale(lang).reblog;
+      if ($('#post_' + response.pid + ' div.post_controls a[href^="/reblog/"]')
+            .length > 0) {
+         return;
+      }
       if (response.success) {
          txt = reblog_text;
          var redir = location.href;

@@ -53,6 +53,9 @@ MissingE.packages.betterReblogs = {
 
    receiveAskReblog: function(response) {
       var item = $('#post_' + response.pid);
+      if (item.find('div.post_controls a[href^="/reblog"]').length > 0) {
+         return;
+      }
       var perm = item.find("a.permalink:first");
       var tid = response.pid;
       var klass, before, rblnk, txt,i;
