@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.4.13** (01/29/2012)
+**_!_** Fix issue with multiple reblog buttons added to some posts  
+**_!_** Ensure photo/video post notification previews show up on top of other elements
+
 ##**2.4.12** (01/27/2012)
 **_+_** Add video post notification previews for Tumblr, Vimeo and YouTube videos  
 **_+_** Restore timestamps for inbox messages  
