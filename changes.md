@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.4.14** (01/31/2012)
+**_!_** Don't reblog tags with quick reblogging feature if preferences set to not automatically reblog tags  
+**_!_** Fix Reply Replies formatting issue for users of Tumblr's Rich Text Editor
+
 ##**2.4.13** (01/29/2012)
 **_!_** Fix issue with multiple reblog buttons added to some posts  
 **_!_** Ensure photo/video post notification previews show up on top of other elements
