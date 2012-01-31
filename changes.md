@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.5.0** (01/31/2012)
+**_+_** Add keyboard shortcuts for Bookmarker and Quick Reblogging
+
 ##**2.4.14** (01/31/2012)
 **_!_** Don't reblog tags with quick reblogging feature if preferences set to not automatically reblog tags  
 **_!_** Fix Reply Replies formatting issue for users of Tumblr's Rich Text Editor
