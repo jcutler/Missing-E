@@ -374,7 +374,8 @@ MissingE.packages.betterReblogs = {
       if (settings.tagQueuedPosts === 1) {
          queueTags = settings.queueTags;
       }
-      if (settings.passTags === 1) {
+      if (settings.passTags === 1 &&
+          settings.autoFillTags === 1) {
          var selector = '#posts div.post_controls a[href^="/reblog/"]';
          if (settings.quickReblog === 1) {
             selector = '#MissingE_quick_reblog_manual';
@@ -598,7 +599,8 @@ MissingE.packages.betterReblogs = {
             var marg = parseInt($('body').css('margin-top'), 10);
             if (isNaN(marg)) { marg = 0; }
             var tagarr = [];
-            if (settings.passTags === 1) {
+            if (settings.passTags === 1 &&
+                settings.autoFillTags === 1) {
                var tags = reblog.closest('li.post').find('span.tags a');
                if (MissingE.isTumblrURL(location.href, ["tagged"])) {
                   var i;
