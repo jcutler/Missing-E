@@ -52,7 +52,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>2.4.14</string>
+		<string>2.4.15</string>
 		<key>Key</key>
 		<string>MissingE_version</string>
 		<key>Title</key>
@@ -515,6 +515,16 @@
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_bookmarker_addBar</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_bookmarker_keyboardShortcut</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

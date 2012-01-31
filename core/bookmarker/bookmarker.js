@@ -229,9 +229,9 @@ MissingE.packages.bookmarker = {
             post = $(this).closest('li.post');
             pid = this.id.match(/\d*$/)[0];
             try {
-               moveWin = $('#bookmarkbar_' + pid).offset().top -
+               moveWin = $('#bookmarkbar_' + pid).get(0).offsetTop -
                            $(window).scrollTop() <= 34;
-               oldPos = post.offset().top;
+               oldPos = post.get(0).offsetTop;
             }
             catch (e) {
                moveWin = false;
@@ -239,7 +239,7 @@ MissingE.packages.bookmarker = {
             $(this).removeClass("MissingE_ismarked");
             MissingE.packages.bookmarker.removeMark(this.id.match(/\d*$/)[0]);
             if (moveWin) {
-               scrollTo = $(window).scrollTop() + post.offset().top -
+               scrollTo = $(window).scrollTop() + post.get(0).offsetTop -
                               oldPos;
                $(window).scrollTop(scrollTo);
             }
@@ -265,18 +265,18 @@ MissingE.packages.bookmarker = {
                }
             }
             pid = this.id.match(/\d*$/)[0];
-            oldPos = post.offset().top;
+            oldPos = post.get(0).offsetTop;
 
             if (MissingE.packages.bookmarker.addMark(pid,user,e.shiftKey)) {
                try {
-                  moveWin = $('#bookmarkbar_' + pid).offset().top -
+                  moveWin = $('#bookmarkbar_' + pid).get(0).offsetTop -
                               $(window).scrollTop() <= 34;
                }
                catch (e) {
                   moveWin = false;
                }
                if (moveWin) {
-                  scrollTo = $(window).scrollTop() + post.offset().top -
+                  scrollTo = $(window).scrollTop() + post.get(0).offsetTop -
                                  oldPos;
                   $(window).scrollTop(scrollTo);
                }
@@ -429,6 +429,25 @@ MissingE.packages.bookmarker = {
 
          if (!MissingE.isTumblrURL(location.href,
                                    ["drafts", "queue", "messages"])) {
+            if (settings.keyboardShortcut) {
+               $(window).keydown(function(e) {
+                  if (e.keyCode !== 77 ||
+                      $(e.target).is('input,textarea')) {
+                     return;
+                  }
+                  var currPos = $(window).scrollTop()+7;
+                  $('#posts li.post').each(function() {
+                     var postPos = this.offsetTop;
+                     if (postPos === currPos) {
+                        var mark = $(this).find('div.post_controls a.MissingE_mark').get(0);
+                        MissingE.packages.bookmarker.markClick.apply(mark, [{which:1, shiftKey:false}]);
+                     }
+                     if (postPos >= currPos) {
+                        return false;
+                     }
+                  });
+               });
+            }
             $("#posts li.post").each(function() {
                MissingE.packages.bookmarker.doMarks(this);
             });
@@ -511,7 +530,7 @@ MissingE.packages.bookmarker = {
             }).keyup(function(e) {
                MissingE.packages.bookmarker.handleEdit('keyup',e);
             }).keydown(function(e) {
-               if (e.which === 74 || e.which === 75 ||
+               if (e.which >= 65 || e.which <= 90 ||
                    e.which === 37 || e.which === 39) {
                   e.stopPropagation();
                }
@@ -535,7 +554,7 @@ MissingE.packages.bookmarker = {
             var bar = $('#bookmarkbar_' + $(this).attr('post'));
             if (MissingE.isTumblrURL(location.href, ["dashboardOnly"]) &&
                 bar.length > 0) {
-               $(window).scrollTop(bar.offset().top-10);
+               $(window).scrollTop(bar.get(0).offsetTop-10);
                return false;
             }
          }

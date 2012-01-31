@@ -1352,6 +1352,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.backupMarks = getSetting("MissingE_bookmarker_marks","");
             settings.format = getSetting("MissingE_bookmarker_format",MissingE.defaultFormat);
             settings.addBar = getSetting("MissingE_bookmarker_addBar",1);
+            settings.keyboardShortcut = getSetting("MissingE_bookmarker_keyboardShortcut",1);
             break;
          case "dashboardTweaks":
             settings.replaceIcons = getSetting("MissingE_dashboardTweaks_replaceIcons",1);

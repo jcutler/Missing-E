@@ -1398,6 +1398,7 @@ function handleRequest(request) {
       settings.MissingE_askTweaks_smallFanMail = getSetting("MissingE_askTweaks_smallFanMail",0);
       settings.MissingE_bookmarker_format = getSetting("MissingE_bookmarker_format",MissingE.defaultFormat);
       settings.MissingE_bookmarker_addBar = getSetting("MissingE_bookmarker_addBar",1);
+      settings.MissingE_bookmarker_keyboardShortcut = getSetting("MissingE_bookmarker_keyboardShortcut",1);
       settings.MissingE_dashboardTweaks_reblogQuoteFit = getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1);
       settings.MissingE_dashboardTweaks_wrapTags = getSetting("MissingE_dashboardTweaks_wrapTags",1);
       settings.MissingE_dashboardTweaks_replaceIcons = getSetting("MissingE_dashboardTweaks_replaceIcons",1);
@@ -1492,6 +1493,7 @@ function handleRequest(request) {
             settings.backupMarks = getSetting("MissingE_bookmarker_marks","");
             settings.format = getSetting("MissingE_bookmarker_format",MissingE.defaultFormat);
             settings.addBar = getSetting("MissingE_bookmarker_addBar",1);
+            settings.keyboardShortcut = getSetting("MissingE_bookmarker_keyboardShortcut",1);
             break;
          case "dashboardTweaks":
             settings.reblogQuoteFit = getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1);

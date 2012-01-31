@@ -522,6 +522,16 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_bookmarker_keyboardShortcut</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
 		<string>%Y-%m-%D %H:%i</string>
 		<key>Key</key>
 		<string>MissingE_bookmarker_format</string>

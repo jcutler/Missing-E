@@ -268,6 +268,7 @@ MissingE.utilities.options = {
          }
          else if (v == "bookmarker") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_bookmarker_addBar',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_bookmarker_keyboardShortcut',1);
             var bmFormat = MissingE.utilities.options.getStorage('MissingE_bookmarker_format',MissingE.defaultFormat);
             frm.MissingE_bookmarker_format.value = bmFormat;
             $('#MissingE_bookmarker_format_sample').text(MissingE.getBookmarkerFormat(new Date(), 'missing-e', bmFormat));

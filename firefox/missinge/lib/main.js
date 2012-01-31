@@ -158,6 +158,7 @@ function getAllSettings(getStale) {
    settings.MissingE_askTweaks_smallFanMail = getSetting("extensions.MissingE.askTweaks.smallFanMail",0);
    settings.MissingE_bookmarker_format = getSetting("extensions.MissingE.bookmarker.format",MissingE.defaultFormat);
    settings.MissingE_bookmarker_addBar = getSetting("extensions.MissingE.bookmarker.addBar",1);
+   settings.MissingE_bookmarker_keyboardShortcut = getSetting("extensions.MissingE.bookmarker.keyboardShortcut",1);
    settings.MissingE_dashboardTweaks_reblogQuoteFit = getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1);
    settings.MissingE_dashboardTweaks_wrapTags = getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1);
    settings.MissingE_dashboardTweaks_replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1);
@@ -1567,6 +1568,7 @@ function handleMessage(message, myWorker) {
             settings.backupMarks = getSetting("extensions.MissingE.bookmarker.marks","");
             settings.format = getSetting("extensions.MissingE.bookmarker.format",MissingE.defaultFormat);
             settings.addBar = getSetting("extensions.MissingE.bookmarker.addBar",1);
+            settings.keyboardShortcut = getSetting("extensions.MissingE.bookmarker.keyboardShortcut",1);
             break;
          case "dashboardTweaks":
             settings.reblogQuoteFit = getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1);
