@@ -385,7 +385,7 @@ MissingE.packages.replyReplies = {
                      .replace(/<\/?div[^>]*>/g,'');
       }
 
-      code = code.replace(/ {2,}/g,' ');
+      code = code.replace(/ {2,}/g,' ').replace(/ >/g,'>').replace(/< /g,'<');
 
       if (settings.defaultTags !== '') {
          tags = settings.defaultTags.concat(tags);
