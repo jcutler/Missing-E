@@ -454,17 +454,22 @@ function loadScripts() {
         </select>
        </td>
       </tr>
-      <tr>
+      <tr class="subopt">
+       <td>Enable quick (1-click) reblogging keyboard shortcuts:<br />
+        <small><code>r</code>eblog / <code>q</code>ueue / <code>d</code>raft</small></td>
+       <td><input type="checkbox" name="MissingE_betterReblogs_keyboardShortcut" /></td>
+      </tr>
+      <tr class="alt">
        <td>Always reblog long text posts as text</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_fullText" /></td>
       </tr>
-      <tr class="alt">
+      <tr>
        <td>Allow reblogging of <em>Ask</em> posts as text<br />
         <small><em>This feature does not always work correctly from permalink pages</em></small>
        </td>
        <td><input type="checkbox" name="MissingE_betterReblogs_reblogAsks" /></td>
       </tr>
-      <tr class="subopt">
+      <tr class="alt subopt">
        <td>Number of retries on failure to add reblog link to ask posts (default <span class="defRetries">4</span>)</td>
        <td><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_askRetries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
       </tr>

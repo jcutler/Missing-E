@@ -1418,6 +1418,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
             settings.reblogAsks = getSetting("MissingE_betterReblogs_reblogAsks",0);
+            settings.keyboardShortcut = getSetting("MissingE_betterReblogs_keyboardShortcut",1);
             break;
       }
       sendResponse(settings);

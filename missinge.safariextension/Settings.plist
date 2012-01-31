@@ -814,6 +814,16 @@
 		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
+		<string>MissingE_betterReblogs_keyboardShortcut</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
 		<string>MissingE_betterReblogs_autoFillTags</string>
 		<key>Title</key>
 		<string></string>

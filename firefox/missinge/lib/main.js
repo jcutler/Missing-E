@@ -215,6 +215,7 @@ function getAllSettings(getStale) {
    settings.MissingE_betterReblogs_quickReblogForceTwitter = getSetting("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
    settings.MissingE_betterReblogs_fullText = getSetting("extensions.MissingE.betterReblogs.fullText",0);
    settings.MissingE_betterReblogs_reblogAsks = getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
+   settings.MissingE_betterReblogs_keyboardShortcut = getSetting("extensions.MissingE.betterReblogs.keyboardShortcut",1);
    settings.MissingE_version = getSetting("extensions.MissingE.version",'');
    settings.MissingE_betterReblogs_askRetries = getSetting("extensions.MissingE.betterReblogs.askRetries",MissingE.defaultRetries);
    if (getStale) {
@@ -1637,6 +1638,7 @@ function handleMessage(message, myWorker) {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
             settings.reblogAsks = getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
+            settings.keyboardShortcut = getSetting("extensions.MissingE.betterReblogs.keyboardShortcut",1);
             break;
       }
       myWorker.postMessage(settings);
