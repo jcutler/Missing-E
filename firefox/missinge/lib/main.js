@@ -31,6 +31,7 @@ var data = require("self").data;
 var Request = require("request").Request;
 var timer = require("timer");
 var widget = null;
+const { Cc, Ci, Cu } = require("chrome");
 
 var maxActiveAjax = 15;
 
@@ -1362,6 +1363,27 @@ function versionCompare(v1, v2) {
       }
       return 0;
    }
+}
+
+function takeScreenshot(x, y, w, h) {
+   var win = Cc['@mozilla.org/appshell/window-mediator;1']
+               .getService(Ci.nsIWindowMediator)
+               .getMostRecentWindow("navigator:browser").gBrowser.contentWindow;
+   window = Cc[
+   x = x ? x : 0;
+   y = y ? y : 0;
+   w = w ? w : window.innerWidth - x;
+   h = h ? h : window.innerHeight - y;
+
+   var ss = Cc["@mozilla.org/appshell/appShellService;1"]
+               .getService(Ci.nsIAppShellService).hiddenDOMWindow.document
+               .createElementNS("http://www.w3.org/1999/xhtml", "canvas");
+   ss.mozOpaque = true;
+   ss.width = w;
+   ss.height = h;
+   var ctx = ss.getContext("2d");
+   ctx.drawWindow(window, x, y, w, h, "rgb(255,255,255)");
+   return ss.toDataURL();
 }
 
 function inArray(entry, arr) {
