@@ -374,15 +374,15 @@ MissingE.packages.betterReblogs = {
       if (settings.tagQueuedPosts === 1) {
          queueTags = settings.queueTags;
       }
-      if (settings.passTags === 1 &&
-          settings.autoFillTags === 1) {
+      if (settings.passTags === 1) {
          var selector = '#posts div.post_controls a[href^="/reblog/"]';
          if (settings.quickReblog === 1) {
             selector = '#MissingE_quick_reblog_manual';
          }
          $(selector).live('mousedown', function() {
             var tags;
-            if (this.id === 'MissingE_quick_reblog_manual') {
+            var isManual = this.id === 'MissingE_quick_reblog_manual';
+            if (isManual && settings.autoFillTags === 1) {
                tags = $('#MissingE_quick_reblog_tags input').val();
                tags = tags.replace(/\s*,\s*/g,',').replace(/,$/,'')
                         .replace(/^\s*/,'');
@@ -390,7 +390,14 @@ MissingE.packages.betterReblogs = {
                MissingE.packages.betterReblogs.setTagOverride();
             }
             else {
-               tags = $(this).closest('li.post').find('span.tags a');
+               if (isManual) {
+                  var postId = $(this).parent().attr('id')
+                                 .replace(/list_for_/,'');
+                  tags = $('#post_' + postId).find('span.tags a');
+               }
+               else {
+                  tags = $(this).closest('li.post').find('span.tags a');
+               }
                var tagarr = [];
                if (MissingE.isTumblrURL(location.href, ["tagged"])) {
                   var i;
@@ -413,7 +420,12 @@ MissingE.packages.betterReblogs = {
                   tagarr.push($(this).text().replace(/^#/,''));
                });
                MissingE.packages.betterReblogs.setReblogTags(tagarr);
-               MissingE.packages.betterReblogs.clearTagOverride();
+               if (isManual) {
+                  MissingE.packages.betterReblogs.setTagOverride();
+               }
+               else {
+                  MissingE.packages.betterReblogs.clearTagOverride();
+               }
             }
          });
       }
