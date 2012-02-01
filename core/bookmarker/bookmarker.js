@@ -432,6 +432,7 @@ MissingE.packages.bookmarker = {
             if (settings.keyboardShortcut) {
                $(window).keydown(function(e) {
                   if (e.keyCode !== 77 ||
+                      e.metaKey || e.shiftKey || e.altKey || e.ctrlKey ||
                       $(e.target).is('input,textarea')) {
                      return;
                   }

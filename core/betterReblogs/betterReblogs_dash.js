@@ -694,6 +694,7 @@ MissingE.packages.betterReblogs = {
          if (settings.keyboardShortcut) {
             $(window).keydown(function(e) {
                if ((e.keyCode !== 68 && e.keyCode !== 81 && e.keyCode !== 82) ||
+                   e.metaKey || e.shiftKey || e.altKey || e.ctrlKey ||
                    $(e.target).is('input,textarea')) {
                   return;
                }
