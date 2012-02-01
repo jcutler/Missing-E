@@ -31,8 +31,9 @@ var data = require("self").data;
 var Request = require("request").Request;
 var timer = require("timer");
 var widget = null;
+/*** NOT READY
 const { Cc, Ci, Cu } = require("chrome");
-
+***/
 var maxActiveAjax = 15;
 
 var activeAjax = 0;
@@ -1365,6 +1366,7 @@ function versionCompare(v1, v2) {
    }
 }
 
+/*** NOT READY
 function decode64(input) {
    var output = "";
    var chr1, chr2, chr3 = "";
@@ -1427,6 +1429,7 @@ function takeScreenshot(x, y, w, h) {
    ctx.drawWindow(window, x, y, w, h, "rgb(255,255,255)");
    return ss.toDataURL();
 }
+***/
 
 function inArray(entry, arr) {
    var i;
@@ -1564,11 +1567,13 @@ function handleMessage(message, myWorker) {
          myWorker.tab.url = message.url;
       }
    }
+/*** NOT READY
    else if (message.greeting == "screenshot") {
       var dataURI = takeScreenshot(0,0,500,500);
       dataURI = dataURI.replace(/^[^,]*,/);
       var binData = decode64(dataURI);
    }
+***/
    else if (message.greeting == "getCrushes") {
       var i;
       for (i=0; i<crushes.length; i++) {
