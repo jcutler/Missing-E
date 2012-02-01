@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.5.1** (01/31/2012)
+**_!_** Don't perform keyboard shortcuts when modifier keys (Shift, Alt, etc) are held
+
 ##**2.5.0** (01/31/2012)
 **_+_** Add keyboard shortcuts for Bookmarker and Quick Reblogging
 
