@@ -79,7 +79,7 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.5.2** (02/02/2012)
-**_!_** Fix issue with Better Reblogs tag reblogging not functioning when set tonot automatically add tags
+**_!_** Fix issue with Better Reblogs tag reblogging not functioning when set to not automatically add tags
 
 ##**2.5.1** (01/31/2012)
 **_!_** Don't perform keyboard shortcuts when modifier keys (Shift, Alt, etc) are held
