@@ -2032,6 +2032,14 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.betterReblogs = false;
+
+         if (getSetting("extensions.MissingE.reblogYourself.enabled",1) == 1) {
+            injectScripts.push(data.url("core/reblogYourself/reblogYourself_fill.js"));
+            activeScripts.reblogYourself = true;
+            activeScripts.reblogYourself_fill = true;
+         }
+         else
+            activeScripts.reblogYourself = false;
       }
       if (MissingE.isTumblrURL(message.url, ["iframe"]) &&
           !MissingE.isTumblrURL(myWorker.tab.url, ["post", "reblog"])) {

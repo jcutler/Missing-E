@@ -1791,6 +1791,13 @@ function handleRequest(request) {
          }
          else
             activeScripts.betterReblogs = false;
+
+         if (getSetting("MissingE_reblogYourself_enabled",1) == 1) {
+            activeScripts.reblogYourself = true;
+            activeScripts.reblogYourself_fill = true;
+         }
+         else
+            activeScripts.reblogYourself = false;
       }
       if (MissingE.isTumblrURL(request.message.url, ["iframe"]) &&
           !MissingE.isTumblrURL(request.target.url, ["post", "reblog"])) {

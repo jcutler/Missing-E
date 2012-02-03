@@ -143,7 +143,12 @@ function doStartup(response) {
          MissingE.packages.askTweaks.init();
       }
       if (response.message.reblogYourself) {
-         MissingE.packages.reblogYourself.init();
+         if (response.message.reblogYourself_fill) {
+            MissingE.packages.reblogYourselfFill.init();
+         }
+         else {
+            MissingE.packages.reblogYourself.init();
+         }
       }
       if (response.message.safeDash) {
          MissingE.packages.safeDash.init();

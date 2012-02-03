@@ -74,6 +74,7 @@
 				<string>core/sidebarTweaks/sidebarTweaks.js</string>
 				<string>core/reblogYourself/reblogYourself_post.js</string>
 				<string>core/reblogYourself/reblogYourself_dash.js</string>
+				<string>core/reblogYourself/reblogYourself_fill.js</string>
 				<string>core/replyReplies/replyReplies.js</string>
 				<string>core/replyReplies/replyReplies_fill.js</string>
 				<string>core/safeDash/safeDash.js</string>

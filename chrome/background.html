@@ -1758,6 +1758,13 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.betterReblogs = false;
+
+         if (getSetting("MissingE_reblogYourself_enabled",1) == 1) {
+            activeScripts.reblogYourself = true;
+            chrome.tabs.executeScript(sender.tab.id, {file: "core/reblogYourself/reblogYourself_fill.js"});
+         }
+         else
+            activeScripts.reblogYourself = false;
       }
       if (MissingE.isTumblrURL(request.url, ["iframe"]) &&
           !MissingE.isTumblrURL(sender.tab.url, ["post", "reblog"])) {
