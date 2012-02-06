@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.5.4** (not yet released)
+**_+_** Add option for simplifying Tumblr "highlighted" posts  
+**_!_** Always show "Send to Twitter" checkbox for Tumblr blogs added for Reblog Yourself
+
 ##**2.5.3** (02/03/2012)
 **_!_** Fix Tumblr's new implementation of reblogging yourself to allow accounts with multiple blogs to reblog a post from a blog to itself
 
