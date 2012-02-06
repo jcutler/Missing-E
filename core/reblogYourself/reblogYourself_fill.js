@@ -26,6 +26,12 @@
 MissingE.packages.reblogYourselfFill = {
 
    run: function() {
+      $('#channel_id').bind('change',function() {
+         var selection = $(this).find('option').filter(':selected');
+         if (selection.data("MissingE_created")) {
+            $('#autopost_options,#set_twitter').show();
+         }
+      });
       var list = $('#user_channels').children('li');
       if (list.length > 0) {
          var pos = null;
@@ -46,6 +52,7 @@ MissingE.packages.reblogYourselfFill = {
             }
             else {
                $('#channel_id').prepend(newOpt);
+               newOpt.data("MissingE_created",true);
                pos = newOpt;
             }
          });
