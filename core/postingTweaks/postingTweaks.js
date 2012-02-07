@@ -289,8 +289,6 @@ MissingE.packages.postingTweaks = {
          if (isShare) {
             $('#post_controls input[type="submit"]:first')
                .attr('id','the_submit_btn');
-            doOnClick = 'document.getElementById(\'the_submit_btn\').click();' +
-                        doOnClick;
          }
          for (i in MissingE.getLocale(lang).postingTweaks.submitText) {
             if (MissingE.getLocale(lang).postingTweaks.submitText
@@ -313,6 +311,12 @@ MissingE.packages.postingTweaks = {
          $('#post_state').bind('change', function() {
             MissingE.packages.postingTweaks
                .showHideButtons(newbtns, this.value);
+            if (isShare) {
+               MissingE.packages.postingTweaks
+                  .changeButtonText($('#post_state').val(),
+                                    MissingE.getLocale(lang).postingTweaks
+                                       .submitText);
+            }
          });
          newbtns.find('button').mouseup(function() {
             if (!isShare) {
@@ -342,6 +346,9 @@ MissingE.packages.postingTweaks = {
                .changeButtonText($('#post_state').val(),
                                  MissingE.getLocale(lang).postingTweaks
                                     .submitText);
+            newbtns.find('button').click(function() {
+               $.globalEval('document.getElementById("the_submit_btn").click()');
+            });
          }
       }
 
