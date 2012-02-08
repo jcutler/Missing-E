@@ -35,10 +35,6 @@ box-shadow:rgb(0,0,0) 0 0 10px;
 z-index:1338;
 }
 
-#MissingE_preview:hover {
-display:block !important;
-}
-
 #MissingE_preview img {
 width:100px;
 background-color:white;
