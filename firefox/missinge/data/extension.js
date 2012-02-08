@@ -34,53 +34,47 @@ MissingE = {
          extension.sendRequest("exportOptions", {}, callback);
       },
 
-      importSettings: function(input, frame) {
+      importSettings: function(input) {
          var form = $(input).closest("form").get(0);
          if (input.files[0]) {
             var formData = new FormData(form);
             formData.append("import", input.files[0]);
-            this._intervalCount = 0;
-            this._interval = setInterval(function() {
-               var xmlDoc = frame.contentDocument;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://tools.missing-e.com/settings',
+                     true);
+            xhr.onreadystatechange = function() {
+               if (xhr.readyState !== 4) { return; }
+               console.log(xhr.status);
                var importedSettings = {};
-               if (xmlDoc.childNodes[1] &&
-                   xmlDoc.childNodes[1].nodeName === "parsererror") {
-                  clearInterval(this._interval);
-                  frame.src = "";
-                  form.reset();
-                  alert("Imported settings file is not valid XML.");
-                  return;
-               }
-               else if (xmlDoc.readyState === "complete" &&
-                        xmlDoc.childNodes[0].nodeName === "missing-e") {
-                  clearInterval(this._interval);
-                  $('missing-e setting', xmlDoc).each(function(i) {
+               if (xhr.status === 200 && xhr.responseXML) {
+                  $('missing-e setting', xhr.responseXML).each(function(i) {
                      importedSettings[$(this).find('name').text()] =
                         $(this).find('value').text();
                   });
-                  frame.src = "";
-                  form.reset();
-                  extension.sendRequest("importOptions",
-                                        {data: importedSettings},
-                                        function(response) {
-                     if (response.msg) { alert(response.msg); }
-                     if (response.success) {
-                        extension.sendRequest("open", {url: "OPTIONS"});
-                        window.close();
-                     }
-                     else {
-                        form.reset();
-                     }
-                  });
                }
-               else if (this._intervalCount++ > 15) {
-                  clearInterval(this._interval);
-                  frame.src = "";
+               else if (xhr.status === 200) {
+                  alert("Imported settings file is not valid XML.");
                   form.reset();
+                  return;
+               }
+               else {
                   alert("Problem uploading file. Please try again later.");
+                  form.reset();
+                  return;
                }
-            }, 1000);
-            form.submit();
+               extension.sendRequest("importOptions", {data: importedSettings},
+                                     function(response) {
+                  if (response.msg) { alert(response.msg); }
+                  if (response.success) {
+                     extension.sendRequest("open", {url: "OPTIONS"});
+                     window.close();
+                  }
+                  else {
+                     form.reset();
+                  }
+               });
+            };
+            xhr.send(formData);
          }
          else {
             form.reset();
