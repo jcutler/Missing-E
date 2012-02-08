@@ -359,8 +359,14 @@ MissingE.packages.betterReblogs = {
                error: function() {
                   MissingE.packages.betterReblogs.failReblog(this.postId);
                },
-               success: function() {
-                  MissingE.packages.betterReblogs.finishReblog(this.postId);
+               success: function(txt) {
+                  if (/<body[^>]*id="dashboard_edit_post"/.test(txt) &&
+                      /<ul[^>]*id="errors"[^>]*>/.test(txt)) {
+                     MissingE.packages.betterReblogs.failReblog(this.postId);
+                  }
+                  else {
+                     MissingE.packages.betterReblogs.finishReblog(this.postId);
+                  }
                }
             });
          }
