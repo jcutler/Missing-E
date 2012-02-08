@@ -2,6 +2,7 @@
 
 header("Content-Type: text/xml");
 header("Cache-Control: public");
+header("Access-Control-Allow-Origin: *");
 
 if ($_FILES["import"]) {
    if ($_FILES["import"]["error"] == UPLOAD_ERR_OK &&
