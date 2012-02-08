@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.5.6** (02/07/2012)
+**_!_** Fix settings import for Firefox
+
 ##**2.5.5** (02/06/2012)
 **_!_** Fix extra post button functionality in Tumblr Share bookmarklet for Firefox 10
 
