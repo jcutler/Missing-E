@@ -26,16 +26,26 @@
 MissingE.packages.reblogYourselfFill = {
 
    run: function() {
-      $('#channel_id').bind('change',function() {
+      var lang = $('html').attr("lang");
+      var myBlog = MissingE.getLocale(lang).myBlog;
+      var isMine = false;
+      var blogMenu = $('#channel_id');
+      blogMenu.bind('change',function() {
          var selection = $(this).find('option').filter(':selected');
          if (selection.data("MissingE_created")) {
             $('#autopost_options,#set_twitter').show();
          }
       });
       var list = $('#user_channels').children('li');
+      if (list.length === blogMenu.find('option').length + 1 &&
+          blogMenu.find('option[value="0"]').length === 0) {
+         isMine = true;
+      }
       if (list.length > 0) {
-         var pos = null;
+         var pos = blogMenu.find('option[value="0"]');
+         if (pos.length === 0) { pos = null; }
          list.each(function() {
+            var newOpt;
             var acct = this.id.match(/tab-(.*)/);
             if (!acct) { return; }
             acct = acct[1];
@@ -45,8 +55,9 @@ MissingE.packages.reblogYourselfFill = {
                pos = newPos;
                return;
             }
-            var newOpt = $('<option />', {val: acct, text: acctTxt});
-            if (pos) {
+            var newOpt = $('<option />', (isMine ? {val: "0", text: myBlog} :
+                                          {val: acct, text: acctTxt}));
+            if (pos && !isMine) {
                pos.after(newOpt);
                pos = newOpt;
             }
@@ -56,7 +67,6 @@ MissingE.packages.reblogYourselfFill = {
                pos = newOpt;
             }
          });
-         $('#channel_id option[value="0"]').remove();
          if ($('#extra_channel').length > 0) {
             $('#channel_id option').clone().appendTo($('#extra_channel').empty());
          }
@@ -64,7 +74,8 @@ MissingE.packages.reblogYourselfFill = {
          if (toChan) {
             toChan = toChan[1];
          }
-         else {
+         if (!toChan ||
+             $('#channel_id option[value="' + toChan + '"]').length === 0) {
             toChan = $('#channel_id option:first').attr('value');
          }
          if ($('#channel_id option[value="' + toChan + '"]').length > 0) {

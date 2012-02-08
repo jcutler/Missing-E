@@ -58,6 +58,7 @@ var locale = {
    "queue": "Queue",
    "massEditor": "Launch Mass Post Editor"
   },
+  "myBlog": "my blog",
   "reblog": "reblog",
   "reblogging": "reblogging...",
   "reblogFailed": "Reblog failed!",
@@ -236,6 +237,7 @@ var locale = {
    "queue": "Warteschleife",
    "massEditor": "Zum Mega-Editor"
   },
+  "myBlog": "meinem Blog",
   "reblog": "rebloggen",
   "reblogging": "rebloggend...",
   "reblogFailed": "Reblog ist fehlgeschlagen!",
@@ -414,6 +416,7 @@ var locale = {
    "queue": "En cola",
    "massEditor": "Editar varias publicaciones"
   },
+  "myBlog": "mi blog",
   "reblog": "rebloguear",
   "reblogging": "reblogueando...",
   "reblogFailed": "¡El reblog falló!",
@@ -592,6 +595,7 @@ var locale = {
    "queue": "File d'attente",
    "massEditor": "Lancer le multi-éditeur de billets"
   },
+  "myBlog": "Blog principal",
   "reblog": "rebloguer",
   "reblogging": "rebloguant...",
   "reblogFailed": "Reblog a échoué!",
@@ -770,6 +774,7 @@ var locale = {
    "queue": "In Coda",
    "massEditor": "Usa la Modifica di Massa"
   },
+  "myBlog": "il mio blog",
   "reblog": "reblogga",
   "reblogging": "rebloggando...",
   "reblogFailed": "Reblog fallito!",
@@ -958,6 +963,7 @@ var locale = {
    "queue": "予約投稿",
    "massEditor": "メガエディターを開く"
   },
+  "myBlog": "メインブログ",
   "reblog": "リブログ",
   "reblogging": "リブログ中...",
   "reblogFailed": "リブログに失敗しました!",
@@ -1129,6 +1135,7 @@ var locale = {
    "queue": "Kolejka",
    "massEditor": "Masowy edytor postów"
   },
+  "myBlog": "moim blogu",
   "reblog": "rebloguj",
   "reblogging": "reblogowanie...",
   "reblogFailed": "Reblogowanie się nie powiodło!",
@@ -1307,6 +1314,7 @@ var locale = {
    "queue": "Очередь",
    "massEditor": "Массовый редактор"
   },
+  "myBlog": "мой блог",
   "reblog": "реблог",
   "reblogging": "ребложу...",
   "reblogFailed": "Не удалось поместить запись к вам в блог!",
@@ -1515,6 +1523,7 @@ var locale = {
    "queue": "Sırada",
    "massEditor": "Toplu Gönderi Editörünü Aç"
   },
+  "myBlog": "blogum",
   "reblog": "yeniden blogla",
   "reblogging": "yeniden bloglama...",
   "reblogFailed": "Yeniden bloglama başarısız oldu!",
