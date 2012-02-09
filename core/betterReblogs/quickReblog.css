@@ -27,6 +27,13 @@ left:0;
 display:none;
 position:absolute;
 width:150px !important;
+padding-top:4px;
+}
+
+#MissingE_quick_reblog .user_menu_nipple {
+top:-1px !important;
+left:50% !important;
+margin-left:-4px !important;
 }
 
 #MissingE_quick_reblog .user_menu_list span .user_menu_list_item {
