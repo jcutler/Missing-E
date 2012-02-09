@@ -78,9 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.5.8** (not yet released)
+##**2.5.8** (02/09/2012)
 **_+_** Add option to go to next/previous page when using J/K keyboard navigation when not using endless scrolling dashboard  
-**_+_** Improve layout of ordered and unordered lists in dashboard posts
+**_+_** Improve layout of ordered and unordered lists in dashboard posts  
+**_!_** Fix alignment of Quick Reblog menu
 
 ##**2.5.7** (02/08/2012)
 **_!_** Show error message for Quick (1-click) Reblogging when daily post limit has been reached
