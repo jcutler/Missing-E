@@ -35,3 +35,10 @@ display:inline;
 #posts .post_controls .button[id^="promote_button_loading_"] {
 height:16px !important;
 }
+
+#posts .post .post_content ul ul, #posts .post .post_content ul ol,
+#posts .post .post_content ol ul, #posts .post .post_content ol ol,
+#posts .post .post_content ul ul:first-child, #posts .post .post_content ul ol:first-child,
+#posts .post .post_content ol ul:first-child, #posts .post .post_content ol ol:first-child {
+margin:5px 0 !important;
+}

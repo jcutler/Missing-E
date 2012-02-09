@@ -94,6 +94,7 @@ MissingE.packages.dashboardTweaks = {
           !(node.hasClass('post')) ||
           !(node.hasClass('is_reblog')) ||
           node.hasClass('is_mine') ||
+          node.find('.post_controls a[id^="post_control_reply"]').length > 0 ||
           node.find('.MissingE_experimental_reply').length > 0) {
          return;
       }
