@@ -380,6 +380,21 @@ MissingE.packages.dashboardTweaks = {
       }
    },
 
+   navigationSpacer: function() {
+      var spacer = $('#MissingE_navSpacer');
+      var lastPost = $('#posts li.post').last();
+      if (lastPost.length === 0) { return; }
+      if (spacer.length === 0) {
+         spacer = $('<div />', {id: "MissingE_navSpacer"})
+                     .insertAfter('#footer');
+      }
+      var diff = $('body').innerHeight() - (lastPost.offset().top + 7) -
+                 spacer.innerHeight();
+      var delta = window.innerHeight - diff;
+      delta = delta > 0 ? delta : 0;
+      spacer.css('padding-top', delta);
+   },
+
    run: function() {
       var settings = this.settings
       var lang = $('html').attr('lang');
@@ -399,6 +414,36 @@ MissingE.packages.dashboardTweaks = {
       $('#posts a.like_button').live('click', function(e) {
          e.preventDefault();
       });
+
+      if (settings.pagedNav === 1 &&
+          $('#auto_pagination_loader').length === 0) {
+         this.navigationSpacer();
+         $(window).resize(this.navigationSpacer);
+         window.addEventListener('keydown', function(e) {
+            if (e.keyCode === 74 || e.keyCode === 75) {
+               MissingE.packages.dashboardTweaks.lastPosition =
+                  $(window).scrollTop();
+            }
+         }, true);
+         window.addEventListener('keydown', function(e) {
+            if (e.keyCode === 74 || e.keyCode === 75) {
+               if (MissingE.packages.dashboardTweaks.lastPosition ===
+                     $(window).scrollTop()) {
+                  var dir = e.keyCode === 74 ? "next_page_link" :
+                                               "previous_page_link";
+                  $.globalEval(
+                     'if (!key_commands_are_suspended && ' +
+                          'document.getElementById("pagination")' +
+                                '.style.display !== "none") {' +
+                        'var toLink = document.getElementById("' + dir + '");' +
+                        'if (toLink) {' +
+                           'location.href=toLink.href;' +
+                        '}' +
+                     '}');
+               }
+            }
+         }, false);
+      }
 
       if (settings.noExpandAll === 1) {
          $('head').append('<style type="text/css">' +

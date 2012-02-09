@@ -175,6 +175,7 @@ function getAllSettings(getStale) {
    settings.MissingE_dashboardTweaks_notePreview = getSetting("extensions.MissingE.dashboardTweaks.notePreview",1);
    settings.MissingE_dashboardTweaks_previewRetries = getSetting("extensions.MissingE.dashboardTweaks.previewRetries",MissingE.defaultRetries);
    settings.MissingE_dashboardTweaks_simpleHighlight = getSetting("extensions.MissingE.dashboardTweaks.simpleHighlight",0);
+   settings.MissingE_dashboardTweaks_pagedNav = getSetting("extensions.MissingE.dashboardTweaks.pagedNav",0);
    settings.MissingE_sidebarTweaks_retries = getSetting("extensions.MissingE.sidebarTweaks.retries",MissingE.defaultRetries);
    settings.MissingE_sidebarTweaks_addSidebar = getSetting("extensions.MissingE.sidebarTweaks.addSidebar",0);
    settings.MissingE_sidebarTweaks_slimSidebar = getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0);
@@ -1660,6 +1661,7 @@ function handleMessage(message, myWorker) {
             settings.sortableNotes = getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1);
             settings.notePreview = getSetting("extensions.MissingE.dashboardTweaks.notePreview",1);
             settings.simpleHighlight = getSetting("extensions.MissingE.dashboardTweaks.simpleHighlight",0);
+            settings.pagedNav = getSetting("extensions.MissingE.dashboardTweaks.pagedNav",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getSetting("extensions.MissingE.dashLinksToTabs.newPostTabs",1);

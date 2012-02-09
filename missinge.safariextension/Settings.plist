@@ -52,7 +52,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>2.5.7</string>
+		<string>2.5.8</string>
 		<key>Key</key>
 		<string>MissingE_version</string>
 		<key>Title</key>
@@ -425,6 +425,16 @@
 		<real>0</real>
 		<key>Key</key>
 		<string>MissingE_dashboardTweaks_simpleHighlight</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_dashboardTweaks_pagedNav</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

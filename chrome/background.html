@@ -1366,6 +1366,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
             settings.notePreview = getSetting("MissingE_dashboardTweaks_notePreview",1);
             settings.simpleHighlight = getSetting("MissingE_dashboardTweaks_simpleHighlight",0);
+            settings.pagedNav = getSetting("MissingE_dashboardTweaks_pagedNav",0);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getSetting("MissingE_dashLinksToTabs_newPostTabs",1);

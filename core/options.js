@@ -319,6 +319,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_notePreview',1);
             frm.MissingE_dashboardTweaks_previewRetries.value = MissingE.utilities.options.getStorage('MissingE_dashboardTweaks_previewRetries',MissingE.defaultRetries);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_simpleHighlight',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_pagedNav',0);
          }
          else if (v == "safeDash") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_safeDash_photosetAll',0);
