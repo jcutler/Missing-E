@@ -224,13 +224,14 @@ MissingE.packages.bookmarker = {
 
    markClick: function(e) {
       if (e.which === 1) {
-         var post, pid, oldPos, scrollTo, moveWin;
+         var post, pid, oldPos, scrollBy, moveWin, oldScroll;
          if ($(this).hasClass("MissingE_ismarked")) {
             post = $(this).closest('li.post');
             pid = this.id.match(/\d*$/)[0];
             try {
+               oldScroll = $(window).scrollTop();
                moveWin = $('#bookmarkbar_' + pid).get(0).offsetTop -
-                           $(window).scrollTop() <= 34;
+                           oldScroll <= 34;
                oldPos = post.get(0).offsetTop;
             }
             catch (e) {
@@ -239,9 +240,9 @@ MissingE.packages.bookmarker = {
             $(this).removeClass("MissingE_ismarked");
             MissingE.packages.bookmarker.removeMark(this.id.match(/\d*$/)[0]);
             if (moveWin) {
-               scrollTo = $(window).scrollTop() + post.get(0).offsetTop -
-                              oldPos;
-               $(window).scrollTop(scrollTo);
+               scrollBy = (post.get(0).offsetTop - $(window).scrollTop()) -
+                          (oldPos - oldScroll);
+               window.scrollBy(0, scrollBy);
             }
          }
          else {
@@ -269,16 +270,17 @@ MissingE.packages.bookmarker = {
 
             if (MissingE.packages.bookmarker.addMark(pid,user,e.shiftKey)) {
                try {
+                  oldScroll = $(window).scrollTop();
                   moveWin = $('#bookmarkbar_' + pid).get(0).offsetTop -
-                              $(window).scrollTop() <= 34;
+                              oldScroll <= 34;
                }
                catch (e) {
                   moveWin = false;
                }
                if (moveWin) {
-                  scrollTo = $(window).scrollTop() + post.get(0).offsetTop -
-                                 oldPos;
-                  $(window).scrollTop(scrollTo);
+                  scrollBy = (post.get(0).offsetTop - $(window).scrollTop()) -
+                             (oldPos - oldScroll);
+                  window.scrollBy(0, scrollBy);
                }
             }
          }
