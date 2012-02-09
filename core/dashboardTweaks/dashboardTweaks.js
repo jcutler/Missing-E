@@ -395,9 +395,22 @@ MissingE.packages.dashboardTweaks = {
       spacer.css('padding-top', delta);
    },
 
+   gotoLastPost: function() {
+      var lastPost = $('#posts li.post').last();
+      if (lastPost.length > 0) {
+         window.scrollTo(0, lastPost.offset().top - 7);
+      }
+   },
+
    run: function() {
-      var settings = this.settings
+      var settings = this.settings;
       var lang = $('html').attr('lang');
+
+      if (settings.pagedNav === 1 &&
+          $('#auto_pagination_loader').length === 0 &&
+          /MissingEnav=backwards/.test(location.search)) {
+         this.gotoLastPost();
+      }
 
       extension.addAjaxListener(function(type,list) {
          if (type === 'notes') { return; }
@@ -414,36 +427,6 @@ MissingE.packages.dashboardTweaks = {
       $('#posts a.like_button').live('click', function(e) {
          e.preventDefault();
       });
-
-      if (settings.pagedNav === 1 &&
-          $('#auto_pagination_loader').length === 0) {
-         this.navigationSpacer();
-         $(window).resize(this.navigationSpacer);
-         window.addEventListener('keydown', function(e) {
-            if (e.keyCode === 74 || e.keyCode === 75) {
-               MissingE.packages.dashboardTweaks.lastPosition =
-                  $(window).scrollTop();
-            }
-         }, true);
-         window.addEventListener('keydown', function(e) {
-            if (e.keyCode === 74 || e.keyCode === 75) {
-               if (MissingE.packages.dashboardTweaks.lastPosition ===
-                     $(window).scrollTop()) {
-                  var dir = e.keyCode === 74 ? "next_page_link" :
-                                               "previous_page_link";
-                  $.globalEval(
-                     'if (!key_commands_are_suspended && ' +
-                          'document.getElementById("pagination")' +
-                                '.style.display !== "none") {' +
-                        'var toLink = document.getElementById("' + dir + '");' +
-                        'if (toLink) {' +
-                           'location.href=toLink.href;' +
-                        '}' +
-                     '}');
-               }
-            }
-         }, false);
-      }
 
       if (settings.noExpandAll === 1) {
          $('head').append('<style type="text/css">' +
@@ -609,6 +592,46 @@ MissingE.packages.dashboardTweaks = {
                                     .notes);
             }
          });
+      }
+
+      if (settings.pagedNav === 1 &&
+          $('#auto_pagination_loader').length === 0) {
+         this.navigationSpacer();
+         $(window).resize(this.navigationSpacer);
+         if (/MissingEnav=backwards/.test(location.search)) {
+            this.gotoLastPost();
+         }
+         window.addEventListener('keydown', function(e) {
+            if (e.keyCode === 74 || e.keyCode === 75) {
+               MissingE.packages.dashboardTweaks.lastPosition =
+                  $(window).scrollTop();
+            }
+         }, true);
+         window.addEventListener('keydown', function(e) {
+            if (e.keyCode === 74 || e.keyCode === 75) {
+               if (MissingE.packages.dashboardTweaks.lastPosition ===
+                     $(window).scrollTop()) {
+                  var toBtn = e.keyCode === 74 ? $('#next_page_link') :
+                                 $('#previous_page_link');
+                  if (toBtn.length === 0) {
+                     return;
+                  }
+                  var toLink = toBtn.get(0).href;
+                  if (e.keyCode === 75) {
+                     if (/\?/.test(toLink)) {
+                        toLink = toLink.replace(/\?/,'?MissingEnav=backwards&');
+                     }
+                     else {
+                        toLink += '?MissingEnav=backwards';
+                     }
+                  }
+                  $.globalEval(
+                     'if (!key_commands_are_suspended) {' +
+                        'location.href="' + toLink + '";' +
+                     '}');
+               }
+            }
+         }, false);
       }
 
       if ((settings.massDelete === 1 &&
