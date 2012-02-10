@@ -602,12 +602,20 @@ MissingE.packages.dashboardTweaks = {
             this.gotoLastPost();
          }
          window.addEventListener('keydown', function(e) {
+            if (e.metaKey || e.shiftKey || e.altKey || e.ctrlKey ||
+                $(e.target).is('input,textarea')) {
+               return;
+             }
             if (e.keyCode === 74 || e.keyCode === 75) {
                MissingE.packages.dashboardTweaks.lastPosition =
                   $(window).scrollTop();
             }
          }, true);
          window.addEventListener('keydown', function(e) {
+            if (e.metaKey || e.shiftKey || e.altKey || e.ctrlKey ||
+                $(e.target).is('input,textarea')) {
+               return;
+            }
             if (e.keyCode === 74 || e.keyCode === 75) {
                if (MissingE.packages.dashboardTweaks.lastPosition ===
                      $(window).scrollTop()) {
