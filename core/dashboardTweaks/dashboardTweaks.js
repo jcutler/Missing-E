@@ -642,6 +642,45 @@ MissingE.packages.dashboardTweaks = {
          }, false);
       }
 
+      if (settings.keyboardShortcut) {
+         $(window).keydown(function(e) {
+            var myPid;
+            if ((e.keyCode !== 67 && e.keyCode !== 27) ||
+                e.metaKey || e.shiftKey || e.altKey || e.ctrlKey) {
+               return;
+            }
+            if (e.keyCode === 67 && $(e.target).is('input,textarea')) {
+               return;
+            }
+            if (e.keyCode === 27) {
+               myPid = e.target.id.match(/^reply_field_(\d*)$/);
+               if (!myPid || myPid.length < 2) { return; }
+               myPid = myPid[1];
+               e.target.blur();
+               $.globalEval('display_reply_pane(' + myPid + ');');
+            }
+            var currPos = $(window).scrollTop()+7;
+            $('#posts li.post:not(#new_post)').each(function() {
+               var postPos = this.offsetTop;
+               if (postPos === currPos) {
+                  myPid = this.id.match(/post_(\d*)/);
+                  if (!myPid || myPid.length < 2) { return false; }
+                  myPid = myPid[1];
+                  var replier = $('#post_control_reply_' + myPid);
+                  if (replier.length === 0) { return false; }
+                  var clickEvt = document.createEvent("MouseEvent");
+                  clickEvt.initMouseEvent("click", true, true, window, 0, 0, 0,
+                                          0, 0, false, false, false, false, 0,
+                                          null);
+                  replier.get(0).dispatchEvent(clickEvt);
+               }
+               if (postPos >= currPos) {
+                  return false;
+               }
+            });
+         });
+      }
+
       if ((settings.massDelete === 1 &&
            MissingE.isTumblrURL(location.href, ["drafts", "queue"])) ||
           (settings.randomQueue === 1 &&

@@ -178,12 +178,27 @@ function loadScripts() {
         <td><input type="checkbox" name="MissingE_dashboardTweaks_simpleHighlight" /></td>
        </tr>
        <tr class="alt">
+        <td>Enable additional keyboard shortcuts for dashboard posts:<br />
+         <table class="subnotes">
+          <tr>
+           <td class="label"><code>C</code></td>
+           <td class="desc">Open comment / reply box for the current post</td>
+          </tr>
+          <tr>
+           <td class="label"><code>Esc</code></td>
+           <td class="desc">Close currently open comment / reply box without submitting it</td>
+          </tr>
+         </table>
+        </td>
+        <td><input type="checkbox" name="MissingE_dashboardTweaks_keyboardShortcut" /></td>
+       </tr>
+       <tr>
         <td><code>J</code> / <code>K</code> keyboard navigation loads next (or previous) page when last (or first) post is reached<br />
          <small><em>This feature is only active for users who</em> have not <em>enabled Tumblr's endless scrolling dashboard.</em></small>
         </td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_pagedNav" /></td>
        </tr>
-       <tr class="experimental">
+       <tr class="alt experimental">
         <td><strong>[EXPERIMENTAL]</strong> Allow replies to reblogs<br />
          <small><em><a target="_blank" href="http://missing-e.com/faq#experimental-reblogReplies">About this experimental feature</a></em></small>
         </td>

@@ -1414,6 +1414,7 @@ function handleRequest(request) {
       settings.MissingE_dashboardTweaks_previewRetries = getSetting("MissingE_dashboardTweaks_previewRetries",MissingE.defaultRetries);
       settings.MissingE_dashboardTweaks_simpleHighlight = getSetting("MissingE_dashboardTweaks_simpleHighlight",0);
       settings.MissingE_dashboardTweaks_pagedNav = getSetting("MissingE_dashboardTweaks_pagedNav",0);
+      settings.MissingE_dashboardTweaks_keyboardShortcut = getSetting("MissingE_dashboardTweaks_keyboardShortcut",1);
       settings.MissingE_sidebarTweaks_retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
       settings.MissingE_sidebarTweaks_slimSidebar = getSetting("MissingE_sidebarTweaks_slimSidebar",0);
@@ -1513,6 +1514,7 @@ function handleRequest(request) {
             settings.notePreview = getSetting("MissingE_dashboardTweaks_notePreview",1);
             settings.simpleHighlight = getSetting("MissingE_dashboardTweaks_simpleHighlight",0);
             settings.pagedNav = getSetting("MissingE_dashboardTweaks_pagedNav",0);
+            settings.keyboardShortcut = getSetting("MissingE_dashboardTweaks_keyboardShortcut",1);
             break;
          case "dashLinksToTabs":
             settings.newPostTabs = getSetting("MissingE_dashLinksToTabs_newPostTabs",1);

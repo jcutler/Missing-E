@@ -440,15 +440,25 @@ table.subnotes .label {
 width:auto !important;
 font-weight:bold;
 padding-right:5px;
-border-top:1px solid rgba(238,238,238,0.30);
-border-bottom:1px solid rgba(238,238,238,0.30);
+border-top:1px solid rgba(255,255,255,0.30);
+border-bottom:1px solid rgba(255,255,255,0.30);
 }
 
 table.subnotes .desc {
 font-style:italic;
-border-top:1px solid rgba(238,238,238,0.30);
-border-bottom:1px solid rgba(238,238,238,0.30);
 text-align:left !important;
+border-top:1px solid rgba(255,255,255,0.30);
+border-bottom:1px solid rgba(255,255,255,0.30);
+}
+
+tr table.subnotes .label, tr table.subnotes .desc {
+border-top:1px solid rgba(150,150,150,0.30);
+border-bottom:1px solid rgba(150,150,150,0.30);
+}
+
+tr.alt table.subnotes .label, tr.alt table.subnotes .desc {
+border-top:1px solid rgba(255,255,255,0.30);
+border-bottom:1px solid rgba(255,255,255,0.30);
 }
 
 td.input_left {
