@@ -532,6 +532,17 @@ color:#44546B;
 background-color:white;
 }
 
+#faq #content code {
+background-color:#F4F4F4;
+padding:1px 4px;
+}
+
+#faq #content p.question code {
+font-style:normal;
+font-size:110%;
+background-color:rgba(0,0,0,0.1);
+}
+
 #copy {
 border-top:1px solid #CCC;
 text-align:center;

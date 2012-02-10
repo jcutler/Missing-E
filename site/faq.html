@@ -49,8 +49,8 @@ jQuery(document).ready(function($) {
 <li><a href="#nottumblr">Is the 'Missing e' browser extension affiliated with or endorsed by Tumblr?</a></li>
 <li><a href="#reenable">'Missing e' stopped working on my Tumblr dashboard. How do I fix it?</a></li>
 <li><a href="#changes">Where can I see a list of changes made to 'Missing e' in a recent version?</a></li>
-<li><a href="#apiissues">What happened to the Follow Checker feature?</a></li>
-<li><a href="#apiissues">What happened to the Unfollower feature?</a></li>
+<li><a href="#followchecker">What happened to the Follow Checker feature?</a></li>
+<li><a href="#unfollower">What happened to the Unfollower feature?</a></li>
 </ul>
 <h2>Your Security</h2>
 <ul>
@@ -78,6 +78,7 @@ jQuery(document).ready(function($) {
 <li><a href="#no-reblog-tags">I don't want my reblogs to include tags from the original post. How can I turn that feature off?</a></li>
 <li><a href="#quick-reblog-on">How do I turn on quick (1-click) reblogging?</a></li>
 <li><a href="#quickreblog-account">I want quick (1-click) reblogging to post to one of my secondary Tumblr accounts. How can I do that?</a></li>
+<li><a href="#quickreblog-tags">How do I add multiple tags when using quick (1-click) reblogging?</a></li>
 </ul>
 <h2>Bookmarker</h2>
 <ul>
@@ -103,6 +104,10 @@ jQuery(document).ready(function($) {
 <h2>Goto Dash Post</h2>
 <ul>
 <li><a href="#goto-issue">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</a></li></ul>
+<h2>Keyboard Shortcuts</h2>
+<ul>
+<li><a href="#keyboard">How do I use keyboard shortcuts on Tumblr?</a></li>
+</ul>
 <h2>Magnifier</h2>
 <ul>
 <li><a href="#magnifier-use">How do I use Magnifier? Where is it?</a></li>
@@ -158,7 +163,7 @@ jQuery(document).ready(function($) {
 <a name="changes"></a><p class="question">Where can I see a list of changes made to 'Missing e' in a recent version?</p>
 <div class="response"><p>You can see a full list of changes (features added, fixed or removed) in the <a href="http://github.missing-e.com/changes">Change History</a> page. You might also consider following <a href="http://blog.missing-e.com">'Missing e' on Tumblr</a> for news and information about the extension.</p>
 <div class="totop"><a href="#">Top</a></div></div>
-<a name="apiissues"></a><p class="question">What happened to the Follow Checker feature?</p>
+<a name="unfollower"></a><a name="followchecker"></a><a name="apiissues"></a><p class="question">What happened to the Follow Checker feature?</p>
 <p class="question">What happened to the Unfollower feature?</p>
 <div class="response">
 <p>Recently, Tumblr began to enforce an <a href="http://www.tumblr.com/policy/en/api">API License Agreement</a> which prohibits the use of many of the features of 'Missing e'. In order to continue distributing 'Missing e' and preserve as many useful features as possible, all those that depended on the Tumblr API (and those which put excessive strain on Tumblr's servers) were removed as of 'Missing e' version 2.0.0.</p>
@@ -299,6 +304,10 @@ jQuery(document).ready(function($) {
 <div class="response"><p>In the 'Missing e' settings page (<a href="#settings">find out how to get there</a>), under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section, you can choose the Tumblr blog you want to use quick reblogging with.</p>
 <p>In these settings, either choose <strong>Main Blog</strong> or <strong>Secondary Blog</strong> and specify an account name. Remember that you <em>must have posting rights</em> on the account you specify or quick (1-click) reblogging will always fail.</p>
 <div class="totop"><a href="#">Top</a></div></div>
+<a name="quickreblog-tags"></a><p class="question">How do I add multiple tags when using quick (1-click) reblogging?</p>
+<div class="response"><p>When you hover your mouse over a post's reblog button, the quick reblog menu appears. In the <em>Tags</em> input box at the bottom, you can add tags. To add multiple tags, simply separate each individual tag with a comma!</p>
+<p>For example, to tag a post with <code>#chocolate #cookie</code>, simply type <code>chocolate, cookie</code> into the <em>Tags</em> input box before clicking the reblog button.</p>
+<div class="totop"><a href="#">Top</a></div></div>
 <a name="bookmark-follow"></a><p class="question">Why does the bookmark icon not appear on some posts?</p>
 <div class="response"><p>The <em>Bookmarker</em> feature allows you to jump directly to a post in your dashboard without having to scroll all the way there yourself. As such, you are only able to bookmark posts by Tumblrs that you follow. These posts (which you will usually on tag search result pages like '<em>http://www.tumblr.com/tagged/sometag</em>') will not have a <em>Bookmarker</em> icon that you can click on.</p>
 <div class="totop"><a href="#">Top</a></div></div>
@@ -395,6 +404,26 @@ jQuery(document).ready(function($) {
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="goto-issue"></a><p class="question">Why does clicking on the "Goto Dash" icon of some posts bring me to the wrong post on the dashboard, or the post immediately before the correct one?</p>
 <div class="response"><p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your feed for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p><p>Both <em>Bookmarker</em> and <em>Goto Dash Post</em> may instead bring you to the next earliest post by someone that you follow.</p><p>This is an issue with Tumblr's dashboard and is <em>not</em> caused by 'Missing e'.</p>
+<div class="totop"><a href="#">Top</a></div></div>
+<a name="keyboard"></a><p class="question">How do I use keyboard shortcuts on Tumblr?</p>
+<div class="response"><p>The basic Tumblr interface allows you to navigate your dashboard using only your keyboard:</p>
+<ul>
+<li><code>J</code> - Jump to the next post in the dashboard</li>
+<li><code>K</code> - Jump to the previous post in the dashboard</li>
+</ul>
+<p>If you use Tumblr's <em>endless scrolling</em> dashboard, you can continue navigating through posts using these keys. However, if you do not use <em>endless scrolling</em>, navigating with <code>J</code> and <code>K</code> will stop once you reach the bottom (or top) of the dashboard.</p><p>To improve navigation for those who don't use <em>endless scrolling</em>, 'Missing e' provides a setting you can activate in the <em>Dashboard Tweaks</em> feature (<a href="#settings">find out how to get to the settings page</a>) that will cause the <code>J</code> and <code>K</code> keys to jump to the next page automatically when you reach the end (or beginning) of the current page!</p>
+<p>When you navigate your dashboard using the <code>J</code> and <code>K</code> keys, Tumblr and 'Missing e' provide a few more keyboard shortcuts that can perform certain actions on the current post:</p>
+<ul>
+<li><code>L</code> - <strong>Like</strong> the current post <em>(this feature is part of the Tumblr interface)</em></li>
+<li><code>M</code> - Bookmark the current post using the <em>Bookmarker</em> feature</li>
+<li><code>C</code> - Open the comment/reply box for the current post</li>
+</ul>
+<p>If you use the 'Missing e' quick (1-click) reblogging feature (<a href="#quick-reblog-on">find out how to activate it</a>), the following keyboard shortcuts are also available:</p>
+<ul>
+<li><code>R</code> - Reblog the current post using <em>quick reblogging</em></li>
+<li><code>D</code> - Reblog the current post to your drafts using <em>quick reblogging</em></li>
+<li><code>Q</code> - Reblog the current post to your queue using <em>quick reblogging</em></li>
+</ul>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="magnifier-use"></a><p class="question">How do I use Magnifier? Where is it?</p>
 <div class="response"><p><em>Magnifier</em> adds a small <img src="images/magnifier-icon.png" alt="Magnifier icon" /> icon to all photo posts on the dashboard. Simply click on it to view the full-size image without ever leaving the dashboard. <em>Magnifier</em> will resize the image to fit on your screen, but you can click on the enlarged image to open it in a new tab or window.</p><p>The <em>Magnifier</em> icon is also added to <strong>photoset</strong> posts. When you click on it, the enlarged images will appear as a slideshow you can navigate with arrow buttons on either side.</p>
