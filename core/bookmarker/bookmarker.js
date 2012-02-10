@@ -442,7 +442,9 @@ MissingE.packages.bookmarker = {
                   $('#posts li.post').each(function() {
                      var postPos = this.offsetTop;
                      if (postPos === currPos) {
-                        var mark = $(this).find('div.post_controls a.MissingE_mark').get(0);
+                        var mark = $(this).find('div.post_controls a.MissingE_mark');
+                        if (mark.length === 0) { return false; }
+                        mark = mark.get(0);
                         MissingE.packages.bookmarker.markClick.apply(mark, [{which:1, shiftKey:false}]);
                      }
                      if (postPos >= currPos) {
