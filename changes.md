@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.5.11** (02/10/2012)
+**_!_** Fix problem with some languages not getting usernames correctly for Post Crushes
+
 ##**2.5.10** (02/10/2012)
 **_+_** Add C keyboard shortcut for opening post comment/reply box  
 **_!_** Don't perform page navigation on J/K keyboard shortcuts when meta keys also held down
