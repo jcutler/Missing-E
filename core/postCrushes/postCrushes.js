@@ -71,16 +71,23 @@ MissingE.packages.postCrushes = {
          var crushimg = new Array(9);
          var crushurl = new Array(9);
          var crushper = new Array(9);
+         var crushtitle = new Array(9);
          var crushname = new Array(9);
          for (i=0; i<crushes.length; i++) {
             crushimg[i] = crushes[i].style.backgroundImage
                            .replace(/^url\(["']*/,"").replace(/['"]*\)$/,"")
                            .replace(/^http:\/\/[^\/]*\//,"").replace(from,to);
             crushurl[i] = crushes[i].href.replace(from,to);
-            crushname[i] = crushes[i].getAttribute('title')
-                              .match(/^[0-9a-zA-Z\-\_]*/)[0];
+            crushtitle[i] = crushes[i].getAttribute('title')
+                              .match(/^([\w\-]+|\d+%)?,?\s(?:[^\s]+\s+)*([\w\-]+)?/);
             crushper[i] = crushes[i].getElementsByTagName("span")[0].innerHTML
                            .replace(/%/,"").replace(from,to);
+         }
+
+         var nameIdx = 1;
+         if (crushtitle[0][1] === crushtitle[1][1] &&
+             crushtitle[0][1] === crushtitle[2][1]) {
+            nameIdx = 2;
          }
 
          for (i=0; i<crushes.length; i++) {
@@ -88,6 +95,7 @@ MissingE.packages.postCrushes = {
                crushimg[i] = crushimg[i].replace(from[j],to[j]);
                crushurl[i] = crushurl[i].replace(from[j],to[j]);
             }
+            crushname[i] = crushtitle[i][nameIdx];
          }
 
          var get = "";
