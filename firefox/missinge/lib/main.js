@@ -1634,6 +1634,8 @@ function handleMessage(message, myWorker) {
             settings.askDash = getSetting("extensions.MissingE.askTweaks.askDash",0);
             settings.massDelete = getSetting("extensions.MissingE.askTweaks.massDelete",1);
             settings.adjustDomain = MissingE.isTumblrURL(myWorker.tab.url, ["messages"]);
+            settings.photoReplies = getSetting("extensions.MissingE.postingTweaks.enabled",1) == 1 ?
+               getSetting("extensions.MissingE.postingTweaks.photoReplies",1) : 0;
             break;
          case "sidebarTweaks":
             settings.retries = getSetting("extensions.MissingE.sidebarTweaks.retries",MissingE.defaultRetries);

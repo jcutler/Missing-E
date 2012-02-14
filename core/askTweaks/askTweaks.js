@@ -158,10 +158,17 @@ MissingE.packages.askTweaks = {
             var params = {};
             var name;
             for (i=0; i<inputs.length; i++) {
-               var inp = $(inputs[i]);
-               name = inp.attr('name');
-               if (name) {
-                  params[name] = inp.val();
+               var theInput = $(inputs[i]);
+               if (theInput.length === 0) { continue; }
+               name = theInput.attr("name");
+               if (!name) { continue; }
+               if (theInput.attr("type") !== "checkbox" ||
+                   theInput.checked === true) {
+                  params[name] = theInput.val();
+               }
+               else if (MissingE.packages.askTweaks.allowPhotoReplies &&
+                        name === "allow_photo_replies") {
+                  params[name] = theInput.val();
                }
             }
             for (i=0; i<textareas.length; i++) {
@@ -332,6 +339,8 @@ MissingE.packages.askTweaks = {
    run: function() {
       var settings = this.settings;
       var lang = $('html').attr('lang');
+      
+      this.allowPhotoReplies = settings.photoReplies === 1;
 
       /*
       $('#posts li.fan_mail .controls_link.to_name').live('click', function() {

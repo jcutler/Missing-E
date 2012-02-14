@@ -1340,6 +1340,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.askDash = getSetting("MissingE_askTweaks_askDash",0);
             settings.massDelete = getSetting("MissingE_askTweaks_massDelete",1);
             settings.adjustDomain = MissingE.isTumblrURL(sender.tab.url, ["messages"]);
+            settings.photoReplies = getSetting("MissingE_postingTweaks_enabled",1) == 1 ?
+               getSetting("MissingE_postingTweaks_photoReplies",1) : 0;
             break;
          case "sidebarTweaks":
             settings.retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
