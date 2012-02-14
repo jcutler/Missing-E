@@ -412,7 +412,7 @@ MissingE.packages.betterReblogs = {
                if (MissingE.isTumblrURL(location.href, ["tagged"])) {
                   var i;
                   var str = location.href.match(/[^\/\?]*(?:$|\?)/)[0];
-                  str = str.replace(/\?/,'').replace(/\+/,' ');
+                  str = str.replace(/\?/,'').replace(/\+/g,' ');
                   var entities = str.match(/%[\dA-F]{2}/gi);
                   if (entities !== undefined && entities !== null) {
                      for (i=0; i<entities.length; i++) {
@@ -627,7 +627,7 @@ MissingE.packages.betterReblogs = {
                if (MissingE.isTumblrURL(location.href, ["tagged"])) {
                   var i;
                   var str = location.href.match(/[^\/\?]*(?:$|\?)/)[0];
-                  str = str.replace(/\?/,'').replace(/\+/,' ');
+                  str = str.replace(/\?/,'').replace(/\+/g,' ');
                   var entities = str.match(/%[\dA-F]{2}/gi);
                   if (entities !== undefined && entities !== null) {
                      for (i=0; i<entities.length; i++) {
