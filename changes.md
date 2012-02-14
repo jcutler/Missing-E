@@ -78,6 +78,12 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.5.13** (02/14/2012)
+**_!_** Fix issue with Ask Tweaks answer submission
+
+##**2.5.12** (02/14/2012)
+**_!_** Fix issue with failing Quick Reblogs
+
 ##**2.5.11** (02/10/2012)
 **_!_** Fix problem with some languages not getting usernames correctly for Post Crushes
 
