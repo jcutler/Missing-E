@@ -321,9 +321,13 @@ MissingE.packages.betterReblogs = {
             var params = {};
             var name;
             for (i=0; i<inputs.length; i++) {
-               name = inputs[i].match(/name="([^"]*)"/);
-               if (name) {
-                  params[name[1]] = $(inputs[i]).val();
+               var theInput = $(inputs[i]);
+               if (theInput.length === 0) { continue; }
+               name = theInput.attr("name");
+               if (!name) { continue; }
+               if (theInput.attr("type") !== "checkbox" ||
+                   theInput.checked === true) {
+                  params[name] = theInput.val();
                }
             }
             for (i=0; i<textareas.length; i++) {
