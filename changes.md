@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.5.14** (02/14/2012)
+**_!_** Fix issue with multiword tag not quick reblogging correctly from tag search page
+
 ##**2.5.13** (02/14/2012)
 **_!_** Fix issue with Ask Tweaks answer submission
 
