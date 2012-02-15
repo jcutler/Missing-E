@@ -615,6 +615,10 @@ margin-top:40px;
 list-style-type:circle;
 }
 
+#faq ul ul {
+list-style-type:disc;
+}
+
 #faq ul, #faq ol {
 padding:0 20px 0 30px;
 }
