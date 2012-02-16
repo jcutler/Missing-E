@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.5.16** (02/16/2012)
+**_!_** Implement second part of fix for odd Chrome OS behaviour with Quick Reblog menu blog select box
+
 ##**2.5.15** (02/16/2012)
 **_!_** Implement possible fix for odd Chrome OS behaviour with Quick Reblog menu blog select box
 
