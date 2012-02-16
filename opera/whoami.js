@@ -63,7 +63,7 @@ if ((window.top === window &&
             post = 'post/' + response.link;
          }
          up.onclick = function() {
-            window.open('http://missing-e.com/update?b=chrome');
+            window.open('http://missing-e.com/update/opera');
          };
          up.style.display = 'block';
       }

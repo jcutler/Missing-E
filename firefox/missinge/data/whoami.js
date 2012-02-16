@@ -46,7 +46,7 @@ self.on('message', function (message) {
          post = 'post/' + message.link;
       }
       up.onclick = function() {
-         window.open('http://missing-e.com/update?b=firefox');
+         window.open('http://missing-e.com/update/firefox');
       };
       up.style.display = 'block';
    }

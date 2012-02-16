@@ -50,7 +50,7 @@ function updateCheck(response) {
          post = 'post/' + response.message.link;
       }
       up.onclick = function() {
-         window.open('http://missing-e.com/update?b=safari');
+         window.open('http://missing-e.com/update/safari');
       };
       up.style.display = 'block';
    }

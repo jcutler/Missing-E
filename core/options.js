@@ -219,16 +219,7 @@ MissingE.utilities.options = {
                               .getStorage('MissingE_version',''));
       extension.sendRequest("update", function(response) {
          if (response.update) {
-            var uplink = 'http://missing-e.com/update?b=';
-            if (extension.isFirefox) {
-               uplink += 'firefox';
-            }
-            else if (extension.isSafari) {
-               uplink += 'safari';
-            }
-            else if (extension.isChrome) {
-               uplink += 'chrome';
-            }
+            var uplink = 'http://missing-e.com/update/' + extension.appName;
             $('#updatelink').attr('href',uplink);
             $('#update').show();
          }

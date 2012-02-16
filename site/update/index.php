@@ -68,9 +68,9 @@ if (!array_key_exists("b", $_GET) || $_GET["b"] === 'chrome') {
 <ul><li>Open the Google Chrome menu (the wrench icon at the top right of the browser).</li>
 <li>In the menu, go to <em>"Tools"</em> and click on <em>"Extensions"</em>.</li>
 <li>A new tab opens with your list of extensions. Click the <em>"Developer mode"</em> button on the right-hand side.</li></ul>
-<div class="example"><img src="../images/examples/chrome-update-1.png" alt="Activate Developer mode" /></div>
+<div class="example"><img src="/images/examples/chrome-update-1.png" alt="Activate Developer mode" /></div>
 <ul><li>Then, click the <em>"Update extensions now"</em> button.</li></ul>
-<div class="example"><img src="../images/examples/chrome-update-2.png" alt="Update extensions" /></div>
+<div class="example"><img src="/images/examples/chrome-update-2.png" alt="Update extensions" /></div>
 <p>You have successfully updated 'Missing e'. Reload any Tumblr tabs you have open to take advantage of features in the new version</p>
 <?php
 }
@@ -84,10 +84,10 @@ if (!array_key_exists("b", $_GET) || $_GET["b"] === 'safari') {
 <li>In the Safari menu, click on <em>"Preferences"</em>.</li>
 <li>In the <em>Preferences</em> window, click on the <em>"Extensions"</em> pane.</li>
 <li>Your list of installed extensions appears at the left. Click on the <em>"Updates"</em> button to show available extension updates.</li></ul>
-<div class="example"><img src="../images/examples/safari-update-1.png" alt="Safari Preferences, Extensions pane" /></div>
+<div class="example"><img src="/images/examples/safari-update-1.png" alt="Safari Preferences, Extensions pane" /></div>
 <ul><li>Click on the <em>"Install All Updates"</em> button to update all of your extensions.
 <ul><li>If you wish to only update 'Missing e', find it in the list of avaialable updates and click on the <em>"Install"</em> button beside the 'Missing e' icon.</li></ul></li></ul>
-<div class="example"><img src="../images/examples/safari-update-2.png" alt="Update extensions" /></div>
+<div class="example"><img src="/images/examples/safari-update-2.png" alt="Update extensions" /></div>
 <?php
 }
 if (!array_key_exists("b", $_GET) || $_GET["b"] === 'firefox') {

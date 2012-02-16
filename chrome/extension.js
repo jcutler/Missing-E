@@ -78,6 +78,7 @@ MissingE = {
 };
 
 extension = {
+   appName: "chrome",
    isChrome: true,
    isFirefox: false,
    isOpera: false,

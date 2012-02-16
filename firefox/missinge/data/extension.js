@@ -84,6 +84,7 @@ MissingE = {
 };
 
 extension = {
+   appName: "firefox",
    isChrome: false,
    isFirefox: true,
    isOpera: false,

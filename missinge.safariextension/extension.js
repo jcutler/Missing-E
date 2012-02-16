@@ -78,6 +78,7 @@ MissingE = {
 };
 
 extension = {
+   appName: "safari",
    isChrome: false,
    isFirefox: false,
    isOpera: false,

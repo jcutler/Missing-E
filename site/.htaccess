@@ -10,6 +10,11 @@ AddType application/x-xpinstall .xpi
 <IfModule mod_rewrite.c>
 RewriteEngine on
 RewriteRule ^faq(\.htm(l)?)?/(.*) http://missing-e.com/faq#$3 [NE,R=302,L]
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ^update/(safari|chrome|firefox) update/index.php?b=$1
+
 RewriteRule ^ask$ http://blog.missing-e.com/ask [R=301,L]
 RewriteRule ^submit$ http://blog.missing-e.com/submit [R=301,L]
 RewriteRule ^archive(/.*)? http://blog.missing-e.com/archive$1 [R=301,L]
