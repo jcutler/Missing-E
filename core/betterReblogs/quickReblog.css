@@ -59,7 +59,7 @@ padding:5px 8px !important;
 display:block;
 }
 
-.MissingE_quick_reblog_tags_inputting {
+.MissingE_quick_reblog_tags_inputting, .MissingE_quick_reblog_selecting {
 display:block !important;
 }
 

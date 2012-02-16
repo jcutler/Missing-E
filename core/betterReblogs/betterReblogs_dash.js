@@ -550,7 +550,12 @@ MissingE.packages.betterReblogs = {
             MissingE.packages.betterReblogs
                .changeQuickReblogAcct($(this),
                                       settings.quickReblogForceTwitter);
+         }).mouseover(function(){
+            qr.addClass('MissingE_quick_reblog_selecting');
+         }).mouseout(function(){
+            qr.removeClass('MissingE_quick_reblog_selecting');
          });
+
          qr.mouseover(function(e){
             if (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
                 !$.contains(qr.get(0), e.relatedTarget) &&
