@@ -217,6 +217,22 @@ MissingE.utilities.options = {
       $('span.defRetries').text(MissingE.defaultRetries);
       $('#versionnum').text(MissingE.utilities.options
                               .getStorage('MissingE_version',''));
+      extension.sendRequest("update", function(response) {
+         if (response.update) {
+            var uplink = 'http://missing-e.com/update?b=';
+            if (extension.isFirefox) {
+               uplink += 'firefox';
+            }
+            else if (extension.isSafari) {
+               uplink += 'safari';
+            }
+            else if (extension.isChrome) {
+               uplink += 'chrome';
+            }
+            $('#updatelink').attr('href',uplink);
+            $('#update').show();
+         }
+      });
       if (extension.isFirefox) {
          var hwSec = document.getElementById('firefox_section');
          var hwFrm = document.getElementById('firefox_options');

@@ -127,6 +127,7 @@ display:block;
 text-decoration:none;
 height:32px;
 line-height:32px;
+position:relative;
 }
 
 #header #menu_right {
@@ -169,6 +170,36 @@ height:100px;
 text-align:center;
 background-image:url('../identity/missinge128.png');
 background-position:0 -14px;
+}
+
+#update {
+display:none;
+position:absolute;
+left:50%;
+margin-left:64px;
+line-height:1;
+text-align:center;
+}
+
+#update > span {
+display:inline-block;
+border-radius:10px;
+padding:6px 10px;
+background-color:rgb(217,48,35);
+color:white;
+}
+
+#update > span a {
+font-weight:bold;
+}
+
+#update .updatenip {
+position:absolute;
+width:15px;
+height:9px;
+background:url('images/updatenip.png');
+bottom:4px;
+left:-13px;
 }
 
 #version {
