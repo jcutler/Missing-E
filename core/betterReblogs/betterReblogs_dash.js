@@ -534,7 +534,16 @@ MissingE.packages.betterReblogs = {
                   MissingE.escapeHTML(MissingE.getLocale(lang).tagsText) +
                   '</div></div>' + node[1];
          var qr = $(txt).appendTo('body');
-         qr.find('#MissingE_quick_reblog_selector select').click(function(e) {
+         var qrSel = qr.find('#MissingE_quick_reblog_selector select');
+         if (settings.accountName === 0 ||
+             qrSel.find('option[value="' + settings.accountName + '"]')
+               .length === 0) {
+            qrSel.val(qrSel.find('option:first').attr('value'));
+         }
+         else {
+            qrSel.val(settings.accountName);
+         }
+         qrSel.click(function(e) {
             e.stopPropagation();
             return false;
          }).change(function() {
