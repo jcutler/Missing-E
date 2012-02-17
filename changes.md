@@ -79,7 +79,7 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.6.0** (02/17/2012)
-**_+_** Add post notes count to notification preview (show notification preview for all post types)
+**_+_** Add post notes count to notification preview (and show notification preview for all post types)
 
 ##**2.5.16** (02/16/2012)
 **_+_** Add update notification bubble to settings page  
