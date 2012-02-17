@@ -351,6 +351,7 @@ MissingE.packages.dashboardTweaks = {
          return;
       }
       if (response.success) {
+         var doImages = true;
          if (MissingE.packages.dashboardTweaks.videoThumbnailCycleId) {
             window.clearInterval(MissingE.packages.dashboardTweaks
                                     .videoThumbnailCycleId);
@@ -369,14 +370,25 @@ MissingE.packages.dashboardTweaks = {
                                        .receiveNotes);
             }
             var i, limit = 2;
-            if (response.type === "video") {
+            if (response.type === "text" ||
+                response.type === "quote" ||
+                response.type === "link" ||
+                response.type === "conversation" ||
+                response.type === "audio" ||
+                response.type === "question") {
+               doImages = false;
+               preWin.removeClass('MissingE_preview_loading')
+                     .append($('<div class="previewIcon ' + response.type +
+                               'Preview" />'));
+            }
+            else if (response.type === "video") {
                preWin.addClass("MissingE_videoPreview");
                MissingE.packages.dashboardTweaks.videoThumbnailCycleId =
                   window.setInterval(MissingE.packages.dashboardTweaks
                                        .videoThumbnailCycle, 600);
                limit = response.data.length;
             }
-            for (i=0; i<limit && i<response.data.length; i++) {
+            for (i=0; doImages && i<limit && i<response.data.length; i++) {
                var prevImg = document.createElement('img');
                prevImg.setAttribute('post', response.pid);
                if (response.type === "video") {
@@ -992,7 +1004,6 @@ MissingE.packages.dashboardTweaks = {
 
       if (settings.notePreview === 1) {
          $('body').append($('<div />', { id: "MissingE_preview" }));
-         var len = MissingE.getLocale(lang).posts.photo.length;
          $('#posts li.notification .hide_overflow > a')
                .live('mouseover', function() {
             var item = $(this);
@@ -1003,10 +1014,18 @@ MissingE.packages.dashboardTweaks = {
             var url = tid[1];
             tid = tid[2];
             var preWin = $('#MissingE_preview');
-            if (preWin.attr('post') !== tid &&
-                (text === MissingE.getLocale(lang).posts.photo[len-1] ||
-                 text === MissingE.getLocale(lang).posts.photoset[len-1] ||
-                 text === MissingE.getLocale(lang).posts.video[len-1])) {
+            var isNotification = false;
+            for (i in MissingE.getLocale(lang).posts) {
+               if (MissingE.getLocale(lang).posts.hasOwnProperty(i)) {
+                  var len = MissingE.getLocale(lang).posts[i].length;
+                  if (text === MissingE.getLocale(lang).posts[i][len-1]) {
+                     type = i;
+                     isNotification = true;
+                     break;
+                  }
+               }
+            }
+            if (preWin.attr('post') !== tid && isNotification) {
                preWin.attr('post',tid);
                preWin.attr('user',url);
                preWin.empty()
@@ -1029,16 +1048,19 @@ MissingE.packages.dashboardTweaks = {
                      noteCount = "";
                   }
                }
-               if (exPost.hasClass("photo")) { type = "photo"; }
-               else if (exPost.hasClass("video")) { type = "video"; }
-               if (exPhotoset.length > 0) {
+               if (type === "photoset") { type = "photo"; }
+               if (type !== "photo" && type !== "video") {
+                  MissingE.packages.dashboardTweaks
+                     .receivePreview({success: true, pid: tid, type: type});
+               }
+               else if (exPhotoset.length > 0) {
                   var exImgs = [];
                   exPhotoset.find('img').each(function() {
                      exImgs.push(this.src.replace(/http:\/\/\d+\./,'http://'));
                   });
                   MissingE.packages.dashboardTweaks
                      .receivePreview({success: true, pid: tid, data: exImgs,
-                                      noteCount: noteCount, type: "photo"});
+                                      type: "photo"});
                }
                else if (exPost.length > 0 &&
                         type === 'photo') {
@@ -1047,7 +1069,7 @@ MissingE.packages.dashboardTweaks = {
                   exImg = exImg.replace(/http:\/\/\d+\./,'http://');
                   MissingE.packages.dashboardTweaks
                      .receivePreview({success: true, pid: tid, data: [exImg],
-                                      noteCount: noteCount, type: "photo"});
+                                      type: "photo"});
                }
                else if (exPost.length > 0 &&
                         type === 'video') {
@@ -1085,7 +1107,6 @@ MissingE.packages.dashboardTweaks = {
                   else {
                      MissingE.packages.dashboardTweaks
                         .receivePreview({success: true, pid: tid,
-                                         noteCount: noteCount,
                                          data: screenshots, type: type});
                   }
                }

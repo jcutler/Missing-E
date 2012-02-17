@@ -798,20 +798,90 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
    });
 }
 
-function doAllNotesAjax(request, sender, sendResponse, hash, retries) {
-   return false;
+function doNotesAjaxMultiStep(request, sender, sendResponse, hash, retries) {
+   debug("AJAX notes 1st request (" + request.pid + ")");
+   startAjax(request.pid);
+   var failMsg = {greeting:"notes", success:false, pid:request.pid};
+   $.ajax({
+      type: "GET",
+      url: request.url + "/post/" + request.pid + "/rss",
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.pid,
+      tabId: sender.tab.id,
+      tabHash: hash,
+      error: function(xhr, textStatus) {
+         if (xhr.status === 404) {
+            debug("notes 1st request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            sendResponse(failMsg);
+            return;
+         }
+         if (this.tabHash !== tabs[this.tabId]) {
+            debug("Stop notes 1st request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         if (!cacheServe("notes 1st", request.pid, null,
+                         function(){return true;}, true)) {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry notes 1st request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug("notes 1st request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               sendResponse(failMsg);
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         var closed = (this.tabHash !== tabs[this.tabId]);
+         if (!(/<guid>[^<]*<\/guid>/.test(data))) {
+            if (closed) {
+               debug("Stop notes 1st request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (!cacheServe("notes 1st", request.pid, null,
+                            function(){return true;}, true)) {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry notes 1st request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug("notes 1st request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  sendResponse(failMsg);
+               }
+            }
+         }
+         else {
+            var info = parseRSS(data, request.type);
+            saveCache(this.targetId, info);
+            dequeueAjax(this.targetId);
+            if (!closed) {
+               doNotesAjax(request, sender, sendResponse, hash, retries);
+            }
+         }
+      }
+   });
 }
 
 function doNotesAjax(request, sender, sendResponse, hash, retries) {
+   if (!cache.hasOwnProperty(request.pid) ||
+       !cache[request.pid].hasOwnProperty("publishStamp")) {
+      doNotesAjaxMultiStep(request, sender, sendResponse, hash, retries);
+      return;
+   }
    debug("AJAX notes request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {greeting:"notes", success:false, pid:request.pid};
-   if (!cache.hasOwnProperty(request.pid) ||
-       !cache[request.pid].hasOwnProperty("publishStamp")) {
-      //doAllNotesAjax(request, sender, sendResponse, hash, retries);
-      sendResponse(failMsg);
-      return;
-   }
    $.ajax({
       type: "GET",
       url: request.url + "/archive?before_time=" +
@@ -1575,6 +1645,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (getSetting("MissingE_dashboardTweaks_notePreview",1) == 1) {
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/preview.css"});
                chrome.tabs.insertCSS(sender.tab.id, {code:
+                  '#MissingE_preview .previewIcon { ' +
+                     'background-image:url("' +
+                     chrome.extension.getURL("core/dashboardTweaks/prevIcon.png") +
+                     '"); ' +
+                  '}' +
                   '#MissingE_preview.MissingE_preview_loading { ' +
                      'background-image:url("' +
                      chrome.extension.getURL("core/dashboardTweaks/loader.gif") +
