@@ -528,7 +528,7 @@ function doVimeoPreview(stamp, id, theWorker) {
             if (!closed) { theWorker.postMessage(failMsg); }
             return;
          }
-         
+
          var theEntry, isNew;
          if (data && data.length > 0) {
             data = data[1];
@@ -559,6 +559,12 @@ function doVimeoPreview(stamp, id, theWorker) {
          return;
       }
    }).get();
+}
+
+function doNotes(count, id, theWorker) {
+   theWorker.postMessage({greeting: "notes", success: true, pid: id,
+                          data: count});
+   return true;
 }
 
 function doPreview(stamp, id, theWorker) {
@@ -658,6 +664,7 @@ function saveCache(id, entry) {
              i == "post_url" ||
              i == "tags" ||
              i == "type" ||
+             i == "publishStamp" ||
              (i == "name" && entry[i] != "")) {
             theEntry[i] = entry[i];
          }
@@ -702,6 +709,9 @@ function runItem(call) {
    }
    else if (call.type === "tags") {
       startTags(call.message, call.worker);
+   }
+   else if (call.type === "notes") {
+      startNotes(call.message, call.worker);
    }
    else if (call.type === "preview") {
       startPreview(call.message, call.worker);
@@ -887,6 +897,11 @@ function parseRSS(data, forceType) {
    }
    info.tags = tags;
 
+   var pubTime = data.match(/<pubDate>([^<]*)<\/pubDate>/);
+   if (pubTime && pubTime.length > 1) {
+      info.publishStamp = (new Date(pubTime[1])).valueOf()/1000;
+   }
+
    var photos = [];
    var desc = data.match(/<description>&lt;img[^<]*/);
    if (desc) {
@@ -985,6 +1000,131 @@ function doTagsAjax(url, pid, count, myWorker, retries) {
             dequeueAjax(this.headers.targetId);
             if (!closed) {
                doTags(info, this.headers.targetId, myWorker);
+            }
+         }
+      }
+   }).get();
+}
+
+function doNotesAjaxMultiStep(baseURL, pid, count, myWorker, retries) {
+   var failMsg = {greeting:"notes", success:false, pid:pid};
+   Request({
+      url: baseURL + '/post/' + pid + "/rss",
+      headers: {tryCount: count,
+                retryLimit: retries,
+                baseURL: baseURL,
+                targetId: pid},
+      onComplete: function(response) {
+         var goodData = /<guid>[^<]*<\/guid>/.test(response.text);
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
+         if (response.status === 404) {
+            debug("notes 1st request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         if (response.status != 200 || !goodData) {
+            if (closed) {
+               debug("Stop notes 1st request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
+            if (!cacheServe("notes 1st", this.headers.targetId, myWorker,
+                            function(){return true;}, true, true)) {
+               if (this.headers.tryCount <= this.headers.retryLimit) {
+                  debug("Retry notes 1st request (" + this.headers.targetId + ")");
+                  doNotesAjaxMultiStep(this.headers.baseURL,
+                         this.headers.targetId, (this.headers.tryCount + 1),
+                         myWorker, this.headers.retryLimit);
+               }
+               else {
+                  debug("notes 1st request (" + this.headers.targetId + ") failed");
+                  dequeueAjax(this.headers.targetId);
+                  myWorker.postMessage(failMsg);
+               }
+            }
+         }
+         else {
+            var info = parseRSS(response.text);
+            saveCache(this.headers.targetId, info);
+            /** Do not dequeue here, FF implementation considers both steps
+                as one startAjax event
+             **/
+            if (!closed) {
+               doNotesAjax(this.headers.baseURL, this.headers.targetId,
+                           0, myWorker, this.headers.retryLimit);
+            }
+         }
+      }
+   }).get();
+}
+
+function doNotesAjax(baseURL, pid, count, myWorker, retries) {
+   if (!cache.hasOwnProperty(pid) ||
+       !cache[pid].hasOwnProperty("publishStamp")) {
+      debug("AJAX notes 1st request (" + pid + ")");
+      doNotesAjaxMultiStep(baseURL, pid, 0, myWorker, retries);
+      return;
+   }
+   var failMsg = {greeting:"notes", success:false, pid:pid};
+   Request({
+      url: baseURL + '/archive?before_time=' + (cache[pid].publishStamp+1),
+      headers: {tryCount: count,
+                retryLimit: retries,
+                baseURL: baseURL,
+                targetId: pid},
+      onComplete: function(response) {
+         var data = response.text.replace(/\n/g,' ');
+         var re = new RegExp('< *a [^>]*id="post_' + this.headers.targetId + '".*<\/a>');
+         var postInfo = re.exec(data);
+         var closed = false;
+         try {
+            var tab = myWorker.tab;
+         }
+         catch (err) {
+            closed = true;
+         }
+         if (response.status === 404) {
+            debug("notes request (" + this.headers.targetId + ") not found");
+            dequeueAjax(this.headers.targetId);
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         if (response.status != 200 || !postInfo) {
+            if (closed) {
+               debug("Stop notes request: Tab closed or changed.");
+               dequeueAjax(this.headers.targetId);
+               return;
+            }
+            if (this.headers.tryCount <= this.headers.retryLimit) {
+               debug("Retry notes request (" + this.headers.targetId + ")");
+               doNotesAjax(this.headers.baseURL, this.headers.targetId,
+                           (this.headers.tryCount + 1), myWorker,
+                           this.headers.retryLimit);
+            }
+            else {
+               debug("notes request (" + this.headers.targetId + ") failed");
+               dequeueAjax(this.headers.targetId);
+               myWorker.postMessage(failMsg);
+            }
+         }
+         else {
+            var noteCount = postInfo[0].match(/<\s*div\s+class="notes"\s*>[^<\d]*([\d\.,]+)[^<\d]*/);
+            if (!noteCount || noteCount.length < 2) {
+               noteCount = "";
+            }
+            else {
+               noteCount = noteCount[1];
+            }
+            dequeueAjax(this.headers.targetId);
+            if (!closed) {
+               doNotes(noteCount, this.headers.targetId, myWorker);
             }
          }
       }
@@ -1156,6 +1296,26 @@ function startTags(message, myWorker) {
       startAjax(message.pid);
       doTagsAjax(url, message.pid, 0, myWorker,
              getSetting("extensions.MissingE.betterReblogs.retries",MissingE.defaultRetries));
+   }
+}
+
+function startNotes(message, myWorker) {
+   try {
+      var tab = myWorker.tab;
+   }
+   catch (err) {
+      debug("Stop notes request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "notes", message: message, worker: myWorker});
+   }
+   else {
+      debug("AJAX notes request (" + message.pid + ")");
+      startAjax(message.pid);
+      doNotesAjax(message.url, message.pid, 0, myWorker,
+             getSetting("extensions.MissingE.dashboardTweaks.previewRetries",MissingE.defaultRetries));
    }
 }
 
@@ -1494,6 +1654,9 @@ function handleMessage(message, myWorker) {
    else if (message.greeting == "betterReblogs") {
       startBetterReblogsAsk(message, myWorker);
    }
+   else if (message.greeting == "notes") {
+      startNotes(message, myWorker);
+   }
    else if (message.greeting == "preview") {
       startPreview(message, myWorker);
    }
@@ -1755,6 +1918,11 @@ function handleMessage(message, myWorker) {
             if (getSetting("extensions.MissingE.dashboardTweaks.notePreview",1) == 1) {
                injectStyles.push({file: "core/dashboardTweaks/preview.css"});
                injectStyles.push({code:
+                  '#MissingE_preview .previewIcon { ' +
+                     'background-image:url("' +
+                     data.url("core/dashboardTweaks/prevIcon.png") +
+                     '"); ' +
+                  '}' +
                   '#MissingE_preview.MissingE_preview_loading { ' +
                      'background-image:url("' +
                      data.url("core/dashboardTweaks/loader.gif") +
