@@ -1635,6 +1635,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          else
             activeScripts.massEditor = false;
       }
+      /*** Not to be activated yet
+      if (MissingE.isTumblrURL(request.url, ["iframe"])) {
+         chrome.tabs.executeScript(sender.tab.id, {file: "core/common/security.js"});
+      }
+      ***/
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url,
                       ["dashboard",
