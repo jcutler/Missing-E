@@ -40,7 +40,22 @@ width:100px;
 background-color:white;
 }
 
-#MissingE_preview img:first-child {
+#MissingE_preview .count {
+position:absolute;
+top:100%;
+margin:0 5px;
+width:86px;
+color:rgba(255,255,255,0.75);
+font-size:11px;
+line-height:1;
+padding:2px 2px 3px 2px;
+text-align:center;
+background-color:rgba(44,71,98,0.75);
+border-bottom-right-radius:6px;
+border-bottom-left-radius:6px;
+}
+
+#MissingE_preview .count + img {
 border-top-right-radius:6px;
 border-top-left-radius:6px;
 }

@@ -322,6 +322,11 @@ function doVimeoPreview(stamp, id, sendResponse) {
    });
 }
 
+function doNotes(count, id, sendResponse) {
+   sendResponse({success: true, pid: id, data: count});
+   return true;
+}
+
 function doPreview(stamp, id, sendResponse) {
    var i, type;
    if (!stamp.photos && !stamp.videoThumbs) {
@@ -418,6 +423,7 @@ function saveCache(id, entry) {
              i == "post_url" ||
              i == "tags" ||
              i == "type" ||
+             i == "publishStamp" ||
              (i == "name" && entry[i] != "")) {
             theEntry[i] = entry[i];
          }
@@ -464,6 +470,9 @@ function runItem(call) {
    }
    else if (call.type === "preview") {
       requestPreview(call.request, call.sender, call.sendResponse, call.hash);
+   }
+   else if (call.type === "notes") {
+      requestNotes(call.request, call.sender, call.sendResponse, call.hash);
    }
 }
 
@@ -659,6 +668,11 @@ function parseRSS(data, forceType) {
    }
    info.tags = tags;
 
+   var pubTime = data.match(/<pubDate>([^<]*)<\/pubDate>/);
+   if (pubTime && pubTime.length > 1) {
+      info.publishStamp = (new Date(pubTime[1])).valueOf()/1000;
+   }
+
    var photos = [];
    var desc = data.match(/<description>&lt;img[^<]*/);
    if (desc) {
@@ -778,6 +792,94 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
             dequeueAjax(this.targetId);
             if (!closed) {
                doTags(info, this.targetId, sendResponse);
+            }
+         }
+      }
+   });
+}
+
+function doAllNotesAjax(request, sender, sendResponse, hash, retries) {
+   return false;
+}
+
+function doNotesAjax(request, sender, sendResponse, hash, retries) {
+   debug("AJAX notes request (" + request.pid + ")");
+   startAjax(request.pid);
+   var failMsg = {greeting:"notes", success:false, pid:request.pid};
+   if (!cache.hasOwnProperty(request.pid) ||
+       !cache[request.pid].hasOwnProperty("publishStamp")) {
+      //doAllNotesAjax(request, sender, sendResponse, hash, retries);
+      sendResponse(failMsg);
+      return;
+   }
+   $.ajax({
+      type: "GET",
+      url: request.url + "/archive?before_time=" +
+            (cache[request.pid].publishStamp+1),
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.pid,
+      tabId: sender.tab.id,
+      tabHash: hash,
+      error: function(xhr, textStatus) {
+         if (xhr.status === 404) {
+            debug("notes request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            sendResponse(failMsg);
+            return;
+         }
+         if (this.tabHash !== tabs[this.tabId]) {
+            debug("Stop notes request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         this.tryCount++;
+         if (this.tryCount <= this.retryLimit) {
+            debug("Retry notes request (" + this.targetId + ")");
+            $.ajax(this);
+            return;
+         }
+         else {
+            debug("notes request (" + this.targetId + ") failed");
+            dequeueAjax(this.targetId);
+            sendResponse(failMsg);
+         }
+      },
+      success: function(data, textStatus) {
+         var closed = (this.tabHash !== tabs[this.tabId]);
+         data = data.replace(/\n/g,' ');
+         var re = new RegExp('< *a [^>]*id="post_' + this.targetId + '".*<\/a>');
+         var postInfo = re.exec(data);
+         if (!postInfo) {
+            if (closed) {
+               debug("Stop notes request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry notes request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug("notes request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               sendResponse(failMsg);
+            }
+         }
+         else {
+            var noteCount = postInfo[0].match(/<\s*div\s+class="notes"\s*>[^<\d]*([\d\.,]+)[^<\d]*/);
+            if (!noteCount || noteCount.length < 2) {
+               noteCount = "";
+            }
+            else {
+               noteCount = noteCount[1];
+            }
+            dequeueAjax(this.targetId);
+            if (!closed) {
+               doNotes(noteCount, this.targetId, sendResponse);
             }
          }
       }
@@ -1062,6 +1164,21 @@ function requestTags(request, sender, sendResponse, hash) {
    }
 }
 
+function requestNotes(request, sender, sendResponse, hash) {
+   if (hash !== tabs[sender.tab.id]) {
+      debug("Stop notes request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "notes", request: request, sender: sender, sendResponse: sendResponse, hash: hash});
+   }
+   else {
+      doNotesAjax(request, sender, sendResponse, hash,
+                    getSetting("MissingE_dashboardTweaks_previewRetries",MissingE.defaultRetries));
+   }
+}
+
 function requestPreview(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
       debug("Stop preview request: Tab closed or changed.");
@@ -1243,6 +1360,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "magnifier") {
       requestMagnifier(request, sender, sendResponse, tabs[sender.tab.id]);
+   }
+   else if (request.greeting == "notes") {
+      requestNotes(request, sender, sendResponse, tabs[sender.tab.id]);
    }
    else if (request.greeting == "preview") {
       requestPreview(request, sender, sendResponse, tabs[sender.tab.id]);

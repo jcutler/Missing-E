@@ -327,6 +327,24 @@ MissingE.packages.dashboardTweaks = {
       currThumb.removeClass('MissingE_visibleThumb');
    },
 
+   showPreviewCount: function(count) {
+      if (count === "") { return; }
+      var lang = $('html').attr('lang');
+      $('#MissingE_preview .count')
+         .text(count + " " + MissingE.getLocale(lang).dashTweaksText.notes)
+         .fadeIn(600);
+   },
+
+   receiveNotes: function(response) {
+      var preWin = $('#MissingE_preview');
+      if (preWin.length === 0) {
+         return;
+      }
+      if (response.success && preWin.attr('post') === response.pid) {
+         MissingE.packages.dashboardTweaks.showPreviewCount(response.data);
+      }
+   },
+
    receivePreview: function(response) {
       var preWin = $('#MissingE_preview');
       if (preWin.length === 0) {
@@ -338,6 +356,18 @@ MissingE.packages.dashboardTweaks = {
                                     .videoThumbnailCycleId);
          }
          if (preWin.attr('post') === response.pid) {
+            var count = $('<span class="count" />').prependTo(preWin);
+            if (response.hasOwnProperty("noteCount") &&
+                response.noteCount !== "") {
+               MissingE.packages.dashboardTweaks
+                  .showPreviewCount(response.noteCount);
+            }
+            else {
+               extension.sendRequest("notes", {url: preWin.attr('user'),
+                                               pid: response.pid},
+                                     MissingE.packages.dashboardTweaks
+                                       .receiveNotes);
+            }
             var i, limit = 2;
             if (response.type === "video") {
                preWin.addClass("MissingE_videoPreview");
@@ -967,7 +997,7 @@ MissingE.packages.dashboardTweaks = {
                .live('mouseover', function() {
             var item = $(this);
             var text = item.text();
-            var type;
+            var type, noteCount;
             var tid = this.href.match(/^(http[s]?:\/\/[^\/]*)\/post\/(\d+)/);
             if (!tid || tid.length < 3) { return; }
             var url = tid[1];
@@ -978,11 +1008,27 @@ MissingE.packages.dashboardTweaks = {
                  text === MissingE.getLocale(lang).posts.photoset[len-1] ||
                  text === MissingE.getLocale(lang).posts.video[len-1])) {
                preWin.attr('post',tid);
+               preWin.attr('user',url);
                preWin.empty()
                   .removeClass('MissingE_videoPreview MissingE_preview_fail')
                   .addClass('MissingE_preview_loading');
                var exPhotoset = $('#photoset_' + tid);
                var exPost = $('#post_' + tid);
+               if (exPost.length > 0) {
+                  var notes = $('#note_link_current_' + tid);
+                  if (notes.length > 0) {
+                     noteCount = notes.text().match(/[\d\.,]+/);
+                     if (noteCount && noteCount.length === 1) {
+                        noteCount = noteCount[0];
+                     }
+                     else {
+                        noteCount = "";
+                     }
+                  }
+                  else {
+                     noteCount = "";
+                  }
+               }
                if (exPost.hasClass("photo")) { type = "photo"; }
                else if (exPost.hasClass("video")) { type = "video"; }
                if (exPhotoset.length > 0) {
@@ -992,7 +1038,7 @@ MissingE.packages.dashboardTweaks = {
                   });
                   MissingE.packages.dashboardTweaks
                      .receivePreview({success: true, pid: tid, data: exImgs,
-                                      type: "photo"});
+                                      noteCount: noteCount, type: "photo"});
                }
                else if (exPost.length > 0 &&
                         type === 'photo') {
@@ -1001,9 +1047,9 @@ MissingE.packages.dashboardTweaks = {
                   exImg = exImg.replace(/http:\/\/\d+\./,'http://');
                   MissingE.packages.dashboardTweaks
                      .receivePreview({success: true, pid: tid, data: [exImg],
-                                      type: "photo"});
+                                      noteCount: noteCount, type: "photo"});
                }
-               else if (false && exPost.length > 0 &&
+               else if (exPost.length > 0 &&
                         type === 'video') {
                   var screenshots;
                   var exSS = exPost.find('#video_thumbnail_' + tid);
@@ -1039,6 +1085,7 @@ MissingE.packages.dashboardTweaks = {
                   else {
                      MissingE.packages.dashboardTweaks
                         .receivePreview({success: true, pid: tid,
+                                         noteCount: noteCount,
                                          data: screenshots, type: type});
                   }
                }
