@@ -316,6 +316,13 @@ function doVimeoPreview(stamp, id, request) {
    });
 }
 
+
+function doNotes(count, id, request) {
+   request.target.page.dispatchMessage("notes",
+      {success: true, pid: id, data: count});
+   return true;
+}
+
 function doPreview(stamp, id, request) {
    var i, type;
    if (!stamp.photos && !stamp.videoThumbs) {
@@ -393,6 +400,9 @@ function runItem(call) {
    else if (call.type === "preview") {
       requestPreview(call.request);
    }
+   else if (call.type === "notes") {
+      requestNotes(call.request);
+   }
 }
 
 function dequeueAjax(id) {
@@ -430,6 +440,7 @@ function saveCache(id, entry) {
              i == "post_url" ||
              i == "tags" ||
              i == "type" ||
+             i == "publishStamp" ||
              (i == "name" && entry[i] != "")) {
             theEntry[i] = entry[i];
          }
@@ -653,6 +664,11 @@ function parseRSS(data, forceType) {
    }
    info.tags = tags;
 
+   var pubTime = data.match(/<pubDate>([^<]*)<\/pubDate>/);
+   if (pubTime && pubTime.length > 1) {
+      info.publishStamp = (new Date(pubTime[1])).valueOf()/1000;
+   }
+
    var photos = [];
    var desc = data.match(/<description>&lt;img[^<]*/);
    if (desc) {
@@ -769,6 +785,158 @@ function doTagsAjax(request, retries) {
             dequeueAjax(this.targetId);
             if (request.target.page !== undefined) {
                doTags(info, this.targetId, request);
+            }
+         }
+      }
+   });
+}
+
+function doNotesAjaxMultiStep(request, retries) {
+   debug("AJAX notes 1st request (" + request.message.pid + ")");
+   startAjax(request.message.pid);
+   var failMsg = {success:false, pid:request.message.pid};
+   $.ajax({
+      type: "GET",
+      url: request.message.url + "/post/" + request.message.pid + "/rss",
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.message.pid,
+      error: function(xhr, textStatus) {
+         if (xhr.status === 404) {
+            debug("notes 1st request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            request.target.page.dispatchMessage("notes",failMsg);
+            return;
+         }
+         if (request.target.page === undefined) {
+            debug("Stop notes 1st request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         if (!cacheServe("notes 1st", request.message.pid, request,
+                         function(){return true;}, true)) {
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry notes 1st request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug("notes 1st request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               request.target.page.dispatchMessage("notes",failMsg);
+            }
+         }
+      },
+      success: function(data, textStatus) {
+         if (!(/<guid>[^<]*<\/guid>/.test(data))) {
+            if (request.target.page === undefined) {
+               debug("Stop notes 1st request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            if (!cacheServe("notes 1st", request.message.pid, request,
+                            function(){return true;}, true)) {
+               this.tryCount++;
+               if (this.tryCount <= this.retryLimit) {
+                  debug("Retry notes 1st request (" + this.targetId + ")");
+                  $.ajax(this);
+                  return;
+               }
+               else {
+                  debug("notes 1st request (" + this.targetId + ") failed");
+                  dequeueAjax(this.targetId);
+                  request.target.page.dispatchMessage("notes",failMsg);
+               }
+            }
+         }
+         else {
+            var info = parseRSS(data, request.message.type);
+            saveCache(this.targetId, info);
+            dequeueAjax(this.targetId);
+            if (request.target.page !== undefined) {
+               doNotesAjax(request, retries);
+            }
+         }
+      }
+   });
+}
+
+function doNotesAjax(request, retries) {
+   if (!cache.hasOwnProperty(request.message.pid) ||
+       !cache[request.message.pid].hasOwnProperty("publishStamp")) {
+      doNotesAjaxMultiStep(request, retries);
+      return;
+   }
+   debug("AJAX notes request (" + request.message.pid + ")");
+   startAjax(request.message.pid);
+   var failMsg = {success:false, pid:request.message.pid};
+   $.ajax({
+      type: "GET",
+      url: request.message.url + "/archive?before_time=" +
+            (cache[request.message.pid].publishStamp+1),
+      dataType: "html",
+      tryCount: 0,
+      retryLimit: retries,
+      targetId: request.message.pid,
+      error: function(xhr, textStatus) {
+         if (xhr.status === 404) {
+            debug("notes request (" + this.targetId + ") not found");
+            dequeueAjax(this.targetId);
+            request.target.page.dispatchMessage("notes",failMsg);
+            return;
+         }
+         if (request.target.page === undefined) {
+            debug("Stop notes request: Tab closed or changed.");
+            dequeueAjax(this.targetId);
+            return;
+         }
+         this.tryCount++;
+         if (this.tryCount <= this.retryLimit) {
+            debug("Retry notes request (" + this.targetId + ")");
+            $.ajax(this);
+            return;
+         }
+         else {
+            debug("notes request (" + this.targetId + ") failed");
+            dequeueAjax(this.targetId);
+            request.target.page.dispatchMessage("notes",failMsg);
+         }
+      },
+      success: function(data, textStatus) {
+         data = data.replace(/\n/g,' ');
+         var re = new RegExp('< *a [^>]*id="post_' + this.targetId + '".*<\/a>');
+         var postInfo = re.exec(data);
+         if (!postInfo) {
+            if (request.target.page === undefined) {
+               debug("Stop notes request: Tab closed or changed.");
+               dequeueAjax(this.targetId);
+               return;
+            }
+            this.tryCount++;
+            if (this.tryCount <= this.retryLimit) {
+               debug("Retry notes request (" + this.targetId + ")");
+               $.ajax(this);
+               return;
+            }
+            else {
+               debug("notes request (" + this.targetId + ") failed");
+               dequeueAjax(this.targetId);
+               request.target.page.dispatchMessage("notes",failMsg);
+            }
+         }
+         else {
+            var noteCount = postInfo[0].match(/<\s*div\s+class="notes"\s*>[^<\d]*([\d\.,]+)[^<\d]*/);
+            if (!noteCount || noteCount.length < 2) {
+               noteCount = "";
+            }
+            else {
+               noteCount = noteCount[1];
+            }
+            dequeueAjax(this.targetId);
+            if (request.target.page !== undefined) {
+               doNotes(noteCount, this.targetId, request);
             }
          }
       }
@@ -972,6 +1140,21 @@ function requestTags(request) {
    else {
       doTagsAjax(request,
              getSetting("MissingE_betterReblogs_retries",MissingE.defaultRetries));
+   }
+}
+
+function requestNotes(request, sender, sendResponse, hash) {
+   if (request.target.page === undefined) {
+      debug("Stop notes request: Tab closed or changed.");
+      dequeueAjax();
+      return;
+   }
+   else if (activeAjax >= maxActiveAjax) {
+      queueAjax({type: "notes", request: request});
+   }
+   else {
+      doNotesAjax(request,
+                  getSetting("MissingE_dashboardTweaks_previewRetries",MissingE.defaultRetries));
    }
 }
 
@@ -1286,6 +1469,9 @@ function handleRequest(request) {
    else if (request.name == "magnifier") {
       requestMagnifier(request);
    }
+   else if (request.name == "notes") {
+      requestNotes(request);
+   }
    else if (request.name == "preview") {
       requestPreview(request);
    }
@@ -1599,6 +1785,11 @@ function handleRequest(request) {
             if (getSetting("MissingE_dashboardTweaks_notePreview",1) == 1) {
                injectStyles.push({file: "core/dashboardTweaks/preview.css"});
                injectStyles.push({code:
+                  '#MissingE_preview .previewIcon { ' +
+                     'background-image:url("' +
+                     safari.extension.baseURI + "core/dashboardTweaks/prevIcon.png" +
+                     '"); ' +
+                  '}' +
                   '#MissingE_preview.MissingE_preview_loading { ' +
                      'background-image:url("' +
                      safari.extension.baseURI + "core/dashboardTweaks/loader.gif" +
