@@ -862,7 +862,7 @@ function doNotesAjaxMultiStep(request, sender, sendResponse, hash, retries) {
             }
          }
          else {
-            var info = parseRSS(data, request.type);
+            var info = parseRSS(data);
             saveCache(this.targetId, info);
             dequeueAjax(this.targetId);
             if (!closed) {
