@@ -92,6 +92,9 @@ MissingE.utilities.options = {
          return MissingE.utilities.options.all_settings[key] == undefined ?
             defaultValue : MissingE.utilities.options.all_settings[key];
       }
+      else if (extension.isOpera) {
+         return widget.preferences[key] == undefined ? defaultValue : widget.preferences[key];
+      }
       else {
          return localStorage[key] == undefined ? defaultValue : localStorage[key];
       }
@@ -102,6 +105,9 @@ MissingE.utilities.options = {
           extension.isSafari) {
          MissingE.utilities.options.all_settings[key] = value;
          extension.sendRequest("change-setting", {name: key, val: value});
+      }
+      else if (extension.isOpera) {
+         widget.preferences[key] = value;
       }
       else {
          localStorage[key] = value;

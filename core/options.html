@@ -39,7 +39,8 @@ var runScripts = ["../extension.js",
 
 function loadScripts() {
    if (typeof chrome !== "undefined" ||
-       typeof safari !== "undefined") {
+       typeof safari !== "undefined" ||
+       typeof opera  !== "undefined") {
 
       if (runScripts.length === 0) {
          return;

@@ -69,6 +69,7 @@ extension = {
    _registerListener: function() {
       this._listeners = {};
       document.addEventListener("receiveOperaMessage", function(evt) {
+         extension.showMessage(evt);
          var i;
          if (evt.data.greeting === "sendFiles") {
             for (i in evt.data.files) {
@@ -174,6 +175,18 @@ extension = {
       else {
          return null;
       }
+   },
+
+   showMessage: function(e) {
+      var msg = "", i;
+      var request = e.data;
+      msg = "\"" + e.data.greeting + "\" message from: " + e.origin;
+      for (i in e.data) {
+         if (e.data.hasOwnProperty(i) && i !== "greeting") {
+            msg += "\n   " + i + " = " + e.data[i];
+         }
+      }
+      console.log(msg);
    },
 
    sendRequest: function(name, request, callback) {

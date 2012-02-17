@@ -88,6 +88,9 @@ MissingE.packages.menuButton = {
          tab.appendChild(elnk);
          tab.appendChild(upnote);
          bar.insertBefore(tab, logout);
+         if (extension.isOpera) {
+            extension.sendRequest("update");
+         }
       }
    },
 

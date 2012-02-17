@@ -8,8 +8,29 @@ var MissingE = {};
 <script type="text/javascript" src="core/localizations.js"></script>
 <script type="text/javascript" src="core/utils.js"></script>
 <script>
+jQuery.support.cors = true;
+var currVersion;
 
 var imageCache = {};
+
+function getSetting(key, defVal) {
+   var retval = widget.preferences[key];
+   if (retval === undefined || retval === null || retval === "") {
+      return defVal;
+   }
+   else {
+      if (/[^\d]/.test(retval)) {
+         return retval;
+      }
+      else {
+         return parseInt(retval, 10);
+      }
+   }
+}
+
+function setSetting(key, val) {
+   widget.preferences[key] = val;
+}
 
 function getImages(imgs, callback) {
    var i;
@@ -98,8 +119,54 @@ function getFiles(files, callback) {
    }
 }
 
+function versionCompare(v1, v2) {
+   if (!v1 && !v2) { return 0; }
+   else if (!v1) { return -1; }
+   else if (!v2) { return 1; }
+   else {
+      var i;
+      var ver1 = v1.split('.');
+      var ver2 = v2.split('.');
+      var len = ver1.length >= ver2.length ? ver1.length : ver2.length;
+      for (i=0; i<len; i++) {
+         if (i >= ver1.length && ver2[i] !== '0') { return -1; }
+         else if (i >= ver2.length && ver1[i] !== '0') { return 1; }
+         else {
+            ver1[i] = parseInt(ver1[i]);
+            ver2[i] = parseInt(ver2[i]);
+         }
+         if (ver1[i] > ver2[i]) { return 1; }
+         if (ver2[i] > ver1[i]) { return -1; }
+      }
+      return 0;
+   }
+}
+
+function getExternalVersion() {
+   $.ajax({
+      type: "GET",
+      url: 'http://missing-e.com/version',
+      dataType: "text",
+      success: function(data, textStatus, xhr) {
+         console.log(data);
+         setSetting('MissingE_lastUpdateCheck', (new Date()).valueOf());
+         var versionInfo = data.split(" ");
+         versionInfo[versionInfo.length-1] =
+            versionInfo[versionInfo.length-1].replace(/\s*$/m,'');
+         setSetting('MissingE_externalVersion', versionInfo[0]);
+         if (versionInfo.length > 1) {
+            setSetting('MissingE_externalVersion_link', versionInfo[1]);
+         }
+         else {
+            setSetting('MissingE_externalVersion_link', '');
+         }
+      }
+   });
+}
+
 function handleRequest(e) {
    var msg = "", i;
+   var request = e.data;
    msg = "\"" + e.data.greeting + "\" message from: " + e.origin;
    for (i in e.data) {
       if (e.data.hasOwnProperty(i) && i !== "greeting") {
@@ -107,8 +174,119 @@ function handleRequest(e) {
       }
    }
    console.log(msg);
+   
+   if (request.greeting == "settings") {
+      var settings = {};
+      settings.component = request.component;
+      switch(request.component) {
+         case "askTweaks":
+            settings.scroll = getSetting("MissingE_askTweaks_scroll",1);
+            settings.betterAnswers = getSetting("MissingE_askTweaks_betterAnswers",0);
+            settings.tagAsker = getSetting("MissingE_askTweaks_tagAsker",1);
+            settings.defaultTags = getSetting("MissingE_askTweaks_defaultTags",'');
+            if (settings.defaultTags !== '') {
+               settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
+            }
+            settings.askDash = getSetting("MissingE_askTweaks_askDash",0);
+            settings.massDelete = getSetting("MissingE_askTweaks_massDelete",1);
+            settings.adjustDomain = MissingE.isTumblrURL(sender.tab.url, ["messages"]);
+            settings.photoReplies = getSetting("MissingE_postingTweaks_enabled",1) == 1 ?
+               getSetting("MissingE_postingTweaks_photoReplies",1) : 0;
+            break;
+         case "sidebarTweaks":
+            settings.retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
+            settings.accountNum = getSetting("MissingE_sidebarTweaks_accountNum",0);
+            settings.slimSidebar = getSetting("MissingE_sidebarTweaks_slimSidebar",0);
+            settings.followingLink = getSetting("MissingE_sidebarTweaks_followingLink",0);
+            settings.addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
+            break;
+         case "bookmarker":
+            settings.backupMarks = getSetting("MissingE_bookmarker_marks","");
+            settings.format = getSetting("MissingE_bookmarker_format",MissingE.defaultFormat);
+            settings.addBar = getSetting("MissingE_bookmarker_addBar",1);
+            settings.keyboardShortcut = getSetting("MissingE_bookmarker_keyboardShortcut",1);
+            break;
+         case "dashboardTweaks":
+            settings.replaceIcons = getSetting("MissingE_dashboardTweaks_replaceIcons",1);
+            settings.postLinks = getSetting("MissingE_dashboardTweaks_postLinks",1);
+            settings.reblogReplies = getSetting("MissingE_dashboardTweaks_reblogReplies",0);
+            settings.widescreen = getSetting("MissingE_dashboardTweaks_widescreen",0);
+            settings.queueArrows = getSetting("MissingE_dashboardTweaks_queueArrows",1);
+            settings.noExpandAll = getSetting("MissingE_dashboardTweaks_noExpandAll",0);
+            settings.massDelete = getSetting("MissingE_dashboardTweaks_massDelete",1);
+            settings.randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
+            settings.sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
+            settings.notePreview = getSetting("MissingE_dashboardTweaks_notePreview",1);
+            settings.simpleHighlight = getSetting("MissingE_dashboardTweaks_simpleHighlight",0);
+            settings.pagedNav = getSetting("MissingE_dashboardTweaks_pagedNav",0);
+            settings.keyboardShortcut = getSetting("MissingE_dashboardTweaks_keyboardShortcut",1);
+            break;
+         case "dashLinksToTabs":
+            settings.newPostTabs = getSetting("MissingE_dashLinksToTabs_newPostTabs",1);
+            settings.sidebar = getSetting("MissingE_dashLinksToTabs_sidebar",0);
+            settings.reblogLinks = getSetting("MissingE_dashLinksToTabs_reblogLinks",0);
+            settings.editLinks = getSetting("MissingE_dashLinksToTabs_editLinks",0);
+            break;
+         case "replyReplies":
+            settings.showAvatars = getSetting("MissingE_replyReplies_showAvatars",1);
+            settings.smallAvatars = getSetting("MissingE_replyReplies_smallAvatars",1);
+            settings.addTags = getSetting("MissingE_replyReplies_addTags",1);
+            settings.defaultTags = getSetting("MissingE_replyReplies_defaultTags",'');
+            if (settings.defaultTags !== '') {
+               settings.defaultTags = settings.defaultTags.replace(/, /g,',').split(',');
+            }
+            break;
+         case "postCrushes":
+            settings.prefix = getSetting("MissingE_postCrushes_prefix","Tumblr Crushes:");
+            settings.crushSize = getSetting("MissingE_postCrushes_crushSize",1);
+            settings.addTags = getSetting("MissingE_postCrushes_addTags",1);
+            settings.showPercent = getSetting("MissingE_postCrushes_showPercent",1);
+            break;
+         case "postingTweaks":
+            settings.photoReplies = getSetting("MissingE_postingTweaks_photoReplies",1);
+            settings.addUploader = getSetting("MissingE_postingTweaks_addUploader",1);
+            settings.quickButtons = getSetting("MissingE_postingTweaks_quickButtons",1);
+            settings.blogSelect = getSetting("MissingE_postingTweaks_blogSelect",0);
+            settings.tagQueuedPosts = getSetting("MissingE_postingTweaks_tagQueuedPosts",0);
+            settings.queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
+            if (settings.queueTags !== '') {
+               settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
+            }
+            settings.showAnswers = getSetting("MissingE_postingTweaks_showAnswers",0);
+            break;
+         case "magnifier":
+            settings.magnifyAvatars = getSetting("MissingE_magnifier_magnifyAvatars",0);
+            break;
+         case "betterReblogs":
+            settings.passTags = getSetting("MissingE_betterReblogs_passTags",1);
+            settings.autoFillTags = getSetting("MissingE_betterReblogs_autoFillTags",1);
+            settings.quickReblog = getSetting("MissingE_betterReblogs_quickReblog",0);
+            settings.accountName = '0';
+            if (getSetting("MissingE_betterReblogs_quickReblogAcctType",0) == 1) {
+               settings.accountName = getSetting("MissingE_betterReblogs_quickReblogAcctName",'0');
+            }
+            settings.quickReblogForceTwitter = getSetting("MissingE_betterReblogs_quickReblogForceTwitter","default");
+            settings.fullText = getSetting("MissingE_betterReblogs_fullText",0);
+            settings.tagQueuedPosts = (getSetting("MissingE_postingTweaks_enabled",1) == 1 && getSetting("MissingE_postingTweaks_tagQueuedPosts",0) == 1) ? 1: 0;
+            settings.queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
+            if (settings.queueTags !== '') {
+               settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
+            }
+            settings.reblogAsks = getSetting("MissingE_betterReblogs_reblogAsks",0);
+            settings.keyboardShortcut = getSetting("MissingE_betterReblogs_keyboardShortcut",1);
+            break;
+      }
+      sendResponse(settings);
+   }
+   else if (request.greeting == "update") {
+      e.source.postMessage({greeting: "update",
+         update: versionCompare(getSetting("MissingE_externalVersion",'0'),
+                                getSetting("MissingE_version",'0')) > 0});
+   }
+   else if (request.greeting === "start") {
+   }
 }
-
+function loc(){return location.href;}
 opera.extension.onmessage = function(e) {
    if (e.data.greeting === "initialize" &&
        /http:\/\/www\.tumblr\.com/.test(e.data.url)) {
@@ -120,8 +298,8 @@ opera.extension.onmessage = function(e) {
          "js":  ["extension.js",
                  "core/localizations.js",
                  "core/utils.js",
-                 "whoami.js",
-                 "core/common/menuButton.js"]
+                 "core/common/menuButton.js",
+                 "whoami.js"]
       };
       getFiles(files, function(result) {
          e.source.postMessage({greeting: "initialize", files: result});
@@ -143,6 +321,28 @@ opera.extension.onmessage = function(e) {
    }
 };
 
+currVersion = widget.version;
+
+function onStart(currVersion, prevVersion) {
+   if (prevVersion && prevVersion !== currVersion) {
+      console.log("Updated Missing e (" +
+                  prevVersion + " => " + currVersion +
+                  ")");
+      setSetting('MissingE_compatCheck',0);
+   }
+   else if (!prevVersion) {
+      console.log("Installed Missing e " + currVersion);
+      //chrome.tabs.create({url:chrome.extension.getURL("core/options.html")});
+   }
+   setSetting('MissingE_version',currVersion);
+}
+
+onStart(currVersion, getSetting('MissingE_version',null));
+
+if (!MissingE.isSameDay(getSetting('MissingE_lastUpdateCheck',0))) {
+   console.log("Checking current available version.");
+   getExternalVersion();
+}
 </script>
 </head>
 <body></body>

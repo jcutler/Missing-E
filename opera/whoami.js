@@ -71,7 +71,6 @@ if ((window.top === window &&
 
    extension.sendRequest("start", {isFrame: fr, url: location.href,
                                    bodyId: document.body.id});
-   extension.sendRequest("update");
 }
 
 }());
