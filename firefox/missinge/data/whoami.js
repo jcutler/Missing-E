@@ -36,6 +36,7 @@ if (!(/http:\/\/www\.tumblr\.com\/customize/.test(location.href)) &&
    }
 }
 
+/*
 self.on('message', function (message) {
    if (message.greeting !== 'update') { return; }
    var up = document.getElementById('missinge_updatenotice');
@@ -51,6 +52,7 @@ self.on('message', function (message) {
       up.style.display = 'block';
    }
 });
+*/
 
 self.on('message', function (message) {
    if (message.greeting !== "startup") {
@@ -88,6 +90,6 @@ self.on('message', function (message) {
    var lang;
    if (html && html[0]) { lang = html[0].getAttribute('lang'); }
    if (!lang) { lang = 'en'; }
-   self.postMessage({greeting: "update", lang: lang});
+   //self.postMessage({greeting: "update", lang: lang});
 });
 
