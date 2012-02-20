@@ -255,7 +255,7 @@ function getAllSettings(getStale) {
 function collapseSettings(toPref, oldA, oldB) {
    if ((ps.isSet(oldA) || ps.isSet(oldB)) &&
        !ps.isSet(toPref)) {
-      console.log('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
+      debug('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
       if (ps.get(oldA,0) === 1 || ps.get(oldB,0) === 1) {
          ps.set(toPref,1);
       }
@@ -276,7 +276,7 @@ function clearSetting(pref) {
 
 function moveSetting(oldpref,newpref) {
    if (ps.isSet(oldpref) && !ps.isSet(newpref)) {
-      console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+      debug('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
       ps.set(newpref,ps.get(oldpref,0));
       ps.reset(oldpref);
    }
@@ -294,7 +294,7 @@ function moveAllSettings(oldgroup, newgroup) {
          var oldpref = 'extensions.' + i.replace(/_/g,'.');
          if (ps.isSet(oldpref)) {
             var newpref = 'extensions.' + i.replace(re,'MissingE_' + newgroup + '_').replace(/_/g,'.');
-            console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+            debug('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
             if (!ps.isSet(newpref)) {
                ps.set(newpref, ps.get(oldpref,0));
             }
@@ -306,7 +306,7 @@ function moveAllSettings(oldgroup, newgroup) {
 
 function invertSetting(oldpref,newpref) {
    if (ps.isSet(oldpref) && !ps.isSet(newpref)) {
-      console.log('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
+      debug('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
       ps.set(newpref,1-ps.get(oldpref,0));
       ps.reset(oldpref);
    }
@@ -1622,12 +1622,14 @@ function handleMessage(message, myWorker) {
          uptodate:versionCompare(getSetting("extensions.MissingE.version",'0'),
                                  message.v) >= 0});
    }
+   /*
    else if (message.greeting == "update") {
       myWorker.postMessage({greeting: "update",
          update:versionCompare(getSetting("extensions.MissingE.externalVersion",'0'),
                                getSetting("extensions.MissingE.version",'0')) > 0,
          msg:MissingE.getLocale(message.lang).update});
    }
+   */
    else if (message.greeting == "exportOptions") {
       exportOptionsXML(myWorker);
    }
@@ -2498,6 +2500,7 @@ pageMod.PageMod({
    }
 });
 
+/*
 function getExternalVersion() {
    Request({
       url: 'http://missing-e.com/version',
@@ -2518,6 +2521,7 @@ function getExternalVersion() {
       }
    }).get();
 }
+*/
 
 function fixupSettings() {
    setIntegerPrefType('extensions.MissingE.betterReblogs.quickReblogAcctType',0);
@@ -2553,12 +2557,13 @@ function onStart(currVersion, prevVersion) {
 }
 
 onStart(currVersion, prevVersion);
+
+/*
 if (!MissingE.isSameDay(getSetting('extensions.MissingE.lastUpdateCheck',0))) {
    console.log("Checking current available version.");
    getExternalVersion();
 }
+*/
 
 fixupSettings();
 toggleWidget();
-
-console.log("Missing e is running.");
