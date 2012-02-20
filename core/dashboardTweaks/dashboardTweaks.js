@@ -377,9 +377,10 @@ MissingE.packages.dashboardTweaks = {
                 response.type === "audio" ||
                 response.type === "question") {
                doImages = false;
-               preWin.removeClass('MissingE_preview_loading')
-                     .append($('<div class="previewIcon ' + response.type +
-                               'Preview" />'));
+               preWin.removeClass('MissingE_preview_loading');
+               $('<div class="previewIcon />')
+                  .addClass(response.type + 'Preview')
+                  .appendTo(preWin);
             }
             else if (response.type === "video") {
                preWin.addClass("MissingE_videoPreview");
