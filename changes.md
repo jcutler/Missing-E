@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.6.1** (02/20/2012)
+**_-_** Remove update notification for Firefox add-on to comply with AMO rules  
+**_!_** Re-enable keyboard shortcuts after closing an ask box opened on the dash
+
 ##**2.6.0** (02/17/2012)
 **_+_** Add post notes count to notification preview (and show notification preview for all post types)
 
