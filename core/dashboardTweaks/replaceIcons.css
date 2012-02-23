@@ -21,10 +21,14 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#posts .post .post_controls {
+position:relative !important;
+}
+
 #posts .post .post_controls a.block_link {
 position:absolute;
-right:20px;
-top:32px;
+right:0;
+top:17px;
 }
 
 #posts .post .post_controls a,
