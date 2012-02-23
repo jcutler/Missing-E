@@ -56,6 +56,10 @@ fi
 if [[ "$UPLOAD" == "" ]]; then
    echo "Changing index version info"
    ./changeIndexVersion.sh
-   echo "Changing update version info"
-   ./changeUpdateVersion.sh
+   read -p "Change update version? " -n 1 -r
+   if [[ $REPLY =~ ^[Yy]$ ]]; then
+      echo "Changing update version info"
+      ./changeUpdateVersion.sh
+   fi
+   echo ""
 fi

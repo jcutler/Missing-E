@@ -11,4 +11,3 @@ else
    scp safari-build/missinge.safariextz ciw@direct.infraware.ca:webapps/missinge/safari/
    ssh ciw@direct.infraware.ca "webapps/missinge/safari/changeVersion.sh $num $str"
 fi
-
