@@ -47,3 +47,7 @@ margin:5px 0 !important;
 position:relative !important;
 z-index:100 !important;
 }
+
+#posts .promotion_highlighted .MissingE_timestamp {
+font-size:13px !important;
+}
