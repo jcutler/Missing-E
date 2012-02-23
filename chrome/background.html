@@ -1692,6 +1692,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                   '}'});
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/replaceIcons.css"});
             }
+            else {
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/noIcons.css"});
+            }
             if (getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/reblogQuoteFit.css"});
             if (getSetting("MissingE_dashboardTweaks_wrapTags",1) == 1)

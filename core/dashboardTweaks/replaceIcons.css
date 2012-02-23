@@ -160,6 +160,13 @@ width:16px !important;
 background-position:-112px 0 !important;
 }
 
+#posts .post .MissingE_experimental_reply_wait,
+#posts .post .MissingE_experimental_reply_success,
+#posts .post .MissingE_experimental_reply_fail {
+font-size:0;
+line-height:0;
+}
+
 #posts .post .MissingE_experimental_reply_wait {
 display:none !important;
 }

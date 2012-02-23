@@ -1832,6 +1832,9 @@ function handleRequest(request) {
                   '}'});
                injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
             }
+            else {
+               injectStyles.push({file: "core/dashboardTweaks/noIcons.css"});
+            }
             if (getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/reblogQuoteFit.css"});
             if (getSetting("MissingE_dashboardTweaks_wrapTags",1) == 1)

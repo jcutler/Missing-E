@@ -124,10 +124,17 @@ MissingE.packages.dashboardTweaks = {
                         " [" + MissingE.getLocale(lang).dashTweaksText.experimental + "]",
                      text: "[" + MissingE.getLocale(lang).dashTweaksText.reply + "]"}));
 
-      notes.after($('<span />',
-                    {"class": "MissingE_post_control " +
-                            "MissingE_experimental_reply_wait",
-                     id: "reply_fail_" + id}));
+      var failer = $('<span />',
+                     {"class": "MissingE_post_control " +
+                               "MissingE_experimental_reply_wait",
+                      id: "reply_fail_" + id});
+      failer.append($('<span />', {"class": "MissingE_successText"})
+                     .append('&nbsp;&#x2714;'));
+      failer.append($('<span />',
+                        {"class": "MissingE_failText",
+                         text: MissingE.getLocale(lang).dashTweaksText.reply})
+                     .prepend('&nbsp;').append('&nbsp;'));
+      failer.insertAfter(notes);
    },
 
    realignReplyNipple: function(nip) {

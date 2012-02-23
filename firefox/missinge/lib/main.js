@@ -1967,6 +1967,9 @@ function handleMessage(message, myWorker) {
                   '}'});
                injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
             }
+            else {
+               injectStyles.push({file: "core/dashboardTweaks/noIcons.css"});
+            }
             if (getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/reblogQuoteFit.css"});
             if (getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1) == 1)
