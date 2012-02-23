@@ -42,3 +42,8 @@ height:16px !important;
 #posts .post .post_content ol ul:first-child, #posts .post .post_content ol ol:first-child {
 margin:5px 0 !important;
 }
+
+#posts .promotion_highlighted .post_controls {
+position:relative !important;
+z-index:100 !important;
+}
