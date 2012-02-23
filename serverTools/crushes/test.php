@@ -1,5 +1,21 @@
 <?php
 
+function addHandle(&$curlHandle,$url) {
+   $cURL = curl_init();
+   curl_setopt($cURL, CURLOPT_URL, $url);
+   curl_setopt($cURL, CURLOPT_HEADER, 0);
+   curl_setopt($cURL, CURLOPT_RETURNTRANSFER, 1);
+   curl_multi_add_handle($curlHandle,$cURL);
+   return $cURL;
+}
+
+function ExecHandle(&$curlHandle) {
+   $flag=null;
+   do {
+      curl_multi_exec($curlHandle,$flag);
+   } while($flag > 0);
+}
+
 if (!isset($_GET['whoami']) || $_GET['whoami'] != "jeremycutler")
    die();
 
@@ -14,6 +30,8 @@ else {
    $large = false;
 }
 
+$curlHandle = curl_multi_init();
+
 for ($i=0; $i<9; $i++) {
    $prefix = "";
    if (preg_match('/^images\/default_avatar/',$_GET["img" . $i]) != 0) {
@@ -27,49 +45,33 @@ for ($i=0; $i<9; $i++) {
 }
 
 for ($i=0; $i<9; $i++) {
+   $curl[$i] = addHandle($curlHandle,$crushes[$i]);
+}
+ExecHandle($curlHandle);
+for ($i=0; $i<9; $i++) {
+   $txt[$i] = curl_multi_getcontent($curl[$i]);
+}
+for ($i=0; $i<9; $i++) {
+   curl_multi_remove_handle($curlHandle, $curl[$i]);
+}
+curl_multi_close($curlHandle);
+
+for ($i=0; $i<9; $i++) {
    if (preg_match('/\.png$/i',$crushes[$i]) == 1 &&
-       ord(substr(file_get_contents($crushes[$i], NULL, NULL, 0, 26),25)) == 4) {
-      //GD can't handle grayscale+alpha, so I'll cheat
-      $url = 'http://tools.dynamicdrive.com/imageoptimizer/index.php';
-      $fields = array(
-                  'userfile'=>'',
-                  'url'=>urldecode($crushes[$i]),
-                  'type'=>'JPG',
-                  'all'=>'on',
-                  'MAX_FILE_SIZE'=>307200,
-                  'go'=>'optimize'
-                );
-
-      $ch = curl_init();
-
-      curl_setopt($ch,CURLOPT_URL,$url);
-      curl_setopt($ch,CURLOPT_POST,true);
-      curl_setopt($ch,CURLOPT_POSTFIELDS,$fields);
-      curl_setopt($ch,CURLOPT_RETURNTRANSFER,TRUE);
-      $ret = curl_exec($ch);
-      curl_close($ch);
-      preg_match("/avatar_\w*_[0-9]*/",$crushes[$i],$tmpname);
-      $thename = $tmpname[0];
-      preg_match("/http\:\/\/[\w\/\.]*${thename}_0.jpg/",$ret,$match);
-      $crushes[$i]=$match[0];
-      $tmp = imagecreatefromjpeg($crushes[$i]);
-   }
-   else if (preg_match('/\.png$/i',$crushes[$i]) == 1) {
-      $tmp = imagecreatefrompng($crushes[$i]);
-   }
-   else if (preg_match('/\.gif$/i',$crushes[$i]) == 1) {
-      $tmp = imagecreatefromgif($crushes[$i]);
-   }
-   else if (preg_match('/\.jpe?g$/i',$crushes[$i]) == 1) {
-      $tmp = imagecreatefromjpeg($crushes[$i]);
+       ord(substr($txt[$i],25)) == 4) {
+     $tmpfile = tempnam("/tmp", "FOO");
+     file_put_contents($tmpfile, $txt[$i]);
+     exec("convert -size 128x128 " . $tmpfile . " " . $tmpfile . ".jpg");
+     $tmp = imagecreatefromjpeg($tmpfile . ".jpg");
+     unlink($tmpfile);
+     unlink($tmpfile . ".jpg");
    }
    else {
-      die("whoops, don't recognize image type.");
+      $tmp = imagecreatefromstring($txt[$i]);
    }
 
    $cimg[$i] = imagecreatetruecolor($avCrop,$avCrop);
    imagecopyresampled($cimg[$i],$tmp,0,0,($avSize-$avCrop)/2,($avSize-$avCrop)/2,$avCrop,$avCrop,$avCrop,$avCrop);
-   //imagecopymergegray($cimg[$i],$tmp,0,0,($avSize-$avCrop)/2,($avSize-$avCrop)/2,$avCrop,$avCrop,100);
    imagedestroy($tmp);
 }
 
