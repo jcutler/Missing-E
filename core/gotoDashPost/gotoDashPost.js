@@ -69,7 +69,7 @@ MissingE.packages.gotoDashPost = {
             var dashlnk = document.createElement('a');
             dashlnk.setAttribute('href',
                                  'http://www.tumblr.com/dashboard/1000/' +
-                                    pid + "?lite");
+                                    pid);
             dashlnk.setAttribute('target', '_top');
             dashlnk.id = "MissingE_gotoDashPost_link";
             var icn = document.createElement('img');

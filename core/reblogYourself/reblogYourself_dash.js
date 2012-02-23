@@ -67,7 +67,7 @@ MissingE.packages.reblogYourself = {
             .find('div.post_controls a[href^="/edit"]');
          if (MissingE.isTumblrURL(redir, ["dashboard"])) {
             redir = "http://www.tumblr.com/dashboard/1000/" +
-                     (Number(response.pid)+1) + "?lite";
+                     (Number(response.pid)+1);
          }
          redir = redir.replace(/http:\/\/www.tumblr.com/,'')
                      .replace(/\//g,'%2F').replace(/\?/g,'%3F')

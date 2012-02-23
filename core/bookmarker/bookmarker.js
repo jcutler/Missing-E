@@ -52,7 +52,7 @@ MissingE.packages.bookmarker = {
       var pid = Number(post)+1;
       var mark = $('<li />', {id: "mark_" + post}).attr("post", post);
       mark.append($('<a />',
-                    {href: "/dashboard/1000/" + pid + "?lite",
+                    {href: "/dashboard/1000/" + pid,
                      "class": "MissingE_bookmarker_marklink"})
                      .attr("post", post)
                      .append($('<div />', {"class": "hide_overflow"})
