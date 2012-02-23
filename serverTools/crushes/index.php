@@ -56,7 +56,7 @@ curl_multi_close($curlHandle);
 for ($i=0; $i<9; $i++) {
    if (preg_match('/\.png$/i',$crushes[$i]) == 1 &&
        ord(substr($txt[$i],25)) == 4) {
-     $tmpfile = tempnam("/tmp", "FOO");
+     $tmpfile = tempnam("/tmp", "CIW");
      file_put_contents($tmpfile, $txt[$i]);
      exec("convert -size 128x128 " . $tmpfile . " " . $tmpfile . ".jpg");
      $tmp = imagecreatefromjpeg($tmpfile . ".jpg");
