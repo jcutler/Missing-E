@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.6.3** (02/23/2012)
+**_!_** Fix Tumblr layout problem that makes 'like' button unclickable on promotion highlighted posts
+
 ##**2.6.2** (02/20/2012)
 **_!_** Minor code changes to comply with AMO rules
 
