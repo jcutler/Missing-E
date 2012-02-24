@@ -359,6 +359,8 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_reblogAsks',0);
             frm.MissingE_betterReblogs_askRetries.value = MissingE.utilities.options.getStorage('MissingE_betterReblogs_askRetries',MissingE.defaultRetries);
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_keyboardShortcut',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_quickKeyboardShortcut',1);
+
          }
          else if (v == "postingTweaks") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_photoReplies',1);

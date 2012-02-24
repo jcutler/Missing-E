@@ -456,10 +456,14 @@ function loadScripts() {
        <td><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_retries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
       </tr>
       <tr class="alt">
+       <td>Press <code>R</code> to reblog current post (manually)</td>
+       <td><input type="checkbox" name="MissingE_betterReblogs_keyboardShortcut" /></td>
+      </tr>
+      <tr>
        <td>Enable quick (1-click) reblogging</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_quickReblog" /></td>
       </tr>
-      <tr class="subopt">
+      <tr class="alt subopt">
        <td>Default Tumblr blog to use with quick reblogging<br />
         <small>You must have posting privileges on the account you select.</small>
        </td>
@@ -472,7 +476,7 @@ function loadScripts() {
         </div>
        </td>
       </tr>
-      <tr class="subopt alt">
+      <tr class="subopt">
        <td>Force quick (1-click) reblogging to send/not send posts to Twitter<br />
         <small><em>By default, quick reblogging will enable the </em>"Send to Twitter"<em> based on your Tumblr settings.<br />
         You can manually check/uncheck the </em>"Send to Twitter"<em> box for any quick reblog post</em></small>
@@ -485,22 +489,22 @@ function loadScripts() {
         </select>
        </td>
       </tr>
-      <tr class="subopt">
+      <tr class="subopt alt">
        <td>Enable quick (1-click) reblogging keyboard shortcuts:<br />
-        <small><code>R</code>eblog / <code>Q</code>ueue / <code>D</code>raft</small></td>
-       <td><input type="checkbox" name="MissingE_betterReblogs_keyboardShortcut" /></td>
+        <small><code>R</code>eblog / <code>Q</code>ueue / <code>D</code>raft / <code>Shift</code>+<code>R</code> to manually reblog</small></td>
+       <td><input type="checkbox" name="MissingE_betterReblogs_quickKeyboardShortcut" /></td>
       </tr>
-      <tr class="alt">
+      <tr>
        <td>Always reblog long text posts as text</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_fullText" /></td>
       </tr>
-      <tr>
+      <tr class="alt">
        <td>Allow reblogging of <em>Ask</em> posts as text<br />
         <small><em>This feature does not always work correctly from permalink pages</em></small>
        </td>
        <td><input type="checkbox" name="MissingE_betterReblogs_reblogAsks" /></td>
       </tr>
-      <tr class="alt subopt">
+      <tr class="subopt">
        <td>Number of retries on failure to add reblog link to ask posts (default <span class="defRetries">4</span>)</td>
        <td><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_askRetries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
       </tr>

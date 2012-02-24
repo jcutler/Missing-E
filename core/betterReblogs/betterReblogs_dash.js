@@ -727,22 +727,28 @@ MissingE.packages.betterReblogs = {
                .doReblog(this,account,queueTags);
             return false;
          });
-         if (settings.keyboardShortcut) {
+         if (settings.quickKeyboardShortcut) {
             $(window).keydown(function(e) {
-               if ((e.keyCode !== 68 && e.keyCode !== 81 && e.keyCode !== 82) ||
-                   e.metaKey || e.shiftKey || e.altKey || e.ctrlKey ||
-                   $(e.target).is('input,textarea')) {
+               // 68 = D, 81 = Q, 82 = R
+               if ($(e.target).is('input,textarea') ||
+                   e.metaKey || e.altKey || e.ctrlKey ||
+                   (e.keyCode !== 68 && e.keyCode !== 81 && e.keyCode !== 82)) {
+                  return;
+               }
+               else if (e.shiftKey && e.keyCode !== 82) {
                   return;
                }
                var currPos = $(window).scrollTop()+7;
                $('#posts li.post').each(function() {
                   var postPos = this.offsetTop;
                   if (postPos === currPos) {
+                     var isManual = false;
+                     var rebBtn = $(this).find('div.post_controls ' +
+                                               'a[href^="/reblog/"]').get(0);
                      var overEvt = document.createEvent("MouseEvent");
                      overEvt.initMouseEvent("mouseover", true, true, window, 0,
                                             0, 0, 0, 0, false, false, false,
                                             false, 0, null);
-                     var rebBtn = $(this).find('div.post_controls a[href^="/reblog/"]').get(0);
                      rebBtn.dispatchEvent(overEvt);
                      if (!$(rebBtn).hasClass('MissingE_quick_reblogging ' +
                                          'MissingE_quick_reblogging_success')) {
@@ -753,22 +759,86 @@ MissingE.packages.betterReblogs = {
                         else if (e.keyCode === 81) {
                            itm = document.getElementById('MissingE_quick_reblog_queue');
                         }
+                        else if (e.keyCode === 82 && e.shiftKey) {
+                           isManual = true;
+                           itm = document.getElementById('MissingE_quick_reblog_manual');
+                        }
                         else if (e.keyCode === 82) {
                            itm = rebBtn;
                         }
-                        var selector = $('#MissingE_quick_reblog_selector select');
-                        var account = settings.accountName;
-                        if (selector.length > 0) {
-                           account = selector.val();
+                        if (isManual) {
+                           var downEvt = document.createEvent("MouseEvent");
+                           downEvt.initMouseEvent("mousedown", true, true,
+                                                  window, 0, 0, 0, 0, 0, false,
+                                                  false, false, false, 0, null);
+                           itm.dispatchEvent(downEvt);
+                           var clickEvt = document.createEvent("MouseEvent");
+                           clickEvt.initMouseEvent("click", true, true, window,
+                                                   0, 0, 0, 0, 0, false, false,
+                                                   false, false, 0, null);
+                           itm.dispatchEvent(clickEvt);
                         }
-                        MissingE.packages.betterReblogs
-                           .doReblog(itm, account, queueTags);
+                        else {
+                           var selector = $('#MissingE_quick_reblog_selector select');
+                           var account = settings.accountName;
+                           if (selector.length > 0) {
+                              account = selector.val();
+                           }
+                           MissingE.packages.betterReblogs
+                              .doReblog(itm, account, queueTags);
+                        }
                      }
                      var outEvt = document.createEvent("MouseEvent");
                      outEvt.initMouseEvent("mouseout", true, true, window, 0,
                                            0, 0, 0, 0, false, false, false,
                                            false, 0, null);
                      rebBtn.dispatchEvent(outEvt);
+                     return false;
+                  }
+                  if (postPos >= currPos) {
+                     return false;
+                  }
+               });
+            });
+         }
+         else if (settings.keyboardShortcut) {
+            $(window).keydown(function(e) {
+               // 82 = R (allow shift key use to be consistent with quick reblog
+               if ($(e.target).is('input,textarea') ||
+                   e.metaKey || e.altKey || e.ctrlKey || e.keyCode !== 82) {
+                  return;
+               }
+               var currPos = $(window).scrollTop()+7;
+               $('#posts li.post').each(function() {
+                  var postPos = this.offsetTop;
+                  if (postPos === currPos) {
+                     var rebBtn = $(this).find('div.post_controls ' +
+                                               'a[href^="/reblog/"]').get(0);
+                     var overEvt = document.createEvent("MouseEvent");
+                     overEvt.initMouseEvent("mouseover", true, true, window, 0,
+                                            0, 0, 0, 0, false, false, false,
+                                            false, 0, null);
+                     rebBtn.dispatchEvent(overEvt);
+                     if (!$(rebBtn).hasClass('MissingE_quick_reblogging ' +
+                                         'MissingE_quick_reblogging_success')) {
+                        itm = document.getElementById('MissingE_quick_reblog_manual');
+                        var downEvt = document.createEvent("MouseEvent");
+                        downEvt.initMouseEvent("mousedown", true, true, window, 0,
+                                               0, 0, 0, 0, false, false, false,
+                                               false, 0, null);
+                        itm.dispatchEvent(downEvt);
+                        var clickEvt = document.createEvent("MouseEvent");
+                        clickEvt.initMouseEvent("click", true, true, window, 0, 0,
+                                                0, 0, 0, false, false, false,
+                                                false, 0, null);
+                        itm.dispatchEvent(clickEvt);
+                     }
+                     var outEvt = document.createEvent("MouseEvent");
+                     outEvt.initMouseEvent("mouseout", true, true, window, 0,
+                                           0, 0, 0, 0, false, false, false,
+                                           false, 0, null);
+                     rebBtn.dispatchEvent(outEvt);
+                     return false;
                   }
                   if (postPos >= currPos) {
                      return false;
@@ -808,6 +878,40 @@ MissingE.packages.betterReblogs = {
          }
          else if (settings.quickReblogForceTwitter === "on") {
             $('#MissingE_quick_reblog_selector select').trigger('change');
+         }
+      }
+      else {
+         // Quick reblog not active
+         if (settings.keyboardShortcut) {
+            $(window).keydown(function(e) {
+               // 82 = R (allow shift key use to be consistent with quick reblog
+               if ($(e.target).is('input,textarea') ||
+                   e.metaKey || e.altKey || e.ctrlKey || e.keyCode !== 82) {
+                  return;
+               }
+               var currPos = $(window).scrollTop()+7;
+               $('#posts li.post').each(function() {
+                  var postPos = this.offsetTop;
+                  if (postPos === currPos) {
+                     var rebBtn = $(this).find('div.post_controls ' +
+                                               'a[href^="/reblog/"]').get(0);
+                     var downEvt = document.createEvent("MouseEvent");
+                     downEvt.initMouseEvent("mousedown", true, true, window, 0,
+                                            0, 0, 0, 0, false, false, false,
+                                            false, 0, null);
+                     rebBtn.dispatchEvent(downEvt);
+                     var clickEvt = document.createEvent("MouseEvent");
+                     clickEvt.initMouseEvent("click", true, true, window, 0, 0,
+                                             0, 0, 0, false, false, false,
+                                             false, 0, null);
+                     rebBtn.dispatchEvent(clickEvt);
+                     return false;
+                  }
+                  if (postPos >= currPos) {
+                     return false;
+                  }
+               });
+            });
          }
       }
    },

@@ -221,6 +221,7 @@ function getAllSettings(getStale) {
    settings.MissingE_betterReblogs_fullText = getSetting("extensions.MissingE.betterReblogs.fullText",0);
    settings.MissingE_betterReblogs_reblogAsks = getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
    settings.MissingE_betterReblogs_keyboardShortcut = getSetting("extensions.MissingE.betterReblogs.keyboardShortcut",1);
+   settings.MissingE_betterReblogs_quickKeyboardShortcut = getSetting("extensions.MissingE.betterReblogs.quickKeyboardShortcut",1);
    settings.MissingE_version = getSetting("extensions.MissingE.version",'');
    settings.MissingE_betterReblogs_askRetries = getSetting("extensions.MissingE.betterReblogs.askRetries",MissingE.defaultRetries);
    if (getStale) {
@@ -1886,6 +1887,7 @@ function handleMessage(message, myWorker) {
             }
             settings.reblogAsks = getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
             settings.keyboardShortcut = getSetting("extensions.MissingE.betterReblogs.keyboardShortcut",1);
+            settings.quickKeyboardShortcut = getSetting("extensions.MissingE.betterReblogs.quickKeyboardShortcut",1);
             break;
       }
       myWorker.postMessage(settings);
@@ -2546,6 +2548,7 @@ function fixupSettings() {
    invertSetting('extensions.MissingE.dashboardTweaks.expandAll','extensions.MissingE.dashboardTweaks.noExpandAll');
    moveSetting('extensions.MissingE.dashboardTweaks.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
    moveSetting('extensions.MissingE.dashboardTweaks.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
+   moveSetting('extensions.MissingE.betterReblogs.keyboardShortcut','extensions.MissingE.betterReblogs.quickKeyboardShortcut');
    collapseSettings('extensions.MissingE.askTweaks.betterAnswers','extensions.MissingE.askTweaks.buttons','extensions.MissingE.askTweaks.tags');
    invertSetting('extensions.MissingE.betterReblogs.noPassTags','extensions.MissingE.betterReblogs.passTags');
 }
