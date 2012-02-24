@@ -655,7 +655,7 @@ MissingE.packages.dashboardTweaks = {
             if (e.metaKey || e.shiftKey || e.altKey || e.ctrlKey ||
                 $(e.target).is('input,textarea')) {
                return;
-             }
+            }
             if (e.keyCode === 74 || e.keyCode === 75) {
                MissingE.packages.dashboardTweaks.lastPosition =
                   $(window).scrollTop();
@@ -695,11 +695,12 @@ MissingE.packages.dashboardTweaks = {
       if (settings.keyboardShortcut) {
          $(window).keydown(function(e) {
             var myPid;
-            if ((e.keyCode !== 67 && e.keyCode !== 27) ||
+            // 27 = Esc, 67 = C, 69 = E
+            if ((e.keyCode !== 67 && e.keyCode !== 27 && e.keyCode !== 69) ||
                 e.metaKey || e.shiftKey || e.altKey || e.ctrlKey) {
                return;
             }
-            if (e.keyCode === 67 && $(e.target).is('input,textarea')) {
+            if (e.keyCode !== 27 && $(e.target).is('input,textarea')) {
                return;
             }
             if (e.keyCode === 27) {
@@ -708,6 +709,7 @@ MissingE.packages.dashboardTweaks = {
                myPid = myPid[1];
                e.target.blur();
                $.globalEval('display_reply_pane(' + myPid + ');');
+               return false;
             }
             var currPos = $(window).scrollTop()+7;
             $('#posts li.post:not(#new_post)').each(function() {
@@ -716,13 +718,19 @@ MissingE.packages.dashboardTweaks = {
                   myPid = this.id.match(/post_(\d*)/);
                   if (!myPid || myPid.length < 2) { return false; }
                   myPid = myPid[1];
-                  var replier = $('#post_control_reply_' + myPid);
-                  if (replier.length === 0) { return false; }
+                  var item;
+                  if (e.keyCode === 67) {
+                     item = $('#post_control_reply_' + myPid);
+                  }
+                  else if (e.keyCode === 69) {
+                     item = $(this).find('.post_controls a[href^="/edit/"]');
+                  }
+                  if (!item || item.length === 0) { return false; }
                   var clickEvt = document.createEvent("MouseEvent");
                   clickEvt.initMouseEvent("click", true, true, window, 0, 0, 0,
                                           0, 0, false, false, false, false, 0,
                                           null);
-                  replier.get(0).dispatchEvent(clickEvt);
+                  item.get(0).dispatchEvent(clickEvt);
                   return false;
                }
                if (postPos >= currPos) {
