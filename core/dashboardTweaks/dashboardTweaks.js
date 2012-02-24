@@ -117,7 +117,6 @@ MissingE.packages.dashboardTweaks = {
                      click: function(){
                         $.globalEval('display_reply_pane([' + id + ',"' +
                                                           key + '"]);');
-                        return false;
                      },
                      id: "post_control_reply_" + id,
                      title: MissingE.getLocale(lang).dashTweaksText.reply +
@@ -137,16 +136,23 @@ MissingE.packages.dashboardTweaks = {
       failer.insertAfter(notes);
    },
 
-   realignReplyNipple: function(nip) {
-      if ($(nip).attr('in_final_position') !== 'true') {
+   realignReplyNipple: function(nip, count) {
+      if (!count) { count = 0; }
+      if (!nip || count > 4) { return; }
+      var nipple = $(nip);
+      var pane = nipple.closest('div[id^="reply_pane_outer_container"]');
+      if (!pane.is(':visible')) {
          setTimeout(function() {
-            MissingE.packages.dashboardTweaks.realignReplyNipple(nip);
+            MissingE.packages.dashboardTweaks.realignReplyNipple(nip, count+1);
          }, 500);
          return false;
       }
-      var right = $(nip).offsetParent().innerWidth() -
-                  $(nip).position().left - $(nip).width();
-      $(nip).css({left:'auto', right:right+'px'});
+      var repBtn = nipple.closest('li.post')
+                     .find('div.post_controls a[id^="post_control_reply"]');
+      var left = repBtn.offset().left + (Math.floor(repBtn.width())>>1) -
+                 pane.offset().left - (Math.floor(nipple.width())>>1) +
+                 (repBtn.hasClass('MissingE_experimental_reply') ? 2 : 0);
+      nipple.css({left:left+'px',right:'auto'});
    },
 
    addExpandAllHandler: function(item) {
@@ -507,6 +513,13 @@ MissingE.packages.dashboardTweaks = {
          });
       }
 
+      $('#posts div.post_controls a[id^="post_control_reply"]')
+            .live('click',function() {
+         var nip = $(this).closest('li.post')
+                     .find('div.reply_pane div.nipple:first');
+         MissingE.packages.dashboardTweaks.realignReplyNipple(nip)
+      });
+
       if (settings.widescreen === 1 &&
           !MissingE.isTumblrURL(location.href, ["settings"])) {
          var w = $('#right_column').width() + 20;
@@ -517,16 +530,6 @@ MissingE.packages.dashboardTweaks = {
          $('#content').css('padding-right', (w+20) + 'px');
          $('#left_column').css('min-height',
                                $('#right_column').height() + 'px');
-         extension.addAjaxListener(function(type,list) {
-            if (type === 'notes') { return; }
-            $.each(list, function(i,val) {
-               $('#'+val).children('div.reply_pane:first')
-                     .each(function() {
-                  MissingE.packages.dashboardTweaks
-                        .realignReplyNipple($(this).find('div.nipple'));
-               });
-            });
-         });
       }
       if (settings.postLinks === 1 &&
           MissingE.isTumblrURL(location.href, ["dashboardOnly"]) &&
