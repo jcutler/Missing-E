@@ -446,6 +446,7 @@ MissingE.packages.bookmarker = {
                         if (mark.length === 0) { return false; }
                         mark = mark.get(0);
                         MissingE.packages.bookmarker.markClick.apply(mark, [{which:1, shiftKey:false}]);
+                        return false;
                      }
                      if (postPos >= currPos) {
                         return false;

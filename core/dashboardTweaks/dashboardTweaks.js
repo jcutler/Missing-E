@@ -723,6 +723,7 @@ MissingE.packages.dashboardTweaks = {
                                           0, 0, false, false, false, false, 0,
                                           null);
                   replier.get(0).dispatchEvent(clickEvt);
+                  return false;
                }
                if (postPos >= currPos) {
                   return false;
