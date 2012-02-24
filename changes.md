@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.6.8** (not yet released)
+**_!_** Fix for Tumblr dashboard post reply nipple positioning
+
 ##**2.6.7** (02/24/2012)
 **_+_** Add E keyboard shortcut option in Dashboard Tweaks to edit current post  
 **_+_** Add Shift+R keyboard shortcut to manually reblog current post when quick (1-click) reblogging is active  
