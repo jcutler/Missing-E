@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.6.8** (not yet released)
+##**2.6.8** (02/24/2012)
 **_!_** Fix for Tumblr dashboard post reply nipple positioning
 
 ##**2.6.7** (02/24/2012)
