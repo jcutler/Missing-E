@@ -85,7 +85,7 @@ function doStartup(response) {
    for (i in response.message) {
       if (response.message.hasOwnProperty(i)) {
          if (i !== 'url' && i !== 'isFrame' && !(/_fill$/.test(i)) &&
-             i !== 'zindexFix' && i !== 'version') {
+             i !== 'zindexFix' && i !== 'version' && i !== "warningInfo") {
             info += i + ": " + (response.message[i] ? "active" : "inactive") +
                      "\n";
          }
@@ -94,6 +94,9 @@ function doStartup(response) {
    console.log(info);
 
    if (window.top === window) {
+      if (response.message.warningInfo) {
+         MissingE.utilities.warningInfo.init();
+      }
       if (response.message.zindexFix) {
          MissingE.utilities.zindexFix.init();
       }

@@ -1905,6 +1905,10 @@ function handleRequest(request) {
       var activeScripts = {url: request.message.url};
       activeScripts.version = currVersion;
       if (!request.message.isFrame &&
+          MissingE.isTumblrURL(request.message.url, ["dashboardOnly"])) {
+         activeScripts.warningInfo = true;
+      }
+      if (!request.message.isFrame &&
           MissingE.isTumblrURL(request.message.url, ["massEditor"])) {
          if (getSetting("MissingE_massEditor_enabled",1) == 1) {
             activeScripts.massEditor = true;

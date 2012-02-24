@@ -2,6 +2,10 @@
 
 var locale = {
  "en": {
+  "warningLink": {
+   "link": "Read Missing-E statement regarding privacy and security",
+   "subtext": "This link added by Missing e"
+  },
   "daysLong": [
    "Sunday",
    "Monday",
@@ -181,6 +185,10 @@ var locale = {
   }
  },
  "de": {
+  "warningLink": {
+   "link": "Lesen Sie den Missing-E Aussage über Privatsphäre und Sicherheit",
+   "subtext": "Dieser Link hinzugefügt von Missing e"
+  },
   "daysLong": [
    "Sonntag",
    "Montag",
@@ -360,6 +368,10 @@ var locale = {
   }
  },
  "es": {
+  "warningLink": {
+   "link": "Lea la declaración de Missing-E respecto a la privacidad y la seguridad",
+   "subtext": "Este enlace añadido por Missing e"
+  },
   "daysLong": [
    "Domingo",
    "Lunes",
@@ -539,7 +551,11 @@ var locale = {
   }
  },
  "fr": {
-   "daysLong": [
+  "warningLink": {
+   "link": "Lire la déclaration de Missing-E concernant la confidentialité et la sécurité",
+   "subtext": "Ce lien ajouté par Missing e"
+  },
+  "daysLong": [
    "Dimanche",
    "Lundi",
    "Mardi",
@@ -718,6 +734,10 @@ var locale = {
   }
  },
  "it": {
+  "warningLink": {
+   "link": "Leggi la dichiarazione di Missing-E sulla privacy e la sicurezza",
+   "subtext": "Questo link aggiunto da Missing e"
+  },
   "daysLong": [
    "Domenica",
    "Lunedi",
@@ -907,6 +927,10 @@ var locale = {
   }
  },
  "ja": {
+  "warningLink": {
+   "link": "プライバシーとセキュリティに関するMissing-Eの文を読む",
+   "subtext": "このリンクは、Missing eによって追加されました"
+  },
   "daysLong": [
    "日",
    "月",
@@ -1079,6 +1103,10 @@ var locale = {
   }
  },
  "pl": {
+  "warningLink": {
+   "link": "Przeczytaj oświadczenie Missing-E dotyczące prywatności i bezpieczeństwa",
+   "subtext": "Ten link został dodany przez Missing e"
+  },
   "daysLong": [
    "niedziela",
    "poniedziałek",
@@ -1258,6 +1286,10 @@ var locale = {
   }
  },
  "ru": {
+  "warningLink": {
+   "link": "Читайте заявление Missing-E в отношении конфиденциальности и безопасности",
+   "subtext": "Эта связь была добавлена ​​Missing e"
+  },
   "daysLong": [
    "воскресенье",
    "понедельник",
@@ -1467,6 +1499,10 @@ var locale = {
   }
  },
  "tr": {
+  "warningLink": {
+   "link": "Gizlilik ve güvenlik açısından Missing-E ifadesi oku",
+   "subtext": "Bu bağlantı Missing e tarafından eklendi"
+  },
   "daysLong": [
    "Pazar",
    "Pazartesi",

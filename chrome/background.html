@@ -1825,6 +1825,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
           loadedUIdraggable = false;
       var widenIframe = false;
       if (sender.tab.url == request.url &&
+          MissingE.isTumblrURL(sender.tab.url, ["dashboardOnly"])) {
+         chrome.tabs.executeScript(sender.tab.id, {file: "core/common/warningInfo.js"});
+      }
+      if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url, ["massEditor"])) {
          if (getSetting("MissingE_massEditor_enabled",1) == 1) {
             activeScripts.massEditor = true;

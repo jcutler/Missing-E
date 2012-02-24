@@ -2108,6 +2108,10 @@ function handleMessage(message, myWorker) {
       activeScripts.extensionURL = data.url("");
       activeScripts.version = currVersion;
       if (!message.isFrame &&
+          MissingE.isTumblrURL(message.url, ["dashboardOnly"])) {
+         injectScripts.push(data.url("core/common/warningInfo.js"));
+      }
+      if (!message.isFrame &&
           MissingE.isTumblrURL(message.url, ["massEditor"])) {
             if (getSetting("extensions.MissingE.massEditor.enabled",1) == 1) {
                injectScripts.push(data.url("core/massEditor/massEditor.js"));

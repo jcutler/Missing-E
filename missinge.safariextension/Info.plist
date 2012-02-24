@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.6.5</string>
+	<string>2.6.6</string>
 	<key>CFBundleVersion</key>
-	<string>26005</string>
+	<string>26006</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -59,6 +59,7 @@
 				<string>lib/jquery.ui.resizable.min.js</string>
 				<string>core/common/menuButton.js</string>
 				<string>lib/facebox/facebox.js</string>
+				<string>core/common/warningInfo.js</string>
 				<string>core/askTweaks/askTweaks.js</string>
 				<string>core/betterReblogs/betterReblogs_dash.js</string>
 				<string>core/betterReblogs/betterReblogs_fill.js</string>
