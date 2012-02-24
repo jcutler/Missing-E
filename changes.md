@@ -78,6 +78,11 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.6.7** (02/24/2012)
+**_+_** Add E keyboard shortcut option in Dashboard Tweaks to edit current post  
+**_+_** Add Shift+R keyboard shortcut to manually reblog current post when quick (1-click) reblogging is active  
+**_+_** Add R keyboard shortcut to manually reblog current post when quick (1-click) reblogging is NOT active
+
 ##**2.6.6** (02/23/2012)
 **_!_** Minor informational changes
 
