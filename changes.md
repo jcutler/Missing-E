@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.6.6** (02/23/2012)
+**_!_** Minor informational changes
+
 ##**2.6.5** (02/23/2012)
 **_!_** Improve styling of dashboard post control buttons  
 **_!_** Show reblog reply success/failure indicators when not using post control icon replacement
