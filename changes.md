@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.6.9** (not yet released)
+**_+_** Add separate option under Ask Tweaks for allowing photo replies to answered messages
+
 ##**2.6.8** (02/24/2012)
 **_!_** Fix for Tumblr dashboard post reply nipple positioning
 
