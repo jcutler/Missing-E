@@ -261,6 +261,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_scroll',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_betterAnswers',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_tagAsker',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_photoReplies',1);
             frm.MissingE_askTweaks_defaultTags.value = MissingE.utilities.options.getStorage('MissingE_askTweaks_defaultTags','');
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_askDash',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_massDelete',1);

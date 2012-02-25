@@ -170,26 +170,26 @@
 		<key>Type</key>
 		<string>Hidden</string>
 	</dict>
-        <dict>
-                <key>DefaultValue</key>
-                <real>1</real>
-                <key>Key</key>
-                <string>MissingE_askTweaks_enabled</string>
-                <key>Title</key>
-                <string></string>
-                <key>Type</key>
-                <string>Hidden</string>
-        </dict>
-        <dict>
-                <key>DefaultValue</key>
-                <real>1</real>
-                <key>Key</key>
-                <string>MissingE_betterReblogs_enabled</string>
-                <key>Title</key>
-                <string></string>
-                <key>Type</key>
-                <string>Hidden</string>
-        </dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_askTweaks_enabled</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_betterReblogs_enabled</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
 	<dict>
 		<key>DefaultValue</key>
 		<real>1</real>
@@ -265,6 +265,16 @@
 		<string></string>
 		<key>Key</key>
 		<string>MissingE_askTweaks_defaultTags</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_askTweaks_photoReplies</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>
