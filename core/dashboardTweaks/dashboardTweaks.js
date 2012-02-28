@@ -391,7 +391,7 @@ MissingE.packages.dashboardTweaks = {
                 response.type === "question") {
                doImages = false;
                preWin.removeClass('MissingE_preview_loading');
-               $('<div class="previewIcon />')
+               $('<div class="previewIcon" />')
                   .addClass(response.type + 'Preview')
                   .appendTo(preWin);
             }
