@@ -27,12 +27,12 @@ MissingE.packages.safeDash = {
 
    undoNSFW: function() {
       $('body').removeClass('MissingE_safeDash');
-      $('#MissingE_safeDash li:first').removeClass('selected');
+      $('#MissingE_safeDash li:first').removeClass('safeDash_active');
    },
 
    doNSFW: function() {
       $('body').addClass('MissingE_safeDash');
-      $('#MissingE_safeDash li:first').addClass('selected');
+      $('#MissingE_safeDash li:first').addClass('safeDash_active');
    },
 
    doHide: function(item) {
@@ -68,8 +68,9 @@ MissingE.packages.safeDash = {
       var sdlnk = '<ul class="controls_section" id="MissingE_safeDash">' +
             '<li class="' +
             (MissingE.getStorage('MissingE_safeDash_state',0) === 1 ?
-             'selected' : '') + '"><a href="#" onclick="return false;" ' +
-            'id="nsfwctrl">Safe Dash</a></li></ul>';
+             'safeDash_active' : '') + '">' +
+             '<a href="#" onclick="return false;" id="nsfwctrl">Safe Dash</a>' +
+             '</li></ul>';
 
       var afterer = $('#MissingE_marklist');
       if (afterer.length === 0) {

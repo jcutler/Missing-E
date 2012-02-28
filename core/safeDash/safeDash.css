@@ -34,6 +34,12 @@ height:19px;
 background-position:12px 0 !important;
 }
 
+#MissingE_safeDash .safeDash_active {
+   background-color:rgba(0,0,0,0.06) !important;
+   border-color:rgba(0,0,0,0.39) !important;
+   box-shadow:0 0 2px rgba(0,0,0,0.25) inset !important;
+}
+
 #posts li.post .post_content {
 width:100%;
 }
