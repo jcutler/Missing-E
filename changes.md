@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.6.11** (02/28/2012)
+**_+_** Add Sidebar Tweaks option to show all tracked tags in dashboard sidebar
+
 ##**2.6.10** (02/28/2012)
 **_!_** Fix sidebar style changes to match new Tumblr styles  
 **_!_** Fix dashboard preview icons for non-photo, non-video posts  
