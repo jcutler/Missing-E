@@ -87,8 +87,7 @@ MissingE.packages.sidebarTweaks = {
          sidebar = $('<ul />', {"class": "controls_section",
                                 id: "MissingE_sidebar"});
          sidebar.attr("account", tumblrAcctNum);
-         var stitle = $('<li />', {id: "MissingE_sidebar_title",
-                                   "class": "recessed selected"});
+         var stitle = $('<li />', {id: "MissingE_sidebar_title"});
          stitle.append($('<a />', {href: "#", text: tumblrText}));
          stitle.append($('<a />',
                          {href: "http://" + tumblrAcct + ".tumblr.com/",
@@ -102,18 +101,20 @@ MissingE.packages.sidebarTweaks = {
                                  (sidebarList[i].klass !== 'posts' ?
                                   '/' + sidebarList[i].klass : ''),
                            "class": sidebarList[i].klass})
-                           .append($('<div />',
+                           .append($('<span />',
                                      {"class": "hide_overflow",
                                       text: sidebarList[i].label}));
             sidebar.append($('<li />').append(aitem));
          }
          var melnk = $('<a />', {href: "/mega-editor/" + tumblrAcct,
                                  "class": "mass_editor"});
-         melnk.append($('<div />',
-                        {"class": "hide_overflow",
-                         text: MissingE.getLocale(lang).sidebar.massEditor}));
-         melnk.append($('<div class="gradient" />'));
-         sidebar.append($('<li class="recessed" />').append(melnk));
+         var hideover = $('<div />', {"class": "hide_overflow",
+                                      text: MissingE.getLocale(lang)
+                                               .sidebar.massEditor});
+         hideover.append($('<span />', {"class": 'sub_control link_arrow',
+                                        html: '&#x25B6;'}));
+         melnk.append(hideover);
+         sidebar.append($('<li class="no_push selected" />').append(melnk));
 
          var beforeguy = $('#right_column a.likes');
          if (beforeguy.length === 0) {
@@ -179,7 +180,7 @@ MissingE.packages.sidebarTweaks = {
                   var msgsIdx = data.indexOf('<!-- Messages -->', beginIdx);
                   var draftIdx = data.indexOf('<!-- Drafts -->', beginIdx);
                   var queueIdx = data.indexOf('<!-- Queue -->', beginIdx);
-                  var endIdx = data.indexOf('<!-- Launch Mass Post editor -->',
+                  var endIdx = data.indexOf('<!-- Mass Post editor -->',
                                             beginIdx);
                   if (followerIdx === -1) { followerIdx = len; }
                   if (msgsIdx === -1) { msgsIdx = len; }

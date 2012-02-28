@@ -60,7 +60,7 @@ var locale = {
    "messages": "Messages",
    "drafts": "Drafts",
    "queue": "Queue",
-   "massEditor": "Launch Mass Post Editor"
+   "massEditor": "Mass Post Editor"
   },
   "myBlog": "my blog",
   "reblog": "reblog",
@@ -243,7 +243,7 @@ var locale = {
    "messages": "Nachrichten",
    "drafts": "Entwürfe",
    "queue": "Warteschleife",
-   "massEditor": "Zum Mega-Editor"
+   "massEditor": "Mass Post Editor"
   },
   "myBlog": "meinem Blog",
   "reblog": "rebloggen",
@@ -426,7 +426,7 @@ var locale = {
    "messages": "Mensajes",
    "drafts": "Borradores",
    "queue": "En cola",
-   "massEditor": "Editar varias publicaciones"
+   "massEditor": "Mass Post Editor"
   },
   "myBlog": "mi blog",
   "reblog": "rebloguear",
@@ -609,7 +609,7 @@ var locale = {
    "messages": "Messages",
    "drafts": "Brouillons",
    "queue": "File d'attente",
-   "massEditor": "Lancer le multi-éditeur de billets"
+   "massEditor": "Mass Post Editor"
   },
   "myBlog": "Blog principal",
   "reblog": "rebloguer",
@@ -792,7 +792,7 @@ var locale = {
    "messages": "Messagi",
    "drafts": "Bozze",
    "queue": "In Coda",
-   "massEditor": "Usa la Modifica di Massa"
+   "massEditor": "Mass Post Editor"
   },
   "myBlog": "il mio blog",
   "reblog": "reblogga",
@@ -985,7 +985,7 @@ var locale = {
    "messages": "メッセージ",
    "drafts": "下書き",
    "queue": "予約投稿",
-   "massEditor": "メガエディターを開く"
+   "massEditor": "Mass Post Editor"
   },
   "myBlog": "メインブログ",
   "reblog": "リブログ",
@@ -1161,7 +1161,7 @@ var locale = {
    "messages": "Wiadomości",
    "drafts": "Wersje robocze",
    "queue": "Kolejka",
-   "massEditor": "Masowy edytor postów"
+   "massEditor": "Mass Post Editor"
   },
   "myBlog": "moim blogu",
   "reblog": "rebloguj",
@@ -1344,7 +1344,7 @@ var locale = {
    "messages": "Сообщения",
    "drafts": "Черновики",
    "queue": "Очередь",
-   "massEditor": "Массовый редактор"
+   "massEditor": "Маss Post Editor"
   },
   "myBlog": "мой блог",
   "reblog": "реблог",
@@ -1557,7 +1557,7 @@ var locale = {
    "messages": "Mesajlar",
    "drafts": "Taslaklar",
    "queue": "Sırada",
-   "massEditor": "Toplu Gönderi Editörünü Aç"
+   "massEditor": "Mass Post Editor"
   },
   "myBlog": "blogum",
   "reblog": "yeniden blogla",

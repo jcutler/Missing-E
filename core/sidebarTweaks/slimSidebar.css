@@ -25,7 +25,11 @@
 margin-top:12px !important;
 }
 
-.controls_section:first-child {
+#right_column hr.divider {
+margin:12px 0 !important;
+}
+
+#right_column .controls_section:first-child {
 margin:0 !important;
 }
 
@@ -36,10 +40,18 @@ margin:12px 0 !important;
 
 .controls_section li a {
 padding:4px 13px 4px 34px !important;
+line-height:18px !important;
 }
 
-.controls_section li.recessed a {
-padding:2px 13px 4px 34px !important;
+#MissingE_marklist li a {
+line-height:14px !important;
+}
+
+.controls_section li .sub_control {
+padding:0 !important;
+line-height:18px !important;
+top:4px !important;
+right:10px !important;
 }
 
 .controls_section li .with_subtitle {
@@ -47,23 +59,20 @@ padding:3px 13px 3px 34px !important;
 }
 
 .controls_section li .tag {
-background-position:7px -643px !important;
-}
-
-.controls_section li.selected .tag {
-background-position:6px -693px !important;
+background-position:6px -644px !important;
 }
 
 .controls_section li .explore_tumblr {
 background-position:6px -1195px !important;
 }
 
-.controls_section li.recessed .explore_more_tags {
-background-position:6px -1147px !important;
+#right_column div.small_links {
+margin-bottom:12px !important;
 }
 
 .remove_tag {
-top:8px !important;
+top:-1px !important;
+right:10px !important;
 }
 
 .keep_tag {
@@ -71,15 +80,11 @@ top:3px !important;
 }
 
 .controls_section a .count {
-top:6px !important;
+top:4px !important;
 }
 
 .controls_section li .following {
 background-position:4px -845px !important;
-}
-
-.controls_section li.selected .following {
-background-position:4px -895px !important;
 }
 
 .controls_section li .add_and_remove {
@@ -90,76 +95,44 @@ background-position:7px -947px !important;
 background-position:7px -743px !important;
 }
 
-.controls_section li.selected .likes {
-background-position:7px -793px !important;
-}
-
 .controls_section li .posts {
-background-position:9px -146px !important;
-}
-
-.controls_section li.selected .posts {
-background-position:-442px -146px !important;
+background-position:9px -147px !important;
 }
 
 .controls_section li .followers {
-background-position:7px -194px !important;
-}
-
-.controls_section li.selected .followers {
-background-position:-445px -194px !important;
+background-position:7px -195px !important;
 }
 
 .controls_section li .messages {
 background-position:7px -293px !important;
 }
 
-.controls_section li.selected .messages {
-background-position:-444px -293px !important;
-}
-
 .controls_section li .drafts {
-background-position:9px -345px !important;
-}
-
-.controls_section li.selected .drafts {
-background-position:-442px -345px !important;
+background-position:9px -346px !important;
 }
 
 .controls_section li .queue {
 background-position:7px -445px !important;
 }
 
-.controls_section li.selected .queue {
-background-position:-444px -445px !important;
-}
-
 .controls_section li .open_blog {
-background-position:9px 10px !important;
+background-position:9px 13px !important;
 }
 
 .controls_section li .customize {
-background-position:9px -47px !important;
+background-position:9px -44px !important;
 }
 
 .controls_section li .mass_editor {
-background-position:10px -497px !important;
+background-position:10px -494px !important;
 }
 
 .controls_section li .settings {
 background-position:7px -96px !important;
 }
 
-.controls_section li.selected .settings {
-background-position:-444px -96px !important;
-}
-
 .controls_section li .members {
-background-position:5px -244px !important;
-}
-
-.controls_section li.selected .members {
-background-position:-446px -244px !important;
+background-position:6px -244px !important;
 }
 
 .controls_section li .delete_all_messages {
@@ -168,10 +141,6 @@ background-position:12px -1293px !important;
 
 .controls_section li .processing {
 background-position:6px -395px !important;
-}
-
-.controls_section li.selected .processing {
-background-position:-445px -395px !important;
 }
 
 #MissingEmassDeleter li .select_all, #MissingEdraftQueueTools li .select_all {
@@ -194,10 +163,6 @@ background-position:6px -102px !important;
 background-position:9px -4px !important;
 }
 
-#MissingE_safeDash li.selected a {
-background-position:9px -33px !important;
-}
-
 #content #search_query {
 padding:4px 40px 4px 9px !important;
 background-position:192px -545px !important;
@@ -205,7 +170,7 @@ background-position:192px -545px !important;
 
 #content #search_controls_button {
 height:18px !important;
-padding:2px 3px 4px 3px !important;
+padding:0 2px 0 0 !important;
 }
 
 #search_controls_wrapper #search_controls {
@@ -241,8 +206,8 @@ background-position:7px -1098px !important;
 }
 
 #MissingE_sidebar_title a {
-background-position:7px 5px !important;
-padding:3px 13px 4px 34px !important;
+background-position:7px 6px !important;
+padding:3px 13px 3px 34px !important;
 }
 
 #MissingE_sidebar_menu li a {
