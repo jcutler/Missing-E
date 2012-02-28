@@ -78,7 +78,12 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.6.9** (not yet released)
+##**2.6.10** (02/28/2012)
+**_!_** Fix sidebar style changes to match new Tumblr styles  
+**_!_** Fix dashboard preview icons for non-photo, non-video posts  
+**_-_** Remove option to point 'Following' button to following list as it is now implemented by default
+
+##**2.6.9** (not released)
 **_+_** Add separate option under Ask Tweaks for allowing photo replies to answered messages
 
 ##**2.6.8** (02/24/2012)
