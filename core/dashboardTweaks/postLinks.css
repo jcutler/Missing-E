@@ -26,6 +26,11 @@ margin:0 !important;
 border-bottom:none !important;
 }
 
+#posts .post.short_new_post {
+height:auto !important;
+padding:0 !important;
+}
+
 #posts .post.new_post .short_post_labels {
 margin:0 1%;
 }
@@ -46,6 +51,7 @@ opacity:1;
 display:inline-block;
 min-width:80%;
 float:none;
+padding:2px 6px;
 }
 
 #posts .post.new_post .short_post_labels a:hover {
