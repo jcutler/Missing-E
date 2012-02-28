@@ -50,8 +50,9 @@ font-size:15px;
 opacity:1;
 display:inline-block;
 min-width:80%;
+max-width:100%;
 float:none;
-padding:2px 6px;
+padding:2px 0;
 }
 
 #posts .post.new_post .short_post_labels a:hover {
