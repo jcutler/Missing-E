@@ -34,10 +34,6 @@ height:19px;
 background-position:12px 0 !important;
 }
 
-#MissingE_safeDash li.selected a {
-background-position:12px -29px !important;
-}
-
 #posts li.post .post_content {
 width:100%;
 }
