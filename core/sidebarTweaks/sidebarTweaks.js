@@ -297,6 +297,10 @@ MissingE.packages.sidebarTweaks = {
             $(this).css('background-image',bg);
          });
       }
+      if (settings.showOverflowTags) {
+         $('#overflow_tags').children('*').remove().appendTo('#tracked_tags');
+         $('#right_column div.small_links a[onclick*="overflow_tags"]').hide();
+      }
       if (settings.addSidebar === 1) {
          MissingE.packages.sidebarTweaks.makeSidebar(settings.accountNum,
                                                      settings.retries);

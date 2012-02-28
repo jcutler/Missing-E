@@ -182,6 +182,7 @@ function getAllSettings(getStale) {
    settings.MissingE_sidebarTweaks_addSidebar = getSetting("extensions.MissingE.sidebarTweaks.addSidebar",0);
    settings.MissingE_sidebarTweaks_slimSidebar = getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0);
    settings.MissingE_sidebarTweaks_accountNum = getSetting("extensions.MissingE.sidebarTweaks.accountNum",0);
+   settings.MissingE_sidebarTweaks_showOverflowTags = getSetting("extensions.MissingE.sidebarTweaks.showOverflowTags",0);
    settings.MissingE_magnifier_magnifyAvatars = getSetting("extensions.MissingE.magnifier.magnifyAvatars",0);
    settings.MissingE_dashLinksToTabs_newPostTabs = getSetting("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
    settings.MissingE_dashLinksToTabs_sidebar = getSetting("extensions.MissingE.dashLinksToTabs.sidebar",0);
@@ -1807,6 +1808,7 @@ function handleMessage(message, myWorker) {
             settings.accountNum = getSetting("extensions.MissingE.sidebarTweaks.accountNum",0);
             settings.slimSidebar = getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0);
             settings.addSidebar = getSetting("extensions.MissingE.sidebarTweaks.addSidebar",0);
+            settings.showOverflowTags = getSetting("extensions.MissingE.sidebarTweaks.showOverflowTags",0);
             break;
          case "bookmarker":
             settings.backupMarks = getSetting("extensions.MissingE.bookmarker.marks","");

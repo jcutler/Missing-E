@@ -464,6 +464,16 @@
 		<key>DefaultValue</key>
 		<real>0</real>
 		<key>Key</key>
+		<string>MissingE_sidebarTweaks_showOverflowTags</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
 		<string>MissingE_sidebarTweaks_accountNum</string>
 		<key>Title</key>
 		<string></string>

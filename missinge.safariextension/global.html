@@ -1605,6 +1605,7 @@ function handleRequest(request) {
       settings.MissingE_sidebarTweaks_retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
       settings.MissingE_sidebarTweaks_slimSidebar = getSetting("MissingE_sidebarTweaks_slimSidebar",0);
+      settings.MissingE_sidebarTweaks_showOverflowTags = getSetting("MissingE_sidebarTweaks_showOverflowTags",0);
       settings.MissingE_magnifier_magnifyAvatars = getSetting("MissingE_magnifier_magnifyAvatars",0);
       settings.MissingE_dashLinksToTabs_newPostTabs = getSetting("MissingE_dashLinksToTabs_newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getSetting("MissingE_dashLinksToTabs_sidebar",0);
@@ -1679,6 +1680,7 @@ function handleRequest(request) {
             settings.accountNum = getSetting("MissingE_sidebarTweaks_accountNum",0);
             settings.slimSidebar = getSetting("MissingE_sidebarTweaks_slimSidebar",0);
             settings.addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
+            settings.showOverflowTags = getSetting("MissingE_sidebarTweaks_showOverflowTags",0);
             break;
          case "bookmarker":
             settings.backupMarks = getSetting("MissingE_bookmarker_marks","");
