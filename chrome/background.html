@@ -1536,7 +1536,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
             settings.accountNum = getSetting("MissingE_sidebarTweaks_accountNum",0);
             settings.slimSidebar = getSetting("MissingE_sidebarTweaks_slimSidebar",0);
-            settings.followingLink = getSetting("MissingE_sidebarTweaks_followingLink",0);
             settings.addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
             break;
          case "bookmarker":
@@ -2212,7 +2211,6 @@ function fixupSettings() {
    clearSetting('MissingE_experimentalFeatures_enabled');
    invertSetting('MissingE_dashboardTweaks_expandAll','MissingE_dashboardTweaks_noExpandAll');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
-   moveSetting('MissingE_dashboardTweaks_followingLink','MissingE_sidebarTweaks_followingLink');
    moveSetting('MissingE_betterReblogs_keyboardShortcut','MissingE_betterReblogs_quickKeyboardShortcut');
    collapseSettings('MissingE_askTweaks_betterAnswers','MissingE_askTweaks_buttons','MissingE_askTweaks_tags');
    invertSetting('MissingE_betterReblogs_noPassTags','MissingE_betterReblogs_passTags');

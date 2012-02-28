@@ -289,10 +289,6 @@ MissingE.packages.sidebarTweaks = {
                        extension.getURL('core/sidebarTweaks/to_blog.png') +
                        '") !important; }</style>');
 
-      if (settings.followingLink === 1) {
-         $('#right_column a.following').attr('href','/following');
-         $('#right_column a.add_and_remove').attr('href','/following');
-      }
       if (settings.slimSidebar === 1) {
          $('#tag_contributors li.item, #tag_editors li.item, ' +
            '#recommended_tumblelogs li.item').each(function() {

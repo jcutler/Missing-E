@@ -270,7 +270,6 @@ MissingE.utilities.options = {
          else if (v == "sidebarTweaks") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_slimSidebar',0);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_followingLink',0);
             frm.MissingE_sidebarTweaks_retries.value = MissingE.utilities.options.getStorage('MissingE_sidebarTweaks_retries',MissingE.defaultRetries);
          }
          else if (v == "dashLinksToTabs") {

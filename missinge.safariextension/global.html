@@ -1605,7 +1605,6 @@ function handleRequest(request) {
       settings.MissingE_sidebarTweaks_retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
       settings.MissingE_sidebarTweaks_addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
       settings.MissingE_sidebarTweaks_slimSidebar = getSetting("MissingE_sidebarTweaks_slimSidebar",0);
-      settings.MissingE_sidebarTweaks_followingLink = getSetting("MissingE_sidebarTweaks_followingLink",0);
       settings.MissingE_magnifier_magnifyAvatars = getSetting("MissingE_magnifier_magnifyAvatars",0);
       settings.MissingE_dashLinksToTabs_newPostTabs = getSetting("MissingE_dashLinksToTabs_newPostTabs",1);
       settings.MissingE_dashLinksToTabs_sidebar = getSetting("MissingE_dashLinksToTabs_sidebar",0);
@@ -1679,7 +1678,6 @@ function handleRequest(request) {
             settings.retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
             settings.accountNum = getSetting("MissingE_sidebarTweaks_accountNum",0);
             settings.slimSidebar = getSetting("MissingE_sidebarTweaks_slimSidebar",0);
-            settings.followingLink = getSetting("MissingE_sidebarTweaks_followingLink",0);
             settings.addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
             break;
          case "bookmarker":
@@ -2254,7 +2252,6 @@ function fixupSettings() {
    clearSetting('MissingE_experimentalFeatures_enabled');
    invertSetting('MissingE_dashboardTweaks_expandAll','MissingE_dashboardTweaks_noExpandAll');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
-   moveSetting('MissingE_dashboardTweaks_followingLink','MissingE_sidebarTweaks_followingLink');
    moveSetting('MissingE_betterReblogs_keyboardShortcut','MissingE_betterReblogs_quickKeyboardShortcut');
    collapseSettings('MissingE_askTweaks_betterAnswers','MissingE_askTweaks_buttons','MissingE_askTweaks_tags');
    invertSetting('MissingE_betterReblogs_noPassTags','MissingE_betterReblogs_passTags');

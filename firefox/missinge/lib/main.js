@@ -181,7 +181,6 @@ function getAllSettings(getStale) {
    settings.MissingE_sidebarTweaks_retries = getSetting("extensions.MissingE.sidebarTweaks.retries",MissingE.defaultRetries);
    settings.MissingE_sidebarTweaks_addSidebar = getSetting("extensions.MissingE.sidebarTweaks.addSidebar",0);
    settings.MissingE_sidebarTweaks_slimSidebar = getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0);
-   settings.MissingE_sidebarTweaks_followingLink = getSetting("extensions.MissingE.sidebarTweaks.followingLink",0);
    settings.MissingE_sidebarTweaks_accountNum = getSetting("extensions.MissingE.sidebarTweaks.accountNum",0);
    settings.MissingE_magnifier_magnifyAvatars = getSetting("extensions.MissingE.magnifier.magnifyAvatars",0);
    settings.MissingE_dashLinksToTabs_newPostTabs = getSetting("extensions.MissingE.dashLinksToTabs.newPostTabs",1);
@@ -1807,7 +1806,6 @@ function handleMessage(message, myWorker) {
             settings.retries = getSetting("extensions.MissingE.sidebarTweaks.retries",MissingE.defaultRetries);
             settings.accountNum = getSetting("extensions.MissingE.sidebarTweaks.accountNum",0);
             settings.slimSidebar = getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0);
-            settings.followingLink = getSetting("extensions.MissingE.sidebarTweaks.followingLink",0);
             settings.addSidebar = getSetting("extensions.MissingE.sidebarTweaks.addSidebar",0);
             break;
          case "bookmarker":
@@ -2547,7 +2545,6 @@ function fixupSettings() {
    clearSetting('extensions.MissingE.experimentalFeatures.enabled');
    invertSetting('extensions.MissingE.dashboardTweaks.expandAll','extensions.MissingE.dashboardTweaks.noExpandAll');
    moveSetting('extensions.MissingE.dashboardTweaks.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
-   moveSetting('extensions.MissingE.dashboardTweaks.followingLink','extensions.MissingE.sidebarTweaks.followingLink');
    moveSetting('extensions.MissingE.betterReblogs.keyboardShortcut','extensions.MissingE.betterReblogs.quickKeyboardShortcut');
    collapseSettings('extensions.MissingE.askTweaks.betterAnswers','extensions.MissingE.askTweaks.buttons','extensions.MissingE.askTweaks.tags');
    invertSetting('extensions.MissingE.betterReblogs.noPassTags','extensions.MissingE.betterReblogs.passTags');
