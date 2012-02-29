@@ -34,6 +34,14 @@ padding-bottom:29px !important;
 display:none;
 }
 
+#posts li.post.fan_mail div.message span[id$="read_more"] br {
+display:block !important;
+}
+
+#posts li.post.fan_mail div.message a.fan_mail_read_more {
+   line-height:14px;
+}
+
 #posts li.post.fan_mail {
 padding-top:17px;
 }
