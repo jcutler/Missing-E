@@ -36,6 +36,10 @@ MissingE.utilities.konami = {
              key !== MissingE.utilities.konami
                         .code[MissingE.utilities.konami.state]) {
             MissingE.utilities.konami.state = 0;
+         }
+         if (!e.shiftKey ||
+             key !== MissingE.utilities.konami
+                        .code[MissingE.utilities.konami.state]) {
             return;
          }
          MissingE.utilities.konami.state++;
@@ -50,6 +54,10 @@ MissingE.utilities.konami = {
             else {
                logo.attr('oldsrc',logo.attr('src'));
                logo.attr('src',extension.getURL('identity/tumblr-with-e.png'));
+            }
+            if (logo.attr('src') ===
+                  extension.getURL('identity/tumblr-with-e.png')) {
+               window.scrollTo(0,0);
             }
          }
       }, false);
