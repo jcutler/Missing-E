@@ -85,7 +85,8 @@ function doStartup(response) {
    for (i in response.message) {
       if (response.message.hasOwnProperty(i)) {
          if (i !== 'url' && i !== 'isFrame' && !(/_fill$/.test(i)) &&
-             i !== 'zindexFix' && i !== 'version' && i !== "warningInfo") {
+             i !== 'zindexFix' && i !== 'version' && i !== "warningInfo" &&
+             i !== 'konami') {
             info += i + ": " + (response.message[i] ? "active" : "inactive") +
                      "\n";
          }
@@ -99,6 +100,9 @@ function doStartup(response) {
       }
       if (response.message.zindexFix) {
          MissingE.utilities.zindexFix.init();
+      }
+      if (response.message.konami) {
+         MissingE.utilities.konami.init();
       }
       if (response.message.massEditor) {
          MissingE.packages.massEditor.init();

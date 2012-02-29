@@ -2132,6 +2132,8 @@ function handleMessage(message, myWorker) {
                                 "messages",
                                 "likes",
                                 "tagged"])) {
+         injectScripts.push(data.url("core/common/konami.js"));
+
          if (getSetting("extensions.MissingE.safeDash.enabled",1) == 1) {
             injectScripts.push(data.url("core/safeDash/safeDash.js"));
             activeScripts.safeDash = true;

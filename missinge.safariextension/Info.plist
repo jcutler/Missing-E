@@ -60,6 +60,7 @@
 				<string>core/common/menuButton.js</string>
 				<string>lib/facebox/facebox.js</string>
 				<string>core/common/warningInfo.js</string>
+				<string>core/common/konami.js</string>
 				<string>core/askTweaks/askTweaks.js</string>
 				<string>core/betterReblogs/betterReblogs_dash.js</string>
 				<string>core/betterReblogs/betterReblogs_fill.js</string>

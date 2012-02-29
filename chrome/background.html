@@ -1852,6 +1852,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                        "messages",
                        "likes",
                        "tagged"])) {
+         chrome.tabs.executeScript(sender.tab.id, {file: "core/common/konami.js"});
+
          if (getSetting("MissingE_safeDash_enabled",1) == 1) {
             activeScripts.safeDash = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "core/safeDash/safeDash.js"});

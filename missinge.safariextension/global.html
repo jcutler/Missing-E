@@ -1928,6 +1928,8 @@ function handleRequest(request) {
                                 "messages",
                                 "likes",
                                 "tagged"])) {
+         activeScripts.konami = true;
+
          if (getSetting("MissingE_safeDash_enabled",1) == 1) {
             activeScripts.safeDash = true;
          }
