@@ -32,7 +32,7 @@ var utils = {
    urlPatterns: {
       "askForm":      /^ask_form\/[^\/]+(\/success)?[\/]?$/,
       "bookmarklet":  /^share(\/\w+)?[\/]?$/,
-      "blog":         /^blog\/[^\/]+(\/search\/[^\/]+)?(\/\d+)?[\/]?$/,
+      "blog":         /^blog\/[^\/]+(\/search\/[^\/]+|\/processing)?(\/\d+)?[\/]?$/,
       "blogData":     /^blog\/[^\/]+\/((members|followers)(\/page\/\d+)?|settings)[\/]?$/,
       "crushes":      /^(blog\/[^\/]+\/)?new\/photo[\/]?$/,
       "dashboard":    /^(dashboard|show\/[^\/]*)([\/].*)?/,
