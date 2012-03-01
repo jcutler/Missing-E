@@ -2168,12 +2168,14 @@ function clearSetting(pref) {
 }
 
 function moveSetting(oldpref, newpref) {
-   var pref;
+   var pref, msg;
    if ((pref = safari.extension.settings.getItem(oldpref))) {
-      console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+      msg = '"' + oldpref + '" depracated.';
       if (safari.extension.settings.getItem(newpref) === null) {
+         msg += 'Moving setting to "' + newpref + '"';
          safari.extension.settings[newpref] = pref;
       }
+      console.log(msg);
       safari.extension.settings.removeItem(oldpref);
    }
 }

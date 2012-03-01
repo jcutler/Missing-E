@@ -2155,10 +2155,12 @@ function clearSetting(pref) {
 function moveSetting(oldpref, newpref) {
    var pref;
    if ((pref = localStorage[oldpref])) {
-      console.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+      msg = '"' + oldpref + '" depracated.';
       if (localStorage.getItem(newpref) === null) {
+         msg += 'Moving setting to "' + newpref + '"';
          localStorage[newpref] = pref;
       }
+      console.log(msg);
       localStorage.removeItem(oldpref);
    }
 }
