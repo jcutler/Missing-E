@@ -39,6 +39,14 @@ width:100% !important;
 width:100% !important;
 }
 
+#posts .promotion_highlighted {
+width:100% !important;
+}
+
+#posts .highlight_ribbon {
+left:100% !important;
+}
+
 #header #tabs_outter_container {
 left:auto !important;
 right:17px !important;
