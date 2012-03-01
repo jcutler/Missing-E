@@ -75,6 +75,10 @@ top:-1px !important;
 right:10px !important;
 }
 
+.tracked_tag_loader {
+top:5px !important;
+}
+
 .keep_tag {
 top:3px !important;
 }
