@@ -400,6 +400,7 @@ function isInternalSetting(setting) {
           /MissingE_externalVersion/.test(setting) ||
           setting === "MissingE_compatCheck" ||
           setting === "MissingE_lastUpdateCheck" ||
+          setting === "MissingE_konami_active" ||
           !/^[a-zA-Z0-9_]*$/.test(setting);
 }
 
@@ -2572,6 +2573,7 @@ function onStart(currVersion, prevVersion) {
       openSettings();
    }
    setSetting('extensions.MissingE.version',currVersion);
+   clearSetting('extensions.MissingE.konami.active');
 }
 
 onStart(currVersion, prevVersion);

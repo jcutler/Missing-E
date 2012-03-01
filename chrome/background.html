@@ -195,6 +195,7 @@ function isInternalSetting(setting) {
           /MissingE_externalVersion/.test(setting) ||
           setting === "MissingE_compatCheck" ||
           setting === "MissingE_lastUpdateCheck" ||
+          setting === "MissingE_konami_active" ||
           !/^\w*$/.test(setting);
 }
 
@@ -2240,6 +2241,7 @@ function onStart(currVersion, prevVersion) {
       chrome.tabs.create({url:chrome.extension.getURL("core/options.html")});
    }
    setSetting('MissingE_version',currVersion);
+   clearSetting('MissingE_konami_active');
 }
 
 onStart(currVersion, getSetting('MissingE_version',null));
