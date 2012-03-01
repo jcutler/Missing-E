@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.6.12** (02/29/2012)
+**_!_** Fix issue with quick (1-click) reblog appearing under some photo posts  
+**_!_** Minor style changes
+
 ##**2.6.11** (02/28/2012)
 **_+_** Add Sidebar Tweaks option to show all tracked tags in dashboard sidebar
 
