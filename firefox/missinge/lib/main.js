@@ -154,6 +154,7 @@ function getAllSettings(getStale) {
    settings.MissingE_askTweaks_scroll = getSetting("extensions.MissingE.askTweaks.scroll",1);
    settings.MissingE_askTweaks_betterAnswers = getSetting("extensions.MissingE.askTweaks.betterAnswers",0);
    settings.MissingE_askTweaks_photoReplies = getSetting("extensions.MissingE.askTweaks.photoReplies",1);
+   settings.MissingE_askTweaks_submissionControls = getSetting("extensions.MissingE.askTweaks.submissionControls",1);
    settings.MissingE_askTweaks_tagAsker = getSetting("extensions.MissingE.askTweaks.tagAsker",1);
    settings.MissingE_askTweaks_defaultTags = getSetting("extensions.MissingE.askTweaks.defaultTags",'');
    settings.MissingE_askTweaks_askDash = getSetting("extensions.MissingE.askTweaks.askDash",0);
@@ -1802,6 +1803,7 @@ function handleMessage(message, myWorker) {
             settings.massDelete = getSetting("extensions.MissingE.askTweaks.massDelete",1);
             settings.adjustDomain = MissingE.isTumblrURL(myWorker.tab.url, ["messages"]);
             settings.photoReplies = getSetting("extensions.MissingE.askTweaks.photoReplies",1);
+            settings.submissionControls = getSetting("extensions.MissingE.askTweaks.submissionControls",1);
             break;
          case "sidebarTweaks":
             settings.retries = getSetting("extensions.MissingE.sidebarTweaks.retries",MissingE.defaultRetries);

@@ -1583,6 +1583,7 @@ function handleRequest(request) {
       settings.MissingE_askTweaks_massDelete = getSetting("MissingE_askTweaks_massDelete",1);
       settings.MissingE_askTweaks_smallFanMail = getSetting("MissingE_askTweaks_smallFanMail",0);
       settings.MissingE_askTweaks_photoReplies = getSetting("MissingE_askTweaks_photoReplies",1);
+      settings.MissingE_askTweaks_submissionControls = getSetting("MissingE_askTweaks_submissionControls",1);
       settings.MissingE_bookmarker_format = getSetting("MissingE_bookmarker_format",MissingE.defaultFormat);
       settings.MissingE_bookmarker_addBar = getSetting("MissingE_bookmarker_addBar",1);
       settings.MissingE_bookmarker_keyboardShortcut = getSetting("MissingE_bookmarker_keyboardShortcut",1);
@@ -1674,6 +1675,7 @@ function handleRequest(request) {
             settings.massDelete = getSetting("MissingE_askTweaks_massDelete",1);
             settings.adjustDomain = MissingE.isTumblrURL(request.target.url, ["messages"]);
             settings.photoReplies = getSetting("MissingE_askTweaks_photoReplies",1);
+            settings.submissionControls = getSetting("MissingE_askTweaks_submissionControls",1);
             break;
          case "sidebarTweaks":
             settings.retries = getSetting("MissingE_sidebarTweaks_retries",MissingE.defaultRetries);
