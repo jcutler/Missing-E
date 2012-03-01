@@ -1816,10 +1816,12 @@ function handleRequest(request) {
                   '#posts .post .post_controls .MissingE_betterReblogs_retryAsk, ' +
                   '#posts .post .post_controls a[href^="/edit"], ' +
                   '#posts .post .post_controls a[onclick*="delete_post_"], ' +
-                  '#posts .post .post_controls a[onclick*="queue_post_"], ' +
-                  '#posts .post .post_controls a[id^="show_notes"] { ' +
+                  '#posts .post .post_controls a[onclick*="queue_post"], ' +
+                  '#posts .post .post_controls a[id^="show_notes"], ' +
+                  '#posts .post .post_controls a[onclick*="approve_post"], ' +
+                  '#posts .post .post_controls a[onclick*="publish_post"] { ' +
                      'background-image:url("' +
-                        safari.extension.baseURI  + "core/dashboardTweaks/replaceIcons.png" +
+                        safari.extension.baseURI  + "core/dashboardTweaks/postIcons.png" +
                      '"); ' +
                   '} ' +
                   '#posts .post .post_controls a.MissingE_quick_reblogging { ' +

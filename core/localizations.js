@@ -112,6 +112,7 @@ var locale = {
    "reply": "reply",
    "notes": "notes",
    "queue": "queue",
+   "publish": "publish",
    "experimental": "EXPERIMENTAL",
    "exp": "X"
   },
@@ -295,6 +296,7 @@ var locale = {
    "reply": "antworten",
    "notes": "Anmerkungen",
    "queue": "in die Warteschleife stellen",
+   "publish": "publizieren",
    "experimental": "EXPERIMENTELL",
    "exp": "X"
   },
@@ -478,6 +480,7 @@ var locale = {
    "reply": "responder",
    "notes": "notas",
    "queue": "cola",
+   "publish": "publicar",
    "experimental": "EXPERIMENTAL",
    "exp": "X"
   },
@@ -661,6 +664,7 @@ var locale = {
    "reply": "réagir",
    "notes": "notes",
    "queue": "file d'attente",
+   "publish": "publier",
    "experimental": "EXPÉRIMENTALE",
    "exp": "X"
   },
@@ -844,6 +848,7 @@ var locale = {
    "reply": "rispondi",
    "notes": "note",
    "queue": "in coda",
+   "publish": "pubblica",
    "experimental": "SPERIMENTALE",
    "exp": "SP"
   },
@@ -1037,6 +1042,7 @@ var locale = {
    "reply": "返信",
    "notes": "リアクション",
    "queue": "キュー",
+   "publish": "公開",
    "experimental": "実験的",
    "exp": "実験"
   },
@@ -1213,6 +1219,7 @@ var locale = {
    "reply": "komentuj",
    "notes": "notek",
    "queue": "kolejkuj",
+   "publish": "publikuj",
    "experimental": "EKSPERYMENTALNA",
    "exp": "X"
   },
@@ -1396,6 +1403,7 @@ var locale = {
    "reply": "ответить",
    "notes": "заметок",
    "queue": "в очередь",
+   "publish": "опубликовать",
    "experimental": "ЭКСПЕРИМЕНТАЛЬНЫЙ",
    "exp": "ЭКСП"
   },
@@ -1609,6 +1617,7 @@ var locale = {
    "reply": "yorum yap",
    "notes": "yorum",
    "queue": "sırada",
+   "publish": "yayınla",
    "experimental": "DENEME",
    "exp": "X"
   },

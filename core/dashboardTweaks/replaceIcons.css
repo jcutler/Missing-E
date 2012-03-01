@@ -52,8 +52,10 @@ display:inline-block;
 #posts .post .post_controls a[href^="/reblog"],
 #posts .post .post_controls a[href^="/edit"],
 #posts .post .post_controls a[onclick*="delete_post_"],
-#posts .post .post_controls a[onclick*="queue_post_"],
-#posts .post .post_controls a[id^="show_notes"] {
+#posts .post .post_controls a[onclick*="queue_post"],
+#posts .post .post_controls a[id^="show_notes"],
+#posts .post .post_controls a[onclick*="approve_post"],
+#posts .post .post_controls a[onclick*="publish_post"] {
 height:14px;
 padding-bottom:2px;
 display:inline-block;
@@ -70,7 +72,9 @@ background-repeat:no-repeat;
 #posts .post .post_controls a[href^="/reblog"],
 #posts .post .post_controls a[href^="/edit"],
 #posts .post .post_controls a[onclick*="delete_post_"],
-#posts .post .post_controls a[onclick*="queue_post_"] {
+#posts .post .post_controls a[onclick*="queue_post"],
+#posts .post .post_controls a[onclick*="approve_post"],
+#posts .post .post_controls a[onclick*="publish_post"] {
 opacity:0.65;
 margin-left:10px;
 font-size:0 !important;
@@ -117,8 +121,10 @@ padding-bottom:2px;
 #posts .post .post_controls a[href^="/reblog"]:hover,
 #posts .post .post_controls a[href^="/edit"]:hover,
 #posts .post .post_controls a[onclick*="delete_post_"]:hover,
-#posts .post .post_controls a[onclick*="queue_post_"]:hover,
-#posts .post .post_controls a[id^="show_notes"]:hover {
+#posts .post .post_controls a[onclick*="queue_post"]:hover,
+#posts .post .post_controls a[id^="show_notes"]:hover,
+#posts .post .post_controls a[onclick*="approve_post"]:hover,
+#posts .post .post_controls a[onclick*="publish_post"]:hover {
 opacity:1;
 }
 
@@ -147,9 +153,15 @@ width:12px;
 background-position:-24px 0;
 }
 
-#posts .post .post_controls a[onclick*="queue_post_"] {
+#posts .post .post_controls a[onclick*="queue_post"] {
 width:13px;
-background-position:-75px 0;
+background-position:-75px 1px;
+}
+
+#posts .post .post_controls a[onclick*="approve_post"],
+#posts .post .post_controls a[onclick*="publish_post"] {
+width:14px;
+background-position:-128px 0;
 }
 
 #posts .post .post_controls .MissingE_reblogYourself_retry,

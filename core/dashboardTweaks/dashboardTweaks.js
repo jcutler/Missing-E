@@ -608,15 +608,19 @@ MissingE.packages.dashboardTweaks = {
                   .test(item.text())))) {
                item.attr('title', MissingE.getLocale(lang).dashTweaksText.del);
             }
-            else if (/queue_post_/.test(item.attr('onclick')) ||
+            else if (/queue_post/.test(item.attr('onclick')) ||
                      (new RegExp(MissingE.getLocale(lang).dashTweaksText.queue,
                                  "i")).test(item.text())) {
                item.attr('title', MissingE.getLocale(lang)
                                     .dashTweaksText.queue);
             }
             else if (/^\/edit/.test(item.attr('href'))) {
+               item.attr('title', MissingE.getLocale(lang).dashTweaksText.edit);
+            }
+            else if (/publish_post/.test(item.attr('onclick')) ||
+                     /approve_post/.test(item.attr('onclick'))) {
                item.attr('title', MissingE.getLocale(lang).dashTweaksText
-                                    .edit);
+                                    .publish);
             }
             else if (/^\/reblog/.test(item.attr('href')) ||
                      /http[s]?:\/\/www\.tumblr\.com\/register\?referer=soft_reblog/

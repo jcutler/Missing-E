@@ -407,7 +407,7 @@ line-height:14px;
 }
 
 .post_controls span {
-background-image:url("dashboardTweaks/replaceIcons.png");
+background-image:url("dashboardTweaks/postIcons.png");
 height:14px;
 background-repeat:no-repeat;
 display:inline-block;
@@ -443,6 +443,11 @@ background-position:-12px 0;
 .post_controls .queue {
 width:13px;
 background-position:-75px 0;
+}
+
+.post_controls .publish {
+width:14px;
+background-position:-128px 0;
 }
 
 img.spinner {
