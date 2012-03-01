@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.6.13** (not yet released)
+**_+_** Add icon replacement for publish button on posts  
+**_+_** Add option in Ask Tweaks to add queue/publish buttons to submitted posts in the Tumblr unified inbox
+
 ##**2.6.12** (02/29/2012)
 **_!_** Fix issue with quick (1-click) reblog appearing under some photo posts  
 **_!_** Minor style changes
