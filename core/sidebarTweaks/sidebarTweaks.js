@@ -289,14 +289,6 @@ MissingE.packages.sidebarTweaks = {
                        extension.getURL('core/sidebarTweaks/to_blog.png') +
                        '") !important; }</style>');
 
-      if (settings.slimSidebar === 1) {
-         $('#tag_contributors li.item, #tag_editors li.item, ' +
-           '#recommended_tumblelogs li.item').each(function() {
-            var bg = $(this).css('background-image');
-            bg = bg.replace(/_40\./,'_30.');
-            $(this).css('background-image',bg);
-         });
-      }
       if (settings.showOverflowTags) {
          $('#overflow_tags').children('*').remove().appendTo('#tracked_tags');
          $('#right_column div.small_links a[onclick*="overflow_tags"]').hide();

@@ -197,6 +197,12 @@ font-size:11px !important;
 line-height:13px !important;
 }
 
+#tag_contributors li.item,
+#tag_editors li.item,
+#recommended_tumblelogs li.item {
+background-size:30px 30px;
+}
+
 .controls_section li .blog small {
 font-size:9px !important;
 }
