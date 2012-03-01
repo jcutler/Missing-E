@@ -48,7 +48,7 @@ MissingE.utilities.konami = {
          newState = 0;
       }
       extension.sendRequest("backupVal", {key: "MissingE_konami_active",
-                                          val: 1});
+                                          val: newState});
       logo.attr('oldsrc',oldSrc);
       var newImg = new Image();
       newImg.onload = function() {
