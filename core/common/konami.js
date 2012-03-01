@@ -29,6 +29,42 @@ MissingE.utilities.konami = {
 
    state: 0,
 
+   toggleLogo: function(noAnimate) {
+      var logo = $('#logo');
+      var oldSrc, newSrc;
+      if (logo.attr('oldsrc')) {
+         var newSrc = logo.attr('oldsrc');
+         var oldSrc = logo.attr('src');
+      }
+      else {
+         var oldSrc = logo.attr('src');
+         var newSrc = extension.getURL('identity/tumblr-with-e.png');
+      }
+      if (newSrc === extension.getURL('identity/tumblr-with-e.png')) {
+         newState = 1;
+         window.scrollTo(0,0);
+      }
+      else {
+         newState = 0;
+      }
+      extension.sendRequest("backupVal", {key: "MissingE_konami_active",
+                                          val: 1});
+      logo.attr('oldsrc',oldSrc);
+      var newImg = new Image();
+      newImg.onload = function() {
+         if (noAnimate) {
+            logo.attr('src',newSrc);
+         }
+         else {
+            logo.fadeOut(800, function() {
+               logo.attr('src',newSrc);
+               logo.fadeIn(800);
+            });
+         }
+      };
+      newImg.src = newSrc;
+   },
+
    run: function() {
       document.addEventListener('keydown', function(e) {
          var key = e.keyCode;
@@ -45,25 +81,18 @@ MissingE.utilities.konami = {
          MissingE.utilities.konami.state++;
          if (MissingE.utilities.konami.state ===
                MissingE.utilities.konami.code.length) {
-            var logo = $('#logo');
-            if (logo.attr('oldsrc')) {
-               var src = logo.attr('oldsrc');
-               logo.attr('oldsrc',logo.attr('src'));
-               logo.attr('src',src);
-            }
-            else {
-               logo.attr('oldsrc',logo.attr('src'));
-               logo.attr('src',extension.getURL('identity/tumblr-with-e.png'));
-            }
-            if (logo.attr('src') ===
-                  extension.getURL('identity/tumblr-with-e.png')) {
-               window.scrollTo(0,0);
-            }
+            MissingE.utilities.konami.toggleLogo();
          }
       }, false);
    },
 
    init: function() {
+      extension.sendRequest("settings", {component: "konami"},
+                            function(response) {
+         if (response.component === "konami" && response.active === 1) {
+            MissingE.utilities.konami.toggleLogo(true);
+         }
+      });
       MissingE.utilities.konami.run();
    }
 };

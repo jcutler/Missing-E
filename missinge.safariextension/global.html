@@ -1663,6 +1663,9 @@ function handleRequest(request) {
       var settings = {};
       settings.component = request.message.component;
       switch(request.message.component) {
+         case "konami":
+            settings.active = getSetting("MissingE_konami_active",0);
+            break;
          case "askTweaks":
             settings.scroll = getSetting("MissingE_askTweaks_scroll",1);
             settings.betterAnswers = getSetting("MissingE_askTweaks_betterAnswers",0);

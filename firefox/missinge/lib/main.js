@@ -1791,6 +1791,9 @@ function handleMessage(message, myWorker) {
       settings.subcomponent = message.subcomponent;
       settings.extensionURL = data.url("");
       switch(message.component) {
+         case "konami":
+            settings.active = getSetting("extensions.MissingE.konami.active",0);
+            break;
          case "askTweaks":
             settings.scroll = getSetting("extensions.MissingE.askTweaks.scroll",1);
             settings.betterAnswers = getSetting("extensions.MissingE.askTweaks.betterAnswers",0);
