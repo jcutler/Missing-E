@@ -244,16 +244,16 @@ MissingE.packages.sidebarTweaks = {
                    menu.find('li:not(.current_sidebar)').length > 0) {
                   if (menu.is(':visible')) {
                      $('#MissingE_sidebar').removeClass('hiddenish');
-                     $('#overlay_for_active_menu').hide();
+                     $('#sidebarTweaks_overlay').hide();
                      menu.hide();
                   }
                   else {
                      $('#MissingE_sidebar').addClass('hiddenish');
-                     if ($('#overlay_for_active_menu').length === 0) {
-                        $('body').prepend('<div id="overlay_for_active_menu">' +
+                     if ($('#sidebarTweaks_overlay').length === 0) {
+                        $('body').prepend('<div id="sidebarTweaks_overlay">' +
                                           '</div>');
                      }
-                     $('#overlay_for_active_menu').show();
+                     $('#sidebarTweaks_overlay').show();
                      menu.show();
                   }
                }
@@ -262,12 +262,12 @@ MissingE.packages.sidebarTweaks = {
             $('#MissingE_sidebar_menu a').click(function() {
                var newAcctNum = $('#MissingE_sidebar_menu a').index(this);
                $('#MissingE_sidebar').remove();
-               $('#overlay_for_active_menu').hide();
+               $('#sidebarTweaks_overlay').hide();
                extension.sendRequest("sidebarTweaks", {accountNum: newAcctNum});
                MissingE.packages.sidebarTweaks.makeSidebar(newAcctNum,retries);
                return false;
             });
-            $('#overlay_for_active_menu').live('click', function() {
+            $('#sidebarTweaks_overlay').live('click', function() {
                if ($('#MissingE_sidebar_menu').is(':visible')) {
                   $('#MissingE_sidebar').removeClass('hiddenish');
                   $(this).hide();
