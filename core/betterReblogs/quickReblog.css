@@ -28,6 +28,7 @@ display:none;
 position:absolute;
 width:150px !important;
 padding-top:4px;
+z-index:1338 !important;
 }
 
 #MissingE_quick_reblog .user_menu_nipple {
