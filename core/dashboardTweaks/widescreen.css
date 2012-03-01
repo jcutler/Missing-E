@@ -40,11 +40,12 @@ width:100% !important;
 }
 
 #posts .promotion_highlighted {
-width:100% !important;
+width:auto !important;
 }
 
-#posts .highlight_ribbon {
+#posts .post .highlight_ribbon {
 left:100% !important;
+right:auto !important;
 }
 
 #header #tabs_outter_container {
