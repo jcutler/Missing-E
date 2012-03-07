@@ -78,6 +78,14 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.0** (03/07/2012)
+**_!_** Update all features for compatibility with new Tumblr dashboard post control buttons  
+**_!_** Reimplement reblog replies to use new Tumblr popover
+
+##**2.6.14** (03/07/2012)
+**_!_** Fix post note count display  
+**_!_** Begin changes to post icons to match new Tumblr post control icons
+
 ##**2.6.13** (03/01/2012)
 **_+_** Add icon replacement for publish button on posts  
 **_+_** Add option in Ask Tweaks to add queue/publish buttons to submitted posts in the Tumblr unified inbox  
