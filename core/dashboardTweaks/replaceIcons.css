@@ -21,16 +21,6 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#posts .post .post_controls {
-position:relative !important;
-}
-
-#posts .post .post_controls a.block_link {
-position:absolute;
-right:0;
-top:17px;
-}
-
 #posts .post .post_controls > a,
 #posts .post .post_controls > span,
 #posts .post .post_controls > iframe {
@@ -38,24 +28,28 @@ vertical-align:top !important;
 }
 
 #dashboard_inbox .post .post_controls a[id^="post_delete_"] {
-line-height:11px !important;
+line-height:18px !important;
 display:inline-block;
 }
 
 #posts .post .post_controls a.MissingE_experimental_reply,
 #posts .post .post_controls .MissingE_experimental_reply_wait,
 #posts .post .post_controls .MissingE_experimental_reply_fail,
+#posts .post .post_controls .MissingE_experimental_reply_success {
+margin-left:15px;
+}
+
+#posts .post .post_controls a.MissingE_experimental_reply,
+#posts .post .post_controls .MissingE_experimental_reply_wait,
+#posts .post .post_controls .MissingE_experimental_reply_fail,
 #posts .post .post_controls .MissingE_experimental_reply_success,
-#posts .post .post_controls a.MissingE_reblogYourself_retry,
 #posts .post .post_controls a[id^="ask_answer_link"],
-#posts .post .post_controls a[id^="post_control_reply"],
 #posts .post .post_controls a[href^="/edit"],
 #posts .post .post_controls a[onclick*="delete_post_"],
 #posts .post .post_controls a[onclick*="queue_post"],
 #posts .post .post_controls a[onclick*="approve_post"],
 #posts .post .post_controls a[onclick*="publish_post"] {
-height:14px;
-padding-bottom:2px;
+height:20px;
 display:inline-block;
 background-repeat:no-repeat;
 }
@@ -64,28 +58,18 @@ background-repeat:no-repeat;
 #posts .post .post_controls .MissingE_experimental_reply_wait,
 #posts .post .post_controls .MissingE_experimental_reply_fail,
 #posts .post .post_controls .MissingE_experimental_reply_success,
-#posts .post .post_controls a.MissingE_reblogYourself_retry,
 #posts .post .post_controls a[id^="ask_answer_link"],
-#posts .post .post_controls a[id^="post_control_reply"],
 #posts .post .post_controls a[href^="/edit"],
 #posts .post .post_controls a[onclick*="delete_post_"],
 #posts .post .post_controls a[onclick*="queue_post"],
 #posts .post .post_controls a[onclick*="approve_post"],
 #posts .post .post_controls a[onclick*="publish_post"] {
 opacity:0.65;
-margin-left:10px;
 font-size:0 !important;
-}
-
-
-#posts .post .post_controls a.MissingE_mark,
-#posts .post .post_controls a.like_button {
-padding-bottom:2px;
 }
 
 #posts .post .post_controls a.MissingE_experimental_reply:hover,
 #posts .post .post_controls a[id^="ask_answer_link"]:hover,
-#posts .post .post_controls a[id^="post_control_reply"]:hover,
 #posts .post .post_controls a[href^="/edit"]:hover,
 #posts .post .post_controls a[onclick*="delete_post_"]:hover,
 #posts .post .post_controls a[onclick*="queue_post"]:hover,
@@ -95,42 +79,34 @@ opacity:1;
 }
 
 #posts .post .post_controls a[href^="/edit"] {
-width:14px;
-background-position:-36px 0;
+width:19px;
+background-position:-104px 0;
 }
 
 #posts .post .post_controls a[onclick*="delete_post_"] {
-width:13px;
-background-position:-50px 0;
+width:16px;
+background-position:-123px 0;
 }
 
-#posts .post .post_controls a[id^="post_control_reply"],
 #posts .post .post_controls a[id^="ask_answer_link"] {
-width:12px;
-background-position:-24px 0;
+width:20px;
+background-position:-159px 0;
 }
 
 #posts .post .post_controls a[onclick*="queue_post"] {
-width:13px;
-background-position:-75px 1px;
+width:20px;
+background-position:-60px 0;
 }
 
 #posts .post .post_controls a[onclick*="approve_post"],
 #posts .post .post_controls a[onclick*="publish_post"] {
-width:14px;
-background-position:-128px 0;
-}
-
-#posts .post .post_controls .MissingE_reblogYourself_retry,
-#posts .post .post_controls .MissingE_betterReblogs_retryAsk {
-opacity:1;
-width:12px;
-background-position:-63px 0;
+width:20px;
+background-position:-139px 0;
 }
 
 #posts .post .post_controls a.MissingE_experimental_reply {
-width:16px !important;
-background-position:-112px 0 !important;
+width:20px !important;
+background-position:0 0 !important;
 }
 
 #posts .post .MissingE_experimental_reply_wait,
@@ -145,16 +121,11 @@ display:none !important;
 }
 
 #posts .post .MissingE_experimental_reply_fail {
-width:12px;
-background-position:-100px 0;
+width:20px;
+background-position:-40px 0;
 }
 
 #posts .post .MissingE_experimental_reply_success {
-width:12px;
-background-position:-88px 0;
-}
-
-#posts .post .post_controls a.MissingE_quick_reblogging,
-#posts .post .post_controls a.MissingE_quick_reblogging_success {
-background-position:0 0;
+width:20px;
+background-position:-20px 0;
 }

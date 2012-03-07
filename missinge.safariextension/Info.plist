@@ -99,6 +99,8 @@
 			<string>lib/facebox/facebox.css</string>
 			<string>core/askTweaks/askTweaks.css</string>
 			<string>core/betterReblogs/quickReblog.css</string>
+			<string>core/betterReblogs/betterReblogs.css</string>
+			<string>core/reblogYourself/reblogYourself.css</string>
 			<string>core/bookmarker/bookmarker.css</string>
 			<string>core/magnifier/magnifier.css</string>
 			<string>core/postingTweaks/postingTweaks.css</string>

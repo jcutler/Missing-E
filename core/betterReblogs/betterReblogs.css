@@ -21,38 +21,10 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#posts li.MissingEmdSelected {
-opacity:0.7;
-}
-
-#MissingEdraftQueueTools li .select_all {
-background-position:12px 11px !important;
-}
-
-#MissingEdraftQueueTools li .deselect_all {
-background-position:12px -26px !important;
-}
-
-#MissingEdraftQueueTools li .delete_selected {
-background-position:10px -62px !important;
-}
-
-#MissingEdraftQueueTools li .randomize {
-height:19px;
-background-position:10px -98px !important;
-}
-
-#posts li.post input.MissingEmassDeleteSelect {
-margin:0;
-}
-
-#posts li.post .MissingEmassDeleteSpan {
-vertical-align:-1px;
-margin-left:8px;
-opacity:0.5;
-line-height:18px !important;
-}
-
-#posts li.post .MissingEmassDeleteSpan:hover {
-opacity:1;
+#posts .post .post_controls a.MissingE_betterReblogs_retryAsk {
+height:20px;
+display:inline-block;
+background-repeat:no-repeat;
+width:24px;
+background-position:-80px 0;
 }

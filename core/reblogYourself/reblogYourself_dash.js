@@ -53,7 +53,7 @@ MissingE.packages.reblogYourself = {
    },
 
    receiveReblog: function(response) {
-      var edit, txt, klass;
+      var edit, txt;
       var lang = $('html').attr("lang");
       var reblog_text = MissingE.getLocale(lang).reblog;
       if ($('#post_' + response.pid + ' div.post_controls a[href^="/reblog/"]')
@@ -61,7 +61,6 @@ MissingE.packages.reblogYourself = {
          return;
       }
       if (response.success) {
-         txt = reblog_text;
          var redir = location.href;
          edit = $('#post_' + response.pid)
             .find('div.post_controls a[href^="/edit"]');
@@ -74,9 +73,9 @@ MissingE.packages.reblogYourself = {
                      .replace(/&/g,'%26');
 
          var nr = $('<a />',
-                    {title: reblog_text, "class": klass,
+                    {title: reblog_text, "class": "reblog_button",
                      href: "/reblog/" + response.pid + "/" + response.data +
-                           "?redirect_to=" + redir, text: txt})
+                           "?redirect_to=" + redir})
                      .insertAfter(edit).before(' ');
          nr.trigger('MissingEaddReblog');
       }
@@ -88,7 +87,6 @@ MissingE.packages.reblogYourself = {
                      {title: reblog_err, href: "#",
                       "class": "MissingE_reblogYourself_retry",
                       click: function() { return false; }});
-         nre.append($('<del />', {text: reblog_text}));
          nre.insertAfter(edit).before(' ');
       }
    },

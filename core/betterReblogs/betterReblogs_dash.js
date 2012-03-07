@@ -91,9 +91,9 @@ MissingE.packages.betterReblogs = {
          before = $('#show_notes_link_' + tid);
       }
       if (response.success) {
-         txt = MissingE.getLocale(lang).reblog;
          rblnk = $('<a />',
-                   {title: reblog_text, text: txt,
+                   {title: reblog_text,
+                    "class": "reblog_button",
                     href: "/reblog/" + tid + "/" + response.data +
                           "/text?post%5Bone%5D=" +
                           MissingE.escapeHTML(question) + "&MissingEaskName=" +
@@ -113,8 +113,8 @@ MissingE.packages.betterReblogs = {
          rblnk = $('<a />',
                    {title: reblog_err,
                     href: "#",
+                    "class": "MissingE_betterReblogs_retryAsk",
                     click: function() { return false; }});
-         rblnk.append($('<del />', {text: reblog_text}));
          if (before.length === 0) {
             rblnk.prependTo(item.find('div.post_controls')).after(' ');
          }

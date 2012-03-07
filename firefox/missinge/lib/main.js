@@ -1923,6 +1923,14 @@ function handleMessage(message, myWorker) {
                        "likes",
                        "tagged"])) {
 
+         injectStyles.push({code:
+               '#posts .post .post_controls .MissingE_reblogYourself_retry, ' +
+               '#posts .post .post_controls .MissingE_betterReblogs_retryAsk { ' +
+                  'background-image:url("' +
+                     data.url("core/dashboardTweaks/postControls.png") +
+                  '"); ' +
+               '}'});
+
          if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
             injectStyles.push({file: "core/dashboardTweaks/dashboardTweaks.css"});
             if (getSetting("extensions.MissingE.dashboardTweaks.notePreview",1) == 1) {
@@ -1946,7 +1954,6 @@ function handleMessage(message, myWorker) {
             }
             if (getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1) == 1) {
                injectStyles.push({code:
-                  '#posts .post .post_controls a[id^="post_control_reply"], ' +
                   '#posts .post .post_controls a[id^="ask_answer_link"], ' +
                   '#posts .post .post_controls a.MissingE_experimental_reply, ' +
                   '#posts .post .post_controls .MissingE_experimental_reply_wait, ' +
@@ -1960,7 +1967,7 @@ function handleMessage(message, myWorker) {
                   '#posts .post .post_controls a[onclick*="approve_post"], ' +
                   '#posts .post .post_controls a[onclick*="publish_post"] { ' +
                      'background-image:url("' +
-                        data.url("core/dashboardTweaks/postIcons.png") +
+                        data.url("core/dashboardTweaks/postControls.png") +
                      '"); ' +
                   '} ' +
                   '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
@@ -2341,6 +2348,7 @@ function handleMessage(message, myWorker) {
             if (getSetting("extensions.MissingE.betterReblogs.quickReblog",0) == 1) {
                zindexFix = true;
             }
+            injectStyles.push({file: data.url("core/betterReblogs/betterReblogs.css")});
             injectScripts.push(data.url("core/betterReblogs/betterReblogs_dash.js"));
             activeScripts.betterReblogs = true;
          }
@@ -2349,6 +2357,7 @@ function handleMessage(message, myWorker) {
 
          if (getSetting("extensions.MissingE.reblogYourself.enabled",1) == 1 &&
              getSetting("extensions.MissingE.reblogYourself.dashboard",1) == 1) {
+            injectStyles.push({file: data.url("core/reblogYourself/reblogYourself.css")});
             injectScripts.push(data.url("core/reblogYourself/reblogYourself_dash.js"));
             activeScripts.reblogYourself = true;
          }

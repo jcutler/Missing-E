@@ -407,47 +407,32 @@ line-height:14px;
 }
 
 .post_controls span {
-background-image:url("dashboardTweaks/postIcons.png");
-height:14px;
+background-image:url("dashboardTweaks/postControls.png");
+height:20px;
 background-repeat:no-repeat;
 display:inline-block;
 margin:0 2px;
 vertical-align:middle;
 }
 
-.post_controls .notes {
-width:12px;
-background-position:0 0;
-}
-
-.post_controls .reply {
-width:12px;
-background-position:-24px 0;
-}
-
 .post_controls .edit {
-width:14px;
-background-position:-36px 0;
+width:19px;
+background-position:-104px 0;
 }
 
 .post_controls .delete {
-width:13px;
-background-position:-50px 0;
-}
-
-.post_controls .reblog {
-width:12px;
-background-position:-12px 0;
+width:16px;
+background-position:-123px 0;
 }
 
 .post_controls .queue {
-width:13px;
-background-position:-75px 0;
+width:20px;
+background-position:-60px 0;
 }
 
 .post_controls .publish {
-width:14px;
-background-position:-128px 0;
+width:20px;
+background-position:-139px 0;
 }
 
 img.spinner {

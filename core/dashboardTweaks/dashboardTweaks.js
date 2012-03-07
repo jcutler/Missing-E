@@ -606,31 +606,17 @@ MissingE.packages.dashboardTweaks = {
                item.attr('title', MissingE.getLocale(lang).dashTweaksText
                                     .publish);
             }
-            else if (/^\/reblog/.test(item.attr('href')) ||
-                     /http[s]?:\/\/www\.tumblr\.com\/register\?referer=soft_reblog/
-                        .test(item.attr('href'))) {
-               item.attr('title', MissingE.getLocale(lang).dashTweaksText
-                                    .reblog);
-            }
             else if (/^ask_answer_link_/.test(item.attr('id'))) {
                item.attr('title', MissingE.getLocale(lang).dashTweaksText
                                     .answer);
             }
-            else if (/^post_control_reply_/.test(item.attr('id'))) {
+            else if (/^post_control_reply_/.test(item.attr('id')) &&
+                     !item.attr('title')) {
                item.attr('title',
                          MissingE.getLocale(lang).dashTweaksText.reply +
                          (item.hasClass("MissingE_experimental_reply") ?
                           " [" + MissingE.getLocale(lang).dashTweaksText
                                     .experimental + "]" : ""));
-            }
-            else if (/^show_notes_/.test(item.attr('id')) &&
-                     item.children().length === 0) {
-               item.attr('title', MissingE.getLocale(lang).dashTweaksText
-                                    .notes);
-            }
-            else if (item.hasClass('reblog_count')) {
-               item.attr('title', MissingE.getLocale(lang).dashTweaksText
-                                    .notes);
             }
          });
       }
