@@ -206,7 +206,7 @@ MissingE.packages.magnifier = {
       $('head').append('<style id="MissingE_magnifier_style" type="text/css">' +
                        'a.MissingE_magnify { ' +
                        'background-image:url("' +
-                          extension.getURL('core/magnifier/magnifier.png') +
+                          extension.getURL('core/magnifier/magnify.png') +
                        '"); } ' +
                        '#facebox .slideshow .turner_left, ' +
                        '#facebox .slideshow .turner_right { ' +

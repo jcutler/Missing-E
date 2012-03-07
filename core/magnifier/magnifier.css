@@ -23,17 +23,12 @@
 
 a.MissingE_magnify {
 border-width:0;
-height:14px;
-width:14px;
-vertical-align:-3px;
+height:20px;
+width:20px;
 display:inline-block;
 background-repeat:no-repeat;
 background-attachment:scroll;
 background-position:0 0;
-}
-
-a.MissingE_magnify:hover {
-background-position:-14px 0;
 }
 
 a.MissingE_magnify_hide {
@@ -42,11 +37,7 @@ background-position:0 0 !important;
 }
 
 a.MissingE_magnify_err {
-background-position:-28px 0 !important;
-}
-
-a.MissingE_magnify + a.like_button {
-margin-left:8px !important;
+background-position:-20px 0 !important;
 }
 
 #posts .notification .avatar_frame .MissingE_magnify_avatar,
