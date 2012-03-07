@@ -99,6 +99,8 @@ MissingE.packages.dashboardTweaks = {
          return;
       }
       var lang = $('html').attr('lang');
+      var replyTxt = "Reply";
+      var replyingTxt = "Replying...";
       var id = node.attr('id').match(/\d*$/)[0];
       var notes = $('#show_notes_link_' + id);
       if (notes.length === 0) {
@@ -111,18 +113,38 @@ MissingE.packages.dashboardTweaks = {
       }
       key = MissingE.escapeHTML(key[1]);
       id = MissingE.escapeHTML(id);
-      notes.after($('<a />',
-                    {"class": "MissingE_experimental_reply",
-                     href: "#",
-                     click: function(){
-                        $.globalEval('display_reply_pane([' + id + ',"' +
-                                                          key + '"]);');
-                     },
-                     id: "post_control_reply_" + id,
-                     title: MissingE.getLocale(lang).dashTweaksText.reply +
-                        " [" + MissingE.getLocale(lang).dashTweaksText.experimental + "]",
-                     text: "[" + MissingE.getLocale(lang).dashTweaksText.reply + "]"}));
-
+      var expRep = $('<span />',
+                     {"class": "MissingE_experimental_reply popover_button reply_button",
+                      href: "#",
+                      id: "post_control_reply_" + id,
+                      title: MissingE.getLocale(lang).dashTweaksText.reply +
+                         " [" + MissingE.getLocale(lang).dashTweaksText.experimental + "]"});
+      var popover = $('<div />', {"class": "popover popover_gradient popover_post_tools"});
+      popover.css('display','none');
+      var app = popover;
+      var inner = $('<div />', {"class": "popover_inner"});
+      app.append(inner);
+      app = inner;
+      inner = $('<form action="/reply" />')
+               .append($('<textarea />', {"name": "reply_text",
+                                          "maxlength": "250",
+                                          title: "250 max"}))
+               .append($('<input />', {"type": "hidden",
+                                       "name": "post_id",
+                                       val: id}))
+               .append($('<input />', {"type": "hidden",
+                                       "name": "key",
+                                       val: key}));
+      app.append(inner);
+      app = inner;
+      inner = $('<button />', {"class": "chrome blue",
+                               text: replyTxt,
+                               css: {'width': '100%'}});
+      inner.data('label',replyTxt);
+      inner.data('label-loading',replyingTxt);
+      app.append(inner);
+      expRep.append(popover);
+      notes.after(expRep);
       var failer = $('<span />',
                      {"class": "MissingE_post_control " +
                                "MissingE_experimental_reply_wait",
@@ -555,6 +577,9 @@ MissingE.packages.dashboardTweaks = {
                'var fail;' +
                'if (response.url === "/reply") {' +
                   'if ((fail = document.getElementById(\'reply_fail_\' + response.parameters.post_id))) {' +
+                     'if ((btn = document.getElementById(\'post_control_reply_\' + response.parameters.post_id))) {' +
+                        'btn.style.display="none";' +
+                     '}' +
                      'if (response.transport.status == 200) {' +
                         'fail.className="MissingE_post_control MissingE_experimental_reply_success";' +
                      '}' +
@@ -707,6 +732,7 @@ MissingE.packages.dashboardTweaks = {
                   clickEvt.initMouseEvent("click", true, true, window, 0, 0, 0,
                                           0, 0, false, false, false, false, 0,
                                           null);
+                  e.preventDefault();
                   item.get(0).dispatchEvent(clickEvt);
                   return false;
                }

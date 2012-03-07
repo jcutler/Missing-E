@@ -51,3 +51,49 @@ z-index:100 !important;
 #posts .promotion_highlighted .MissingE_timestamp {
 font-size:13px !important;
 }
+
+#posts .post .post_controls .MissingE_experimental_reply,
+#posts .post .post_controls .reply_button {
+cursor:pointer;
+}
+
+#posts .post .post_controls .MissingE_experimental_reply,
+#posts .post .post_controls .MissingE_experimental_reply_wait,
+#posts .post .post_controls .MissingE_experimental_reply_fail,
+#posts .post .post_controls .MissingE_experimental_reply_success {
+margin-left:15px;
+height:19px;
+display:inline-block;
+background-repeat:no-repeat;
+}
+
+#posts .post .post_controls .MissingE_experimental_reply:hover {
+opacity:1;
+}
+
+#posts .post .post_controls .MissingE_experimental_reply {
+width:19px !important;
+background-position:0 0 !important;
+}
+
+#posts .post .MissingE_experimental_reply_wait,
+#posts .post .MissingE_experimental_reply_success,
+#posts .post .MissingE_experimental_reply_fail {
+font-size:0;
+line-height:0;
+}
+
+#posts .post .MissingE_experimental_reply_wait,
+#posts .post .MissingE_experimental_reply.already_reply {
+display:none !important;
+}
+
+#posts .post .MissingE_experimental_reply_fail {
+width:19px;
+background-position:-50px 0;
+}
+
+#posts .post .MissingE_experimental_reply_success {
+width:19px;
+background-position:-25px 0;
+}

@@ -32,17 +32,6 @@ line-height:18px !important;
 display:inline-block;
 }
 
-#posts .post .post_controls a.MissingE_experimental_reply,
-#posts .post .post_controls .MissingE_experimental_reply_wait,
-#posts .post .post_controls .MissingE_experimental_reply_fail,
-#posts .post .post_controls .MissingE_experimental_reply_success {
-margin-left:15px;
-}
-
-#posts .post .post_controls a.MissingE_experimental_reply,
-#posts .post .post_controls .MissingE_experimental_reply_wait,
-#posts .post .post_controls .MissingE_experimental_reply_fail,
-#posts .post .post_controls .MissingE_experimental_reply_success,
 #posts .post .post_controls a[id^="ask_answer_link"],
 #posts .post .post_controls a[href^="/edit"],
 #posts .post .post_controls a[onclick*="delete_post_"],
@@ -54,10 +43,6 @@ display:inline-block;
 background-repeat:no-repeat;
 }
 
-#posts .post .post_controls a.MissingE_experimental_reply,
-#posts .post .post_controls .MissingE_experimental_reply_wait,
-#posts .post .post_controls .MissingE_experimental_reply_fail,
-#posts .post .post_controls .MissingE_experimental_reply_success,
 #posts .post .post_controls a[id^="ask_answer_link"],
 #posts .post .post_controls a[href^="/edit"],
 #posts .post .post_controls a[onclick*="delete_post_"],
@@ -68,7 +53,6 @@ opacity:0.65;
 font-size:0 !important;
 }
 
-#posts .post .post_controls a.MissingE_experimental_reply:hover,
 #posts .post .post_controls a[id^="ask_answer_link"]:hover,
 #posts .post .post_controls a[href^="/edit"]:hover,
 #posts .post .post_controls a[onclick*="delete_post_"]:hover,
@@ -80,52 +64,27 @@ opacity:1;
 
 #posts .post .post_controls a[href^="/edit"] {
 width:19px;
-background-position:-104px 0;
+background-position:-119px 0;
 }
 
 #posts .post .post_controls a[onclick*="delete_post_"] {
 width:16px;
-background-position:-123px 0;
+background-position:-138px 0;
 }
 
 #posts .post .post_controls a[id^="ask_answer_link"] {
+height:19px
 width:20px;
-background-position:-159px 0;
+background-position:-174px 0;
 }
 
 #posts .post .post_controls a[onclick*="queue_post"] {
 width:20px;
-background-position:-60px 0;
+background-position:-75px 0;
 }
 
 #posts .post .post_controls a[onclick*="approve_post"],
 #posts .post .post_controls a[onclick*="publish_post"] {
 width:20px;
-background-position:-139px 0;
-}
-
-#posts .post .post_controls a.MissingE_experimental_reply {
-width:20px !important;
-background-position:0 0 !important;
-}
-
-#posts .post .MissingE_experimental_reply_wait,
-#posts .post .MissingE_experimental_reply_success,
-#posts .post .MissingE_experimental_reply_fail {
-font-size:0;
-line-height:0;
-}
-
-#posts .post .MissingE_experimental_reply_wait {
-display:none !important;
-}
-
-#posts .post .MissingE_experimental_reply_fail {
-width:20px;
-background-position:-40px 0;
-}
-
-#posts .post .MissingE_experimental_reply_success {
-width:20px;
-background-position:-20px 0;
+background-position:-154px 0;
 }
