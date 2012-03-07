@@ -27,13 +27,9 @@
 vertical-align:top !important;
 }
 
-#dashboard_inbox .post .post_controls a[id^="post_delete_"] {
-line-height:18px !important;
-display:inline-block;
-}
-
 #posts .post .post_controls a[id^="ask_answer_link"],
 #posts .post .post_controls a[href^="/edit"],
+#dashboard_inbox .post .post_controls a[id^="post_delete_"],
 #posts .post .post_controls a[onclick*="delete_post_"],
 #posts .post .post_controls a[onclick*="queue_post"],
 #posts .post .post_controls a[onclick*="approve_post"],
@@ -45,16 +41,18 @@ background-repeat:no-repeat;
 
 #posts .post .post_controls a[id^="ask_answer_link"],
 #posts .post .post_controls a[href^="/edit"],
+#dashboard_inbox .post .post_controls a[id^="post_delete_"],
 #posts .post .post_controls a[onclick*="delete_post_"],
 #posts .post .post_controls a[onclick*="queue_post"],
 #posts .post .post_controls a[onclick*="approve_post"],
 #posts .post .post_controls a[onclick*="publish_post"] {
-opacity:0.65;
+opacity:0.65 !important;
 font-size:0 !important;
 }
 
 #posts .post .post_controls a[id^="ask_answer_link"]:hover,
 #posts .post .post_controls a[href^="/edit"]:hover,
+#dashboard_inbox .post .post_controls a[id^="post_delete_"],
 #posts .post .post_controls a[onclick*="delete_post_"]:hover,
 #posts .post .post_controls a[onclick*="queue_post"]:hover,
 #posts .post .post_controls a[onclick*="approve_post"]:hover,
@@ -67,15 +65,16 @@ width:19px;
 background-position:-119px 0;
 }
 
+#dashboard_inbox .post .post_controls a[id^="post_delete_"],
 #posts .post .post_controls a[onclick*="delete_post_"] {
 width:16px;
 background-position:-138px 0;
 }
 
 #posts .post .post_controls a[id^="ask_answer_link"] {
-height:19px
+height:19px;
 width:20px;
-background-position:-174px 0;
+background-position:-179px 0;
 }
 
 #posts .post .post_controls a[onclick*="queue_post"] {

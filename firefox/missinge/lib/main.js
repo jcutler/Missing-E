@@ -1960,6 +1960,7 @@ function handleMessage(message, myWorker) {
                injectStyles.push({code:
                   '#posts .post .post_controls a[id^="ask_answer_link"], ' +
                   '#posts .post .post_controls a[href^="/edit"], ' +
+                  '#dashboard_inbox .post .post_controls a[id^="post_delete_"], ' +
                   '#posts .post .post_controls a[onclick*="delete_post_"], ' +
                   '#posts .post .post_controls a[onclick*="queue_post"], ' +
                   '#posts .post .post_controls a[onclick*="approve_post"], ' +
