@@ -421,7 +421,7 @@ MissingE.packages.bookmarker = {
          extension.getURL("core/bookmarker/sidebar_bookmark.png") +
          '") !important; } ' +
          'a.MissingE_mark { background-image:url("' +
-         extension.getURL("core/bookmarker/post_bookmark.png") + '"); } ' +
+         extension.getURL("core/bookmarker/mark_control.png") + '"); } ' +
          '#right_column #MissingE_marklist .MissingE_unmarker { ' +
          'background-image:url("' +
          extension.getURL("core/bookmarker/unmarker.png") + '") !important; }');

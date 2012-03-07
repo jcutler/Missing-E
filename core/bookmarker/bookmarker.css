@@ -88,8 +88,8 @@ opacity:1;
 
 a.MissingE_mark {
 border-width:0;
-height:14px;
-width:6px;
+height:19px;
+width:7px;
 vertical-align:-3px;
 display:inline-block;
 background-repeat:no-repeat;
@@ -97,12 +97,9 @@ background-attachment:scroll;
 background-position:0 0;
 }
 
-a.MissingE_mark:hover {
-background-position:-6px 0;
-}
-
 a.MissingE_ismarked {
-background-position:-12px 0 !important;
+background-position:-7px 0;
+opacity:1 !important;
 }
 
 #right_column #MissingE_marklist #MissingE_bookmarker_edit {
