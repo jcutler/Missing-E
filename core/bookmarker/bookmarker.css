@@ -89,7 +89,7 @@ opacity:1;
 a.MissingE_mark {
 border-width:0;
 height:19px;
-width:7px;
+width:11px;
 display:inline-block;
 background-repeat:no-repeat;
 background-attachment:scroll;
@@ -97,7 +97,7 @@ background-position:0 0;
 }
 
 a.MissingE_ismarked {
-background-position:-7px 0;
+background-position:-9px 0;
 opacity:1 !important;
 }
 
