@@ -1668,7 +1668,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             }
             if (getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1) {
                chrome.tabs.insertCSS(sender.tab.id, {code:
-                  '#posts .post .post_controls a[href^="/reblog"], ' +
                   '#posts .post .post_controls a[id^="post_control_reply"], ' +
                   '#posts .post .post_controls a[id^="ask_answer_link"], ' +
                   '#posts .post .post_controls a.MissingE_experimental_reply, ' +
@@ -1680,7 +1679,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                   '#posts .post .post_controls a[href^="/edit"], ' +
                   '#posts .post .post_controls a[onclick*="delete_post_"], ' +
                   '#posts .post .post_controls a[onclick*="queue_post"], ' +
-                  '#posts .post .post_controls a[id^="show_notes"], ' +
                   '#posts .post .post_controls a[onclick*="approve_post"], ' +
                   '#posts .post .post_controls a[onclick*="publish_post"] { ' +
                      'background-image:url("' +

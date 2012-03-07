@@ -582,22 +582,6 @@ MissingE.packages.dashboardTweaks = {
           document.body.id !== "tinymce" &&
           document.body.id !== "dashboard_edit_post") {
 
-         if (lang === "es" || lang === "ru" || lang === "pl") {
-            $('#posts .post .post_controls a[id^="show_notes_"] span')
-                  .text(function(i,txt) {
-               return txt.replace(/(\d)\s+(\d)/,'$1,$2');
-            });
-            extension.addAjaxListener(function(type, list) {
-               if (type === 'notes') { return; }
-               $.each(list, function(i,val) {
-                  $('#'+val+' .post_controls a[id^="show_notes_"] span')
-                        .text(function(i,txt) {
-                     return txt.replace(/(\d)\s+(\d)/,'$1,$2');
-                  });
-               });
-            });
-         }
-
          $('#posts .post .post_controls a').live('mouseover', function() {
             var item = $(this);
             if (item.attr('title')) { return; }

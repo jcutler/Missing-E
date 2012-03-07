@@ -1946,7 +1946,6 @@ function handleMessage(message, myWorker) {
             }
             if (getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1) == 1) {
                injectStyles.push({code:
-                  '#posts .post .post_controls a[href^="/reblog"], ' +
                   '#posts .post .post_controls a[id^="post_control_reply"], ' +
                   '#posts .post .post_controls a[id^="ask_answer_link"], ' +
                   '#posts .post .post_controls a.MissingE_experimental_reply, ' +
@@ -1958,7 +1957,6 @@ function handleMessage(message, myWorker) {
                   '#posts .post .post_controls a[href^="/edit"], ' +
                   '#posts .post .post_controls a[onclick*="delete_post_"], ' +
                   '#posts .post .post_controls a[onclick*="queue_post"], ' +
-                  '#posts .post .post_controls a[id^="show_notes"], ' +
                   '#posts .post .post_controls a[onclick*="approve_post"], ' +
                   '#posts .post .post_controls a[onclick*="publish_post"] { ' +
                      'background-image:url("' +

@@ -31,9 +31,9 @@ right:0;
 top:17px;
 }
 
-#posts .post .post_controls a,
-#posts .post .post_controls span,
-#posts .post .post_controls iframe {
+#posts .post .post_controls > a,
+#posts .post .post_controls > span,
+#posts .post .post_controls > iframe {
 vertical-align:top !important;
 }
 
@@ -49,11 +49,9 @@ display:inline-block;
 #posts .post .post_controls a.MissingE_reblogYourself_retry,
 #posts .post .post_controls a[id^="ask_answer_link"],
 #posts .post .post_controls a[id^="post_control_reply"],
-#posts .post .post_controls a[href^="/reblog"],
 #posts .post .post_controls a[href^="/edit"],
 #posts .post .post_controls a[onclick*="delete_post_"],
 #posts .post .post_controls a[onclick*="queue_post"],
-#posts .post .post_controls a[id^="show_notes"],
 #posts .post .post_controls a[onclick*="approve_post"],
 #posts .post .post_controls a[onclick*="publish_post"] {
 height:14px;
@@ -69,7 +67,6 @@ background-repeat:no-repeat;
 #posts .post .post_controls a.MissingE_reblogYourself_retry,
 #posts .post .post_controls a[id^="ask_answer_link"],
 #posts .post .post_controls a[id^="post_control_reply"],
-#posts .post .post_controls a[href^="/reblog"],
 #posts .post .post_controls a[href^="/edit"],
 #posts .post .post_controls a[onclick*="delete_post_"],
 #posts .post .post_controls a[onclick*="queue_post"],
@@ -80,35 +77,6 @@ margin-left:10px;
 font-size:0 !important;
 }
 
-#posts .post .post_controls a[id^="show_notes"] {
-position:relative;
-background-position:3px -16px;
-border-right:15px solid transparent;
-background-clip:border-box;
-line-height:15px;
-width:0;
-word-spacing:-0.5ex;
-text-indent:10px;
-text-align:right;
-overflow:visible;
-font-size:0 !important;
-margin-left:60px;
-}
-
-#posts .post .post_controls a[id^="show_notes"] span {
-font-size:13px !important;
-position:absolute;
-right:0;
-overflow:hidden;
-height:16px;
-display:inline-block;
-white-space:pre-wrap;
-}
-
-html[lang="ja"] #posts .post .post_controls a[id^="show_notes"] span {
-overflow:visible;
-overflow-y:hidden;
-}
 
 #posts .post .post_controls a.MissingE_mark,
 #posts .post .post_controls a.like_button {
@@ -118,18 +86,12 @@ padding-bottom:2px;
 #posts .post .post_controls a.MissingE_experimental_reply:hover,
 #posts .post .post_controls a[id^="ask_answer_link"]:hover,
 #posts .post .post_controls a[id^="post_control_reply"]:hover,
-#posts .post .post_controls a[href^="/reblog"]:hover,
 #posts .post .post_controls a[href^="/edit"]:hover,
 #posts .post .post_controls a[onclick*="delete_post_"]:hover,
 #posts .post .post_controls a[onclick*="queue_post"]:hover,
-#posts .post .post_controls a[id^="show_notes"]:hover,
 #posts .post .post_controls a[onclick*="approve_post"]:hover,
 #posts .post .post_controls a[onclick*="publish_post"]:hover {
 opacity:1;
-}
-
-#posts .post .post_controls a[id^="show_notes"]:hover {
-background-position:3px 0;
 }
 
 #posts .post .post_controls a[href^="/edit"] {
@@ -140,11 +102,6 @@ background-position:-36px 0;
 #posts .post .post_controls a[onclick*="delete_post_"] {
 width:13px;
 background-position:-50px 0;
-}
-
-#posts .post .post_controls a[href^="/reblog"] {
-width:12px;
-background-position:-12px 0;
 }
 
 #posts .post .post_controls a[id^="post_control_reply"],
