@@ -514,3 +514,12 @@ font-size:12px;
 font-style:italic;
 margin-bottom:4px;
 }
+
+#post_control_icons.small_icons {
+transform-origin:left center;
+transform:scale(0.8,0.8);
+-webkit-transform-origin:left center;
+-webkit-transform:scale(0.8,0.8);
+-moz-transform-origin:left center;
+-moz-transform:scale(0.8,0.8);
+}

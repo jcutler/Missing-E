@@ -453,6 +453,25 @@ MissingE.utilities.options = {
       }
    },
 
+   toggleSmallIcons: function(noAnimation) {
+      var icons = $('#post_control_icons');
+      var isSmall = $('input[name="MissingE_dashboardTweaks_smallIcons"]')
+                        .get(0).checked;
+      icons.hide();
+      if (isSmall) {
+         icons.addClass('small_icons');
+      }
+      else {
+         icons.removeClass('small_icons');
+      }
+      if (noAnimation) {
+         icons.show();
+      }
+      else {
+         icons.fadeIn(300);
+      }
+   },
+
    init: function() {
       extension.sendRequest("close-options");
 
@@ -478,6 +497,11 @@ MissingE.utilities.options = {
          MissingE.utilities.options.loadSettings();
          MissingE.utilities.options.setupPage();
       }
+      
+      $('input[name="MissingE_dashboardTweaks_smallIcons"]').change(function(){
+         MissingE.utilities.options.toggleSmallIcons();
+      });
+      MissingE.utilities.options.toggleSmallIcons(true);
    }
 };
 
