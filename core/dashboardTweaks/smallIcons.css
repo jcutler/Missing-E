@@ -31,19 +31,30 @@ transform:scale(0.8,0.8);
 font-size:16px !important;
 }
 
-#posts .post .post_controls iframe[src^="/upload/image"] {
-width:25px !important;
-margin-right:-4px !important;
+#upload_image_form #controls {
+transform-origin:center center;
+transform:scale(0.8,0.8);
+-webkit-transform-origin:center center;
+-webkit-transform:scale(0.8,0.8);
+-moz-transform-origin:center center;
+-moz-transform:scale(0.8,0.8);
 }
 
+#posts .post .post_controls iframe[src^="/upload/image"] {
+vertical-align:middle !important;
+height:16px !important;
+width:18px !important;
+}
+
+#posts .post .post_controls iframe[src^="/upload/image"],
 #posts .post .post_controls .popover_post_tools,
 #posts .post .post_controls .MissingEmassDeleteSelect {
-transform:scale(1.25,1.25);
 transform-origin:center center;
--webkit-transform:scale(1.25,1.25);
+transform:scale(1.25,1.25);
 -webkit-transform-origin:center center;
--moz-transform:scale(1.25,1.25);
+-webkit-transform:scale(1.25,1.25);
 -moz-transform-origin:center center;
+-moz-transform:scale(1.25,1.25);
 }
 
 #posts .post post_controls .reply_button {

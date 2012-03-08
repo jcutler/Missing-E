@@ -1905,6 +1905,17 @@ function handleMessage(message, myWorker) {
       var injectStyles = [];
 
       if (myWorker.tab.url !== message.url &&
+          MissingE.isTumblrURL(message.url, ["upload"]) &&
+          MissingE.isTumblrURL(myWorker.tab.url,
+                               ["dashboard", "blog", "likes", "tagged"])) {
+         if (getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0) == 1) {
+            myWorker.postMessage({greeting: "earlyStyles",
+                                  extensionURL: data.url(""),
+                                  styles: [{file: "core/dashboardTweaks/smallIcons.css"}]});
+         }
+         return;
+      }
+      else if (myWorker.tab.url !== message.url &&
           !MissingE.isTumblrURL(message.url, ["askForm", "fanMail"])) {
          return;
       }

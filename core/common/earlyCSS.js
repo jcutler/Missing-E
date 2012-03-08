@@ -23,7 +23,7 @@
 
 (function(){
    if (window.top === window ||
-       MissingE.isTumblrURL(location.href, ["askForm", "fanMail"])) {
+       MissingE.isTumblrURL(location.href, ["fanMail", "upload"])) {
       extension.sendRequest("earlyStyles", {url: location.href},
                             function(response) {
          var i;

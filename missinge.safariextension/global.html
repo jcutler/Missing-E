@@ -1780,6 +1780,16 @@ function handleRequest(request) {
          injectStyles.push({file: "core/askTweaks/smallFanMail.css"});
       }
 
+      if (MissingE.isTumblrURL(request.message.url, ["upload"]) &&
+          MissingE.isTumblrURL(request.target.url,
+                               ["dashboard", "blog", "likes", "tagged"])) {
+         if (getSetting("MissingE_dashboardTweaks_smallIcons",0) == 1) {
+            request.target.page.dispatchMessage("earlyStyles",
+                                                {styles: [{file: "core/dashboardTweaks/smallIcons.css"}]});
+         }
+         return;
+      }
+
       if (MissingE.isTumblrURL(request.message.url,
                       ["dashboard",
                        "blog",
