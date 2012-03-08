@@ -78,8 +78,11 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.3** (03/08/2012)
+**_!_** Fix placement of quick (1-click) reblogging menu when using reduced post control icons
+
 ##**2.7.2** (03/08/2012)
-**_+_** Fix display of animated icon for quick (1-click) reblogging
+**_!_** Fix display of animated icon for quick (1-click) reblogging
 
 ##**2.7.1** (03/08/2012)
 **_+_** Add option to reduce dashboard post icon size  
