@@ -63,6 +63,10 @@ transform:scale(1.25,1.25);
 -moz-transform:scale(1.25,1.25);
 }
 
+#posts .post .post_controls .reblog_count {
+padding:1px 5px !important;
+}
+
 #posts .post post_controls .reply_button {
 display:inline-block !important;
 position:relative !important;
