@@ -1976,12 +1976,12 @@ function handleMessage(message, myWorker) {
                   '} ' +
                   '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
                      'background-image:url("' +
-                        data.url("core/betterReblogs/reblog_animated.gif") +
+                        data.url("core/betterReblogs/reblogging.gif") +
                      '") !important; ' +
                   '} ' +
                   '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
                      'background-image:url("' +
-                        data.url("core/betterReblogs/reblog_success.png") +
+                        data.url("core/betterReblogs/reblogSuccess.png") +
                      '") !important; ' +
                   '}'});
                injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});

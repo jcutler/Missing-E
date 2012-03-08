@@ -1697,12 +1697,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                   '} ' +
                   '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
                      'background-image:url("' +
-                     chrome.extension.getURL("core/betterReblogs/reblog_animated.gif") +
+                     chrome.extension.getURL("core/betterReblogs/reblogging.gif") +
                      '") !important; ' +
                   '} ' +
                   '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
                      'background-image:url("' +
-                     chrome.extension.getURL("core/betterReblogs/reblog_success.png") +
+                     chrome.extension.getURL("core/betterReblogs/reblogSuccess.png") +
                      '") !important; ' +
                   '}'});
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/replaceIcons.css"});

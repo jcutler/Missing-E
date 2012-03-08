@@ -202,15 +202,14 @@ MissingE.packages.betterReblogs = {
       var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
       a.attr('oldtxt',a.attr('title'));
       $('#MissingE_quick_reblog').css('display','none');
-      a.addClass('MissingE_quick_reblogging')
-         .text(MissingE.getLocale(lang).reblogging);
+      a.addClass('MissingE_quick_reblogging');
       a.attr('title',MissingE.getLocale(lang).reblogging);
    },
 
    failReblog: function(id) {
       var lang = $('html').attr('lang');
       var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
-      a.removeClass('MissingE_quick_reblogging').text(a.attr('oldtxt'));
+      a.removeClass('MissingE_quick_reblogging');
       a.attr('title',a.attr('oldtxt'));
       a.removeAttr('oldtxt');
       alert(MissingE.getLocale(lang).reblogFailed);
@@ -220,8 +219,7 @@ MissingE.packages.betterReblogs = {
       var lang = $('html').attr('lang');
       var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
       a.addClass('MissingE_quick_reblogging_success')
-         .addClass('MissingE_quick_reblogging_success')
-         .text(MissingE.getLocale(lang).rebloggedText);
+         .addClass('MissingE_quick_reblogging_success');
       a.attr('title',MissingE.getLocale(lang).rebloggedText);
       a.removeAttr('oldtxt');
    },
