@@ -99,8 +99,8 @@ MissingE.packages.dashboardTweaks = {
          return;
       }
       var lang = $('html').attr('lang');
-      var replyTxt = "Reply";
-      var replyingTxt = "Replying...";
+      var replyTxt = MissingE.getLocale(lang).reply;
+      var replyingTxt = MissingE.getLocale(lang).replying;
       var id = node.attr('id').match(/\d*$/)[0];
       var notes = $('#show_notes_link_' + id);
       if (notes.length === 0) {
@@ -140,8 +140,8 @@ MissingE.packages.dashboardTweaks = {
       inner = $('<button />', {"class": "chrome blue",
                                text: replyTxt,
                                css: {'width': '100%'}});
-      inner.data('label',replyTxt);
-      inner.data('label-loading',replyingTxt);
+      inner.attr('data-label',replyTxt);
+      inner.attr('data-label-loading',replyingTxt);
       app.append(inner);
       expRep.append(popover);
       notes.after(expRep);

@@ -104,6 +104,8 @@ var locale = {
    "audio": "Audio",
    "video": "Video"
   },
+  "reply": "Reply",
+  "replying": "Replying...",
   "dashTweaksText": {
    "answer": "answer",
    "edit": "edit",
@@ -288,6 +290,8 @@ var locale = {
    "audio": "Audio",
    "video": "Video"
   },
+  "reply": "Antworten",
+  "replying": "Antworten...",
   "dashTweaksText": {
    "answer": "antworten",
    "edit": "bearbeiten",
@@ -472,6 +476,8 @@ var locale = {
    "audio": "Audio",
    "video": "Vídeo"
   },
+  "reply": "Responder",
+  "replying": "Respondiendo...",
   "dashTweaksText": {
    "answer": "responder",
    "edit": "editar",
@@ -656,8 +662,10 @@ var locale = {
    "audio": "Audio",
    "video": "Vidéo"
   },
+  "reply": "Envoyer",
+  "replying": "Réaction en cours d'envoi...",
   "dashTweaksText": {
-   "answer": "répondre",
+   "answer": "Répondre",
    "edit": "éditer",
    "del": "supprimer",
    "reblog": "rebloguer",
@@ -840,6 +848,8 @@ var locale = {
    "audio": "Audio",
    "video": "Video"
   },
+  "reply": "Rispondi",
+  "replying": "Rispondendo...",
   "dashTweaksText": {
    "answer": "rispondi",
    "edit": "modifica",
@@ -1034,6 +1044,8 @@ var locale = {
    "audio": "音声",
    "video": "動画"
   },
+  "reply": "返信",
+  "replying": "返信中…",
   "dashTweaksText": {
    "answer": "回答する",
    "edit": "編集",
@@ -1211,6 +1223,8 @@ var locale = {
    "audio": "Audio",
    "video": "Wideo"
   },
+  "reply": "Komentuj",
+  "replying": "Komentowanie...",
   "dashTweaksText": {
    "answer": "odpowiedz",
    "edit": "edytuj",
@@ -1395,6 +1409,8 @@ var locale = {
    "audio": "Аудио",
    "video": "Видео"
   },
+  "reply": "Ответить",
+  "replying": "Ответ...",
   "dashTweaksText": {
    "answer": "ответить",
    "edit": "изменить",
@@ -1609,6 +1625,8 @@ var locale = {
    "audio": "Ses",
    "video": "Video"
   },
+  "reply": "Yorum yap",
+  "replying": "Yanıtlanıyor...",
   "dashTweaksText": {
    "answer": "yanıtla",
    "edit": "düzenle",
