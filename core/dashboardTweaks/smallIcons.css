@@ -21,6 +21,11 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#MissingE_quick_reblog {
+margin-top:-3px;
+margin-left:-1px;
+}
+
 #posts .post .post_controls {
 transform-origin:right top;
 transform:scale(0.8,0.8);

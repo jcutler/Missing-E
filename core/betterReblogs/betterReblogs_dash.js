@@ -679,7 +679,7 @@ MissingE.packages.betterReblogs = {
                               .replace(/[\?&]$/,'') + arg;
             qr.find('#MissingE_quick_reblog_manual').attr('href', newurl);
             h = Math.round(pos.top+h-marg);
-            w = Math.round(pos.left-w);
+            w = Math.round(pos.left-w-1);
             qr.removeData('off');
             qr.css('cssText', 'top:' + h + 'px !important;' +
                               'left:' + w + 'px !important;');
