@@ -21,9 +21,9 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#posts .post .post_controls > a,
-#posts .post .post_controls > span,
-#posts .post .post_controls > iframe {
+#dashboard_inbox #posts .post .post_controls > a,
+#dashboard_inbox #posts .post .post_controls > span,
+#dashboard_inbox #posts .post .post_controls > iframe {
 vertical-align:top !important;
 }
 
