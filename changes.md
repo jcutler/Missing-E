@@ -78,9 +78,12 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.2** (03/08/2012)
+**_+_** Fix display of animated icon for quick (1-click) reblogging
+
 ##**2.7.1** (03/08/2012)
 **_+_** Add option to reduce dashboard post icon size  
-**_!_** Fix icons for quick reblogging to match new Tumblr dashboard post control buttons
+**_!_** Fix icons for quick (1-click) reblogging to match new Tumblr dashboard post control buttons
 
 ##**2.7.0** (03/07/2012)
 **_!_** Update all features for compatibility with new Tumblr dashboard post control buttons  
