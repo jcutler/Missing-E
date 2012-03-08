@@ -27,6 +27,7 @@ margin-left:-1px;
 }
 
 #posts .post .post_controls {
+position:relative;
 transform-origin:right top;
 transform:scale(0.8,0.8);
 -webkit-transform-origin:right top;

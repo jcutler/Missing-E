@@ -458,6 +458,23 @@ MissingE.packages.dashboardTweaks = {
       }
    },
 
+   smallIconsZIndex: function(post) {
+      var idx = 2147483647;
+      var ctrl = post.find('.post_controls');
+      var nextPost = post.next();
+      while (nextPost && !nextPost.hasClass('post')) {
+         nextPost = nextPost.next();
+      }
+      if (nextPost) {
+         var nextCtrl = nextPost.find('.post_controls').css('z-index','auto');
+      }
+      var overlay = $('#overlay_for_active_menu');
+      if (overlay.length > 0) {
+         idx = overlay.css('z-index') + 1;
+      }
+      ctrl.css('z-index',idx);
+   },
+
    navigationSpacer: function() {
       var spacer = $('#MissingE_navSpacer');
       var lastPost = $('#posts li.post').last();
@@ -603,6 +620,14 @@ MissingE.packages.dashboardTweaks = {
          });
       }
 
+      if (settings.smallIcons === 1) {
+         $('#posts .post .post_controls .popover_button')
+               .live('mouseover', function() {
+            MissingE.packages.dashboardTweaks
+               .smallIconsZIndex($(this).closest('.post'));
+         });
+      }
+
       if (settings.replaceIcons === 1 &&
           document.body.id !== "tinymce" &&
           document.body.id !== "dashboard_edit_post") {
@@ -710,7 +735,6 @@ MissingE.packages.dashboardTweaks = {
                if (!myPid || myPid.length < 2) { return; }
                myPid = myPid[1];
                e.target.blur();
-               $.globalEval('display_reply_pane(' + myPid + ');');
                return false;
             }
             var currPos = $(window).scrollTop()+7;
@@ -722,6 +746,10 @@ MissingE.packages.dashboardTweaks = {
                   myPid = myPid[1];
                   var item;
                   if (e.keyCode === 67) {
+                     if (settings.smallIcons === 1) {
+                        MissingE.packages.dashboardTweaks
+                           .smallIconsZIndex($(this));
+                     }
                      item = $('#post_control_reply_' + myPid);
                   }
                   else if (e.keyCode === 69) {
