@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.4** (03/08/2012)
+**_!_** Fix issue with reply box being partially hidden when using reduced post control icons
+
 ##**2.7.3** (03/08/2012)
 **_!_** Fix placement of quick (1-click) reblogging menu when using reduced post control icons
 
