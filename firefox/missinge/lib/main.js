@@ -1908,7 +1908,8 @@ function handleMessage(message, myWorker) {
           MissingE.isTumblrURL(message.url, ["upload"]) &&
           MissingE.isTumblrURL(myWorker.tab.url,
                                ["dashboard", "blog", "likes", "tagged"])) {
-         if (getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0) == 1) {
+         if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1 &&
+             getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0) == 1) {
             myWorker.postMessage({greeting: "earlyStyles",
                                   extensionURL: data.url(""),
                                   styles: [{file: "core/dashboardTweaks/smallIcons.css"}]});

@@ -1783,7 +1783,8 @@ function handleRequest(request) {
       if (MissingE.isTumblrURL(request.message.url, ["upload"]) &&
           MissingE.isTumblrURL(request.target.url,
                                ["dashboard", "blog", "likes", "tagged"])) {
-         if (getSetting("MissingE_dashboardTweaks_smallIcons",0) == 1) {
+         if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1 &&
+             getSetting("MissingE_dashboardTweaks_smallIcons",0) == 1) {
             request.target.page.dispatchMessage("earlyStyles",
                                                 {styles: [{file: "core/dashboardTweaks/smallIcons.css"}]});
          }

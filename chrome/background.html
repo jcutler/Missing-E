@@ -1639,7 +1639,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       if (MissingE.isTumblrURL(request.url, ["upload"]) &&
           MissingE.isTumblrURL(sender.tab.url,
                                ["dashboard", "blog", "likes", "tagged"])) {
-         if (getSetting("MissingE_dashboardTweaks_smallIcons",0) == 1) {
+         if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1 &&
+             getSetting("MissingE_dashboardTweaks_smallIcons",0) == 1) {
             sendResponse({styles: [{file: "core/dashboardTweaks/smallIcons.css"}]});
          }
          return;
