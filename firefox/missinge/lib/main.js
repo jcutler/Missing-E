@@ -166,6 +166,7 @@ function getAllSettings(getStale) {
    settings.MissingE_dashboardTweaks_reblogQuoteFit = getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1);
    settings.MissingE_dashboardTweaks_wrapTags = getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1);
    settings.MissingE_dashboardTweaks_replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1);
+   settings.MissingE_dashboardTweaks_smallIcons = getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0);
    settings.MissingE_dashboardTweaks_postLinks = getSetting("extensions.MissingE.dashboardTweaks.postLinks",1);
    settings.MissingE_dashboardTweaks_reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
    settings.MissingE_dashboardTweaks_widescreen = getSetting("extensions.MissingE.dashboardTweaks.widescreen",0);
@@ -1826,6 +1827,7 @@ function handleMessage(message, myWorker) {
             settings.reblogQuoteFit = getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1);
             settings.wrapTags = getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1);
             settings.replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1);
+            settings.smallIcons = getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0);
             settings.postLinks = getSetting("extensions.MissingE.dashboardTweaks.postLinks",1);
             settings.reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
             settings.widescreen = getSetting("extensions.MissingE.dashboardTweaks.widescreen",0);
@@ -1937,6 +1939,9 @@ function handleMessage(message, myWorker) {
 
          if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
             injectStyles.push({file: "core/dashboardTweaks/dashboardTweaks.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0) == 1) {
+               injectStyles.push({file: "core/dashboardTweaks/smallIcons.css"});
+            }
             if (getSetting("extensions.MissingE.dashboardTweaks.notePreview",1) == 1) {
                injectStyles.push({file: "core/dashboardTweaks/preview.css"});
                injectStyles.push({code:

@@ -325,6 +325,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_reblogQuoteFit',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_wrapTags',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_replaceIcons',1);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_smallIcons',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_postLinks',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_reblogReplies',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashboardTweaks_widescreen',0);

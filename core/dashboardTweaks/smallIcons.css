@@ -1,0 +1,53 @@
+/*
+* 'Missing e' Extension
+*
+* Copyright 2011, Jeremy Cutler
+* Released under the GPL version 3 licence.
+* SEE: license/GPL-LICENSE.txt
+*
+* This file is part of 'Missing e'.
+*
+* 'Missing e' is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* 'Missing e' is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#posts .post .post_controls {
+transform-origin:right top;
+transform:scale(0.8,0.8);
+-webkit-transform-origin:right top;
+-webkit-transform:scale(0.8,0.8);
+-moz-transform-origin:right top;
+-moz-transform:scale(0.8,0.8);
+font-size:16px !important;
+}
+
+#posts .post .post_controls .popover_post_tools,
+#posts .post .post_controls .MissingEmassDeleteSelect {
+transform:scale(1.25,1.25);
+transform-origin:center center;
+-webkit-transform:scale(1.25,1.25);
+-webkit-transform-origin:center center;
+-moz-transform:scale(1.25,1.25);
+-moz-transform-origin:center center;
+}
+
+#posts .post post_controls .reply_button {
+display:inline-block !important;
+position:relative !important;
+}
+
+#posts .post .post_controls .popover_post_tools {
+position:absolute !important;
+top:56px !important;
+right:-41px !important;
+}

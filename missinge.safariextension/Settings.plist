@@ -52,7 +52,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>2.7.0</string>
+		<string>2.7.1</string>
 		<key>Key</key>
 		<string>MissingE_version</string>
 		<key>Title</key>
@@ -355,6 +355,16 @@
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashboardTweaks_replaceIcons</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_dashboardTweaks_smallIcons</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

@@ -1591,6 +1591,7 @@ function handleRequest(request) {
       settings.MissingE_dashboardTweaks_reblogQuoteFit = getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1);
       settings.MissingE_dashboardTweaks_wrapTags = getSetting("MissingE_dashboardTweaks_wrapTags",1);
       settings.MissingE_dashboardTweaks_replaceIcons = getSetting("MissingE_dashboardTweaks_replaceIcons",1);
+      settings.MissingE_dashboardTweaks_smallIcons = getSetting("MissingE_dashboardTweaks_smallIcons",0);
       settings.MissingE_dashboardTweaks_postLinks = getSetting("MissingE_dashboardTweaks_postLinks",1);
       settings.MissingE_dashboardTweaks_reblogReplies = getSetting("MissingE_dashboardTweaks_reblogReplies",0);
       settings.MissingE_dashboardTweaks_widescreen = getSetting("MissingE_dashboardTweaks_widescreen",0);
@@ -1698,6 +1699,7 @@ function handleRequest(request) {
             settings.reblogQuoteFit = getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1);
             settings.wrapTags = getSetting("MissingE_dashboardTweaks_wrapTags",1);
             settings.replaceIcons = getSetting("MissingE_dashboardTweaks_replaceIcons",1);
+            settings.smallIcons = getSetting("MissingE_dashboardTweaks_smallIcons",0);
             settings.postLinks = getSetting("MissingE_dashboardTweaks_postLinks",1);
             settings.reblogReplies = getSetting("MissingE_dashboardTweaks_reblogReplies",0);
             settings.widescreen = getSetting("MissingE_dashboardTweaks_widescreen",0);
@@ -1802,6 +1804,9 @@ function handleRequest(request) {
 
          if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1) {
             injectStyles.push({file: "core/dashboardTweaks/dashboardTweaks.css"});
+            if (getSetting("MissingE_dashboardTweaks_smallIcons",0) == 1) {
+               injectStyles.push({file: "core/dashboardTweaks/smallIcons.css"});
+            }
             if (getSetting("MissingE_dashboardTweaks_notePreview",1) == 1) {
                injectStyles.push({file: "core/dashboardTweaks/preview.css"});
                injectStyles.push({code:
