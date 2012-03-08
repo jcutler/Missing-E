@@ -25,6 +25,8 @@
 
 MissingE.packages.bookmarker = {
 
+   reverseLoading: true,
+
    serializeMarks: function(a) {
       var s = "";
       var i;
@@ -49,10 +51,17 @@ MissingE.packages.bookmarker = {
    },
 
    getMarkText: function(dt, post, name) {
-      var pid = Number(post)+1;
+      var pid = Number(post);
       var mark = $('<li />', {id: "mark_" + post}).attr("post", post);
+      var href = "/dashboard/1000/";
+      if (this.reverseLoading) {
+         href += "-" + (pid-1) + "#post_" + pid;
+      }
+      else {
+         href += (pid+1);
+      }
       mark.append($('<a />',
-                    {href: "/dashboard/1000/" + pid,
+                    {href: "/dashboard/1000/-" + (pid-1) + "#post_" + pid,
                      "class": "MissingE_bookmarker_marklink"})
                      .attr("post", post)
                      .append($('<div />', {"class": "hide_overflow"})
@@ -445,7 +454,8 @@ MissingE.packages.bookmarker = {
                         var mark = $(this).find('div.post_controls a.MissingE_mark');
                         if (mark.length === 0) { return false; }
                         mark = mark.get(0);
-                        MissingE.packages.bookmarker.markClick.apply(mark, [{which:1, shiftKey:false}]);
+                        MissingE.packages.bookmarker.markClick
+                           .apply(mark, [{which:1, shiftKey:false}]);
                         return false;
                      }
                      if (postPos >= currPos) {

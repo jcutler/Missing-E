@@ -497,6 +497,17 @@ MissingE.packages.dashboardTweaks = {
       }
    },
 
+   gotoPost: function(postId) {
+      console.log(postId);
+      if (/^#post_\d+$/.test(postId)) {
+         var post = $(postId);
+         console.log(post.offset().top);
+         if (post.length > 0) {
+            window.scrollTo(0, post.offset().top - 7);
+         }
+      }
+   },
+
    run: function() {
       var settings = this.settings;
       var lang = $('html').attr('lang');
@@ -717,6 +728,10 @@ MissingE.packages.dashboardTweaks = {
                }
             }
          }, false);
+      }
+
+      if (/^#post_\d+$/.test(location.hash)) {
+         this.gotoPost(location.hash);
       }
 
       if (settings.keyboardShortcut) {
