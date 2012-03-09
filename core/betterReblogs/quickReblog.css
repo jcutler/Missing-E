@@ -80,6 +80,17 @@ color:#444 !important;
 width:95%;
 }
 
+#MissingE_quick_reblog #MissingE_quick_reblog_tags textarea {
+font:normal 10px Helvetica,sans-serif !important;
+color:#444 !important;
+width:136px;
+max-width:136px;
+min-width:136px;
+height:24px;
+min-height:24px;
+padding:0 !important;
+}
+
 #MissingE_quick_reblog #MissingE_quick_reblog_twitter input {
 vertical-align:-2px;
 }

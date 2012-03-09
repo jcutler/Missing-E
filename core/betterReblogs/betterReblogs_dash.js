@@ -267,7 +267,7 @@ MissingE.packages.betterReblogs = {
       }
       url = location.protocol + '//' + location.host + url;
       url = url.replace(/\?redirect_to=.*$/,'');
-      var tags = $('#MissingE_quick_reblog_tags input').val();
+      var tags = $('#MissingE_quick_reblog_tags textarea').val();
       tags = tags.replace(/^\s*,/,'').replace(/,(\s*,)*/g,',')
                .replace(/\s*,\s*/g,',').replace(/,$/,'')
                .replace(/^\s*/,'').replace(/\s*$/,'');
@@ -404,7 +404,7 @@ MissingE.packages.betterReblogs = {
             var tags;
             var isManual = this.id === 'MissingE_quick_reblog_manual';
             if (isManual && settings.autoFillTags === 1) {
-               tags = $('#MissingE_quick_reblog_tags input').val();
+               tags = $('#MissingE_quick_reblog_tags textarea').val();
                tags = tags.replace(/\s*,\s*/g,',').replace(/,$/,'')
                         .replace(/^\s*/,'');
                MissingE.packages.betterReblogs.setReblogTagsPlainText(tags);
@@ -541,7 +541,7 @@ MissingE.packages.betterReblogs = {
          }
          txt += node[0] + '<div class="user_menu_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_tags">' +
-                  '<input type="text" /><br />' +
+                  '<textarea rows="2" /><br />' +
                   MissingE.escapeHTML(MissingE.getLocale(lang).tagsText) +
                   '</div></div>' + node[1];
          var qr = $(txt).appendTo('body');
@@ -597,7 +597,7 @@ MissingE.packages.betterReblogs = {
                }
             }
          });
-         qr.find('#MissingE_quick_reblog_tags input').focus(function() {
+         qr.find('#MissingE_quick_reblog_tags textarea').focus(function() {
             qr.addClass('MissingE_quick_reblog_tags_inputting');
             var taginput = this;
             if (extension.isSafari || extension.isFirefox) {
@@ -684,7 +684,7 @@ MissingE.packages.betterReblogs = {
             var postId = reblog.closest('li.post').attr('id').match(/\d*$/)[0];
             if (qr.find('div.user_menu_list').attr('id') !==
                   'list_for_' + postId) {
-               qr.find('#MissingE_quick_reblog_tags input')
+               qr.find('#MissingE_quick_reblog_tags textarea')
                   .val(tagarr.join(', '));
                qr.find('div.user_menu_list').attr('id','list_for_' + postId);
             }
@@ -750,7 +750,7 @@ MissingE.packages.betterReblogs = {
             $(document).click(function(e) {
                if (!$.contains(qr.get(0), e.relatedTarget)) {
                   qr.removeClass('MissingE_quick_reblog_keys');
-                  var inpBox = $('#MissingE_quick_reblog_tags input');
+                  var inpBox = $('#MissingE_quick_reblog_tags textarea');
                   inpBox.get(0).blur();
                   if (qr.css('display') === 'none') {
                      MissingE.packages.betterReblogs.resetTumblr =
@@ -816,7 +816,7 @@ MissingE.packages.betterReblogs = {
                                  !qr.hasClass('MissingE_quick_reblog_keys')) {
                            qr.addClass('MissingE_quick_reblog_keys');
                            qr.find('.MissingE_qr_keyActive').removeClass('MissingE_qr_keyActive');
-                           inpBox = $('#MissingE_quick_reblog_tags input');
+                           inpBox = $('#MissingE_quick_reblog_tags textarea');
                            inpBox.closest('.user_menu_list_item').addClass('MissingE_qr_keyActive');
                            inpBox.get(0).focus();
                            e.preventDefault();
@@ -825,7 +825,7 @@ MissingE.packages.betterReblogs = {
                         else if (qr.hasClass('MissingE_quick_reblog_keys') &&
                                  e.keyCode === 27) {
                            qr.removeClass('MissingE_quick_reblog_keys');
-                           inpBox = $('#MissingE_quick_reblog_tags input');
+                           inpBox = $('#MissingE_quick_reblog_tags textarea');
                            inpBox.get(0).blur();
                            if (qr.css('display') === 'none') {
                               MissingE.packages.betterReblogs.resetTumblr =
