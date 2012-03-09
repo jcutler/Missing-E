@@ -21,6 +21,10 @@
 * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#posts big big {
+font-size:16px;
+}
+
 #posts div.reply_pane .chrome:not(:disabled) {
 cursor:pointer;
 }
