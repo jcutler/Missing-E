@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.7** (03/09/2012)
+**_!_** Apply fixes to quick (1-click) reblogging icon display  
+**_!_** Improve fix for bookmark error page issue
+
 ##**2.7.6** (03/08/2012)
 **_!_** Fix issue with some 'Missing e' bookmarks showing error pages  
 **_!_** Improve Tumblr's font size limitation for HTML &lt;big&gt; tags
