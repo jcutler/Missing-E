@@ -79,6 +79,7 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.7.8** (not yet released)
+**_+_** Automatic tagging of reblogged posts  
 **_+_** Add T keyboard shortcut to quick (1-click) reblogging to edit tags before reblogging
 
 ##**2.7.7** (03/09/2012)
