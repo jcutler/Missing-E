@@ -88,7 +88,7 @@ MissingE.packages.bookmarker = {
                          text: MissingE.getLocale(lang).bookmarkNoun + " - "});
          bartxt.append($('<em />', {id: "bookmarkbar_label_" + markid,
                                     text: marktxt}));
-         if (altPost) {
+         if (altPost || post.hasClass("MissingE_dummy")) {
             var label = $('<span />', {"class": "MissingE_bookmark_missing " +
                                           "MissingE_bookmark_missing_" + lang,
                                        text: " ("});
@@ -423,6 +423,19 @@ MissingE.packages.bookmarker = {
 
    run: function() {
       var settings = this.settings;
+
+      if (/^#post_\d+$/.test(location.hash)) {
+         if ($(location.hash).length === 0) {
+            var dummyId = location.hash.replace(/^#/,'');
+            var dummy = $('<li />', {id: dummyId,
+                                     "class": "post MissingE_dummy"});
+            dummy.css({'height':0,
+                       'padding':0,
+                       'margin':0});
+                       console.log(dummy);
+            $('#posts').append(dummy);
+         }
+      }
 
       $('head').append('<style type="text/css">' +
          '#MissingE_marklist .MissingE_bookmarker_marklink, ' +

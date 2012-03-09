@@ -498,12 +498,15 @@ MissingE.packages.dashboardTweaks = {
    },
 
    gotoPost: function(postId) {
-      console.log(postId);
       if (/^#post_\d+$/.test(postId)) {
          var post = $(postId);
-         console.log(post.offset().top);
          if (post.length > 0) {
-            window.scrollTo(0, post.offset().top - 7);
+            if (post.hasClass('MissingE_dummy')) {
+               window.scrollTo(0, post.offset().top - 41);
+            }
+            else {
+               window.scrollTo(0, post.offset().top - 7);
+            }
          }
       }
    },
