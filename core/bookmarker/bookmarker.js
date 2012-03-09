@@ -25,7 +25,7 @@
 
 MissingE.packages.bookmarker = {
 
-   reverseLoading: true,
+   reverseLoading: false,
 
    serializeMarks: function(a) {
       var s = "";
@@ -53,7 +53,7 @@ MissingE.packages.bookmarker = {
    getMarkText: function(dt, post, name) {
       var pid = Number(post);
       var mark = $('<li />', {id: "mark_" + post}).attr("post", post);
-      var href = "/dashboard/1000/";
+      var href = "/dashboard/2000/";
       if (this.reverseLoading) {
          href += "-" + (pid-1) + "#post_" + pid;
       }
