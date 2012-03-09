@@ -440,7 +440,7 @@ margin-left:-1px !important;
 vertical-align:top !important;
 }
 
-tr.subopt td:first-child {
+tr.subopt > td:first-child {
 border-left:24px solid #F8F8F8;
 padding-left:32px;
 background-image:url('images/subopt.png');
@@ -474,12 +474,31 @@ border-top:1px solid rgba(255,255,255,0.30);
 border-bottom:1px solid rgba(255,255,255,0.30);
 }
 
-tr table.subnotes .label, tr table.subnotes .desc {
+table.subnotes .basic {
+text-align:left !important;
+border-top:1px solid rgba(255,255,255,0.30);
+border-bottom:1px solid rgba(255,255,255,0.30);
+}
+
+table.subnotes .basic code {
+font-weight:bold;
+}
+
+table.subnotes td ul {
+padding-left:25px;
+margin:2px 0;
+}
+
+table.subnotes td ul li {
+margin:3px 0;
+}
+
+tr table.subnotes .label, tr table.subnotes .desc, tr table.subnotes .basic {
 border-top:1px solid rgba(150,150,150,0.30);
 border-bottom:1px solid rgba(150,150,150,0.30);
 }
 
-tr.alt table.subnotes .label, tr.alt table.subnotes .desc {
+tr.alt table.subnotes .label, tr.alt table.subnotes .desc, tr.alt table.subnotes .basic {
 border-top:1px solid rgba(255,255,255,0.30);
 border-bottom:1px solid rgba(255,255,255,0.30);
 }

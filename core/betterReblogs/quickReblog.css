@@ -60,7 +60,9 @@ padding:5px 6px !important;
 display:block;
 }
 
-.MissingE_quick_reblog_tags_inputting, .MissingE_quick_reblog_selecting {
+.MissingE_quick_reblog_tags_inputting,
+.MissingE_quick_reblog_selecting,
+.MissingE_quick_reblog_keys {
 display:block !important;
 }
 
@@ -120,4 +122,9 @@ padding-bottom:6px !important;
 
 a.MissingE_quick_reblog_field div {
 cursor:default;
+}
+
+#MissingE_quick_reblog .user_menu_list a .user_menu_list_item.MissingE_qr_keyActive,
+#MissingE_quick_reblog .user_menu_list span .user_menu_list_item.MissingE_qr_keyActive {
+background-color:#444 !important;
 }

@@ -613,6 +613,14 @@ MissingE.packages.betterReblogs = {
                sel.trigger('change');
             }
          }).keydown(function(e) {
+            if ((e.which === 9 || e.which === 13) &&
+                qr.hasClass('MissingE_quick_reblog_keys')) {
+               this.blur();
+               e.preventDefault();
+            }
+            else if (e.which === 27) {
+               return;
+            }
             if (e.which >= 65 || e.which <= 90 ||
                 e.which === 37 || e.which === 39) {
                e.stopPropagation();
@@ -726,12 +734,37 @@ MissingE.packages.betterReblogs = {
             return false;
          });
          if (settings.quickKeyboardShortcut) {
+            $(document).click(function(e) {
+               if (!$.contains(qr.get(0), e.relatedTarget)) {
+                  qr.removeClass('MissingE_quick_reblog_keys');
+                  if (qr.css('display') === 'none') {
+                     MissingE.packages.betterReblogs.resetTumblr =
+                           setTimeout(function() {
+                        var sel = $('#MissingE_quick_reblog_selector select');
+                        if (sel.find('option[value="' + settings.accountName +
+                                     '"]').length > 0) {
+                           sel.val(settings.accountName);
+                        }
+                        else {
+                           sel.val(sel.find('option:first').val());
+                        }
+                        sel.trigger('change');
+                     }, 1000);
+                  }
+               }
+            });
             $(window).keydown(function(e) {
-               // 68 = D, 81 = Q, 82 = R
-               if ($(e.target).is('input,textarea') ||
-                   e.metaKey || e.altKey || e.ctrlKey ||
-                   (e.keyCode !== 68 && e.keyCode !== 81 && e.keyCode !== 82)) {
+               // 27 = Esc, 68 = D, 81 = Q, 82 = R, 84 = T
+               if (e.metaKey || e.altKey || e.ctrlKey ||
+                   (e.keyCode !== 68 && e.keyCode !== 81 && e.keyCode !== 82 &&
+                    e.keyCode !== 84 && e.keyCode !== 27)) {
                   return;
+               }
+               if ($(e.target).is('input,textarea')) {
+                  if (!qr.hasClass('MissingE_quick_reblog_keys') ||
+                      e.keyCode !== 27) {
+                     return;
+                  }
                }
                else if (e.shiftKey && e.keyCode !== 82) {
                   return;
@@ -750,7 +783,7 @@ MissingE.packages.betterReblogs = {
                      rebBtn.dispatchEvent(overEvt);
                      if (!$(rebBtn).hasClass('MissingE_quick_reblogging ' +
                                          'MissingE_quick_reblogging_success')) {
-                        var itm;
+                        var itm, inpBox;
                         if (e.keyCode === 68) {
                            itm = document.getElementById('MissingE_quick_reblog_draft');
                         }
@@ -763,6 +796,42 @@ MissingE.packages.betterReblogs = {
                         }
                         else if (e.keyCode === 82) {
                            itm = rebBtn;
+                        }
+                        else if (e.keyCode === 84 &&
+                                 !qr.hasClass('MissingE_quick_reblog_keys')) {
+                           qr.addClass('MissingE_quick_reblog_keys');
+                           qr.find('.MissingE_qr_keyActive').removeClass('MissingE_qr_keyActive');
+                           inpBox = $('#MissingE_quick_reblog_tags input');
+                           inpBox.closest('.user_menu_list_item').addClass('MissingE_qr_keyActive');
+                           inpBox.get(0).focus();
+                           e.preventDefault();
+                           return false;
+                        }
+                        else if (qr.hasClass('MissingE_quick_reblog_keys') &&
+                                 e.keyCode === 27) {
+                           qr.removeClass('MissingE_quick_reblog_keys');
+                           var inpBox = $('#MissingE_quick_reblog_tags input');
+                           inpBox.get(0).blur();
+                           if (qr.css('display') === 'none') {
+                              MissingE.packages.betterReblogs.resetTumblr =
+                                    setTimeout(function() {
+                                 var sel = $('#MissingE_quick_reblog_selector select');
+                                 if (sel.find('option[value="' + settings.accountName +
+                                                '"]').length > 0) {
+                                    sel.val(settings.accountName);
+                                 }
+                                 else {
+                                    sel.val(sel.find('option:first').val());
+                                 }
+                                 sel.trigger('change');
+                              }, 1000);
+                           }
+                        }
+                        if (!itm) {
+                           return;
+                        }
+                        else {
+                           qr.removeClass('MissingE_quick_reblog_keys');
                         }
                         if (isManual) {
                            var downEvt = document.createEvent("MouseEvent");
