@@ -130,7 +130,7 @@ jQuery(document).ready(function($) {
 </ul>
 <h2>Reblog Yourself</h2>
 <ul>
-<li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del> (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</a></li>
+<li><a href="#reblog-load">Why do the reblog links for some of my posts in the dashboard show up like this: <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>?</a></li>
 </ul>
 <h2>Reply Replies</h2>
 <ul>
@@ -468,15 +468,15 @@ jQuery(document).ready(function($) {
 <a name="magnifier-full"></a><p class="question">How can I open the full-size photo in its own tab or window?</p>
 <div class="response"><p>You can click on any photo enlarged by <em>Magnifier</em> to open it in its own tab or window at full size.</p><div class="totop"><a href="#">Top</a></div></div>
 <a name="masseditor-100"></a><p class="question">Why can I only select the first 100 posts in the Mass Editor?</p>
-<p>Why can't I select more posts? I can select some, but the select buttons stop working!</p>
+<p class="question">Why can't I select more posts? I can select some, but the select buttons stop working!</p>
 <div class="response"><p>The Tumblr Mass editor is limited to editing tags or deleting only 100 posts at a time. This is a limitation of Tumblr, not 'Missing e'.</p><div class="totop"><a href="#">Top</a></div></div>
 <a name="uploader-load"></a><p class="question">Why is the '+ Upload Photo' button not showing up on a new post or edit post page?</p>
 <div class="response">
 <p>Much like the '+ Upload Photo' button that Tumblr places on new text post pages by default, <em>Posting Tweaks</em> must load an additional Tumblr page in the background before adding the button. During times when Tumblr is very busy or error-prone, this page may not load.</p><p>Try reloading the post page to try again.</p>
 <div class="totop"><a href="#">Top</a></div></div>
-<a name="reblog-load"></a><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <del><strong>reblog</strong></del>  (or <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>)?</p>
+<a name="reblog-load"></a><p class="question">Why do the reblog links for some of my posts in the dashboard show up like this: <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>?</p>
 <div class="response">
-<p>In order to add a reblog link to your posts on the dashboard, <em>Reblog Yourself</em> has to read that post's <strong>permalink</strong> page. During times when Tumblr is very busy or error-prone, this may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <strong><del>reblog</del></strong>.</p><p>You can click on the <strong><del>reblog</del></strong> text to tell <em>Reblog Yourself</em> to try again. If it shows up without the strikethrough (ie. '<strong>reblog</strong>'), then the link works!</p><p>You should note that the reblog button added to individual post pages (not on the dashboard) is more or less unaffected by Tumblr server problems.</p>
+<p>In order to add a reblog link to your posts on the dashboard, <em>Reblog Yourself</em> has to read that post's <strong>permalink</strong> page. During times when Tumblr is very busy or error-prone, this may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <span class="MissingE_post_control MissingE_reblog_control MissingE_reblog_control_retry" style="margin-left:0px"></span>.</p><p>You can click on the icon to tell <em>Reblog Yourself</em> to try again. If it shows up without the exclamation mark, then the link works!</p><p>You should note that the reblog button added to individual post pages (not on the dashboard) is more or less unaffected by Tumblr server problems.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <a name="replies-how"></a><p class="question">How do I reply to a reply (or other notification)?</p>
 <div class="response">
@@ -531,7 +531,7 @@ jQuery(document).ready(function($) {
 <a name="experimental-reblogReplies"></a><p class="question">Why is the <span>"Allow replies to reblogs"</span> setting experimental?</p>
 <div class="response">
 <div class="experimental-details"><p>This setting is part of a set of <em>experimental</em> features in 'Missing e'.</p><p>It is <em>experimental</em> because it is a useful, interesting feature for Tumblr, but it does not work reliably.</p><p>This setting is provided for your use, but <strong>is not supported</strong> and may be <strong>removed from 'Missing e' at any time</strong>, without notice.</p><p>Questions and pleas for help regarding this feature will be ignored!</p></div>
-<p>The <em>"Allow replies to reblogs"</em> option does, indeed, allow you to reply to reblogged posts with a button that looks like <strong>[reply]</strong> <em>or</em> <span class="MissingE_post_control MissingE_experimental_reply_control" style="margin-left:0px;"></span>. If the user who reblogged it has their "Show notifications" setting turned on in their Tumblr <a href="http://www.tumblr.com/preferences">preferences</a>, they will <em>most likely</em> receive a notification of your reply. However, your reply <em>may not</em> always show up in the post's notes. Especially if you have also reblogged it, or reblog it after replying.</p>
+<p>The <em>"Allow replies to reblogs"</em> option does, indeed, allow you to reply to reblogged posts with a button that looks like <span class="MissingE_post_control MissingE_experimental_reply_control" style="margin-left:0px;"></span>. If the user who reblogged it has their "Show notifications" setting turned on in their Tumblr <a href="http://www.tumblr.com/preferences">preferences</a>, they will <em>most likely</em> receive a notification of your reply. However, your reply <em>may not</em> always show up in the post's notes. Especially if you have also reblogged it, or reblog it after replying.</p>
 <p>On top of that, the attempt to reply may not even work at all! When attempting to send a reply, the experimental reply button will be replaced with an <span class="MissingE_post_control MissingE_experimental_reply_success" style="margin-left:0px;"></span> icon, if successful. If the reply fails for some reason, you will see an <span class="MissingE_post_control MissingE_experimental_reply_fail" style="margin-left:0px;"></span> icon.</p>
 <div class="totop"><a href="#">Top</a></div></div>
 <div id="inlinefooter"><div id="foot-left">An open-source project released under <a href="http://www.gnu.org/licenses/gpl.html">GPL v3</a></div><div class="clear"></div></div>
