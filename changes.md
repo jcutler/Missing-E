@@ -78,6 +78,12 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.10** (not yet released)
+**_!_** Increase size for quick (1-click) reblog tags box for easier tagging
+
+##**2.7.9** (03/09/2012)
+**_!_** Fix issue with quick (1-click) reblog reblogging/success icons not appearing
+
 ##**2.7.8** (03/09/2012)
 **_+_** Automatic tagging of reblogged posts  
 **_+_** Add T keyboard shortcut to quick (1-click) reblogging to edit tags before reblogging  
