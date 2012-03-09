@@ -1818,6 +1818,16 @@ function handleRequest(request) {
                   'background-image:url("' +
                      safari.extension.baseURI  + "core/dashboardTweaks/postControls.png" +
                   '"); ' +
+               '} ' +
+               '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
+                  'background-image:url("' +
+                     safari.extension.baseURI + "core/betterReblogs/reblogging.gif" +
+                  '") !important; ' +
+               '} ' +
+               '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
+                  'background-image:url("' +
+                     safari.extension.baseURI + "core/betterReblogs/reblogSuccess.png" +
+                  '") !important; ' +
                '}'});
 
          if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1) {
@@ -1856,16 +1866,6 @@ function handleRequest(request) {
                      'background-image:url("' +
                         safari.extension.baseURI  + "core/dashboardTweaks/postControls.png" +
                      '"); ' +
-                  '} ' +
-                  '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
-                     'background-image:url("' +
-                        safari.extension.baseURI + "core/betterReblogs/reblogging.gif" +
-                     '") !important; ' +
-                  '} ' +
-                  '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
-                     'background-image:url("' +
-                        safari.extension.baseURI + "core/betterReblogs/reblogSuccess.png" +
-                     '") !important; ' +
                   '}'});
                injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
             }

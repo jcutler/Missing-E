@@ -1671,6 +1671,16 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                   'background-image:url("' +
                      chrome.extension.getURL("core/dashboardTweaks/postControls.png") +
                   '") !important; ' +
+               '} ' +
+               '#posts .post .post_controls .MissingE_quick_reblogging { ' +
+                  'background-image:url("' +
+                     chrome.extension.getURL("core/betterReblogs/reblogging.gif") +
+                  '") !important; ' +
+               '} ' +
+               '#posts .post .post_controls .MissingE_quick_reblogging_success { ' +
+                  'background-image:url("' +
+                     chrome.extension.getURL("core/betterReblogs/reblogSuccess.png") +
+                  '") !important; ' +
                '}'});
 
          if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1) {
@@ -1709,16 +1719,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                      'background-image:url("' +
                      chrome.extension.getURL("core/dashboardTweaks/postControls.png") +
                      '"); ' +
-                  '} ' +
-                  '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
-                     'background-image:url("' +
-                     chrome.extension.getURL("core/betterReblogs/reblogging.gif") +
-                     '") !important; ' +
-                  '} ' +
-                  '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
-                     'background-image:url("' +
-                     chrome.extension.getURL("core/betterReblogs/reblogSuccess.png") +
-                     '") !important; ' +
                   '}'});
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/replaceIcons.css"});
             }

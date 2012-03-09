@@ -1954,6 +1954,16 @@ function handleMessage(message, myWorker) {
                   'background-image:url("' +
                      data.url("core/dashboardTweaks/postControls.png") +
                   '"); ' +
+               '} ' +
+               '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
+                  'background-image:url("' +
+                     data.url("core/betterReblogs/reblogging.gif") +
+                  '") !important; ' +
+               '} ' +
+               '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
+                  'background-image:url("' +
+                     data.url("core/betterReblogs/reblogSuccess.png") +
+                  '") !important; ' +
                '}'});
 
          if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
@@ -1992,16 +2002,6 @@ function handleMessage(message, myWorker) {
                      'background-image:url("' +
                         data.url("core/dashboardTweaks/postControls.png") +
                      '"); ' +
-                  '} ' +
-                  '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
-                     'background-image:url("' +
-                        data.url("core/betterReblogs/reblogging.gif") +
-                     '") !important; ' +
-                  '} ' +
-                  '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
-                     'background-image:url("' +
-                        data.url("core/betterReblogs/reblogSuccess.png") +
-                     '") !important; ' +
                   '}'});
                injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
             }
