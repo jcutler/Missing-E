@@ -1987,12 +1987,12 @@ function handleMessage(message, myWorker) {
                      '"); ' +
                   '} ' +
                   '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
-                     'background:url("' +
+                     'background-image:url("' +
                         data.url("core/betterReblogs/reblogging.gif") +
                      '") !important; ' +
                   '} ' +
                   '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
-                     'background:url("' +
+                     'background-image:url("' +
                         data.url("core/betterReblogs/reblogSuccess.png") +
                      '") !important; ' +
                   '}'});
