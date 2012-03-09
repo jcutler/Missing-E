@@ -81,7 +81,8 @@ color:#4183c4;
 ##**2.7.8** (03/09/2012)
 **_+_** Automatic tagging of reblogged posts  
 **_+_** Add T keyboard shortcut to quick (1-click) reblogging to edit tags before reblogging  
-**_!_** Improve fix for bookmark error page issue
+**_!_** Improve fix for bookmark error page issue  
+**_!_** Fix issue with some Goto Dash Post buttons loading error pages
 
 ##**2.7.7** (03/09/2012)
 **_!_** Apply fixes to quick (1-click) reblogging icon display  
