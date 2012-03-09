@@ -222,6 +222,8 @@ function getAllSettings(getStale) {
    settings.MissingE_betterReblogs_quickReblogAcctName = getSetting("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
    settings.MissingE_betterReblogs_quickReblogForceTwitter = getSetting("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
    settings.MissingE_betterReblogs_fullText = getSetting("extensions.MissingE.betterReblogs.fullText",0);
+   settings.MissingE_betterReblogs_tagReblogs = getSetting("extensions.MissingE.betterReblogs.tagReblogs",0);
+   settings.MissingE_betterReblogs_reblogTags = getSetting("extensions.MissingE.betterReblogs.reblogTags",'');
    settings.MissingE_betterReblogs_reblogAsks = getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
    settings.MissingE_betterReblogs_keyboardShortcut = getSetting("extensions.MissingE.betterReblogs.keyboardShortcut",1);
    settings.MissingE_betterReblogs_quickKeyboardShortcut = getSetting("extensions.MissingE.betterReblogs.quickKeyboardShortcut",1);
@@ -1892,6 +1894,11 @@ function handleMessage(message, myWorker) {
             settings.queueTags = getSetting("extensions.MissingE.postingTweaks.queueTags",'');
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
+            }
+            settings.tagReblogs = getSetting("extensions.MissingE.betterReblogs.tagReblogs",0);
+            settings.reblogTags = getSetting("extensions.MissingE.betterReblogs.reblogTags",'');
+            if (settings.reblogTags !== '') {
+               settings.reblogTags = settings.reblogTags.replace(/, /g,',').split(',');
             }
             settings.reblogAsks = getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
             settings.keyboardShortcut = getSetting("extensions.MissingE.betterReblogs.keyboardShortcut",1);

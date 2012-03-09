@@ -99,6 +99,13 @@ MissingE.packages.betterReblogsFill = {
             .setReblogTagsPlainText(document.getElementById('post_tags').value);
       }
       tags = MissingE.packages.betterReblogsFill.getReblogTags();
+      if (settings.tagReblogs === 1 && settings.reblogTags !== "") {
+         for (i=0; i<settings.reblogTags.length; i++) {
+            if ($.inArray(settings.reblogTags[i],tags) === -1) {
+               tags.push(settings.reblogTags[i]);
+            }
+         }
+      }
 
       if (document.body.id === 'dashboard_edit_post') {
          $('#the_as_links a[href!="#"]').click(function() {

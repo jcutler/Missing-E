@@ -170,7 +170,8 @@ MissingE.utilities.options = {
          }
          else if (obj.name === 'MissingE_askTweaks_defaultTags' ||
                   obj.name === 'MissingE_replyReplies_defaultTags' ||
-                  obj.name === 'MissingE_postingTweaks_queueTags') {
+                  obj.name === 'MissingE_postingTweaks_queueTags' ||
+                  obj.name === 'MissingE_postingTweaks_reblogTags') {
             var val = MissingE.utilities.options.trim(obj.value);
             val = val.replace(/^\s*,/,'').replace(/,(\s*,)*/g,',')
                      .replace(/\s*,\s*/g,', ').replace(/,\s*$/,'')
@@ -363,7 +364,8 @@ MissingE.utilities.options = {
             frm.MissingE_betterReblogs_askRetries.value = MissingE.utilities.options.getStorage('MissingE_betterReblogs_askRetries',MissingE.defaultRetries);
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_keyboardShortcut',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_quickKeyboardShortcut',1);
-
+            MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_tagReblogs',0);
+            frm.MissingE_betterReblogs_reblogTags.value = MissingE.utilities.options.getStorage('MissingE_betterReblogs_reblogTags','');
          }
          else if (v == "postingTweaks") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_photoReplies',1);

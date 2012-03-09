@@ -1617,6 +1617,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (settings.queueTags !== '') {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
+            settings.tagReblogs = getSetting("MissingE_betterReblogs_tagReblogs",0);
+            settings.reblogTags = getSetting("MissingE_betterReblogs_reblogTags",'');
+            if (settings.reblogTags !== '') {
+               settings.reblogTags = settings.reblogTags.replace(/, /g,',').split(',');
+            }
             settings.reblogAsks = getSetting("MissingE_betterReblogs_reblogAsks",0);
             settings.keyboardShortcut = getSetting("MissingE_betterReblogs_keyboardShortcut",1);
             settings.quickKeyboardShortcut = getSetting("MissingE_betterReblogs_quickKeyboardShortcut",1);

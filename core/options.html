@@ -528,6 +528,14 @@ function loadScripts() {
        <td>Number of retries on failure to add reblog link to ask posts (default <span class="defRetries">4</span>)</td>
        <td><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_askRetries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
       </tr>
+      <tr class="alt">
+       <td>Automatically add tags to reblogged posts</td>
+       <td><input type="checkbox" name="MissingE_betterReblogs_tagReblogs" /></td>
+      </tr>
+      <tr class="subopt">
+       <td>Tags to add to reblogged posts (separated by commas)</td>
+       <td><input type="text" name="MissingE_betterReblogs_reblogTags" style="width:250px;" value="" class="simple blurable_setting" /></td>
+      </tr>
      </table>
     </div>
    </form>

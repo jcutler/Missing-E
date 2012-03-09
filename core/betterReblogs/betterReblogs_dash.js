@@ -246,7 +246,7 @@ MissingE.packages.betterReblogs = {
       }
    },
 
-   doReblog: function(item,accountName,queueTags) {
+   doReblog: function(item,accountName,queueTags,reblogTags) {
       var reblogMode = {
          "normal":  '0',
          "draft":   '1',
@@ -272,11 +272,21 @@ MissingE.packages.betterReblogs = {
                .replace(/\s*,\s*/g,',').replace(/,$/,'')
                .replace(/^\s*/,'').replace(/\s*$/,'');
       var mode = reblogMode[type];
+      var taglist;
       if (queueTags && queueTags !== "" && type === "queue") {
-         var taglist = tags.split(',');
+         taglist = tags.split(',');
          for (i=0; i<queueTags.length; i++) {
             if ($.inArray(queueTags[i],taglist) === -1) {
                taglist.push(queueTags[i]);
+            }
+         }
+         tags = taglist.join(",");
+      }
+      if (reblogTags && reblogTags !== "") {
+         taglist = tags.split(',');
+         for (i=0; i<reblogTags.length; i++) {
+            if ($.inArray(reblogTags[i],taglist) === -1) {
+               taglist.push(reblogTags[i]);
             }
          }
          tags = taglist.join(",");
@@ -378,9 +388,12 @@ MissingE.packages.betterReblogs = {
    run: function() {
       var lang = $('html').attr('lang');
       var settings = this.settings;
-      var queueTags = "";
+      var queueTags = "", reblogTags = "";
       if (settings.tagQueuedPosts === 1) {
          queueTags = settings.queueTags;
+      }
+      if (settings.tagReblogs === 1) {
+         reblogTags = settings.reblogTags;
       }
       if (settings.passTags === 1) {
          var selector = '#posts div.post_controls a[href^="/reblog/"]';
@@ -730,7 +743,7 @@ MissingE.packages.betterReblogs = {
             }
             e.preventDefault();
             MissingE.packages.betterReblogs
-               .doReblog(this,account,queueTags);
+               .doReblog(this,account,queueTags,reblogTags);
             return false;
          });
          if (settings.quickKeyboardShortcut) {
@@ -854,7 +867,7 @@ MissingE.packages.betterReblogs = {
                               account = selector.val();
                            }
                            MissingE.packages.betterReblogs
-                              .doReblog(itm, account, queueTags);
+                              .doReblog(itm, account, queueTags, reblogTags);
                         }
                      }
                      var outEvt = document.createEvent("MouseEvent");
@@ -939,7 +952,7 @@ MissingE.packages.betterReblogs = {
                account = selector.val();
             }
             MissingE.packages.betterReblogs
-               .doReblog(this,account,queueTags);
+               .doReblog(this,account,queueTags,reblogTags);
          });
 
          if (settings.quickReblogForceTwitter === "default") {
