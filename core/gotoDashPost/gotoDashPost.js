@@ -68,7 +68,7 @@ MissingE.packages.gotoDashPost = {
 
             var dashlnk = document.createElement('a');
             dashlnk.setAttribute('href',
-                                 'http://www.tumblr.com/dashboard/1000/' +
+                                 'http://www.tumblr.com/dashboard/500/' +
                                     pid);
             dashlnk.setAttribute('target', '_top');
             dashlnk.id = "MissingE_gotoDashPost_link";
