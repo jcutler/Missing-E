@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.6** (03/08/2012)
+**_!_** Fix issue with some 'Missing e' bookmarks showing error pages  
+**_!_** Improve Tumblr's font size limitation for HTML &lt;big&gt; tags
+
 ##**2.7.5** (03/08/2012)
 **_!_** Fix layout error in options page
 
