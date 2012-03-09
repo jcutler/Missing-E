@@ -432,7 +432,6 @@ MissingE.packages.bookmarker = {
             dummy.css({'height':0,
                        'padding':0,
                        'margin':0});
-                       console.log(dummy);
             $('#posts').append(dummy);
          }
       }
