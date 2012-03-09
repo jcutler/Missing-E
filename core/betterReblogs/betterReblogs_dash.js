@@ -737,6 +737,8 @@ MissingE.packages.betterReblogs = {
             $(document).click(function(e) {
                if (!$.contains(qr.get(0), e.relatedTarget)) {
                   qr.removeClass('MissingE_quick_reblog_keys');
+                  var inpBox = $('#MissingE_quick_reblog_tags input');
+                  inpBox.get(0).blur();
                   if (qr.css('display') === 'none') {
                      MissingE.packages.betterReblogs.resetTumblr =
                            setTimeout(function() {
@@ -810,7 +812,7 @@ MissingE.packages.betterReblogs = {
                         else if (qr.hasClass('MissingE_quick_reblog_keys') &&
                                  e.keyCode === 27) {
                            qr.removeClass('MissingE_quick_reblog_keys');
-                           var inpBox = $('#MissingE_quick_reblog_tags input');
+                           inpBox = $('#MissingE_quick_reblog_tags input');
                            inpBox.get(0).blur();
                            if (qr.css('display') === 'none') {
                               MissingE.packages.betterReblogs.resetTumblr =
