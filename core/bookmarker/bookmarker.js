@@ -53,15 +53,15 @@ MissingE.packages.bookmarker = {
    getMarkText: function(dt, post, name) {
       var pid = Number(post);
       var mark = $('<li />', {id: "mark_" + post}).attr("post", post);
-      var href = "/dashboard/2000/";
+      var url = "/dashboard/500/";
       if (this.reverseLoading) {
-         href += "-" + (pid-1) + "#post_" + pid;
+         url += "-" + (pid-1) + "#post_" + pid;
       }
       else {
-         href += (pid+1);
+         url += (pid+1);
       }
       mark.append($('<a />',
-                    {href: "/dashboard/1000/-" + (pid-1) + "#post_" + pid,
+                    {href: url,
                      "class": "MissingE_bookmarker_marklink"})
                      .attr("post", post)
                      .append($('<div />', {"class": "hide_overflow"})
