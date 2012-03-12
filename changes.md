@@ -79,7 +79,8 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.7.10** (not yet released)
-**_!_** Increase size for quick (1-click) reblog tags box for easier tagging
+**_!_** Increase size for quick (1-click) reblog tags box for easier tagging  
+**_!_** Fix issue with post control icons showing up over top of magnified images
 
 ##**2.7.9** (03/09/2012)
 **_!_** Fix issue with quick (1-click) reblog reblogging/success icons not appearing
