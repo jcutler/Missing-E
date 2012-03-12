@@ -459,7 +459,7 @@ MissingE.packages.dashboardTweaks = {
    },
 
    smallIconsZIndex: function(post) {
-      var idx = 2147483647;
+      var idx = 10000;
       var ctrl = post.find('.post_controls');
       var nextPost = post.next();
       while (nextPost && !nextPost.hasClass('post')) {

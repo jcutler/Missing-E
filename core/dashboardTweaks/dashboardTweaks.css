@@ -25,6 +25,10 @@
 font-size:16px;
 }
 
+#overlay_for_active_menu {
+z-index:10000 !important;
+}
+
 #posts div.reply_pane .chrome:not(:disabled) {
 cursor:pointer;
 }

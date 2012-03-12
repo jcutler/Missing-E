@@ -2,7 +2,7 @@
 position:fixed;
 top:0;
 left:0;
-z-index:2000;
+z-index:10003;
 text-align:left;
 }
 
@@ -139,7 +139,7 @@ z-index:-100;
 
 .facebox_overlayBG {
 background-color:#000;
-z-index:199;
+z-index:10002;
 }
 
 #facebox .logo {
