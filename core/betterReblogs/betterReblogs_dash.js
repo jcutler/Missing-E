@@ -634,6 +634,9 @@ MissingE.packages.betterReblogs = {
             else if (e.which === 27) {
                return;
             }
+            else if (e.which === 13) {
+               e.preventDefault();
+            }
             if (e.which >= 65 || e.which <= 90 ||
                 e.which === 37 || e.which === 39) {
                e.stopPropagation();
