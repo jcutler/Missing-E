@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.7.10** (not yet released)
+##**2.7.10** (03/12/2012)
 **_!_** Increase size for quick (1-click) reblog tags box for easier tagging  
 **_!_** Fix issue with post control icons showing up over top of magnified images  
 **_!_** Improve fix for bookmark error page issue
