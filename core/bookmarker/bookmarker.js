@@ -53,7 +53,7 @@ MissingE.packages.bookmarker = {
    getMarkText: function(dt, post, name) {
       var pid = Number(post);
       var mark = $('<li />', {id: "mark_" + post}).attr("post", post);
-      var url = "/dashboard/500/";
+      var url = "/dashboard/49/";
       if (this.reverseLoading) {
          url += "-" + (pid-1) + "#post_" + pid;
       }
