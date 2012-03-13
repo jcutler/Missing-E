@@ -33,6 +33,10 @@ z-index:10000 !important;
 cursor:pointer;
 }
 
+#posts .post .post_controls .MissingE_experimental_reply.active {
+z-index:10001;
+}
+
 #posts .post_controls .button {
 height:14px !important;
 padding:0 !important;
@@ -76,7 +80,7 @@ background-repeat:no-repeat;
 }
 
 #posts .post .post_controls .MissingE_experimental_reply:hover {
-opacity:1;
+opacity:0.9;
 }
 
 #posts .post .post_controls .MissingE_experimental_reply {
