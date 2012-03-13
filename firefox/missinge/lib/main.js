@@ -166,6 +166,7 @@ function getAllSettings(getStale) {
    settings.MissingE_dashboardTweaks_reblogQuoteFit = getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1);
    settings.MissingE_dashboardTweaks_wrapTags = getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1);
    settings.MissingE_dashboardTweaks_replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1);
+   settings.MissingE_dashboardTweaks_textControls = getSetting("extensions.MissingE.dashboardTweaks.textControls",0);
    settings.MissingE_dashboardTweaks_smallIcons = getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0);
    settings.MissingE_dashboardTweaks_postLinks = getSetting("extensions.MissingE.dashboardTweaks.postLinks",1);
    settings.MissingE_dashboardTweaks_reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
@@ -1829,6 +1830,7 @@ function handleMessage(message, myWorker) {
             settings.reblogQuoteFit = getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1);
             settings.wrapTags = getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1);
             settings.replaceIcons = getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1);
+            settings.textControls = getSetting("extensions.MissingE.dashboardTweaks.textControls",0);
             settings.smallIcons = getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0);
             settings.postLinks = getSetting("extensions.MissingE.dashboardTweaks.postLinks",1);
             settings.reblogReplies = getSetting("extensions.MissingE.dashboardTweaks.reblogReplies",0);
@@ -1955,12 +1957,12 @@ function handleMessage(message, myWorker) {
                      data.url("core/dashboardTweaks/postControls.png") +
                   '"); ' +
                '} ' +
-               '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
+               '#posts .post .post_controls .MissingE_quick_reblogging { ' +
                   'background-image:url("' +
                      data.url("core/betterReblogs/reblogging.gif") +
                   '") !important; ' +
                '} ' +
-               '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
+               '#posts .post .post_controls .MissingE_quick_reblogging_success { ' +
                   'background-image:url("' +
                      data.url("core/betterReblogs/reblogSuccess.png") +
                   '") !important; ' +
@@ -2005,8 +2007,8 @@ function handleMessage(message, myWorker) {
                   '}'});
                injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
             }
-            else {
-               injectStyles.push({file: "core/dashboardTweaks/noIcons.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.textControls",0) == 1) {
+               injectStyles.push({file: "core/dashboardTweaks/textControls.css"});
             }
             if (getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/reblogQuoteFit.css"});

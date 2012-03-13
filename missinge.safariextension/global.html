@@ -1591,6 +1591,7 @@ function handleRequest(request) {
       settings.MissingE_dashboardTweaks_reblogQuoteFit = getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1);
       settings.MissingE_dashboardTweaks_wrapTags = getSetting("MissingE_dashboardTweaks_wrapTags",1);
       settings.MissingE_dashboardTweaks_replaceIcons = getSetting("MissingE_dashboardTweaks_replaceIcons",1);
+      settings.MissingE_dashboardTweaks_textControls = getSetting("MissingE_dashboardTweaks_textControls",0);
       settings.MissingE_dashboardTweaks_smallIcons = getSetting("MissingE_dashboardTweaks_smallIcons",0);
       settings.MissingE_dashboardTweaks_postLinks = getSetting("MissingE_dashboardTweaks_postLinks",1);
       settings.MissingE_dashboardTweaks_reblogReplies = getSetting("MissingE_dashboardTweaks_reblogReplies",0);
@@ -1701,6 +1702,7 @@ function handleRequest(request) {
             settings.reblogQuoteFit = getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1);
             settings.wrapTags = getSetting("MissingE_dashboardTweaks_wrapTags",1);
             settings.replaceIcons = getSetting("MissingE_dashboardTweaks_replaceIcons",1);
+            settings.textControls = getSetting("MissingE_dashboardTweaks_textControls",0);
             settings.smallIcons = getSetting("MissingE_dashboardTweaks_smallIcons",0);
             settings.postLinks = getSetting("MissingE_dashboardTweaks_postLinks",1);
             settings.reblogReplies = getSetting("MissingE_dashboardTweaks_reblogReplies",0);
@@ -1819,12 +1821,12 @@ function handleRequest(request) {
                      safari.extension.baseURI  + "core/dashboardTweaks/postControls.png" +
                   '"); ' +
                '} ' +
-               '#posts .post .post_controls a.MissingE_quick_reblogging { ' +
+               '#posts .post .post_controls .MissingE_quick_reblogging { ' +
                   'background-image:url("' +
                      safari.extension.baseURI + "core/betterReblogs/reblogging.gif" +
                   '") !important; ' +
                '} ' +
-               '#posts .post .post_controls a.MissingE_quick_reblogging_success { ' +
+               '#posts .post .post_controls .MissingE_quick_reblogging_success { ' +
                   'background-image:url("' +
                      safari.extension.baseURI + "core/betterReblogs/reblogSuccess.png" +
                   '") !important; ' +
@@ -1869,8 +1871,8 @@ function handleRequest(request) {
                   '}'});
                injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
             }
-            else {
-               injectStyles.push({file: "core/dashboardTweaks/noIcons.css"});
+            if (getSetting("MissingE_dashboardTweaks_textControls",0) == 1) {
+               injectStyles.push({file: "core/dashboardTweaks/textControls.css"});
             }
             if (getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/reblogQuoteFit.css"});

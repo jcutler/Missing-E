@@ -115,10 +115,10 @@ MissingE.packages.dashboardTweaks = {
       id = MissingE.escapeHTML(id);
       var expRep = $('<span />',
                      {"class": "MissingE_experimental_reply popover_button reply_button",
-                      href: "#",
                       id: "post_control_reply_" + id,
                       title: MissingE.getLocale(lang).dashTweaksText.reply +
                          " [" + MissingE.getLocale(lang).dashTweaksText.experimental + "]"});
+      expRep.attr("label", "[" + MissingE.getLocale(lang).dashTweaksText.reply + "]");
       var popover = $('<div />', {"class": "popover popover_gradient popover_post_tools"});
       popover.css('display','none');
       var app = popover;

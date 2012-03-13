@@ -1552,6 +1552,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             break;
          case "dashboardTweaks":
             settings.replaceIcons = getSetting("MissingE_dashboardTweaks_replaceIcons",1);
+            settings.textControls = getSetting("MissingE_dashboardTweaks_textControls",0);
             settings.smallIcons = getSetting("MissingE_dashboardTweaks_smallIcons",0);
             settings.postLinks = getSetting("MissingE_dashboardTweaks_postLinks",1);
             settings.reblogReplies = getSetting("MissingE_dashboardTweaks_reblogReplies",0);
@@ -1722,8 +1723,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                   '}'});
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/replaceIcons.css"});
             }
-            else {
-               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/noIcons.css"});
+            if (getSetting("MissingE_dashboardTweaks_textControls",0) == 1) {
+               chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/textControls.css"});
             }
             if (getSetting("MissingE_dashboardTweaks_reblogQuoteFit",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/reblogQuoteFit.css"});
