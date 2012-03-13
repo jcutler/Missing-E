@@ -448,6 +448,10 @@ background-position:8px center;
 background-repeat:no-repeat;
 }
 
+tr.subopt.disabled td {
+opacity:0.5;
+}
+
 table.subnotes {
 margin-left:10px;
 font-size:80%;

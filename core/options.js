@@ -137,12 +137,19 @@ MissingE.utilities.options = {
       }
    },
 
+   toggleSubOptions: function(obj) {
+      var disable = !obj.checked;
+      $(obj).closest('tr').nextUntil('tr:not(.subopt)')
+         .toggleClass('disabled',disable);
+   },
+
    doSetting: function(obj, isNumber, defaultValue, min, max) {
       if (obj.tagName.toLowerCase() == "select") {
          MissingE.utilities.options.setStorage(obj.name, $(obj).val());
       }
       else if (obj.type == "checkbox") {
          MissingE.utilities.options.setStorage(obj.name, (obj.checked ? 1 : 0));
+         MissingE.utilities.options.toggleSubOptions(obj);
       }
       else if (obj.type == "radio") {
          var val = obj.value;
@@ -384,6 +391,25 @@ MissingE.utilities.options = {
             frm.MissingE_reblogYourself_retries.value = MissingE.utilities.options.getStorage('MissingE_reblogYourself_retries',MissingE.defaultRetries);
          }
       }
+      $('.section_options tr.subopt').each(function() {
+         var me = $(this);
+         var prt = me.prev();
+         while (prt.length === 1 && prt.hasClass('subopt')) {
+            prt = prt.prev();
+         }
+         if (prt.length === 1) {
+            var chk = prt.find('input[type="checkbox"]');
+            if (chk.get(0).checked) {
+               me.removeClass('disabled');
+            }
+            else {
+               me.addClass('disabled');
+            }
+         }
+         else {
+            me.removeClass('disabled');
+         }
+      });
    },
 
    resetPrefix: function() {
