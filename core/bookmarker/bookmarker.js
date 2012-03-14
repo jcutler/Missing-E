@@ -314,6 +314,7 @@ MissingE.packages.bookmarker = {
          var heart = ctrl.find('a.like_button');
          var mag = ctrl.find('a.MissingE_magnify');
          var klass = 'MissingE_mark';
+         var from = this.dashboardPagePost ? this.dashboardPagePost : 0;
          for (j=0; j < marks.length; j++) {
             if (post === marks[j][1]) {
                klass += ' MissingE_ismarked';
@@ -321,10 +322,11 @@ MissingE.packages.bookmarker = {
                break;
             }
             var prevPost = $(item).prevAll('li.post:not(#new_post)').first();
-            if (/http:\/\/www\.tumblr\.com\/dashboard/.test(location.href) &&
+            if (MissingE.isTumblrURL(location.href, ["dashboardOnly"]) &&
                 post < marks[j][1] &&
-                prevPost.length === 1 &&
-                prevPost.attr('id').match(/\d*$/)[0] > marks[j][1]) {
+                ((prevPost.length === 1 &&
+                  prevPost.attr('id').match(/\d*$/)[0] > marks[j][1]) ||
+                 from > marks[j][1])) {
                MissingE.packages.bookmarker.addBar(marks[j], lang, item);
             }
          }
@@ -541,6 +543,18 @@ MissingE.packages.bookmarker = {
    },
 
    init: function() {
+      if (MissingE.isTumblrURL(location.href, ["dashboardOnly"])) {
+         var from = location.href.match(/http:\/\/www\.tumblr\.com\/dashboard\/\d+\/(\d+)/);
+         if (from && from.length > 1) {
+            this.dashboardPagePost = parseInt(from[1],10);
+         }
+         else {
+            this.dashboardPagePost = 0;
+         }
+      }
+      else {
+         this.dashboardPagePost = 0;
+      }
       $('#MissingE_marklist a.MissingE_bookmarker_marklink').live('click',
                                                                  function(e) {
          if ($(this).closest('li').data('editmode') === "EDIT") {
