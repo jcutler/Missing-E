@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.7.11** (not yet released)
+##**2.7.11** (03/15/2012)
 **_+_** Add Dashboard Tweaks option to restore dashboard post text controls (instead of icons)  
 **_!_** Disallow new line keypress in quick (1-click) reblog tags box
 
