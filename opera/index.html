@@ -325,13 +325,11 @@ currVersion = widget.version;
 
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
-      console.log("Updated Missing e (" +
-                  prevVersion + " => " + currVersion +
-                  ")");
+      MissingE.log("Updated Missing e (" + prevVersion + " => " + currVersion + ")");
       setSetting('MissingE_compatCheck',0);
    }
    else if (!prevVersion) {
-      console.log("Installed Missing e " + currVersion);
+      MissingE.log("Installed Missing e " + currVersion);
       //chrome.tabs.create({url:chrome.extension.getURL("core/options.html")});
    }
    setSetting('MissingE_version',currVersion);
@@ -340,7 +338,7 @@ function onStart(currVersion, prevVersion) {
 onStart(currVersion, getSetting('MissingE_version',null));
 
 if (!MissingE.isSameDay(getSetting('MissingE_lastUpdateCheck',0))) {
-   console.log("Checking current available version.");
+   MissingE.log("Checking current available version.");
    getExternalVersion();
 }
 </script>

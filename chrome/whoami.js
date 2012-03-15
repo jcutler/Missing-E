@@ -50,7 +50,7 @@ if ((window.top === window &&
             }
          }
       }
-      console.log(info);
+      MissingE.log(info);
    });
 
    chrome.extension.sendRequest({greeting: "update"}, function (response) {

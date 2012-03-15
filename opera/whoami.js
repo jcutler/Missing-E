@@ -48,7 +48,7 @@ if ((window.top === window &&
             }
          }
       }
-      console.log(info);
+      MissingE.log(info);
    });
 
    extension.addListener("update", function(response) {

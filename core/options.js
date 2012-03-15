@@ -203,7 +203,7 @@ MissingE.utilities.options = {
 
    loadCheck: function(f, i, def) {
       if (!f || !f[i]) {
-         console.log("Problem finding '" + f.id + "' option '" + i + "'.");
+         MissingE.debug("Problem finding '" + f.id + "' option '" + i + "'.");
       }
       else if (MissingE.utilities.options.getStorage(i,def) == 1) {
          f[i].checked = true;
@@ -252,7 +252,7 @@ MissingE.utilities.options = {
          var v = componentList[i];
          var frm = document.getElementById(v + "_options");
          if (!frm) {
-            console.log("Unable to find '" + v + "' form.");
+            MissingE.debug("Unable to find '" + v + "' form.");
             continue;
          }
          var active = frm.active;

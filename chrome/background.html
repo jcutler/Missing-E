@@ -24,6 +24,7 @@
 <head>
 <script type="text/javascript">
 var MissingE = {};
+var extension = {isChrome: true};
 </script>
 <script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="core/utils.js"></script>
@@ -47,7 +48,6 @@ var askerTableCopy = {};
 var askerTableClear;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
-var debugMode = false;
 var tabs = {};
 var replies = {};
 var crushes = {};
@@ -84,13 +84,13 @@ function getVersion() {
 function addTab(id, url) {
    var d = (new Date()).valueOf();
    tabs[id] = d;
-   debug("Adding tab (" + id + ") " + d);
+   MissingE.debug("Adding tab (" + id + ") " + d);
 }
 
 chrome.tabs.onRemoved.addListener(function(id, removeInfo) {
    if (tabs[id]) {
       delete tabs[id];
-      debug("Removing tab (" + id + ")");
+      MissingE.debug("Removing tab (" + id + ")");
    }
 });
 
@@ -137,19 +137,13 @@ cacheClear = setInterval(function() {
 clearQueues = setInterval(function() {
    if (activeAjax == 0) {
       if (numSleeping !== 0) {
-         debug(numSleeping + " still sleeping");
+         MissingE.debug(numSleeping + " still sleeping");
       }
       if (waitQueue.length > 0) {
-         debug(waitQueue.length + " still queued");
+         MissingE.debug(waitQueue.length + " still queued");
       }
    }
 }, tenSeconds);
-
-function debug(msg) {
-   if (debugMode) {
-      console.log(msg);
-   }
-}
 
 function versionCompare(v1, v2) {
    if (!v1 && !v2) { return 0; }
@@ -226,7 +220,7 @@ function receiveOptions(request, sendResponse) {
             else {
                changed++;
             }
-            debug(i + " [" + old + " => '" +
+            MissingE.debug(i + " [" + old + " => '" +
                         settings[i] + "']");
             localStorage[i] = settings[i];
          }
@@ -253,7 +247,7 @@ function receiveOptions(request, sendResponse) {
 
 function doTags(stamp, id, sendResponse) {
    if (!stamp.tags) {
-      debug("Cache entry does not have tags");
+      MissingE.debug("Cache entry does not have tags");
       return false;
    }
    var tags = stamp.tags;
@@ -283,12 +277,12 @@ function doVimeoPreview(stamp, id, sendResponse) {
       targetId: id,
       error: function(xhr, textStatus) {
          if (xhr.status == 404) {
-            debug("vimeo request (" + this.targetId + ") not found");
+            MissingE.debug("vimeo request (" + this.targetId + ") not found");
             sendResponse(failMsg);
             return;
          }
          else {
-            debug("vimeo request (" + this.targetId + ") failed");
+            MissingE.debug("vimeo request (" + this.targetId + ") failed");
             sendResponse(failMsg);
             return;
          }
@@ -303,11 +297,11 @@ function doVimeoPreview(stamp, id, sendResponse) {
             return;
          }
          if ((theEntry = cache[id])) {
-            debug("Saving vimeo thumb " + id + " to cache (HIT)");
+            MissingE.debug("Saving vimeo thumb " + id + " to cache (HIT)");
             isNew = false;
          }
          else {
-            debug("Saving vimeo thumb " + id + " to cache (MISS)");
+            MissingE.debug("Saving vimeo thumb " + id + " to cache (MISS)");
             cacheElements++;
             theEntry = {};
             isNew = false;
@@ -331,7 +325,7 @@ function doNotes(count, id, sendResponse) {
 function doPreview(stamp, id, sendResponse) {
    var i, type;
    if (!stamp.photos && !stamp.videoThumbs) {
-      debug("Cache entry does not have photos");
+      MissingE.debug("Cache entry does not have photos");
       return false;
    }
    if (stamp.photos) { type = "photo"; }
@@ -347,7 +341,7 @@ function doPreview(stamp, id, sendResponse) {
       photos.push(chrome.extension.getURL('core/dashboardTweaks/black.png'));
    }
    if (/vimeo:/.test(photos[0])) {
-      debug("Preview image is " + photos[0] + ". Accessing Vimeo API.");
+      MissingE.debug("Preview image is " + photos[0] + ". Accessing Vimeo API.");
       doVimeoPreview(stamp, id, sendResponse);
       return true;
    }
@@ -359,7 +353,7 @@ function doPreview(stamp, id, sendResponse) {
 
 function doTimestamp(stamp, id, sendResponse) {
    if (!stamp.timestamp) {
-      debug("Cache entry does not have timestamp");
+      MissingE.debug("Cache entry does not have timestamp");
       return false;
    }
    var ts = stamp.timestamp;
@@ -376,7 +370,7 @@ function doTimestamp(stamp, id, sendResponse) {
 
 function doReblogDash(stamp, id, sendResponse) {
    if (!stamp.reblog_key) {
-      debug("Cache entry does not have reblog key.");
+      MissingE.debug("Cache entry does not have reblog key.");
       return false;
    }
    var key = stamp.reblog_key;
@@ -387,7 +381,7 @@ function doReblogDash(stamp, id, sendResponse) {
 
 function queueAjax(details) {
    waitQueue.push(details);
-   debug("Queueing " + details.type + " request. " + (waitQueue.length) + " in queue");
+   MissingE.debug("Queueing " + details.type + " request. " + (waitQueue.length) + " in queue");
 }
 
 function dequeueAjax(id) {
@@ -399,7 +393,7 @@ function dequeueAjax(id) {
    while (activeAjax < maxActiveAjax) {
       var call = waitQueue.shift();
       if (!call) { return false; }
-      debug("Dequeueing " + call.type + " request. " + (waitQueue.length) + " in queue");
+      MissingE.debug("Dequeueing " + call.type + " request. " + (waitQueue.length) + " in queue");
       runItem(call);
    }
 }
@@ -408,11 +402,11 @@ function saveCache(id, entry) {
    var theEntry;
    var isNew = true;
    if ((theEntry = cache[id])) {
-      debug("Saving " + id + " to cache (HIT)");
+      MissingE.debug("Saving " + id + " to cache (HIT)");
       isNew = false;
    }
    else {
-      debug("Saving " + id + " to cache (MISS)");
+      MissingE.debug("Saving " + id + " to cache (MISS)");
       cacheElements++;
       theEntry = {};
    }
@@ -442,7 +436,7 @@ function saveCache(id, entry) {
 function cacheServe(type, id, sendResponse, fn, midFlight, notAjax) {
    var entry;
    if ((entry = cache[id])) {
-      debug(type + " request (" + id + ") has cache entry.");
+      MissingE.debug(type + " request (" + id + ") has cache entry.");
       if (midFlight && !notAjax) {
          dequeueAjax(id);
       }
@@ -484,7 +478,7 @@ function wakeById(id) {
       if ((call = activeRequests[id][i])) {
          delete onHold[call.type + call.request.pid];
          numSleeping--;
-         debug("Selectively waking " + call.type + " request (" + call.request.pid + "). " + numSleeping + " still asleep");
+         MissingE.debug("Selectively waking " + call.type + " request (" + call.request.pid + "). " + numSleeping + " still asleep");
          runItem(call);
       }
    }
@@ -501,7 +495,7 @@ function isRequested(details) {
       bucket.push(details);
       numSleeping++;
       details.request.sleepCount++;
-      debug("Sleeping " + details.type + " request (" + details.request.pid +
+      MissingE.debug("Sleeping " + details.type + " request (" + details.request.pid +
             ") [" + details.request.sleepCount + "]. " + numSleeping +
             " asleep");
       return true;
@@ -519,7 +513,7 @@ function startAjax(id) {
 }
 
 function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
-   debug("AJAX " + type + " request (" + request.pid + ")");
+   MissingE.debug("AJAX " + type + " request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {greeting:type, success:false, pid:request.pid};
    $.ajax({
@@ -533,13 +527,13 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
       tabHash: hash,
       error: function(xhr, textStatus) {
          if (xhr.status == 404) {
-            debug(type + " request (" + this.targetId + ") not found");
+            MissingE.debug(type + " request (" + this.targetId + ") not found");
             dequeueAjax(this.targetId);
             sendResponse(failMsg);
             return;
          }
          if (this.tabHash !== tabs[this.tabId]) {
-            debug("Stop " + type + " request: Tab closed or changed.");
+            MissingE.debug("Stop " + type + " request: Tab closed or changed.");
             dequeueAjax(this.targetId);
             return;
          }
@@ -549,12 +543,12 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
          else {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-               debug("Retry " + type + " request (" + this.targetId + ")");
+               MissingE.debug("Retry " + type + " request (" + this.targetId + ")");
                $.ajax(this);
                return;
             }
             else {
-               debug(type + " request (" + this.targetId + ") failed");
+               MissingE.debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
             }
@@ -564,7 +558,7 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
          var closed = (this.tabHash !== tabs[this.tabId]);
          if (!(/<input[^>]*name="post\[date\]"[^>]*>/.test(data))) {
             if (closed) {
-               debug("Stop " + type + " request: Tab closed or changed.");
+               MissingE.debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.targetId);
                return;
             }
@@ -574,12 +568,12 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
             else {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
-                  debug("Retry " + type + " request (" + this.targetId + ")");
+                  MissingE.debug("Retry " + type + " request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  debug(type + " request (" + this.targetId + ") failed");
+                  MissingE.debug(type + " request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
                   sendResponse(failMsg);
                }
@@ -600,7 +594,7 @@ function doAskAjax(request, sender, sendResponse, hash, retries, type, doFunc) {
                }
             }
             if (failed) {
-               debug(type + " request (" + this.targetId + ") failed");
+               MissingE.debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
                return;
@@ -721,7 +715,7 @@ function parseRSS(data, forceType) {
 }
 
 function doTagsAjax(request, sender, sendResponse, hash, retries) {
-   debug("AJAX tags request (" + request.pid + ")");
+   MissingE.debug("AJAX tags request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {greeting:"tags", success:false, pid:request.pid};
    $.ajax({
@@ -735,13 +729,13 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
       tabHash: hash,
       error: function(xhr, textStatus) {
          if (xhr.status === 404) {
-            debug("tags request (" + this.targetId + ") not found");
+            MissingE.debug("tags request (" + this.targetId + ") not found");
             dequeueAjax(this.targetId);
             sendResponse(failMsg);
             return;
          }
          if (this.tabHash !== tabs[this.tabId]) {
-            debug("Stop tags request: Tab closed or changed.");
+            MissingE.debug("Stop tags request: Tab closed or changed.");
             dequeueAjax(this.targetId);
             return;
          }
@@ -751,12 +745,12 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
          else {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-               debug("Retry tags request (" + this.targetId + ")");
+               MissingE.debug("Retry tags request (" + this.targetId + ")");
                $.ajax(this);
                return;
             }
             else {
-               debug("tags request (" + this.targetId + ") failed");
+               MissingE.debug("tags request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
             }
@@ -766,7 +760,7 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
          var closed = (this.tabHash !== tabs[this.tabId]);
          if (!(/<guid>[^<]*<\/guid>/.test(data))) {
             if (closed) {
-               debug("Stop tags request: Tab closed or changed.");
+               MissingE.debug("Stop tags request: Tab closed or changed.");
                dequeueAjax(this.targetId);
                return;
             }
@@ -776,12 +770,12 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
             else {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
-                  debug("Retry tags request (" + this.targetId + ")");
+                  MissingE.debug("Retry tags request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  debug("tags request (" + this.targetId + ") failed");
+                  MissingE.debug("tags request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
                   sendResponse(failMsg);
                }
@@ -800,7 +794,7 @@ function doTagsAjax(request, sender, sendResponse, hash, retries) {
 }
 
 function doNotesAjaxMultiStep(request, sender, sendResponse, hash, retries) {
-   debug("AJAX notes 1st request (" + request.pid + ")");
+   MissingE.debug("AJAX notes 1st request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {greeting:"notes", success:false, pid:request.pid};
    $.ajax({
@@ -814,13 +808,13 @@ function doNotesAjaxMultiStep(request, sender, sendResponse, hash, retries) {
       tabHash: hash,
       error: function(xhr, textStatus) {
          if (xhr.status === 404) {
-            debug("notes 1st request (" + this.targetId + ") not found");
+            MissingE.debug("notes 1st request (" + this.targetId + ") not found");
             dequeueAjax(this.targetId);
             sendResponse(failMsg);
             return;
          }
          if (this.tabHash !== tabs[this.tabId]) {
-            debug("Stop notes 1st request: Tab closed or changed.");
+            MissingE.debug("Stop notes 1st request: Tab closed or changed.");
             dequeueAjax(this.targetId);
             return;
          }
@@ -828,12 +822,12 @@ function doNotesAjaxMultiStep(request, sender, sendResponse, hash, retries) {
                          function(){return true;}, true)) {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-               debug("Retry notes 1st request (" + this.targetId + ")");
+               MissingE.debug("Retry notes 1st request (" + this.targetId + ")");
                $.ajax(this);
                return;
             }
             else {
-               debug("notes 1st request (" + this.targetId + ") failed");
+               MissingE.debug("notes 1st request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
             }
@@ -843,7 +837,7 @@ function doNotesAjaxMultiStep(request, sender, sendResponse, hash, retries) {
          var closed = (this.tabHash !== tabs[this.tabId]);
          if (!(/<guid>[^<]*<\/guid>/.test(data))) {
             if (closed) {
-               debug("Stop notes 1st request: Tab closed or changed.");
+               MissingE.debug("Stop notes 1st request: Tab closed or changed.");
                dequeueAjax(this.targetId);
                return;
             }
@@ -851,12 +845,12 @@ function doNotesAjaxMultiStep(request, sender, sendResponse, hash, retries) {
                             function(){return true;}, true)) {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
-                  debug("Retry notes 1st request (" + this.targetId + ")");
+                  MissingE.debug("Retry notes 1st request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  debug("notes 1st request (" + this.targetId + ") failed");
+                  MissingE.debug("notes 1st request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
                   sendResponse(failMsg);
                }
@@ -880,7 +874,7 @@ function doNotesAjax(request, sender, sendResponse, hash, retries) {
       doNotesAjaxMultiStep(request, sender, sendResponse, hash, retries);
       return;
    }
-   debug("AJAX notes request (" + request.pid + ")");
+   MissingE.debug("AJAX notes request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {greeting:"notes", success:false, pid:request.pid};
    $.ajax({
@@ -895,24 +889,24 @@ function doNotesAjax(request, sender, sendResponse, hash, retries) {
       tabHash: hash,
       error: function(xhr, textStatus) {
          if (xhr.status === 404) {
-            debug("notes request (" + this.targetId + ") not found");
+            MissingE.debug("notes request (" + this.targetId + ") not found");
             dequeueAjax(this.targetId);
             sendResponse(failMsg);
             return;
          }
          if (this.tabHash !== tabs[this.tabId]) {
-            debug("Stop notes request: Tab closed or changed.");
+            MissingE.debug("Stop notes request: Tab closed or changed.");
             dequeueAjax(this.targetId);
             return;
          }
          this.tryCount++;
          if (this.tryCount <= this.retryLimit) {
-            debug("Retry notes request (" + this.targetId + ")");
+            MissingE.debug("Retry notes request (" + this.targetId + ")");
             $.ajax(this);
             return;
          }
          else {
-            debug("notes request (" + this.targetId + ") failed");
+            MissingE.debug("notes request (" + this.targetId + ") failed");
             dequeueAjax(this.targetId);
             sendResponse(failMsg);
          }
@@ -924,18 +918,18 @@ function doNotesAjax(request, sender, sendResponse, hash, retries) {
          var postInfo = re.exec(data);
          if (!postInfo) {
             if (closed) {
-               debug("Stop notes request: Tab closed or changed.");
+               MissingE.debug("Stop notes request: Tab closed or changed.");
                dequeueAjax(this.targetId);
                return;
             }
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-               debug("Retry notes request (" + this.targetId + ")");
+               MissingE.debug("Retry notes request (" + this.targetId + ")");
                $.ajax(this);
                return;
             }
             else {
-               debug("notes request (" + this.targetId + ") failed");
+               MissingE.debug("notes request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
             }
@@ -958,7 +952,7 @@ function doNotesAjax(request, sender, sendResponse, hash, retries) {
 }
 
 function doPreviewAjax(request, sender, sendResponse, hash, retries) {
-   debug("AJAX preview request (" + request.pid + ")");
+   MissingE.debug("AJAX preview request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {greeting:"preview", success:false, pid:request.pid};
    $.ajax({
@@ -972,13 +966,13 @@ function doPreviewAjax(request, sender, sendResponse, hash, retries) {
       tabHash: hash,
       error: function(xhr, textStatus) {
          if (xhr.status === 404) {
-            debug("preview request (" + this.targetId + ") not found");
+            MissingE.debug("preview request (" + this.targetId + ") not found");
             dequeueAjax(this.targetId);
             sendResponse(failMsg);
             return;
          }
          if (this.tabHash !== tabs[this.tabId]) {
-            debug("Stop preview request: Tab closed or changed.");
+            MissingE.debug("Stop preview request: Tab closed or changed.");
             dequeueAjax(this.targetId);
             return;
          }
@@ -988,12 +982,12 @@ function doPreviewAjax(request, sender, sendResponse, hash, retries) {
          else {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-               debug("Retry preview request (" + this.targetId + ")");
+               MissingE.debug("Retry preview request (" + this.targetId + ")");
                $.ajax(this);
                return;
             }
             else {
-               debug("preview request (" + this.targetId + ") failed");
+               MissingE.debug("preview request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
             }
@@ -1003,7 +997,7 @@ function doPreviewAjax(request, sender, sendResponse, hash, retries) {
          var closed = (this.tabHash !== tabs[this.tabId]);
          if (!(/<guid>[^<]*<\/guid>/.test(data))) {
             if (closed) {
-               debug("Stop preview request: Tab closed or changed.");
+               MissingE.debug("Stop preview request: Tab closed or changed.");
                dequeueAjax(this.targetId);
                return;
             }
@@ -1013,12 +1007,12 @@ function doPreviewAjax(request, sender, sendResponse, hash, retries) {
             else {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
-                  debug("Retry preview request (" + this.targetId + ")");
+                  MissingE.debug("Retry preview request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  debug("preview request (" + this.targetId + ") failed");
+                  MissingE.debug("preview request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
                   sendResponse(failMsg);
                }
@@ -1038,7 +1032,7 @@ function doPreviewAjax(request, sender, sendResponse, hash, retries) {
 
 function doReblogAjax(type, request, sender, sendResponse, hash, retries,
                               additional) {
-   debug("AJAX " + type + " request (" + request.pid + ")");
+   MissingE.debug("AJAX " + type + " request (" + request.pid + ")");
    startAjax(request.pid);
    var failMsg = {greeting:type, success:false, pid:request.pid};
    if (additional) {
@@ -1059,13 +1053,13 @@ function doReblogAjax(type, request, sender, sendResponse, hash, retries,
       tabHash: hash,
       error: function(xhr, textStatus) {
          if (xhr.status === 404) {
-            debug(type + " request (" + this.targetId + ") not found");
+            MissingE.debug(type + " request (" + this.targetId + ") not found");
             dequeueAjax(this.targetId);
             sendResponse(failMsg);
             return;
          }
          if (this.tabHash !== tabs[this.tabId]) {
-            debug("Stop " + type + " request: Tab closed or changed.");
+            MissingE.debug("Stop " + type + " request: Tab closed or changed.");
             dequeueAjax(this.targetId);
             return;
          }
@@ -1075,12 +1069,12 @@ function doReblogAjax(type, request, sender, sendResponse, hash, retries,
          else {
             this.tryCount++;
             if (this.tryCount <= this.retryLimit) {
-               debug("Retry " + type + " request (" + this.targetId + ")");
+               MissingE.debug("Retry " + type + " request (" + this.targetId + ")");
                $.ajax(this);
                return;
             }
             else {
-               debug(type + " request (" + this.targetId + ") failed");
+               MissingE.debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
             }
@@ -1091,7 +1085,7 @@ function doReblogAjax(type, request, sender, sendResponse, hash, retries,
          var ifr = data.match(/<\s*iframe[^>]*id="tumblr_controls"[^>]*>/);
          if (!ifr || ifr.length === 0) {
             if (closed) {
-               debug("Stop " + type + " request: Tab closed or changed.");
+               MissingE.debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.targetId);
                return;
             }
@@ -1101,12 +1095,12 @@ function doReblogAjax(type, request, sender, sendResponse, hash, retries,
             else {
                this.tryCount++;
                if (this.tryCount <= this.retryLimit) {
-                  debug("Retry " + type + " request (" + this.targetId + ")");
+                  MissingE.debug("Retry " + type + " request (" + this.targetId + ")");
                   $.ajax(this);
                   return;
                }
                else {
-                  debug(type + " request (" + this.targetId + ") failed");
+                  MissingE.debug(type + " request (" + this.targetId + ") failed");
                   dequeueAjax(this.targetId);
                   sendResponse(failMsg);
                }
@@ -1132,7 +1126,7 @@ function doReblogAjax(type, request, sender, sendResponse, hash, retries,
                }
             }
             else if (!closed) {
-               debug(type + " request (" + this.targetId + ") failed");
+               MissingE.debug(type + " request (" + this.targetId + ") failed");
                dequeueAjax(this.targetId);
                sendResponse(failMsg);
             }
@@ -1143,7 +1137,7 @@ function doReblogAjax(type, request, sender, sendResponse, hash, retries,
 
 function requestBetterReblogsAsk(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
-      debug("Stop betterReblogs request: Tab closed or changed.");
+      MissingE.debug("Stop betterReblogs request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1165,7 +1159,7 @@ function requestBetterReblogsAsk(request, sender, sendResponse, hash) {
 
 function requestReblogYourself(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
-      debug("Stop reblogYourself request: Tab closed or changed.");
+      MissingE.debug("Stop reblogYourself request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1188,7 +1182,7 @@ function requestReblogYourself(request, sender, sendResponse, hash) {
 function requestTimestamp(request, sender, sendResponse, hash) {
    if (request.lang) { lang = request.lang; }
    if (hash !== tabs[sender.tab.id]) {
-      debug("Stop timestamp request: Tab closed or changed.");
+      MissingE.debug("Stop timestamp request: Tab closed or changed.");
       dequeueAjax();
       return false;
    }
@@ -1210,13 +1204,13 @@ function requestTimestamp(request, sender, sendResponse, hash) {
       doAjax(request, sender, sendResponse, hash,
              getSetting("MissingE_timestamps_retries",MissingE.defaultRetries),
              "timestamp", doTimestamp,
-             {pid: request.pid, debugMode: debugMode});
+             {pid: request.pid});
    }
 }
 
 function requestTags(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
-      debug("Stop tags request: Tab closed or changed.");
+      MissingE.debug("Stop tags request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1237,7 +1231,7 @@ function requestTags(request, sender, sendResponse, hash) {
 
 function requestNotes(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
-      debug("Stop notes request: Tab closed or changed.");
+      MissingE.debug("Stop notes request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1252,7 +1246,7 @@ function requestNotes(request, sender, sendResponse, hash) {
 
 function requestPreview(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
-      debug("Stop preview request: Tab closed or changed.");
+      MissingE.debug("Stop preview request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1273,11 +1267,11 @@ function requestPreview(request, sender, sendResponse, hash) {
 
 function requestMagnifier(request, sender, sendResponse, hash) {
    if (hash !== tabs[sender.tab.id]) {
-      debug("Stop magnifier request: Tab closed or changed.");
+      MissingE.debug("Stop magnifier request: Tab closed or changed.");
       return;
    }
    else {
-      debug("Building magnifier request (" + request.pid + ")");
+      MissingE.debug("Building magnifier request (" + request.pid + ")");
       var i,url;
       if (request.num > 1) {
          url = [];
@@ -1343,11 +1337,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    }
    else if (request.greeting == "getAsker") {
       if (askerTable[sender.tab.url]) {
-         debug("Found saved asker for '" + sender.tab.url + "'");
+         MissingE.debug("Found saved asker for '" + sender.tab.url + "'");
          var name = askerTable[sender.tab.url].asker;
          var isSure = askerTable[sender.tab.url].isSure;
          if (--askerTable[sender.tab.url].count == 0) {
-            debug("Deleting saved asker for '" + sender.tab.url + "'");
+            MissingE.debug("Deleting saved asker for '" + sender.tab.url + "'");
             delete askerTable[sender.tab.url];
          }
          if (name && name !== "") {
@@ -1356,21 +1350,21 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
       else {
          if (askerWaiters[sender.tab.url]) {
-            debug("Creating new askerWaiter for '" + sender.tab.url + "'");
+            MissingE.debug("Creating new askerWaiter for '" + sender.tab.url + "'");
             askerWaiters[sender.tab.url].push(sendResponse);
          }
          else {
-            debug("Adding askerWaiter for '" + sender.tab.url + "'");
+            MissingE.debug("Adding askerWaiter for '" + sender.tab.url + "'");
             askerWaiters[sender.tab.url] = [sendResponse];
          }
       }
    }
    else if (request.greeting == "sendAsker") {
       if (askerWaiters[sender.tab.url]) {
-         debug("Found existing askerWaiter for '" + sender.tab.url + "'");
+         MissingE.debug("Found existing askerWaiter for '" + sender.tab.url + "'");
          var callback = askerWaiters[sender.tab.url].pop();
          if (askerWaiters[sender.tab.url].length === 0) {
-            debug("Deleting existing askerWaiter queue for '" + sender.tab.url + "'");
+            MissingE.debug("Deleting existing askerWaiter queue for '" + sender.tab.url + "'");
             delete askerWaiters[sender.tab.url];
          }
          if (request.name && request.name !== "") {
@@ -1379,11 +1373,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       }
       else {
          if (askerTable[sender.tab.url]) {
-            debug("Found existing askerTable entry for '" + sender.tab.url + "'");
+            MissingE.debug("Found existing askerTable entry for '" + sender.tab.url + "'");
             askerTable[sender.tab.url].count++;
          }
          else {
-            debug("Creating askerTable entry for '" + sender.tab.url + "'");
+            MissingE.debug("Creating askerTable entry for '" + sender.tab.url + "'");
             askerTable[sender.tab.url] = {asker: request.name,
                                           isSure: request.isSure, count:1};
          }
@@ -1455,7 +1449,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          return true;
       }
       else {
-         debug("Building timestamp (" + request.pid + ")");
+         MissingE.debug("Building timestamp (" + request.pid + ")");
          var ts = MissingE.buildTimestamp(request.stamp);
          if (ts !== null) {
             var info = {"timestamp":ts};
@@ -2161,7 +2155,7 @@ function collapseSettings(toPref, oldA, oldB) {
    var prefB = localStorage[oldB];
    var newPref;
    if (prefA || prefB) {
-      console.log('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
+      MissingE.log('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
    }
    if (prefA === "1" || prefB === "1") {
       newPref = "1";
@@ -2187,7 +2181,7 @@ function moveSetting(oldpref, newpref) {
          msg += 'Moving setting to "' + newpref + '"';
          localStorage[newpref] = pref;
       }
-      console.log(msg);
+      MissingE.log(msg);
       localStorage.removeItem(oldpref);
    }
 }
@@ -2198,7 +2192,7 @@ function moveAllSettings(oldgroup, newgroup) {
       if (localStorage.hasOwnProperty(i) &&
           re.test(i)) {
          var newpref = i.replace(re,'MissingE_' + newgroup + '_');
-         console.log('"' + i + '" depracated. Moving setting to "' + newpref + '"');
+         MissingE.log('"' + i + '" depracated. Moving setting to "' + newpref + '"');
          if (localStorage.getItem(newpref) === null) {
             localStorage[newpref] = localStorage[i];
          }
@@ -2210,7 +2204,7 @@ function moveAllSettings(oldgroup, newgroup) {
 function invertSetting(oldpref, newpref) {
    var pref;
    if ((pref = localStorage[oldpref])) {
-      console.log('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
+      MissingE.log('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
       if (localStorage.getItem(newpref) === null) {
          localStorage[newpref] = (pref === "1" || pref === 1 ? "0" : "1");
       }
@@ -2256,13 +2250,11 @@ function fixupSettings() {
 
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
-      console.log("Updated Missing e (" +
-                  prevVersion + " => " + currVersion +
-                  ")");
+      MissingE.log("Updated Missing e (" + prevVersion + " => " + currVersion + ")");
       setSetting('MissingE_compatCheck',0);
    }
    else if (!prevVersion) {
-      console.log("Installed Missing e " + currVersion);
+      MissingE.log("Installed Missing e " + currVersion);
       setSetting('MissingE_compatCheck',0);
       chrome.tabs.create({url:chrome.extension.getURL("core/options.html")});
    }
@@ -2273,7 +2265,7 @@ function onStart(currVersion, prevVersion) {
 onStart(currVersion, getSetting('MissingE_version',null));
 
 if (!MissingE.isSameDay(getSetting('MissingE_lastUpdateCheck',0))) {
-   console.log("Checking current available version.");
+   MissingE.log("Checking current available version.");
    getExternalVersion();
 }
 fixupSettings();

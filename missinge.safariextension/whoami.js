@@ -92,7 +92,7 @@ function doStartup(response) {
          }
       }
    }
-   console.log(info);
+   MissingE.log(info);
 
    if (window.top === window) {
       if (response.message.warningInfo) {

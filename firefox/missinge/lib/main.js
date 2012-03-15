@@ -51,10 +51,10 @@ var crushes = [];
 var repliesAndCrushesClear;
 var fiveMinutes = 300000;
 var tenSeconds = 10000;
+var extension = {isFirefox: true};
 var MissingE = require("utils").utils;
 MissingE.locale = require("localizations").locale;
 var lang = 'en';
-var debugMode = false;
 
 function getVersion() {
    return require("self").version;
@@ -112,19 +112,13 @@ cacheClear = timer.setInterval(function() {
 clearQueues = timer.setInterval(function() {
    if (activeAjax == 0) {
       if (numSleeping !== 0) {
-         debug(numSleeping + " still sleeping");
+         MissingE.debug(numSleeping + " still sleeping");
       }
       if (waitQueue.length > 0) {
-         debug(waitQueue.length + " still queued");
+         MissingE.debug(waitQueue.length + " still queued");
       }
    }
 }, tenSeconds);
-
-function debug(msg) {
-   if (debugMode) {
-      console.debug(msg);
-   }
-}
 
 var componentList = ["dashboardTweaks",
                      "bookmarker",
@@ -262,7 +256,7 @@ function getAllSettings(getStale) {
 function collapseSettings(toPref, oldA, oldB) {
    if ((ps.isSet(oldA) || ps.isSet(oldB)) &&
        !ps.isSet(toPref)) {
-      debug('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
+      MissingE.log('"' + oldA + '" and "' + oldB + '" depracated. Moving settings to "' + toPref + '"');
       if (ps.get(oldA,0) === 1 || ps.get(oldB,0) === 1) {
          ps.set(toPref,1);
       }
@@ -283,7 +277,7 @@ function clearSetting(pref) {
 
 function moveSetting(oldpref,newpref) {
    if (ps.isSet(oldpref) && !ps.isSet(newpref)) {
-      debug('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+      MissingE.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
       ps.set(newpref,ps.get(oldpref,0));
       ps.reset(oldpref);
    }
@@ -301,7 +295,7 @@ function moveAllSettings(oldgroup, newgroup) {
          var oldpref = 'extensions.' + i.replace(/_/g,'.');
          if (ps.isSet(oldpref)) {
             var newpref = 'extensions.' + i.replace(re,'MissingE_' + newgroup + '_').replace(/_/g,'.');
-            debug('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
+            MissingE.log('"' + oldpref + '" depracated. Moving setting to "' + newpref + '"');
             if (!ps.isSet(newpref)) {
                ps.set(newpref, ps.get(oldpref,0));
             }
@@ -313,7 +307,7 @@ function moveAllSettings(oldgroup, newgroup) {
 
 function invertSetting(oldpref,newpref) {
    if (ps.isSet(oldpref) && !ps.isSet(newpref)) {
-      debug('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
+      MissingE.log('"' + oldpref + '" changed to inverted setting "' + newpref + '"');
       ps.set(newpref,1-ps.get(oldpref,0));
       ps.reset(oldpref);
    }
@@ -460,7 +454,7 @@ function receiveOptions(message, theWorker) {
                else {
                   changed++;
                }
-               debug(i + " [" + old + " => '" +
+               MissingE.debug(i + " [" + old + " => '" +
                            settings[i] + "']");
             }
          }
@@ -488,7 +482,7 @@ function receiveOptions(message, theWorker) {
 
 function doTags(stamp, id, theWorker) {
    if (!stamp.tags) {
-      debug("Cache entry does not have tags");
+      MissingE.debug("Cache entry does not have tags");
       return false;
    }
    var tags = stamp.tags;
@@ -527,12 +521,12 @@ function doVimeoPreview(stamp, id, theWorker) {
             closed = true;
          }
          if (response.status === 404) {
-            debug("vimeo request (" + this.headers.targetId + ") failed");
+            MissingE.debug("vimeo request (" + this.headers.targetId + ") failed");
             if (!closed) { theWorker.postMessage(failMsg); }
             return;
          }
          if (response.status !== 200 || !data) {
-            debug("vimeo request (" + this.headers.targetId + ") failed");
+            MissingE.debug("vimeo request (" + this.headers.targetId + ") failed");
             if (!closed) { theWorker.postMessage(failMsg); }
             return;
          }
@@ -546,11 +540,11 @@ function doVimeoPreview(stamp, id, theWorker) {
             return;
          }
          if ((theEntry = cache[id])) {
-            debug("Saving vimeo thumb " + id + " to cache (HIT)");
+            MissingE.debug("Saving vimeo thumb " + id + " to cache (HIT)");
             isNew = false;
          }
          else {
-            debug("Saving vimeo thumb " + id + " to cache (MISS)");
+            MissingE.debug("Saving vimeo thumb " + id + " to cache (MISS)");
             cacheElements++;
             theEntry = {};
             isNew = false;
@@ -578,7 +572,7 @@ function doNotes(count, id, theWorker) {
 function doPreview(stamp, id, theWorker) {
    var i, type;
    if (!stamp.photos && !stamp.videoThumbs) {
-      debug("Cache entry does not have photos");
+      MissingE.debug("Cache entry does not have photos");
       return false;
    }
    if (stamp.photos) { type = "photo"; }
@@ -594,7 +588,7 @@ function doPreview(stamp, id, theWorker) {
       photos.push(data.url('core/dashboardTweaks/black.png'));
    }
    if (/vimeo:/.test(photos[0])) {
-      debug("Preview image is " + photos[0] + ". Accessing Vimeo API.");
+      MissingE.debug("Preview image is " + photos[0] + ". Accessing Vimeo API.");
       doVimeoPreview(stamp, id, theWorker);
       return true;
    }
@@ -608,7 +602,7 @@ function doPreview(stamp, id, theWorker) {
 
 function doTimestamp(stamp, id, theWorker) {
    if (!stamp.timestamp) {
-      debug("Cache entry does not have timestamp");
+      MissingE.debug("Cache entry does not have timestamp");
       return false;
    }
    var ts = stamp.timestamp;
@@ -624,7 +618,7 @@ function doTimestamp(stamp, id, theWorker) {
 
 function doReblogDash(stamp, id, theWorker, type) {
    if (!stamp.reblog_key) {
-      debug("Cache entry does not have reblog key.");
+      MissingE.debug("Cache entry does not have reblog key.");
       return false;
    }
    var key = stamp.reblog_key;
@@ -635,7 +629,7 @@ function doReblogDash(stamp, id, theWorker, type) {
 
 function queueAjax(details) {
    waitQueue.push(details);
-   debug("Queueing " + details.type + " request. " + (waitQueue.length) + " in queue");
+   MissingE.debug("Queueing " + details.type + " request. " + (waitQueue.length) + " in queue");
 }
 
 function dequeueAjax(id) {
@@ -647,7 +641,7 @@ function dequeueAjax(id) {
    while (activeAjax < maxActiveAjax) {
       var call = waitQueue.shift();
       if (!call) { return false; }
-      debug("Dequeueing " + call.type + " request. " + (waitQueue.length) + " in queue");
+      MissingE.debug("Dequeueing " + call.type + " request. " + (waitQueue.length) + " in queue");
       runItem(call);
    }
 }
@@ -656,11 +650,11 @@ function saveCache(id, entry) {
    var theEntry;
    var isNew = true;
    if ((theEntry = cache[id])) {
-      debug("Saving " + id + " to cache (HIT)");
+      MissingE.debug("Saving " + id + " to cache (HIT)");
       isNew = false;
    }
    else {
-      debug("Saving " + id + " to cache (MISS)");
+      MissingE.debug("Saving " + id + " to cache (MISS)");
       cacheElements++;
       theEntry = {};
    }
@@ -690,7 +684,7 @@ function saveCache(id, entry) {
 function cacheServe(type, id, theWorker, fn, midFlight, notAjax) {
    var entry;
    if ((entry = cache[id])) {
-      debug(type + " request(" + id + ") has cache entry.");
+      MissingE.debug(type + " request(" + id + ") has cache entry.");
       if (midFlight && !notAjax) {
          dequeueAjax(id);
       }
@@ -733,7 +727,7 @@ function wakeById(id) {
       if ((call = activeRequests[id][i])) {
          delete onHold[call.type + call.message.pid];
          numSleeping--;
-         debug("Selectively waking " + call.type + " request (" + call.message.pid + "). " + numSleeping + " still asleep");
+         MissingE.debug("Selectively waking " + call.type + " request (" + call.message.pid + "). " + numSleeping + " still asleep");
          runItem(call);
       }
    }
@@ -750,7 +744,7 @@ function isRequested(details) {
       bucket.push(details);
       numSleeping++;
       details.message.sleepCount++;
-      debug("Sleeping " + details.type + " request (" + details.message.pid +
+      MissingE.debug("Sleeping " + details.type + " request (" + details.message.pid +
             ") [" + details.message.sleepCount + "]. " + numSleeping +
             " asleep");
       return true;
@@ -783,7 +777,7 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
             closed = true;
          }
          if (response.status === 404) {
-            debug(type + " request (" + this.headers.targetId + ") not found");
+            MissingE.debug(type + " request (" + this.headers.targetId + ") not found");
             dequeueAjax(this.headers.targetId);
             myWorker.postMessage(failMsg);
             return;
@@ -791,7 +785,7 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
          if (response.status != 200 ||
              !(/<input[^>]*name="post\[date\]"[^>]*>/.test(response.text))) {
             if (closed) {
-               debug("Stop " + type + " request: Tab closed or changed.");
+               MissingE.debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
                return;
             }
@@ -801,13 +795,13 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
             }
             else {
                if (this.headers.tryCount <= this.headers.retryLimit) {
-                  debug("Retry " + type + " request (" + this.headers.targetId + ")");
+                  MissingE.debug("Retry " + type + " request (" + this.headers.targetId + ")");
                   doAskAjax('http://www.tumblr.com/edit/',
                          this.headers.targetId, (this.headers.tryCount + 1),
                          myWorker, this.headers.retryLimit, type, doFunc);
                }
                else {
-                  debug(type + " request (" + this.headers.targetId + ") failed");
+                  MissingE.debug(type + " request (" + this.headers.targetId + ") failed");
                   dequeueAjax(this.headers.targetId);
                   myWorker.postMessage(failMsg);
                }
@@ -829,7 +823,7 @@ function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
                }
             }
             if (failed) {
-               debug(type + " request (" + this.headers.targetId + ") failed");
+               MissingE.debug(type + " request (" + this.headers.targetId + ") failed");
                dequeueAjax(this.headers.targetId);
                myWorker.postMessage(failMsg);
                return;
@@ -973,14 +967,14 @@ function doTagsAjax(url, pid, count, myWorker, retries) {
             closed = true;
          }
          if (response.status === 404) {
-            debug("tags request (" + this.headers.targetId + ") not found");
+            MissingE.debug("tags request (" + this.headers.targetId + ") not found");
             dequeueAjax(this.headers.targetId);
             myWorker.postMessage(failMsg);
             return;
          }
          if (response.status != 200 || !goodData) {
             if (closed) {
-               debug("Stop tags request: Tab closed or changed.");
+               MissingE.debug("Stop tags request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
                return;
             }
@@ -990,13 +984,13 @@ function doTagsAjax(url, pid, count, myWorker, retries) {
             }
             else {
                if (this.headers.tryCount <= this.headers.retryLimit) {
-                  debug("Retry tags request (" + this.headers.targetId + ")");
+                  MissingE.debug("Retry tags request (" + this.headers.targetId + ")");
                   doTagsAjax(this.url,
                          this.headers.targetId, (this.headers.tryCount + 1),
                          myWorker, this.headers.retryLimit);
                }
                else {
-                  debug("tags request (" + this.headers.targetId + ") failed");
+                  MissingE.debug("tags request (" + this.headers.targetId + ") failed");
                   dequeueAjax(this.headers.targetId);
                   myWorker.postMessage(failMsg);
                }
@@ -1032,27 +1026,27 @@ function doNotesAjaxMultiStep(baseURL, pid, count, myWorker, retries) {
             closed = true;
          }
          if (response.status === 404) {
-            debug("notes 1st request (" + this.headers.targetId + ") not found");
+            MissingE.debug("notes 1st request (" + this.headers.targetId + ") not found");
             dequeueAjax(this.headers.targetId);
             myWorker.postMessage(failMsg);
             return;
          }
          if (response.status != 200 || !goodData) {
             if (closed) {
-               debug("Stop notes 1st request: Tab closed or changed.");
+               MissingE.debug("Stop notes 1st request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
                return;
             }
             if (!cacheServe("notes 1st", this.headers.targetId, myWorker,
                             function(){return true;}, true, true)) {
                if (this.headers.tryCount <= this.headers.retryLimit) {
-                  debug("Retry notes 1st request (" + this.headers.targetId + ")");
+                  MissingE.debug("Retry notes 1st request (" + this.headers.targetId + ")");
                   doNotesAjaxMultiStep(this.headers.baseURL,
                          this.headers.targetId, (this.headers.tryCount + 1),
                          myWorker, this.headers.retryLimit);
                }
                else {
-                  debug("notes 1st request (" + this.headers.targetId + ") failed");
+                  MissingE.debug("notes 1st request (" + this.headers.targetId + ") failed");
                   dequeueAjax(this.headers.targetId);
                   myWorker.postMessage(failMsg);
                }
@@ -1076,7 +1070,7 @@ function doNotesAjaxMultiStep(baseURL, pid, count, myWorker, retries) {
 function doNotesAjax(baseURL, pid, count, myWorker, retries) {
    if (!cache.hasOwnProperty(pid) ||
        !cache[pid].hasOwnProperty("publishStamp")) {
-      debug("AJAX notes 1st request (" + pid + ")");
+      MissingE.debug("AJAX notes 1st request (" + pid + ")");
       doNotesAjaxMultiStep(baseURL, pid, 0, myWorker, retries);
       return;
    }
@@ -1099,25 +1093,25 @@ function doNotesAjax(baseURL, pid, count, myWorker, retries) {
             closed = true;
          }
          if (response.status === 404) {
-            debug("notes request (" + this.headers.targetId + ") not found");
+            MissingE.debug("notes request (" + this.headers.targetId + ") not found");
             dequeueAjax(this.headers.targetId);
             myWorker.postMessage(failMsg);
             return;
          }
          if (response.status != 200 || !postInfo) {
             if (closed) {
-               debug("Stop notes request: Tab closed or changed.");
+               MissingE.debug("Stop notes request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
                return;
             }
             if (this.headers.tryCount <= this.headers.retryLimit) {
-               debug("Retry notes request (" + this.headers.targetId + ")");
+               MissingE.debug("Retry notes request (" + this.headers.targetId + ")");
                doNotesAjax(this.headers.baseURL, this.headers.targetId,
                            (this.headers.tryCount + 1), myWorker,
                            this.headers.retryLimit);
             }
             else {
-               debug("notes request (" + this.headers.targetId + ") failed");
+               MissingE.debug("notes request (" + this.headers.targetId + ") failed");
                dequeueAjax(this.headers.targetId);
                myWorker.postMessage(failMsg);
             }
@@ -1157,14 +1151,14 @@ function doPreviewAjax(url, pid, count, type, myWorker, retries) {
             closed = true;
          }
          if (response.status === 404) {
-            debug("preview request (" + this.headers.targetId + ") not found");
+            MissingE.debug("preview request (" + this.headers.targetId + ") not found");
             dequeueAjax(this.headers.targetId);
             myWorker.postMessage(failMsg);
             return;
          }
          if (response.status != 200 || !goodData) {
             if (closed) {
-               debug("Stop preview request: Tab closed or changed.");
+               MissingE.debug("Stop preview request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
                return;
             }
@@ -1174,13 +1168,13 @@ function doPreviewAjax(url, pid, count, type, myWorker, retries) {
             }
             else {
                if (this.headers.tryCount <= this.headers.retryLimit) {
-                  debug("Retry preview request (" + this.headers.targetId + ")");
+                  MissingE.debug("Retry preview request (" + this.headers.targetId + ")");
                   doPreviewAjax(this.url,
                          this.headers.targetId, (this.headers.tryCount + 1),
                          this.headers.type, myWorker, this.headers.retryLimit);
                }
                else {
-                  debug("preview request (" + this.headers.targetId + ") failed");
+                  MissingE.debug("preview request (" + this.headers.targetId + ") failed");
                   dequeueAjax(this.headers.targetId);
                   myWorker.postMessage(failMsg);
                }
@@ -1222,14 +1216,14 @@ function doReblogAjax(type, url, pid, count, myWorker, retries, additional) {
             closed = true;
          }
          if (response.status === 404) {
-            debug(type + " request (" + this.headers.targetId + ") not found");
+            MissingE.debug(type + " request (" + this.headers.targetId + ") not found");
             dequeueAjax(this.headers.targetId);
             myWorker.postMessage(failMsg);
             return;
          }
          if (response.status != 200 || !ifr || ifr.length === 0) {
             if (closed) {
-               debug("Stop " + type + " request: Tab closed or changed.");
+               MissingE.debug("Stop " + type + " request: Tab closed or changed.");
                dequeueAjax(this.headers.targetId);
                return;
             }
@@ -1239,13 +1233,13 @@ function doReblogAjax(type, url, pid, count, myWorker, retries, additional) {
             }
             else {
                if (this.headers.tryCount <= this.headers.retryLimit) {
-                  debug("Retry " + type + " request (" + this.headers.targetId + ")");
+                  MissingE.debug("Retry " + type + " request (" + this.headers.targetId + ")");
                   doReblogAjax(type, this.url,
                          this.headers.targetId, (this.headers.tryCount + 1),
                          myWorker, this.headers.retryLimit, additional);
                }
                else {
-                  debug(type + " request (" + this.headers.targetId + ") failed");
+                  MissingE.debug(type + " request (" + this.headers.targetId + ") failed");
                   dequeueAjax(this.headers.targetId);
                   myWorker.postMessage(failMsg);
                }
@@ -1271,7 +1265,7 @@ function doReblogAjax(type, url, pid, count, myWorker, retries, additional) {
                }
             }
             else if (!closed) {
-               debug(type + " request (" + this.headers.targetId + ") failed");
+               MissingE.debug(type + " request (" + this.headers.targetId + ") failed");
                dequeueAjax(this.headers.targetId);
                myWorker.postMessage(failMsg);
             }
@@ -1285,7 +1279,7 @@ function startTags(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      debug("Stop tags request: Tab closed or changed.");
+      MissingE.debug("Stop tags request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1300,7 +1294,7 @@ function startTags(message, myWorker) {
    }
    else {
       var url = message.url + "/post/" + message.pid + "/rss";
-      debug("AJAX tags request (" + message.pid + ")");
+      MissingE.debug("AJAX tags request (" + message.pid + ")");
       startAjax(message.pid);
       doTagsAjax(url, message.pid, 0, myWorker,
              getSetting("extensions.MissingE.betterReblogs.retries",MissingE.defaultRetries));
@@ -1312,7 +1306,7 @@ function startNotes(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      debug("Stop notes request: Tab closed or changed.");
+      MissingE.debug("Stop notes request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1320,7 +1314,7 @@ function startNotes(message, myWorker) {
       queueAjax({type: "notes", message: message, worker: myWorker});
    }
    else {
-      debug("AJAX notes request (" + message.pid + ")");
+      MissingE.debug("AJAX notes request (" + message.pid + ")");
       startAjax(message.pid);
       doNotesAjax(message.url, message.pid, 0, myWorker,
              getSetting("extensions.MissingE.dashboardTweaks.previewRetries",MissingE.defaultRetries));
@@ -1332,7 +1326,7 @@ function startPreview(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      debug("Stop preview request: Tab closed or changed.");
+      MissingE.debug("Stop preview request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1347,7 +1341,7 @@ function startPreview(message, myWorker) {
    }
    else {
       var url = message.url + "/post/" + message.pid + "/rss";
-      debug("AJAX preview request (" + message.pid + ")");
+      MissingE.debug("AJAX preview request (" + message.pid + ")");
       startAjax(message.pid);
       doPreviewAjax(url, message.pid, 0, message.type, myWorker,
              getSetting("extensions.MissingE.dashboardTweaks.previewRetries",MissingE.defaultRetries));
@@ -1359,10 +1353,10 @@ function startMagnifier(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      debug("Stop magnifier request: Tab closed or changed.");
+      MissingE.debug("Stop magnifier request: Tab closed or changed.");
       return;
    }
-   debug("Buidling magnifier request (" + message.pid + ")");
+   MissingE.debug("Buidling magnifier request (" + message.pid + ")");
    var i,url;
    if (message.num > 1) {
       url = [];
@@ -1386,7 +1380,7 @@ function startTimestamp(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      debug("Stop timestamp request: Tab closed or changed.");
+      MissingE.debug("Stop timestamp request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1401,14 +1395,14 @@ function startTimestamp(message, myWorker) {
       queueAjax({type: "timestamp", message: message, worker: myWorker});
    }
    else if (message.url === 'http://www.tumblr.com/edit/') {
-      debug("AJAX timestamp request (" + message.pid + ")");
+      MissingE.debug("AJAX timestamp request (" + message.pid + ")");
       startAjax(message.pid);
       doAskAjax(message.url, message.pid, 0, myWorker,
                 getSetting("extensions.MissingE.timestamps.retries",MissingE.defaultRetries),
                 "timestamp", doTimestamp);
    }
    else {
-      debug("AJAX timestamp request (" + message.pid + ")");
+      MissingE.debug("AJAX timestamp request (" + message.pid + ")");
       startAjax(message.pid);
       doAjax(message.url, message.pid, 0, myWorker,
              getSetting("extensions.MissingE.timestamps.retries",MissingE.defaultRetries),
@@ -1421,7 +1415,7 @@ function startBetterReblogsAsk(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      debug("Stop betterReblogs request: Tab closed or changed.");
+      MissingE.debug("Stop betterReblogs request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1436,7 +1430,7 @@ function startBetterReblogsAsk(message, myWorker) {
       queueAjax({type: "betterReblogs", message: message, worker: myWorker});
    }
    else {
-      debug("AJAX betterReblogs request (" + message.pid + ")");
+      MissingE.debug("AJAX betterReblogs request (" + message.pid + ")");
       startAjax(message.pid);
       doReblogAjax("betterReblogs", message.url, message.pid, 0, myWorker,
              getSetting("extensions.MissingE.reblogYourself.askRetries",MissingE.defaultRetries),
@@ -1491,7 +1485,7 @@ function startReblogYourself(message, myWorker) {
       var tab = myWorker.tab;
    }
    catch (err) {
-      debug("Stop reblogYourself request: Tab closed or changed.");
+      MissingE.debug("Stop reblogYourself request: Tab closed or changed.");
       dequeueAjax();
       return;
    }
@@ -1506,7 +1500,7 @@ function startReblogYourself(message, myWorker) {
       queueAjax({type: "reblogYourself", message: message, worker: myWorker});
    }
    else {
-      debug("AJAX reblogYourself request (" + message.pid + ")");
+      MissingE.debug("AJAX reblogYourself request (" + message.pid + ")");
       startAjax(message.pid);
       doReblogAjax("reblogYourself", message.url, message.pid, 0, myWorker,
              getSetting("extensions.MissingE.reblogYourself.retries",MissingE.defaultRetries),
@@ -1548,7 +1542,7 @@ function decode64(input) {
    // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
    var base64test = /[^A-Za-z0-9\+\/\=]/g;
    if (base64test.exec(input)) {
-      debug("There were invalid base64 characters in the input text.");
+      MissingE.debug("There were invalid base64 characters in the input text.");
       return;
    }
    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
@@ -1684,7 +1678,7 @@ function handleMessage(message, myWorker) {
          return true;
       }
       else {
-         debug("Building timestamp (" + message.pid + ")");
+         MissingE.debug("Building timestamp (" + message.pid + ")");
          var ts = MissingE.buildTimestamp(message.stamp);
          if (ts !== null) {
             var info = {"timestamp":ts};
@@ -2477,6 +2471,7 @@ pageMod.PageMod({
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("extension.js"),
                        data.url("core/common/menuButton.js"),
+                       data.url("core/utils.js"),
                        data.url("whoami.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {
@@ -2596,12 +2591,11 @@ function fixupSettings() {
 
 function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
-      console.log("Updated Missing e (" +
-                  prevVersion + " => " + currVersion +
-                  ")");
+      MissingE.log("Updated Missing e (" +
+            prevVersion + " => " + currVersion + ")");
    }
    else if (!prevVersion) {
-      console.log("Installed Missing e " + currVersion);
+      MissingE.log("Installed Missing e " + currVersion);
       openSettings();
    }
    setSetting('extensions.MissingE.version',currVersion);
@@ -2612,7 +2606,7 @@ onStart(currVersion, prevVersion);
 
 /*
 if (!MissingE.isSameDay(getSetting('extensions.MissingE.lastUpdateCheck',0))) {
-   console.log("Checking current available version.");
+   MissingE.log("Checking current available version.");
    getExternalVersion();
 }
 */

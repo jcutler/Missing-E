@@ -84,7 +84,7 @@ self.on('message', function (message) {
          }
       }
    }
-   console.log(info);
+   MissingE.log(info);
 
    var html = document.getElementsByTagName('html');
    var lang;

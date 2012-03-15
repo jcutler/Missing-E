@@ -37,7 +37,7 @@
       }
    }
    if (toRemove.length > 0) {
-      console.log("Missing e is removing a fake login box from this page.");
+      MissingE.log("Missing e is removing a fake login box from this page.");
    }
    for (i=0; i<toRemove.length; i++) {
       toRemove[i].parentNode.removeChild(toRemove[i]);

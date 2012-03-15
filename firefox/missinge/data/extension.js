@@ -44,7 +44,6 @@ MissingE = {
                      true);
             xhr.onreadystatechange = function() {
                if (xhr.readyState !== 4) { return; }
-               console.log(xhr.status);
                var importedSettings = {};
                if (xhr.status === 200 && xhr.responseXML) {
                   $('missing-e setting', xhr.responseXML).each(function(i) {

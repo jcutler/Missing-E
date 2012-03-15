@@ -28,6 +28,18 @@ var utils = {
    minRetries: 0,
    maxRetries: 20,
    defaultFormat: "%Y-%m-%D %H:%i",
+   
+   debug: function(msg) {
+      if (this.loggingLevel && this.loggingLevel >= 2) {
+         console.debug(msg);
+      }
+   },
+   
+   log: function(msg) {
+      if (this.loggingLevel && this.loggingLevel >= 1) {
+         console.log(msg);
+      }
+   },
 
    urlPatterns: {
       "askForm":      /^ask_form\/[^\/]+(\/success)?[\/]?$/,
@@ -237,7 +249,7 @@ var utils = {
       else {
          if (!this.locale.hasOwnProperty(lang)) {
              this.locale[lang] = false;
-            console.log("Warning: Localization not found for language '" +
+            MissingE.debug("Warning: Localization not found for language '" +
                         lang + "'");
          }
          return this.locale.en;
@@ -387,11 +399,25 @@ var utils = {
 if (typeof window === "undefined" &&
     typeof require === "function" &&
     require("api-utils/xul-app")) {
+   // No logging or debugging output in Firefox released add-on
+   if (utils.loggingLevel === undefined) {
+      utils.loggingLevel = 0;
+   }
    exports.utils = utils;
 }
 else if (!MissingE.hasOwnProperty("_utilsLoaded") ||
          !MissingE._utilsLoaded) {
    var i;
+   if (utils.loggingLevel === undefined) {
+      if (extension.isFirefox) {
+         // no logging or debugging output in Firefox released add-on
+         utils.loggingLevel = 0;
+      }
+      else {
+         // other browsers will display logging but not debugging output
+         utils.loggingLevel = 1;
+      }
+   }
    MissingE._utilsLoaded = true;
    for (i in utils) {
       if (utils.hasOwnProperty(i)) {
