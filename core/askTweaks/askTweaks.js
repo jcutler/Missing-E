@@ -47,8 +47,15 @@ MissingE.packages.askTweaks = {
                           ');" />');
          addQueue.attr('title', queueText);
          addQueue.text(queueText);
-         controls.prepend(addPub);
-         controls.prepend(addQueue);
+         var block = controls.find('a[id^="post_block_"]');
+         if (block.length === 1) {
+            block.after(addPub);
+            block.after(addQueue);
+         }
+         else {
+            controls.prepend(addPub);
+            controls.prepend(addQueue);
+         }
       }
    },
 
