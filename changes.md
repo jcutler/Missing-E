@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.14** (03/16/2012)
+**_!_** Fix problem with extra post buttons on Tumblr share bookmarklet defaulting to publish on Firefox for Windows
+
 ##**2.7.13** (03/16/2012)
 **_!_** Fix issue with bars for older bookmarks sometimes appearing at the top of secondary dashboard pages  
 **_!_** Increase Firefox compatibility to version 14.0a1
