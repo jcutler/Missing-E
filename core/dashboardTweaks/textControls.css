@@ -73,3 +73,8 @@ height:auto !important;
 background:transparent !important;
 line-height:20px !important;
 }
+
+#posts .post .post_controls .popover_post_tools {
+position:absolute !important;
+right:-52px !important;
+}

@@ -94,7 +94,7 @@ MissingE.packages.dashboardTweaks = {
           !(node.hasClass('post')) ||
           !(node.hasClass('is_reblog')) ||
           node.hasClass('is_mine') ||
-          node.find('.post_controls a[id^="post_control_reply"]').length > 0 ||
+          node.find('.post_controls span.reply_button').length > 0 ||
           node.find('.MissingE_experimental_reply').length > 0) {
          return;
       }
@@ -119,6 +119,7 @@ MissingE.packages.dashboardTweaks = {
                       title: MissingE.getLocale(lang).dashTweaksText.reply +
                          " [" + MissingE.getLocale(lang).dashTweaksText.experimental + "]"});
       expRep.attr("label", "[" + MissingE.getLocale(lang).dashTweaksText.reply + "]");
+      expRep.append(' ');
       var popover = $('<div />', {"class": "popover popover_gradient popover_post_tools"});
       popover.css('display','none');
       var app = popover;
@@ -156,25 +157,8 @@ MissingE.packages.dashboardTweaks = {
                          text: MissingE.getLocale(lang).dashTweaksText.reply})
                      .prepend('&nbsp;').append('&nbsp;'));
       failer.insertAfter(notes);
-   },
-
-   realignReplyNipple: function(nip, count) {
-      if (!count) { count = 0; }
-      if (!nip || count > 4) { return; }
-      var nipple = $(nip);
-      var pane = nipple.closest('div[id^="reply_pane_outer_container"]');
-      if (!pane.is(':visible')) {
-         setTimeout(function() {
-            MissingE.packages.dashboardTweaks.realignReplyNipple(nip, count+1);
-         }, 500);
-         return false;
-      }
-      var repBtn = nipple.closest('li.post')
-                     .find('div.post_controls a[id^="post_control_reply"]');
-      var left = repBtn.offset().left + (Math.floor(repBtn.width())>>1) -
-                 pane.offset().left - (Math.floor(nipple.width())>>1) +
-                 (repBtn.hasClass('MissingE_experimental_reply') ? 2 : 0);
-      nipple.css({left:left+'px',right:'auto'});
+      notes.after(' ');
+      failer.after(' ');
    },
 
    addExpandAllHandler: function(item) {
@@ -566,11 +550,11 @@ MissingE.packages.dashboardTweaks = {
          });
       }
 
-      $('#posts div.post_controls a[id^="post_control_reply"]')
-            .live('click',function() {
-         var nip = $(this).closest('li.post')
-                     .find('div.reply_pane div.nipple:first');
-         MissingE.packages.dashboardTweaks.realignReplyNipple(nip)
+      $('#posts .post_controls .reply_button').live('mouseup',function(e) {
+         var me = $(this);
+         if (!me.next().hasClass('MissingE_reply_overlay')) {
+            me.after($('<div />', {"class": "MissingE_reply_overlay"}));
+         }
       });
 
       if (settings.widescreen === 1 &&

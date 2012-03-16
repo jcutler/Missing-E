@@ -109,3 +109,18 @@ background-position:-50px 0;
 width:19px;
 background-position:-25px 0;
 }
+
+#posts .post .post_controls .MissingE_reply_overlay {
+position:absolute;
+top:0;
+left:0;
+background-color:transparent;
+z-index:10001;
+display:none;
+width:100%;
+height:100%;
+}
+
+#posts .post .post_controls .reply_button.active + .MissingE_reply_overlay {
+display:block;
+}

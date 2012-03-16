@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Jeremy Cutler</string>
 	<key>Builder Version</key>
-	<string>534.52.7</string>
+	<string>6534.54.16</string>
 	<key>CFBundleDisplayName</key>
 	<string>Missing e</string>
 	<key>CFBundleIdentifier</key>
@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.7.11</string>
+	<string>2.7.12</string>
 	<key>CFBundleVersion</key>
-	<string>27011</string>
+	<string>27012</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>

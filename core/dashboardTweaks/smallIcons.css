@@ -75,5 +75,6 @@ position:relative !important;
 #posts .post .post_controls .popover_post_tools {
 position:absolute !important;
 top:56px !important;
-right:-41px !important;
+right:-50px !important;
+margin-right:50% !important;
 }
