@@ -321,12 +321,14 @@ MissingE.packages.bookmarker = {
                MissingE.packages.bookmarker.addBar(marks[j], lang);
                break;
             }
+            var postVal = parseInt(post,10);
+            var markVal = parseInt(post,10);
             var prevPost = $(item).prevAll('li.post:not(#new_post)').first();
             if (MissingE.isTumblrURL(location.href, ["dashboardOnly"]) &&
-                post < marks[j][1] &&
+                postVal < markVal &&
                 ((prevPost.length === 1 &&
-                  prevPost.attr('id').match(/\d*$/)[0] > marks[j][1]) ||
-                 from > marks[j][1])) {
+                  parseInt(prevPost.attr('id').match(/\d*$/)[0],10) > markVal) ||
+                 from > markVal)) {
                MissingE.packages.bookmarker.addBar(marks[j], lang, item);
             }
          }
