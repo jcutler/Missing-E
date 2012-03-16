@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.15** (not yet released)
+**_!_** Fix issue with quick (1-click) reblog menu account selector resetting preemptively
+
 ##**2.7.14** (03/16/2012)
 **_!_** Fix problem with extra post buttons (draft, queue, private) on Tumblr share bookmarklet defaulting to publish on Firefox for Windows
 
