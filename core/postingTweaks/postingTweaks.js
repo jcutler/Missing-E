@@ -335,9 +335,13 @@ MissingE.packages.postingTweaks = {
             else if (this.id === 'MissingE_privatePost') {
                $('#post_state').val('private');
             }
+            if (isShare) {
+               $.globalEval("sync_input_values('_form_post_state', " +
+                            "$('post_state').value);");
+            }
             var evt = document.createEvent("HTMLEvents");
             evt.initEvent('change',false,true);
-            $('#post_state').get(0).dispatchEvent(evt);
+            document.getElementById('post_state').dispatchEvent(evt);
          });
          MissingE.packages.postingTweaks
             .showHideButtons(newbtns, $('#post_state').val());
