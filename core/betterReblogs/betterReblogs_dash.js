@@ -29,6 +29,10 @@ MissingE.packages.betterReblogs = {
 
    checked: {},
 
+   showingReblogMenu: function() {
+      return $('#MissingE_quick_reblog:visible').length > 0;
+   },
+
    addAskReblog: function(item) {
       if (item.tagName === "LI" && $(item).hasClass('post') &&
           $(item).hasClass('note')) {
@@ -582,8 +586,10 @@ MissingE.packages.betterReblogs = {
                   qr.data('off','off');
                }
                else {
+                  clearTimeout(MissingE.packages.betterReblogs.resetTumblr);
                   MissingE.packages.betterReblogs.resetTumblr =
                         setTimeout(function() {
+                     if (MissingE.packages.betterReblogs.showingReblogMenu()) { return; }
                      var sel = $('#MissingE_quick_reblog_selector select');
                      if (sel.find('option[value="' + settings.accountName +
                                   '"]').length > 0) {
@@ -651,6 +657,7 @@ MissingE.packages.betterReblogs = {
                return;
             }
             clearTimeout(MissingE.packages.betterReblogs.resetTumblr);
+            delete MissingE.packages.betterReblogs.resetTumblr;
             var pos = reblog.offset();
             var h = reblog.outerHeight() - 2;
             var w = (qr.outerWidth()>>1) - (reblog.innerWidth()>>1);
@@ -711,7 +718,7 @@ MissingE.packages.betterReblogs = {
                qr.show();
             }
          }).live('mouseout',function(e) {
-            if (!e.reldatedTarget ||
+            if (!e.relatedTarget ||
                 (e.relatedTarget.id !== 'MissingE_quick_reblog' &&
                  !$.contains(qr.get(0), e.relatedTarget))) {
                qr.css('display','');
@@ -719,8 +726,10 @@ MissingE.packages.betterReblogs = {
                   qr.data('off','off');
                }
                else {
+                  clearTimeout(MissingE.packages.betterReblogs.resetTumblr);
                   MissingE.packages.betterReblogs.resetTumblr =
                         setTimeout(function() {
+                     if (MissingE.packages.betterReblogs.showingReblogMenu()) { return; }
                      var sel = $('#MissingE_quick_reblog_selector select');
                      if (sel.find('option[value="' + settings.accountName +
                                   '"]').length > 0) {
@@ -756,8 +765,10 @@ MissingE.packages.betterReblogs = {
                   var inpBox = $('#MissingE_quick_reblog_tags textarea');
                   inpBox.get(0).blur();
                   if (qr.css('display') === 'none') {
+                     clearTimeout(MissingE.packages.betterReblogs.resetTumblr);
                      MissingE.packages.betterReblogs.resetTumblr =
                            setTimeout(function() {
+                        if (MissingE.packages.betterReblogs.showingReblogMenu()) { return; }
                         var sel = $('#MissingE_quick_reblog_selector select');
                         if (sel.find('option[value="' + settings.accountName +
                                      '"]').length > 0) {
@@ -831,8 +842,10 @@ MissingE.packages.betterReblogs = {
                            inpBox = $('#MissingE_quick_reblog_tags textarea');
                            inpBox.get(0).blur();
                            if (qr.css('display') === 'none') {
+                              clearTimeout(MissingE.packages.betterReblogs.resetTumblr);
                               MissingE.packages.betterReblogs.resetTumblr =
                                     setTimeout(function() {
+                                 if (MissingE.packages.betterReblogs.showingReblogMenu()) { return; }
                                  var sel = $('#MissingE_quick_reblog_selector select');
                                  if (sel.find('option[value="' + settings.accountName +
                                                 '"]').length > 0) {
