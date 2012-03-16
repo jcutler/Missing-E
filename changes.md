@@ -78,8 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.7.12** (not yet released)
+##**2.7.12** (03/16/2012)
 **_!_** Fix issue with bars for older bookmarks sometimes appearing at the top of secondary dashboard pages  
+**_!_** Increase Firefox compatibility to version 14.0a1
 
 ##**2.7.11** (03/15/2012)
 **_+_** Add Dashboard Tweaks option to restore dashboard post text controls (instead of icons)  
