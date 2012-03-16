@@ -322,7 +322,7 @@ MissingE.packages.bookmarker = {
                break;
             }
             var postVal = parseInt(post,10);
-            var markVal = parseInt(post,10);
+            var markVal = parseInt(marks[j][1],10);
             var prevPost = $(item).prevAll('li.post:not(#new_post)').first();
             if (MissingE.isTumblrURL(location.href, ["dashboardOnly"]) &&
                 postVal < markVal &&
