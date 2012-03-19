@@ -446,7 +446,7 @@ MissingE.packages.dashboardTweaks = {
       var idx = 10000;
       var ctrl = post.find('.post_controls');
       var nextPost = post.next();
-      while (nextPost && !nextPost.hasClass('post')) {
+      while (nextPost && nextPost.length > 0 && !nextPost.hasClass('post')) {
          nextPost = nextPost.next();
       }
       if (nextPost) {
