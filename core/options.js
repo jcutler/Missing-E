@@ -104,17 +104,18 @@ MissingE.utilities.options = {
          }
       });
 
-      $('#nav a').each(function() {
-         var klass = this.className;
-         var ver = klass.match(/\bv(\d+_\d+_\d+)\b/);
-         if (ver && ver.length >= 2) {
-            var optVersion = ver[1].replace(/_/g,'.');
-            if (MissingE.versionCompare(optVersion, prevVersion) > 0) {
-               $(this).addClass("hasNewOption")
-                  .prepend('<div class="newOption" />');
-            }
-         }
-      });
+      if ($('#dashboard_container .hasNewOption').length > 0) {
+         $('#dashboard_nav').addClass("hasNewOption")
+            .prepend('<div class="newOption" />');
+      }
+      if ($('#posting_container .hasNewOption').length > 0) {
+         $('#posting_nav').addClass("hasNewOption")
+            .prepend('<div class="newOption" />');
+      }
+      if ($('#social_container .hasNewOption').length > 0) {
+         $('#social_nav').addClass("hasNewOption")
+            .prepend('<div class="newOption" />');
+      }
    },
 
    getStorage: function(key,defaultValue) {
