@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.17** (not yet released)
+**_+_** Add 'NEW' indicator to new or updated options in the settings page
+
 ##**2.7.16** (03/19/2012)
 **_!_** Fix issue with post control buttons unuseable after replying to a post
 
@@ -338,7 +341,7 @@ color:#4183c4;
 ##**2.3.7** (01/06/2012)
 **_+_** Add option for 40x40 pixel avatar size in Reply Replies  
 **_+_** Add selection button for private posts and next 100 posts in Mass Editor Tweaks  
-**_!_** Change option for expanding all inline images in a post togethre to an opt-out of now default Tumblr interface behaviour  
+**_!_** Change option for expanding all inline images in a post together to an opt-out of now default Tumblr interface behaviour  
 **_!_** Improve loading speed for page style changes  
 **_!_** Fix bug in Sidebar Tweaks default account when importing 'Missing e' settings in Firefox  
 **_!_** Prevent error output when using a tab in which 'Missing e' settings have been loaded to navigate to other pages  
