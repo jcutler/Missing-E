@@ -222,8 +222,10 @@ function getAllSettings(getStale) {
    settings.MissingE_betterReblogs_reblogAsks = getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
    settings.MissingE_betterReblogs_keyboardShortcut = getSetting("extensions.MissingE.betterReblogs.keyboardShortcut",1);
    settings.MissingE_betterReblogs_quickKeyboardShortcut = getSetting("extensions.MissingE.betterReblogs.quickKeyboardShortcut",1);
-   settings.MissingE_version = getSetting("extensions.MissingE.version",'');
    settings.MissingE_betterReblogs_askRetries = getSetting("extensions.MissingE.betterReblogs.askRetries",MissingE.defaultRetries);
+   settings.MissingE_version = getSetting("extensions.MissingE.version",'');
+   settings.MissingE_previousVersion = getSetting('extensions.MissingE.previousVersion','');
+
    if (getStale) {
       settings.MissingE_askFixes_scroll = getSetting("extensions.MissingE.askFixes.scroll",1);
       settings.MissingE_askFixes_betterAnswers = getSetting("extensions.MissingE.askFixes.betterAnswers",0);
@@ -395,6 +397,7 @@ function exportOptionsXML(theWorker) {
 function isInternalSetting(setting) {
    return !/^MissingE_/.test(setting) ||
           setting === "MissingE_version" ||
+          setting === "MissingE_previousVersion" ||
           /MissingE_externalVersion/.test(setting) ||
           setting === "MissingE_compatCheck" ||
           setting === "MissingE_lastUpdateCheck" ||
@@ -1508,29 +1511,6 @@ function startReblogYourself(message, myWorker) {
    }
 }
 
-function versionCompare(v1, v2) {
-   if (!v1 && !v2) { return 0; }
-   else if (!v1) { return -1; }
-   else if (!v2) { return 1; }
-   else {
-      var i;
-      var ver1 = v1.split('.');
-      var ver2 = v2.split('.');
-      var len = ver1.length >= ver2.length ? ver1.length : ver2.length;
-      for (i=0; i<len; i++) {
-         if (i >= ver1.length && ver2[i] !== '0') { return -1; }
-         else if (i >= ver2.length && ver1[i] !== '0') { return 1; }
-         else {
-            ver1[i] = parseInt(ver1[i]);
-            ver2[i] = parseInt(ver2[i]);
-         }
-         if (ver1[i] > ver2[i]) { return 1; }
-         if (ver2[i] > ver1[i]) { return -1; }
-      }
-      return 0;
-   }
-}
-
 /*** NOT READY
 function decode64(input) {
    var output = "";
@@ -1620,15 +1600,15 @@ function handleMessage(message, myWorker) {
       }
    }
    else if (message.greeting == "version") {
-      myWorker.postMessage({greeting: "version",
-         uptodate:versionCompare(getSetting("extensions.MissingE.version",'0'),
+      myWorker.postMessage({greeting: "version", uptodate:
+         MissingE.versionCompare(getSetting("extensions.MissingE.version",'0'),
                                  message.v) >= 0});
    }
    /*
    else if (message.greeting == "update") {
-      myWorker.postMessage({greeting: "update",
-         update:versionCompare(getSetting("extensions.MissingE.externalVersion",'0'),
-                               getSetting("extensions.MissingE.version",'0')) > 0,
+      myWorker.postMessage({greeting: "update", update:
+         MissingE.versionCompare(getSetting("extensions.MissingE.externalVersion",'0'),
+                                 getSetting("extensions.MissingE.version",'0')) > 0,
          msg:MissingE.getLocale(message.lang).update});
    }
    */
@@ -2593,10 +2573,15 @@ function onStart(currVersion, prevVersion) {
    if (prevVersion && prevVersion !== currVersion) {
       MissingE.log("Updated Missing e (" +
             prevVersion + " => " + currVersion + ")");
+      setSetting('extensions.MissingE.previousVersion',prevVersion);
    }
    else if (!prevVersion) {
       MissingE.log("Installed Missing e " + currVersion);
+      setSetting('extensions.MissingE.previousVersion',currVersion);
       openSettings();
+   }
+   if (getSetting('extensions.MissingE.previousVersion','') == '') {
+      setSetting('extensions.MissingE.previousVersion',currVersion);
    }
    setSetting('extensions.MissingE.version',currVersion);
    clearSetting('extensions.MissingE.konami.active');

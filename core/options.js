@@ -84,6 +84,37 @@ MissingE.utilities.options = {
             MissingE.utilities.options.resetRetries(this);
          }
       });
+
+      // Firefox doesn't display the new buttons properly, so workaround
+      if (extension.isFirefox) {
+         $('body').addClass('firefox_options');
+      }
+
+      var prevVersion = MissingE.utilities.options
+                           .getStorage('MissingE_previousVersion','');
+      $('tr[class*="v"]').each(function() {
+         var klass = this.className;
+         var ver = klass.match(/\bv(\d+_\d+_\d+)\b/);
+         if (ver && ver.length >= 2) {
+            var optVersion = ver[1].replace(/_/g,'.');
+            if (MissingE.versionCompare(optVersion, prevVersion) > 0) {
+               $(this).children('td:first').addClass("hasNewOption")
+                  .prepend('<div class="newOption" />');
+            }
+         }
+      });
+
+      $('#nav a').each(function() {
+         var klass = this.className;
+         var ver = klass.match(/\bv(\d+_\d+_\d+)\b/);
+         if (ver && ver.length >= 2) {
+            var optVersion = ver[1].replace(/_/g,'.');
+            if (MissingE.versionCompare(optVersion, prevVersion) > 0) {
+               $(this).addClass("hasNewOption")
+                  .prepend('<div class="newOption" />');
+            }
+         }
+      });
    },
 
    getStorage: function(key,defaultValue) {
@@ -450,35 +481,35 @@ MissingE.utilities.options = {
    doshow: function(component) {
       var itm;
       if (component == 'about') {
-         document.getElementById('about_nav').className = 'nav_item active';
+         $('#about_nav').addClass('active');
          document.getElementById('about_container').style.display = 'block';
       }
       else {
-         document.getElementById('about_nav').className = 'nav_item';
+         $('#about_nav').removeClass('active');
          document.getElementById('about_container').style.display = 'none';
       }
       if (component == 'dashboard') {
-         document.getElementById('dashboard_nav').className = 'nav_item active';
+         $('#dashboard_nav').addClass('active');
          document.getElementById('dashboard_container').style.display = 'block';
       }
       else {
-         document.getElementById('dashboard_nav').className = 'nav_item';
+         $('#dashboard_nav').removeClass('active');
          document.getElementById('dashboard_container').style.display = 'none';
       }
       if (component == 'posting') {
-         document.getElementById('posting_nav').className = 'nav_item active';
+         $('#posting_nav').addClass('active');
          document.getElementById('posting_container').style.display = 'block';
       }
       else {
-         document.getElementById('posting_nav').className = 'nav_item';
+         $('#posting_nav').removeClass('active');
          document.getElementById('posting_container').style.display = 'none';
       }
       if (component == 'social') {
-         document.getElementById('social_nav').className = 'nav_item active';
+         $('#social_nav').addClass('active');
          document.getElementById('social_container').style.display = 'block';
       }
       else {
-         document.getElementById('social_nav').className = 'nav_item';
+         $('#social_nav').removeClass('active');
          document.getElementById('social_container').style.display = 'none';
       }
    },

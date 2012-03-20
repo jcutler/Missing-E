@@ -89,9 +89,9 @@ function loadScripts() {
 <div id="changehistory"><a target="_blank" href="http://github.missing-e.com/changes">Change History</a></div>
 <div id="nav">
  <a href="#" id="about_nav" class="nav_item active">About</a>
- <a href="#" id="dashboard_nav" class="nav_item">Dashboard Features</a>
- <a href="#" id="posting_nav" class="nav_item">Post Features</a>
- <a href="#" id="social_nav" class="nav_item">Social Features</a>
+ <a href="#" id="dashboard_nav" class="nav_item v2_7_11">Dashboard Features</a>
+ <a href="#" id="posting_nav" class="nav_item v2_7_8">Post Features</a>
+ <a href="#" id="social_nav" class="nav_item v2_6_13">Social Features</a>
 </div>
 <div id="container">
  <div id="about_container" class="options_container" style="display:block;">
@@ -141,11 +141,11 @@ function loadScripts() {
         </td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_replaceIcons" /></td>
        </tr>
-       <tr class="alt">
+       <tr class="alt v2_7_1">
         <td>Reduce size of dashboard post control button icons</td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_smallIcons" /></td>
        </tr>
-       <tr>
+       <tr class="v2_7_11">
         <td>Replace icon dashboard controls with text <em>(reply, reblog)</em></td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_textControls" /></td>
        </tr>
@@ -161,23 +161,23 @@ function loadScripts() {
         <td>Always display Tumblr's move to top of queue button on queued posts</td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_queueArrows" /></td>
        </tr>
-       <tr>
+       <tr class="v2_3_7">
         <td>Don't expand/minimize <em>all</em> thumbnail images in a post together</td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_noExpandAll" /></td>
        </tr>
-       <tr class="alt">
+       <tr class="alt v2_0_5">
         <td>Add mass deletion buttons to Drafts and Queue</td>
         <td class="even"><input type="checkbox" name="MissingE_dashboardTweaks_massDelete" /></td>
        </tr>
-       <tr>
+       <tr class="v2_2_13">
         <td>Add <em>Shuffle</em> button to the Queue</td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_randomQueue" /></td>
        </tr>
-       <tr class="alt">
+       <tr class="alt v2_2_2">
         <td>Enable sorting of notes in dashboard posts</td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_sortableNotes" /></td>
        </tr>
-       <tr>
+       <tr class="v2_4_0">
         <td>Show small preview thumbnail for reblog/like/reply notifications of photo and video posts</td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_notePreview" /></td>
        </tr>
@@ -185,11 +185,11 @@ function loadScripts() {
         <td>Number of retries on failure to load photo URL (default <span class="defRetries">4</span>)</td>
         <td style="white-space:nowrap;"><input class="setting_retry numinput" type="text" name="MissingE_dashboardTweaks_previewRetries" value="4" size="1" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
        </tr>
-       <tr>
+       <tr class="v2_5_4">
         <td>Display simplified Tumblr <em>highlighted</em> posts</td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_simpleHighlight" /></td>
        </tr>
-       <tr class="alt">
+       <tr class="alt v2_6_7">
         <td>Enable additional keyboard shortcuts for dashboard posts:<br />
          <table class="subnotes">
           <tr>
@@ -208,7 +208,7 @@ function loadScripts() {
         </td>
         <td><input type="checkbox" name="MissingE_dashboardTweaks_keyboardShortcut" /></td>
        </tr>
-       <tr>
+       <tr class="v2_5_8">
         <td><code>J</code> / <code>K</code> keyboard navigation loads next (or previous) page when last (or first) post is reached<br />
          <small><em>This feature is only active for users who</em> have not <em>enabled Tumblr's endless scrolling dashboard.</em></small>
         </td>
@@ -246,7 +246,7 @@ function loadScripts() {
         <td>Slimmer dashboard sidebar</td>
         <td><input type="checkbox" name="MissingE_sidebarTweaks_slimSidebar" /></td>
        </tr>
-       <tr class="alt">
+       <tr class="alt v2_6_11">
         <td>Always show all tracked tags in the dashboard sidebar</td>
         <td><input type="checkbox" name="MissingE_sidebarTweaks_showOverflowTags" /></td>
        </tr>
@@ -272,7 +272,7 @@ function loadScripts() {
         <td>Show simple labels above bookmarked posts</td>
         <td><input type="checkbox" name="MissingE_bookmarker_addBar" /></td>
        </tr>
-       <tr class="alt">
+       <tr class="alt v2_5_1">
         <td>Press <code>M</code> to bookmark current post</td>
         <td><input type="checkbox" name="MissingE_bookmarker_keyboardShortcut" /></td>
        </tr>
@@ -376,7 +376,7 @@ function loadScripts() {
       <li>All full-size videos</li>
      </ul>
      <table class="section_options">
-      <tr>
+      <tr class="v2_4_0">
        <td>Reveal all images in a photoset at the same time</td>
        <td><input type="checkbox" name="MissingE_safeDash_photosetAll" /></td>
       </tr>
@@ -451,7 +451,7 @@ function loadScripts() {
      <div class="section_title">Better Reblogs</div>
      <p>Additional features to make reblogging easier and more productive!</p>
      <table class="section_options">
-      <tr>
+      <tr class="v2_2_0">
        <td>Keep original post tags when reblogging</td>
        <td class="odd"><input type="checkbox" name="MissingE_betterReblogs_passTags" /></td>
       </tr>
@@ -465,7 +465,7 @@ function loadScripts() {
        <td>Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td>
        <td><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_retries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
       </tr>
-      <tr class="alt">
+      <tr class="alt v2_6_7">
        <td>Press <code>R</code> to reblog current post (manually)</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_keyboardShortcut" /></td>
       </tr>
@@ -499,7 +499,7 @@ function loadScripts() {
         </select>
        </td>
       </tr>
-      <tr class="subopt alt">
+      <tr class="subopt alt v2_7_8">
        <td>Enable quick (1-click) reblogging keyboard shortcuts:<br />
         <table class="subnotes">
          <tr>
@@ -522,7 +522,7 @@ function loadScripts() {
        <td>Always reblog long text posts as text</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_fullText" /></td>
       </tr>
-      <tr class="alt">
+      <tr class="alt v2_2_11">
        <td>Allow reblogging of <em>Ask</em> posts as text<br />
         <small><em>This feature does not always work correctly from permalink pages</em></small>
        </td>
@@ -532,7 +532,7 @@ function loadScripts() {
        <td>Number of retries on failure to add reblog link to ask posts (default <span class="defRetries">4</span>)</td>
        <td><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_askRetries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
       </tr>
-      <tr class="alt">
+      <tr class="alt v2_7_8">
        <td>Automatically add tags to reblogged posts</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_tagReblogs" /></td>
       </tr>
@@ -595,7 +595,7 @@ function loadScripts() {
        <td>Number of retries on failure to check for sub-Tumblr post permissions (default <span class="defRetries">4</span>)</td>
        <td style="white-space:nowrap;"><input type="text" class="setting_retry numinput" size="1" name="MissingE_postingTweaks_subEditRetries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
       </tr>
-      <tr>
+      <tr class="v2_0_5">
        <td>Automatically add tags to queued posts</td>
        <td><input type="checkbox" name="MissingE_postingTweaks_tagQueuedPosts" /></td>
       </tr>
@@ -603,7 +603,7 @@ function loadScripts() {
        <td>Tags to add to queued posts (separated by commas)</td>
        <td><input type="text" name="MissingE_postingTweaks_queueTags" style="width:250px;" value="" class="simple blurable_setting" /></td>
       </tr>
-      <tr>
+      <tr class="v2_3_11">
        <td>Always show <em>"Let people answer this"</em> checkbox<br />
         <ul>
          <li><small>Checkbox will be shown, but not activated unless you turn it on</small></li>
@@ -686,11 +686,11 @@ function loadScripts() {
        <td>Add mass deletion buttons to inbox and messages pages</td>
        <td><input type="checkbox" name="MissingE_askTweaks_massDelete" /></td>
       </tr>
-      <tr class="alt">
+      <tr class="alt v2_3_9">
        <td>Slimmer Fan Mail messages (reduce font size and spacing)</td>
        <td><input type="checkbox" name="MissingE_askTweaks_smallFanMail" /></td>
       </tr>
-      <tr>
+      <tr class="v2_6_13">
        <td>Add queue/publish buttons to submitted posts in the Tumblr unified inbox</td>
        <td><input type="checkbox" name="MissingE_askTweaks_submissionControls" /></td>
       </tr>
@@ -756,7 +756,7 @@ function loadScripts() {
        <td>Show user avatar in replies</td>
        <td><input type="checkbox" name="MissingE_replyReplies_showAvatars" /></td>
       </tr>
-      <tr class="alt subopt">
+      <tr class="alt subopt v2_3_7">
        <td>Avatar size</td>
        <td class="even input_left" style="white-space:nowrap;">
         <input id="MissingE_replyReplies_smallAvatars_small" type="radio" name="MissingE_replyReplies_smallAvatars" value="1" checked="checked" /> Small avatars (16x16)<br />
@@ -780,7 +780,6 @@ function loadScripts() {
     </div>
    </form>
   </div>
-
  </div>
 </div>
 </body>

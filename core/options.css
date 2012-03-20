@@ -243,7 +243,7 @@ text-align:center;
 
 #nav {
 text-align:center;
-margin:10px 0 8px 0;
+margin:12px 0 8px 0;
 }
 
 #nav a {
@@ -350,6 +350,50 @@ background-color:#E8E8E8;
 color:#333;
 vertical-align:middle;
 padding:6px 10px;
+}
+
+.section_options td.hasNewOption {
+position:relative;
+}
+
+.firefox_options .section_options td.hasNewOption {
+background-image:url("new.png");
+background-repeat:no-repeat;
+background-position:0px 1px;
+padding-left:30px;
+}
+
+.newOption {
+display:none;
+}
+
+.section_options td.hasNewOption .newOption {
+position:absolute;
+left:-20px;
+top:1px;
+display:block;
+height:100%;
+width:28px;
+background:transparent url("new.png") no-repeat center top;
+}
+
+.firefox_options .section_options td.hasNewOption .newOption {
+display:none !important;
+}
+
+#nav a.hasNewOption {
+position:relative;
+}
+
+#nav a.hasNewOption .newOption {
+position:absolute;
+top:-7px;
+right:-7px;
+display:block;
+height:20px;
+width:20px;
+background:transparent url("new.png") no-repeat center center;
+background-size:20px 20px;
 }
 
 .section_options td img {
