@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.7.16** (03/19/2012)
+**_!_** Fix issue with post control buttons unuseable after replying to a post
+
 ##**2.7.15** (03/19/2012)
 **_!_** Fix freeze page issue when attempting to reply to last post on a page when small dashboard icons option is activated  
 **_!_** Fix issue with quick (1-click) reblog menu account selector resetting preemptively
