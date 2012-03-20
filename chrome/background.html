@@ -1178,12 +1178,6 @@ function requestTimestamp(request, sender, sendResponse, hash) {
                 getSetting("MissingE_timestamps_retries",MissingE.defaultRetries),
                 "timestamp", doTimestamp);
    }
-   else {
-      doAjax(request, sender, sendResponse, hash,
-             getSetting("MissingE_timestamps_retries",MissingE.defaultRetries),
-             "timestamp", doTimestamp,
-             {pid: request.pid});
-   }
 }
 
 function requestTags(request, sender, sendResponse, hash) {

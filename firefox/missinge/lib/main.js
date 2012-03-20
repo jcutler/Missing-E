@@ -1404,13 +1404,6 @@ function startTimestamp(message, myWorker) {
                 getSetting("extensions.MissingE.timestamps.retries",MissingE.defaultRetries),
                 "timestamp", doTimestamp);
    }
-   else {
-      MissingE.debug("AJAX timestamp request (" + message.pid + ")");
-      startAjax(message.pid);
-      doAjax(message.url, message.pid, 0, myWorker,
-             getSetting("extensions.MissingE.timestamps.retries",MissingE.defaultRetries),
-             "timestamp", doTimestamp, {pid: message.pid});
-   }
 }
 
 function startBetterReblogsAsk(message, myWorker) {

@@ -1197,12 +1197,6 @@ function requestTimestamp(request) {
                 getSetting("MissingE_timestamps_retries",MissingE.defaultRetries),
                 "timestamp", doTimestamp);
    }
-   else {
-      doAjax(request,
-             getSetting("MissingE_timestamps_retries",MissingE.defaultRetries),
-             "timestamp", doTimestamp,
-             {pid: request.pid});
-   }
 }
 
 function requestBetterReblogsAsk(request) {
