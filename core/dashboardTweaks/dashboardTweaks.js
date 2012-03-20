@@ -449,7 +449,7 @@ MissingE.packages.dashboardTweaks = {
       while (nextPost && nextPost.length > 0 && !nextPost.hasClass('post')) {
          nextPost = nextPost.next();
       }
-      if (nextPost) {
+      if (nextPost && nextPost.length > 0 && nextPost.hasClass('post')) {
          var nextCtrl = nextPost.find('.post_controls').css('z-index','auto');
       }
       var overlay = $('#overlay_for_active_menu');
@@ -550,11 +550,17 @@ MissingE.packages.dashboardTweaks = {
          });
       }
 
-      $('#posts .post_controls .reply_button').live('mouseup',function(e) {
+      $('#posts .post_controls .reply_button').live('mouseup',function() {
          var me = $(this);
          if (!me.next().hasClass('MissingE_reply_overlay')) {
             me.after($('<div />', {"class": "MissingE_reply_overlay"}));
          }
+      });
+
+      $('#posts .post_controls .reply_button form button').live('click',
+            function() {
+         var me = $(this).closest('.post_controls');
+         me.find('div.MissingE_reply_overlay').remove();
       });
 
       if (settings.widescreen === 1 &&

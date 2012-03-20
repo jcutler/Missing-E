@@ -124,3 +124,8 @@ height:100%;
 #posts .post .post_controls .reply_button.active + .MissingE_reply_overlay {
 display:block;
 }
+
+
+#posts .post .post_controls .reply_button.already_reply + .MissingE_reply_overlay {
+display:none !important;
+}
