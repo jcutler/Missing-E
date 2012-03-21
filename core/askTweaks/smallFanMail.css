@@ -42,6 +42,11 @@ display:block !important;
 line-height:14px;
 }
 
+#posts li.post.fan_mail div.message div:last-child a {
+position:relative;
+z-index:1;
+}
+
 #posts li.post.fan_mail {
 padding-top:17px;
 }
@@ -50,7 +55,9 @@ padding-top:17px;
 margin-top:-17px;
 }
 
-#posts li.post.fan_mail > div.avatar_and_i, #posts li.post.fan_mail > div.message {
+#posts li.post.fan_mail > div.avatar_and_i,
+#posts li.post.fan_mail > div.message,
+#posts li.post.fan_mail > div.controls {
 margin-top:0;
 }
 
