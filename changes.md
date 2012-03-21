@@ -79,6 +79,7 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.7.17** (not yet released)
+**_+_** Add Ask Tweaks option to show entire Fan Mail messages (without clicking 'Read More' button)  
 **_+_** Add 'NEW' indicator to new or updated options in the settings page
 
 ##**2.7.16** (03/19/2012)
