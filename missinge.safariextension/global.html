@@ -1619,7 +1619,7 @@ function handleRequest(request) {
       settings.MissingE_betterReblogs_quickKeyboardShortcut = getSetting("MissingE_betterReblogs_quickKeyboardShortcut",1);
       settings.MissingE_betterReblogs_askRetries = getSetting("MissingE_betterReblogs_askRetries",MissingE.defaultRetries);
       settings.MissingE_version = getSetting("MissingE_version",'');
-      settings.previousVersion = getSetting("MissingE_previousVersion",'');
+      settings.MissingE_previousVersion = getSetting("MissingE_previousVersion",'');
       request.target.page.dispatchMessage("all-settings",settings);
    }
    else if (request.name == "sidebarTweaks") {
