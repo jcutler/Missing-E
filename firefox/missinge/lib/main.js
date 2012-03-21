@@ -2557,7 +2557,6 @@ function fixupSettings() {
    clearSetting('extensions.MissingE.experimentalFeatures.enabled');
    invertSetting('extensions.MissingE.dashboardTweaks.expandAll','extensions.MissingE.dashboardTweaks.noExpandAll');
    moveSetting('extensions.MissingE.dashboardTweaks.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
-   moveSetting('extensions.MissingE.betterReblogs.keyboardShortcut','extensions.MissingE.betterReblogs.quickKeyboardShortcut');
    collapseSettings('extensions.MissingE.askTweaks.betterAnswers','extensions.MissingE.askTweaks.buttons','extensions.MissingE.askTweaks.tags');
    invertSetting('extensions.MissingE.betterReblogs.noPassTags','extensions.MissingE.betterReblogs.passTags');
 }
