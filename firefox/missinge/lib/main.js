@@ -154,6 +154,7 @@ function getAllSettings(getStale) {
    settings.MissingE_askTweaks_askDash = getSetting("extensions.MissingE.askTweaks.askDash",0);
    settings.MissingE_askTweaks_massDelete = getSetting("extensions.MissingE.askTweaks.massDelete",1);
    settings.MissingE_askTweaks_smallFanMail = getSetting("extensions.MissingE.askTweaks.smallFanMail",0);
+   settings.MissingE_askTweaks_allFanMail = getSetting("extensions.MissingE.askTweaks.allFanMail",0);
    settings.MissingE_bookmarker_format = getSetting("extensions.MissingE.bookmarker.format",MissingE.defaultFormat);
    settings.MissingE_bookmarker_addBar = getSetting("extensions.MissingE.bookmarker.addBar",1);
    settings.MissingE_bookmarker_keyboardShortcut = getSetting("extensions.MissingE.bookmarker.keyboardShortcut",1);
@@ -1897,10 +1898,15 @@ function handleMessage(message, myWorker) {
          return;
       }
 
-      if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1 &&
-          getSetting("extensions.MissingE.askTweaks.smallFanMail",0) == 1 &&
-          MissingE.isTumblrURL(message.url, ["fanMail", "messages"])) {
-         injectStyles.push({file: "core/askTweaks/smallFanMail.css"});
+      if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
+         if (getSetting("extensions.MissingE.askTweaks.smallFanMail",0) == 1 &&
+             MissingE.isTumblrURL(message.url, ["fanMail", "messages"])) {
+            injectStyles.push({file: "core/askTweaks/smallFanMail.css"});
+         }
+         if (getSetting("extensions.MissingE.askTweaks.allFanMail",0) == 1 &&
+             MissingE.isTumblrURL(message.url, ["messages"])) {
+            injectStyles.push({file: "core/askTweaks/allFanMail.css"});
+         }
       }
 
       if (MissingE.isTumblrURL(message.url,

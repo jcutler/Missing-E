@@ -332,6 +332,16 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
+		<real>0</real>
+		<key>Key</key>
+		<string>MissingE_askTweaks_allFanMail</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
 		<real>1</real>
 		<key>Key</key>
 		<string>MissingE_dashboardTweaks_reblogQuoteFit</string>

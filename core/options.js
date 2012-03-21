@@ -307,6 +307,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_askDash',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_massDelete',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_smallFanMail',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_allFanMail',0);
          }
          else if (v == "sidebarTweaks") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);

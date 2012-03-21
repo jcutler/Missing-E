@@ -1600,9 +1600,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "earlyStyles") {
       var injectSlimSidebar = false;
 
-      if (getSetting("MissingE_askTweaks_smallFanMail",0) == 1) {
-         if (MissingE.isTumblrURL(request.url, ["fanMail", "messages"])) {
+      if (getSetting("MissingE_askTweaks_enabled",1) == 1) {
+         if (getSetting("MissingE_askTweaks_smallFanMail",0) == 1 &&
+             MissingE.isTumblrURL(request.url, ["fanMail", "messages"])) {
             chrome.tabs.insertCSS(sender.tab.id, {file: "core/askTweaks/smallFanMail.css", allFrames: true});
+         }
+         if (getSetting("MissingE_askTweaks_allFanMail",0) == 1 &&
+             MissingE.isTumblrURL(request.url, ["messages"])) {
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/askTweaks/allFanMail.css"});
          }
       }
 
