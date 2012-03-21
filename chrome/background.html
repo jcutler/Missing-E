@@ -1601,10 +1601,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var injectSlimSidebar = false;
 
       if (getSetting("MissingE_askTweaks_smallFanMail",0) == 1) {
-         if (MissingE.isTumblrURL(request.url, ["fanMail"])) {
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/askTweaks/smallFanMail.css", allFrames: true});
-         }
-         if (MissingE.isTumblrURL(sender.tab.url, ["messages"])) {
+         if (MissingE.isTumblrURL(request.url, ["fanMail", "messages"])) {
             chrome.tabs.insertCSS(sender.tab.id, {file: "core/askTweaks/smallFanMail.css", allFrames: true});
          }
       }
