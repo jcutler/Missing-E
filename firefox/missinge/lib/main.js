@@ -2584,7 +2584,7 @@ onStart(currVersion, prevVersion);
 
 /*
 if (!MissingE.isSameDay(getSetting('extensions.MissingE.lastUpdateCheck',0))) {
-   MissingE.log("Checking current available version.");
+   MissingE.debug("Checking current available version.");
    getExternalVersion();
 }
 */

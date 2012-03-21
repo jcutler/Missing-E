@@ -2243,7 +2243,7 @@ function onStart(currVersion, prevVersion) {
 onStart(currVersion, getSetting('MissingE_version',null));
 
 if (!MissingE.isSameDay(getSetting('MissingE_lastUpdateCheck',0))) {
-   MissingE.log("Checking current available version.");
+   MissingE.debug("Checking current available version.");
    getExternalVersion();
 }
 fixupSettings();
