@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="tumblr,missinge,missing,e,feature,features,blog,blogging" />
+<meta name="description" content="Missing e - The unofficial browser extension for Tumblr!"/>
+<meta name="author" content="Jeremy Cutler" />
+<meta name="robots" content="FOLLOW,INDEX" />
+<title>FAQ - Missing e - The browser extension for Tumblr!</title>
+<link href="http://fonts.googleapis.com/css?family=Bitter:400,700,400italic" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+<link rel="icon" href="/favicon.png" type="image/x-icon" />
+<script type="text/javascript" src="browser.js"></script>
+<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="reset.css" />
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript">
+<!--
+
+function openHash(hash) {
+   var item = $(hash);
+   if (item.length === 0) {
+      return;
+   }
+   item = item.closest('.faq_entry');
+   if (item.length > 0) {
+      if (!item.hasClass('open_faq')) {
+         item.addClass('open_faq');
+      }
+      var top = item.offset().top;
+      top -= 46;
+      window.scrollTo(0,top);
+   }
+}
+
+jQuery(document).ready(function($) {
+   if (location.hash !== "") {
+      openHash(location.hash);
+   }
+   $('a[href^="#"]').click(function() {
+      openHash($(this).attr('href'));
+      return false;
+   });
+   $('.instructions_title').click(function() {
+      $(this).parent().toggleClass('open_instructions');
+   });
+   $('.faq_item').click(function() {
+      $(this).closest('.faq_entry').toggleClass('open_faq');
+   });
+   if (BrowserDetect.browser === "Chrome") {
+      $('.chrome_instructions').addClass('open_instructions');
+   }
+   else if (BrowserDetect.browser === "Safari") {
+      $('.safari_instructions').addClass('open_instructions');
+   }
+   else if (BrowserDetect.browser === "Firefox") {
+      $('.firefox_instructions').addClass('open_instructions');
+   }
+   else if (BrowserDetect.browser === "Opera") {
+      $('.opera_instructions').addClass('open_instructions');
+   }
+});
+
+-->
+</script>
+</head>
+<body id="faq">
+<div id="header_container">
+ <div id="header">
+  <div id="header_bar">
+   <a id="home_link" href="/"></a>
+   <div id="header_links">
+    <a href="features">Features</a>
+    <span class="selected">FAQ</span>
+    <a href="troubleshoot">Submit a Bug</a>
+    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">Donate</a>
+   </div>
+  </div>
+ </div>
+</div>
+<div id="banner_container">
+ <div id="banner">
+  <div id="banner_box">
+   <h1>Question? Problem?</h1>
+   <h2>Find some answers to frequently asked questions about Missing e.</h2>
+  </div>
+  <img id="banner_img" style="width:218px;height:220px;margin-top:-175px;" src="images/question.png" alt="Missing e" />
+ </div>
+</div>
+<div id="ads">
+ <div id="ads_title">Sponsored<br />Links</div>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3604999147338055";
+/* New Site */
+google_ad_slot = "9843551983";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<!--
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+-->
+</div>
+<div class="content_container">
+ <div class="content">
+  <div class="faq_group">
+   <h1>General</h1>
+   <div class="faq_entry">
+    <a class="anchor" id="not-tumblr"></a><a class="anchor" id="nottumblr"></a><a class="anchor" id="affiliated"></a>
+    <div class="faq_item">
+     <div class="faq_icon"></div>
+     <h2>Is <strong>Missing e</strong> affiliated with or endorsed by Tumblr?</h2>
+    </div>
+    <div class="faq_answer">
+     <p><strong><em>No.</em></strong> The <strong>Missing e</strong> browser extension is not affiliated with Tumblr in any way. Its features are intended to improve the ease of use of <em>tumblr.com</em>, but it is neither approved nor endorsed by Tumblr.</p>
+     <p>As an unofficial extension for Tumblr, <strong>Missing e</strong> is happy to do what it can to enhance your enjoyment of the Tumblr microblogging experience.</p>
+     <p>By downloading and using this extension, you agree to the terms and conditions of the <a href="eula">Missinge End User License Agreement</a>.</p>
+    </div>
+   </div>
+   <div class="faq_entry">
+    <a class="anchor" id="safari-invalid"></a>
+    <div class="faq_item">
+     <div class="faq_icon"></div>
+     <h2>I just got the message <em>'Safari can't use the extension "Missing e" because the extension is no longer valid'</em>. What should I do?</h2>
+    </div>
+    <div class="faq_answer">
+     <p>Recently, a minor bug was introduced into the Safari version of <strong>Missing e</strong> that caused earlier versions to report themselves as being <em>invalid</em>.</p>
+     <p>To fix this, all you have to do is <a href="download">reinstall <strong>Missing e</strong></a> on Safari. Your <strong>Missing e</strong> bookmarks will be preserved, but you will have to customize your <strong>Missing e</strong> settings again, including activating optional features like <em>Quick (1-Click) Reblog</em>.</p>
+     <p><a href="download">Reinstall <strong>Missing e</strong></a></p>
+    </div>
+   </div>
+   <div class="faq_entry">
+    <a class="anchor" id="disable"></a><a class="anchor" id="reenable"></a><a class="anchor" id="re-enable"></a>
+    <div class="faq_item">
+     <div class="faq_icon"></div>
+     <h2><strong>Missing e</strong> has stopped working on my Tumblr. How do I fix it?</h2>
+    </div>
+    <div class="faq_answer">
+     <p>A small number of users find that browser extensions can stop working without warning. In order to fix this, it is not necessary to uninstall and reinstall the extension!</p>
+     <p>Instead, all you need to do is to disable and re-enable <strong>Missing e</strong> in your browser's extensions list. Here's how:</p>
+     <div class="chrome_instructions">
+      <div class="instructions_title"><div class="more"></div><h3>Google Chrome</h3></div>
+      <div class="instructions">
+       <ul>
+        <li>In the menu (click the wrench icon at the top right of the browser window), go to <em>Tools</em> and click on <em>Extensions</em></li>
+        <li>In your extensions list, find the entry for <strong>Missing e</strong>
+         <ul>
+          <li>Uncheck the box labelled <em>Enabled</em></li>
+          <li>Check the same box again to re-enable it</li>
+         </ul>
+        </li>
+        <li>Reload your Tumblr dashboard</li>
+       </ul>
+       <div class="screenshot_container">
+        <div class="screenshot">
+         <img src="images/examples/chrome-disable.png" alt="Re-enable Missing e on Chrome" />
+         <div class="screenshot_overlay"></div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="safari_instructions">
+      <div class="instructions_title"><div class="more"></div><h3>Apple Safari</h3></div>
+      <div class="instructions">
+       <ul>
+        <li>Open the Safari menu
+         <ul>
+          <li><strong>Mac OS X:</strong> click <em>Safari</em> in the menu bar at the top of the screen</li>
+          <li><strong>Windows:</strong> click on the gear icon at the top right of the browser window<li>
+         </ul>
+        </li>
+        <li>In the Safari menu, click on <em>Preferences</em></li>
+        <li>In the Preferences window, click the <em>Extensions</em> tab at the top</li>
+        <li>In your extensions list on the left, click the entry for <strong>Missing e</strong>
+         <ul>
+          <li>Uncheck the box labelled <em>Enable Missing e</em></li>
+          <li>Check the same box again to re-enable it</li>
+         </ul>
+        </li>
+        <li>Reload your Tumblr dashboard</li>
+       </ul>
+       <div class="screenshot_container">
+        <div class="screenshot">
+         <img src="images/examples/safari-disable.png" alt="Re-enable Missing e on Safari" />
+         <div class="screenshot_overlay"></div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="firefox_instructions">
+      <div class="instructions_title"><div class="more"></div><h3>Mozilla Firefox</h3></div>
+      <div class="instructions">
+       <ul>
+        <li>In the Firefox menu, go to <em>Tools</em> and click on <em>Add-ons</em></li>
+        <li>In your add-ons list, find the entry for <strong>Missing e</strong>
+         <ul>
+          <li>Click the button labelled <em>Disable</em></li>
+          <li>Click the same button again (it will now be labelled <em>Enable</em>) to re-enable it</li>
+         </ul>
+        </li>
+        <li>Reload your Tumblr dashboard</li>
+       </ul>
+       <div class="screenshot_container">
+        <div class="screenshot">
+         <img src="images/examples/firefox-disable.jpg" alt="Re-enable Missing e on Firefox" />
+         <div class="screenshot_overlay"></div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+
+  </div>
+ </div>
+</div>
+
+<div id="footer_container">
+ <div id="footer">
+ &copy; 2012 Jeremy Cutler<br />
+ <small>An open-source project released under <a class="link" href="http://www.gnu.org/licenses/gpl.html" title="GPL v3 License">GPL v3</a></small>
+ <a class="greybutton button" style="float:right;" href="http://blog.missing-e.com" title="Missing e on Tumblr">Follow Missing e on Tumblr</a>
+ </div>
+</div>
+</body>
+</html>

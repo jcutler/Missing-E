@@ -10,6 +10,7 @@
 <link href="http://fonts.googleapis.com/css?family=Bitter:400,700,400italic" rel="stylesheet" type="text/css">
 <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 <link rel="icon" href="/favicon.png" type="image/x-icon" />
+<script type="text/javascript" src="browser.js"></script>
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="reset.css" />
 <link rel="stylesheet" type="text/css" href="style.css" />
@@ -25,7 +26,7 @@ function makeUpdate() {
 }
 
 function makeInstalled() {
-   $('#download_button').attr('href','#').click(function() {
+   $('#download_button').attr('href','#').addClass('disabled_greenbutton').click(function() {
       return false;
    });
    $('#download_txt').css('display','none');
@@ -70,14 +71,12 @@ jQuery(document).ready(function($) {
 <div id="header_container">
  <div id="header">
   <div id="header_bar">
-   <!--<a id="home" href="/"></a>-->
-   <span id="home"></span>
+   <span id="home_link"></span>
    <div id="header_links">
-    <!--<span class="selected">Features</span>-->
     <a href="features">Features</a>
     <a href="faq">FAQ</a>
     <a href="troubleshoot">Submit a Bug</a>
-    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8">Donate</a>
+    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">Donate</a>
    </div>
   </div>
  </div>
@@ -99,7 +98,6 @@ jQuery(document).ready(function($) {
    </div>
   </div>
   <img id="banner_img" src="images/missinge350.png" alt="Missing e" />
-  </div>
  </div>
 </div>
 <div id="ads">
@@ -116,13 +114,14 @@ google_ad_height = 90;
 <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 -->
 </div>
-<div id="content_container">
- <div id="content">
+<div class="content_container">
+ <div class="content">
   <div id="highlights">
    <div class="highlight">
     <div class="icon" id="fresh"></div>
     <h1>Always getting better.</h1>
     <span><strong>Missing e</strong> is constantly improving! When there are changes to the Tumblr interface or when a great new feature idea comes up, you'll have the extension that is first to improve your Tumbling!</span>
+    <a href="http://blog.missing-e.com" title="'Missing e' on Tumblr">Stay Updated on Tumblr</a>
    </div>
    <div class="highlight">
     <div class="icon" id="custom"></div>
@@ -132,7 +131,7 @@ google_ad_height = 90;
    <div class="highlight">
     <div class="icon" id="fast"></div>
     <h1>Simpler and faster.</h1>
-    <span>Some extensions for Tumblr can take forever to load. Even when they do, many don't integrate well with Tumblr's appearance. Do away with trouble like that by installing <strong>Missing e</strong>.</span>
+    <span>Some extensions for Tumblr can take forever to load. Others require you to install all sorts of extra stuff before you can get it working the way you want. Do away with trouble like that by installing <strong>Missing e</strong>.</span>
    </div>
    <div class="highlight">
     <div class="icon" id="open"></div>
@@ -150,11 +149,20 @@ google_ad_height = 90;
    <h1>Missing e is supported by donations from users like you!</h1>
    <h2>If you enjoy Missing e, you can donate via PayPal. It's fast and safe.</h2>
   </div>
-  <a class="donatebutton button" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8" title="Donate to Missing e">Donate!</a>
+  <a class="donatebutton button" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8" title="Donate to Missing e">Donate!</a>
  </div>
 </div>
-<div id="content_container">
- <div id="content">
+<div class="content_container">
+ <div class="content">
+  <div class="iconbar">
+   <div class="baricon" id="questionmark"></div>
+   <div class="bartxt">
+    <h1>Not sure how to use a feature? Got a question?</h1>
+    <div class="bardesc">
+    Answers to many questions can be found in the <a href="faq" title="Frequently Asked Questions">FAQ</a>. If you can't find what you're looking for, <a href="http://blog.missing-e.com/ask" title="Send Missing e a message">send Missing a message</a>.
+    </div>
+   </div>
+  </div>
   <div class="iconbar">
    <div class="baricon" id="trouble"></div>
    <div class="bartxt">
