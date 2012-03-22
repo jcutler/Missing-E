@@ -16,6 +16,8 @@
 <script type="text/javascript">
 <!--
 
+var updateCheck;
+
 function makeUpdate() {
    $('#download_button').attr('href','update');
    $('#download_txt').css('display','none');
@@ -23,31 +25,59 @@ function makeUpdate() {
 }
 
 function makeInstalled() {
-   $('#download_button').attr('href','#').css('cursor','default').click(function() {
+   $('#download_button').attr('href','#').click(function() {
       return false;
    });
    $('#download_txt').css('display','none');
    $('#installed_txt').css('display','inline');
 }
 
-jQuery(document).ready(function($) {
+function checkUpdate(count) {
+   if (!count) { count = 1; }
+   if ($('#old_update').length === 0) {
+      return;
+   }
+   else if ($('#uptodate').css('display') === "inline-block") {
+      $('#old_update').remove();
+      makeInstalled();
+   }
+   else if ($('#notuptodate').css('display') === "inline-block") {
+      $('#old_update').remove();
+      makeUpdate();
+   }
+   else if (count > 20) {
+      return;
+   }
+   else {
+      count++;
+      updateCheck = setTimeout(function(){ checkUpdate(count); }, 500);
+   }
+}
 
+jQuery(document).ready(function($) {
+   updateCheck = setTimeout(checkUpdate, 500);
 });
 
 -->
 </script>
 </head>
 <body id="home">
+<div id="old_update">
+ <div id="uptodate"></div>
+ <div id="notuptodate"></div>
+</div>
 <div version="2.7.17" style="display:none" id="versioncheck"></div>
 <div id="header_container">
  <div id="header">
   <div id="header_bar">
-   <a id="home" href="/"></a>
+   <!--<a id="home" href="/"></a>-->
+   <span id="home"></span>
    <div id="header_links">
-    <span class="selected">Features</span>
+    <!--<span class="selected">Features</span>-->
+    <a href="features">Features</a>
     <a href="faq">FAQ</a>
-    <a href="support">Support</a>
-    <a href="promote">Donate</a>
+    <a href="troubleshoot">Submit a Bug</a>
+    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8">Donate</a>
    </div>
   </div>
  </div>
@@ -60,7 +90,7 @@ jQuery(document).ready(function($) {
    <h2>Available for Chrome, Firefox and Safari.</h2>
    <h3>Find out what everyone is talking about!</h3>
    <div id="download_box">
-    <a id="download_button" href="download" class="greenbutton"><span id="download_txt">Download</span><span id="update_txt">Update</span><span id="installed_txt">Installed</span><span id="download_version">Version 2.7.17</span></a>
+    <a id="download_button" href="download" class="button greenbutton"><span id="download_txt">Download</span><span id="update_txt">Update</span><span id="installed_txt">Installed</span><span id="download_version">Version 2.7.17</span></a>
     <div id="download_info">
      By using this extension, you agree<br />
      to the terms and conditions of the<br />
@@ -120,7 +150,7 @@ google_ad_height = 90;
    <h1>Missing e is supported by donations from users like you!</h1>
    <h2>If you enjoy Missing e, you can donate via PayPal. It's fast and safe.</h2>
   </div>
-  <a class="donatebutton" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8" title="Donate to Missing e">Donate!</a>
+  <a class="donatebutton button" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EGQCRBB2BH5U8" title="Donate to Missing e">Donate!</a>
  </div>
 </div>
 <div id="content_container">
@@ -130,7 +160,7 @@ google_ad_height = 90;
    <div class="bartxt">
     <h1>Something not working properly? Found a bug?</h1>
     <div class="bardesc">
-    Check the <a href="faq" title="Frequently Asked Questions">FAQ</a> to see if there's already a solution to your problem. If not, <a href="bugreport" title="Submit a bug report">submit a bug report</a>.
+    Check the <a href="faq" title="Frequently Asked Questions">FAQ</a> to see if there's already a solution to your problem. If not, <a href="troubleshoot" title="Submit a bug report">submit a bug report</a>.
     </div>
    </div>
   </div>
@@ -149,7 +179,7 @@ google_ad_height = 90;
  <div id="footer">
  &copy; 2012 Jeremy Cutler<br />
  <small>An open-source project released under <a class="link" href="http://www.gnu.org/licenses/gpl.html" title="GPL v3 License">GPL v3</a></small>
- <a class="greybutton" style="float:right;" href="http://blog.missing-e.com" title="Missing e on Tumblr">Follow Missing e on Tumblr</a>
+ <a class="greybutton button" style="float:right;" href="http://blog.missing-e.com" title="Missing e on Tumblr">Follow Missing e on Tumblr</a>
  </div>
 </div>
 </body>

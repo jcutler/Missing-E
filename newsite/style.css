@@ -48,7 +48,7 @@ padding:0 30px;
 display:inline-block;
 text-decoration:none;
 color:rgb(245,245,245);
-text-shadow:rgb(22,40,59) 1px 1px 0px;
+text-shadow:rgb(22,40,59) 1px 1px 1px;
 }
 
 #header #header_links {
@@ -56,7 +56,7 @@ float:right;
 height:100%;
 }
 
-#header a#home {
+#header #home {
 padding:0 5px;
 float:left;
 width:64px;
@@ -75,6 +75,12 @@ box-shadow:inset 0px 1px 1px 1px rgba(0, 0, 0, 0.5);
 color:rgb(34,54,75);
 background-color:rgba(189,210,241,0.8);
 text-shadow:none;
+}
+
+#header a:active {
+background-color:rgb(37,67,112);
+color:rgb(245,245,245);
+text-shadow:rgb(22,40,59) 1px 1px 1px;
 }
 
 #header a#home:hover {
@@ -232,6 +238,7 @@ display:inline-block;
 
 #banner h1 {
 font-size:400%;
+line-height:1;
 font-weight:bolder;
 margin-bottom:5px;
 text-shadow:rgb(53,90,145) 1px 1px 2px;
@@ -243,7 +250,8 @@ float:left;
 
 #banner_img {
 position:absolute;
-bottom:-30px;
+top:-30px;
+bottom:auto;
 right:0;
 }
 
@@ -252,6 +260,7 @@ min-height:200px;
 }
 
 #home #banner_img {
+   top:auto;
 bottom:-30px;
 }
 
@@ -320,6 +329,11 @@ text-decoration: none;
 text-shadow: 1px 1px 0px white;
 }
 
+.greenbutton:active {
+   position:relative;
+   top:1px;
+}
+
 .greybutton:hover {
 background: -webkit-gradient( linear, left top, left bottom, color-stop(0, #CFCFCF), color-stop(0.95, white) );
 background: -moz-linear-gradient( center top, #CFCFCF 0%, white 95% );
@@ -333,6 +347,7 @@ margin-top:15px;
 #download_button {
 display:inline-block;
 padding:4px 27px 6px;
+min-width:90px;
 }
 
 #download_info {
@@ -427,6 +442,10 @@ text-shadow:1px 1px 1px rgba(255,255,255,0.5);
    top:2px;
 }
 
+#footer a.greybutton:active {
+   top:3px;
+}
+
 #donate_container {
 background:black url('images/darkstrip.png') repeat;
 width: 100%;
@@ -467,6 +486,11 @@ background: -moz-linear-gradient( center top, #F2AB1E 0%, #F0C911 95% );
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2AB1E', endColorstr='#F0C911');
 }
 
+.donatebutton:active {
+   position:relative;
+   top:1px;
+}
+
 #donate {
 text-align:center;
    width:860px;
@@ -491,6 +515,20 @@ text-align:center;
    display:inline-block;
 }
 
+#old_update {
+   font-size:0;
+   position:absolute;
+   height:1px;
+   width:1px;
+   top:0;
+   right:0;
+   display:none;
+}
+
+#old_update div {
+   display:none;
+}
+
 #donate .donatebutton {
    margin-left:40px;
 }
@@ -504,4 +542,8 @@ text-align:center;
 font-weight:normal;
    font-size:18px;
    line-height:22px;
+}
+
+.button:active {
+top:1px;
 }
