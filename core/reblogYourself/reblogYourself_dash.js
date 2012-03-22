@@ -35,9 +35,7 @@ MissingE.packages.reblogYourself = {
              $(item).find('div.post_controls a.MissingE_reblog_control')
                      .length > 0 ||
              ($(item).find('div.post_controls a[href^="/edit"]')
-                  .length === 0 &&
-              $(item).find('div.post_controls a.MissingE_edit_control')
-                     .length === 0)) {
+                  .length === 0)) {
             return true;
          }
          var tid = $(item).attr("id").match(/\d*$/)[0];
@@ -53,7 +51,7 @@ MissingE.packages.reblogYourself = {
    },
 
    receiveReblog: function(response) {
-      var edit, txt;
+      var before, txt;
       var lang = $('html').attr("lang");
       var reblog_text = MissingE.getLocale(lang).reblog;
       if ($('#post_' + response.pid + ' div.post_controls a[href^="/reblog/"]')
@@ -61,9 +59,12 @@ MissingE.packages.reblogYourself = {
          return;
       }
       if (response.success) {
+         var post = $('#post_' + response.pid);
          var redir = location.href;
-         edit = $('#post_' + response.pid)
-            .find('div.post_controls a[href^="/edit"]');
+         before = $('#post_control_reply_' + tid);
+         if (before.length === 0) {
+            before = $('#show_notes_link_' + tid);
+         }
          if (MissingE.isTumblrURL(redir, ["dashboard"])) {
             redir = "http://www.tumblr.com/dashboard/1000/" +
                      (Number(response.pid)+1);
@@ -75,8 +76,17 @@ MissingE.packages.reblogYourself = {
          var nr = $('<a />',
                     {title: reblog_text, "class": "reblog_button",
                      href: "/reblog/" + response.pid + "/" + response.data +
-                           "?redirect_to=" + redir})
-                     .insertAfter(edit).before(' ');
+                           "?redirect_to=" + redir});
+         if (before.length === 0) {
+            nr.prependTo(item.find('div.post_controls')).after(' ');
+         }
+         else {
+            nr.insertAfter(before).before(' ');
+         }
+         if (!post.hasClass("note")) {
+            nr.attr('data-fast-reblog-url',
+                    "/fast_reblog/" + response.pid + "/" + response.data);
+         }
          nr.trigger('MissingEaddReblog');
       }
       else {
@@ -87,7 +97,12 @@ MissingE.packages.reblogYourself = {
                      {title: reblog_err, href: "#",
                       "class": "MissingE_reblogYourself_retry",
                       click: function() { return false; }});
-         nre.insertAfter(edit).before(' ');
+         if (before.length === 0) {
+            nre.prependTo(item.find('div.post_controls')).after(' ');
+         }
+         else {
+            nre.insertAfter(before).before(' ');
+         }
       }
    },
 

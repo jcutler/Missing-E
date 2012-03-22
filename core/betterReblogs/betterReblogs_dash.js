@@ -84,13 +84,7 @@ MissingE.packages.betterReblogs = {
       question = encodeURIComponent(question);
 
       var reblog_text = MissingE.getLocale(lang).reblog;
-      before = item.find('div.post_controls a[href^="/edit"]');
-      if (before.length === 0) {
-         before = item.find('div.post_controls a.MissingE_edit_control');
-      }
-      if (before.length === 0) {
-         before = $('#post_control_reply_' + tid);
-      }
+      before = $('#post_control_reply_' + tid);
       if (before.length === 0) {
          before = $('#show_notes_link_' + tid);
       }
@@ -393,6 +387,21 @@ MissingE.packages.betterReblogs = {
       var lang = $('html').attr('lang');
       var settings = this.settings;
       var queueTags = "", reblogTags = "";
+
+      $('#posts .post_controls .reblog_button').mouseover(function() {
+         var item = $(this);
+         var post = item.closest('.post');
+         if (!post.hasClass('note') &&
+               (!item.attr('data-fast-reblog-url') ||
+               item.attr('data-fast-reblog-url') === '')) {
+            var key = this.href.match(/\/reblog\/(\d+)\/(\w+)/);
+            if (key && key.length > 2) {
+               item.attr('data-fast-reblog-url',
+                           "/fast_reblog/" + key[1] + "/" + key[2]);
+            }
+         }
+      });
+
       if (settings.tagQueuedPosts === 1) {
          queueTags = settings.queueTags;
       }
