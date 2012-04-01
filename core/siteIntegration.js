@@ -31,16 +31,30 @@ MissingE.utilities.siteIntegration = {
    init: function() {
       window.addEventListener('message', function(e) {
          if (e.data && e.data.MissingE && e.data.src === "site") {
-            if (e.data.request === "version") {
+            if (e.data.request === "updated") {
                var versiondiv = document.getElementById('versioncheck');
                if (versiondiv) {
                   var ver = versiondiv.getAttribute('version');
-                  extension.sendRequest("version", {v: ver}, function(response) {
+                  extension.sendRequest("updatedCheck", {v: ver}, function(response) {
                      extension.siteMessage({"MissingE":true, "src":"extension",
-                                            "response":"version",
+                                            "response":"updated",
                                             "uptodate":response.uptodate}, e);
                   });
                }
+            }
+            else if (e.data.request === "options") {
+               extension.sendRequest("getOptions", function(response) {
+                  extension.siteMessage({"MissingE":true, "src":"extension",
+                                         "response":"options",
+                                         "options":response.options}, e);
+               });
+            }
+            else if (e.data.request === "extensionInfo") {
+               extension.sendRequest("getExtensionInfo", function(response) {
+                  extension.siteMessage({"MissingE":true, "src":"extension",
+                                         "response":"extensionInfo",
+                                         "info":response.info}, e);
+               });
             }
          }
       },false);

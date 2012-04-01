@@ -419,6 +419,17 @@ function createOptionParams() {
    return opts;
 }
 
+function createOptionString() {
+   var i, result = "";
+   var opts = createOptionParams();
+   for (i in opts) {
+      if (opts.hasOwnProperty(i)) {
+         result += i + ": \"" + opts[i] + "\"\n";
+      }
+   }
+   return result;
+}
+
 function receiveOptions(message, theWorker) {
    var changed, set, reset;
    changed = set = reset = 0;
@@ -1593,8 +1604,8 @@ function handleMessage(message, myWorker) {
          openSettings();
       }
    }
-   else if (message.greeting == "version") {
-      myWorker.postMessage({greeting: "version", uptodate:
+   else if (message.greeting == "updatedCheck") {
+      myWorker.postMessage({greeting: "updatedCheck", uptodate:
          MissingE.versionCompare(getSetting("extensions.MissingE.version",'0'),
                                  message.v) >= 0});
    }
@@ -1606,6 +1617,13 @@ function handleMessage(message, myWorker) {
          msg:MissingE.getLocale(message.lang).update});
    }
    */
+   else if (message.greeting == "getOptions") {
+      myWorker.postMessage({greeting: "getOptions", options: createOptionString()});
+   }
+   else if (message.greeting == "getExtensionInfo") {
+      myWorker.postMessage({greeting: "getExtensionInfo",
+         info:{ version: getSetting("extensions.MissingE.version",'0') }});
+   }
    else if (message.greeting == "exportOptions") {
       exportOptionsXML(myWorker);
    }

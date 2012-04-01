@@ -171,6 +171,17 @@ function createOptionParams() {
    return opts;
 }
 
+function createOptionString() {
+   var i, result = "";
+   var opts = createOptionParams();
+   for (i in opts) {
+      if (opts.hasOwnProperty(i)) {
+         result += i + ": \"" + opts[i] + "\"\n";
+      }
+   }
+   return result;
+}
+
 function receiveOptions(request) {
    var currSettings = {};
    var changed, set, reset;
@@ -1325,10 +1336,18 @@ function handleRequest(request) {
       }
       request.target.browserWindow.openTab().url = theurl;
    }
-   else if (request.name == "version") {
-      request.target.page.dispatchMessage("version",
+   else if (request.name == "updatedCheck") {
+      request.target.page.dispatchMessage("updatedCheck",
          {uptodate:(MissingE.versionCompare(getSetting("MissingE_version",'0'),
                     request.v) >= 0)});
+   }
+   else if (request.name == "getOptions") {
+      request.target.page.dispatchMessage("getOptions",
+         {options: createOptionString()});
+   }
+   else if (request.name == "getExtensionInfo") {
+      request.target.page.dispatchMessage("getExtensionInfo",
+         {info:{ version: getSetting("MissingE_version",'0') }});
    }
    else if (request.name == "exportOptions") {
       exportOptionsXML(request);

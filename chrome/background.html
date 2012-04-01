@@ -182,6 +182,17 @@ function createOptionParams() {
    return opts;
 }
 
+function createOptionString() {
+   var i, result = "";
+   var opts = createOptionParams();
+   for (i in opts) {
+      if (opts.hasOwnProperty(i)) {
+         result += i + ": \"" + opts[i] + "\"\n";
+      }
+   }
+   return result;
+}
+
 function receiveOptions(request, sendResponse) {
    var changed, set, reset;
    changed = set = reset = 0;
@@ -1281,13 +1292,20 @@ function loadUI(tabId, uiType) {
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    if (!sender.tab) sendResponse({});
-   else if (request.greeting == "version") {
+   else if (request.greeting == "updatedCheck") {
       sendResponse({uptodate:
          MissingE.versionCompare(getSetting("MissingE_version",'0'),
                                  request.v) >= 0});
    }
    else if (request.greeting == "postMessage") {
       alert(request.text);
+   }
+   else if (request.greeting == "getOptions") {
+      sendResponse({greeting: "getOptions", options: createOptionString()});
+   }
+   else if (request.greeting == "getExtensionInfo") {
+      sendResponse({greeting: "getExtensionInfo",
+                    info:{ version: getSetting("MissingE_version",'0') }});
    }
    else if (request.greeting == "exportOptions") {
       sendResponse({greeting: "exportOptions", url: "http://tools.missing-e.com/settings?" + $.param(createOptionParams())});
