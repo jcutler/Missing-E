@@ -445,18 +445,18 @@ min-width:970px;
 margin:15px auto 0;
 padding:10px 40px 0;
 height:40px;
-background-image: linear-gradient(bottom, rgb(150,150,150) 0%, rgb(125,125,125) 100%);
-background-image: -o-linear-gradient(bottom, rgb(150,150,150) 0%, rgb(125,125,125) 100%);
-background-image: -moz-linear-gradient(bottom, rgb(150,150,150) 0%, rgb(125,125,125) 100%);
-background-image: -webkit-linear-gradient(bottom, rgb(150,150,150) 0%, rgb(125,125,125) 100%);
-background-image: -ms-linear-gradient(bottom, rgb(150,150,150) 0%, rgb(125,125,125) 100%);
+background-image: linear-gradient(bottom, rgb(165,165,165) 0%, rgb(150,150,150) 100%);
+background-image: -o-linear-gradient(bottom, rgb(165,165,165) 0%, rgb(150,150,150) 100%);
+background-image: -moz-linear-gradient(bottom, rgb(165,165,165) 0%, rgb(150,150,150) 100%);
+background-image: -webkit-linear-gradient(bottom, rgb(165,165,165) 0%, rgb(150,150,150) 100%);
+background-image: -ms-linear-gradient(bottom, rgb(165,165,165) 0%, rgb(150,150,150) 100%);
 
 background-image: -webkit-gradient(
 	linear,
 	left bottom,
 	left top,
-	color-stop(0, rgb(150,150,150)),
-	color-stop(1, rgb(125,125,125))
+	color-stop(0, rgb(165,165,165)),
+	color-stop(1, rgb(150,150,150))
 );
 }
 
@@ -625,6 +625,10 @@ min-height:18px;
 font-weight:normal;
 }
 
+.faq_group h2 + h2 {
+margin-top:4px;
+}
+
 .faq_item .faq_icon {
 background:url("images/sprites.png") no-repeat;
 background-position:-40px -200px;
@@ -645,6 +649,15 @@ margin-top:0;
 
 .faq_answer p:last-child {
 margin-bottom:0;
+}
+
+.faq_answer .center_text {
+text-align:center;
+margin:10px 0;
+}
+
+.faq_answer big {
+font-size:125%;
 }
 
 .faq_answer {
@@ -671,6 +684,20 @@ padding:18px 30px 20px;
 margin-bottom:10px;
 font-size:14px;
 height:auto;
+}
+
+.faq_answer .subtitle {
+background-color:rgba(255,255,255,0.4);
+padding:3px 8px;
+margin:16px -2px 10px -2px;
+}
+
+.faq_answer hr {
+border:0;
+border-top:1px solid rgba(0,0,0,0.6);
+width:60%;
+margin:22px auto;
+box-shadow: 1px 1px 1px 0 rgba(255,255,255,0.6);
 }
 
 ul {
