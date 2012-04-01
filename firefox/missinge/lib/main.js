@@ -2517,7 +2517,7 @@ pageMod.PageMod({
    include: ["http://missing-e.com/*"],
    contentScriptWhen: 'ready',
    contentScriptFile: [data.url("extension.js"),
-                       data.url("core/versionCheck.js")],
+                       data.url("core/siteIntegration.js")],
    onAttach: function (worker) {
       worker.on('message', function(data) {
          handleMessage(data, this);

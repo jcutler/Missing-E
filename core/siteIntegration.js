@@ -23,29 +23,30 @@
 
 (function(){
 
-MissingE.utilities.versionCheck = {
+MissingE.utilities.siteIntegration = {
 
    run: function() {
-      if (this.uptodate) {
-         document.getElementById('uptodate').style.display = 'inline-block';
-      }
-      else {
-         document.getElementById('notuptodate').style.display = 'inline-block';
-      }
    },
 
    init: function() {
-      var versiondiv = document.getElementById('versioncheck');
-      if (versiondiv) {
-         var ver = versiondiv.getAttribute('version');
-         extension.sendRequest("version", {v: ver}, function(response) {
-            MissingE.utilities.versionCheck.uptodate = response.uptodate;
-            MissingE.utilities.versionCheck.run();
-         });
-      }
+      window.addEventListener('message', function(e) {
+         if (e.data && e.data.MissingE && e.data.src === "site") {
+            if (e.data.request === "version") {
+               var versiondiv = document.getElementById('versioncheck');
+               if (versiondiv) {
+                  var ver = versiondiv.getAttribute('version');
+                  extension.sendRequest("version", {v: ver}, function(response) {
+                     extension.siteMessage({"MissingE":true, "src":"extension",
+                                            "response":"version",
+                                            "uptodate":response.uptodate}, e);
+                  });
+               }
+            }
+         }
+      },false);
    }
 };
 
-MissingE.utilities.versionCheck.init();
+MissingE.utilities.siteIntegration.init();
 
 }());

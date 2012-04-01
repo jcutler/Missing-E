@@ -248,6 +248,22 @@ extension = {
       this.addListener(name, callback);
       request.greeting = name;
       self.postMessage(request);
+   },
+
+   siteMessage: function(data, originOrEvent) {
+      var msg = document.createEvent("MessageEvent");
+      var origin = "*"
+      var src = window;
+      if (typeof originOrEvent === "string" ||
+          !originOrEvent.source) {
+         origin = originOrEvent;
+      }
+      else {
+         source = originOrEvent.source;
+         origin = originOrEvent.origin;
+      }
+      msg.initMessageEvent("message",false,false,data,origin,0,window,null);
+      source.dispatchEvent(msg);
    }
 };
 

@@ -56,16 +56,6 @@ function updateCheck(response) {
    }
 }
 
-function versionCheck(response) {
-   if (response.name !== "version") { return; }
-   if (response.message.uptodate) {
-      document.getElementById('uptodate').style.display = 'inline-block';
-   }
-   else {
-      document.getElementById('notuptodate').style.display = 'inline-block';
-   }
-}
-
 function doStartup(response) {
    var i;
    if (response.name !== "startup" ||
@@ -188,4 +178,3 @@ function doStartup(response) {
 
 safari.self.addEventListener("message", updateCheck, false);
 safari.self.addEventListener("message", doStartup, false);
-safari.self.addEventListener("message", versionCheck, false);

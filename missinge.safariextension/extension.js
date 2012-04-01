@@ -217,6 +217,16 @@ extension = {
       }
       this.addListener(name, callback);
       safari.self.tab.dispatchMessage(name, request);
+   },
+
+   siteMessage: function(data, originOrEvent) {
+      if (typeof originOrEvent === "string" ||
+          !originOrEvent.source) {
+         window.postMessage(data, originOrEvent);
+      }
+      else {
+         originOrEvent.source.postMessage(data, originOrEvent.origin);
+      }
    }
 };
 
