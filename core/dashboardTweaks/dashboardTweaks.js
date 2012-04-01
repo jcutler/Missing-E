@@ -454,7 +454,9 @@ MissingE.packages.dashboardTweaks = {
       }
       var overlay = $('#overlay_for_active_menu');
       if (overlay.length > 0) {
-         idx = overlay.css('z-index') + 1;
+         var z = parseInt(overlay.css('z-index'),10);
+         if (isNaN(z)) { z = 0; }
+         idx = z + 1;
       }
       ctrl.css('z-index',idx);
    },
