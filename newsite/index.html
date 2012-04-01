@@ -18,6 +18,7 @@
 <!--
 
 var updateCheck;
+var extResponded;
 
 function makeUpdate() {
    $('#download_button').attr('href','update');
@@ -33,9 +34,28 @@ function makeInstalled() {
    $('#installed_txt').css('display','inline');
 }
 
+function receiveMessage(msg) {
+   if (msg.data.response === "updated") {
+      if (updateCheck) {
+         window.clearTimeout(updateCheck);
+      }
+      $('#old_update').remove();
+      if (msg.data.uptodate) {
+         makeInstalled();
+      }
+      else {
+         makeUpdate();
+      }
+   }
+}
+
 function checkUpdate(count) {
    if (!count) { count = 1; }
-   if ($('#old_update').length === 0) {
+
+   if (window.extResponded) {
+      return;
+   }
+   else if ($('#old_update').length === 0) {
       return;
    }
    else if ($('#uptodate').css('display') === "inline-block") {
@@ -51,11 +71,22 @@ function checkUpdate(count) {
    }
    else {
       count++;
+      window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
+                         "http://missing-e.com");
       updateCheck = setTimeout(function(){ checkUpdate(count); }, 500);
    }
 }
 
 jQuery(document).ready(function($) {
+   window.extResponded = false;
+   window.addEventListener("message", function(e) {
+      if (e.data && e.data.MissingE && e.data.src === "extension") {
+         window.extResponded = true;
+         receiveMessage(e);
+      }
+   }, false);
+   window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
+                      "http://missing-e.com");
    updateCheck = setTimeout(checkUpdate, 500);
 });
 
