@@ -694,7 +694,7 @@ margin:16px -2px 10px -2px;
 
 .faq_answer code {
 font-family:monospace;
-background-color:#f4f4f4;
+background-color:#F8F8F8;
 padding:1px 4px;
 }
 
@@ -724,11 +724,18 @@ list-style-type:circle;
 .screenshot_container {
 text-align:center;
 margin:10px 0;
+font-size:0;
 }
 
 .screenshot {
 display:inline-block;
 position:relative;
+}
+
+.screenshot + .caption {
+font-style:italic;
+font-size:14px;
+text-align:center;
 }
 
 .screenshot img {
