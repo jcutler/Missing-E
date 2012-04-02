@@ -78,7 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.8.0** (not yet released)
+##**2.8.1** (not yet released)
+**_!_** Localize timestamp load failure text for non-English users
+
+##**2.8.0** (04/01/2012)
 **_+_** Add Ask Tweaks option to show entire Fan Mail messages (without clicking 'Read More' button)  
 **_+_** Add 'NEW' indicator to new or updated options in the settings page  
 **_!_** Fix issue on Safari with post control icons showing up on top of Magnifier-enlarged images
