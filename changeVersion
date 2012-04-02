@@ -7,6 +7,7 @@ CH=$WDIR/chrome/manifest.json
 SF=$WDIR/missinge.safariextension/Info.plist
 SFst=$WDIR/missinge.safariextension/Settings.plist
 INDEX=$WDIR/site/index.html
+CURRVER=$WDIR/site/currentVersion.js
 
 sed -e 's/"version": "[^"]*"/"version": "'$1'"/' $FF > $FF.new
 mv $FF.new $FF
@@ -25,6 +26,9 @@ s/(CFBundleVersion<\/key>[^<]*<string>)[^<]*/\1'$2'/
 rm $SF.new
 sed -e 's/<string>MISSINGEVERSION<\/string>/<string>'$1'<\/string>/' $SFst.template > $SFst
 
-sed -e 's/<div version="[^"]*" id="versioncheck">/<div version="'$1'" id="versioncheck">/' $INDEX > $INDEX.new
+sed -e 's/<div version="[^"]*" id="versioncheck"/<div version="'$1'" id="versioncheck"/' $INDEX > $INDEX.new
 sed -e 's/<a href="faq#update">Update to v[0-9\.]* now<\/a>/<a href="faq#update">Update to v'$1' now<\/a>/' $INDEX.new > $INDEX
-rm $INDEX.new
+sed -e 's/<span id="download_version">Version [0-9\.]*<\/span>/<span id="download_version">Version '$1'<\/span>/' $INDEX > $INDEX.new
+mv $INDEX.new $INDEX
+
+echo "var currentVersion=\"$1\";" > $CURRVER
