@@ -34,18 +34,30 @@ MissingE.packages.timestamps = {
          info.text(response.data);
       }
       else {
-         var failHTML = 'Timestamp loading failed.';
-         if (MissingE.isTumblrURL(location.href, ["messages"])) {
-            failHTML += ' <a class="MissingE_timestamp_retry" href="#" ' +
-                        'onclick="return false;">Retry</a>';
+         var lang = $('html').attr('lang');
+         var i;
+         var failArr = MissingE.getLocale(lang).timestamps.failText;
+         var retryIdx = MissingE.getLocale(lang).timestamps.retryIndex;
+         var failNode = $('<span />');
+         for (i=0; i<failArr.length; i++) {
+            if (i === retryIdx) {
+               failNode.append($('<a />',{"class": "MissingE_timestamp_retry",
+                                          href: "#", onclick: "return false;",
+                                          text: failArr[i]}));
+            }
+            else {
+               failNode.append($('<span />',{text: failArr[i]}));
+            }
+            if (i+1 < failArr.length) {
+               failNode.append(' ');
+            }
          }
-         info.html(failHTML);
+         info.empty().append(failNode);
       }
    },
 
    loadTimestamp: function(item) {
       var lang = $('html').attr('lang');
-
       if (item.tagName === "LI" && $(item).hasClass("post") &&
           !$(item).hasClass("fan_mail") &&
           $(item).attr("id") !== "new_post" &&
@@ -95,12 +107,6 @@ MissingE.packages.timestamps = {
    },
 
    run: function() {
-      $('head').append('<style type="text/css">' +
-                       'span.MissingE_timestamp a {' +
-                       'text-decoration:none !important } ' +
-                       'span.MissingE_timestamp a:hover { ' +
-                       'text-decoration:underline !important; }' +
-                       '</style>');
       $('#posts li.post div.post_info a.MissingE_timestamp_retry')
          .live('click',function() {
          var post = $(this).closest('li.post');

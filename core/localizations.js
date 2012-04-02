@@ -135,6 +135,10 @@ var locale = {
   },
   "reblogTags": "Reblog Tags",
   "removeTag": "Remove tag",
+  "timestamps": {
+   "failText": ["Timestamp loading failed.", "Retry"],
+   "retryIndex": 1
+  },
   "loading": "Loading...",
   "error": "An error occurred. Click to reload.",
   "posts": {
@@ -321,6 +325,10 @@ var locale = {
   },
   "reblogTags": "mit den Tags rebloggen",
   "removeTag": "Tag entfernen",
+  "timestamps": {
+   "failText": ["Zeitstempel Laden fehlgeschlagen.", "Wiederholen"],
+   "retryIndex": 1
+  },
   "loading": "wird geladen...",
   "error": "Ein Fehler ist aufgetreten. Klicken Sie, erneut zu versuchen.",
   "posts": {
@@ -507,6 +515,10 @@ var locale = {
   },
   "reblogTags": "Rebloguear etiquetas",
   "removeTag": "Eliminar etiqueta",
+  "timestamps": {
+   "failText": ["Carga de la marca de tiempo fallado.", "Vuelva a intentarlo"],
+   "retryIndex": 1
+  },
   "loading": "Cargando...",
   "error": "Se ha producido un error. Haga clic aquí para intentarlo de nuevo.",
   "posts": {
@@ -693,6 +705,10 @@ var locale = {
   },
   "reblogTags": "Rebloguer Tags",
   "removeTag": "Supprimer le tag",
+  "timestamps": {
+   "failText": ["Chargement de timestamp échoué.", "Réessayer"],
+   "retryIndex": 1
+  },
   "loading": "Pas prêt...",
   "error": "Une erreur s'est produite. Cliquez pour essayer à nouveau.",
   "posts": {
@@ -879,6 +895,10 @@ var locale = {
   },
   "reblogTags": "Reblogga i Tag",
   "removeTag": "Rimuovi tag",
+  "timestamps": {
+   "failText": ["Caricamento del timestamp fallito.", "Riprova"],
+   "retryIndex": 1
+  },
   "loading": "In caricamento...",
   "error": "Si è verificato un errore. Clicca per provare di nuovo.",
   "posts": {
@@ -1075,6 +1095,10 @@ var locale = {
   },
   "reblogTags": "タグをリブログ",
   "removeTag": "タグを除去する",
+  "timestamps": {
+   "failText": ["タイムスタンプのロードに失敗しました。", "再試行します"],
+   "retryIndex": 1
+  },
   "loading": "読込中...",
   "error": "エラーが発生しました。 クリックしてもう一度やり直してください。",
   "posts": {
@@ -1254,6 +1278,10 @@ var locale = {
   },
   "reblogTags": "Rebloguj tagi",
   "removeTag": "Usuń tag",
+  "timestamps": {
+   "failText": ["Załadunek Timestamp się nie powiodło.", "Ponów"],
+   "retryIndex": 1
+  },
   "loading": "Ładuję...",
   "error": "Wystąpił błąd. Kiknij, aby odświeżyć.",
   "posts": {
@@ -1440,6 +1468,10 @@ var locale = {
   },
   "reblogTags": "Реблог теги",
   "removeTag": "Удалить тег",
+  "timestamps": {
+   "failText": ["Отметка времени загрузки не удалось.", "Повторить"],
+   "retryIndex": 1
+  },
   "loading": "Загрузка...",
   "error": "Произошла ошибка. Кликните, чтобы перезагрузить.",
   "posts": {
@@ -1656,6 +1688,10 @@ var locale = {
   },
   "reblogTags": "Yeniden blogla etiketler",
   "removeTag": "Etiketi kaldır",
+  "timestamps": {
+   "failText": ["Zaman Damgası yükleme başarısız oldu.", "Yeniden deneyin"],
+   "retryIndex": 1
+  },
   "loading": "Yüklüyor",
   "error": "Bir hata oluştu! Lütfen yeniden deneyin.",
   "posts": {
