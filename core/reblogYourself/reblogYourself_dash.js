@@ -61,9 +61,9 @@ MissingE.packages.reblogYourself = {
       if (response.success) {
          var post = $('#post_' + response.pid);
          var redir = location.href;
-         before = $('#post_control_reply_' + tid);
+         before = $('#post_control_reply_' + response.pid);
          if (before.length === 0) {
-            before = $('#show_notes_link_' + tid);
+            before = $('#show_notes_link_' + response.pid);
          }
          if (MissingE.isTumblrURL(redir, ["dashboard"])) {
             redir = "http://www.tumblr.com/dashboard/1000/" +
@@ -78,7 +78,7 @@ MissingE.packages.reblogYourself = {
                      href: "/reblog/" + response.pid + "/" + response.data +
                            "?redirect_to=" + redir});
          if (before.length === 0) {
-            nr.prependTo(item.find('div.post_controls')).after(' ');
+            nr.prependTo(post.find('div.post_controls')).after(' ');
          }
          else {
             nr.insertAfter(before).before(' ');
