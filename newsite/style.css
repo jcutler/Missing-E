@@ -202,6 +202,10 @@ background-position:-64px -128px;
 background-position:-128px -128px;
 }
 
+#donateheart {
+background-position:0 -64px;
+}
+
 #battery {
 background-position:-192px -128px;
 }
@@ -1377,11 +1381,13 @@ line-height:1;
 height:auto;
 }
 
-#uptodate_message, #loading_message {
+#uptodate_message, #loading_message, #thankyou_message {
 padding:40px 0 20px 0;
 }
 
-#uptodate_message .iconbar h1, #loading_message .iconbar h1 {
+#uptodate_message .iconbar h1,
+#loading_message .iconbar h1,
+#thankyou_message .iconbar h1 {
 font-size:25px;
 }
 
