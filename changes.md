@@ -78,7 +78,8 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.8.1** (not yet released)
+##**2.8.1** (04/03/2012)
+**_!_** Fix problem with reblog buttons not being added to posts for users with single blogs  
 **_!_** Localize timestamp load failure text for non-English users
 
 ##**2.8.0** (04/01/2012)
