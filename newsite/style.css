@@ -1417,6 +1417,10 @@ padding:30px 50px;
 display:none;
 }
 
+#submitbug .troubleshoot_box {
+display:block;
+}
+
 .troubleshoot_box .big {
 font-size:110%;
 }
@@ -1456,6 +1460,11 @@ font-size:15px;
 margin:4px 0;
 }
 
+#submitbug .troubleshoot_box .troubleshoot_item p {
+font-size:14px;
+margin:2px 0;
+}
+
 .troubleshoot_box .troubleshoot_item .step_icon {
 position:absolute;
 top:8px;
@@ -1493,4 +1502,36 @@ border-bottom: 2px solid white;
 box-shadow:0px 1px 1px 1px rgba(255, 255, 255, 0.5);
 -webkit-box-shadow:0px 1px 1px 1px rgba(255, 255, 255, 0.5);
 -moz-box-shadow:0px 1px 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+#submitbug textarea {
+box-sizing:border-box;
+width:752px;
+height:180px;
+max-width:752px;
+min-width:752px;
+margin-top:1px;
+margin-bottom:10px;
+padding:3px 4px;
+}
+
+#formbuttons {
+text-align:right;
+}
+
+#formbuttons .button {
+position:relative;
+font-size:17px;
+padding:8px 27px;
+margin-left:8px;
+cursor:pointer;
+}
+
+#formbuttons a.button {
+min-width:60px;
+}
+
+#formbuttons button.button span {
+display:inline-block;
+min-width:60px;
 }

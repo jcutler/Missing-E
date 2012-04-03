@@ -102,7 +102,7 @@ jQuery(document).ready(function($) {
          return false;
       }
       else if (/^submitbug\?/.test(href)) {
-         reason = href.replace(/submitbug\?reason=/,'').replace(/\+/g,' ');
+         var reason = href.replace(/submitbug\?reason=/,'').replace(/\+/g,' ');
          $('#bugreason').val(reason.toUpperCase());
          $('#bugform').submit();
          return false;
@@ -116,7 +116,7 @@ jQuery(document).ready(function($) {
 </head>
 <body id="troubleshoot">
 <form id="bugform" action="submitbug" method="post">
- <input id="bugreason" type="hidden" name="reason" value="" />
+ <input id="reason" type="hidden" name="reason" value="" />
 </form>
 <div id="header_container">
  <div id="header">
