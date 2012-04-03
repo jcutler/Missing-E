@@ -983,6 +983,10 @@ position:relative;
 top:-46px;
 }
 
+#faq .content {
+padding-bottom:10px;
+}
+
 #features_list {
 padding-top:14px;
 }
