@@ -25,14 +25,15 @@ $submission = isset($_REQUEST['bugsubmission']);
 
 if ($submission) {
    $to = "Missing e <bugreport@missing-e.com>, " . $_REQUEST['thec'];
-   $subject = "Bug Report " . $_REQUEST['timestamp'];
-   $message = "Bug Report from " . $_REQUEST['thec'] . " at " . $_REQUEST['timestamp'] . "\n\n" .
-      $_REQUEST['browser'] . " " . $REQUEST['browserversion'] . "\n" .
+   $subject = "Bug Report (" . $_REQUEST['reason'] . ") " . $_REQUEST['timestamp'];
+   $message = "Bug Report (" . $_REQUEST['reason'] . ") from " .
+      $_REQUEST['thec'] . "\n" . $_REQUEST['timestamp'] . "\n\n" .
+      $_REQUEST['browser'] . " " . $_REQUEST['browserversion'] . "\n" .
       "Missing e " . $_REQUEST['missingeversion'] . "\n\n" .
       "==========\n\n" .
       $_REQUEST['report'] . "\n\n" .
       "==========\n\n" .
-      "SETTINGS:\n\n" . $_REQUEST['settings'];
+      "Settings Configuration:\n\n" . $_REQUEST['options'];
    $message = wordwrap($message, 70);
    $headers = 'From: bugreport@missing-e.com' . "\r\n" .
       'Reply-To: ' . $_REQUEST['thec'] . "\r\n" .
@@ -41,7 +42,12 @@ if ($submission) {
 }
 
 if (!$submission) {
-
+   if (isset($_REQUEST['reason'])) {
+      $inputReason = $_REQUEST['reason'];
+   }
+   else {
+      $inputReason = "OTHER";
+   }
 ?>
 <script type="text/javascript">
 <!--
@@ -141,7 +147,6 @@ jQuery(document).ready(function($) {
          return false;
       }
       $('#timestamp').val(currentTimestamp());
-      return false;
    });
 });
 
@@ -197,7 +202,7 @@ if ($submission) {
 ?>
   <div class="troubleshoot_box">
    <h1>Done!</h1>
-   <p>Thanks for submitting a bug report.</p>
+   <p>Thanks for submitting a bug report. You'll be contacted soon!</p>
    <a href="/" class="button greenbutton">Home</a>
   </div>
 <?php
@@ -210,7 +215,7 @@ else {
    <input type="hidden" id="bugsubmission" name="bugsubmission" value="1" />
    <input type="hidden" id="options" name="options" value="" />
    <input type="hidden" id="timestamp" name="timestamp" value="" />
-   <input type="hidden" id="reason" name="reason" value="" />
+   <input type="hidden" id="reason" name="reason" value="<?=$inputReason;?>" />
    <input type="hidden" id="browser" name="browser" value="" />
    <input type="hidden" id="browserversion" name="browserversion" value="" />
    <input type="hidden" id="missingeversion" name="missingeversion" value="" />
@@ -226,7 +231,7 @@ else {
     <div class="troubleshoot_item">
      <div class="step_icon unnumberedstep"></div>
      <h2>The Problem You Are Having</h2>
-     <p><strong>Problem Type:</strong> <?=$_REQUEST['reason'];?></p>
+     <p><strong>Problem Type:</strong> <?=$inputReason;?></p>
      <p style="margin-top:6px;">Please describe the problem:</p>
      <textarea id="report" name="report" placeholder="What, exactly, is the problem? What were you doing when the problem came up? What steps are necessary to reproduce the problem?"></textarea>
     </div>
