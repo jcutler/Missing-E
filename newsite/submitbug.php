@@ -24,6 +24,23 @@
 $submission = isset($_REQUEST['bugsubmission']);
 
 if ($submission) {
+   $to = "Missing e <bugreport@missing-e.com>, " . $_REQUEST['thec'];
+   $subject = "Bug Report " . $_REQUEST['timestamp'];
+   $message = "Bug Report from " . $_REQUEST['thec'] . " at " . $_REQUEST['timestamp'] . "\n\n" .
+      $_REQUEST['browser'] . " " . $REQUEST['browserversion'] . "\n" .
+      "Missing e " . $_REQUEST['missingeversion'] . "\n\n" .
+      "==========\n\n" .
+      $_REQUEST['report'] . "\n\n" .
+      "==========\n\n" .
+      "SETTINGS:\n\n" . $_REQUEST['settings'];
+   $message = wordwrap($message, 70);
+   $headers = 'From: bugreport@missing-e.com' . "\r\n" .
+      'Reply-To: ' . $_REQUEST['thec'] . "\r\n" .
+      'X-Mailer: PHP/' . phpversion();
+   mail($to, $subject, $message, $headers);
+}
+
+if (!$submission) {
 
 ?>
 <script type="text/javascript">
@@ -61,6 +78,11 @@ function receiveInfo(msg) {
          $('#missingeversion').val(msg.data.info.version);
          $('#missingeversion_text').text(msg.data.info.version);
       }
+      window.postMessage({"MissingE":true, "src":"site", "request":"options"},
+                         "http://test.missing-e.com");
+   }
+   else if (msg.data.response === "options") {
+      $('#options').val(msg.data.options);
    }
 }
 
@@ -86,10 +108,8 @@ jQuery(document).ready(function($) {
    window.extResponded = false;
    window.addEventListener("message", function(e) {
       if (e.data && e.data.MissingE && e.data.src === "extension") {
-         if (!window.extResponded) {
-            window.extResponded = true;
-            receiveInfo(e);
-         }
+         window.extResponded = true;
+         receiveInfo(e);
       }
    }, false);
    window.postMessage({"MissingE":true, "src":"site",
@@ -141,7 +161,7 @@ jQuery(document).ready(function($) {
    <div id="header_links">
     <a href="features">Features</a>
     <a href="faq">FAQ</a>
-    <span class="selected">Troubleshoot</span>
+    <a href="troubleshoot" class="selected">Troubleshoot</a>
     <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">Donate</a>
    </div>
   </div>
@@ -188,6 +208,7 @@ else {
 ?>
   <form id="bugform" action="submitbug" method="post">
    <input type="hidden" id="bugsubmission" name="bugsubmission" value="1" />
+   <input type="hidden" id="options" name="options" value="" />
    <input type="hidden" id="timestamp" name="timestamp" value="" />
    <input type="hidden" id="reason" name="reason" value="" />
    <input type="hidden" id="browser" name="browser" value="" />

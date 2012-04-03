@@ -212,6 +212,7 @@ background-position:-192px -128px;
 
 #ads {
 font-size:0;
+margin-top:1px;
 height:90px;
 min-width:970px;
 text-align:center;
@@ -219,7 +220,6 @@ background-color:rgba(0,0,0,0.1);
 }
 
 #ads #ads_title {
-margin-top:-1px;
 color:rgb(245,245,245);
 font-size:18px;
 float:left;
