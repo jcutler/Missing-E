@@ -106,3 +106,5 @@ if [[ "$SYS" == "Darwin" ]]; then
 else
    "c:/Program Files/Mozilla Firefox/firefox.exe" "https://addons.mozilla.org/en-US/developers/addon/missing-e/versions/#version-upload" &
 fi
+
+echo "  Remember to run changeFirefoxURL.sh after uploading!"
