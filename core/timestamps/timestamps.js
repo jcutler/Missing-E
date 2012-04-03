@@ -42,7 +42,7 @@ MissingE.packages.timestamps = {
          for (i=0; i<failArr.length; i++) {
             if (i === retryIdx) {
                failNode.append($('<a />',{"class": "MissingE_timestamp_retry",
-                                          href: "#", onclick: "return false;",
+                                          href: "#",
                                           text: failArr[i]}));
             }
             else {
@@ -114,6 +114,7 @@ MissingE.packages.timestamps = {
             MissingE.packages.timestamps
                .loadTimestamp($(this).parents('li.post').get(0));
          }
+         return false;
       });
       $('#posts li.post').each(function(){
          MissingE.packages.timestamps.loadTimestamp(this);
