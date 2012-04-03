@@ -121,7 +121,6 @@ jQuery(document).ready(function($) {
          return false;
       }
       $('#timestamp').val(currentTimestamp());
-      console.log($('#timestamp').val());
       return false;
    });
 });
