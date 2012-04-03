@@ -53,6 +53,7 @@ function toggleBrowser(browser) {
 function updateToggle(uptodate, browser) {
    var success = false;
    browser = browser.toLowerCase();
+   $('#loading_message').hide();
    if (uptodate) {
       $('#download_process').hide().children('div').hide();
       $('#uptodate_message').show();
@@ -184,6 +185,14 @@ google_ad_height = 90;
 </div>
 <div class="content_container">
  <div class="content">
+  <div id="loading_message">
+   <div class="iconbar">
+    <div class="baricon" id="clock"></div>
+    <div class="bartxt">
+     <h1>Getting version information&hellip;</h1>
+    </div>
+   </div>
+  </div>
   <div id="uptodate_message" style="display:none;">
    <div class="iconbar">
     <div class="baricon" id="battery"></div>
@@ -270,13 +279,6 @@ google_ad_height = 90;
       <h2>You're done!</h2>
       <p>Wasn't that easy? Now reload Tumblr to start using <strong>Missing e</strong>.</p>
      </div>
-    </div>
-   </div>
-   <div class="iconbar">
-    <div class="baricon" id="megaphone"></div>
-    <div class="bartxt">
-     <h1>Thanks for choosing Missing e!</h1>
-     <div class="bardesc">Make sure to follow the <a href="http://blog.missing-e.com"><strong>Missing e</strong> Tumblr blog</a> to get the latest news about <strong>Missing e</strong>.</div>
     </div>
    </div>
   </div>
