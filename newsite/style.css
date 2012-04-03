@@ -1025,7 +1025,6 @@ display:none;
 
 .inline_fancybox {
 width:600px;
-height:500px;
 }
 
 .fancybox_icon_dummy {
@@ -1076,13 +1075,12 @@ position:relative;
 padding-left:32px;
 }
 
-.feature_option .check,
-.feature_option .cross {
+.feature_option .check {
 background:url("images/sprites.png") no-repeat;
 width:16px;
 height:16px;
 position:absolute;
-top:0;
+top:-1px;
 left:12px;
 }
 
@@ -1092,6 +1090,10 @@ background-position:-16px -240px;
 
 .feature_option.default_option .check {
 background-position:0 -240px;
+}
+
+.inline_fancybox p {
+font-size:14px;
 }
 
 .inline_fancybox h1 {
@@ -1107,10 +1109,6 @@ font-size:14px;
 margin:10px 0;
 }
 
-.inline_fancybox p {
-font-size:14px;
-}
-
 .inline_fancybox p, .inline_fancybox ul {
 margin:0 0 4px 0;
 }
@@ -1124,6 +1122,31 @@ padding:0 16px;
 font-size:13px;
 }
 
-#header_links a[href*="troubleshoot"] {
-display:none;
+.feature_option_legend {
+margin-top:8px;
+}
+
+.feature_option_legend p {
+font-style:italic;
+text-align:right;
+font-size:11px;
+margin:0;
+}
+
+.feature_option_legend .checkmark,
+.feature_option_legend .cross {
+width:14px;
+height:14px;
+display:inline-block;
+background-image:url("images/sprites.png");
+background-repeat:no-repeat;
+vertical-align:bottom;
+}
+
+.feature_option_legend .checkmark {
+background-position:-1px -241px;
+}
+
+.feature_option_legend .cross {
+background-position:-17px -241px;
 }

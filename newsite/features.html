@@ -38,12 +38,13 @@ jQuery(document).ready(function($) {
       $.fancybox.open(group, {
          wrapCSS   : 'open_fancybox',
          index     : startIdx,
-         maxHeight : 600,
+         maxHeight : 500,
          fitToView : false,
          closeClick: false,
          closeBtn  : false,
+         fixed     : true,
          helpers   : {
-            title  : { type: 'inside' },
+            title  : { type: 'outside' },
             buttons: {}
          },
          afterShow : function() {
@@ -240,13 +241,120 @@ google_ad_height = 90;
    <span class="check"></span>
    <p>Open <em>Ask</em> boxes from a user menu (<img src="images/usermenu_i.png" style="width:16px;height:16px;" alt="User menu icon" />) without leaving the dashboard</p>
   </div>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Mass delete messages in your inbox</p>
+  </div>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Add queue/publish buttons to submitted posts in your inbox</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Smaller <em>Fan Mail</em> messages</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Always show long <em>Fan Mail</em> messages as a whole</p>
+  </div>
+  <div class="feature_option_legend">
+   <p>Settings active by default: <span class="checkmark"></span></p>
+   <p>Optional settings you can activate: <span class="cross"></span></p>
+  </div>
  </div>
 </div>
 <div class="inline_fancybox" id="betterreblogs_box">
  <img class="fancybox_icon_dummy" src="icons/betterReblogs_avatar.png" alt="Better Reblogs" />
  <div class="fancybox_container">
   <h1>Better Reblogs</h1>
-  <p class="desc">Hello!</p>
+  <p class="desc">Reblog faster and more productively.</p>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Keep original tags when reblogging</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Enable quick (1-click) reblogging</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Always reblog long text posts as text (instead of link posts)</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Allow reblogging of <em>Ask</em> posts as text</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Automatically add tags to reblogged posts</p>
+  </div>
+  <div class="feature_option_legend">
+   <p>Settings active by default: <span class="checkmark"></span></p>
+   <p>Optional settings you can activate: <span class="cross"></span></p>
+  </div>
+ </div>
+</div>
+<div class="inline_fancybox" id="bookmarker_box">
+ <img class="fancybox_icon_dummy" src="icons/bookmarker_avatar.png" alt="Bookmarker" />
+ <div class="fancybox_container">
+  <h1>Bookmarker</h1>
+  <p class="desc">Mark your place in the dashboard to go back to later.</p>
+  <p class="desc"><em>Bookmarker</em> adds a small bookmark button to posts. Click on one to mark that post in your dashboard. Jump back to it at any time by clicking on the bookmark entry in your Tumblr sidebar.</p>
+ </div>
+</div>
+<div class="inline_fancybox" id="dashbaordtweaks_box">
+ <img class="fancybox_icon_dummy" src="icons/dashboardTweaks_avatar.png" alt="Dashboard Tweaks" />
+ <div class="fancybox_container">
+  <h1>Dashboard Tweaks</h1>
+  <p class="desc">Customize your dashboard interface for easier reading and blogging.</p>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Fit reblog post quotes into a smaller area for easier reading</p>
+  </div>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Wrap dashboard post tags onto multiple lines</p>
+  </div>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Replace text dashboard controls (<em>delete, edit, queue, publish</em>) with icons</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Reduce size of dashboard post control buttons</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Replace icon dashboard controls (<em>reply, reblog</em>) with text</p>
+  </div>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Add new post buttons to the top of all dashboard pages</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Widescreen dashboard</p>
+  </div>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Show a <em>move to top of queue</em> button on queued posts</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Control whether thumbnail images in posts enlarge together</p>
+  </div>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Mass delete posts in your drafts or queue</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Add a <em>Shuffle</em> button to your queue</p>
+  </div>
+  <div class="feature_option_legend">
+   <p>Settings active by default: <span class="checkmark"></span></p>
+   <p>Optional settings you can activate: <span class="cross"></span></p>
+  </div>
  </div>
 </div>
 <div id="footer_container">
