@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
+<!--
+
+ Turnabout is fair play, sir.
+
+-->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="tumblr,missinge,missing,e,feature,features,blog,blogging" />
@@ -20,20 +25,6 @@
 
 var updateCheck;
 var extResponded;
-
-function makeUpdate() {
-   $('#download_button').attr('href','update');
-   $('#download_txt').css('display','none');
-   $('#update_txt').css('display','inline');
-}
-
-function makeInstalled() {
-   $('#download_button').attr('href','#').addClass('disabled_greenbutton').click(function() {
-      return false;
-   });
-   $('#download_txt').css('display','none');
-   $('#installed_txt').css('display','inline');
-}
 
 function receiveInfo(msg) {
    var earliestVer = [2,9,0];
@@ -66,6 +57,7 @@ function receiveInfo(msg) {
       else {
          $('#start_troubleshoot').show();
       }
+   }
 }
 
 function checkUpdate(count) {
@@ -81,7 +73,7 @@ function checkUpdate(count) {
       count++;
       window.postMessage({"MissingE":true, "src":"site",
                           "request":"extensionInfo"},
-                         "http://missing-e.com");
+                         "http://test.missing-e.com");
       updateCheck = setTimeout(function(){ checkUpdate(count); }, 500);
    }
 }
@@ -98,7 +90,24 @@ jQuery(document).ready(function($) {
    }, false);
    window.postMessage({"MissingE":true, "src":"site",
                        "request":"extensionInfo"},
-                      "http://missing-e.com");
+                      "http://test.missing-e.com");
+
+   $('.troubleshoot_box a').click(function() {
+      var href = $(this).attr('href');
+      if (/^#ts_.+$/.test(href)) {
+         $('.troubleshoot_box').hide();
+         $(href).show();
+         var top = $('.content_container:first').offset().top;
+         $(window).scrollTop(top-50);
+         return false;
+      }
+      else if (/^submitbug\?/.test(href)) {
+         reason = href.replace(/submitbug\?reason=/,'').replace(/\+/g,' ');
+         $('#bugreason').val(reason.toUpperCase());
+         $('#bugform').submit();
+         return false;
+      }
+   });
    updateCheck = setTimeout(checkUpdate, 500);
 });
 
@@ -106,6 +115,9 @@ jQuery(document).ready(function($) {
 </script>
 </head>
 <body id="troubleshoot">
+<form id="bugform" action="submitbug" method="post">
+ <input id="bugreason" type="hidden" name="reason" value="" />
+</form>
 <div id="header_container">
  <div id="header">
   <div id="header_bar">
@@ -123,7 +135,7 @@ jQuery(document).ready(function($) {
  <div id="banner">
   <div id="banner_box">
    <h1>Having problems with Missing e?</h1>
-   <h2>Let's see if you can do something about it!</h2>
+   <h2>Let's see if we can do something about it!</h2>
   </div>
   <img id="banner_img" style="width:219px;height:180px;margin-top:-25px;" src="images/stethescope.png" alt="Missing e Troubleshooting" />
  </div>
@@ -138,11 +150,11 @@ google_ad_width = 728;
 google_ad_height = 90;
 //-->
 </script>
-<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+<!--<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>-->
 </div>
 <div class="content_container">
  <div class="content">
-  <div class="troubleshoot_box" id="#pre_troubleshoot">
+  <div class="troubleshoot_box" id="pre_troubleshoot" style="display:block;">
    <h1>First things first&hellip;</h1>
    <div class="troubleshoot_item">
     <div class="step_icon unnumberedstep"></div>
@@ -151,6 +163,102 @@ google_ad_height = 90;
     <a href="update" class="button greenbutton">Update</a>
    </div>
   </div>
+  <div class="troubleshoot_box" id="start_troubleshoot" style="text-align:center">
+   <a href="#ts_0" class="button greenbutton">Start Troubleshooting</a>
+  </div>
+  <div class="troubleshoot_box" id="ts_0">
+   <h1>Troubleshooting Missing e</h1>
+   <p>Here, you'll be able to figure out what problem you're having and fix it or send a bug report, if necessary.</p>
+   <p><strong>What is the problem?</strong></p>
+   <a href="#ts_something" class="fullbutton button greenbutton">Something is not working right!</a>
+   <a href="#ts_performance" class="fullbutton button greenbutton">Missing e features are loading slower than usual!</a>
+   <a href="#ts_missing" class="fullbutton button greenbutton">A feature I used to have is missing!</a>
+   <a href="#ts_disappeared" class="fullbutton button greenbutton">Missing e disappeared!</a>
+   <a href="#ts_tumblrchange" class="fullbutton button greenbutton">Tumblr changed something and broke Missing e!</a>
+   <a href="submitbug?reason=not+listed" class="fullbutton button greenbutton">None of the above</a>
+  </div>
+  <div class="troubleshoot_box" id="ts_something">
+   <h1>Tumblr?</h1>
+   <img class="ts_image" src="images/examples/tumblr_logo.gif" alt="Tumblr" />
+   <p><strong>Have you noticed Tumblr making changes to their interface recently, or adding/removing features?</strong></p>
+   <a href="#ts_tumblrchange" class="fullbutton button greenbutton">Yes</a>
+   <a href="submitbug?reason=extension+not+working+correctly" class="fullbutton button greenbutton">No</a>
+  </div>
+  <div class="troubleshoot_box" id="ts_tumblrchange">
+   <h1>Please be patient.</h1>
+   <p>It sounds like Tumblr made some changes to their interface that may have broken the <strong>Missing e</strong> feature you are using. An update will be available as soon as possible.</p>
+   <p>You can also send a bug report to help speed up this process.</p>
+   <a href="submitbug?reason=tumblr+change" class="fullbutton button greenbutton">Send a bug report</a>
+   <a href="#ts_done" class="fullbutton button greenbutton">No thanks</a>
+  </div>
+  <div class="troubleshoot_box" id="ts_performance">
+   <h1>Do you have other extensions installed?</h1>
+   <p>Some Tumblr extensions can interfere with <strong>Missing e</strong>, reducing performance.</p>
+   <p><strong>Do you have any other extensions (XKit, Tumblr Life) installed? Try temporarily disabling them to see if your problem continues.</strong></p>
+   <a href="#ts_performance2" class="fullbutton button greenbutton">No, I only have Missing e.</a>
+   <a href="#ts_done" class="fullbutton button greenbutton">Yes, I have other extensions.<br />Disabling them fixed my problem.</a>
+   <a href="#ts_performance2" class="fullbutton button greenbutton">Yes, I have other extensions.<br />Disabling them <em>did not</em> fix my problem.</a>
+   <a href="#ts_0" class="fullbutton button greenbutton">Go back</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_performance2">
+  <h1>Try disabling some Missing e features.</h1>
+  <p>On busy or slow computers, some <strong>Missing e</strong> features can slow down your browser.</p>
+  <p><strong>Click on the 'e.' icon at the top of your dashboard to open the Missing e settings page. Try disabling features that you don't use. Did that fix the problem?</strong></p>
+  <a href="#ts_done" class="fullbutton button greenbutton">Yes</a>
+  <a href="#ts_updatebrowser" class="fullbutton button greenbutton">No</a>
+  <a href="#ts_performance" class="fullbutton button greenbutton">Go back</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_updatebrowser">
+  <h1>Try updating your browser.</h1>
+  <p>If you are not using the latest version of your browser, try updating it.</p>
+  <p><strong>Did that fix the problem?</strong></p>
+  <a href="#ts_done" class="fullbutton button greenbutton">Yes</a>
+  <a href="submitbug?reason=performance" class="fullbutton button greenbutton">No</a>
+  <a href="#ts_performance2" class="fullbutton button greenbutton">Go back</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_missing">
+  <h1>Can you see the 'e.' icon at the top of your dashboard?</h1>
+  <img class="ts_image" src="images/examples/ts_eicon.png" alt="Tumblr" />
+  <a href="submitbug?reason=missing+feature" class="fullbutton button greenbutton">Yes</a>
+  <a href="#ts_missing2" class="fullbutton button greenbutton">No</a>
+  <a href="#ts_0" class="fullbutton button greenbutton">Go back</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_missing2">
+  <h1>Try re-enabling Missing e.</h1>
+  <p>Sometimes, problems with your browser can cause <strong>Missing e</strong> to stop working temporarily.</p>
+  <p><strong><a href="faq/re-enable" target="_blank">Follow these instructions to re-enable Missing e</a>. Did this fix the problem?</strong></p>
+  <a href="#ts_done" class="fullbutton button greenbutton">Yes</a>
+  <a href="submitbug?reason=missing+feature" class="fullbutton button greenbutton">No</a>
+  <a href="#ts_missing" class="fullbutton button greenbutton">Go back</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_disappeared">
+  <h1>Can you see the 'e.' icon at the top of your dashboard?</h1>
+  <img class="ts_image" src="images/examples/ts_eicon.png" alt="Tumblr" />
+  <a href="submitbug?reason=extension+disappeared" class="fullbutton button greenbutton">Yes</a>
+  <a href="#ts_disappeared2" class="fullbutton button greenbutton">No</a>
+  <a href="#ts_0" class="fullbutton button greenbutton">Go back</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_disappeared2">
+  <h1>Try re-enabling Missing e.</h1>
+  <p>Sometimes, problems with your browser can cause <strong>Missing e</strong> to stop working temporarily.</p>
+  <p><strong><a href="faq/re-enable" target="_blank">Follow these instructions to re-enable Missing e</a>. Did this fix the problem?</strong></p>
+  <a href="#ts_done" class="fullbutton button greenbutton">Yes</a>
+  <a href="#ts_disappeared3" class="fullbutton button greenbutton">No</a>
+  <a href="#ts_disappeared" class="fullbutton button greenbutton">Go back</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_disappeared3">
+  <h1>Try uninstalling and reinstalling Missing e.</h1>
+  <p>Uninstalling and reinstalling an extension can sometimes fix problems with the connection between the extension and the browser.</p>
+  <p><strong><a href="faq/uninstall" target="_blank">Follow the uninstall instructions</a> and then <a href="download" target="_blank">install Missing e again</a>. Doing this will reset your Missing e settings to the defaults, so you'll have to configure it again.</strong></p>
+  <p><strong>Did this fix the problem?</strong></p>
+  <a href="#ts_done" class="fullbutton button greenbutton">Yes</a>
+  <a href="submitbug?reason=extension+disappeared" class="fullbutton button greenbutton">No</a>
+  <a href="#ts_disappeared2" class="fullbutton button greenbutton">Go back</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_done">
+  <h1>Done!</h1>
+  <p>Thanks for using the <strong>Missing e</strong> troubleshooter.</p>
+  <a href="#ts_0" class="button greenbutton">Start Over</a>
  </div>
 </div>
 <div id="footer_container">
