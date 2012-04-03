@@ -169,7 +169,7 @@ function getAllSettings(getStale) {
    settings.MissingE_dashboardTweaks_queueArrows = getSetting("extensions.MissingE.dashboardTweaks.queueArrows",1);
    settings.MissingE_dashboardTweaks_noExpandAll = getSetting("extensions.MissingE.dashboardTweaks.noExpandAll",0);
    settings.MissingE_dashboardTweaks_massDelete = getSetting("extensions.MissingE.dashboardTweaks.massDelete",1);
-   settings.MissingE_dashboardTweaks_randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0);
+   settings.MissingE_dashboardTweaks_randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",1);
    settings.MissingE_dashboardTweaks_sortableNotes = getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1);
    settings.MissingE_dashboardTweaks_notePreview = getSetting("extensions.MissingE.dashboardTweaks.notePreview",1);
    settings.MissingE_dashboardTweaks_previewRetries = getSetting("extensions.MissingE.dashboardTweaks.previewRetries",MissingE.defaultRetries);
@@ -242,7 +242,7 @@ function getAllSettings(getStale) {
       settings.MissingE_dashboardFixes_widescreen = getSetting("extensions.MissingE.dashboardFixes.widescreen",0);
       settings.MissingE_dashboardFixes_queueArrows = getSetting("extensions.MissingE.dashboardFixes.queueArrows",1);
       settings.MissingE_dashboardFixes_massDelete = getSetting("extensions.MissingE.dashboardFixes.massDelete",1);
-      settings.MissingE_dashboardFixes_randomQueue = getSetting("extensions.MissingE.dashboardFixes.randomQueue",0);
+      settings.MissingE_dashboardFixes_randomQueue = getSetting("extensions.MissingE.dashboardFixes.randomQueue",1);
       settings.MissingE_dashboardFixes_sortableNotes = getSetting("extensions.MissingE.dashboardFixes.sortableNotes",1);
       settings.MissingE_postingFixes_photoReplies = getSetting("extensions.MissingE.postingFixes.photoReplies",1);
       settings.MissingE_postingFixes_addUploader = getSetting("extensions.MissingE.postingFixes.addUploader",1);
@@ -1824,7 +1824,7 @@ function handleMessage(message, myWorker) {
             settings.queueArrows = getSetting("extensions.MissingE.dashboardTweaks.queueArrows",1);
             settings.noExpandAll = getSetting("extensions.MissingE.dashboardTweaks.noExpandAll",0);
             settings.massDelete = getSetting("extensions.MissingE.dashboardTweaks.massDelete",1);
-            settings.randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0);
+            settings.randomQueue = getSetting("extensions.MissingE.dashboardTweaks.randomQueue",1);
             settings.sortableNotes = getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1);
             settings.notePreview = getSetting("extensions.MissingE.dashboardTweaks.notePreview",1);
             settings.simpleHighlight = getSetting("extensions.MissingE.dashboardTweaks.simpleHighlight",0);
@@ -2008,7 +2008,7 @@ function handleMessage(message, myWorker) {
             if (getSetting("extensions.MissingE.dashboardTweaks.postLinks",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/postLinks.css"});
             if (getSetting("extensions.MissingE.dashboardTweaks.massDelete",1) == 1 ||
-                getSetting("extensions.MissingE.dashboardTweaks.randomQueue",0) == 1)
+                getSetting("extensions.MissingE.dashboardTweaks.randomQueue",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/draftQueueTools.css"});
             if (getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/notesSorter.css"});

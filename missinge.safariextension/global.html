@@ -1584,7 +1584,7 @@ function handleRequest(request) {
       settings.MissingE_dashboardTweaks_queueArrows = getSetting("MissingE_dashboardTweaks_queueArrows",1);
       settings.MissingE_dashboardTweaks_noExpandAll = getSetting("MissingE_dashboardTweaks_noExpandAll",0);
       settings.MissingE_dashboardTweaks_massDelete = getSetting("MissingE_dashboardTweaks_massDelete",1);
-      settings.MissingE_dashboardTweaks_randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
+      settings.MissingE_dashboardTweaks_randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",1);
       settings.MissingE_dashboardTweaks_sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
       settings.MissingE_dashboardTweaks_notePreview = getSetting("MissingE_dashboardTweaks_notePreview",1);
       settings.MissingE_dashboardTweaks_previewRetries = getSetting("MissingE_dashboardTweaks_previewRetries",MissingE.defaultRetries);
@@ -1696,7 +1696,7 @@ function handleRequest(request) {
             settings.queueArrows = getSetting("MissingE_dashboardTweaks_queueArrows",1);
             settings.noExpandAll = getSetting("MissingE_dashboardTweaks_noExpandAll",0);
             settings.massDelete = getSetting("MissingE_dashboardTweaks_massDelete",1);
-            settings.randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
+            settings.randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",1);
             settings.sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
             settings.notePreview = getSetting("MissingE_dashboardTweaks_notePreview",1);
             settings.simpleHighlight = getSetting("MissingE_dashboardTweaks_simpleHighlight",0);
@@ -1872,7 +1872,7 @@ function handleRequest(request) {
             if (getSetting("MissingE_dashboardTweaks_postLinks",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/postLinks.css"});
             if (getSetting("MissingE_dashboardTweaks_massDelete",1) == 1 ||
-                getSetting("MissingE_dashboardTweaks_randomQueue",0) == 1)
+                getSetting("MissingE_dashboardTweaks_randomQueue",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/draftQueueTools.css"});
             if (getSetting("MissingE_dashboardTweaks_sortableNotes",1) == 1)
                injectStyles.push({file: "core/dashboardTweaks/notesSorter.css"});

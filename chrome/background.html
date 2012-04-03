@@ -1545,7 +1545,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.queueArrows = getSetting("MissingE_dashboardTweaks_queueArrows",1);
             settings.noExpandAll = getSetting("MissingE_dashboardTweaks_noExpandAll",0);
             settings.massDelete = getSetting("MissingE_dashboardTweaks_massDelete",1);
-            settings.randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",0);
+            settings.randomQueue = getSetting("MissingE_dashboardTweaks_randomQueue",1);
             settings.sortableNotes = getSetting("MissingE_dashboardTweaks_sortableNotes",1);
             settings.notePreview = getSetting("MissingE_dashboardTweaks_notePreview",1);
             settings.simpleHighlight = getSetting("MissingE_dashboardTweaks_simpleHighlight",0);
@@ -1720,7 +1720,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (getSetting("MissingE_dashboardTweaks_postLinks",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/postLinks.css"});
             if (getSetting("MissingE_dashboardTweaks_massDelete",1) == 1 ||
-                getSetting("MissingE_dashboardTweaks_randomQueue",0) == 1)
+                getSetting("MissingE_dashboardTweaks_randomQueue",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/draftQueueTools.css"});
             if (getSetting("MissingE_dashboardTweaks_sortableNotes",1) == 1)
                chrome.tabs.insertCSS(sender.tab.id, {file: "core/dashboardTweaks/notesSorter.css"});
