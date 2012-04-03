@@ -1413,6 +1413,9 @@ margin:8px 0;
 .troubleshoot_box {
 text-shadow:1px 1px 1px white;
 padding:30px 50px;
+}
+
+#troubleshoot .troubleshoot_box {
 display:none;
 }
 
