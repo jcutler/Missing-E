@@ -187,6 +187,10 @@ background-position:-192px -64px;
 background-position:0 -128px;
 }
 
+#megaphone {
+background-position:-64px -128px;
+}
+
 #ads {
 font-size:0;
 height:90px;
@@ -350,13 +354,13 @@ background-color: white;
 border-radius: 6px;
 border: 1px solid #666;
 display: inline-block;
-color: #303030;
+color: #303030 !important;
 font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 font-size: 14px;
 font-weight: bold;
 padding: 5px 19px;
 text-decoration: none;
-text-shadow: 1px 1px 0px white;
+text-shadow: 1px 1px 0px white !important;
 }
 
 .disabled_greenbutton {
@@ -966,6 +970,10 @@ top:-46px;
 padding-top:14px;
 }
 
+#features_list .iconbar {
+margin-bottom:6px;
+}
+
 .feature_row {
 padding:0 60px;
 font-size:0;
@@ -1157,4 +1165,109 @@ display:inline-block;
 -moz-transform: scale(0.9,-1.1);
 -o-transform: scale(0.9,-1.1);
 transform: scale(0.9,-1.1);
+}
+
+.download_process {
+text-shadow:1px 1px 1px white;
+padding:30px 50px 20px;
+}
+
+.download_process .recognize {
+font-size:24px;
+line-height:1;
+}
+
+.download_process .recognize_other {
+margin-left:4px;
+vertical-align:top;
+position:relative;
+}
+
+.install_instructions {
+margin-top:28px;
+}
+
+.install_instructions h1 {
+font-size:24px;
+margin-bottom:16px;
+}
+
+.install_instructions .install_step {
+position:relative;
+padding:8px 12px 8px 42px;
+border-radius:10px;
+background-color:rgba(255,255,255,0.7);
+border:1px solid rgba(0,0,0,0.2);
+margin:10px 0;
+}
+
+.install_instructions .install_step h2 {
+font-size:18px;
+font-weight:bold;
+line-height:1;
+min-height:20px;
+margin-bottom:8px;
+}
+
+.install_instructions .install_step p {
+font-size:15px;
+margin:4px 0;
+}
+
+.step_icon {
+background:url("images/sprites.png") no-repeat;
+width:20px;
+height:20px;
+display:inline-block;
+}
+
+.install_instructions .install_step .step_icon {
+position:absolute;
+top:8px;
+left:12px;
+}
+
+.step_icon.step1 {
+background-position:-64px -192px;
+}
+
+.step_icon.step2 {
+background-position:-64px -224px;
+}
+
+.step_icon.step3 {
+background-position:-96px -192px;
+}
+
+.step_icon.step4 {
+background-position:-96px -224px;
+}
+
+.install_instructions .install_step .button {
+position:absolute;
+top:50%;
+margin-top:-20px;
+right:12px;
+}
+
+.install_instructions .install_step .button:active {
+top:50%;
+margin-top:-19px;
+}
+
+#download .iconbar {
+padding:0;
+margin:12px 0;
+}
+
+#download .iconbar h1 {
+font-size:25px;
+line-height:1;
+margin:16px 0 8px 0;
+}
+
+#download .iconbar .bardesc {
+font-size:16px;
+line-height:1;
+height:auto;
 }
