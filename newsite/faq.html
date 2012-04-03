@@ -17,6 +17,18 @@
 <script type="text/javascript">
 <!--
 
+function scrollEntryVisible(entry) {
+   var item = $(entry);
+   var winHeight = $(window).innerHeight();
+   var footerHeight = $('#footer_container').innerHeight();
+   var scroll = $(window).scrollTop();
+   var entryBottom = item.outerHeight() + item.offset().top;
+   var delta = entryBottom - (scroll + winHeight - footerHeight - 5);
+   if (delta > 0) {
+      $(window).scrollTop(scroll + delta);
+   }
+}
+
 function openHash(hash) {
    var item = $(hash);
    if (item.length === 0) {
@@ -59,6 +71,7 @@ jQuery(document).ready(function($) {
       }
       else {
          entry.addClass('open_faq').removeClass('closed_faq');
+         window.setTimeout(function() {scrollEntryVisible(entry)}, 400);
       }
    });
    if (BrowserDetect.browser === "Chrome") {
