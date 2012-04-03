@@ -1,0 +1,32 @@
+Options +FollowSymLinks +MultiViews
+<Files ~ "^\.ht">
+	Order allow,deny
+	Deny from all
+</Files>
+
+AddType application/octet-stream .safariextz
+AddType application/x-xpinstall .xpi
+
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteRule ^faq(\.htm(l)?)?/(.*) http://missing-e.com/faq#$3 [NE,R=302,L]
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ^update/.* http://missing-e.com/update [R=301,L]
+
+RewriteRule ^ask$ http://blog.missing-e.com/ask [R=301,L]
+RewriteRule ^submit$ http://blog.missing-e.com/submit [R=301,L]
+RewriteRule ^archive(/.*)? http://blog.missing-e.com/archive$1 [R=301,L]
+RewriteRule ^tagged(/.*) http://blog.missing-e.com/tagged$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^www.missing-e.com$ [NC]
+RewriteRule ^(.*)$ http://missing-e.com/$1 [R=301,L]
+</IfModule>
+
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf|txt)$">
+Header set Cache-control "max-age=604800"
+</FilesMatch>
+
+<FilesMatch "version$">
+Header set Cache-Control "no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0"
+</FilesMatch>

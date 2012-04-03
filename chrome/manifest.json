@@ -33,7 +33,8 @@
          "all_frames": true
       },
       {
-         "matches": ["http://missing-e.com/*"],
+         "matches": ["http://test.missing-e.com/*",
+                     "http://missing-e.com/*"],
          "js": ["extension.js",
                 "core/siteIntegration.js"]
       }

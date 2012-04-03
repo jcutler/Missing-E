@@ -1396,3 +1396,52 @@ margin:12px 0
 font-size:14px;
 margin:8px 0;
 }
+
+.troubleshoot_box {
+text-shadow:1px 1px 1px white;
+padding:30px 50px 20px;
+}
+
+.troubleshoot_box h1 {
+font-size:25px;
+}
+
+.troubleshoot_box .troubleshoot_item {
+position:relative;
+padding:8px 12px 8px 42px;
+border-radius:10px;
+background-color:rgba(255,255,255,0.7);
+border:1px solid rgba(0,0,0,0.2);
+margin:10px 0;
+}
+
+.troubleshoot_box .troubleshoot_item h2 {
+font-size:18px;
+font-weight:bold;
+line-height:1;
+min-height:20px;
+margin-bottom:8px;
+}
+
+.troubleshoot_box .troubleshoot_item p {
+font-size:15px;
+margin:4px 0;
+}
+
+.troubleshoot_box .troubleshoot_item .step_icon {
+position:absolute;
+top:8px;
+left:12px;
+}
+
+.troubleshoot_box .troubleshoot_item .button {
+position:absolute;
+top:50%;
+margin-top:-20px;
+right:12px;
+}
+
+.troubleshoot_box .troubleshoot_item .button:active {
+top:50%;
+margin-top:-19px;
+}

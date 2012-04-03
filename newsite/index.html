@@ -73,7 +73,7 @@ function checkUpdate(count) {
    else {
       count++;
       window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
-                         "http://missing-e.com");
+                         "http://test.missing-e.com");
       updateCheck = setTimeout(function(){ checkUpdate(count); }, 500);
    }
 }
@@ -87,7 +87,7 @@ jQuery(document).ready(function($) {
       }
    }, false);
    window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
-                      "http://missing-e.com");
+                      "http://test.missing-e.com");
    updateCheck = setTimeout(checkUpdate, 500);
 });
 
@@ -107,7 +107,7 @@ jQuery(document).ready(function($) {
    <div id="header_links">
     <a href="features">Features</a>
     <a href="faq">FAQ</a>
-    <a href="troubleshoot">Submit a Bug</a>
+    <a href="troubleshoot">Troubleshoot</a>
     <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">Donate</a>
    </div>
   </div>
@@ -142,9 +142,7 @@ google_ad_width = 728;
 google_ad_height = 90;
 //-->
 </script>
-<!--
 <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
--->
 </div>
 <div class="content_container">
  <div class="content">
