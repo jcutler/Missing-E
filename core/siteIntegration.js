@@ -51,6 +51,7 @@ MissingE.utilities.siteIntegration = {
             }
             else if (e.data.request === "extensionInfo") {
                extension.sendRequest("getExtensionInfo", function(response) {
+                  response.info.browser = extension.appName;
                   extension.siteMessage({"MissingE":true, "src":"extension",
                                          "response":"extensionInfo",
                                          "info":response.info}, e);
