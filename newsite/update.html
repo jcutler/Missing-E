@@ -6,7 +6,7 @@
 <meta name="description" content="Missing e - The unofficial browser extension for Tumblr!"/>
 <meta name="author" content="Jeremy Cutler" />
 <meta name="robots" content="FOLLOW,INDEX" />
-<title>Download - Missing e - The browser extension for Tumblr!</title>
+<title>Update - Missing e - The browser extension for Tumblr!</title>
 <link href="http://fonts.googleapis.com/css?family=Bitter:400,700,400italic" rel="stylesheet" type="text/css">
 <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 <link rel="icon" href="/favicon.png" type="image/x-icon" />
@@ -18,19 +18,29 @@
 <script type="text/javascript">
 <!--
 
+var updateCheck;
+var extResponded;
+var upToDate = false;
+
 function toggleBrowser(browser) {
    var success = false;
    browser = browser.toLowerCase();
    if (browser === 'chrome') {
       success = true;
+      $('#download_firefox').hide();
+      $('#download_safari').hide();
       $('#download_chrome').show();
    }
    else if (browser === 'firefox') {
       success = true;
+      $('#download_chrome').hide();
+      $('#download_safari').hide();
       $('#download_firefox').show();
    }
    else if (browser === 'safari') {
       success = true;
+      $('#download_chrome').hide();
+      $('#download_firefox').hide();
       $('#download_safari').show();
    }
    if (success) {
@@ -40,12 +50,69 @@ function toggleBrowser(browser) {
    return false;
 }
 
+function updateToggle(uptodate, browser) {
+   var success = false;
+   browser = browser.toLowerCase();
+   if (uptodate) {
+      $('#download_process').hide().children('div').hide();
+      $('#uptodate_message').show();
+   }
+   else {
+      $('#uptodate_message').hide();
+      toggleBrowser(browser);
+   }
+}
+
+function receiveMessage(msg) {
+   if (msg.data.response === "updated") {
+      if (updateCheck) {
+         window.clearTimeout(updateCheck);
+      }
+      $('#old_update').remove();
+      upToDate = msg.data.uptodate;
+      window.postMessage({"MissingE":true, "src":"site",
+                          "request":"extensionInfo"},
+                         "http://missing-e.com");
+   }
+   if (msg.data.response === "extensionInfo") {
+      var browser = BrowserDetect.browser;
+      if (msg.data.info && msg.data.info.browser) {
+         browser = msg.data.info.browser;
+      }
+      updateToggle(upToDate, browser);
+   }
+}
+
+function checkUpdate(count) {
+   if (!count) { count = 1; }
+
+   if (window.extResponded) {
+      return;
+   }
+   else if ($('#old_update').length === 0) {
+      return;
+   }
+   else if ($('#uptodate').css('display') === "inline-block" ||
+            $('#notuptodate').css('display') === "inline-block") {
+      $('#old_update').remove();
+      updateToggle(false, BrowserDetect.browser);
+      return;
+   }
+   else if (count === 3) {
+      updateToggle(false, BrowserDetect.browser);
+   }
+   else if (count > 20) {
+      return;
+   }
+   count++;
+   window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
+                      "http://missing-e.com");
+   updateCheck = setTimeout(function(){ checkUpdate(count); }, 500);
+}
+
 jQuery(document).ready(function($) {
    if (firefoxURL) {
       $('#firefox_download').attr('href',firefoxURL);
-   }
-   if (BrowserDetect && BrowserDetect.hasOwnProperty('browser')) {
-      toggleBrowser(BrowserDetect.browser);
    }
    $('a.recognize_other').click(function() {
       $('#download_process').hide().children('div').hide();
@@ -58,12 +125,27 @@ jQuery(document).ready(function($) {
       toggleBrowser(browser);
       return false;
    });
+   window.extResponded = false;
+   window.addEventListener("message", function(e) {
+      if (e.data && e.data.MissingE && e.data.src === "extension") {
+         window.extResponded = true;
+         receiveMessage(e);
+      }
+   }, false);
+   window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
+                      "http://missing-e.com");
+   updateCheck = setTimeout(checkUpdate, 500);
 });
 
 -->
 </script>
 </head>
 <body id="download">
+<div id="old_update">
+ <div id="uptodate"></div>
+ <div id="notuptodate"></div>
+</div>
+<div version="2.9.0" id="versioncheck" style="display:none"></div>
 <div id="header_container">
  <div id="header">
   <div id="header_bar">
@@ -80,10 +162,10 @@ jQuery(document).ready(function($) {
 <div id="banner_container">
  <div id="banner">
   <div id="banner_box">
-   <h1>Get Missing e now!</h1>
-   <h2>Here's how to install Missing e. It's easy.</h2>
+   <h1>Update Missing e!</h1>
+   <h2>Keep Missing e up to date so you don't miss out on fixes and new features.</h2>
   </div>
-  <img id="banner_img" style="width:194px;height:210px;margin-top:-85px;margin-right:8px" src="images/download.png" alt="Download Missing e" />
+  <img id="banner_img" style="width:201px;height:210px;margin-top:-105px;" src="images/update.png" alt="Update Missing e" />
  </div>
 </div>
 <div id="ads">
@@ -102,39 +184,39 @@ google_ad_height = 90;
 </div>
 <div class="content_container">
  <div class="content">
-  <div id="download_select">
+  <div id="uptodate_message" style="display:none;">
+   <div class="iconbar">
+    <div class="baricon" id="battery"></div>
+    <div class="bartxt">
+     <h1>Sweet! Your <strong>Missing e</strong> extension is up to date.</h1>
+    </div>
+   </div>
+  </div>
+  <div id="download_select" style="display:none;">
    <h1>Select your browser:</h1>
    <div class="browser_select">
     <a class="chrome" href="#"><img src="images/chrome.png" alt="Google Chrome" /><div>Google Chrome</div></a>
     <a class="firefox" href="#"><img src="images/firefox.png" alt="Mozilla Firefox" /><div>Mozilla Firefox</div></a>
     <a class="safari" href="#"><img src="images/safari.png" alt="Apple Safari" /><div>Apple Safari</div></a>
    </div>
-   <div class="iconbar">
-    <div class="baricon" id="monitor"></div>
-    <div class="bartxt">
-     <h1>Don't see your browser here?</h1>
-     <div class="bardesc">
-      Some browsers can use the same extensions as one of the ones above. If you want to know whether your browser is supported, <a href="http://blog.missing-e.com/ask">ask me on Tumblr</a>. 
-     </div>
-    </div>
-   </div>
   </div>
   <div id="download_process" style="display:none;">
    <div id="download_chrome" style="display:none;">
     <div class="recognize">I've recognized your web browser as <strong>Google Chrome</strong>. <a class="greybutton button recognize_other" href="#">Not correct?</a></div>
     <div class="install_instructions">
-     <h1>Install <strong>Missing e</strong></h1>
+     <h1>Missing e is not up to date. Update it now!</h1>
+     <div class="update_text">Chrome will update your extensions regularly. To update immediately, follow these instructions:</div>
      <div class="install_step">
       <div class="step_icon step1"></div>
-      <h2>Start the download</h2>
+      <h2>Download the newest version</h2>
       <p>Click the button at the right to download <strong>Missing e</strong>.</p>
-      <p>When asked if you want to <em>Add "Missing e"</em>, click the <strong>Add</strong> button.</p>
       <a href="https://clients2.google.com/service/update2/crx?response=redirect&amp;x=id%3Dbcjbagclppcgdbpobcpoojdjdmcjhpid%26uc%26lang%3Den-US" class="button greenbutton">Download Now</a>
      </div>
      <div class="install_step">
       <div class="step_icon step2"></div>
       <h2>Confirm the installation</h2>
       <p>Click the <strong>Continue</strong> button in the confirmation that appears at the bottom of your browser window.</p>
+      <p>When asked if you want to <em>Add "Missing e"</em>, click the <strong>Add</strong> button.</p>
      </div>
      <div class="install_step">
       <div class="step_icon step3"></div>
@@ -146,12 +228,13 @@ google_ad_height = 90;
    <div id="download_safari" style="display:none;">
     <div class="recognize">I've recognized your web browser as <strong>Apple Safari</strong>. <a class="greybutton button recognize_other" href="#">Not correct?</a></div>
     <div class="install_instructions">
-     <h1>Install <strong>Missing e</strong></h1>
+     <h1>Missing e is not up to date. Update it now!</h1>
+     <div class="update_text">Safari will update your extensions regularly. To update immediately, follow these instructions:</div>
      <div class="install_step">
       <div class="step_icon step1"></div>
-      <h2>Start the download</h2>
+      <h2>Download the newest version</h2>
       <p>Click the button at the right to download <strong>Missing e</strong>.</p>
-      <a href="safari/download.php" class="button greenbutton">Download Now</a>
+      <a href="safari/missinge.safariextz" class="button greenbutton">Download Now</a>
      </div>
      <div class="install_step">
       <div class="step_icon step2"></div>
@@ -169,10 +252,11 @@ google_ad_height = 90;
    <div id="download_firefox" style="display:none;">
     <div class="recognize">I've recognized your web browser as <strong>Mozilla Firefox</strong>. <a class="greybutton button recognize_other" href="#">Not correct?</a></div>
     <div class="install_instructions">
-     <h1>Install <strong>Missing e</strong></h1>
+     <h1>Missing e is not up to date. Update it now!</h1>
+     <div class="update_text">Firefox will update your extensions regularly. To update it immediately, follow these instructions:</div>
      <div class="install_step">
       <div class="step_icon step1"></div>
-      <h2>Start the download</h2>
+      <h2>Download the newest version</h2>
       <p>Click the button at the right to download <strong>Missing e</strong>.</p>
       <a id="firefox_download" href="https://addons.mozilla.org/en-US/firefox/addon/missing-e/versions/" class="button greenbutton">Download Now</a>
      </div>

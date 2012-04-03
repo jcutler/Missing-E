@@ -196,6 +196,10 @@ background-position:-64px -128px;
 background-position:-128px -128px;
 }
 
+#battery {
+background-position:-192px -128px;
+}
+
 #ads {
 font-size:0;
 height:90px;
@@ -1198,7 +1202,7 @@ min-height:140px;
 -ms-transition:all 0.2s ease-in-out;
 transition:all 0.2s ease-in-out;
 display:inline-block;
-margin:0 12px;
+margin:0 8px;
 text-decoration:none;
 vertical-align:top;
 }
@@ -1264,6 +1268,11 @@ margin-top:28px;
 
 .install_instructions h1 {
 font-size:24px;
+margin-bottom:16px;
+}
+
+.install_instructions .update_text {
+font-size:15px;
 margin-bottom:16px;
 }
 
@@ -1354,4 +1363,12 @@ margin:16px 0 8px 0;
 font-size:16px;
 line-height:1;
 height:auto;
+}
+
+#uptodate_message {
+padding:40px 0 20px 0;
+}
+
+#uptodate_message .iconbar h1 {
+font-size:25px;
 }
