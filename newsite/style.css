@@ -1318,6 +1318,10 @@ background-position:-96px -192px;
 background-position:-96px -224px;
 }
 
+.step_icon.unnumberedstep {
+background-position:-128px -192px;
+}
+
 .install_instructions .install_step .button {
 position:absolute;
 top:50%;
