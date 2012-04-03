@@ -159,6 +159,7 @@ margin:12px auto;
 
 .iconbar .bartxt {
 display:inline-block;
+max-width:796px;
 }
 
 .iconbar .bardesc {
@@ -189,6 +190,10 @@ background-position:0 -128px;
 
 #megaphone {
 background-position:-64px -128px;
+}
+
+#monitor {
+background-position:-128px -128px;
 }
 
 #ads {
@@ -1167,17 +1172,87 @@ display:inline-block;
 transform: scale(0.9,-1.1);
 }
 
-.download_process {
+#download_process, #download_select {
 text-shadow:1px 1px 1px white;
 padding:30px 50px 20px;
 }
 
-.download_process .recognize {
+#download_select {
+font-size:0;
+}
+
+#download_select h1 {
+font-size:25px;
+margin-bottom:12px;
+}
+
+#download_select .browser_select {
+padding:0 24px;
+min-height:140px;
+}
+
+#download_select .browser_select a {
+-webkit-transition:all 0.2s ease-in-out;
+-moz-transition:all 0.2s ease-in-out;
+-o-transition:all 0.2s ease-in-out;
+-ms-transition:all 0.2s ease-in-out;
+transition:all 0.2s ease-in-out;
+display:inline-block;
+margin:0 12px;
+text-decoration:none;
+vertical-align:top;
+}
+
+#download_select .browser_select a div {
+-webkit-transition:all 0.2s ease-in-out;
+-moz-transition:all 0.2s ease-in-out;
+-o-transition:all 0.2s ease-in-out;
+-ms-transition:all 0.2s ease-in-out;
+transition:all 0.2s ease-in-out;
+font-size:13px;
+text-align:center;
+text-decoration:none;
+color:#444;
+max-width:96px;
+opacity:0;
+color:rgb(245,245,245);
+background-color:rgba(0,0,0,0.6);
+border-radius:10px;
+text-shadow:none;
+padding:2px 4px;
+margin-top:-12px;
+}
+
+#download_select .browser_select a img {
+-webkit-transition:all 0.2s ease-in-out;
+-moz-transition:all 0.2s ease-in-out;
+-o-transition:all 0.2s ease-in-out;
+-ms-transition:all 0.2s ease-in-out;
+transition:all 0.2s ease-in-out;
+width:96px;
+height:96px;
+}
+
+#download_select .browser_select a:hover {
+margin:0 24px;
+}
+
+#download_select .browser_select a:hover div {
+max-width:128px;
+opacity:1;
+}
+
+#download_select .browser_select a:hover img {
+width:128px;
+height:128px;
+}
+
+#download_process .recognize {
 font-size:24px;
 line-height:1;
 }
 
-.download_process .recognize_other {
+#download_process .recognize_other {
 margin-left:4px;
 vertical-align:top;
 position:relative;
@@ -1255,18 +1330,23 @@ top:50%;
 margin-top:-19px;
 }
 
-#download .iconbar {
+#download_process .iconbar, #download_select .iconbar {
 padding:0;
 margin:12px 0;
 }
 
-#download .iconbar h1 {
+#download_process .iconbar .bartxt,
+#download_select .iconbar .bartxt {
+max-width:766px;
+}
+
+#download_process .iconbar h1 {
 font-size:25px;
 line-height:1;
 margin:16px 0 8px 0;
 }
 
-#download .iconbar .bardesc {
+#download_process .iconbar .bardesc {
 font-size:16px;
 line-height:1;
 height:auto;

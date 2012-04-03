@@ -10,6 +10,7 @@
 <link href="http://fonts.googleapis.com/css?family=Bitter:400,700,400italic" rel="stylesheet" type="text/css">
 <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 <link rel="icon" href="/favicon.png" type="image/x-icon" />
+<script type="text/javascript" src="firefoxURL.js"></script>
 <script type="text/javascript" src="browser.js"></script>
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="reset.css" />
@@ -17,8 +18,44 @@
 <script type="text/javascript">
 <!--
 
+function toggleBrowser(browser) {
+   var success = false;
+   browser = browser.toLowerCase();
+   if (browser === 'chrome') {
+      success = true;
+      $('#download_chrome').show();
+   }
+   else if (browser === 'firefox') {
+      success = true;
+      $('#download_firefox').show();
+   }
+   else if (browser === 'safari') {
+      success = true;
+      $('#download_safari').show();
+   }
+   if (success) {
+      $('#download_select').hide();
+      $('#download_process').show();
+   }
+   return false;
+}
+
 jQuery(document).ready(function($) {
+   if (firefoxURL) {
+      $('#firefox_download').attr('href',firefoxURL);
+   }
+   if (BrowserDetect && BrowserDetect.hasOwnProperty('browser')) {
+      toggleBrowser(BrowserDetect.browser);
+   }
    $('a.recognize_other').click(function() {
+      $('#download_process').hide().children('div').hide();
+      $('#download_select').show();
+      return false;
+   });
+   $('#download_select a').click(function() {
+      var item = $(this);
+      var browser = $(this).attr('class');
+      toggleBrowser(browser);
       return false;
    });
 });
@@ -33,7 +70,7 @@ jQuery(document).ready(function($) {
    <a id="home_link" href="/"></a>
    <div id="header_links">
     <a href="features">Features</a>
-    <a href="faq">FAQ</span>
+    <a href="faq">FAQ</a>
     <a href="troubleshoot">Submit a Bug</a>
     <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">Donate</a>
    </div>
@@ -44,7 +81,7 @@ jQuery(document).ready(function($) {
  <div id="banner">
   <div id="banner_box">
    <h1>Get Missing e now!</h1>
-   <h2>Here's how to install Missing e. It's easy!</h2>
+   <h2>Here's how to install Missing e. It's easy.</h2>
   </div>
   <img id="banner_img" style="width:194px;height:210px;margin-top:-85px;margin-right:8px" src="images/download.png" alt="Missing e" />
  </div>
@@ -65,8 +102,25 @@ google_ad_height = 90;
 </div>
 <div class="content_container">
  <div class="content">
-  <div class="download_process">
-   <div id="download_chrome">
+  <div id="download_select">
+   <h1>Select your browser:</h1>
+   <div class="browser_select">
+    <a class="chrome" href="#"><img src="images/chrome.png" alt="Google Chrome" /><div>Google Chrome</div></a>
+    <a class="firefox" href="#"><img src="images/firefox.png" alt="Mozilla Firefox" /><div>Mozilla Firefox</div></a>
+    <a class="safari" href="#"><img src="images/safari.png" alt="Apple Safari" /><div>Apple Safari</div></a>
+   </div>
+   <div class="iconbar">
+    <div class="baricon" id="monitor"></div>
+    <div class="bartxt">
+     <h1>Don't see your browser here?</h1>
+     <div class="bardesc">
+      Some browsers can use the same extensions as one of the ones above. If you want to know whether your browser is supported, <a href="http://blog.missing-e.com/ask">ask me on Tumblr</a>. 
+     </div>
+    </div>
+   </div>
+  </div>
+  <div id="download_process" style="display:none;">
+   <div id="download_chrome" style="display:none;">
     <div class="recognize">I've recognized your web browser as <strong>Google Chrome</strong>. <a class="greybutton button recognize_other" href="#">Not correct?</a></div>
     <div class="install_instructions">
      <h1>Install <strong>Missing e</strong></h1>
@@ -80,6 +134,51 @@ google_ad_height = 90;
       <div class="step_icon step2"></div>
       <h2>Confirm the installation</h2>
       <p>Click the <strong>Continue</strong> button in the confirmation that appears at the bottom of your browser window.</p>
+     </div>
+     <div class="install_step">
+      <div class="step_icon step3"></div>
+      <h2>You're done!</h2>
+      <p>Wasn't that easy? Now reload Tumblr to start using <strong>Missing e</strong>.</p>
+     </div>
+    </div>
+   </div>
+   <div id="download_safari" style="display:none;">
+    <div class="recognize">I've recognized your web browser as <strong>Apple Safari</strong>. <a class="greybutton button recognize_other" href="#">Not correct?</a></div>
+    <div class="install_instructions">
+     <h1>Install <strong>Missing e</strong></h1>
+     <div class="install_step">
+      <div class="step_icon step1"></div>
+      <h2>Start the download</h2>
+      <p>Click the button at the right to download <strong>Missing e</strong>.</p>
+      <a href="safari/download.php" class="button greenbutton">Download Now</a>
+     </div>
+     <div class="install_step">
+      <div class="step_icon step2"></div>
+      <h2>Install the extension</h2>
+      <p>Double-click on the downloaded file <em>(missinge.safariextz)</em> to open it.</p>
+      <p>When asked to if you are sure you want to install, click the <strong>Install</strong> button.</p>
+     </div>
+     <div class="install_step">
+      <div class="step_icon step3"></div>
+      <h2>You're done!</h2>
+      <p>Wasn't that easy? Now reload Tumblr to start using <strong>Missing e</strong>.</p>
+     </div>
+    </div>
+   </div>
+   <div id="download_firefox" style="display:none;">
+    <div class="recognize">I've recognized your web browser as <strong>Mozilla Firefox</strong>. <a class="greybutton button recognize_other" href="#">Not correct?</a></div>
+    <div class="install_instructions">
+     <h1>Install <strong>Missing e</strong></h1>
+     <div class="install_step">
+      <div class="step_icon step1"></div>
+      <h2>Start the download</h2>
+      <p>Click the button at the right to download <strong>Missing e</strong>.</p>
+      <a id="firefox_download" href="https://addons.mozilla.org/en-US/firefox/addon/missing-e/versions/" class="button greenbutton">Download Now</a>
+     </div>
+     <div class="install_step">
+      <div class="step_icon step2"></div>
+      <h2>Confirm the installation</h2>
+      <p>Click the <strong>Install Now</strong> button in the confirmation box that appears.</p>
      </div>
      <div class="install_step">
       <div class="step_icon step3"></div>
