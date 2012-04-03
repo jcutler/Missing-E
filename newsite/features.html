@@ -41,7 +41,6 @@ jQuery(document).ready(function($) {
          maxHeight : 500,
          fitToView : false,
          closeClick: false,
-         closeBtn  : false,
          fixed     : true,
          helpers   : {
             title  : { type: 'outside' },
@@ -302,7 +301,7 @@ google_ad_height = 90;
   <p class="desc"><em>Bookmarker</em> adds a small bookmark button to posts. Click on one to mark that post in your dashboard. Jump back to it at any time by clicking on the bookmark entry in your Tumblr sidebar.</p>
  </div>
 </div>
-<div class="inline_fancybox" id="dashbaordtweaks_box">
+<div class="inline_fancybox" id="dashboardtweaks_box">
  <img class="fancybox_icon_dummy" src="icons/dashboardTweaks_avatar.png" alt="Dashboard Tweaks" />
  <div class="fancybox_container">
   <h1>Dashboard Tweaks</h1>
@@ -347,9 +346,37 @@ google_ad_height = 90;
    <span class="check"></span>
    <p>Mass delete posts in your drafts or queue</p>
   </div>
-  <div class="feature_option">
+  <div class="feature_option default_option">
    <span class="check"></span>
    <p>Add a <em>Shuffle</em> button to your queue</p>
+  </div>
+  <div class="feature_option_legend">
+   <p>Settings active by default: <span class="checkmark"></span></p>
+   <p>Optional settings you can activate: <span class="cross"></span></p>
+  </div>
+ </div>
+</div>
+<div class="inline_fancybox" id="dashlinkstotabs_box">
+ <img class="fancybox_icon_dummy" src="icons/dashLinksToTabs_avatar.png" alt="Dash Links to Tabs" />
+ <div class="fancybox_container">
+  <h1>Dash Links to Tabs</h1>
+  <p class="desc">Open links in your dashboard in new tabs. Never lose your place in the dashboard!</p>
+  <p class="desc">In addition to opening new tabs when you click on links in posts, you can also set other buttons and links to open in new tabs:</p>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>New post buttons at the top of the dashboard</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Buttons in the Tumblr sidebar</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Reblog buttons on dashboard posts</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Edit buttons on dashboard posts</p>
   </div>
   <div class="feature_option_legend">
    <p>Settings active by default: <span class="checkmark"></span></p>
