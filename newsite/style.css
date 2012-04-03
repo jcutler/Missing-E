@@ -1150,3 +1150,11 @@ background-position:-1px -241px;
 .feature_option_legend .cross {
 background-position:-17px -241px;
 }
+
+.flip_vertical {
+display:inline-block;
+-webkit-transform: scale(0.9,-1.1);
+-moz-transform: scale(0.9,-1.1);
+-o-transform: scale(0.9,-1.1);
+transform: scale(0.9,-1.1);
+}
