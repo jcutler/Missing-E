@@ -126,6 +126,10 @@ text-shadow:0px 1px 0px white;
 font-size:0;
 }
 
+.center_iconbar {
+text-align:center;
+}
+
 .iconbar h1 {
 font-size:20px;
 line-height:64px;
@@ -142,6 +146,15 @@ background-repeat:no-repeat;
 width:64px;
 height:64px;
 margin-right:10px;
+}
+
+.center_iconbar .baricon {
+vertical-align:bottom;
+margin-right:0;
+}
+
+#feature_suggestion {
+margin:12px auto;
 }
 
 .iconbar .bartxt {
@@ -168,6 +181,10 @@ background-position:-128px -64px;
 
 #questionmark {
 background-position:-192px -64px;
+}
+
+#star {
+background-position:0 -128px;
 }
 
 #ads {
@@ -407,6 +424,10 @@ color:rgba(255,255,255,0.9);
 text-shadow:none;
 }
 
+.clear {
+clear:both;
+}
+
 .disabled_greenbutton #download_version {
 color:rgba(0,0,0,0.5);
 }
@@ -599,12 +620,21 @@ font-size:20px;
 }
 
 .faq_item {
+-webkit-transition:all 0.2s ease-in-out;
+-moz-transition:all 0.2s ease-in-out;
+-o-transition:all 0.2s ease-in-out;
+-ms-transition:all 0.2s ease-in-out;
+transition:all 0.2s ease-in-out;
 position:relative;
 padding:6px 10px 6px 10px;
 border-radius:10px;
 background-color:rgba(255,255,255,0.7);
 border:1px solid rgba(0,0,0,0.2);
 cursor:pointer;
+}
+
+.faq_item:hover {
+background-color:rgba(255,255,255,0.8);
 }
 
 .open_faq .faq_item {
@@ -638,7 +668,7 @@ position:relative;
 
 .faq_item h2 .faq_icon {
 background:url("images/sprites.png") no-repeat;
-background-position:-32px -200px;
+background-position:-32px -192px;
 height:16px;
 width:16px;
 position:absolute;
@@ -677,7 +707,7 @@ p.warning .experimental_warning {
 width:16px;
 height:16px;
 background:url("images/sprites.png") no-repeat;
-background-position:-48px -200px;
+background-position:-48px -192px;
 position:absolute;
 top:50%;
 margin-top:-8px;
@@ -847,7 +877,7 @@ vertical-align:bottom;
 .reblog_fail {
 width:21px;
 height:20px;
-background-position:0 -216px;
+background-position:0 -208px;
 }
 
 .experimental_reply,
@@ -861,15 +891,15 @@ height:16px;
 }
 
 .experimental_reply {
-background-position:-32px -232px;
+background-position:-32px -224px;
 }
 
 .experimental_reply_success {
-background-position:-48px -216px;
+background-position:-48px -208px;
 }
 
 .experimental_reply_fail {
-background-position:-48px -232px;
+background-position:-48px -224px;
 }
 
 .closed_faq .reblog_fail_small {
@@ -885,7 +915,7 @@ height:0;
 .reblog_fail_small {
 width:15px;
 height:16px;
-background-position:-32px -216px;
+background-position:-32px -208px;
 }
 
 .instructions {
@@ -915,7 +945,7 @@ left:-1px;
 }
 
 .instructions_title .more {
-background-position:0 -200px;
+background-position:0 -192px;
 }
 
 .open_instructions .instructions {
@@ -923,11 +953,177 @@ display:block;
 }
 
 .open_instructions .instructions_title .more {
-background-position:-16px -200px;
+background-position:-16px -192px;
 }
 
 #faq a.anchor {
 display:inline-block;
 position:relative;
 top:-46px;
+}
+
+#features_list {
+padding-top:14px;
+}
+
+.feature_row {
+padding:0 60px;
+font-size:0;
+text-shadow:1px 1px 1px white;
+margin-bottom:8px;
+}
+
+.feature_item {
+-webkit-transition:all 0.2s ease-in-out;
+-moz-transition:all 0.2s ease-in-out;
+-o-transition:all 0.2s ease-in-out;
+-ms-transition:all 0.2s ease-in-out;
+transition:all 0.2s ease-in-out;
+float:left;
+display:inline-block;
+width:346px;
+position:relative;
+padding:6px 12px 8px 46px;
+border-radius:10px;
+background-color:rgba(255,255,255,0.7);
+border:1px solid rgba(0,0,0,0.2);
+cursor:pointer;
+min-height:55px;
+}
+
+.feature_item:hover {
+background-color:rgba(255,255,255,0.8);
+}
+
+.feature_item + .feature_item {
+float:right;
+}
+
+.feature_item img {
+position:absolute;
+left:8px;
+top:4px;
+width:32px;
+height:32px;
+}
+
+.feature_item h2 {
+font-size:16px;
+font-weight:bold;
+line-height:20px;
+min-height:20px;
+margin-bottom:3px;
+}
+
+.feature_item p {
+font-size:14px;
+}
+
+body > .inline_fancybox {
+display:none;
+}
+
+.inline_fancybox {
+width:600px;
+height:500px;
+}
+
+.fancybox_icon_dummy {
+position:absolute;
+visibility:hidden;
+}
+
+.open_fancybox .fancybox-outer {
+background-repeat:no-repeat;
+background-position:-16px -16px;
+}
+
+#features #fancybox-buttons ul {
+width:110px;
+}
+
+#features #fancybox-buttons a.btnPrev {
+width:34px;
+background-position:2px 0;
+border-right:1px solid #3E3E3E;
+}
+
+#features #fancybox-buttons .btnPlay_container,
+#features #fancybox-buttons .btnToggle_container {
+display:none;
+}
+
+#features #fancybox-buttons a.btnNext {
+width:34px;
+background-position:-28px 0;
+border-left:1px solid #111;
+}
+
+#features .open_fancybox .fancybox-nav {
+display:none;
+}
+
+.open_fancybox {
+text-shadow:1px 1px 1px white;
+}
+
+.inline_fancybox {
+font-size:0;
+}
+
+.feature_option {
+position:relative;
+padding-left:32px;
+}
+
+.feature_option .check,
+.feature_option .cross {
+background:url("images/sprites.png") no-repeat;
+width:16px;
+height:16px;
+position:absolute;
+top:0;
+left:12px;
+}
+
+.feature_option .check {
+background-position:-16px -240px;
+}
+
+.feature_option.default_option .check {
+background-position:0 -240px;
+}
+
+.inline_fancybox h1 {
+font-size:20px;
+line-height:24px;
+text-align:center;
+margin-bottom:12px;
+padding:0 50px;
+}
+
+.inline_fancybox .desc {
+font-size:14px;
+margin:10px 0;
+}
+
+.inline_fancybox p {
+font-size:14px;
+}
+
+.inline_fancybox p, .inline_fancybox ul {
+margin:0 0 4px 0;
+}
+
+.inline_fancybox img {
+vertical-align:bottom;
+}
+
+.inline_fancybox ul {
+padding:0 16px;
+font-size:13px;
+}
+
+#header_links a[href*="troubleshoot"] {
+display:none;
 }

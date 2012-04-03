@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="tumblr,missinge,missing,e,feature,features,blog,blogging" />
+<meta name="description" content="Missing e - The unofficial browser extension for Tumblr!"/>
+<meta name="author" content="Jeremy Cutler" />
+<meta name="robots" content="FOLLOW,INDEX" />
+<title>Features - Missing e - The browser extension for Tumblr!</title>
+<link href="http://fonts.googleapis.com/css?family=Bitter:400,700,400italic" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+<link rel="icon" href="/favicon.png" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="reset.css" />
+<script type="text/javascript" src="browser.js"></script>
+<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.0.5" type="text/css" media="screen" />
+<script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.0.5"></script>
+<link rel="stylesheet" href="fancybox/source/helpers/jquery.fancybox-buttons.css?v=2.0.5" type="text/css" media="screen" />
+<script type="text/javascript" src="fancybox/source/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript">
+<!--
+
+jQuery(document).ready(function($) {
+   var group = [];
+   $('.inline_fancybox').each(function() {
+      group.push({href:'#'+this.id});
+   });
+   $('#features_list .feature_item').click(function() {
+      var boxName = this.id.replace(/item$/,'box');
+      var i, startIdx=0;
+      for (i=0; i<group.length; i++) {
+         if (group[i].href === '#' + boxName) {
+            startIdx = i;
+            break;
+         }
+      }
+      $.fancybox.open(group, {
+         wrapCSS   : 'open_fancybox',
+         index     : startIdx,
+         maxHeight : 600,
+         fitToView : false,
+         closeClick: false,
+         closeBtn  : false,
+         helpers   : {
+            title  : { type: 'inside' },
+            buttons: {}
+         },
+         afterShow : function() {
+            var dummy = $('.open_fancybox .fancybox_icon_dummy');
+            var src = dummy.attr('src');
+            $('.open_fancybox .fancybox-outer').css('background-image',
+                                                    'url("' + src + '")');
+         }
+      }); 
+   });
+});
+
+-->
+</script>
+</head>
+<body id="features">
+<div id="header_container">
+ <div id="header">
+  <div id="header_bar">
+   <a id="home_link" href="/"></a>
+   <div id="header_links">
+    <span class="selected">Features</span>
+    <a href="faq">FAQ</a>
+    <a href="troubleshoot">Submit a Bug</a>
+    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">Donate</a>
+   </div>
+  </div>
+ </div>
+</div>
+<div id="banner_container">
+ <div id="banner">
+  <div id="banner_box">
+   <h1>Features!</h1>
+   <h2>Check out what Missing e has to offer.</h2>
+  </div>
+  <img id="banner_img" style="margin-top:-65px;width:355px;height:280px;" src="images/swissknife.png" alt="Missing e" />
+ </div>
+</div>
+<div id="ads">
+ <div id="ads_title">Sponsored<br />Links</div>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3604999147338055";
+/* New Site */
+google_ad_slot = "9843551983";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<!--
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+-->
+</div>
+<div class="content_container">
+ <div class="content">
+  <div id="features_list">
+   <div class="iconbar">
+    <div class="baricon" id="star"></div>
+    <div class="bartxt">
+     <h1>Many ways to improve your Tumblr experience!</h1>
+    </div>
+   </div>
+   <div class="feature_row">
+    <div id="asktweaks_item" class="feature_item">
+     <img src="icons/askTweaks_avatar.png" alt="Ask Tweaks" />
+     <h2>Ask Tweaks</h2>
+     <p>Make it easier to send asks and manage messages in your inbox.</p>
+    </div>
+    <div id="betterreblogs_item" class="feature_item">
+     <img src="icons/betterReblogs_avatar.png" alt="Better Reblogs" />
+     <h2>Better Reblogs</h2>
+     <p>Reblog faster and more productively.</p>
+    </div>
+    <div class="clear"></div>
+   </div>
+   <div class="feature_row">
+    <div id="bookmarker_item" class="feature_item">
+     <img src="icons/bookmarker_avatar.png" alt="Bookmarker" />
+     <h2>Bookmarker</h2>
+     <p>Mark your place in the dashboard to go back to later.</p>
+    </div>
+    <div id="dashboardtweaks_item" class="feature_item">
+     <img src="icons/dashboardTweaks_avatar.png" alt="Dashboard Tweaks" />
+     <h2>Dashboard Tweaks</h2>
+     <p>Customize your dashboard interface for easier reading and blogging.</p>
+    </div>
+    <div class="clear"></div>
+   </div>
+   <div class="feature_row">
+    <div id="dashlinkstotabs_item" class="feature_item">
+     <img src="icons/dashLinksToTabs_avatar.png" alt="Dash Links to Tabs" />
+     <h2>Dash Links to Tabs</h2>
+     <p>Open links in your dashboard in new tabs. Never lose your place in the dashboard!</p>
+    </div>
+    <div id="gotodashpost_item" class="feature_item">
+     <img src="icons/gotoDashPost_avatar.png" alt="Goto Dash Post" />
+     <h2>Goto Dash Post</h2>
+     <p>Jump directly from a post permalink page to its position on the dashboard.</p>
+    </div>
+    <div class="clear"></div>
+   </div>
+   <div class="feature_row">
+    <div id="magnifier_item" class="feature_item">
+     <img src="icons/magnifier_avatar.png" alt="Magnifier" />
+     <h2>Magnifier</h2>
+     <p>Enlarge photo posts and Tumblr avatars without leaving the dashboard.</p>
+    </div>
+    <div id="masseditortweaks_item" class="feature_item">
+     <img src="icons/massEditorTweaks_avatar.png" alt="Mass Editor Tweaks" />
+     <h2>Mass Editor Tweaks</h2>
+     <p>Select multiple posts (by type, number) in the Tumblr Mass Editor.</p>
+    </div>
+    <div class="clear"></div>
+   </div>
+   <div class="feature_row">
+    <div id="postcrushes_item" class="feature_item">
+     <img src="icons/postCrushes_avatar.png" alt="Post Crushes" />
+     <h2>Post Crushes</h2>
+     <p>Automatically create posts of your Tumblr crushes.</p>
+    </div>
+    <div id="postingtweaks_item" class="feature_item">
+     <img src="icons/postingTweaks_avatar.png" alt="Posting Tweaks" />
+     <h2>Posting Tweaks</h2>
+     <p>More functions and automatic actions for creating or editing posts.</p>
+    </div>
+    <div class="clear"></div>
+   </div>
+   <div class="feature_row">
+    <div id="reblogyourself_item" class="feature_item">
+     <img src="icons/reblogYourself_avatar.png" alt="Reblog Yourself" />
+     <h2>Reblog Yourself</h2>
+     <p>Improve reblogging functionality to your own Tumblr posts.</p>
+    </div>
+    <div id="replyreplies_item" class="feature_item">
+     <img src="icons/replyReplies_avatar.png" alt="Reply Replies" />
+     <h2>Reply Replies</h2>
+     <p>Automatically create reply posts for answering post replies and other notes.</p>
+    </div>
+    <div class="clear"></div>
+   </div>
+   <div class="feature_row">
+    <div id="safedash_item" class="feature_item">
+     <img src="icons/safeDash_avatar.png" alt="Safe Dash" />
+     <h2>Safe Dash</h2>
+     <p>In public? Hide images in Tumblr posts until you hover your mouse over them (in case they're unsafe).</p>
+    </div>
+    <div id="sidebartweaks_item" class="feature_item">
+     <img src="icons/sidebarTweaks_avatar.png" alt="Sidebar Tweaks" />
+     <h2>Sidebar Tweaks</h2>
+     <p>Tweak your Tumblr sidebar and add useful stuff to it.</p>
+    </div>
+    <div class="clear"></div>
+   </div>
+   <div class="feature_row">
+    <div id="timestamps_item" class="feature_item">
+     <img src="icons/timestamps_avatar.png" alt="Timestamps" />
+     <h2>Timestamps</h2>
+     <p>Add the date and time to a post, message or submission.</p>
+    </div>
+    <div class="clear"></div>
+   </div>
+  </div>
+ </div>
+</div>
+<div class="content_container">
+ <div class="content">
+  <div class="iconbar center_iconbar" id="feature_suggestion">
+   <div class="bartxt">
+    <h1><span class="baricon" id="bulb"></span>Have a feature idea?</h1>
+    <div class="bardesc">
+    Send <strong>Missing e</strong> <a href="http://blog.missing-e.com/ask" title="Send Missing e a message">a message</a>. Many new features started out as interesting ideas from users like you!
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+<div class="inline_fancybox" id="asktweaks_box">
+ <img class="fancybox_icon_dummy" src="icons/askTweaks_avatar.png" alt="Ask Tweaks" />
+ <div class="fancybox_container">
+  <h1>Ask Tweaks</h1>
+  <p class="desc">Makes it easier to send asks and manage messages in your inbox.</p>
+  <div class="feature_option default_option">
+   <span class="check"></span>
+   <p>Add scrollbars when sending long asks</p>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Add extra post options when answering asks:</p>
+   <ul>
+    <li>publish to your drafts, queue or as private with a single click</li>
+    <li>add tags when answering messages</li>
+   </ul>
+  </div>
+  <div class="feature_option">
+   <span class="check"></span>
+   <p>Open <em>Ask</em> boxes from a user menu (<img src="images/usermenu_i.png" style="width:16px;height:16px;" alt="User menu icon" />) without leaving the dashboard</p>
+  </div>
+ </div>
+</div>
+<div class="inline_fancybox" id="betterreblogs_box">
+ <img class="fancybox_icon_dummy" src="icons/betterReblogs_avatar.png" alt="Better Reblogs" />
+ <div class="fancybox_container">
+  <h1>Better Reblogs</h1>
+  <p class="desc">Hello!</p>
+ </div>
+</div>
+<div id="footer_container">
+ <div id="footer">
+ &copy; 2012 Jeremy Cutler<br />
+ <small>An open-source project released under <a class="link" href="http://www.gnu.org/licenses/gpl.html" title="GPL v3 License">GPL v3</a></small>
+ <a class="greybutton button" style="float:right;" href="http://blog.missing-e.com" title="Missing e on Tumblr">Follow Missing e on Tumblr</a>
+ </div>
+</div>
+</body>
+</html>
