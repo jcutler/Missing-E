@@ -401,6 +401,7 @@ MissingE.utilities.options = {
             }
             frm.MissingE_betterReblogs_quickReblogAcctName.value = qran;
             $(frm.MissingE_betterReblogs_quickReblogForceTwitter).val(MissingE.utilities.options.getStorage('MissingE_betterReblogs_quickReblogForceTwitter','default'));
+            $(frm.MissingE_betterReblogs_quickReblogForceFacebook).val(MissingE.utilities.options.getStorage('MissingE_betterReblogs_quickReblogForceFacebook','default'));
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_fullText',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_reblogAsks',0);
             frm.MissingE_betterReblogs_askRetries.value = MissingE.utilities.options.getStorage('MissingE_betterReblogs_askRetries',MissingE.defaultRetries);

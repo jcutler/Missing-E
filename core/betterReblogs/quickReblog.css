@@ -139,3 +139,15 @@ cursor:default;
 #MissingE_quick_reblog .user_menu_list span .user_menu_list_item.MissingE_qr_keyActive {
 background-color:#444 !important;
 }
+
+#MissingE_quick_reblog .user_menu_list a .user_menu_list_item.MissingE_quick_reblog_twitter_box,
+#MissingE_quick_reblog .user_menu_list span .user_menu_list_item.MissingE_quick_reblog_twitter_box {
+border-bottom:0 !important;
+padding-bottom:2px !important;
+}
+
+#MissingE_quick_reblog .user_menu_list a .user_menu_list_item.MissingE_quick_reblog_facebook_box,
+#MissingE_quick_reblog .user_menu_list span .user_menu_list_item.MissingE_quick_reblog_facebook_box {
+border-top:0 !important;
+padding-top:2px !important;
+}

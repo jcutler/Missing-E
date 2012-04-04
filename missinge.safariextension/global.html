@@ -1631,6 +1631,7 @@ function handleRequest(request) {
       settings.MissingE_betterReblogs_quickReblogAcctType = getSetting("MissingE_betterReblogs_quickReblogAcctType",0);
       settings.MissingE_betterReblogs_quickReblogAcctName = getSetting("MissingE_betterReblogs_quickReblogAcctName",'');
       settings.MissingE_betterReblogs_quickReblogForceTwitter = getSetting("MissingE_betterReblogs_quickReblogForceTwitter","default");
+      settings.MissingE_betterReblogs_quickReblogForceFacebook = getSetting("MissingE_betterReblogs_quickReblogForceFacebook","default");
       settings.MissingE_betterReblogs_fullText = getSetting("MissingE_betterReblogs_fullText",0);
       settings.MissingE_betterReblogs_reblogAsks = getSetting("MissingE_betterReblogs_reblogAsks",0);
       settings.MissingE_betterReblogs_tagReblogs = getSetting("MissingE_betterReblogs_tagReblogs",0);
@@ -1748,6 +1749,7 @@ function handleRequest(request) {
                settings.accountName = getSetting("MissingE_betterReblogs_quickReblogAcctName",'0');
             }
             settings.quickReblogForceTwitter = getSetting("MissingE_betterReblogs_quickReblogForceTwitter","default");
+            settings.quickReblogForceFacebook = getSetting("MissingE_betterReblogs_quickReblogForceFacebook","default");
             settings.fullText = getSetting("MissingE_betterReblogs_fullText",0);
             settings.tagQueuedPosts = (getSetting("MissingE_postingTweaks_enabled",1) == 1 && getSetting("MissingE_postingTweaks_tagQueuedPosts",0) == 1) ? 1: 0;
             settings.queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
