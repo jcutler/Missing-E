@@ -36,6 +36,7 @@ if ($submission) {
       "--------------------\n\n" .
       "Bug Report (" . $_REQUEST['reason'] . ") from " .
       $_REQUEST['thec'] . "\n" . $_REQUEST['timestamp'] . "\n\n" .
+      $_REQUEST['os'] . "\n" .
       $_REQUEST['browser'] . " " . $_REQUEST['browserversion'] . "\n" .
       "Missing e " . $_REQUEST['missingeversion'] . "\n\n" .
       "==========\n\n" .
@@ -132,6 +133,9 @@ jQuery(document).ready(function($) {
 
    updateCheck = setTimeout(checkUpdate, 500);
 
+   $('#os').val(BrowserDetect.OS);
+   $('#os_text').text(BrowserDetect.OS);
+
    $('#browser').val(BrowserDetect.browser);
    $('#browser_text').text(BrowserDetect.browser);
 
@@ -224,6 +228,7 @@ else {
    <input type="hidden" id="options" name="options" value="" />
    <input type="hidden" id="timestamp" name="timestamp" value="" />
    <input type="hidden" id="reason" name="reason" value="<?=$inputReason;?>" />
+   <input type="hidden" id="os" name="os" value="" />
    <input type="hidden" id="browser" name="browser" value="" />
    <input type="hidden" id="browserversion" name="browserversion" value="" />
    <input type="hidden" id="missingeversion" name="missingeversion" value="" />
@@ -232,6 +237,7 @@ else {
     <div class="troubleshoot_item">
      <div class="step_icon unnumberedstep"></div>
      <h2>Your Computer</h2>
+     <p><strong>Operating System:</strong> <span id="os_text"></span></p>
      <p><strong>Browser:</strong> <span id="browser_text"></span></p>
      <p><strong>Browser Version:</strong> <span id="browserversion_text"></span></p>
      <p><strong>Missing e Version:</strong> <span id="missingeversion_text"></span></p>
