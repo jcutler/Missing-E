@@ -79,7 +79,8 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.9.4** (not yet released)
-**_+_** Add support for captioning in quick reblog menu
+**_+_** Add support for captioning in quick reblog menu  
+**_+_** Add 'S' shortcut key to select posts/messages for mass deletion
 
 ##**2.9.3** (04/04/2012)
 **_+_** Add option for Facebook posting in quick reblog menu  
