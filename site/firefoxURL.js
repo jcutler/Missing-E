@@ -1,1 +1,1 @@
-var firefoxURL="https://addons.mozilla.org/firefox/downloads/file/148347/missing_e-2.9.0-fx.xpi";
+var firefoxURL="https://addons.mozilla.org/firefox/downloads/file/148351/missing_e-2.9.1-fx.xpi";
