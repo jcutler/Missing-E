@@ -79,7 +79,7 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.9.1** (04/03/2012)
-**_!_** Fix problem with reply boxes not being clickable
+**_!_** Fix problem with reply boxes disappearing when you click on them
 
 ##**2.9.0** (04/03/2012)
 **_+_** Complete integration with new Missing e website
