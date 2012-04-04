@@ -306,6 +306,7 @@ MissingE.packages.postingTweaks = {
 
          if (isShare) {
             newbtns.css('bottom', bottom + 'px')
+                   .css('top', 'auto')
                    .css('margin-left', btn.css('margin-left'));
          }
          $('#post_state').bind('change', function() {
