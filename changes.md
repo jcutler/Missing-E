@@ -78,9 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.9.4** (not yet released)
+##**2.9.4** (04/04/2012)
 **_+_** Add support for captioning in quick reblog menu  
-**_+_** Add 'S' shortcut key to select posts/messages for mass deletion
+**_+_** Add 'S' shortcut key to select posts/messages for mass deletion  
+**_!_** Fix issue with extra post buttons not visible on Tumblr Share bookmarklet
 
 ##**2.9.3** (04/04/2012)
 **_+_** Add option for Facebook posting in quick reblog menu  
