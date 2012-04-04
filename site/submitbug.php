@@ -93,7 +93,7 @@ function receiveInfo(msg) {
          $('#missingeversion_text').text(msg.data.info.version);
       }
       window.postMessage({"MissingE":true, "src":"site", "request":"options"},
-                         "http://test.missing-e.com");
+                         "http://missing-e.com");
    }
    else if (msg.data.response === "options") {
       $('#options').val(msg.data.options);
@@ -113,7 +113,7 @@ function checkUpdate(count) {
       count++;
       window.postMessage({"MissingE":true, "src":"site",
                           "request":"extensionInfo"},
-                         "http://test.missing-e.com");
+                         "http://missing-e.com");
       updateCheck = setTimeout(function(){ checkUpdate(count); }, 500);
    }
 }
@@ -128,7 +128,7 @@ jQuery(document).ready(function($) {
    }, false);
    window.postMessage({"MissingE":true, "src":"site",
                        "request":"extensionInfo"},
-                      "http://test.missing-e.com");
+                      "http://missing-e.com");
 
    updateCheck = setTimeout(checkUpdate, 500);
 

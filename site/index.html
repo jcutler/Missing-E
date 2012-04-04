@@ -78,7 +78,7 @@ function checkUpdate(count) {
    else {
       count++;
       window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
-                         "http://test.missing-e.com");
+                         "http://missing-e.com");
       updateCheck = setTimeout(function(){ checkUpdate(count); }, 500);
    }
 }
@@ -92,7 +92,7 @@ jQuery(document).ready(function($) {
       }
    }, false);
    window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
-                      "http://test.missing-e.com");
+                      "http://missing-e.com");
    updateCheck = setTimeout(checkUpdate, 500);
 });
 
