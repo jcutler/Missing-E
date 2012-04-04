@@ -337,6 +337,12 @@ MissingE.packages.betterReblogs = {
       user = $('#post_' + postId).attr("name");
       var twitter = $('#MissingE_quick_reblog_twitter input').is(':checked');
       var facebook = $('#MissingE_quick_reblog_facebook input').is(':checked');
+      var caption = $('#MissingE_quick_reblog_caption textarea').val();
+      caption = caption.replace(/^\s+/,'').replace(/\s+$/,'');
+      if (caption.length > 0) {
+         caption = '\n<p>' + caption.replace(/\n/g,'</p>\n<p>') + '</p>';
+         caption = caption.replace(/<p><\/p>/g,'<p><br /></p>');
+      }
       MissingE.packages.betterReblogs.startReblog(postId);
       $.ajax({
          type: "GET",
@@ -370,6 +376,7 @@ MissingE.packages.betterReblogs = {
             var textareas = html.match(/<textarea[^>]*>[^<]*<\/textarea>/g);
             var params = {};
             var name;
+            var bodyBox;
             for (i=0; i<inputs.length; i++) {
                var theInput = $(inputs[i]);
                if (theInput.length === 0) { continue; }
@@ -383,6 +390,11 @@ MissingE.packages.betterReblogs = {
             for (i=0; i<textareas.length; i++) {
                name = textareas[i].match(/name="([^"]*)"/);
                if (name && !(/id="custom_tweet"/.test(textareas[i]))) {
+                  if (!bodyBox &&
+                      (name[1] === "post[two]" ||
+                       name[1] === "post[three]")) {
+                     bodyBox = name[i];
+                  }
                   params[name[1]] = $(textareas[i]).text();
                }
             }
@@ -397,6 +409,9 @@ MissingE.packages.betterReblogs = {
                params["post[two]"] = '<p><a href="' + perm + '" ' +
                  'class="tumblr_blog">' + user + '</a>:</p><blockquote>' +
                  params["post[two]"] + '</blockquote>';
+            }
+            if (caption.length > 0 && bodyBox) {
+               params[bodyBox] += caption;
             }
             if (!twitter) {
                delete params["send_to_twitter"];
@@ -610,11 +625,20 @@ MissingE.packages.betterReblogs = {
             txt +=  '</select><br />Tumblr</div></div>' + node[1];
          }
          txt += node[0] + '<div class="user_menu_list_item has_tag_input">' +
+                  '<div id="MissingE_quick_reblog_caption">' +
+                  '<textarea rows="2" /><br />' +
+                  MissingE.escapeHTML(MissingE.getLocale(lang).captionText) +
+                  '</div></div>' + node[1];
+         txt += node[0] + '<div class="user_menu_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_tags">' +
                   '<textarea rows="2" /><br />' +
                   MissingE.escapeHTML(MissingE.getLocale(lang).tagsText) +
                   '</div></div>' + node[1];
          var qr = $(txt).appendTo('body');
+         qr.find('#MissingE_quick_reblog_caption textarea')
+            .attr('placeholder', MissingE.getLocale(lang).captionText);
+         qr.find('#MissingE_quick_reblog_tags textarea')
+            .attr('placeholder', MissingE.getLocale(lang).tagsText);
          var qrSel = qr.find('#MissingE_quick_reblog_selector select');
          if (settings.accountName === 0 ||
              qrSel.find('option[value="' + settings.accountName + '"]')
@@ -670,7 +694,11 @@ MissingE.packages.betterReblogs = {
                }
             }
          });
-         qr.find('#MissingE_quick_reblog_tags textarea').focus(function() {
+         qr.find('textarea').focus(function() {
+            if (qr.hasClass('MissingE_quick_reblog_keys')) {
+               $(this).closest('.user_menu_list_item')
+                  .addClass('MissingE_qr_keyActive');
+            }
             qr.addClass('MissingE_quick_reblog_tags_inputting');
             var taginput = this;
             if (extension.isSafari || extension.isFirefox) {
@@ -682,6 +710,10 @@ MissingE.packages.betterReblogs = {
                });
             }
          }).blur(function() {
+            if (qr.hasClass('MissingE_quick_reblog_keys')) {
+               $(this).closest('.user_menu_list_item')
+                  .removeClass('MissingE_qr_keyActive');
+            }
             if (extension.isSafari || extension.isFirefox) {
                $(document).unbind('keydown.MissingEqr');
             }
@@ -699,20 +731,45 @@ MissingE.packages.betterReblogs = {
                sel.trigger('change');
             }
          }).keydown(function(e) {
-            if ((e.which === 9 || e.which === 13) &&
-                qr.hasClass('MissingE_quick_reblog_keys')) {
+            var type = "unknown";
+            if (this.parentNode.id === 'MissingE_quick_reblog_tags') {
+               type = 'tags';
+            }
+            else if (this.parentNode.id === 'MissingE_quick_reblog_caption') {
+               type = 'caption';
+            }
+            if (e.which === 9) {
                this.blur();
                e.preventDefault();
+               if (type === 'tags') {
+                  if (e.shiftKey) {
+                     $('#MissingE_quick_reblog_caption textarea')
+                        .get(0).focus();
+                  }
+               }
+               else if (type === 'caption') {
+                  if (!e.shiftKey) {
+                     $('#MissingE_quick_reblog_tags textarea').get(0).focus();
+                  }
+               }
             }
             else if (e.which === 27) {
                return;
             }
-            else if (e.which === 13) {
+            else if (e.which === 13 && type === 'tags') {
                e.preventDefault();
             }
             if (e.which >= 65 || e.which <= 90 ||
                 e.which === 37 || e.which === 39) {
                e.stopPropagation();
+            }
+         }).keyup(function() {
+            if (this.parentNode.id === 'MissingE_quick_reblog_caption') {
+               this.style.height = '24px';
+               var newHeight = this.scrollHeight;
+               if (newHeight < 24) { newHeight = 24; }
+               if (newHeight > 60) { newHeight = 72; }
+               this.style.height = newHeight + 'px';
             }
          });
          $('#posts div.post_controls a[href^="/reblog/"]')
@@ -763,6 +820,8 @@ MissingE.packages.betterReblogs = {
                   'list_for_' + postId) {
                qr.find('#MissingE_quick_reblog_tags textarea')
                   .val(tagarr.join(', '));
+               qr.find('#MissingE_quick_reblog_caption textarea')
+                  .css('height','24px').val('');
                qr.find('div.user_menu_list').attr('id','list_for_' + postId);
             }
             var arg = '';
@@ -893,8 +952,7 @@ MissingE.packages.betterReblogs = {
                         else if (e.keyCode === 82) {
                            itm = rebBtn;
                         }
-                        else if (e.keyCode === 84 &&
-                                 !qr.hasClass('MissingE_quick_reblog_keys')) {
+                        else if (e.keyCode === 84) {
                            qr.addClass('MissingE_quick_reblog_keys');
                            qr.find('.MissingE_qr_keyActive').removeClass('MissingE_qr_keyActive');
                            inpBox = $('#MissingE_quick_reblog_tags textarea');

@@ -86,6 +86,7 @@ var locale = {
    }
   ],
   "private": "Private",
+  "captionText": "Caption",
   "tagsText": "Tags",
   "twitterText": "Send to Twitter",
   "facebookText": "Send to Facebook",
@@ -277,6 +278,7 @@ var locale = {
    }
   ],
   "private": "Privat",
+  "captionText": "Beschreibung",
   "tagsText": "Tags",
   "twitterText": "auf Twitter posten",
   "facebookText": "auf Facebook posten",
@@ -468,6 +470,7 @@ var locale = {
    }
   ],
   "private": "Privado",
+  "captionText": "Descripción",
   "tagsText": "Etiquetas",
   "twitterText": "Enviar a Twitter",
   "facebookText": "Enviar a Facebook",
@@ -660,6 +663,7 @@ var locale = {
   ],
   "private": "Privé",
   "tagsText": "Tags",
+  "captionText": "Description",
   "twitterText": "Publier sur Twitter",
   "facebookText": "Publier sur Facebook",
   "askPost": "Question",
@@ -851,6 +855,7 @@ var locale = {
   ],
   "private": "Privato",
   "tagsText": "Tag",
+  "captionText": "Descrizione",
   "twitterText": "Posta su Twitter",
   "facebookText": "Posta su Facebook",
   "askPost": "Chiedi",
@@ -1051,6 +1056,7 @@ var locale = {
    }
   ],
   "private": "プライベート",
+  "captionText": "説明",
   "tagsText": "タグ",
   "twitterText": "投稿を Twitter にも送信",
   "facebookText": "投稿を Facebook にも送信",
@@ -1235,6 +1241,7 @@ var locale = {
    }
   ],
   "private": "Private",
+  "captionText": "Podpis",
   "tagsText": "tagi",
   "twitterText": "Wyślij na Twittera",
   "facebookText": "Wyślij na Facebook",
@@ -1426,6 +1433,7 @@ var locale = {
    }
   ],
   "private": "Личное",
+  "captionText": "Подпись",
   "tagsText": "теги",
   "twitterText": "Отправить в Twitter",
   "facebookText": "Отправить в Facebook",
@@ -1647,6 +1655,7 @@ var locale = {
    }
   ],
   "private": "Özel",
+  "captionText": "Etiket",
   "tagsText": "Etiketler",
   "twitterText": "Twitter'a gönder",
   "facebookText": "Facebook'a gönder",
