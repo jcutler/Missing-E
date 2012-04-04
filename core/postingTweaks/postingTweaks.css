@@ -28,6 +28,8 @@ position:relative !important;
 #MissingE_postMenu {
 position:absolute;
 left:0;
+top:36px;
+z-index:100;
 padding:1px 0 3px 0;
 margin-bottom:10px;
 visibility:hidden;
@@ -39,6 +41,9 @@ line-height:20px !important;
 height:20px !important;
 margin:1px 0 1px 0 !important;
 width:100% !important;
+box-shadow:0px 0px 3px 1px white;
+-webkit-box-shadow:0px 0px 3px 1px white;
+-moz-box-shadow:0px 0px 3px 1px white;
 }
 
 #bookmarklet_index #MissingE_postMenu {
