@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.2** (04/03/2012)
+**_!_** Fix site integration in Safari extension
+
 ##**2.9.1** (04/03/2012)
 **_!_** Fix problem with reply boxes disappearing when you click on them
 
