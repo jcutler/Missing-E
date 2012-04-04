@@ -1339,7 +1339,7 @@ function handleRequest(request) {
    else if (request.name == "updatedCheck") {
       request.target.page.dispatchMessage("updatedCheck",
          {uptodate:(MissingE.versionCompare(getSetting("MissingE_version",'0'),
-                    request.v) >= 0)});
+                    request.message.v) >= 0)});
    }
    else if (request.name == "getOptions") {
       request.target.page.dispatchMessage("getOptions",
