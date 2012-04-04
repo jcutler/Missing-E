@@ -732,8 +732,9 @@ MissingE.packages.dashboardTweaks = {
       if (settings.keyboardShortcut) {
          $(window).keydown(function(e) {
             var myPid;
-            // 27 = Esc, 67 = C, 69 = E
-            if ((e.keyCode !== 67 && e.keyCode !== 27 && e.keyCode !== 69) ||
+            // 27 = Esc, 67 = C, 69 = E, 83 = S
+            if ((e.keyCode !== 67 && e.keyCode !== 27 && e.keyCode !== 69 &&
+                 e.keyCode !== 83) ||
                 e.metaKey || e.shiftKey || e.altKey || e.ctrlKey) {
                return;
             }
@@ -764,6 +765,9 @@ MissingE.packages.dashboardTweaks = {
                   }
                   else if (e.keyCode === 69) {
                      item = $(this).find('.post_controls a[href^="/edit/"]');
+                  }
+                  else if (e.keyCode === 83) {
+                     item = $(this).find('.MissingEmassDeleteSelect');
                   }
                   if (!item || item.length === 0) { return false; }
                   var clickEvt = document.createEvent("MouseEvent");
