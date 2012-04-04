@@ -52,10 +52,8 @@ function receiveInfo(msg) {
    if (supported) {
       if (currentVersion === msg.data.info.version) {
          $('#pre_troubleshoot').hide();
+         $('#start_troubleshoot').hide();
          $('#ts_0').show();
-      }
-      else {
-         $('#start_troubleshoot').show();
       }
    }
 }
@@ -66,7 +64,7 @@ function checkUpdate(count) {
    if (window.extResponded) {
       return;
    }
-   else if (count > 20) {
+   else if (count > 3) {
       return;
    }
    else {
@@ -163,7 +161,7 @@ google_ad_height = 90;
     <a href="update" class="button greenbutton">Update</a>
    </div>
   </div>
-  <div class="troubleshoot_box" id="start_troubleshoot" style="text-align:center">
+  <div class="troubleshoot_box" id="start_troubleshoot" style="text-align:center;display:block;">
    <a href="#ts_0" class="button greenbutton">Start Troubleshooting</a>
   </div>
   <div class="troubleshoot_box" id="ts_0">
@@ -219,7 +217,7 @@ google_ad_height = 90;
   <div class="troubleshoot_box" id="ts_missing">
    <h1>Can you see the 'e.' icon at the top of your dashboard?</h1>
    <img class="ts_image" src="images/examples/ts_eicon.png" alt="Tumblr" />
-   <a href="submitbug?reason=missing+feature" class="fullbutton button greenbutton">Yes</a>
+   <a href="#ts_followcheck" class="fullbutton button greenbutton">Yes</a>
    <a href="#ts_missing2" class="fullbutton button greenbutton">No</a>
    <a href="#ts_0" class="fullbutton button greenbutton">Go back</a>
   </div>
@@ -230,6 +228,19 @@ google_ad_height = 90;
    <a href="#ts_done" class="fullbutton button greenbutton">Yes</a>
    <a href="submitbug?reason=missing+feature" class="fullbutton button greenbutton">No</a>
    <a href="#ts_missing" class="fullbutton button greenbutton">Go back</a>
+  </div>
+  <div class="troubleshoot_box" id="ts_followcheck">
+   <h1>Are you looking for the <em>Follow Checker</em> or <em>Unfollower</em> features?</h1>
+   <p></p>
+   <a href="#ts_followcheck2" class="fullbutton button greenbutton">Yes</a>
+   <a href="submitbug?reason=missing+feature" class="fullbutton button greenbutton">No</a>
+   <a href="#ts_missing" class="fullbutton button greenbutton">Go back</a>
+  </div>
+  <div class="troubleshoot_box" id="ts_followcheck2">
+   <h1>Those features are no longer available</h1>
+   <p>The <em>Follow Checker</em> and <em>Unfollower</em> features violate the Tumblr <a href="http://www.tumblr.com/policy">terms of service</a>.<br />They were removed from <strong>Missing e</strong> quite some time ago.</p>
+   <p><strong>For more information, <a href="faq/unfollower">please read the FAQ</a>.</strong></p> 
+   <a href="#ts_0" class="button greenbutton">Start Over</a>
   </div>
   <div class="troubleshoot_box" id="ts_disappeared">
    <h1>Can you see the 'e.' icon at the top of your dashboard?</h1>
