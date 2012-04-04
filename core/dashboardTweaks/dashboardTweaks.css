@@ -25,7 +25,8 @@
 font-size:16px;
 }
 
-#overlay_for_active_menu {
+#overlay_for_active_menu,
+#glass_overlay {
 z-index:10000 !important;
 }
 
