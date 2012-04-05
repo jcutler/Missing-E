@@ -181,10 +181,11 @@ MissingE.packages.postingTweaks = {
             var key = $('#form_key').val();
             $.ajax({
                type: "POST",
+               async: !extension.isChrome,
                url: "http://www.tumblr.com/add_tags_to_posts",
                data: {"post_ids": id,
                       "tags": queueTags.join(","),
-                      "form_key": key}
+                      "form_key": key},
             });
          });
          $('#posts div.MissingE_postMenu button').live('mouseup', function() {

@@ -429,13 +429,16 @@ MissingE.packages.betterReblogs = {
             $.ajax({
                type: 'POST',
                url: this.url,
+               async: !extension.isChrome,
                postId: this.postId,
                data: params,
+               dataType: 'html',
                error: function() {
                   MissingE.packages.betterReblogs.failReblog(this.postId);
                },
                success: function(txt) {
-                  if (/<body[^>]*id="dashboard_edit_post"/.test(txt) &&
+                  if (/<body[^>]*id="dashboard_edit_post"/.test(txt) ||
+                      /<body[^>]*id="dashboard_edit_post"/.test(txt) &&
                       /<ul[^>]*id="errors"[^>]*>/.test(txt)) {
                      MissingE.packages.betterReblogs.failReblog(this.postId);
                   }

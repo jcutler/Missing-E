@@ -226,6 +226,8 @@ MissingE.packages.askTweaks = {
             $.ajax({
                type: 'POST',
                url: this.url,
+               async: !extension.isChrome,
+               dataType: 'html',
                postId: this.postId,
                buttonType: this.buttonType,
                data: params,
