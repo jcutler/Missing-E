@@ -257,6 +257,10 @@ opacity:1;
 top:100px;
 }
 
+#home #nav_bar #home_nav .subtext {
+display:none;
+}
+
 #nav_bar #nav_links a {
 -webkit-transition:all 0.2s ease-in-out;
 -moz-transition:all 0.2s ease-in-out;
@@ -415,6 +419,9 @@ font-size:0;
 text-shadow:1px 1px 1px rgba(0,0,0,0.2);
 vertical-align:middle;
 border:1px solid rgba(0,0,0,0.5);
+box-shadow:3px 3px 6px 1px rgba(0,0,0,0.3);
+-webkit-box-shadow:3px 3px 6px 1px rgba(0,0,0,0.3);
+-moz-box-shadow:3px 3px 6px 1px rgba(0,0,0,0.3);
 }
 
 .postit_box {
@@ -430,8 +437,8 @@ position:relative;
 }
 
 .postit_box .icon {
-   float:right;
-   margin:-36px -33px -11px -11px;
+float:right;
+margin:-36px -33px -11px -11px;
 }
 
 .paper_box hgroup {
@@ -450,9 +457,9 @@ bottom:0;
 }
 
 .postit_box h1 {
-   font-size:20px;
-   font-weight:bolder;
-   text-align:left;
+font-size:20px;
+font-weight:bolder;
+text-align:left;
 }   
 
 .paper_box p {
@@ -478,9 +485,9 @@ color:#444;
 }
 
 .postit_box p a {
-   font-weight:bold;
-   text-decoration:none;
-   border-bottom:1px solid rgba(41,54,76,0.3);
+font-weight:bold;
+text-decoration:none;
+border-bottom:1px solid rgba(41,54,76,0.3);
 }
 
 .paper_box .icon {
@@ -513,7 +520,7 @@ transform:rotate(-2deg);
 }
 
 .postit_box.paper_box3 {
-   margin-left:4px;
+margin-left:4px;
 }
 
 #outer_page {
@@ -593,10 +600,10 @@ background-position:-192px 0;
 }
 
 #donate_bar {
-   width:860px;
-   height:81px;
-   margin:0 auto 38px;
-   padding:16px 34px 26px;
+width:860px;
+height:81px;
+margin:0 auto 38px;
+padding:16px 34px 26px;
 background-image:url("images/fullribbon.png");
 color:whiteSmoke;
 text-shadow:1px 1px 1px rgba(0,0,0,0.5);
@@ -604,7 +611,7 @@ position:relative;
 }
 
 #donate_bar .icon {
-   margin:8px 0 9px 0;
+margin:8px 0 9px 0;
 }
 
 #trouble {
@@ -644,37 +651,37 @@ background-position:-192px -128px;
 }
 
 #donate_bar > * {
-   display:inline-block;
-   vertical-align:middle;
+display:inline-block;
+vertical-align:middle;
 }
 
 #donate_bar h1, #donate_bar h2 {
-   text-shadow:1px 1px 1px rgba(0,0,0,0.5);
+text-shadow:1px 1px 1px rgba(0,0,0,0.5);
 }
 
 #donate_bar h1 {
-   font-size:20px;
-   line-height:24px;
-   font-weight:bold;
+font-size:20px;
+line-height:24px;
+font-weight:bold;
 }
 
 #donate_bar h2 {
-   font-size:18px;
-   line-height:22px;
-   font-weight:lighter;
+font-size:18px;
+line-height:22px;
+font-weight:lighter;
 }
 
 #donate_bar .button {
-   padding:6px 18px;
-   font-size:15px;
-   position:absolute;
-   line-height:18px;
-   right:46px;
-   top:39px;
+padding:6px 18px;
+font-size:15px;
+position:absolute;
+line-height:18px;
+right:46px;
+top:39px;
 }
 
 #donate_bar .button:active {
-   top:40px;
+top:40px;
 }
 
 #footer_container {
@@ -699,13 +706,13 @@ margin:0 auto;
 }
 
 #footer .button {
-   line-height:18px;
-   padding:6px 18px;
-   font-size:15px;
-   margin-top:-16px;
-   float:right;
+line-height:18px;
+padding:6px 18px;
+font-size:15px;
+margin-top:-16px;
+float:right;
 }
 
 #lowest_content {
-   padding-bottom:15px;
+padding-bottom:15px;
 }
