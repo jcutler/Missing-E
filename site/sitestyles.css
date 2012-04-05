@@ -133,7 +133,7 @@ font-size:11px;
 display:block;
 clear:both;
 color:rgba(255,255,255,0.9);
-text-shadow:none;
+text-shadow:0px 1px 1px rgba(0, 0, 0, 0.1)
 }
 
 header {
@@ -398,7 +398,7 @@ padding-top:32px;
 
 #home #lower_content {
 width:880px;
-margin:32px auto 32px auto;
+margin:36px auto 32px auto;
 }
 
 .highlights {
@@ -541,7 +541,7 @@ text-align:center;
 
 #home #ad {
 position:static;
-margin-top:20px;
+margin-top:26px;
 }
 
 #download_button {
