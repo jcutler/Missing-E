@@ -457,7 +457,7 @@ function receiveOptions(message, theWorker) {
                   setSetting('extensions.' + i.replace(/_/g,"."), val);
                }
             }
-            else {
+            else if (typeof allSettings[i] !== "undefined") {
                done = true;
                setSetting('extensions.' + i.replace(/_/g,"."), settings[i]);
             }
@@ -2581,6 +2581,7 @@ function fixupSettings() {
    moveAllSettings('postingFixes','postingTweaks');
    clearSetting('extensions.MissingE.postingTweaks.uploaderToggle');
    clearSetting('extensions.MissingE.experimentalFeatures.enabled');
+   clearSetting('extensions.MissingE.sidebarTweaks.followingLink');
    invertSetting('extensions.MissingE.dashboardTweaks.expandAll','extensions.MissingE.dashboardTweaks.noExpandAll');
    moveSetting('extensions.MissingE.dashboardTweaks.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
    collapseSettings('extensions.MissingE.askTweaks.betterAnswers','extensions.MissingE.askTweaks.buttons','extensions.MissingE.askTweaks.tags');
