@@ -26,13 +26,15 @@
 MissingE.packages.dashboardTweaks = {
 
    setupMassDeletePost: function(item) {
+      var controls = $(item).find('div.post_controls');
+      controls.append(' ');
       $('<span />', {"class": "MissingEmassDeleteSpan"})
          .append($('<input />',
                    {type: "checkbox",
                     val: "0",
                     id: item.id + "_select",
                     "class": "MissingEmassDeleteSelect"}))
-         .appendTo($(item).find('div.post_controls'));
+         .appendTo(controls);
    },
 
    deletePosts: function(key, lang) {
@@ -786,11 +788,11 @@ MissingE.packages.dashboardTweaks = {
       }
 
       if ((settings.massDelete === 1 &&
-           MissingE.isTumblrURL(location.href, ["drafts", "queue"])) ||
+           MissingE.isTumblrURL(location.href, ["drafts", "queue", "blog"])) ||
           (settings.randomQueue === 1 &&
            MissingE.isTumblrURL(location.href, ["queue"]))) {
          var doMassDelete = settings.massDelete === 1 &&
-            MissingE.isTumblrURL(location.href, ["drafts", "queue"]);
+            MissingE.isTumblrURL(location.href, ["drafts", "queue", "blog"]);
          var doRandomQueue = settings.randomQueue === 1 &&
             MissingE.isTumblrURL(location.href, ["queue"]);
          var afterguy = $('#right_column a.settings');
