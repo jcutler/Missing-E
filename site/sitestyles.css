@@ -2,6 +2,10 @@
 background-repeat:no-repeat;
 }
 
+a {
+color:#29364C;
+}
+
 body {
 background:rgb(243,243,243) url("images/page-bg-dark.png");
 background-repeat:repeat;
@@ -11,6 +15,14 @@ color:#444;
 
 strong {
 font-weight:bold;
+}
+
+em {
+font-style:italic;
+}
+
+small {
+font-size:smaller;
 }
 
 .goldbutton {
@@ -48,6 +60,41 @@ font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	top:1px;
 }
 
+.silverbutton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size:17px;
+	font-weight:bold;
+	padding:6px 27px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #ffffff;
+}
+
+.silverbutton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}
+
+.silverbutton:active {
+	position:relative;
+	top:1px;
+}
+
 .greenbutton {
 -moz-box-shadow:inset 0px 1px 0px 0px #caefab;
 -webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
@@ -81,7 +128,7 @@ position:relative;
 top:1px;
 }
 
-.greenbutton #download_version {
+#download_button #download_version {
 font-size:11px;
 display:block;
 clear:both;
@@ -263,6 +310,11 @@ opacity:1;
 top:12px;
 }
 
+#nav_bar #nav_links a.blog_nav:hover, #nav_bar #nav_links a.blog_nav.selected_nav {
+background-color:#7449F1;
+border-bottom:6px solid #5531BF;
+}
+
 #nav_bar #nav_links a.faq_nav:hover, #nav_bar #nav_links a.faq_nav.selected_nav {
 background-color:#01B0EC;
 border-bottom:6px solid #0484B0;
@@ -365,6 +417,23 @@ vertical-align:middle;
 border:1px solid rgba(0,0,0,0.5);
 }
 
+.postit_box {
+height:171px;
+width:206px;
+background-image:url("images/postit.png");
+display:inline-block;
+font-size:0;
+text-shadow:1px 1px 1px rgba(0,0,0,0.2);
+vertical-align:top;
+padding:10px 17px 15px 20px;
+position:relative;
+}
+
+.postit_box .icon {
+   float:right;
+   margin:-36px -33px -11px -11px;
+}
+
 .paper_box hgroup {
 height:44px;
 position:relative;
@@ -380,6 +449,12 @@ position:absolute;
 bottom:0;
 }
 
+.postit_box h1 {
+   font-size:20px;
+   font-weight:bolder;
+   text-align:left;
+}   
+
 .paper_box p {
 margin-top:15px;
 font-size:13px;
@@ -389,8 +464,23 @@ text-shadow: none;
 text-align:justify;
 }
 
+.postit_box p {
+font-size:13px;
+line-height:15px;
+text-align:justify;
+margin-top:20px;
+padding:0 8px 0 4px;
+text-indent:8px;
+}
+
 .paper_box p a {
 color:#444;
+}
+
+.postit_box p a {
+   font-weight:bold;
+   text-decoration:none;
+   border-bottom:1px solid rgba(41,54,76,0.3);
 }
 
 .paper_box .icon {
@@ -420,6 +510,10 @@ transform:rotate(-2deg);
 -moz-transform:rotate(-2deg);
 -webkit-transform:rotate(-3deg);
 -o-transform:rotate(-2deg);
+}
+
+.postit_box.paper_box3 {
+   margin-left:4px;
 }
 
 #outer_page {
@@ -501,7 +595,7 @@ background-position:-192px 0;
 #donate_bar {
    width:860px;
    height:81px;
-   margin:0 auto;
+   margin:0 auto 38px;
    padding:16px 34px 26px;
 background-image:url("images/fullribbon.png");
 color:whiteSmoke;
@@ -513,8 +607,40 @@ position:relative;
    margin:8px 0 9px 0;
 }
 
-#donate_heart {
-   background-position:0 -64px;
+#trouble {
+background-position:-64px -64px;
+}
+
+#bulb {
+background-position:-128px -64px;
+}
+
+#questionmark {
+background-position:-192px -64px;
+}
+
+#clock {
+background-position:-256px -64px;
+}
+
+#star {
+background-position:0 -128px;
+}
+
+#megaphone {
+background-position:-64px -128px;
+}
+
+#monitor {
+background-position:-128px -128px;
+}
+
+#donateheart {
+background-position:0 -64px;
+}
+
+#battery {
+background-position:-192px -128px;
 }
 
 #donate_bar > * {
@@ -541,11 +667,45 @@ position:relative;
 #donate_bar .button {
    padding:6px 18px;
    font-size:15px;
-}
-
-#donate_bar .button {
    position:absolute;
    line-height:18px;
    right:46px;
    top:39px;
+}
+
+#donate_bar .button:active {
+   top:40px;
+}
+
+#footer_container {
+width:100%;
+-webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+-moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+min-width:880px;
+margin:40px auto 0;
+height:50px;
+background-color:rgba(0,0,0,0.3);
+}
+
+#footer {
+position:relative;
+font-size:14px;
+color:black;
+text-shadow:1px 1px 1px rgba(255,255,255,0.5);
+width:840px;
+padding:10px 20px 0;
+margin:0 auto;
+}
+
+#footer .button {
+   line-height:18px;
+   padding:6px 18px;
+   font-size:15px;
+   margin-top:-16px;
+   float:right;
+}
+
+#lowest_content {
+   padding-bottom:15px;
 }
