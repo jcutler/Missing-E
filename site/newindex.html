@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
+<!--
+
+ Turnabout is fair play, sir.
+
+-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="tumblr,missinge,missing,e,feature,features,blog,blogging" />
+<meta name="description" content="Missing e - The unofficial browser extension for Tumblr!"/>
+<meta name="author" content="Jeremy Cutler" />
+<meta name="robots" content="FOLLOW,INDEX" />
+<title>Missing e - The original browser extension for Tumblr!</title>
+<link href='http://fonts.googleapis.com/css?family=Kreon:300,400,700' rel='stylesheet' type='text/css'>
+<link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+<link rel="icon" href="/favicon.png" type="image/x-icon" />
+<script type="text/javascript" src="browser.js"></script>
+<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="reset.css" />
+<link rel="stylesheet" type="text/css" href="sitestyles.css" />
+<script type="text/javascript" src="currentVersion.js"></script>
+<script type="text/javascript">
+<!--
+/*
+var updateCheck;
+var extResponded;
+
+function makeUpdate() {
+   $('#download_button').attr('href','update');
+   $('#download_txt').css('display','none');
+   $('#update_txt').css('display','inline');
+}
+
+function makeInstalled() {
+   $('#download_button').attr('href','#').addClass('disabled_greenbutton').click(function() {
+      return false;
+   });
+   $('#download_txt').css('display','none');
+   $('#installed_txt').css('display','inline');
+}
+
+function receiveMessage(msg) {
+   if (msg.data.response === "updated") {
+      if (updateCheck) {
+         window.clearTimeout(updateCheck);
+      }
+      $('#old_update').remove();
+      if (msg.data.uptodate) {
+         makeInstalled();
+      }
+      else {
+         makeUpdate();
+      }
+   }
+}
+
+function checkUpdate(count) {
+   if (!count) { count = 1; }
+
+   if (window.extResponded) {
+      return;
+   }
+   else if ($('#old_update').length === 0) {
+      return;
+   }
+   else if ($('#uptodate').css('display') === "inline-block") {
+      $('#old_update').remove();
+      makeInstalled();
+   }
+   else if ($('#notuptodate').css('display') === "inline-block") {
+      $('#old_update').remove();
+      makeUpdate();
+   }
+   else if (count > 20) {
+      return;
+   }
+   else {
+      count++;
+      window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
+                         "http://missing-e.com");
+      updateCheck = setTimeout(function(){ checkUpdate(count); }, 500);
+   }
+}
+
+jQuery(document).ready(function($) {
+   window.extResponded = false;
+   window.addEventListener("message", function(e) {
+      if (e.data && e.data.MissingE && e.data.src === "extension") {
+         window.extResponded = true;
+         receiveMessage(e);
+      }
+   }, false);
+   window.postMessage({"MissingE":true, "src":"site", "request":"updated"},
+                      "http://missing-e.com");
+   updateCheck = setTimeout(checkUpdate, 500);
+});
+*/
+-->
+</script>
+</head>
+<body id="home">
+
+<header>
+ <nav>
+  <div id="nav_bar">
+   <a href="/" id="home_nav"><span id="home_navbg"></span><span class="subtext">HOME</span><img src="images/missinge100.png" alt="Home" /></a>
+   <div id="nav_links">
+    <a href="features" class="features_nav selected_nav">FEATURES<span class="subtext">WHAT IT'S FOR.</span></a>
+    <a href="faq" class="faq_nav">FAQ<span class="subtext">QUESTIONS?</span></a>
+    <a href="troubleshoot" class="problems_nav">PROBLEMS<span class="subtext">LET'S TROUBLESHOOT!</span></a>
+    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8" class="donate_nav selected_nav">DONATE<span class="subtext">SUPPORT MISSING E!</span></a>
+   </div>
+  </nav>
+  <div id="banner">
+   <div id="icon_ribbon">
+    <div id="page_icon">
+     <img src="images/missinge350.png" alt="Missing e" style="margin-top:-80px;opacity:0.95;" />
+    </div>
+   </div>
+   <div id="icon_ribbon_rem"></div>
+   <div id="banner_text">
+    <hgroup>
+     <h1>Missing e</h1>
+     <h2>The original extension for Tumblr</h2>
+     <h2>Available for <strong>Chrome</strong>, <strong>Firefox</strong> and <strong>Safari</strong>.</h2>
+     <h3>Find out what all the fuss is about!</h3>
+    <hgroup>
+   </div>
+  </div>
+ </div>
+</header>
+<div id="main_content">
+ <div id="download_box">
+  <a id="download_button" href="download" class="button greenbutton">
+   <span id="download_txt">Download</span>
+   <span id="installed_txt" style="display:none;">Installed</span>
+   <span id="update_txt" style="display:none;">Update</span>
+   <span id="download_version">Version 2.9.6</span>
+  </a>
+  <div id="download_info">
+   By using this extension, you agree<br />
+   to the terms and conditions of the<br />
+   <a href="eula">Missing e End User License Agreement</a>
+  </div>
+ </div>
+</div>
+
+<div id="ad">
+ <script type="text/javascript">
+  <!--
+   google_ad_client = "ca-pub-3604999147338055";
+   /* New Site */
+   google_ad_slot = "9843551983";
+   google_ad_width = 728;
+   google_ad_height = 90;
+  //-->
+ </script>
+ <!--
+ <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+ -->
+</div>
+
+<div id="lower_content">
+ <div class="highlights">
+  <div class="paper_box paper_box1">
+   <div class="icon" id="fresh"></div>
+   <hgroup><h1>Always getting better.</h1></hgroup>
+   <p><strong>Missing e</strong> is constantly improving! Whether there are changes to the Tumblr interface to be improved or a great new feature idea, you'll be using an extension that strives to always be fresh and exciting!</p>
+   <p><a href="http://blog.missing-e.com">Stay updated on my Tumblr</a></p>
+  </div>
+  <div class="paper_box paper_box2">
+   <div class="icon" id="custom"></div>
+   <hgroup><h1>Completely customizable.</h1></hgroup>
+   <p>Whether you want to reply to replies, see all of a post's tags or reblog without leaving the Tumblr dashboard, <strong>Missing e</strong> has what you need! Something you don't want? <em>Easy.</em> You can disable any feature and customize all sorts of options!</p>
+  </div>
+  <div class="paper_box paper_box3">
+   <div class="icon" id="open"></div>
+   <hgroup><h1>Safe, free and open.</h1></hgroup>
+   <p>Not only is <strong>Missing e</strong> provided entirely free of charge, it is also completely open source. That means anybody can examine the code to confirm that it is safe and anybody can help make the extension better!</p>
+   <p><a href="https://github.com/jcutler/Missing-E">Source Code on Github</a></p>
+  </div>
+ </div>
+</div>
+<div id="donate_bar">
+ <div class="icon" id="donate_heart"></div>
+ <hgroup>
+  <h1>Missing e is a labour of love to which I give much of my free time!</h1>
+  <h2>Please donate so I can convince my Tumblr-less wife that I'm working on something useful.</h2>
+ </hgroup>
+ <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8" class="button goldbutton">Donate!</a>
+</div>
+
+<!--
+<div id="old_update">
+ <div id="uptodate"></div>
+ <div id="notuptodate"></div>
+</div>
+<div version="2.9.6" id="versioncheck" style="display:none"></div>
+<div id="header_container">
+ <div id="header">
+  <div id="header_bar">
+   <span id="home_link"></span>
+   <div id="header_links">
+    <a href="features">Features</a>
+    <a href="faq">FAQ</a>
+    <a href="troubleshoot">Troubleshoot</a>
+    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">Donate</a>
+   </div>
+  </div>
+ </div>
+</div>
+<div id="banner_container">
+ <div id="banner">
+  <div id="banner_box">
+   <h1 id="missing">Missing e</h1>
+   <h2>The original extension for Tumblr.</h2>
+   <h2>Available for Chrome, Firefox and Safari.</h2>
+   <h3>Find out what everyone is talking about!</h3>
+   <div id="download_box">
+    <a id="download_button" href="download" class="button greenbutton"><span id="download_txt">Download</span><span id="update_txt">Update</span><span id="installed_txt">Installed</span><span id="download_version">Version 2.9.6</span></a>
+    <div id="download_info">
+     By using this extension, you agree<br />
+     to the terms and conditions of the<br />
+     <a href="eula">Missing e End User License Agreement</a>
+    </div>
+   </div>
+  </div>
+  <img id="banner_img" src="images/missinge350.png" alt="Missing e" />
+ </div>
+</div>
+<div id="ads">
+ <div id="ads_title">Sponsored<br />Links</div>
+<script type="text/javascript">-->
+<!--
+google_ad_client = "ca-pub-3604999147338055";
+/* New Site */
+google_ad_slot = "9843551983";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+<!--</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<div class="content_container">
+ <div class="content">
+  <div id="highlights">
+   <div class="highlight">
+    <div class="icon" id="fresh"></div>
+    <h1>Always getting better.</h1>
+    <span><strong>Missing e</strong> is constantly improving! When there are changes to the Tumblr interface or when a great new feature idea is added, you'll have an extension that is fresh and exciting!</span>
+    <a href="http://blog.missing-e.com" title="'Missing e' on Tumblr">Stay Updated on Tumblr</a>
+   </div>
+   <div class="highlight">
+    <div class="icon" id="custom"></div>
+    <h1>Completely customizable.</h1>
+    <span>Whether you want to reply to replies, see all of a post's tags or reblog without leaving the Tumblr dashboard, <strong>Missing e</strong> has what you need! Something you don't want? <em>Easy.</em> You can disable any feature and customize all sorts of options!</span>
+   </div>
+   <div class="highlight">
+    <div class="icon" id="fast"></div>
+    <h1>Simpler and faster.</h1>
+    <span>Some extensions for Tumblr can take forever to load. Others require you to install all sorts of extra stuff before you can get it working the way you want. Do away with trouble like that by installing <strong>Missing e</strong>.</span>
+   </div>
+   <div class="highlight">
+    <div class="icon" id="open"></div>
+    <h1>Safe, free and open.</h1>
+    <span>Not only is <strong>Missing e</strong> provided entirely free of charge, it is also completely open source. That means anybody can examine the code to confirm that it is safe and anybody can help make the extension better!</span>
+    <a href="https://github.com/jcutler/Missing-E" title="'Missing e' on Github">Source Code on Github</a>
+   </div>
+  </div>
+ </div>
+</div>
+<div id="donate_container">
+ <div id="donate">
+  <div id="donate_icon"></div>
+  <div id="donate_txt">
+   <h1>Missing e is supported by donations from users like you!</h1>
+   <h2>If you enjoy Missing e, you can donate via PayPal. It's fast and safe.</h2>
+  </div>
+  <a class="donatebutton button" href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8" title="Donate to Missing e">Donate!</a>
+ </div>
+</div>
+<div class="content_container">
+ <div class="content">
+  <div class="iconbar">
+   <div class="baricon" id="questionmark"></div>
+   <div class="bartxt">
+    <h1>Not sure how to use a feature? Got a question?</h1>
+    <div class="bardesc">
+    Answers to many questions can be found in the <a href="faq" title="Frequently Asked Questions">FAQ</a>. If you can't find what you're looking for, <a href="http://blog.missing-e.com/ask" title="Send Missing e a message">send Missing a message</a>.
+    </div>
+   </div>
+  </div>
+  <div class="iconbar">
+   <div class="baricon" id="trouble"></div>
+   <div class="bartxt">
+    <h1>Something not working properly? Found a bug?</h1>
+    <div class="bardesc">
+    Check the <a href="faq" title="Frequently Asked Questions">FAQ</a> to see if there's already a solution to your problem. If not, <a href="troubleshoot">try troubleshooting or submitting a bug report</a>.
+    </div>
+   </div>
+  </div>
+  <div class="iconbar">
+   <div class="baricon" id="bulb"></div>
+   <div class="bartxt">
+    <h1>Have a great suggestion?</h1>
+    <div class="bardesc">
+    Send <strong>Missing e</strong> <a href="http://blog.missing-e.com/ask" title="Send Missing e a message">a message</a>. Many new features started out as interesting ideas from users like you!
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+<div id="footer_container">
+ <div id="footer">
+ &copy; 2012 Jeremy Cutler<br />
+ <small>An open-source project released under <a class="link" href="http://www.gnu.org/licenses/gpl.html" title="GPL v3 License">GPL v3</a></small>
+ <a class="greybutton button" style="float:right;" href="http://blog.missing-e.com" title="Missing e on Tumblr">Follow Missing e on Tumblr</a>
+ </div>
+</div>
+-->
+</body>
+</html>
