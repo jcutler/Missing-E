@@ -2,8 +2,16 @@ Cache settings check for Quick Reblogging
 
 Change all features that pass info to new tabs to no longer use localStorage
 
-Add screenshot links to the settings page
+Audio controls for currently-playing audio post [tagthesun]
+Set nicknames [aidiera]
+Chrome synchronous posting
+Empty posts (with tags): &#8192;
+Hide Twitter/FB boxes when account doesn't have
+Implement filter feature (saviour) block notifications too
+Fancybox for magnifier
+Remove retry settings
+Make option groups into buttons that open a fancybox for sub options
+Mass editor mass make private?
+Mass editor select by tags? (Binary search, sort of) it can be done, only check unselected posts.
 
--Immediately destroy/re-create widget for FF option
--encode URLs being used for GETs
--Timestamps on asks need to be removed?
+For mass editor select, bg process can send back completion status to fill a bar thing and start selecting (or marking as private without reloading page)
