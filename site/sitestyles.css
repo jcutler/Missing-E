@@ -137,7 +137,7 @@ text-shadow:0px 1px 1px rgba(0, 0, 0, 0.1)
 }
 
 header {
-position:absolute;
+position:relative;
 overflow:hidden;
 top:0;
 left:0;
@@ -179,6 +179,8 @@ line-height:1;
 header h1 {
 font-weight:bolder;
 font-size:52px;
+line-height:44px;
+margin-bottom:8px;
 }
 
 header h2 {
@@ -392,12 +394,20 @@ height:100%;
 
 #main_content {
 width:880px;
-margin:195px auto 65px;
+margin:36px auto 65px;
+}
+
+.content_box {
+   margin-bottom:8px;
+}
+
+.content_box h1 {
+   font-size:32px;
 }
 
 #home #main_content {
+margin-top:0;
 margin-bottom:0;
-padding-top:32px;
 }
 
 #home #lower_content {
@@ -431,7 +441,7 @@ background-image:url("images/postit.png");
 display:inline-block;
 font-size:0;
 text-shadow:1px 1px 1px rgba(0,0,0,0.2);
-vertical-align:top;
+vertical-align:middle;
 padding:10px 17px 15px 20px;
 position:relative;
 }
@@ -441,14 +451,14 @@ float:right;
 margin:-36px -33px -11px -11px;
 }
 
-.paper_box hgroup {
+.paper_box hgroup, #main_content .outer_page .paper_box hgroup {
 height:44px;
 position:relative;
 width:179px;
 margin-left:49px;
 }
 
-.paper_box h1 {
+.paper_box h1, #main_content .outer_page .paper_box h1 {
 font-size:20px;
 font-weight:bolder;
 vertical-align:middle;
@@ -456,13 +466,19 @@ position:absolute;
 bottom:0;
 }
 
-.postit_box h1 {
+.postit_box h1, #main_content .outer_page .postit_box h1 {
 font-size:20px;
 font-weight:bolder;
 text-align:left;
-}   
+}
 
-.paper_box p {
+.postit_box h2, #main_content .outer_page .postit_box h2 {
+font-size:20px;
+font-weight:bolder;
+text-align:left;
+}
+
+.paper_box p, #main_content .outer_page .paper_box p {
 margin-top:15px;
 font-size:13px;
 line-height:15px;
@@ -471,7 +487,7 @@ text-shadow: none;
 text-align:justify;
 }
 
-.postit_box p {
+.postit_box p, #main_content .outer_page .postit_box p {
 font-size:13px;
 line-height:15px;
 text-align:justify;
@@ -480,11 +496,11 @@ padding:0 8px 0 4px;
 text-indent:8px;
 }
 
-.paper_box p a {
+.paper_box p a, #main_content .outer_page .paper_box p a {
 color:#444;
 }
 
-.postit_box p a {
+.postit_box p a, #main_content .outer_page .postit_box p a {
 font-weight:bold;
 text-decoration:none;
 border-bottom:1px solid rgba(41,54,76,0.3);
@@ -523,7 +539,7 @@ transform:rotate(-2deg);
 margin-left:4px;
 }
 
-#outer_page {
+#main_content .outer_page {
 border:8px solid transparent;
 -webkit-box-shadow: 0 0 8px rgba(0,0,0,0.3);
 -moz-box-shadow: 0 0 8px rgba(0,0,0,0.3);
@@ -532,12 +548,20 @@ background:white;
 -webkit-background-clip: padding-box;
 -moz-background-clip: padding-box;
 background-clip: padding-box;
+padding:14px 24px;
+}
+
+.outer_page p {
+   font-size:14px;
+   margin:8px 0;
+   text-align:justify;
+}
+
+.outer_page p {
+   text-indent:1em;
 }
 
 #ad {
-position:absolute;
-top:236px;
-left:0;
 width:100%;
 min-width:880px;
 background-color:rgba(0,0,0,0.1);
@@ -547,7 +571,6 @@ text-align:center;
 }
 
 #home #ad {
-position:static;
 margin-top:26px;
 }
 
@@ -648,6 +671,10 @@ background-position:0 -64px;
 
 #battery {
 background-position:-192px -128px;
+}
+
+#infoballoon {
+background-position:-256px 0;
 }
 
 #donate_bar > * {
