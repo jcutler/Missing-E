@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
-<!--
-
- Turnabout is fair play, sir.
-
--->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="tumblr,missinge,missing,e,feature,features,blog,blogging" />
 <meta name="description" content="Missing e - The unofficial browser extension for Tumblr!"/>
 <meta name="author" content="Jeremy Cutler" />
 <meta name="robots" content="FOLLOW,INDEX" />
-<title>FAQ - Missing e - The browser extension for Tumblr!</title>
-<link href="http://fonts.googleapis.com/css?family=Bitter:400,700,400italic" rel="stylesheet" type="text/css">
+<title>FAQ - Missing e - The original browser extension for Tumblr!</title>
+<link href='http://fonts.googleapis.com/css?family=Kreon:300,400,700' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 <link rel="icon" href="/favicon.png" type="image/x-icon" />
 <script type="text/javascript" src="browser.js"></script>
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="reset.css" />
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="sitestyles.css" />
 <script type="text/javascript">
 <!--
 
 function scrollEntryVisible(entry) {
    var item = $(entry);
    var winHeight = $(window).innerHeight();
-   var footerHeight = $('#footer_container').innerHeight();
    var scroll = $(window).scrollTop();
    var entryBottom = item.outerHeight() + item.offset().top;
-   var delta = entryBottom - (scroll + winHeight - footerHeight - 5);
+   var delta = entryBottom - (scroll + winHeight - 5);
    if (delta > 0) {
       var scrollTo = scroll + delta;
-      var itemTop = item.offset().top - 46;
+      var itemTop = item.offset().top - 6;
       if (scrollTo > itemTop) {
          scrollTo = itemTop;
       }
@@ -102,913 +96,918 @@ jQuery(document).ready(function($) {
 </script>
 </head>
 <body id="faq">
-<div id="header_container">
- <div id="header">
-  <div id="header_bar">
-   <a id="home_link" href="/"></a>
-   <div id="header_links">
-    <a href="features">Features</a>
-    <span class="selected">FAQ</span>
-    <a href="troubleshoot">Troubleshoot</a>
-    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">Donate</a>
+<header>
+ <nav>
+  <div id="nav_bar">
+   <a href="/" id="home_nav"><span id="home_navbg"></span><span class="subtext">HOME</span><img src="images/missinge100.png" alt="Home" /></a>
+   <div id="nav_links">
+    <a href="features" class="features_nav">FEATURES<span class="subtext">WHAT IT'S FOR.</span></a>
+    <a href="faq" class="faq_nav selected_nav">FAQ<span class="subtext">QUESTIONS?</span></a>
+    <a href="troubleshoot" class="problems_nav">PROBLEMS<span class="subtext">LET'S TROUBLESHOOT!</span></a>
+    <a href="http://blog.missing-e.com" class="blog_nav">BLOG<span class="subtext">STAY UPDATED.</span></a>
+    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8" class="donate_nav">DONATE<span class="subtext">SUPPORT MISSING E!</span></a>
    </div>
   </div>
- </div>
-</div>
-<div id="banner_container">
+ </nav>
  <div id="banner">
-  <div id="banner_box">
-   <h1>Got a question about Missing e?</h1>
-   <h2>Well, I have some answers. Let's see if they match!</h2>
+  <div id="icon_ribbon">
+   <div id="page_icon">
+    <img src="images/question.png" alt="Missing e FAQ" style="margin-top:-18px;margin-left:25px;opacity:0.95;" />
+   </div>
   </div>
-  <img id="banner_img" style="width:218px;height:220px;margin-top:-95px;" src="images/question.png" alt="Missing e FAQ" />
+  <div id="icon_ribbon_rem"></div>
+  <div id="banner_text">
+   <hgroup>
+    <h1>Got a question about Missing e?</h1>
+    <h2>Well, I have some answers. Let's see if they match!</h2>
+   </hgroup>
+  </div>
  </div>
+</header>
+<div id="ad">
+ <script type="text/javascript">
+  <!--
+   google_ad_client = "ca-pub-3604999147338055";
+   /* New Site */
+   google_ad_slot = "9843551983";
+   google_ad_width = 728;
+   google_ad_height = 90;
+  //-->
+ </script>
+ <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 </div>
-<div id="ads">
- <div id="ads_title">Sponsored<br />Links</div>
-<script type="text/javascript"><!--
-google_ad_client = "ca-pub-3604999147338055";
-/* New Site */
-google_ad_slot = "9843551983";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-</div>
-<div class="content_container">
- <div class="content">
-  <div class="faq_group">
-   <h1>General</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="not-tumblr"></a><a class="anchor" id="nottumblr"></a><a class="anchor" id="affiliated"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Is <strong>Missing e</strong> affiliated with or endorsed by Tumblr?</h2>
-    </div>
-    <div class="faq_answer">
-     <p><strong><em>No.</em></strong> The <strong>Missing e</strong> browser extension is not affiliated with Tumblr in any way. Its features are intended to improve the ease of use of <em>tumblr.com</em>, but it is neither approved nor endorsed by Tumblr.</p>
-     <p>As an unofficial extension for Tumblr, <strong>Missing e</strong> is happy to do what it can to enhance your enjoyment of the Tumblr microblogging experience.</p>
-     <p>By downloading and using this extension, you agree to the terms and conditions of the <a href="eula">Missinge End User License Agreement</a>.</p>
-    </div>
+<div id="main_content">
+ <div class="faq_group">
+  <h1>General</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="not-tumblr"></a><a class="anchor" id="nottumblr"></a><a class="anchor" id="affiliated"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Is <strong>Missing e</strong> affiliated with or endorsed by Tumblr?</h2>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="safari-invalid"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>I just got the message <em>"Safari can't use the extension "Missing e" because the extension is no longer valid"</em>. What should I do?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Recently, a minor bug was introduced into the Safari version of <strong>Missing e</strong> that caused earlier versions to report themselves as being <em>invalid</em>.</p>
-     <p>To fix this, all you have to do is <a href="download">reinstall <strong>Missing e</strong></a> on Safari. Your <strong>Missing e</strong> bookmarks will be preserved, but you will have to customize your <strong>Missing e</strong> settings again, including activating optional features like <em>Quick (1-Click) Reblog</em>.</p>
-     <p><a href="download">Reinstall <strong>Missing e</strong></a></p>
-    </div>
+   <div class="faq_answer">
+    <p><strong><em>No.</em></strong> The <strong>Missing e</strong> browser extension is not affiliated with Tumblr in any way. Its features are intended to improve the ease of use of <em>tumblr.com</em>, but it is neither approved nor endorsed by Tumblr.</p>
+    <p>As an unofficial extension for Tumblr, <strong>Missing e</strong> is happy to do what it can to enhance your enjoyment of the Tumblr microblogging experience.</p>
+    <p>By downloading and using this extension, you agree to the terms and conditions of the <a href="eula">Missinge End User License Agreement</a>.</p>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="sourcecode"></a><a class="anchor" id="source-code"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Is <strong>Missing e</strong> open source? Where can I get a copy of the source code?</h2>
-    </div>
-    <div class="faq_answer">
-     <p><strong>Missing e</strong> is an open source project released under the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License, version 3</a>. This means that you can obtain a copy of the source code, modify it and distribute your own version (as long as you also release under the GNU General Public License, version 3 or higher).</p>
-     <p><a href="github.com/jcutler/Missing-E">Browse or get a copy of <strong>Missing e</strong>'s source code at GitHub.</a></p>
-    </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="safari-invalid"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>I just got the message <em>"Safari can't use the extension "Missing e" because the extension is no longer valid"</em>. What should I do?</h2>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="reenable"></a><a class="anchor" id="re-enable"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span><strong>Missing e</strong> has completely stopped working on my Tumblr. How do I fix it?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>A small number of users find that browser extensions can stop working without warning. In order to fix this, it is not necessary to uninstall and reinstall the extension!</p>
-     <p>Instead, all you need to do is to disable and re-enable <strong>Missing e</strong> in your browser's extensions list. Here's how:</p>
-     <div class="chrome_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Google Chrome</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>In the menu (click the wrench icon at the top right of the browser window), go to <em>Tools</em> and click on <em>Extensions</em></li>
-        <li>In your extensions list, find the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Uncheck the box labelled <em>Enabled</em></li>
-          <li>Check the same box again to re-enable it</li>
-         </ul>
-        </li>
-        <li>Reload your Tumblr dashboard</li>
-       </ul>
-       <div class="screenshot_container">
-        <div class="screenshot">
-         <img src="images/examples/chrome-disable.png" alt="Re-enable Missing e on Chrome" />
-         <div class="screenshot_overlay"></div>
-        </div>
+   <div class="faq_answer">
+    <p>Recently, a minor bug was introduced into the Safari version of <strong>Missing e</strong> that caused earlier versions to report themselves as being <em>invalid</em>.</p>
+    <p>To fix this, all you have to do is <a href="download">reinstall <strong>Missing e</strong></a> on Safari. Your <strong>Missing e</strong> bookmarks will be preserved, but you will have to customize your <strong>Missing e</strong> settings again, including activating optional features like <em>Quick (1-Click) Reblog</em>.</p>
+    <p><a href="download">Reinstall <strong>Missing e</strong></a></p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="sourcecode"></a><a class="anchor" id="source-code"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Is <strong>Missing e</strong> open source? Where can I get a copy of the source code?</h2>
+   </div>
+   <div class="faq_answer">
+    <p><strong>Missing e</strong> is an open source project released under the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License, version 3</a>. This means that you can obtain a copy of the source code, modify it and distribute your own version (as long as you also release under the GNU General Public License, version 3 or higher).</p>
+    <p><a href="github.com/jcutler/Missing-E">Browse or get a copy of <strong>Missing e</strong>'s source code at GitHub.</a></p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="reenable"></a><a class="anchor" id="re-enable"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span><strong>Missing e</strong> has completely stopped working on my Tumblr. How do I fix it?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>A small number of users find that browser extensions can stop working without warning. In order to fix this, it is not necessary to uninstall and reinstall the extension!</p>
+    <p>Instead, all you need to do is to disable and re-enable <strong>Missing e</strong> in your browser's extensions list. Here's how:</p>
+    <div class="chrome_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Google Chrome</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>In the menu (click the wrench icon at the top right of the browser window), go to <em>Tools</em> and click on <em>Extensions</em></li>
+       <li>In your extensions list, find the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Uncheck the box labelled <em>Enabled</em></li>
+         <li>Check the same box again to re-enable it</li>
+        </ul>
+       </li>
+       <li>Reload your Tumblr dashboard</li>
+      </ul>
+      <div class="screenshot_container">
+       <div class="screenshot">
+        <img src="images/examples/chrome-disable.png" alt="Re-enable Missing e on Chrome" />
+        <div class="screenshot_overlay"></div>
        </div>
       </div>
      </div>
-     <div class="safari_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Apple Safari</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>Open the Safari menu
-         <ul>
-          <li><strong>Mac OS X:</strong> click <em>Safari</em> in the menu bar at the top of the screen</li>
-          <li><strong>Windows:</strong> click on the gear icon at the top right of the browser window</li>
-         </ul>
-        </li>
-        <li>In the Safari menu, click on <em>Preferences</em></li>
-        <li>In the Preferences window, click the <em>Extensions</em> tab at the top</li>
-        <li>In your extensions list on the left, click the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Uncheck the box labelled <em>Enable Missing e</em></li>
-          <li>Check the same box again to re-enable it</li>
-         </ul>
-        </li>
-        <li>Reload your Tumblr dashboard</li>
-       </ul>
-       <div class="screenshot_container">
-        <div class="screenshot">
-         <img src="images/examples/safari-disable.png" alt="Re-enable Missing e on Safari" />
-         <div class="screenshot_overlay"></div>
-        </div>
+    </div>
+    <div class="safari_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Apple Safari</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>Open the Safari menu
+        <ul>
+         <li><strong>Mac OS X:</strong> click <em>Safari</em> in the menu bar at the top of the screen</li>
+         <li><strong>Windows:</strong> click on the gear icon at the top right of the browser window</li>
+        </ul>
+       </li>
+       <li>In the Safari menu, click on <em>Preferences</em></li>
+       <li>In the Preferences window, click the <em>Extensions</em> tab at the top</li>
+       <li>In your extensions list on the left, click the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Uncheck the box labelled <em>Enable Missing e</em></li>
+         <li>Check the same box again to re-enable it</li>
+        </ul>
+       </li>
+       <li>Reload your Tumblr dashboard</li>
+      </ul>
+      <div class="screenshot_container">
+       <div class="screenshot">
+        <img src="images/examples/safari-disable.png" alt="Re-enable Missing e on Safari" />
+        <div class="screenshot_overlay"></div>
        </div>
       </div>
      </div>
-     <div class="firefox_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Mozilla Firefox</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>In the Firefox menu, go to <em>Tools</em> and click on <em>Add-ons</em></li>
-        <li>In your add-ons list, find the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Click the button labelled <em>Disable</em></li>
-          <li>Click the same button again (it will now be labelled <em>Enable</em>) to re-enable it</li>
-         </ul>
-        </li>
-        <li>Reload your Tumblr dashboard</li>
-       </ul>
-       <div class="screenshot_container">
-        <div class="screenshot">
-         <img src="images/examples/firefox-disable.jpg" alt="Re-enable Missing e on Firefox" />
-         <div class="screenshot_overlay"></div>
-        </div>
+    </div>
+    <div class="firefox_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Mozilla Firefox</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>In the Firefox menu, go to <em>Tools</em> and click on <em>Add-ons</em></li>
+       <li>In your add-ons list, find the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Click the button labelled <em>Disable</em></li>
+         <li>Click the same button again (it will now be labelled <em>Enable</em>) to re-enable it</li>
+        </ul>
+       </li>
+       <li>Reload your Tumblr dashboard</li>
+      </ul>
+      <div class="screenshot_container">
+       <div class="screenshot">
+        <img src="images/examples/firefox-disable.jpg" alt="Re-enable Missing e on Firefox" />
+        <div class="screenshot_overlay"></div>
        </div>
       </div>
      </div>
     </div>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="submitbug"></a><a class="anchor" id="submit-bug"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span><strong>Missing e</strong> isn't working properly or is causing problems! What do I do?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>First, make sure that <strong>Missing e</strong> is up-to-date. To do this, go to the <a href="update"><strong>Missing e</strong> update page</a>. If your version is not up-to-date, update it and then reload Tumblr.</p>
-     <p>Then, make sure that the problem is due to <strong>Missing e</strong>. To do this, try <a href="#disable">disabling</a> <strong>Missing e</strong> (<a href="#disable">find out how</a>) and then reload Tumblr. If the problem remains, then it is because of the Tumblr interface or another browser extension you are using, not <strong>Missing e</strong>.</p>
-     <p>If the problem is definitely with <strong>Missing e</strong>, <a href="troubleshoot">submit a bug report</a> with as many details about the problem as possible.</p>
-    </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="submitbug"></a><a class="anchor" id="submit-bug"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span><strong>Missing e</strong> isn't working properly or is causing problems! What do I do?</h2>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="disable"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I temporarily disable <strong>Missing e</strong>?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>It's a good idea to temporarily disable <strong>Missing e</strong> before <a href="#submit-bug">submitting a bug report</a> for a problem with the extension or when you need to contact Tumblr support. Here's how to do it:</p>
-     <div class="chrome_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Google Chrome</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>In the menu (click the wrench icon at the top right of the browser window), go to <em>Tools</em> and click on <em>Extensions</em></li>
-        <li>In your extensions list, find the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Uncheck the box labelled <em>Enabled</em></li>
-          <li>Check the same box again when you are ready to re-enable it</li>
-         </ul>
-        </li>
-        <li>Reload your Tumblr dashboard</li>
-       </ul>
-       <div class="screenshot_container">
-        <div class="screenshot">
-         <img src="images/examples/chrome-disable.png" alt="Re-enable Missing e on Chrome" />
-         <div class="screenshot_overlay"></div>
-        </div>
-       </div>
-      </div>
-     </div>
-     <div class="safari_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Apple Safari</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>Open the Safari menu
-         <ul>
-          <li><strong>Mac OS X:</strong> click <em>Safari</em> in the menu bar at the top of the screen</li>
-          <li><strong>Windows:</strong> click on the gear icon at the top right of the browser window</li>
-         </ul>
-        </li>
-        <li>In the Safari menu, click on <em>Preferences</em></li>
-        <li>In the Preferences window, click the <em>Extensions</em> tab at the top</li>
-        <li>In your extensions list on the left, click the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Uncheck the box labelled <em>Enable Missing e</em></li>
-          <li>Check the same box again when you are ready to re-enable it</li>
-         </ul>
-        </li>
-        <li>Reload your Tumblr dashboard</li>
-       </ul>
-       <div class="screenshot_container">
-        <div class="screenshot">
-         <img src="images/examples/safari-disable.png" alt="Re-enable Missing e on Safari" />
-         <div class="screenshot_overlay"></div>
-        </div>
-       </div>
-      </div>
-     </div>
-     <div class="firefox_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Mozilla Firefox</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>In the Firefox menu, go to <em>Tools</em> and click on <em>Add-ons</em></li>
-        <li>In your add-ons list, find the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Click the button labelled <em>Disable</em></li>
-          <li>Click the same button again (it will now be labelled <em>Enable</em>) when you are ready to re-enable it</li>
-         </ul>
-        </li>
-        <li>Reload your Tumblr dashboard</li>
-       </ul>
-       <div class="screenshot_container">
-        <div class="screenshot">
-         <img src="images/examples/firefox-disable.jpg" alt="Re-enable Missing e on Firefox" />
-         <div class="screenshot_overlay"></div>
-        </div>
+   <div class="faq_answer">
+    <p>First, make sure that <strong>Missing e</strong> is up-to-date. To do this, go to the <a href="update"><strong>Missing e</strong> update page</a>. If your version is not up-to-date, update it and then reload Tumblr.</p>
+    <p>Then, make sure that the problem is due to <strong>Missing e</strong>. To do this, try <a href="#disable">disabling</a> <strong>Missing e</strong> (<a href="#disable">find out how</a>) and then reload Tumblr. If the problem remains, then it is because of the Tumblr interface or another browser extension you are using, not <strong>Missing e</strong>.</p>
+    <p>If the problem is definitely with <strong>Missing e</strong>, <a href="troubleshoot">submit a bug report</a> with as many details about the problem as possible.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="disable"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I temporarily disable <strong>Missing e</strong>?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>It's a good idea to temporarily disable <strong>Missing e</strong> before <a href="#submit-bug">submitting a bug report</a> for a problem with the extension or when you need to contact Tumblr support. Here's how to do it:</p>
+    <div class="chrome_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Google Chrome</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>In the menu (click the wrench icon at the top right of the browser window), go to <em>Tools</em> and click on <em>Extensions</em></li>
+       <li>In your extensions list, find the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Uncheck the box labelled <em>Enabled</em></li>
+         <li>Check the same box again when you are ready to re-enable it</li>
+        </ul>
+       </li>
+       <li>Reload your Tumblr dashboard</li>
+      </ul>
+      <div class="screenshot_container">
+       <div class="screenshot">
+        <img src="images/examples/chrome-disable.png" alt="Re-enable Missing e on Chrome" />
+        <div class="screenshot_overlay"></div>
        </div>
       </div>
      </div>
     </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="followchecker"></a><a class="anchor" id="follow-checker"></a><a class="anchor" id="unfollower"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>What happened to the <em>Follow Checker</em> feature?</h2>
-     <h2><span class="faq_icon"></span>What happened to the <em>Unfollower</em> feature?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Tumblr's <a href="http://www.tumblr.com/policy">terms of service</a> does not allow certain automatic features that put significant strain on their servers. The <em>Follow Checeker</em> and <em>Unfollower</em> features could be a burdern on Tumblr's ability to server its users. These features were removed from <strong>Missing e</strong> as of version 2.0.0 to prevent just such problems.</p>
-     <p>I apologize for the inconvenience that affects users who depended on these features. However, I hope you will understand that these sacrifices were made so taht you may continue to use and receive new versions of <strong>Missing e</strong>.</p>
-     <p>Some users installed older versions of <strong>Missing e</strong> (1.7.6 or earlier) from third-party sites in order to keep the <em>Follow Checker</em> and <em>Unfollower</em> features. However, these older versions are no longer supported. Many other features have since become broken and can only be fixed by updating to the newest version of <strong>Missing e</strong>. If this is the case for you, first <a href="#uninstall">uninstall the old version</a> and then <a href="#install">install the current version from the official site</a>!</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="greyboxes"></a><a class="anchor" id="grey-boxes"></a><a class="anchor" id="grayboxes"></a><a class="anchor" id="gray-boxes"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Images on my dash show up as grey boxes unless I hover my mouse over them. How do I fix this?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>If images and photos on your dashboard are hidden behind grey boxes (with a small lock icon), it means that you have activated the <em>Safe Dash</em> feature.</p>
-     <p>The purpose of <em>Safe Dash</em> is to hide images on your dashboard when you use Tumblr in a public setting. In case any of the images are offensive or embarassing, they are hidden unless you hover your mouse over the grey box.</p>
-     <p>If you did not intend to activate <em>Safe Dash</em>, you can disable it by clicking on the <em>Safe Dash</em> button in the sidebar of your Tumblr dashboard.</p>
-    </div>
-   </div>
-  </div>
-  <div class="faq_group">
-   <h1>Your Security</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="warning"></a><a class="anchor" id="safe"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>A warning came up on Tumblr saying <strong>Missing e</strong> could cause problems on my blog, expose me to hacking or access my private information. Is this true?</h2>
-     <h2><span class="faq_icon"></span>I've heard that using <strong>Missing e</strong> could get your Tumblr account or posts deleted. Is this just a rumour?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>You may have seen a warning message put out by Tumblr, suggesting that <strong>Missing e</strong> is a browser "hack" that could cause problems for your account. Rest assured that <strong>Missing e</strong> is completely safe. Using it <em>will not</em> cause your account or any of your posts to be deleted! The only change is that Tumblr will not provide technical help for your account while you are using <strong>Missing e</strong>.</p>
-     <p>The issues Tumblr mentions in their warning are a worst-case scenario for installing browser extensions, scripts or modifications of any kind. However, <strong>Missing e</strong> is not a source of these kinds of problems.</p>
-     <h3 class="subtitle">Data Loss</h3>
-     <p>It is very unlikely that <strong>Missing e</strong> will cause any data loss. This is especially true of existing posts. Without your interaction, <strong>Missing e</strong> <em>will not</em> delete anything!</p>
-     <h3 class="subtitle">Privacy / Private Information</h3>
-     <p><strong>Missing e</strong> does not obtain, use or store your email address, password, IP address, search queries or contents of any of your existing posts.</p>
-     <p>There is a <a href="http://blog.missing-e.com/post/6005505122/permissions">useful Tumblr post</a> that explains what browser extension permissions <strong>Missing e</strong> uses, explaining many of the security notifications you get when installing the extension. <a href="http://blog.missing-e.com/post/6005505122/permissions">Click here to read about that</a>.</p>
-     <h3 class="subtitle">Page Scraping</h3>
-     <p><strong>Missing e</strong> implements only a small amount of what Tumblr calls <em>page scraping</em>. It is not done regularly, nor is it excessive. With it, you have access to features like adding your sidebar to all dashboard pages, seeing timestamps of messages in your inbox and being able to reblog yourself from the dashboard.</p>
-     <p class="center_text"><a href="http://blog.missing-e.com/post/15049053871/tumblrs-support-problem-with-missing-e">Click here to reblog about this on Tumblr</a></p>
-     <hr>
-     <p>All users are encouraged to <a href="https://github.com/jcutler/Missing-E" target="_blank" title="Missing e on Github">examine the <strong>Missing e</strong> source code</a> to confirm all of these claims.</p>
-     <p>If you have any questions about specific problems you've heard are related to <strong>Missing e</strong> or about the extension in general, you are welcome to <a href="http://blog.missing-e.com/ask">drop by the <strong>Missing e</strong> askbox</a>. If you are still uncomfortable with using <strong>Missing e</strong>, please feel free to uninstall it (<a href="#uninstall">instructions</a>).</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="permissions"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>The download page has a lot of warnings about what <strong>Missing e</strong> could do on my comptuer. Is it safe to install?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Browser extensions need to ask for certain permissions from your browser in order for many features to work. Please read <a href="http://blog.missing-e.com/post/6005505122/permissions">this post on Tumblr</a> for an explanation of the permissions that <strong>Missing e</strong> uses and why it uses them.</p>
-    </div>
-   </div>
-  </div>
-  <div class="faq_group">
-   <h1>Install / Uninstall / Update</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="install"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Okay, you've convinced me. How do I install <strong>Missing e</strong>?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Installing <strong>Missing e</strong> is easy!</p>
-     <p>Simply <a href="download">click here</a> if you are currently using the browser you want to install on, or click the <em>Download</em> button on the <a href="/"><strong>Missing e</strong> home page</a>. Then, follow the instructions!</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="uninstall"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span><strong>Missing e</strong> isn't working out for me. How do I uninstall it?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>I'm sorry to hear that! Don't forget, if there are certain features you don't like and others you do, you can customize <strong>Missing e</strong> and only use the features you want. <a href="#featurecontrol">Find out how</a>.</p>
-     <p>If you still want to uninstall, follow these instructions:</p>
-     <div class="chrome_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Google Chrome</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>In the menu (click the wrench icon at the top right of the browser window), go to <em>Tools</em> and click on <em>Extensions</em></li>
-        <li>In your extensions list, find the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Click the <em>Remove</em> button to uninstall it</li>
-         </ul>
-        </li>
-       </ul>
+    <div class="safari_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Apple Safari</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>Open the Safari menu
+        <ul>
+         <li><strong>Mac OS X:</strong> click <em>Safari</em> in the menu bar at the top of the screen</li>
+         <li><strong>Windows:</strong> click on the gear icon at the top right of the browser window</li>
+        </ul>
+       </li>
+       <li>In the Safari menu, click on <em>Preferences</em></li>
+       <li>In the Preferences window, click the <em>Extensions</em> tab at the top</li>
+       <li>In your extensions list on the left, click the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Uncheck the box labelled <em>Enable Missing e</em></li>
+         <li>Check the same box again when you are ready to re-enable it</li>
+        </ul>
+       </li>
+       <li>Reload your Tumblr dashboard</li>
+      </ul>
+      <div class="screenshot_container">
+       <div class="screenshot">
+        <img src="images/examples/safari-disable.png" alt="Re-enable Missing e on Safari" />
+        <div class="screenshot_overlay"></div>
+       </div>
       </div>
      </div>
-     <div class="safari_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Apple Safari</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>Open the Safari menu
-         <ul>
-          <li><strong>Mac OS X:</strong> click <em>Safari</em> in the menu bar at the top of the screen</li>
-          <li><strong>Windows:</strong> click on the gear icon at the top right of the browser window</li>
-         </ul>
-        </li>
-        <li>In the Safari menu, click on <em>Preferences</em></li>
-        <li>In the Preferences window, click the <em>Extensions</em> tab at the top</li>
-        <li>In your extensions list on the left, click the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Click the <em>Uninstall</em> button to uninstall it</li>
-         </ul>
-        </li>
-       </ul>
-      </div>
-     </div>
-     <div class="firefox_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Mozilla Firefox</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>In the Firefox menu, go to <em>Tools</em> and click on <em>Add-ons</em></li>
-        <li>In your add-ons list, find the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Click the <em>Remove</em> button to uninstall it</li>
-         </ul>
-        </li>
-       </ul>
+    </div>
+    <div class="firefox_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Mozilla Firefox</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>In the Firefox menu, go to <em>Tools</em> and click on <em>Add-ons</em></li>
+       <li>In your add-ons list, find the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Click the button labelled <em>Disable</em></li>
+         <li>Click the same button again (it will now be labelled <em>Enable</em>) when you are ready to re-enable it</li>
+        </ul>
+       </li>
+       <li>Reload your Tumblr dashboard</li>
+      </ul>
+      <div class="screenshot_container">
+       <div class="screenshot">
+        <img src="images/examples/firefox-disable.jpg" alt="Re-enable Missing e on Firefox" />
+        <div class="screenshot_overlay"></div>
+       </div>
       </div>
      </div>
     </div>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="update"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I update <strong>Missing e</strong> to the newest version?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Updating <strong>Missing e</strong> is easy!</p>
-     <p>Simply <a href="update">click here</a> or click the <em>Update</em> button on the <a href="/"><strong>Missing e</strong> home page</a>. Then, follow the instructions!</p>
-    </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="followchecker"></a><a class="anchor" id="follow-checker"></a><a class="anchor" id="unfollower"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>What happened to the <em>Follow Checker</em> feature?</h2>
+    <h2><span class="faq_icon"></span>What happened to the <em>Unfollower</em> feature?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Tumblr's <a href="http://www.tumblr.com/policy">terms of service</a> does not allow certain automatic features that put significant strain on their servers. The <em>Follow Checeker</em> and <em>Unfollower</em> features could be a burdern on Tumblr's ability to server its users. These features were removed from <strong>Missing e</strong> as of version 2.0.0 to prevent just such problems.</p>
+    <p>I apologize for the inconvenience that affects users who depended on these features. However, I hope you will understand that these sacrifices were made so taht you may continue to use and receive new versions of <strong>Missing e</strong>.</p>
+    <p>Some users installed older versions of <strong>Missing e</strong> (1.7.6 or earlier) from third-party sites in order to keep the <em>Follow Checker</em> and <em>Unfollower</em> features. However, these older versions are no longer supported. Many other features have since become broken and can only be fixed by updating to the newest version of <strong>Missing e</strong>. If this is the case for you, first <a href="#uninstall">uninstall the old version</a> and then <a href="#install">install the current version from the official site</a>!</p>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Customizing / Settings</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="featurecontrol"></a><a class="anchor" id="feature-control"></a><a class="anchor" id="settings"></a><a class="anchor" id="customize"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How can I customize how <strong>Missing e</strong> works?</h2>
-     <h2><span class="faq_icon"></span>How can I see or change my <strong>Missing e</strong> settings?</h2>
-     <h2><span class="faq_icon"></span>I don't want to use one of the features. How do I turn it off?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>All of <strong>Missing e</strong>'s features can be enabled, configured and disabled individually! This customizability is one of the extensions best assets.</p>
-     <p>Here's how to access the <strong>Missing e</strong> settings page:</p>
-     <div class="chrome_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Google Chrome</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>Click on the <span class="big"><strong>e.</strong></span> button at the top of any Tumblr dashboard page</li>
-       </ul>
-       <h3>OR</h3>
-       <ul>
-        <li>In the menu (click the wrench icon at the top right of the browser window), go to <em>Tools</em> and click on <em>Extensions</em></li>
-        <li>In your extensions list, find the entry for <strong>Missing e</strong>
-         <ul>
-          <li>Click on the <em>Options</em> link</li>
-         </ul>
-        </li>
-       </ul>
-      </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="greyboxes"></a><a class="anchor" id="grey-boxes"></a><a class="anchor" id="grayboxes"></a><a class="anchor" id="gray-boxes"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Images on my dash show up as grey boxes unless I hover my mouse over them. How do I fix this?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>If images and photos on your dashboard are hidden behind grey boxes (with a small lock icon), it means that you have activated the <em>Safe Dash</em> feature.</p>
+    <p>The purpose of <em>Safe Dash</em> is to hide images on your dashboard when you use Tumblr in a public setting. In case any of the images are offensive or embarassing, they are hidden unless you hover your mouse over the grey box.</p>
+    <p>If you did not intend to activate <em>Safe Dash</em>, you can disable it by clicking on the <em>Safe Dash</em> button in the sidebar of your Tumblr dashboard.</p>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Your Security</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="warning"></a><a class="anchor" id="safe"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>A warning came up on Tumblr saying <strong>Missing e</strong> could cause problems on my blog, expose me to hacking or access my private information. Is this true?</h2>
+    <h2><span class="faq_icon"></span>I've heard that using <strong>Missing e</strong> could get your Tumblr account or posts deleted. Is this just a rumour?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>You may have seen a warning message put out by Tumblr, suggesting that <strong>Missing e</strong> is a browser "hack" that could cause problems for your account. Rest assured that <strong>Missing e</strong> is completely safe. Using it <em>will not</em> cause your account or any of your posts to be deleted! The only change is that Tumblr will not provide technical help for your account while you are using <strong>Missing e</strong>.</p>
+    <p>The issues Tumblr mentions in their warning are a worst-case scenario for installing browser extensions, scripts or modifications of any kind. However, <strong>Missing e</strong> is not a source of these kinds of problems.</p>
+    <h3 class="subtitle">Data Loss</h3>
+    <p>It is very unlikely that <strong>Missing e</strong> will cause any data loss. This is especially true of existing posts. Without your interaction, <strong>Missing e</strong> <em>will not</em> delete anything!</p>
+    <h3 class="subtitle">Privacy / Private Information</h3>
+    <p><strong>Missing e</strong> does not obtain, use or store your email address, password, IP address, search queries or contents of any of your existing posts.</p>
+    <p>There is a <a href="http://blog.missing-e.com/post/6005505122/permissions">useful Tumblr post</a> that explains what browser extension permissions <strong>Missing e</strong> uses, explaining many of the security notifications you get when installing the extension. <a href="http://blog.missing-e.com/post/6005505122/permissions">Click here to read about that</a>.</p>
+    <h3 class="subtitle">Page Scraping</h3>
+    <p><strong>Missing e</strong> implements only a small amount of what Tumblr calls <em>page scraping</em>. It is not done regularly, nor is it excessive. With it, you have access to features like adding your sidebar to all dashboard pages, seeing timestamps of messages in your inbox and being able to reblog yourself from the dashboard.</p>
+    <p class="center_text"><a href="http://blog.missing-e.com/post/15049053871/tumblrs-support-problem-with-missing-e">Click here to reblog about this on Tumblr</a></p>
+    <hr>
+    <p>All users are encouraged to <a href="https://github.com/jcutler/Missing-E" target="_blank" title="Missing e on Github">examine the <strong>Missing e</strong> source code</a> to confirm all of these claims.</p>
+    <p>If you have any questions about specific problems you've heard are related to <strong>Missing e</strong> or about the extension in general, you are welcome to <a href="http://blog.missing-e.com/ask">drop by the <strong>Missing e</strong> askbox</a>. If you are still uncomfortable with using <strong>Missing e</strong>, please feel free to uninstall it (<a href="#uninstall">instructions</a>).</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="permissions"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>The download page has a lot of warnings about what <strong>Missing e</strong> could do on my comptuer. Is it safe to install?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Browser extensions need to ask for certain permissions from your browser in order for many features to work. Please read <a href="http://blog.missing-e.com/post/6005505122/permissions">this post on Tumblr</a> for an explanation of the permissions that <strong>Missing e</strong> uses and why it uses them.</p>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Install / Uninstall / Update</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="install"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Okay, you've convinced me. How do I install <strong>Missing e</strong>?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Installing <strong>Missing e</strong> is easy!</p>
+    <p>Simply <a href="download">click here</a> if you are currently using the browser you want to install on, or click the <em>Download</em> button on the <a href="/"><strong>Missing e</strong> home page</a>. Then, follow the instructions!</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="uninstall"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span><strong>Missing e</strong> isn't working out for me. How do I uninstall it?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>I'm sorry to hear that! Don't forget, if there are certain features you don't like and others you do, you can customize <strong>Missing e</strong> and only use the features you want. <a href="#featurecontrol">Find out how</a>.</p>
+    <p>If you are having problems with <strong>Missing e</strong> please <a href="troubleshoot">try troubleshooting and/or submitting a bug report</a> so I can help fix your issue.</p>
+    <p>If you still want to uninstall, follow these instructions:</p>
+    <div class="chrome_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Google Chrome</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>In the menu (click the wrench icon at the top right of the browser window), go to <em>Tools</em> and click on <em>Extensions</em></li>
+       <li>In your extensions list, find the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Click the <em>Remove</em> button to uninstall it</li>
+        </ul>
+       </li>
+      </ul>
      </div>
-     <div class="safari_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Apple Safari</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>Click on the <span class="big"><strong>e.</strong></span> button at the top of any Tumblr dashboard page</li>
-       </ul>
-       <h3>OR</h3>
-       <ul>
-        <li>In the Safari menubar, click the <span class="big"><strong>e.</strong></span> button</li>
-       </ul>
-      </div>
-     </div>
-     <div class="firefox_instructions">
-      <div class="instructions_title"><div class="more"></div><h3>Mozilla Firefox</h3></div>
-      <div class="instructions">
-       <ul>
-        <li>Click on the <span class="big"><strong>e.</strong></span> button at the top of any Tumblr dashboard page</li>
-       </ul>
-       <h3>OR</h3>
-       <ul>
-        <li>In the Firefox add-on bar (usually at the bottom of the browser window), click on the <span class="big"><strong>e.</strong></span> button</li>
-       </ul>
-      </div>
+    </div>
+    <div class="safari_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Apple Safari</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>Open the Safari menu
+        <ul>
+         <li><strong>Mac OS X:</strong> click <em>Safari</em> in the menu bar at the top of the screen</li>
+         <li><strong>Windows:</strong> click on the gear icon at the top right of the browser window</li>
+        </ul>
+       </li>
+       <li>In the Safari menu, click on <em>Preferences</em></li>
+       <li>In the Preferences window, click the <em>Extensions</em> tab at the top</li>
+       <li>In your extensions list on the left, click the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Click the <em>Uninstall</em> button to uninstall it</li>
+        </ul>
+       </li>
+      </ul>
      </div>
     </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="transfersettings"></a><a class="anchor" id="transfer-settings"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I copy my <strong>Missing e</strong> settings from one browser to another?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>On the browser you wish to copy your <strong>Missing e</strong> settings <em>from</em> (the <em>source browser</em>), go to the <strong>Missing e</strong> settings page (<a href="settings">find out how to get there</a>). At the top of the settings page, click on the <em>Export</em> button. A dialog box will appear allowing you to save your <strong>Missing e</strong> settings in an <em>xml</em> file.</p>
-     <p>If you are moving your <strong>Missing e</strong> settings to another computer, transfer your saved <em>xml</em> file to that computer.</p>
-     <p>Open the <strong>Missing e</strong> settings page in the browser to which you want to apply your settings (the <em>destination browser</em>). At the top of the page, click on the <em>Import</em> button. A dialog box will appear asking you to open an <em>xml</em> file. Select the <em>xml</em> file you created with the <em>source browser</em>.</p>
-     <p>When the file is opened, the extension will apply any changes. Any settings you have manually set in the source browser will be set in the destination browser. All settings that you <em>have not</em> manually set in the source browser will be <em>reset</em> to their <em>default values</em> in the destination browser.</p>
-    </div>
-   </div>
-  </div>
-  <div class="faq_group">
-   <h1>Ask Tweaks</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="asktweaks-on"></a><a class="anchor" id="tag-asks"></a><a class="anchor" id="queue-asks"></a><a class="anchor" id="draft-asks"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I add tags when I answer a message (ask)?</h2>
-     <h2><span class="faq_icon"></span>How do I queue (or save as draft) answers to messages (asks)?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Tagging of messages (asks) and additional post options (queue, draft, private) when you answer them (part of the <em>Ask Tweaks</em> feature) is <strong>disabled by default</strong> when you install <strong>Missing e</strong>. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>). Click the <em>Social Features</em> tab and, in the <em>Ask Tweaks</em> section, activate the setting labelled "add extra post options".</p>
-    </div>
-   </div>
-  </div>
-  <div class="faq_group">
-   <h1>Better Reblogs</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="reblog-tags"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why does <strong>Missing e</strong> add a <strong>#</strong> or <strong>!</strong> to reblog buttons on post permalink pages?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>The <em>Better Reblogs</em> feature can automatically keep the tags from a post when you reblog it. On individual post pages, <em>Better Reblogs</em> must get the tags from the Tumblr RSS feed. When this is successful (to show that tags will be preserved when you reblog), the reblog button changes to this:</p>
-     <p class="center_text"><img src="images/examples/reblog_tags.png" alt="Reblog with Tags button" /></p>
-     <p>During times when Tumblr is very busy or error-prone, the RSS feeds may not work correctly. <strong>Missing e</strong> will retry a few times before giving up. When that happens, tags will not be preserved when you reblog this post. To indicate this, the reblog button will change to this:</p>
-     <p class="center_text"><img src="images/examples/reblog_tags_fail.png" alt="Reblog with Tags (failed) button" /></p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="no-reblog-tags"></a><a class="anchor" id="reblog-tags-off"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>I don't want my reblogs to include tags from the original post. How can I turn that feature off?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>The <em>Better Reblogs</em> feature can automatically keep the tags from a post when you reblog it. You can turn this off in the settings (<a href="#settings">find out how to get there</a>), under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
-     <p>You can:</p>
-     <ul>
-      <li>Disable automatic adding of the original post's tags
-       <ul>
-        <li>You will still be able to add the original post tags by clicking on the <em>"Reblog Tags"</em> button</li>
-       </ul>
-      </li>
-      <li>Turn off tag reblogging completely
-       <ul>
-        <li>Do this by turning off the checkbox labelled <em>"Keep original tags when reblogging"</em></li>
-       </ul>
-      </li>
-     </ul>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="quick-reblog"></a><a class="anchor" id="quickreblog"></a><a class="anchor" id="quick-reblog-on"></a><a class="anchor" id="quickreblog-on"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I turn on <strong>Quick (1-Click) Reblogging</strong>?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Quick (1-click) reblogging (part of the <em>Better Reblogs</em> feature) is <strong>disabled by default</strong> when you first install <strong>Missing e</strong>. To enable it, go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="quick-reblog-account"></a><a class="anchor" id="quickreblog-account"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>I want <strong>Quick (1-Click) Reblogging</strong> to post to one of my secondary Tumblr blogs. How can I do that?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>If you want to post a reblog to a secondary Tumblr associated with your current account, simply select a different Tumblr blog in the quick reblog menu that appears when you hover over a reblog button. Then click to reblog!</p>
-     <p>If you want to change the blog that the quick reblog menu will post to by default, you can do so in the <strong>Missing e</strong> settings page (<a href="#settings">find out how to get there</a>), under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
-     <p>In these settings, either choose <strong>Main Blog</strong> or <strong>Secondary Blog</strong> and specify an account name in the box below. Remember that you <em>must be able to post</em> on the blog you specify with the account you are using. Otherwise, quick (1-click) reblogging will default to the first Tumblr blog in its list.</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="quick-reblog-tags"></a><a class="anchor" id="quickreblog-tags"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I add multiple tags when using <strong>Quick (1-Click) Reblogging</strong>?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>When you hover your mouse over a post's reblog button, the quick reblog menu appears. In the <em>"Tags"</em> input box at the bottom, you can add and edit tags. To add multiple tags, simply separate each individual tag with a comma.</p>
-     <p>For example, to tag a post with <code>#chocolate #cookie</code>, simply type <code>chocolate, cookie</code> into the <em>"Tags"</em> input box before clicking the reblog button.</p>
-    </div>
-   </div>
-  </div>
-  <div class="faq_group">
-   <h1>Bookmarker</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="bookmark-follow"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why does the bookmark icon not appear on some posts?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>The <em>Bookmarker</em> feature allows you to jump directly to a post in your dashboard without having to scroll all the way there yourself. As such, you are only able to bookmark posts by Tumblrs that you follow. Other posts (like those on a tag search results page) will not have a bookmark icon that you can click on.</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="bookmark-issue"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why does loading a bookmarked post sometimes loads the dash at the wrong post or a post earlier than the one I bookmarked?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your dashboard for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p>
-     <p><em>Bookmarker</em> may instead bring you to the next earlier post by someone that you follow.</p>
-     <p>This is an issue with Tumblr's dashboard and is <em>not</em> caused by <strong>Missing e</strong>.</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="bookmark-format"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I change the bookmark labels to 12-hour format instead of 24-hour?</h2>
-     <h2><span class="faq_icon"></span>How do I change the way the date and time is shown in bookmark labels?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>In the <strong>Missing e</strong> settings (<a href="#settings">find out how to get there</a>), you can change the default format of how the date and time will appear on bookmark labels. By default, the format will be <code>%Y-%m-%D %H:%i</code>, which would look like <code>2012-04-01 22:07</code>.</p>
-     <p>There are plenty of these special format codes that you can use, all of them conveniently listed alongside the format option in the settings page. For example, if you wanted that same bookmark to show up as <code>missing-e: 1-Apr-2011 10:07pm</code> (for a post published by Tumblr <em>"missing-e"</em>), you would enter the format as <code>%u: %d-%M-%Y %g:%i%a</code>.</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="bookmark-rename"></a><a class="anchor" id="rename-bookmark"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I change the name of a bookmark to something more useful?</h2>
-    </div>
-    <div class="faq_answer">
-     <p><strong>You can set a custom name for a bookmark when you create it:</strong></p>
-     <ul>
-      <li>Hold down the <code>Shift</code> key when you click on the bookmark icon of a post</li>
-      <li>A popup box will appear for you to type in the custom bookmark name</li>
-     </ul>
-     <p><strong>You can change the name of an existing bookmark:</strong></p>
-     <ul>
-      <li>Hold down the <code>Shift</code> key when you click on a bookmark in the bookmark list in your dashboard sidebar</li>
-      <li>The bookmark entry will change to an input where you can type in the custom name</li>
-      <li>If you decide not to change the name, just press the <code>Esc</code> key</li>
-     </ul>
-     <div class="screenshot_container">
-      <div class="screenshot">
-       <img src="images/examples/rename_bookmark.png" alt="Renaming a bookmark" />
-       <div class="screenshot_overlay"></div>
-      </div>
-      <div class="caption">Renaming an existing bookmark</div>
+    <div class="firefox_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Mozilla Firefox</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>In the Firefox menu, go to <em>Tools</em> and click on <em>Add-ons</em></li>
+       <li>In your add-ons list, find the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Click the <em>Remove</em> button to uninstall it</li>
+        </ul>
+       </li>
+      </ul>
      </div>
     </div>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Dashboard Tweaks</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="shuffle"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I shuffle or randomize posts in my queue?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>The queue <em>Shuffle</em> button (part of the <em>Dashboard Tweaks</em> feature) is <strong>disabled by default</strong> when you first install <strong>Missing e</strong>. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Dashboard Features</em> tab, in the <em>Dashboard Tweaks</em> section.</p>
-     <p>Once activated, a <em>Shuffle</em> button will be added to the sidebar whenever you are in your Tumblr Queue. Clicking it will randomize the order of the queued posts currently visible on the page.</p>
-    </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="update"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I update <strong>Missing e</strong> to the newest version?</h2>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="shuffle-limit"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why does the <em>Shuffle</em> button not randomize all the posts in my queue (including ones not currently on the page)?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Due to the way the Tumblr interface works, the <em>Shuffle</em> button can only randomize queued posts that are currently visible in the Queue page.</p>
-     <p>However, you can use Tumblr's <em>endless scrolling</em> dashboard feature to load as many queued posts as you want. The <em>Shuffle</em> button can then randomize a larger set of queued posts.</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="experimental-reblogreplies"></a><a class="anchor" id="experimental-reblog-replies"></a><a class="anchor" id="reblogreplies"></a><a class="anchor" id="reblog-replies"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>What is the experimental <em>"Allow replies to reblogs"</em> setting? Why is it experimental?</h2>
-    </div>
-    <div class="faq_answer">
-     <p class="warning"><span class="experimental_warning"></span><strong><em>Experimental</em></strong> settings add useful, interesting features to Tumblr, but <em>may not work reliably</em>. This setting is provided for your use, but <em>is not supported</em> and <em>may be removed from <strong>Missing e</strong></em> at any time, without notice. Support questions regarding this setting will be ignored!</p>
-     <p>The <em>"Allow replies to reblogs"</em> option allows you to reply to reblogged posts with an experimental <span class="experimental_reply"></span> or <strong>[reply]</strong> button. If the user who reblogged it has enabled <em>"Show notifications"</em> in their <a href="http://www.tumblr.com/preferences">Tumblr preferences</a>, they will <em>most likely</em> receive a notification of your reply. However, your reply <em>may not</em> always show up in the post's notes if you have also reblogged it (or reblog it after replying).</p>
-     <p>Under some conditions, reblog replies may not work. When a reblog reply is sent, the experimental reply button will be replaced with <span class="experimental_reply_success"></span> or <strong>&#x2714;</strong>, if successful. If the reply fails, you will see <span class="experimental_reply_fail"></span> or <strong><del>&nbsp;reply&nbsp;</del></strong>.</p>    
-    </div>
+   <div class="faq_answer">
+    <p>Updating <strong>Missing e</strong> is easy!</p>
+    <p>Simply <a href="update">click here</a> or click the <em>Update</em> button on the <a href="/"><strong>Missing e</strong> home page</a>. Then, follow the instructions!</p>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Dash Links to Tabs</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="newtabs"></a><a class="anchor" id="new-tabs"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>I don't want <strong>Missing e</strong> to open all these new tabs. How do I stop it?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>In the settings (<a href="#settings">find out how to get there</a>), under the <em>Dashboard Features</em> tab, in the <em>Dash Links to Tabs</em> section, you can change if and when <strong>Missing e</strong> opens new tabs.</p>
-     <p>You can change whether or not new tabs are opened for these actions:</p>
-     <ul>
-      <li>clicking the <em>new post</em> buttons at the top of your dashboard</li>
-      <li>clicking buttons in your Tumblr sidebar</li>
-      <li>clicking the reblog button for dashboard posts</li>
-      <li>clicking the edit button on your own posts in the dashboard</li>
-     </ul>
-     <p>If you do not want <em>any</em> new tabs to be opened, simply click the big ON/OFF toggle switch for the <em>Dash Links to Tabs</em> feature in the <strong>Missing e</strong> settings page.</p>
-    </div>
+ </div>
+ <div class="faq_group">
+  <h1>Customizing / Settings</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="featurecontrol"></a><a class="anchor" id="feature-control"></a><a class="anchor" id="settings"></a><a class="anchor" id="customize"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How can I customize how <strong>Missing e</strong> works?</h2>
+    <h2><span class="faq_icon"></span>How can I see or change my <strong>Missing e</strong> settings?</h2>
+    <h2><span class="faq_icon"></span>I don't want to use one of the features. How do I turn it off?</h2>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="safari-tabs"></a><a class="anchor" id="safaritabs"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>When I click on a link in with the <em>Safari</em> browser, it opens in a new window instead of a tab. How can I change that?</h2>
+   <div class="faq_answer">
+    <p>All of <strong>Missing e</strong>'s features can be enabled, configured and disabled individually! This customizability is one of the extensions best assets.</p>
+    <p>Here's how to access the <strong>Missing e</strong> settings page:</p>
+    <div class="chrome_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Google Chrome</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>Click on the <span class="big"><strong>e.</strong></span> button at the top of any Tumblr dashboard page</li>
+      </ul>
+      <h3>OR</h3>
+      <ul>
+       <li>In the menu (click the wrench icon at the top right of the browser window), go to <em>Tools</em> and click on <em>Extensions</em></li>
+       <li>In your extensions list, find the entry for <strong>Missing e</strong>
+        <ul>
+         <li>Click on the <em>Options</em> link</li>
+        </ul>
+       </li>
+      </ul>
+     </div>
     </div>
-    <div class="faq_answer">
-     <p>By default, Safari will open any link that asks for a new window in another browser window instead of a new tab. You can change this behaviour in Safari's preferences.</p>
-     <ul>
-      <li>Open the Safari menu
-       <ul>
-        <li><strong>Mac OS X:</strong> click <em>Safari</em> in the menu bar at the top of the screen</li>
-        <li><strong>Windows:</strong> click the gear icon at the top right of the browser window</li>
-       </ul>
-      </li>
-      <li>In the Safari menu, click on <em>Preferences</em></li>
-      <li>In the Preferences window, click the <em>Tabs</em> button at the top</li>
-      <li>Change the setting labelled <em>"Open pages in tabs instead of windows"</em> to <strong>"Automatically"</strong></li>
-     </ul>
-     <div class="screenshot_container">
-      <div class="screenshot">
-       <img src="images/examples/safari_tabs.png" alt="Safari preferences - open pages in tabs">
-       <div class="screenshot_overlay"></div>
-      </div>
-      <div class="caption">Safari preferences - open pages in tabs</div>
+    <div class="safari_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Apple Safari</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>Click on the <span class="big"><strong>e.</strong></span> button at the top of any Tumblr dashboard page</li>
+      </ul>
+      <h3>OR</h3>
+      <ul>
+       <li>In the Safari menubar, click the <span class="big"><strong>e.</strong></span> button</li>
+      </ul>
+     </div>
+    </div>
+    <div class="firefox_instructions">
+     <div class="instructions_title"><div class="more"></div><h3>Mozilla Firefox</h3></div>
+     <div class="instructions">
+      <ul>
+       <li>Click on the <span class="big"><strong>e.</strong></span> button at the top of any Tumblr dashboard page</li>
+      </ul>
+      <h3>OR</h3>
+      <ul>
+       <li>In the Firefox add-on bar (usually at the bottom of the browser window), click on the <span class="big"><strong>e.</strong></span> button</li>
+      </ul>
      </div>
     </div>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Goto Dash Post</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="goto-issue"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why does clicking on the <em>Goto Dash</em> button of some posts bring me to the wrong post on the dashboard or a post earlier than the correct one?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your dashboard for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p>
-     <p><em>Goto Dash Post</em> may instead bring you to the next earlier post by someone that you follow.</p>
-     <p>This is an issue with Tumblr's dashboard and is <em>not</em> caused by <strong>Missing e</strong>.</p>
-    </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="transfersettings"></a><a class="anchor" id="transfer-settings"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I copy my <strong>Missing e</strong> settings from one browser to another?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>On the browser you wish to copy your <strong>Missing e</strong> settings <em>from</em> (the <em>source browser</em>), go to the <strong>Missing e</strong> settings page (<a href="settings">find out how to get there</a>). At the top of the settings page, click on the <em>Export</em> button. A dialog box will appear allowing you to save your <strong>Missing e</strong> settings in an <em>xml</em> file.</p>
+    <p>If you are moving your <strong>Missing e</strong> settings to another computer, transfer your saved <em>xml</em> file to that computer.</p>
+    <p>Open the <strong>Missing e</strong> settings page in the browser to which you want to apply your settings (the <em>destination browser</em>). At the top of the page, click on the <em>Import</em> button. A dialog box will appear asking you to open an <em>xml</em> file. Select the <em>xml</em> file you created with the <em>source browser</em>.</p>
+    <p>When the file is opened, the extension will apply any changes. Any settings you have manually set in the source browser will be set in the destination browser. All settings that you <em>have not</em> manually set in the source browser will be <em>reset</em> to their <em>default values</em> in the destination browser.</p>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Keyboard Shortcuts</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="keyboard"></a><a class="anchor" id="keyboard-shortcuts"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I use keyboard shortcuts on Tumblr?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>The basic Tumblr interface allows you to navigate your dashboard using only your keboard:</p>
-     <ul>
-      <li><code>J</code> - Jump to the next post in the dashboard</li>
-      <li><code>K</code> - Jump to the previous post in the dashboard</li>
-     </ul>
-     <p>If you use Tumblr's <em>endless scrolling</em> dashboard, you can continue navigating through posts using these keys. However, if you do not use <em>endless scrolling</em>, navigating with <code>J</code> and <code>K</code> will stop once you reach the bottom (or top) of the dashboard.</p>
-     <p>To improve navigation for people who don't use <em>endless scrolling</em>, <strong>Missing e</strong> provides a setting that you can activate in the <em>Dashboard Tweaks</em> feature (<a href="#settings">find out how to get to the settings page</a>) that wil cause the <code>J</code> and <code>K</code> keys to jump to the next page automatically when you reach the bottom (or top) of the current page!</p>
-     <p>When you navigate on your dashboard with the <code>J</code> and <code>K</code> keys, Tumblr and <strong>Missing e</strong> provide a few more keyboard shortcuts that can perform certain actions on the current post:</p>
-     <ul>
-      <li><code>L</code> - <strong>Like</strong> the current post <em>(this feature is part of the Tumblr interface)</em></li>
-      <li><code>M</code> - Bookmark the current post</li>
-      <li><code>C</code> - Open the comment/reply box for the current post</li>
-      <li><code>E</code> - Edit the current post</li>
-      <li><code>S</code> - Select the current post for <em>mass deletion</em> (when that feature is active)</li>
-     </ul>
-     <p>If you use the <strong>Missing e</strong> quick (1-click) reblogging feature (<a href="#quick-reblog-on">find out how to activate it</a>), the following keyobard shortcuts are also available:</p>
-     <ul>
-      <li><code>R</code> - Reblog the current post using <em>quick reblogging</em></li>
-      <li><code>D</code> - Reblog the current post to your drafts using <em>quick reblogging</em></li>
-      <li><code>Q</code> - Reblog the current post to your queue using <em>quick reblogging</em></li>
-      <li><code>T</code> - Open the <em>quick reblog</em> menu to add/edit tags (then press one of the other keys to reblog it)</li>
-     </ul>
-    </div>
+ </div>
+ <div class="faq_group">
+  <h1>Ask Tweaks</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="asktweaks-on"></a><a class="anchor" id="tag-asks"></a><a class="anchor" id="queue-asks"></a><a class="anchor" id="draft-asks"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I add tags when I answer a message (ask)?</h2>
+    <h2><span class="faq_icon"></span>How do I queue (or save as draft) answers to messages (asks)?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Tagging of messages (asks) and additional post options (queue, draft, private) when you answer them (part of the <em>Ask Tweaks</em> feature) is <strong>disabled by default</strong> when you install <strong>Missing e</strong>. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>). Click the <em>Social Features</em> tab and, in the <em>Ask Tweaks</em> section, activate the setting labelled "add extra post options".</p>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Magnifier</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="magnifier"></a><a class="anchor" id="magnifier-use"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I use <em>Magnifier</em>? Where is it?</h2>
-    </div>
-    <div class="faq_answer">
-     <p><em>Magnifier</em> adds a small <img src="images/magnifier-icon.png" style="height:16px;width:16px;" alt="Magnifier icon" /> icon to all photo posts on the dashboard. Simply click on it to view the full-size image without ever leaving the dashboard. <em>Magnifier</em> will resize the image to fit on your screen, but you can click on the enlarged image to open it in a new tab or window.</p>
-     <p>The <em>Magnifier</em> icon is also added to <strong>photoset</strong> posts. When you click on it, the enlarged images will appear as a slideshow that you can navgiate using arrow buttons on either side.</p>
-    </div>
+ </div>
+ <div class="faq_group">
+  <h1>Better Reblogs</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="reblog-tags"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why does <strong>Missing e</strong> add a <strong>#</strong> or <strong>!</strong> to reblog buttons on post permalink pages?</h2>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="magnifier-resized"></a><a class="anchor" id="magnifier-full"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why is the <em>Magnifier</em> enlarged photo still not full size?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Photos enlarged by <em>Magnifier</em> are shown scaled down so that they fit into your browser window. You can click on the enlarged photo to open it in its own tab or window at full size.</p>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="magnifier-avatar"></a><a class="anchor" id="magnify-avatar"></a><a class="anchor" id="magnifier-avatars"></a><a class="anchor" id="magnify-avatars"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How can I enlarge Tumblr user avatars?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>The option that enables enlarging of Tumblr user avatars (part of the <em>Magnifier</em> feature) is <strong>disabled by default</strong> when you first install <strong>Missing e</strong>. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Dashboard Features</em> tab, in the <em>Magnifier</em> section.</p>
-     <p>When the option is enabled, <em>Magnifier</em> adds a <img src="images/magoverlay.png" alt="Magnify Avatar Icon" style="height:16px;width:16px;" /> icon to Tumblr avatars that appears <em>when you hover your mouse over the small avatar image</em>. Clicking on this icon enlarges the avatar image without leaving the current page.</p>
-    </div>
+   <div class="faq_answer">
+    <p>The <em>Better Reblogs</em> feature can automatically keep the tags from a post when you reblog it. On individual post pages, <em>Better Reblogs</em> must get the tags from the Tumblr RSS feed. When this is successful (to show that tags will be preserved when you reblog), the reblog button changes to this:</p>
+    <p class="center_text"><img src="images/examples/reblog_tags.png" alt="Reblog with Tags button" /></p>
+    <p>During times when Tumblr is very busy or error-prone, the RSS feeds may not work correctly. <strong>Missing e</strong> will retry a few times before giving up. When that happens, tags will not be preserved when you reblog this post. To indicate this, the reblog button will change to this:</p>
+    <p class="center_text"><img src="images/examples/reblog_tags_fail.png" alt="Reblog with Tags (failed) button" /></p>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Mass Editor Tweaks</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="masseditorlimit"></a><a class="anchor" id="masseditor-limit"></a><a class="anchor" id="mass-editor-limit"></a><a class="anchor" id="masseditor100"></a><a class="anchor" id="masseditor-100"></a><a class="anchor" id="mass-editor-100"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why can't I select more posts in the Mass Editor? I can select some, but then the select buttons stop working!</h2>
-     <h2><span class="faq_icon"></span>Why can I only select 100 posts in the Mass Editor?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>The Tumblr <em>Mass Editor</em> is limited to deleting or editing tags for only 100 posts at a time. This is a limitation of the Tumblr interface, not <strong>Missing e</strong>.</p>
-    </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="no-reblog-tags"></a><a class="anchor" id="reblog-tags-off"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>I don't want my reblogs to include tags from the original post. How can I turn that feature off?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>The <em>Better Reblogs</em> feature can automatically keep the tags from a post when you reblog it. You can turn this off in the settings (<a href="#settings">find out how to get there</a>), under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
+    <p>You can:</p>
+    <ul>
+     <li>Disable automatic adding of the original post's tags
+      <ul>
+       <li>You will still be able to add the original post tags by clicking on the <em>"Reblog Tags"</em> button</li>
+      </ul>
+     </li>
+     <li>Turn off tag reblogging completely
+      <ul>
+       <li>Do this by turning off the checkbox labelled <em>"Keep original tags when reblogging"</em></li>
+      </ul>
+     </li>
+    </ul>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Posting Tweaks</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="uploader-load"></a><a class="anchor" id="missing-uploader"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why is the <em>'+ Upload Photo'</em> button not showing up on a new post or edit post page?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Much like the <em>'+ Upload Photo'</em> button that Tumblr places on new text posts pages, <em>Posting Tweaks</em> must load an additional Tumblr page in the background before adding the button. During times when Tumblr is very busy or error-prone, this page my not load.</p>
-     <p>Try reloading the post page to get it to try again.</p>
-    </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="quick-reblog"></a><a class="anchor" id="quickreblog"></a><a class="anchor" id="quick-reblog-on"></a><a class="anchor" id="quickreblog-on"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I turn on <strong>Quick (1-Click) Reblogging</strong>?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Quick (1-click) reblogging (part of the <em>Better Reblogs</em> feature) is <strong>disabled by default</strong> when you first install <strong>Missing e</strong>. To enable it, go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Reblog Yourself</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="reblog-load"></a><a class="anchor" id="reblog-yourself-load"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why do the reblog links for some of my posts in the dashboard show up like this: <span class="reblog_fail"></span> or <del>&nbsp;reblog&nbsp;</del>?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>To add a reblog link to some of your posts on the dashboard, <em>Reblog Yourself</em> has to read additional Tumblr post information in the background. During times when Tumblr is very busy or error-prone, this may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <span class="reblog_fail_small"></span> or <del>&nbsp;reblog&nbsp;</del>.</p>
-     <p>You can click on this button to make <em>Reblog Yourself</em> try again. If it shows up without the exclamation mark (or without the strikethrough text), then the link works!</p>
-    </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="quick-reblog-account"></a><a class="anchor" id="quickreblog-account"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>I want <strong>Quick (1-Click) Reblogging</strong> to post to one of my secondary Tumblr blogs. How can I do that?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>If you want to post a reblog to a secondary Tumblr associated with your current account, simply select a different Tumblr blog in the quick reblog menu that appears when you hover over a reblog button. Then click to reblog!</p>
+    <p>If you want to change the blog that the quick reblog menu will post to by default, you can do so in the <strong>Missing e</strong> settings page (<a href="#settings">find out how to get there</a>), under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</p>
+    <p>In these settings, either choose <strong>Main Blog</strong> or <strong>Secondary Blog</strong> and specify an account name in the box below. Remember that you <em>must be able to post</em> on the blog you specify with the account you are using. Otherwise, quick (1-click) reblogging will default to the first Tumblr blog in its list.</p>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Reply Replies</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="reply-how"></a><a class="anchor" id="replyreplies-how"></a><a class="anchor" id="replies-how"></a><a class="anchor" id="replyreplies"></a><a class="anchor" id="reply"></a><a class="anchor" id="replies"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I reply to a reply (or other post note)?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>Although you can also reply to notes loaded by clicking on the notes count button of a dashboard post, it is best if you enable <em>Show notifications</em> in your <a href="http://www.tumblr.com/preferences">Tumblr preferences</a> to show notifications directly on your dashboard.</p>
-     <p>Just click on the notification icon on the right side of the one of these notifications (heart, reply bubble, etc) to open a new post with the notification already added, ready for you to comment on.</p>
-     <div class="screenshot_container">
-      <div class="screenshot">
-       <img src="images/examples/notification.png" alt="Replying to a Tumblr dashboard notification">
-       <div class="screenshot_overlay"></div>
-      </div>
-      <div class="caption">Replying to a Tumblr dashboard notification</div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="quick-reblog-tags"></a><a class="anchor" id="quickreblog-tags"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I add multiple tags when using <strong>Quick (1-Click) Reblogging</strong>?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>When you hover your mouse over a post's reblog button, the quick reblog menu appears. In the <em>"Tags"</em> input box at the bottom, you can add and edit tags. To add multiple tags, simply separate each individual tag with a comma.</p>
+    <p>For example, to tag a post with <code>#chocolate #cookie</code>, simply type <code>chocolate, cookie</code> into the <em>"Tags"</em> input box before clicking the reblog button.</p>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Bookmarker</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="bookmark-follow"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why does the bookmark icon not appear on some posts?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>The <em>Bookmarker</em> feature allows you to jump directly to a post in your dashboard without having to scroll all the way there yourself. As such, you are only able to bookmark posts by Tumblrs that you follow. Other posts (like those on a tag search results page) will not have a bookmark icon that you can click on.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="bookmark-issue"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why does loading a bookmarked post sometimes loads the dash at the wrong post or a post earlier than the one I bookmarked?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your dashboard for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p>
+    <p><em>Bookmarker</em> may instead bring you to the next earlier post by someone that you follow.</p>
+    <p>This is an issue with Tumblr's dashboard and is <em>not</em> caused by <strong>Missing e</strong>.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="bookmark-format"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I change the bookmark labels to 12-hour format instead of 24-hour?</h2>
+    <h2><span class="faq_icon"></span>How do I change the way the date and time is shown in bookmark labels?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>In the <strong>Missing e</strong> settings (<a href="#settings">find out how to get there</a>), you can change the default format of how the date and time will appear on bookmark labels. By default, the format will be <code>%Y-%m-%D %H:%i</code>, which would look like <code>2012-04-01 22:07</code>.</p>
+    <p>There are plenty of these special format codes that you can use, all of them conveniently listed alongside the format option in the settings page. For example, if you wanted that same bookmark to show up as <code>missing-e: 1-Apr-2011 10:07pm</code> (for a post published by Tumblr <em>"missing-e"</em>), you would enter the format as <code>%u: %d-%M-%Y %g:%i%a</code>.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="bookmark-rename"></a><a class="anchor" id="rename-bookmark"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I change the name of a bookmark to something more useful?</h2>
+   </div>
+   <div class="faq_answer">
+    <p><strong>You can set a custom name for a bookmark when you create it:</strong></p>
+    <ul>
+     <li>Hold down the <code>Shift</code> key when you click on the bookmark icon of a post</li>
+     <li>A popup box will appear for you to type in the custom bookmark name</li>
+    </ul>
+    <p><strong>You can change the name of an existing bookmark:</strong></p>
+    <ul>
+     <li>Hold down the <code>Shift</code> key when you click on a bookmark in the bookmark list in your dashboard sidebar</li>
+     <li>The bookmark entry will change to an input where you can type in the custom name</li>
+     <li>If you decide not to change the name, just press the <code>Esc</code> key</li>
+    </ul>
+    <div class="screenshot_container">
+     <div class="screenshot">
+      <img src="images/examples/rename_bookmark.png" alt="Renaming a bookmark" />
+      <div class="screenshot_overlay"></div>
      </div>
-     <p>You can also reply to the notes that are displayed when you click on the notes count button of a dashboard post. Simply click on the notification icon on the right side of one of these notes to open a new post with the notification already added, ready for you to comment on.</p>
-     <div class="screenshot_container">
-      <div class="screenshot">
-       <img src="images/examples/reply_note.png" alt="Replying to a Tumblr post note">
-       <div class="screenshot_overlay"></div>
-      </div>
-      <div class="caption">Replying to a Tumblr post note</div>
-     </div>
-    </div>
-   </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="reply-multiple"></a><a class="anchor" id="replies-multi"></a><a class="anchor" id="multiple-replies"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I reply to more than one notification at once?</h2>
-    </div>
-    <div class="faq_answer">
-     <ol>
-      <li>Hold down the <code>Shift</code> key and click on the icons of each of the notifications you want to reply to.</li>
-      <li>Let go of the <code>Shift</code> key and click on the icon of the last notification you want to include.</li>
-      <li>All the notifications will appear in a single <em>Reply Replies</em> post in chronological order.</li>
-     </ol>
+     <div class="caption">Renaming an existing bookmark</div>
     </div>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Sidebar Tweaks</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="add-sidebar"></a><a class="anchor" id="addsidebar"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I get my blog sidebar (posts, followers, messages, etc.) on every dashboard page?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>You can add a blog sidebar (which includes your post, follower, message, draft and queue counts) to dashboard pages that don't normall have them. You can activate this feature in the settings page (<a href="#settings">find out how to get there</a>), under the <em>Dashboard Features</em> tab, in the <em>Sidebar Tweaks</em> section.</p>
-    </div>
+ </div>
+ <div class="faq_group">
+  <h1>Dashboard Tweaks</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="shuffle"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I shuffle or randomize posts in my queue?</h2>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="sidebar-switch"></a><a class="anchor" id="sidebar-account"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I choose which Tumblr blog sidebar gets added to every dashboard page?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>When you activate the added blog sidebar feature (<a href="#add-sidebar">find out how</a>), <em>Sidebar Tweaks</em> will start out by adding the blog sidebar for your <strong>primary</strong> Tumblr blog associated with your account. If you want a different blog's sidebar to appear, click on the blog title at the top of the added sidebar and then select a different Tumblr blog from the menu that appears.</p>
-     <p>When you select a different blog, your choice will be remembered the next time that you load the dashboard! Please note that you <em>cannot switch</em> the blog sidebars shown on blog pages (<strong>/blog/your-name</strong>).</p>
-     <div class="screenshot_container">
-      <div class="screenshot">
-       <img src="images/examples/added_sidebar.png" alt="Selecting an account for the added sidebar">
-       <div class="screenshot_overlay"></div>
-      </div>
-      <div class="caption">Selecting an account for the added sidebar</div>
+   <div class="faq_answer">
+    <p>The queue <em>Shuffle</em> button (part of the <em>Dashboard Tweaks</em> feature) is <strong>disabled by default</strong> when you first install <strong>Missing e</strong>. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Dashboard Features</em> tab, in the <em>Dashboard Tweaks</em> section.</p>
+    <p>Once activated, a <em>Shuffle</em> button will be added to the sidebar whenever you are in your Tumblr Queue. Clicking it will randomize the order of the queued posts currently visible on the page.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="shuffle-limit"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why does the <em>Shuffle</em> button not randomize all the posts in my queue (including ones not currently on the page)?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Due to the way the Tumblr interface works, the <em>Shuffle</em> button can only randomize queued posts that are currently visible in the Queue page.</p>
+    <p>However, you can use Tumblr's <em>endless scrolling</em> dashboard feature to load as many queued posts as you want. The <em>Shuffle</em> button can then randomize a larger set of queued posts.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="experimental-reblogreplies"></a><a class="anchor" id="experimental-reblog-replies"></a><a class="anchor" id="reblogreplies"></a><a class="anchor" id="reblog-replies"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>What is the experimental <em>"Allow replies to reblogs"</em> setting? Why is it experimental?</h2>
+   </div>
+   <div class="faq_answer">
+    <p class="warning"><span class="experimental_warning"></span><strong><em>Experimental</em></strong> settings add useful, interesting features to Tumblr, but <em>may not work reliably</em>. This setting is provided for your use, but <em>is not supported</em> and <em>may be removed from <strong>Missing e</strong></em> at any time, without notice. Support questions regarding this setting will be ignored!</p>
+    <p>The <em>"Allow replies to reblogs"</em> option allows you to reply to reblogged posts with an experimental <span class="experimental_reply"></span> or <strong>[reply]</strong> button. If the user who reblogged it has enabled <em>"Show notifications"</em> in their <a href="http://www.tumblr.com/preferences">Tumblr preferences</a>, they will <em>most likely</em> receive a notification of your reply. However, your reply <em>may not</em> always show up in the post's notes if you have also reblogged it (or reblog it after replying).</p>
+    <p>Under some conditions, reblog replies may not work. When a reblog reply is sent, the experimental reply button will be replaced with <span class="experimental_reply_success"></span> or <strong>&#x2714;</strong>, if successful. If the reply fails, you will see <span class="experimental_reply_fail"></span> or <strong><del>&nbsp;reply&nbsp;</del></strong>.</p>    
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Dash Links to Tabs</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="newtabs"></a><a class="anchor" id="new-tabs"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>I don't want <strong>Missing e</strong> to open all these new tabs. How do I stop it?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>In the settings (<a href="#settings">find out how to get there</a>), under the <em>Dashboard Features</em> tab, in the <em>Dash Links to Tabs</em> section, you can change if and when <strong>Missing e</strong> opens new tabs.</p>
+    <p>You can change whether or not new tabs are opened for these actions:</p>
+    <ul>
+     <li>clicking the <em>new post</em> buttons at the top of your dashboard</li>
+     <li>clicking buttons in your Tumblr sidebar</li>
+     <li>clicking the reblog button for dashboard posts</li>
+     <li>clicking the edit button on your own posts in the dashboard</li>
+    </ul>
+    <p>If you do not want <em>any</em> new tabs to be opened, simply click the big ON/OFF toggle switch for the <em>Dash Links to Tabs</em> feature in the <strong>Missing e</strong> settings page.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="safari-tabs"></a><a class="anchor" id="safaritabs"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>When I click on a link in with the <em>Safari</em> browser, it opens in a new window instead of a tab. How can I change that?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>By default, Safari will open any link that asks for a new window in another browser window instead of a new tab. You can change this behaviour in Safari's preferences.</p>
+    <ul>
+     <li>Open the Safari menu
+      <ul>
+       <li><strong>Mac OS X:</strong> click <em>Safari</em> in the menu bar at the top of the screen</li>
+       <li><strong>Windows:</strong> click the gear icon at the top right of the browser window</li>
+      </ul>
+     </li>
+     <li>In the Safari menu, click on <em>Preferences</em></li>
+     <li>In the Preferences window, click the <em>Tabs</em> button at the top</li>
+     <li>Change the setting labelled <em>"Open pages in tabs instead of windows"</em> to <strong>"Automatically"</strong></li>
+    </ul>
+    <div class="screenshot_container">
+     <div class="screenshot">
+      <img src="images/examples/safari_tabs.png" alt="Safari preferences - open pages in tabs">
+      <div class="screenshot_overlay"></div>
      </div>
+     <div class="caption">Safari preferences - open pages in tabs</div>
     </div>
    </div>
   </div>
-  <div class="faq_group">
-   <h1>Timestamps</h1>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="timestamps-format"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>How do I change the timestamp to 12-hour format instead of 24-hour?</h2>
-     <h2><span class="faq_icon"></span>How do I change the way the date and time is shown in timestamps?</h2>
+ </div>
+ <div class="faq_group">
+  <h1>Goto Dash Post</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="goto-issue"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why does clicking on the <em>Goto Dash</em> button of some posts bring me to the wrong post on the dashboard or a post earlier than the correct one?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Some blogs (especially secondary tumblrs) do not behave correctly on your Tumblr dashboard. They may appear in your dashboard for a time, but after a while you may no longer be able to scroll to them. The posts are still visible on the Tumblr's personal page, but not on the dashboard.</p>
+    <p><em>Goto Dash Post</em> may instead bring you to the next earlier post by someone that you follow.</p>
+    <p>This is an issue with Tumblr's dashboard and is <em>not</em> caused by <strong>Missing e</strong>.</p>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Keyboard Shortcuts</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="keyboard"></a><a class="anchor" id="keyboard-shortcuts"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I use keyboard shortcuts on Tumblr?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>The basic Tumblr interface allows you to navigate your dashboard using only your keboard:</p>
+    <ul>
+     <li><code>J</code> - Jump to the next post in the dashboard</li>
+     <li><code>K</code> - Jump to the previous post in the dashboard</li>
+    </ul>
+    <p>If you use Tumblr's <em>endless scrolling</em> dashboard, you can continue navigating through posts using these keys. However, if you do not use <em>endless scrolling</em>, navigating with <code>J</code> and <code>K</code> will stop once you reach the bottom (or top) of the dashboard.</p>
+    <p>To improve navigation for people who don't use <em>endless scrolling</em>, <strong>Missing e</strong> provides a setting that you can activate in the <em>Dashboard Tweaks</em> feature (<a href="#settings">find out how to get to the settings page</a>) that wil cause the <code>J</code> and <code>K</code> keys to jump to the next page automatically when you reach the bottom (or top) of the current page!</p>
+    <p>When you navigate on your dashboard with the <code>J</code> and <code>K</code> keys, Tumblr and <strong>Missing e</strong> provide a few more keyboard shortcuts that can perform certain actions on the current post:</p>
+    <ul>
+     <li><code>L</code> - <strong>Like</strong> the current post <em>(this feature is part of the Tumblr interface)</em></li>
+     <li><code>M</code> - Bookmark the current post</li>
+     <li><code>C</code> - Open the comment/reply box for the current post</li>
+     <li><code>E</code> - Edit the current post</li>
+     <li><code>S</code> - Select the current post for <em>mass deletion</em> (when that feature is active)</li>
+    </ul>
+    <p>If you use the <strong>Missing e</strong> quick (1-click) reblogging feature (<a href="#quick-reblog-on">find out how to activate it</a>), the following keyobard shortcuts are also available:</p>
+    <ul>
+     <li><code>R</code> - Reblog the current post using <em>quick reblogging</em></li>
+     <li><code>D</code> - Reblog the current post to your drafts using <em>quick reblogging</em></li>
+     <li><code>Q</code> - Reblog the current post to your queue using <em>quick reblogging</em></li>
+     <li><code>T</code> - Open the <em>quick reblog</em> menu to add/edit tags (then press one of the other keys to reblog it)</li>
+    </ul>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Magnifier</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="magnifier"></a><a class="anchor" id="magnifier-use"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I use <em>Magnifier</em>? Where is it?</h2>
+   </div>
+   <div class="faq_answer">
+    <p><em>Magnifier</em> adds a small <img src="images/magnifier-icon.png" style="height:16px;width:16px;" alt="Magnifier icon" /> icon to all photo posts on the dashboard. Simply click on it to view the full-size image without ever leaving the dashboard. <em>Magnifier</em> will resize the image to fit on your screen, but you can click on the enlarged image to open it in a new tab or window.</p>
+    <p>The <em>Magnifier</em> icon is also added to <strong>photoset</strong> posts. When you click on it, the enlarged images will appear as a slideshow that you can navgiate using arrow buttons on either side.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="magnifier-resized"></a><a class="anchor" id="magnifier-full"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why is the <em>Magnifier</em> enlarged photo still not full size?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Photos enlarged by <em>Magnifier</em> are shown scaled down so that they fit into your browser window. You can click on the enlarged photo to open it in its own tab or window at full size.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="magnifier-avatar"></a><a class="anchor" id="magnify-avatar"></a><a class="anchor" id="magnifier-avatars"></a><a class="anchor" id="magnify-avatars"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How can I enlarge Tumblr user avatars?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>The option that enables enlarging of Tumblr user avatars (part of the <em>Magnifier</em> feature) is <strong>disabled by default</strong> when you first install <strong>Missing e</strong>. To enable it, you need to go to the settings page (<a href="#settings">find out how</a>) and enable it under the <em>Dashboard Features</em> tab, in the <em>Magnifier</em> section.</p>
+    <p>When the option is enabled, <em>Magnifier</em> adds a <img src="images/magoverlay.png" alt="Magnify Avatar Icon" style="height:16px;width:16px;" /> icon to Tumblr avatars that appears <em>when you hover your mouse over the small avatar image</em>. Clicking on this icon enlarges the avatar image without leaving the current page.</p>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Mass Editor Tweaks</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="masseditorlimit"></a><a class="anchor" id="masseditor-limit"></a><a class="anchor" id="mass-editor-limit"></a><a class="anchor" id="masseditor100"></a><a class="anchor" id="masseditor-100"></a><a class="anchor" id="mass-editor-100"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why can't I select more posts in the Mass Editor? I can select some, but then the select buttons stop working!</h2>
+    <h2><span class="faq_icon"></span>Why can I only select 100 posts in the Mass Editor?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>The Tumblr <em>Mass Editor</em> is limited to deleting or editing tags for only 100 posts at a time. This is a limitation of the Tumblr interface, not <strong>Missing e</strong>.</p>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Posting Tweaks</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="uploader-load"></a><a class="anchor" id="missing-uploader"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why is the <em>'+ Upload Photo'</em> button not showing up on a new post or edit post page?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Much like the <em>'+ Upload Photo'</em> button that Tumblr places on new text posts pages, <em>Posting Tweaks</em> must load an additional Tumblr page in the background before adding the button. During times when Tumblr is very busy or error-prone, this page my not load.</p>
+    <p>Try reloading the post page to get it to try again.</p>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Reblog Yourself</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="reblog-load"></a><a class="anchor" id="reblog-yourself-load"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why do the reblog links for some of my posts in the dashboard show up like this: <span class="reblog_fail"></span> or <del>&nbsp;reblog&nbsp;</del>?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>To add a reblog link to some of your posts on the dashboard, <em>Reblog Yourself</em> has to read additional Tumblr post information in the background. During times when Tumblr is very busy or error-prone, this may not work correctly. <em>Reblog Yourself</em> will retry a few times before giving up and showing: <span class="reblog_fail_small"></span> or <del>&nbsp;reblog&nbsp;</del>.</p>
+    <p>You can click on this button to make <em>Reblog Yourself</em> try again. If it shows up without the exclamation mark (or without the strikethrough text), then the link works!</p>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Reply Replies</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="reply-how"></a><a class="anchor" id="replyreplies-how"></a><a class="anchor" id="replies-how"></a><a class="anchor" id="replyreplies"></a><a class="anchor" id="reply"></a><a class="anchor" id="replies"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I reply to a reply (or other post note)?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>Although you can also reply to notes loaded by clicking on the notes count button of a dashboard post, it is best if you enable <em>Show notifications</em> in your <a href="http://www.tumblr.com/preferences">Tumblr preferences</a> to show notifications directly on your dashboard.</p>
+    <p>Just click on the notification icon on the right side of the one of these notifications (heart, reply bubble, etc) to open a new post with the notification already added, ready for you to comment on.</p>
+    <div class="screenshot_container">
+     <div class="screenshot">
+      <img src="images/examples/notification.png" alt="Replying to a Tumblr dashboard notification">
+      <div class="screenshot_overlay"></div>
+     </div>
+     <div class="caption">Replying to a Tumblr dashboard notification</div>
     </div>
-    <div class="faq_answer">
-     <p>In the <strong>Missing e</strong> settings (<a href="#settings">find out how to get there</a>), you can change the default format of how the date and time will appear on post timestamps. By default, the format will be <code>%Y-%m-%D %H:%i</code>, which would look like <code>2012-04-01 22:07</code>.</p>
-     <p>There are plenty of these special format codes that you can use, all of them conveniently listed alongside the format option in the settings page. For example, if you wanted that same timestamp to show up as <code>1-Apr-2011 10:07pm</code>, you would enter the format as <code>%d-%M-%Y %g:%i%a</code>.</p>
+    <p>You can also reply to the notes that are displayed when you click on the notes count button of a dashboard post. Simply click on the notification icon on the right side of one of these notes to open a new post with the notification already added, ready for you to comment on.</p>
+    <div class="screenshot_container">
+     <div class="screenshot">
+      <img src="images/examples/reply_note.png" alt="Replying to a Tumblr post note">
+      <div class="screenshot_overlay"></div>
+     </div>
+     <div class="caption">Replying to a Tumblr post note</div>
     </div>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="timestamps-wrongtime"></a><a class="anchor" id="timestamps-wrong"></a><a class="anchor" id="timestamp-wrongtime"></a><a class="anchor" id="timestamp-wrong"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Timestamps on dashboard posts are always off by a few hours. How do I fix this?</h2>
-     <h2><span class="faq_icon"></span>The time that shows up on dashboard posts is incorrect. How do I fix them?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>The <strong>Missing e</strong> <em>Timestamps</em> feature uses the time of a post obtained from Tumblr. If Tumblr's post time is incorrect, so will <strong>Missing e</strong>'s timestamp.</p>
-     <p>If your timestamps are <em>always</em> off by the same number of hours, this is likely because you have not set your timezone in your Tumblr blog's settings.</p>
-     <p>Here's how to configure your Tumblr timezone:</p>
-     <ol>
-      <li>Go to the settings page for your <strong>primary</strong> blog
-       <ul>
-        <li><em>www.tumblr.com/blog/<strong>your-name</strong>/settings</em></li>
-        <li>Replace <strong>your-name</strong> with the username of your primary blog</li>
-       </ul>
-      </li>
-      <li>Select the correct timezone for where you live from the <em>Timezone</em> drop-down box part way down the page</li>
-      <li>Click the <em>Save</em> button at the bottom of the page</li>
-     </ol>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="reply-multiple"></a><a class="anchor" id="replies-multi"></a><a class="anchor" id="multiple-replies"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I reply to more than one notification at once?</h2>
+   </div>
+   <div class="faq_answer">
+    <ol>
+     <li>Hold down the <code>Shift</code> key and click on the icons of each of the notifications you want to reply to.</li>
+     <li>Let go of the <code>Shift</code> key and click on the icon of the last notification you want to include.</li>
+     <li>All the notifications will appear in a single <em>Reply Replies</em> post in chronological order.</li>
+    </ol>
+   </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Sidebar Tweaks</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="add-sidebar"></a><a class="anchor" id="addsidebar"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I get my blog sidebar (posts, followers, messages, etc.) on every dashboard page?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>You can add a blog sidebar (which includes your post, follower, message, draft and queue counts) to dashboard pages that don't normall have them. You can activate this feature in the settings page (<a href="#settings">find out how to get there</a>), under the <em>Dashboard Features</em> tab, in the <em>Sidebar Tweaks</em> section.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="sidebar-switch"></a><a class="anchor" id="sidebar-account"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I choose which Tumblr blog sidebar gets added to every dashboard page?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>When you activate the added blog sidebar feature (<a href="#add-sidebar">find out how</a>), <em>Sidebar Tweaks</em> will start out by adding the blog sidebar for your <strong>primary</strong> Tumblr blog associated with your account. If you want a different blog's sidebar to appear, click on the blog title at the top of the added sidebar and then select a different Tumblr blog from the menu that appears.</p>
+    <p>When you select a different blog, your choice will be remembered the next time that you load the dashboard! Please note that you <em>cannot switch</em> the blog sidebars shown on blog pages (<strong>/blog/your-name</strong>).</p>
+    <div class="screenshot_container">
+     <div class="screenshot">
+      <img src="images/examples/added_sidebar.png" alt="Selecting an account for the added sidebar">
+      <div class="screenshot_overlay"></div>
+     </div>
+     <div class="caption">Selecting an account for the added sidebar</div>
     </div>
    </div>
-   <div class="faq_entry closed_faq">
-    <a class="anchor" id="timestamps-load"></a>
-    <div class="faq_item">
-     <h2><span class="faq_icon"></span>Why do timestamps sometimes fail to load on messages in my inbox?</h2>
-    </div>
-    <div class="faq_answer">
-     <p>To add the date and/or time to messages (except <em>Fan Mail</em>) in your inbox, the <em>Timestamps</em> feature has to get additional information about that message from Tumblr, in the background. During times when Tumblr is very busy or error-prone, this may not work correctly. <em>Timestamps</em> will retry a few times before giving up and displaying: <strong><em>Timestamp loading failed. <span class="underline">Retry</span></em></strong>.</p>
-     <p>You can click on <strong>"<span class="underline">Retry</span>"</strong> to try loading the timestamp again.</p>
-    </div>
+  </div>
+ </div>
+ <div class="faq_group">
+  <h1>Timestamps</h1>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="timestamps-format"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>How do I change the timestamp to 12-hour format instead of 24-hour?</h2>
+    <h2><span class="faq_icon"></span>How do I change the way the date and time is shown in timestamps?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>In the <strong>Missing e</strong> settings (<a href="#settings">find out how to get there</a>), you can change the default format of how the date and time will appear on post timestamps. By default, the format will be <code>%Y-%m-%D %H:%i</code>, which would look like <code>2012-04-01 22:07</code>.</p>
+    <p>There are plenty of these special format codes that you can use, all of them conveniently listed alongside the format option in the settings page. For example, if you wanted that same timestamp to show up as <code>1-Apr-2011 10:07pm</code>, you would enter the format as <code>%d-%M-%Y %g:%i%a</code>.</p>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="timestamps-wrongtime"></a><a class="anchor" id="timestamps-wrong"></a><a class="anchor" id="timestamp-wrongtime"></a><a class="anchor" id="timestamp-wrong"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Timestamps on dashboard posts are always off by a few hours. How do I fix this?</h2>
+    <h2><span class="faq_icon"></span>The time that shows up on dashboard posts is incorrect. How do I fix them?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>The <strong>Missing e</strong> <em>Timestamps</em> feature uses the time of a post obtained from Tumblr. If Tumblr's post time is incorrect, so will <strong>Missing e</strong>'s timestamp.</p>
+    <p>If your timestamps are <em>always</em> off by the same number of hours, this is likely because you have not set your timezone in your Tumblr blog's settings.</p>
+    <p>Here's how to configure your Tumblr timezone:</p>
+    <ol>
+     <li>Go to the settings page for your <strong>primary</strong> blog
+      <ul>
+       <li><em>www.tumblr.com/blog/<strong>your-name</strong>/settings</em></li>
+       <li>Replace <strong>your-name</strong> with the username of your primary blog</li>
+      </ul>
+     </li>
+     <li>Select the correct timezone for where you live from the <em>Timezone</em> drop-down box part way down the page</li>
+     <li>Click the <em>Save</em> button at the bottom of the page</li>
+    </ol>
+   </div>
+  </div>
+  <div class="faq_entry closed_faq">
+   <a class="anchor" id="timestamps-load"></a>
+   <div class="faq_item">
+    <h2><span class="faq_icon"></span>Why do timestamps sometimes fail to load on messages in my inbox?</h2>
+   </div>
+   <div class="faq_answer">
+    <p>To add the date and/or time to messages (except <em>Fan Mail</em>) in your inbox, the <em>Timestamps</em> feature has to get additional information about that message from Tumblr, in the background. During times when Tumblr is very busy or error-prone, this may not work correctly. <em>Timestamps</em> will retry a few times before giving up and displaying: <strong><em>Timestamp loading failed. <span class="underline">Retry</span></em></strong>.</p>
+    <p>You can click on <strong>"<span class="underline">Retry</span>"</strong> to try loading the timestamp again.</p>
    </div>
   </div>
  </div>
 </div>
 <div id="footer_container">
  <div id="footer">
- &copy; 2012 Jeremy Cutler<br />
- <small>An open-source project released under <a class="link" href="http://www.gnu.org/licenses/gpl.html" title="GPL v3 License">GPL v3</a></small>
- <a class="greybutton button" style="float:right;" href="http://blog.missing-e.com" title="Missing e on Tumblr">Follow Missing e on Tumblr</a>
+  &copy; 2012, Jeremy Cutler<br />
+  <small>An open-source project released under <a class="link" href="http://www.gnu.org/licenses/gpl.html" title="GPL v3 License">GPL v3</a></small>
+  <a class="button silverbutton" href="http://blog.missing-e.com" title="Missing e on Tumblr">Follow Missing e on Tumblr</a>
  </div>
 </div>
 </body>
