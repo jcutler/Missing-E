@@ -78,6 +78,13 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.7** (not yet released)
+**_!_** Hide Twitter and Facebook checkboxes in quick reblog menu when those services not available  
+**_!_** Fix issue with quick reblog send to Twitter checkbox on even when forced off
+
+##**2.9.6** (04/05/2012)
+**_+_** Enable mass deletion of blog posts
+
 ##**2.9.5** (04/04/2012)
 **_!_** Fix problem importing older settings file into Firefox add-on
 
