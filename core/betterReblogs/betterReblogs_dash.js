@@ -170,12 +170,15 @@ MissingE.packages.betterReblogs = {
                      /checked="checked"/.test(cb[0]) ||
                      /checked\s*[^=]/.test(cb[0]);
                }
+               /*
                var fbName = data.match(/<option[^<]*id="fb_name_option"[^>]*>([^<]+)<\/[^>]*>/);
                if (!fbName || fbName.length < 2) {
                   MissingE.packages.betterReblogs.hasFacebook[tumblr] = false;
                }
+               */
+               MissingE.packages.betterReblogs.hasFacebook[tumblr] =
+                  MissingE.packages.betterReblogs.facebookChecked[tumblr];
 
-               MissingE.packages.betterReblogs.servicesChecked = true;
                if (select.val() === tumblr) {
                   select.trigger('change');
                }
@@ -186,12 +189,14 @@ MissingE.packages.betterReblogs = {
 
    getFacebookDefaults: function() {
       if (!MissingE.packages.betterReblogs.servicesChecked) {
+         MissingE.packages.betterReblogs.servicesChecked = true;
          MissingE.packages.betterReblogs.getServiceDefaults();
       }
    },
 
    getTwitterDefaults: function() {
       if (!MissingE.packages.betterReblogs.servicesChecked) {
+         MissingE.packages.betterReblogs.servicesChecked = true;
          MissingE.packages.betterReblogs.getServiceDefaults();
       }
    },
@@ -206,14 +211,28 @@ MissingE.packages.betterReblogs = {
       else {
          rm.attr('href',curhref + '&channel_id=' + sel.val());
       }
-      if (MissingE.packages.betterReblogs.twitterChecked[sel.val()] ||
+      if (MissingE.packages.betterReblogs.hasTwitter[sel.val()]) {
+         $('#MissingE_quick_reblog').addClass('hasTwitter');
+      }
+      else {
+         $('#MissingE_quick_reblog').removeClass('hasTwitter');
+      }
+      if (MissingE.packages.betterReblogs.hasFacebook[sel.val()]) {
+         $('#MissingE_quick_reblog').addClass('hasFacebook');
+      }
+      else {
+         $('#MissingE_quick_reblog').removeClass('hasFacebook');
+      }
+      if ((twitter === "default" &&
+           MissingE.packages.betterReblogs.twitterChecked[sel.val()]) ||
           twitter === "on") {
          $('#MissingE_quick_reblog_twitter input').get(0).checked = true;
       }
       else {
          $('#MissingE_quick_reblog_twitter input').get(0).checked = false;
       }
-      if (MissingE.packages.betterReblogs.facebookChecked[sel.val()] ||
+      if ((facebook === "default" &&
+           MissingE.packages.betterReblogs.facebookChecked[sel.val()]) ||
           facebook === "on") {
          $('#MissingE_quick_reblog_facebook input').get(0).checked = true;
       }
@@ -335,8 +354,10 @@ MissingE.packages.betterReblogs = {
       isAsk = $('#post_' + postId).hasClass('note');
       perm = $('#permalink_' + postId).attr("href");
       user = $('#post_' + postId).attr("name");
-      var twitter = $('#MissingE_quick_reblog_twitter input').is(':checked');
-      var facebook = $('#MissingE_quick_reblog_facebook input').is(':checked');
+      var twitter = $('#MissingE_quick_reblog_twitter input').is(':checked') &&
+         $('#MissingE_quick_reblog').hasClass('hasTwitter');
+      var facebook = $('#MissingE_quick_reblog_facebook input').is(':checked') &&
+         $('#MissingE_quick_reblog').hasClass('hasFacebook');
       var caption = $('#MissingE_quick_reblog_caption textarea').val();
       caption = caption.replace(/^\s+/,'').replace(/\s+$/,'');
       if (caption.length > 0) {
@@ -1105,22 +1126,8 @@ MissingE.packages.betterReblogs = {
                .doReblog(this,account,queueTags,reblogTags);
          });
 
-         var doChange = false;
-         if (settings.quickReblogForceTwitter === "default") {
-            MissingE.packages.betterReblogs.getTwitterDefaults();
-         }
-         else if (settings.quickReblogForceTwitter === "on") {
-            doChange = true;
-         }
-         if (settings.quickReblogForceFacebook === "default") {
-            MissingE.packages.betterReblogs.getFacebookDefaults();
-         }
-         else if (settings.quickReblogForceFacebook === "on") {
-            doChange = true;
-         }
-         if (doChange) {
-            $('#MissingE_quick_reblog_selector select').trigger('change');
-         }
+         MissingE.packages.betterReblogs.getTwitterDefaults();
+         MissingE.packages.betterReblogs.getFacebookDefaults();
       }
       else {
          // Quick reblog not active
