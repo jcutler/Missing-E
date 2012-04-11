@@ -450,7 +450,6 @@ MissingE.packages.betterReblogs = {
             $.ajax({
                type: 'POST',
                url: this.url,
-               async: !extension.isChrome,
                postId: this.postId,
                data: params,
                dataType: 'html',
