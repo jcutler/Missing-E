@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.7** (04/11/2012)
+**_!_** Fix issue with lagging quick reblog on Chrome
+
 ##**2.9.6** (04/09/2012)
 **_+_** Enable mass deletion of blog posts
 **_!_** Hide Twitter and Facebook checkboxes in quick reblog menu when those services not available  
