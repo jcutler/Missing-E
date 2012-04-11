@@ -4,6 +4,7 @@ Change all features that pass info to new tabs to no longer use localStorage
 
 Audio controls for currently-playing audio post [tagthesun]
 Set nicknames [aidiera]
+Bookmark in tracked tags [bananacomnena]
 Chrome synchronous posting
 Empty posts (with tags): &#8192;
 Hide Twitter/FB boxes when account doesn't have
