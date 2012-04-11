@@ -1598,6 +1598,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             }
             settings.quickReblogForceTwitter = getSetting("MissingE_betterReblogs_quickReblogForceTwitter","default");
             settings.quickReblogForceFacebook = getSetting("MissingE_betterReblogs_quickReblogForceFacebook","default");
+            settings.quickReblogCaption = getSetting("MissingE_betterReblogs_quickReblogCaption",1);
             settings.fullText = getSetting("MissingE_betterReblogs_fullText",0);
             settings.tagQueuedPosts = (getSetting("MissingE_postingTweaks_enabled",1) == 1 && getSetting("MissingE_postingTweaks_tagQueuedPosts",0) == 1) ? 1: 0;
             settings.queueTags = getSetting("MissingE_postingTweaks_queueTags",'');

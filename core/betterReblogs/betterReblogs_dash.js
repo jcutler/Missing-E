@@ -662,6 +662,10 @@ MissingE.packages.betterReblogs = {
             .attr('placeholder', MissingE.getLocale(lang).captionText);
          qr.find('#MissingE_quick_reblog_tags textarea')
             .attr('placeholder', MissingE.getLocale(lang).tagsText);
+         if (settings.quickReblogCaption === 0) {
+            qr.find('#MissingE_quick_reblog_caption')
+               .closest('.user_menu_list_item').css('display','none');
+         }
          var qrSel = qr.find('#MissingE_quick_reblog_selector select');
          if (settings.accountName === 0 ||
              qrSel.find('option[value="' + settings.accountName + '"]')

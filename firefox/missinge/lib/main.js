@@ -218,6 +218,7 @@ function getAllSettings(getStale) {
    settings.MissingE_betterReblogs_quickReblogAcctName = getSetting("extensions.MissingE.betterReblogs.quickReblogAcctName",'');
    settings.MissingE_betterReblogs_quickReblogForceTwitter = getSetting("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
    settings.MissingE_betterReblogs_quickReblogForceFacebook = getSetting("extensions.MissingE.betterReblogs.quickReblogForceFacebook",'default');
+   settings.MissingE_betterReblogs_quickReblogCaption = getSetting("extensions.MissingE.betterReblogs.quickReblogCaption",1);
    settings.MissingE_betterReblogs_fullText = getSetting("extensions.MissingE.betterReblogs.fullText",0);
    settings.MissingE_betterReblogs_tagReblogs = getSetting("extensions.MissingE.betterReblogs.tagReblogs",0);
    settings.MissingE_betterReblogs_reblogTags = getSetting("extensions.MissingE.betterReblogs.reblogTags",'');
@@ -1879,6 +1880,7 @@ function handleMessage(message, myWorker) {
             }
             settings.quickReblogForceTwitter = getSetting("extensions.MissingE.betterReblogs.quickReblogForceTwitter",'default');
             settings.quickReblogForceFacebook = getSetting("extensions.MissingE.betterReblogs.quickReblogForceFacebook",'default');
+            settings.quickReblogCaption = getSetting("extensions.MissingE.betterReblogs.quickReblogCaption",1);
             settings.fullText = getSetting("extensions.MissingE.betterReblogs.fullText",0);
             settings.tagQueuedPosts = (getSetting("extensions.MissingE.postingTweaks.enabled",1) == 1 && getSetting("extensions.MissingE.postingTweaks.tagQueuedPosts",0) == 1) ? 1 : 0;
             settings.queueTags = getSetting("extensions.MissingE.postingTweaks.queueTags",'');

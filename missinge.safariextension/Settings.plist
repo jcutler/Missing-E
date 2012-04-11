@@ -52,7 +52,7 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>2.9.7</string>
+		<string>2.9.8</string>
 		<key>Key</key>
 		<string>MissingE_version</string>
 		<key>Title</key>
@@ -905,6 +905,16 @@
 		<string>default</string>
 		<key>Key</key>
 		<string>MissingE_betterReblogs_quickReblogForceFacebook</string>
+		<key>Title</key>
+		<string></string>
+		<key>Type</key>
+		<string>Hidden</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<real>1</real>
+		<key>Key</key>
+		<string>MissingE_betterReblogs_quickReblogCaption</string>
 		<key>Title</key>
 		<string></string>
 		<key>Type</key>

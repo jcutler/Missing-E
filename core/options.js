@@ -408,6 +408,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_keyboardShortcut',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_quickKeyboardShortcut',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_tagReblogs',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_quickReblogCaption',1);
             frm.MissingE_betterReblogs_reblogTags.value = MissingE.utilities.options.getStorage('MissingE_betterReblogs_reblogTags','');
          }
          else if (v == "postingTweaks") {
