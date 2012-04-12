@@ -146,6 +146,28 @@ MissingE.packages.postingTweaks = {
          }
       }
 
+      if (MissingE.isTumblrURL(location.href, ["textPost"])) {
+         $('#edit_post').submit(function() {
+            if (!/\S/.test($('#post_two').val()) &&
+                /\S/.test($('#post_tags').val())) {
+               var insertText = '<small><em><small><em><small>&#8192;' +
+                                '</small></em></small></em></small>';
+
+               $.globalEval('var addText = "' + insertText + '";' +
+                  'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
+                     'if (!/\S/.test(ed.getContent())) {' +
+                        'alert("yup");' +
+                        'ed.execCommand("mceInsertContent", false, addText);' +
+                        'insertTag("post_two", addText);' +
+                     '}' +
+                  '}' +
+                  'else {' +
+                     'insertTag("post_two", addText);' +
+                  '}');
+            }
+         });
+      }
+
       $('#set_tags').append('<div style="text-align:right;">' +
            '<a class="clear_tags" style="color:#666;font-size:10px;" ' +
            'href="#" onclick="var tok=document.getElementById(\'tokens\');' +
