@@ -78,9 +78,12 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.9** (not yet released)
+**_+_** Add always-on feature to allow empty text posts with tags
+
 ##**2.9.8** (04/11/2012)
-**_!_** Fix bug in 2.9.7 that caused some features to stop working correctly  
-**_+_** Add option to hide quick reblog caption box
+**_+_** Add option to hide quick reblog caption box  
+**_!_** Fix bug in 2.9.7 that caused some features to stop working correctly
 
 ##**2.9.7** (04/11/2012)
 **_!_** Fix issue with lagging quick reblog on Chrome
