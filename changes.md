@@ -78,8 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.9.9** (not yet released)
-**_+_** Add always-on feature to allow empty text posts with tags
+##**2.9.9** (04/17/2012)
+**_+_** Add always-on feature to allow empty text posts with tags  
+**_+_** Add Posting Tweaks option to automatically set "Send to Facebook" checkbox to off  
+**_!_** Fix issue with reblog as text feature running twice on some posts
 
 ##**2.9.8** (04/11/2012)
 **_+_** Add option to hide quick reblog caption box  
