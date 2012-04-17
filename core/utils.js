@@ -58,6 +58,7 @@ var utils = {
       "massEditor":   /^mega-editor\/[^\/]+(\/[0-9]+\/[0-9]+)?[\/]?$/,
       "messages":     /^(blog\/[^\/]+\/)?(messages|submissions|inbox)[\/]?.*$/,
       "post":         /^((blog\/[^\/]+\/)?new\/[^\/]+|edit\/\d+|share(\/\w+)?)[\/]?$/,
+      "textPost":     /^(blog\/[^\/]+\/)?new\/text/,
       "queue":        /^blog\/[^\/]+\/queue[\/]?.*$/,
       "reblog":       /^reblog\/\d+\/\w+(\/\w+)?[\/]?$/,
       "reply":        /^(blog\/[^\/]+\/)?new\/(text|photo)[\/]?$/,
