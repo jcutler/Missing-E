@@ -81,7 +81,8 @@ color:#4183c4;
 ##**2.9.9** (04/17/2012)
 **_+_** Add always-on feature to allow empty text posts with tags  
 **_+_** Add Posting Tweaks option to automatically set "Send to Facebook" checkbox to off  
-**_!_** Fix issue with reblog as text feature running twice on some posts
+**_!_** Fix issue with reblog as text feature running twice on some posts  
+**_!_** Move to jQuery 1.7.2 on all platforms
 
 ##**2.9.8** (04/11/2012)
 **_+_** Add option to hide quick reblog caption box  
