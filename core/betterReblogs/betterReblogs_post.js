@@ -109,7 +109,7 @@ MissingE.packages.betterReblogsPost = {
             link.setAttribute('tags',response.data.join(','));
             if (response.fullText) {
                link.setAttribute('href',
-                  link.getAttribute('href').replace(/\?/,'/text?'));
+                  link.getAttribute('href').replace(/(\/text)?\?/,'/text?'));
             }
          }
          else {
@@ -157,7 +157,7 @@ MissingE.packages.betterReblogsPost = {
                   trg.href += "?";
                }
                if (response.isSure) {
-                  trg.href = trg.href.replace(/\?/,'/text?');
+                  trg.href = trg.href.replace(/(\/text)?\?/,'/text?');
                }
                else {
                   trg.href += "MissingEaskSure=0&";

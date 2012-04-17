@@ -136,7 +136,7 @@ MissingE.packages.betterReblogsFill = {
                   MissingE.packages.betterReblogsFill.setReblogTags(tags);
                }
                location.href = location.href.replace(/MissingEaskSure=0&/,'')
-                                    .replace(/\?/,"/text?");
+                                    .replace(/(\/text)?\?/,"/text?");
                return;
             }
          }
@@ -159,7 +159,7 @@ MissingE.packages.betterReblogsFill = {
                   var addSearch = "&MissingEaskerName=" + askerName +
                      "&MissingEaskPost=" + askPost[1] + "&MissingEaskName=" +
                      askName[1];
-                  location.href = location.href.replace(/\?/,"/text?") +
+                  location.href = location.href.replace(/(\/text)?\?/,"/text?") +
                                     addSearch;
                   return;
                }
