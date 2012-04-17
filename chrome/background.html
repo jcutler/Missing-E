@@ -1584,6 +1584,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                settings.queueTags = settings.queueTags.replace(/, /g,',').split(',');
             }
             settings.showAnswers = getSetting("MissingE_postingTweaks_showAnswers",0);
+            settings.facebookOff = getSetting("MissingE_postingTweaks_facebookOff",0);
             break;
          case "magnifier":
             settings.magnifyAvatars = getSetting("MissingE_magnifier_magnifyAvatars",0);

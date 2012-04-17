@@ -385,6 +385,15 @@ MissingE.packages.postingTweaks = {
          if (apr !== null && apr !== undefined) { apr.checked = true; }
       }
 
+      if (settings.facebookOff === 1) {
+         var fbcb = document.getElementById("send_to_fbog");
+         if (fbcb) { fbcb.checked = false; }
+         $('#channel_id').bind('change', function() {
+            var fbcb = document.getElementById("send_to_fbog");
+            if (fbcb) { fbcb.checked = false; }
+         });
+      }
+
       if (settings.addUploader === 1 &&
           !MissingE.isTumblrURL(location.href, ["drafts", "messages",
                                                 "bookmarklet"]) &&

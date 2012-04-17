@@ -421,6 +421,7 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_tagQueuedPosts',0);
             frm.MissingE_postingTweaks_queueTags.value = MissingE.utilities.options.getStorage('MissingE_postingTweaks_queueTags','');
             MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_showAnswers',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_postingTweaks_facebookOff',0);
          }
          else if (v == "reblogYourself") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_reblogYourself_postPage',1);
