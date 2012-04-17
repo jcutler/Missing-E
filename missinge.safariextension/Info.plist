@@ -47,7 +47,8 @@
 			<key>End</key>
 			<array>
 				<string>extension.js</string>
-				<string>jquery.min.js</string>
+				<string>lib/jquery-1.7.2.min.js</string>
+				<string>lib/evalFix.js</string>
 				<string>core/localizations.js</string>
 				<string>core/utils.js</string>
 				<string>core/common/ajaxEvents.js</string>

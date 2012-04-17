@@ -357,7 +357,8 @@ function openSettings() {
       url: data.url("core/options.html"),
       onReady: function(tab) {
          tab.attach({
-            contentScriptFile: [data.url("jquery-1.5.2.min.js"),
+            contentScriptFile: [data.url("lib/jquery-1.7.2.min.js"),
+                                data.url("lib/evalFix.js"),
                                 data.url("extension.js"),
                                 data.url("core/localizations.js"),
                                 data.url("core/utils.js"),
@@ -2421,7 +2422,8 @@ function handleMessage(message, myWorker) {
          injectScripts.unshift(data.url("lib/jquery.ui.widget.min.js"));
          injectScripts.unshift(data.url("lib/jquery.ui.core.min.js"));
       }
-      injectScripts.unshift(data.url("jquery-1.5.2.min.js"));
+      injectScripts.unshift(data.url("lib/evalFix.js"));
+      injectScripts.unshift(data.url("lib/jquery-1.7.2.min.js"));
       if (zindexFix) {
          injectScripts.push(data.url("core/common/zindexFix.js"));
       }
