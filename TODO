@@ -5,14 +5,13 @@ Change all features that pass info to new tabs to no longer use localStorage
 Audio controls for currently-playing audio post [tagthesun]
 Set nicknames [aidiera]
 Bookmark in tracked tags [bananacomnena]
-Chrome synchronous posting
-Empty posts (with tags): &#8192;
-Hide Twitter/FB boxes when account doesn't have
++ Empty posts (with tags): &#8192;
 Implement filter feature (saviour) block notifications too
 Fancybox for magnifier
 Remove retry settings
 Make option groups into buttons that open a fancybox for sub options
 Mass editor mass make private?
 Mass editor select by tags? (Binary search, sort of) it can be done, only check unselected posts.
+Default Facebook off
 
 For mass editor select, bg process can send back completion status to fill a bar thing and start selecting (or marking as private without reloading page)
