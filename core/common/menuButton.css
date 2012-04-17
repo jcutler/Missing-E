@@ -26,7 +26,8 @@ visibility:visible !important;
 }
 
 #header #missinge_button a {
-background-position:center center;
+background-position:center center !important;
+background-size:auto !important;
 opacity:0.5;
 }
 
