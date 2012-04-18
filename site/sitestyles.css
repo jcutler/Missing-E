@@ -562,6 +562,13 @@ text-align:justify;
 text-indent:1em;
 }
 
+#ad_title {
+width:100%;
+font-size:12px;
+text-align:center;
+font-style:italic;
+}
+
 #ad {
 width:100%;
 min-width:880px;
@@ -571,7 +578,7 @@ height:90px;
 text-align:center;
 }
 
-#home #ad {
+#home #ad_title {
 margin-top:26px;
 }
 
