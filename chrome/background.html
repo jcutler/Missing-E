@@ -1586,6 +1586,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             }
             settings.showAnswers = getSetting("MissingE_postingTweaks_showAnswers",0);
             settings.facebookOff = getSetting("MissingE_postingTweaks_facebookOff",0);
+            settings.smartRedirect = getSetting("MissingE_postingTweaks_smartRedirect",0);
             break;
          case "magnifier":
             settings.magnifyAvatars = getSetting("MissingE_magnifier_magnifyAvatars",0);
@@ -1973,6 +1974,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                       ["post",
                        "reblog",
                        "messages",
+                       "queue",
                        "drafts"])) {
          if (getSetting("MissingE_postingTweaks_enabled",1) == 1) {
             activeScripts.postingTweaks = true;

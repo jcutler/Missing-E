@@ -1613,6 +1613,7 @@ function handleRequest(request) {
       settings.MissingE_postingTweaks_queueTags = getSetting("MissingE_postingTweaks_queueTags",'');
       settings.MissingE_postingTweaks_showAnswers = getSetting("MissingE_postingTweaks_showAnswers",0);
       settings.MissingE_postingTweaks_facebookOff = getSetting("MissingE_postingTweaks_facebookOff",0);
+      settings.MissingE_postingTweaks_smartRedirect = getSetting("MissingE_postingTweaks_smartRedirect",0);
       settings.MissingE_reblogYourself_postPage = getSetting("MissingE_reblogYourself_postPage",1);
       settings.MissingE_reblogYourself_dashboard = getSetting("MissingE_reblogYourself_dashboard",1);
       settings.MissingE_reblogYourself_retries = getSetting("MissingE_reblogYourself_retries",MissingE.defaultRetries);
@@ -1740,6 +1741,7 @@ function handleRequest(request) {
             }
             settings.showAnswers = getSetting("MissingE_postingTweaks_showAnswers",0);
             settings.facebookOff = getSetting("MissingE_postingTweaks_facebookOff",0);
+            settings.smartRedirect = getSetting("MissingE_postingTweaks_smartRedirect",0);
             break;
          case "magnifier":
             settings.magnifyAvatars = getSetting("MissingE_magnifier_magnifyAvatars",0);
@@ -2023,6 +2025,7 @@ function handleRequest(request) {
                                ["post",
                                 "reblog",
                                 "messages",
+                                "queue",
                                 "drafts"])) {
          if (getSetting("MissingE_postingTweaks_enabled",1) == 1) {
             activeScripts.postingTweaks = true;
