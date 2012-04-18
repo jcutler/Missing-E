@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.10** (04/17/2012)
+**_!_** Remove unnecessary alert box when posting an empty post with tags using the Tumblr Rich Text Editor
+
 ##**2.9.9** (04/17/2012)
 **_+_** Add always-on feature to allow empty text posts with tags  
 **_+_** Add Posting Tweaks option to automatically set "Send to Facebook" checkbox to off  
