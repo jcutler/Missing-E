@@ -156,7 +156,6 @@ MissingE.packages.postingTweaks = {
                $.globalEval('var addText = "' + insertText + '";' +
                   'if (tinyMCE && (ed = tinyMCE.get("post_two"))) {' +
                      'if (!/\S/.test(ed.getContent())) {' +
-                        'alert("yup");' +
                         'ed.execCommand("mceInsertContent", false, addText);' +
                         'insertTag("post_two", addText);' +
                      '}' +
