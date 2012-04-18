@@ -148,7 +148,8 @@ MissingE.packages.postingTweaks = {
 
       if (MissingE.isTumblrURL(location.href, ["textPost"])) {
          $('#edit_post').submit(function() {
-            if (!/\S/.test($('#post_two').val()) &&
+            if (!/\S/.test($('#post_one').val()) &&
+                !/\S/.test($('#post_two').val()) &&
                 /\S/.test($('#post_tags').val())) {
                var insertText = '<small><em><small><em><small>&#8192;' +
                                 '</small></em></small></em></small>';
