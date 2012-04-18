@@ -1,15 +1,35 @@
 Cache settings check for Quick Reblogging
 
 Change all features that pass info to new tabs to no longer use localStorage
+   - Reblog tags I think
 
 Audio controls for currently-playing audio post [tagthesun]
-Set nicknames [aidiera]
-Bookmark in tracked tags [bananacomnena]
-Implement filter feature (saviour) block notifications too
-Fancybox for magnifier
-Remove retry settings
-Make option groups into buttons that open a fancybox for sub options
-Mass editor mass make private?
-Mass editor select by tags? (Binary search, sort of) it can be done, only check unselected posts.
+   - good idea, how to do it?
 
-For mass editor select, bg process can send back completion status to fill a bar thing and start selecting (or marking as private without reloading page)
+Set nicknames [aidiera]
+   - don't think it is possible. Run into the issue of no permanent id for users
+
+Bookmark in tracked tags [bananacomnena]
+   - http://www.tumblr.com/tagged/cutlerish?before=1334600670
+   - before has timestamp argument (in seconds)
+   - post RSS has enough info, but inline time in post corner does not
+   
+Implement filter feature (saviour) block notifications too
+   - talk to Bjorn first
+
+Fancybox for magnifier
+   - for next major version (Opera?)
+
+Remove retry settings
+   - for next major version
+
+Make option groups into buttons that open a fancybox for sub options
+   - for next major version
+
+Mass editor mass make private?
+   - done in background, send back list
+
+Mass editor select by tags?
+   - Binary search, sort of
+   - it can be done, only check unselected posts.
+   - bg process can send back completion status to fill a bar thing and start selecting (or marking as private without reloading page)
