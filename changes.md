@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.11** (not yet released)
+**_+_** Add smart redirect feature to redirect to where you saved a new post to
+
 ##**2.9.10** (04/17/2012)
 **_!_** Remove unnecessary alert box when posting an empty post with tags using the Tumblr Rich Text Editor
 
