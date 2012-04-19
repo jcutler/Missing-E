@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.12** (2012-04-18)
+**_!_** Fix issue with ask box on dashboard not draggable
+
 ##**2.9.11** (2012-04-17)
 **_+_** Add smart redirect feature to redirect to where you saved a new post to  
 **_!_** Don't treat text posts with title and no body as tag-only posts (by adding whitespace to the body)
