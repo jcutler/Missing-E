@@ -33,3 +33,6 @@ Mass editor select by tags?
    - Binary search, sort of
    - it can be done, only check unselected posts.
    - bg process can send back completion status to fill a bar thing and start selecting (or marking as private without reloading page)
+
+Ask Tweaks
+   - Send to Facebook option
