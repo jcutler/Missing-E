@@ -170,8 +170,12 @@ MissingE.utilities.options = {
    },
 
    toggleSubOptions: function(obj) {
+      var item = $(obj);
+      if (item.closest('tr').hasClass('subopt')) {
+         return;
+      }
       var disable = !obj.checked;
-      $(obj).closest('tr').nextUntil('tr:not(.subopt)')
+      item.closest('tr').nextUntil('tr:not(.subopt)')
          .toggleClass('disabled',disable);
    },
 
