@@ -1,77 +1,121 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
-<!--
-
- Turnabout is fair play, sir.
-
--->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="tumblr,missinge,missing,e,feature,features,blog,blogging" />
 <meta name="description" content="Missing e - The unofficial browser extension for Tumblr!"/>
 <meta name="author" content="Jeremy Cutler" />
 <meta name="robots" content="FOLLOW,INDEX" />
-<title>Thanks - Missing e - The browser extension for Tumblr!</title>
-<link href="http://fonts.googleapis.com/css?family=Bitter:400,700,400italic" rel="stylesheet" type="text/css">
+<title>Thanks - Missing e - The original browser extension for Tumblr!</title>
+<link href='http://fonts.googleapis.com/css?family=Kreon:300,400,700' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 <link rel="icon" href="/favicon.png" type="image/x-icon" />
 <script type="text/javascript" src="browser.js"></script>
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 <link rel="stylesheet" type="text/css" href="reset.css" />
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.0.5" type="text/css" media="screen" />
+<script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.0.5"></script>
+<link rel="stylesheet" href="fancybox/source/helpers/jquery.fancybox-buttons.css?v=2.0.5" type="text/css" media="screen" />
+<script type="text/javascript" src="fancybox/source/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
+<link rel="stylesheet" type="text/css" href="sitestyles.css" />
+<script type="text/javascript">
+<!--
+
+jQuery(document).ready(function($) {
+   var group = [];
+   $('.inline_fancybox').each(function() {
+      group.push({href:'#'+this.id});
+   });
+   $('#features_list .feature_item').click(function() {
+      var boxName = this.id.replace(/item$/,'box');
+      var i, startIdx=0;
+      for (i=0; i<group.length; i++) {
+         if (group[i].href === '#' + boxName) {
+            startIdx = i;
+            break;
+         }
+      }
+      $.fancybox.open(group, {
+         wrapCSS   : 'open_fancybox',
+         index     : startIdx,
+         maxHeight : 500,
+         fitToView : false,
+         closeClick: false,
+         fixed     : true,
+         helpers   : {
+            title  : { type: 'outside' },
+            buttons: {}
+         },
+         afterShow : function() {
+            var dummy = $('.open_fancybox .fancybox_icon_dummy');
+            var src = dummy.attr('src');
+            $('.open_fancybox .fancybox-outer').css('background-image',
+                                                    'url("' + src + '")');
+         }
+      }); 
+   });
+});
+
+-->
+</script>
 </head>
-<body id="faq">
-<div id="header_container">
- <div id="header">
-  <div id="header_bar">
-   <a id="home_link" href="/"></a>
-   <div id="header_links">
-    <a href="features">Features</a>
-    <a href="faq">FAQ</a>
-    <a href="troubleshoot">Troubleshoot</a>
-    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8">Donate</a>
+<body id="features">
+<header>
+ <nav>
+  <div id="nav_bar">
+   <a href="/" id="home_nav"><span id="home_navbg"></span><span class="subtext">HOME</span><img src="images/missinge100.png" alt="Home" /></a>
+   <div id="nav_links">
+    <a href="features" class="features_nav selected_nav">FEATURES<span class="subtext">WHAT IT'S FOR.</span></a>
+    <a href="faq" class="faq_nav">FAQ<span class="subtext">QUESTIONS?</span></a>
+    <a href="troubleshoot" class="problems_nav">PROBLEMS<span class="subtext">LET'S TROUBLESHOOT!</span></a>
+    <a href="http://blog.missing-e.com" class="blog_nav">BLOG<span class="subtext">STAY UPDATED.</span></a>
+    <a href="https://www.paypal.com/ca/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=EGQCRBB2BH5U8" class="donate_nav">DONATE<span class="subtext">SUPPORT MISSING E!</span></a>
    </div>
   </div>
- </div>
-</div>
-<div id="banner_container">
+ </nav>
  <div id="banner">
-  <div id="banner_box">
-   <h1>Thank you!</h1>
-   <h2>Your support is tremendously appreciated.</h2>
+  <div id="icon_ribbon">
+   <div id="page_icon">
+    <img src="images/thanks.png" alt="Thank You" style="margin-left:2px;margin-top:-45px;opacity:0.95;" />
+   </div>
   </div>
-  <img id="banner_img" style="width:280px;height:185px;margin-top:-95px;" src="images/thanks.png" alt="Thanks for your support!" />
+  <div id="icon_ribbon_rem"></div>
+  <div id="banner_text">
+   <hgroup>
+    <h1>Thank you!</h1>
+    <h2>Your support is tremendously appreciated.</h2>
+   </hgroup>
+  </div>
  </div>
+</header>
+<div id="ad_title">Advertisement</div>
+<div id="ad">
+ <script type="text/javascript">
+  <!--
+   google_ad_client = "ca-pub-3604999147338055";
+   /* New Site */
+   google_ad_slot = "9843551983";
+   google_ad_width = 728;
+   google_ad_height = 90;
+  //-->
+ </script>
+ <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 </div>
-<div id="ads">
- <div id="ads_title">Sponsored<br />Links</div>
-<script type="text/javascript"><!--
-google_ad_client = "ca-pub-3604999147338055";
-/* New Site */
-google_ad_slot = "9843551983";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-</div>
-<div class="content_container">
- <div class="content">
-  <div id="thankyou_message">
-   <div class="iconbar">
-    <div class="baricon" id="donateheart"></div>
-    <div class="bartxt">
-     <h1>Missing e stays alive through the support of users like you!</h1>
-    </div>
+<div id="main_content">
+ <div id="thankyou_message">
+  <div class="iconbar">
+   <div class="baricon" id="donateheart"></div>
+   <div class="bartxt">
+    <h1>Missing e stays alive through the support of users like you!</h1>
    </div>
   </div>
  </div>
 </div>
 <div id="footer_container">
  <div id="footer">
- &copy; 2012 Jeremy Cutler<br />
- <small>An open-source project released under <a class="link" href="http://www.gnu.org/licenses/gpl.html" title="GPL v3 License">GPL v3</a></small>
- <a class="greybutton button" style="float:right;" href="http://blog.missing-e.com" title="Missing e on Tumblr">Follow Missing e on Tumblr</a>
+  &copy; 2012, Jeremy Cutler<br />
+  <small>An open-source project released under <a class="link" href="http://www.gnu.org/licenses/gpl.html" title="GPL v3 License">GPL v3</a></small>
+  <a class="button silverbutton" href="http://blog.missing-e.com" title="Missing e on Tumblr">Follow Missing e on Tumblr</a>
  </div>
 </div>
 </body>
