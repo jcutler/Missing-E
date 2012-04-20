@@ -1552,13 +1552,14 @@ font-size:15px;
 margin:16px 0 24px 0;
 }
 
-#bugform h1 {
+#submitbug #main_content h1, #troubleshoot #main_content h1 {
 font-weight:bolder;
 font-size:28px;
 margin-bottom:10px;
 }
 
 .bugreport_box {
+position:relative;
 background-image:url("images/lined_paper.png");
 border-radius:6px;
 text-shadow:1px 1px 1px rgba(0,0,0,0.2);
@@ -1590,6 +1591,8 @@ padding:14px 16px 15px 10px;
 }
 
 .bugreport_box .step_icon {
+float:left;
+margin-right:8px;
 vertical-align:middle;
 }
 
@@ -1604,10 +1607,6 @@ font-weight:bold;
 .bugreport_box hgroup {
 font-size:0;
 margin-bottom:15px;
-}
-
-.bugreport_box hgroup .step_icon + h2 {
-margin-left:8px;
 }
 
 .bugreport_box p {
@@ -1684,4 +1683,64 @@ margin-bottom:10px;
 #bugreport_done p {
 font-size: 15px;
 margin:10px 0 16px 0;
+}
+
+.bugreport_box .button { 
+position:absolute;
+top:50%;
+margin-top:-17px;
+right:12px;
+}
+
+.troubleshoot_box {
+text-shadow:1px 1px 1px white;
+margin:10px 0 50px 0;
+padding:0 20px;
+}
+
+#troubleshoot .troubleshoot_box {
+display:none;
+}
+
+.troubleshoot_box p {
+font-size:17px;
+margin:0 0 12px 0;
+}
+
+.troubleshoot_box .bugreport_box p {
+font-size:15px;
+margin:0 0 0 28px;
+}
+
+#troubleshoot #main_content {
+margin-bottom:95px;
+}
+
+.troubleshoot_box .fullbutton {
+text-align:left;
+display:block;
+margin: 10px 0;
+font-size:17px;
+padding:8px 20px;
+}
+
+.troubleshoot_box .ts_image {
+display:block;
+width:840px;
+margin-top: 10px;
+margin-bottom: 10px;
+border-radius: 10px;
+box-shadow:2px 2px 1px 0px rgba(255, 255, 255, 0.5);
+-webkit-box-shadow:2px 2px 1px 0px rgba(255, 255, 255, 0.5);
+-moz-box-shadow:2px 2px 1px 0px rgba(255, 255, 255, 0.5);
+}
+
+#troubleshoot #bugform {
+position:absolute;
+width:0;
+height:0;
+font-size:0;
+top:0;
+left:0;
+opacity:0;
 }

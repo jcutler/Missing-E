@@ -242,8 +242,8 @@ else {
   <input type="hidden" id="missingeversion" name="missingeversion" value="" />
   <h1>Submit Bug Report</h1>
   <div class="bugreport_box wide_postit">
+   <div class="step_icon unnumberedstep"></div>
    <hgroup>
-    <div class="step_icon unnumberedstep"></div>
     <h2>Your Computer</h2>
    </hgroup>
    <p><strong>Operating System:</strong> <span id="os_text"></span></p>
@@ -252,8 +252,8 @@ else {
    <p><strong>Missing e Version:</strong> <span id="missingeversion_text"></span></p>
   </div>
   <div class="bugreport_box">
+   <div class="step_icon unnumberedstep"></div>
    <hgroup>
-    <div class="step_icon unnumberedstep"></div>
     <h2>The Problem You Are Having</h2>
    </hgroup>
     <p><strong>Problem Type:</strong> <?=$inputReason;?></p>
@@ -261,8 +261,8 @@ else {
     <textarea id="report" name="report" placeholder="What, exactly, is the problem? What were you doing when the problem came up? What steps are necessary to reproduce the problem?"></textarea>
   </div>
   <div class="bugreport_box">
+   <div class="step_icon unnumberedstep"></div>
    <hgroup>
-    <div class="step_icon unnumberedstep"></div>
     <h2>Contact Email</h2>
    </hgroup>
    <p class="bugreport_msg">Required. Your email address will not be used except for communicating with you for bug investigation.</p>
