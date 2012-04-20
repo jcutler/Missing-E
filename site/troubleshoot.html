@@ -47,7 +47,6 @@ function receiveInfo(msg) {
    if (supported) {
       if (currentVersion === msg.data.info.version) {
          $('#pre_troubleshoot').hide();
-         $('#start_troubleshoot').hide();
          $('#ts_0').show();
       }
    }
@@ -90,9 +89,9 @@ jQuery(document).ready(function($) {
 
    $('.troubleshoot_box a').click(function() {
       var href = $(this).attr('href');
-      var dropBreadcrumb = true;
+      var goback = false;
       if (href === "#ts_goback") {
-         dropBreadcrumb = false;
+         goback = true;
          if (breadcrumbs.length === 0) {
             href = "#ts_0";
          }
@@ -101,7 +100,7 @@ jQuery(document).ready(function($) {
          }
       }
       else if (href === "#ts_restart") {
-         dropBreadcrumb = false;
+         goback = true;
          breadcrumbs = [];
          href = "#ts_0";
       }
@@ -110,7 +109,7 @@ jQuery(document).ready(function($) {
          $(href).show();
          var top = $('#main_content:first').offset().top;
          $(window).scrollTop(top-30);
-         if (dropBreadcrumb && currentLoc.length > 0) {
+         if (!goback && currentLoc.length > 0) {
             breadcrumbs.push(currentLoc);
          }
          currentLoc = href;
@@ -175,7 +174,7 @@ jQuery(document).ready(function($) {
  <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 </div>
 <div id="main_content">
- <div class="troubleshoot_box" id="pre_troubleshoot" style="display:block;">
+ <div class="troubleshoot_box active_box" id="pre_troubleshoot" style="display:block;">
   <h1>First things first&hellip;</h1>
   <div class="bugreport_box wide_postit">
    <div class="step_icon unnumberedstep"></div>
@@ -185,9 +184,9 @@ jQuery(document).ready(function($) {
    <p>Make sure you are using the latest version of <strong>Missing e</strong>. Your problem may already be fixed!</p>
    <a href="update" class="button greenbutton">Update</a>
   </div>
- </div>
- <div class="troubleshoot_box" id="start_troubleshoot" style="text-align:center;display:block;">
-  <a href="#ts_0" class="button greenbutton">Start Troubleshooting</a>
+  <div id="start_troubleshoot">
+   <a href="#ts_0" class="button greenbutton">Start Troubleshooting</a>
+  </div>
  </div>
  <div class="troubleshoot_box" id="ts_0">
   <h1>Troubleshooting Missing e</h1>
