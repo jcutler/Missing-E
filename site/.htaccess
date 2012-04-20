@@ -13,7 +13,7 @@ RewriteEngine on
 RewriteRule ^faq(\.htm(l)?)?/(.*) http://missing-e.com/faq#$3 [NE,R=302,L]
 
 RewriteRule ^update(\.htm(l)?)?/(.*) http://missing-e.com/update [R=301,L]
-
+RewriteRule ^bugreport$ http://missing-e.com/submitbug [R=301,L]
 RewriteRule ^ask$ http://blog.missing-e.com/ask [R=301,L]
 RewriteRule ^submit$ http://blog.missing-e.com/submit [R=301,L]
 RewriteRule ^archive(/.*)? http://blog.missing-e.com/archive$1 [R=301,L]

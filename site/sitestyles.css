@@ -72,7 +72,7 @@ background-color:#ededed;
 -moz-border-radius:6px;
 -webkit-border-radius:6px;
 border-radius:6px;
-border:1px solid #dcdcdc;
+border:1px solid #999;
 display:inline-block;
 color:#666;
 font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -134,7 +134,12 @@ font-size:11px;
 display:block;
 clear:both;
 color:rgba(255,255,255,0.9);
-text-shadow:0px 1px 1px rgba(0, 0, 0, 0.1)
+text-shadow:0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+#download_button.silverbutton #download_version {
+color:rgba(0,0,0,0.4);
+text-shadow:1px 1px 0px white;
 }
 
 header {
@@ -1545,4 +1550,138 @@ padding:30px 0 10px;
 .install_title .update_text {
 font-size:15px;
 margin:16px 0 24px 0;
+}
+
+#bugform h1 {
+font-weight:bolder;
+font-size:28px;
+margin-bottom:10px;
+}
+
+.bugreport_box {
+background-image:url("images/lined_paper.png");
+border-radius:6px;
+text-shadow:1px 1px 1px rgba(0,0,0,0.2);
+vertical-align:middle;
+border:1px solid rgba(0,0,0,0.5);
+box-shadow:3px 3px 6px 1px rgba(0,0,0,0.3);
+-webkit-box-shadow:3px 3px 6px 1px rgba(0,0,0,0.3);
+-moz-box-shadow:3px 3px 6px 1px rgba(0,0,0,0.3);
+padding:24px 16px 15px 10px;
+margin:10px 0;
+}
+
+.wide_postit {
+background-color:rgb(249,237,158);
+background-image: linear-gradient(left top, rgb(249,233,114) 36%, rgb(252,230,105) 68%, rgb(249,237,158) 92%);
+background-image: -o-linear-gradient(left top, rgb(249,233,114) 36%, rgb(252,230,105) 68%, rgb(249,237,158) 92%);
+background-image: -moz-linear-gradient(left top, rgb(249,233,114) 36%, rgb(252,230,105) 68%, rgb(249,237,158) 92%);
+background-image: -webkit-linear-gradient(left top, rgb(249,233,114) 36%, rgb(252,230,105) 68%, rgb(249,237,158) 92%);
+background-image: -ms-linear-gradient(left top, rgb(249,233,114) 36%, rgb(252,230,105) 68%, rgb(249,237,158) 92%);
+background-image: -webkit-gradient(
+linear,
+left top,
+50% 90%,
+color-stop(0.36, rgb(249,233,114)),
+color-stop(0.68, rgb(252,230,105)),
+color-stop(0.92, rgb(249,237,158))
+);
+padding:14px 16px 15px 10px;
+}
+
+.bugreport_box .step_icon {
+vertical-align:middle;
+}
+
+.bugreport_box h2 {
+line-height:20px;
+vertical-align:middle;
+display:inline-block;
+font-size:20px;
+font-weight:bold;
+}
+
+.bugreport_box hgroup {
+font-size:0;
+margin-bottom:15px;
+}
+
+.bugreport_box hgroup .step_icon + h2 {
+margin-left:8px;
+}
+
+.bugreport_box p {
+font-size:15px;
+margin-left:28px;
+line-height:1;
+}
+
+.bugreport_box.wide_postit p {
+line-height:auto;
+}
+
+#submitbug textarea {
+box-sizing:border-box;
+width:798px;
+height:179px;
+max-height:179px;
+max-width:798px;
+min-width:798px;
+margin:9px 0 0 28px;
+padding:3px 4px;
+}
+
+.bugreport_box .input_box {
+margin:14px 0 8px 28px;
+font-size:0;
+}
+
+.bugreport_box .input_box input {
+font-size:12px;
+line-height:14px;
+height:14px;
+margin:0;
+padding:1px 1px 0 1px;
+border:0;
+border-bottom:2px solid #444;
+background-color:transparent;
+}
+
+.bugreport_box .bugreport_msg {
+font-size:13px;
+line-height:15px;
+font-style:italic;
+}
+
+#formbuttons {
+margin-top:15px;
+text-align:right;
+}
+
+#formbuttons .button {
+position:relative;
+font-size:17px;
+padding:8px 27px;
+margin-left:8px;
+cursor:pointer;
+}
+
+#formbuttons a.button {
+min-width:60px;
+}
+
+#formbuttons button.button span {
+display:inline-block;
+min-width:60px;
+}
+
+#bugreport_done h1 {
+font-weight:bolder;
+font-size:28px;
+margin-bottom:10px;
+}
+
+#bugreport_done p {
+font-size: 15px;
+margin:10px 0 16px 0;
 }
