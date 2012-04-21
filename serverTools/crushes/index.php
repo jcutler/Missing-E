@@ -75,14 +75,16 @@ for ($i=0; $i<9; $i++) {
       $tmp = imagecreatefromstring($txt[$i]);
    }
 
-   $cimg[$i] = imagecreatetruecolor($avCrop,$avCrop);
-   imagecopyresampled($cimg[$i],$tmp,0,0,($avSize-$avCrop)/2,($avSize-$avCrop)/2,$avCrop,$avCrop,$avCrop,$avCrop);
-   imagedestroy($tmp);
+   $cimg[$i] = $tmp;
 }
 
 $offset = 10;
-$img = imagecreatetruecolor($avCrop*3+$offset*4,$avCrop*3+$offset*4);
+$dim = $avCrop*3+$offset*4;
+$img = imagecreatetruecolor($dim,$dim);
 $wh = imagecolorallocate($img, 255, 255, 255);
+$bl = imagecolorallocatealpha($img, 0, 0, 0, 95);
+imagefill($img, 0, 0, $wh);
+imagefilledrectangle($img, 0, 0, $dim, $dim, $bl);
 
 if ($large) {
    $overlay['w'] = 44;
@@ -137,7 +139,7 @@ header('Content-type: image/jpeg');
 imagejpeg($img, NULL, 80);
 
 imagecolordeallocate($img, $wh);
-
+imagecolordeallocate($img, $bl);
 imagedestroy($img);
 
 ?>
