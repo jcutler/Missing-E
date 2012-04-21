@@ -82,6 +82,7 @@ color:#4183c4;
 **_!_** Fix issue with ask box on dashboard not draggable  
 **_!_** Fix issue with sub-options in the setting page appearing disabled when parent option is enabled  
 **_!_** Restore functionality of tag-only posts feature  
+**_!_** Fix non-functional avatar magnifier on /following page  
 **_-_** Temporarily disable ask reblogging functionality
 
 ##**2.9.11** (2012-04-17)
