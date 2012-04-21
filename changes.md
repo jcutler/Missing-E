@@ -81,7 +81,8 @@ color:#4183c4;
 ##**2.9.12** (not yet released)
 **_!_** Fix issue with ask box on dashboard not draggable  
 **_!_** Fix issue with sub-options in the setting page appearing disabled when parent option is enabled  
-**_!_** Restore functionality of tag-only posts feature
+**_!_** Restore functionality of tag-only posts feature  
+**_-_** Temporarily disable ask reblogging functionality
 
 ##**2.9.11** (2012-04-17)
 **_+_** Add smart redirect feature to redirect to where you saved a new post to  
