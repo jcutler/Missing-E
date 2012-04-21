@@ -78,9 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.9.12** (2012-04-18)
+##**2.9.12** (not yet released)
 **_!_** Fix issue with ask box on dashboard not draggable  
-**_!_** Fix issue with sub-options in the setting page appearing disabled when parent option is enabled
+**_!_** Fix issue with sub-options in the setting page appearing disabled when parent option is enabled  
+**_!_** Restore functionality of tag-only posts feature
 
 ##**2.9.11** (2012-04-17)
 **_+_** Add smart redirect feature to redirect to where you saved a new post to  
