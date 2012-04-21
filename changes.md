@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.9.12** (not yet released)
+##**2.9.12** (2012-04-21)
 **_!_** Fix issue with ask box on dashboard not draggable  
 **_!_** Fix issue with sub-options in the setting page appearing disabled when parent option is enabled  
 **_!_** Restore functionality of tag-only posts feature  
