@@ -1897,7 +1897,7 @@ function handleMessage(message, myWorker) {
             if (settings.reblogTags !== '') {
                settings.reblogTags = settings.reblogTags.replace(/, /g,',').split(',');
             }
-            settings.reblogAsks = getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
+            settings.reblogAsks = 0;//getSetting("extensions.MissingE.betterReblogs.reblogAsks",0);
             settings.keyboardShortcut = getSetting("extensions.MissingE.betterReblogs.keyboardShortcut",1);
             settings.quickKeyboardShortcut = getSetting("extensions.MissingE.betterReblogs.quickKeyboardShortcut",1);
             break;
