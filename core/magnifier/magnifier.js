@@ -52,7 +52,14 @@ MissingE.packages.magnifier = {
             src = src.replace(/^url\(['"]?/,'').replace(/['"]?\)$/,'');
          }
          else if (li.hasClass('follower')) {
-            src = $(this).parent().find('img.avatar').attr('src');
+            src = $(this).parent().find('.avatar');
+            if (src.is('img')) {
+               src = src.attr('src');
+            }
+            else {
+               src = src.css('background-image');
+               src = src.replace(/^url\(['"]?/,'').replace(/['"]?\)$/,'');
+            }
          }
          else if (li.attr('id') === 'crushes') {
             src = $(this).parent().css('background-image');
@@ -69,7 +76,8 @@ MissingE.packages.magnifier = {
    insertAvatarMagnifier: function(item) {
       var it = $(item);
       var mag;
-      if (it.find('div.MissingE_magnify_avatar').length > 0) {
+      if (it.find('div.MissingE_magnify_avatar').length > 0 ||
+          it.attr('id') === "invite_someone") {
          return;
       }
       if (item.tagName === "LI" && it.hasClass("notification")) {
