@@ -151,7 +151,7 @@ MissingE.packages.postingTweaks = {
             if (!/\S/.test($('#post_one').val()) &&
                 !/\S/.test($('#post_two').val()) &&
                 /\S/.test($('#post_tags').val())) {
-               var insertText = '<small><em><small><em><small>&#8192;' +
+               var insertText = '<small><em><small><em><small>&#x3000;' +
                                 '</small></em></small></em></small>';
 
                $.globalEval('var addText = "' + insertText + '";' +
