@@ -136,7 +136,8 @@ header("Content-Disposition: attachment; filename=crushes.png");
 */
 
 header('Content-type: image/jpeg');
-imagejpeg($img, NULL, 80);
+$quality = $large ? 80 : 90;
+imagejpeg($img, NULL, $quality);
 
 imagecolordeallocate($img, $wh);
 imagecolordeallocate($img, $bl);

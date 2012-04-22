@@ -143,7 +143,7 @@ if (isset($_GET["format"]) && preg_match("/^png$/i",$_GET["format"]) == 1) {
    imagepng($img);
 }
 else {
-   $quality = 80;
+   $quality = $large ? 80 : 90;
    if (isset($_GET["quality"])) {
       $val = (int)$_GET["quality"];
       if ($val >= 0 && $val <= 100)
