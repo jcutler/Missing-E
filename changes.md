@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.13** (not yet released)
+**_!_** Move Safe Dash button above tracked tags for easier access for those with many tracked tags  
+**_!_** Fix issue with icons sometimes displaying on top of a quick reblog menu
+
 ##**2.9.12** (2012-04-21)
 **_!_** Fix issue with ask box on dashboard not draggable  
 **_!_** Fix issue with sub-options in the setting page appearing disabled when parent option is enabled  
