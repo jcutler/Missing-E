@@ -28,7 +28,7 @@ display:none;
 position:absolute;
 width:170px !important;
 padding-top:4px;
-z-index:1338 !important;
+z-index:10000 !important;
 }
 
 #MissingE_quick_reblog .user_menu_nipple {
