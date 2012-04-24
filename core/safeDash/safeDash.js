@@ -72,7 +72,10 @@ MissingE.packages.safeDash = {
              '<a href="#" onclick="return false;" id="nsfwctrl">Safe Dash</a>' +
              '</li></ul>';
 
-      var afterer = $('#MissingE_marklist');
+      var afterer = $('#tracked_tags');
+      if (afterer.length === 0) {
+         afterer = $('#MissingE_marklist');
+      }
       if (afterer.length === 0) {
          afterer = $('#right_column .radar');
       }
