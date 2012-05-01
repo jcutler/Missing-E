@@ -163,19 +163,11 @@ MissingE.packages.betterReblogs = {
                   MissingE.packages.betterReblogs.hasTwitter[tumblr] = false;
                   MissingE.packages.betterReblogs.twitterChecked[tumblr] = false;
                }
-
-               cb = data.match(/<input[^>]*id="fb_connect_button"[^>]*>/);
+               cb = data.match(/<div[^>]*id="fb_connect_prompt[^>]*>/);
                if (cb && cb.length > 0) {
                   MissingE.packages.betterReblogs.facebookChecked[tumblr] =
-                     /checked="checked"/.test(cb[0]) ||
-                     /checked\s*[^=]/.test(cb[0]);
+                     /display:\s*none/.test(cb[0]);
                }
-               /*
-               var fbName = data.match(/<option[^<]*id="fb_name_option"[^>]*>([^<]+)<\/[^>]*>/);
-               if (!fbName || fbName.length < 2) {
-                  MissingE.packages.betterReblogs.hasFacebook[tumblr] = false;
-               }
-               */
                MissingE.packages.betterReblogs.hasFacebook[tumblr] =
                   MissingE.packages.betterReblogs.facebookChecked[tumblr];
 
