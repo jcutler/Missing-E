@@ -80,6 +80,7 @@ color:#4183c4;
 
 ##**2.9.13** (not yet released)
 **_+_** Add Portuguese localization  
+**_!_** Fix issue with auto reblog tags not being added in some cases  
 **_!_** Fix problem with Facebook checkbox not showing up in Quick Reblog menu  
 **_!_** Fix issue with automatic tagging of reblog posts with original post without tags  
 **_!_** Move Safe Dash button above tracked tags for easier access for those with many tracked tags  
