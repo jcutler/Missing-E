@@ -1472,7 +1472,7 @@ var locale = {
     "draft": "Salvar como rascunho",
     "private": "Salvar privada"
    },
-   "clearTagsText": "Marcas Claras"
+   "clearTagsText": "Marcas claras"
   },
   "reblogTags": "Reblogar marcador",
   "removeTag": "Remover marcador",
