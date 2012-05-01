@@ -1524,9 +1524,9 @@ var locale = {
    "selectAll": "Selecionar Todos",
    "deselectAll": "Desselecionar Todos",
    "deleteSelected": "Excluir Selecionados",
-   "messagesConfirm": "Tem certeza que deseja excluir os 5 mensagens selecionadas?",
+   "messagesConfirm": "Tem certeza que deseja excluir os # mensagens selecionadas?",
    "messagesError": "Algumas mensagens não puderam ser removidos. Por favor, tente novamente mais tarde.",
-   "postsConfirm": "Tem certeza de que deseja excluir os 5 publicações selecionadas?",
+   "postsConfirm": "Tem certeza de que deseja excluir os # publicações selecionadas?",
    "postsError": "Algumas publicações não pôde ser removido. Por favor, tente novamente mais tarde.",
    "confirmReplace": {
     "operation": ["-", 1],
