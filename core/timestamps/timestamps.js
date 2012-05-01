@@ -83,7 +83,7 @@ MissingE.packages.timestamps = {
             $(item).find(".post_controls:first")
                   .after('<div class="post_info">' +
                          '<span class="MissingE_timestamp" ' +
-                         'style="font-weight:normal;">' +
+                         'style="font-weight:normal;line-height:normal;">' +
                          MissingE.escapeHTML(MissingE.getLocale(lang).loading) +
                          '</span></div>');
          }
@@ -91,7 +91,7 @@ MissingE.packages.timestamps = {
             var spn = div.find('span.MissingE_timestamp');
             if (spn.length === 0) {
                div.append('<br><span class="MissingE_timestamp" ' +
-                          'style="font-weight:normal;">' +
+                          'style="font-weight:normal;line-height:normal;">' +
                           MissingE.escapeHTML(MissingE.getLocale(lang).loading)+
                           '</span>');
             }
