@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.9.13** (not yet released)
+##**2.9.13** (2012-05-01)
 **_+_** Add Portuguese localization  
 **_!_** Fix issue with auto reblog tags not being added in some cases  
 **_!_** Fix problem with Facebook checkbox not showing up in Quick Reblog menu  
