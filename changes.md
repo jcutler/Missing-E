@@ -79,6 +79,7 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.9.13** (not yet released)
+**_+_** Add Portuguese localization  
 **_!_** Move Safe Dash button above tracked tags for easier access for those with many tracked tags  
 **_!_** Fix issue with icons sometimes displaying on top of a quick reblog menu
 
