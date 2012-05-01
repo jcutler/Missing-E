@@ -132,7 +132,6 @@ var locale = {
     "draft": "Save Draft",
     "private": "Save as Private"
    },
-   "uploadImagesText": "Upload images instead",
    "clearTagsText": "Clear Tags"
   },
   "reblogTags": "Reblog Tags",
@@ -324,7 +323,6 @@ var locale = {
     "draft": "Entwurf speichern",
     "private": "Speichern als privat"
    },
-   "uploadImagesText": "Stattdessen, lade fotos hoch",
    "clearTagsText": "Tags entfernen"
   },
   "reblogTags": "mit den Tags rebloggen",
@@ -516,7 +514,6 @@ var locale = {
     "draft": "Guardar borrador",
     "private": "Guardar como Privado"
    },
-   "uploadImagesText": "Subir fotos en su lugar",
    "clearTagsText": "Quitar etiquetas"
   },
   "reblogTags": "Rebloguear etiquetas",
@@ -708,7 +705,6 @@ var locale = {
     "draft": "Enregistrer le brouillon",
     "private": "Sauvegarder privé"
    },
-   "uploadImagesText": "Ajouter les photos à la place",
    "clearTagsText": "Supprimer Tags"
   },
   "reblogTags": "Rebloguer Tags",
@@ -900,7 +896,6 @@ var locale = {
     "draft": "Salva bozza",
     "private": "Salva post privato"
    },
-   "uploadImagesText": "Oppure carica foto",
    "clearTagsText": "Cancella i Tag"
   },
   "reblogTags": "Reblogga i Tag",
@@ -946,7 +941,7 @@ var locale = {
    "text": ["come ", "testo", ""],
    "textTitle": "Rispondi con un testo"
   },
-  "Shuffle": "Mischiare la coda",
+  "shuffle": "Mischiare la coda",
   "deleteConfirm": "Sei sicuro di voler eliminare questo post?",
   "massDelete": {
    "selectAll": "Seleziona tutto",
@@ -1102,7 +1097,6 @@ var locale = {
     "draft": "下書き保存",
     "private": "プライベート保存"
    },
-   "uploadImagesText": "画像をアップロード",
    "clearTagsText": "タグをクリア"
   },
   "reblogTags": "タグをリブログ",
@@ -1287,7 +1281,6 @@ var locale = {
     "draft": "Wersję roboczą",
     "private": "Post prywatny"
    },
-   "uploadImagesText": "Użyj zdjęcia",
    "clearTagsText": "Usuń tagi"
   },
   "reblogTags": "Rebloguj tagi",
@@ -1346,6 +1339,208 @@ var locale = {
    "type": "Typ",
    "user": "Użytkownik",
    "reset": "Resetuj"
+  }
+ },
+ "pt": {
+  "warningLink": {
+   "link": "Leia a declaração de Missing-E sobre privacidade e segurança",
+   "subtext": "Este link adicionado por Missing e"
+  },
+  "daysLong": [
+   "Domingo",
+   "Segunda-feira",
+   "Terça-feira",
+   "Querta-feira",
+   "Quinta-feira",
+   "Sexta-feira",
+   "Sábado"
+  ],
+  "daysShort": [
+   "Dom",
+   "Seg",
+   "Ter",
+   "Qua",
+   "Qui",
+   "Sex",
+   "Sáb"
+  ],
+  "monthsLong": [
+   "Janeiro",
+   "Fevereiro",
+   "Março",
+   "Abril",
+   "Maio",
+   "Junho",
+   "Julho",
+   "Agosto",
+   "Setembro",
+   "Outubro",
+   "Novembro",
+   "Dezembro"
+  ],
+  "monthsShort": [
+   "Jan",
+   "Fev",
+   "Mar",
+   "Abr",
+   "Mai",
+   "Jun",
+   "Jul",
+   "Ago",
+   "Set",
+   "Out",
+   "Nov",
+   "Dez"
+  ],
+  "update": "Atualização Missing e",
+  "postCrushes": "Publicar o seu esmaga",
+  "sidebar": {
+   "posts": "Postagens",
+   "followers": "Seguidores",
+   "messages": "Mensagens",
+   "drafts": "Rascunhos",
+   "queue": "Programadas",
+   "massEditor": "Editar várias postagens"
+  },
+  "myBlog": "meu blog",
+  "reblog": "reblogar",
+  "reblogging": "reblogando...",
+  "reblogFailed": "Reblog falhou!",
+  "rebloggedText": "reblogei",
+  "reblogOptions": [
+   {
+    "item": "draft",
+    "text": "Salvar como rascunho"
+   },
+   {
+    "item": "queue",
+    "text": "Colocar na fila"
+   },
+   {
+    "item": "private",
+    "text": "Particular"
+   },
+   {
+    "item": "manual",
+    "text": "Reblogar manualmente"
+   }
+  ],
+  "private": "Particular",
+  "captionText": "Descrição",
+  "tagsText": "Marcadores",
+  "twitterText": "Enviar para o Twitter",
+  "facebookText": "Enviar para o Facebook",
+  "askPost": "Perguntar",
+  "askPerson": ["Pergunte", "U"],
+  "asked": ["U", "perguntou"],
+  "reblogAsk": "Reblogar Pergunta",
+  "select": "Selecionar",
+  "first100": "Primeiros 100",
+  "next100": "Próximo 100",
+  "postTypeNames": {
+   "text": "Texto",
+   "photo": "Foto",
+   "quote": "Citação",
+   "link": "Link",
+   "chat": "Chat",
+   "audio": "Áudio",
+   "video": "Vídeo"
+  },
+  "reply": "Responder",
+  "replying": "Responder...",
+  "dashTweaksText": {
+   "answer": "resposta",
+   "edit": "editar",
+   "del": "excluir",
+   "reblog": "reblogar",
+   "reply": "responder",
+   "notes": "notas",
+   "queue": "fila",
+   "publish": "publicar",
+   "experimental": "EXPERIMENTAL",
+   "exp": "X"
+  },
+  "bookmarkVerb": "marcar",
+  "bookmarkNoun": "Marcador",
+  "bookmarksTitle": "Marcadores",
+  "postUnavailable": "Postar Indisponíveis",
+  "magnify": "ampliar",
+  "postingTweaks": {
+   "submitText": {
+    "publish": "Criar publicação",
+    "queue": "Colocar no fila",
+    "draft": "Salvar como rascunho",
+    "private": "Salvar privada"
+   },
+   "clearTagsText": "Marcas Claras"
+  },
+  "reblogTags": "Reblogar marcador",
+  "removeTag": "Remover marcador",
+  "timestamps": {
+   "failText": ["Falha ao carregar timestamp.", "Tentar novamente"],
+   "retryIndex": 1
+  },
+  "loading": "Carregamento...",
+  "error": "Ocorreu um erro. Clique para recarregar.",
+  "posts": {
+   "text": ["sua", "postagem"],
+   "photo": ["sua", "foto"],
+   "photoset": ["seu", "álbum de fotos"],
+   "quote": ["sua", "citação"],
+   "link": ["seu", "link"],
+   "conversation": ["seu", "chat"],
+   "audio": ["sua", "postagem de áudio"],
+   "video": ["seu", "vídeo"],
+   "question": ["sua", "pergunta"]
+  },
+  "notifications": {
+   "like": ["U", "gostou da", "P"],
+   "reblog": ["U", "reblogou", "P"],
+   "reblogIndex": 1,
+   "answer": ["U", "respondeu a", "P"],
+   "reply": ["U", "respondeu a", "P"]
+  },
+  "postNnotificationChanges": {
+   "like": {
+    "da sue": "do sue"
+   },
+   "answer": {
+    "a sue": "ao sue"
+   },
+   "reply": {
+    "a sue": "ao sue"
+   }
+  },
+  "replyType": {
+   "as": "como ...",
+   "photo": ["como ", "foto", ""],
+   "photoTitle": "Reposta Foto",
+   "text": ["como ", "texto", ""],
+   "textTitle": "Resposta Texto"
+  },
+  "shuffle": "Baralhar a fila",
+  "deleteConfirm": "Você tem certeza que quer apagar esta postagem?",
+  "massDelete": {
+   "selectAll": "Selecionar Todos",
+   "deselectAll": "Desselecionar Todos",
+   "deleteSelected": "Excluir Selecionados",
+   "messagesConfirm": "Tem certeza que deseja excluir os 5 mensagens selecionadas?",
+   "messagesError": "Algumas mensagens não puderam ser removidos. Por favor, tente novamente mais tarde.",
+   "postsConfirm": "Tem certeza de que deseja excluir os 5 publicações selecionadas?",
+   "postsError": "Algumas publicações não pôde ser removido. Por favor, tente novamente mais tarde.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    "0": {
+     "os 1 mensagens selecionadas": "a mensagem selecionada",
+     "os 1 publicações selecionadas": "da publicação selecionada"
+    }
+   }
+  },
+  "sorting": {
+   "sort": "Ordenar",
+   "type": "Tipo",
+   "user": "Usuário",
+   "reset": "Restaurar"
   }
  },
  "ru": {
@@ -1479,7 +1674,6 @@ var locale = {
     "draft": "Сохранить черновик",
     "private": "Сохранить как личное"
    },
-   "uploadImagesText": "Загрузить фото",
    "clearTagsText": "Очистить теги"
   },
   "reblogTags": "Реблог теги",
@@ -1701,7 +1895,6 @@ var locale = {
     "draft": "Taslak olarak kaydet",
     "private": "Özel olarak kaydet"
    },
-   "uploadImagesText": "Bunun yerine başka fotograf yükle",
    "clearTagsText": "Etiketleri sil"
   },
   "reblogTags": "Yeniden blogla etiketler",
