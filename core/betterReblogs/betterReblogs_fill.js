@@ -105,15 +105,16 @@ MissingE.packages.betterReblogsFill = {
                tags.push(settings.reblogTags[i]);
             }
          }
+         MissingE.packages.betterReblogsFill.setReblogTags(tags);
       }
 
       if (document.body.id === 'dashboard_edit_post') {
          $('#the_as_links a[href!="#"]').click(function() {
             var pt = document.getElementById('post_tags').value;
-            if (pt !== '') {
+            if (pt && pt !== '') {
                MissingE.packages.betterReblogsFill.setReblogTagsPlainText(pt);
             }
-            else if (tags !== '') {
+            else if (tags && tags.length > 0) {
                MissingE.packages.betterReblogsFill.setReblogTags(tags);
             }
          });
@@ -128,11 +129,11 @@ MissingE.packages.betterReblogsFill = {
                 askPost && askPost.length > 1 &&
                 $('#left_column').children("div.post_question").length !== 0) {
                pt = document.getElementById('post_tags').value;
-               if (pt !== '') {
+               if (pt && pt !== '') {
                   MissingE.packages.betterReblogsFill
                      .setReblogTagsPlainText(pt);
                }
-               else if (tags !== '') {
+               else if (tags && tags.length > 0) {
                   MissingE.packages.betterReblogsFill.setReblogTags(tags);
                }
                location.href = location.href.replace(/MissingEaskSure=0&/,'')
@@ -144,11 +145,11 @@ MissingE.packages.betterReblogsFill = {
                   askPost.length < 2) {
             if ($('#left_column').children("div.post_question").length !== 0) {
                pt = document.getElementById('post_tags').value;
-               if (pt !== '') {
+               if (pt && pt !== '') {
                   MissingE.packages.betterReblogsFill
                      .setReblogTagsPlainText(pt);
                }
-               else if (tags !== '') {
+               else if (tags && tags.length > 0) {
                   MissingE.packages.betterReblogsFill.setReblogTags(tags);
                }
                askName = document.referrer.match(/[&\?]name=([^&]*)/);
