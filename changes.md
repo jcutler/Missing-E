@@ -80,11 +80,10 @@ color:#4183c4;
 
 ##**2.9.13** (2012-05-01)
 **_+_** Add Portuguese localization  
-**_!_** Fix issue with auto reblog tags not being added in some cases  
+**_!_** Fix issue with automatic tagging of reblog posts not being added in some cases  
 **_!_** Fix problem with Facebook checkbox not showing up in Quick Reblog menu  
-**_!_** Fix issue with automatic tagging of reblog posts with original post without tags  
 **_!_** Move Safe Dash button above tracked tags for easier access for those with many tracked tags  
-**_!_** Fix issue with icons sometimes displaying on top of a quick reblog menu
+**_!_** Fix issue with icons sometimes displaying on top of a Quick Reblog menu
 
 ##**2.9.12** (2012-04-21)
 **_!_** Fix issue with ask box on dashboard not draggable  
