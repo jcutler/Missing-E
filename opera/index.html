@@ -5,6 +5,7 @@
 <script type="text/javascript" src="lib/evalFix.js"></script>
 <script type="text/javascript">
 var MissingE = {};
+var extension = {isOpera: true};
 </script>
 <script type="text/javascript" src="core/localizations.js"></script>
 <script type="text/javascript" src="core/utils.js"></script>
@@ -149,7 +150,6 @@ function getExternalVersion() {
       url: 'http://missing-e.com/version',
       dataType: "text",
       success: function(data, textStatus, xhr) {
-         console.log(data);
          setSetting('MissingE_lastUpdateCheck', (new Date()).valueOf());
          var versionInfo = data.split(" ");
          versionInfo[versionInfo.length-1] =
@@ -284,10 +284,294 @@ function handleRequest(e) {
          update: versionCompare(getSetting("MissingE_externalVersion",'0'),
                                 getSetting("MissingE_version",'0')) > 0});
    }
+   else if (request.greeting == "earlyStyles") {
+      var injectSlimSidebar = false;
+      var injectStyles = [];
+
+      if (false && e.origin !== request.url &&
+          MissingE.isTumblrURL(request.url, ["upload"]) &&
+          MissingE.isTumblrURL(e.origin,
+                               ["dashboard", "blog", "likes", "tagged"])) {
+         if (getSetting("MissingE_dashboardTweaks_enabled",1) == 1 &&
+             getSetting("MissingE_dashboardTweaks_smallIcons",0) == 1) {
+            myWorker.postMessage({greeting: "earlyStyles",
+                                  extensionURL: data.url(""),
+                                  styles: [{file: "core/dashboardTweaks/smallIcons.css"}]});
+         }
+         return;
+      }
+      else if (false && myWorker.tab.url !== message.url &&
+          !MissingE.isTumblrURL(message.url, ["askForm", "fanMail"])) {
+         return;
+      }
+
+      if (false && getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
+         if (getSetting("extensions.MissingE.askTweaks.smallFanMail",0) == 1 &&
+             MissingE.isTumblrURL(message.url, ["fanMail", "messages"])) {
+            injectStyles.push({file: "core/askTweaks/smallFanMail.css"});
+         }
+         if (getSetting("extensions.MissingE.askTweaks.allFanMail",0) == 1 &&
+             MissingE.isTumblrURL(message.url, ["messages"])) {
+            injectStyles.push({file: "core/askTweaks/allFanMail.css"});
+         }
+      }
+
+      if (false && MissingE.isTumblrURL(message.url,
+                      ["dashboard",
+                       "blog",
+                       "blogData",
+                       "drafts",
+                       "queue",
+                       "messages",
+                       "likes",
+                       "tagged"])) {
+
+         injectStyles.push({code:
+               '#posts .post .post_controls .MissingE_experimental_reply, ' +
+               '#posts .post .post_controls .MissingE_experimental_reply_wait, ' +
+               '#posts .post .post_controls .MissingE_experimental_reply_fail, ' +
+               '#posts .post .post_controls .MissingE_experimental_reply_success, ' +
+               '#posts .post .post_controls .MissingE_reblogYourself_retry, ' +
+               '#posts .post .post_controls .MissingE_betterReblogs_retryAsk { ' +
+                  'background-image:url("' +
+                     data.url("core/dashboardTweaks/postControls.png") +
+                  '"); ' +
+               '} ' +
+               '#posts .post .post_controls .MissingE_quick_reblogging { ' +
+                  'background-image:url("' +
+                     data.url("core/betterReblogs/reblogging.gif") +
+                  '") !important; ' +
+               '} ' +
+               '#posts .post .post_controls .MissingE_quick_reblogging_success { ' +
+                  'background-image:url("' +
+                     data.url("core/betterReblogs/reblogSuccess.png") +
+                  '") !important; ' +
+               '}'});
+
+         if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
+            injectStyles.push({file: "core/dashboardTweaks/dashboardTweaks.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0) == 1) {
+               injectStyles.push({file: "core/dashboardTweaks/smallIcons.css"});
+            }
+            if (getSetting("extensions.MissingE.dashboardTweaks.notePreview",1) == 1) {
+               injectStyles.push({file: "core/dashboardTweaks/preview.css"});
+               injectStyles.push({code:
+                  '#MissingE_preview .previewIcon { ' +
+                     'background-image:url("' +
+                     data.url("core/dashboardTweaks/prevIcon.png") +
+                     '"); ' +
+                  '}' +
+                  '#MissingE_preview.MissingE_preview_loading { ' +
+                     'background-image:url("' +
+                     data.url("core/dashboardTweaks/loader.gif") +
+                     '");' +
+                  '}' +
+                  '#MissingE_preview.MissingE_preview_fail { ' +
+                     'background-image:url("' +
+                     data.url("core/dashboardTweaks/prevFail.png") +
+                     '");' +
+                  '}'});
+            }
+            if (getSetting("extensions.MissingE.dashboardTweaks.replaceIcons",1) == 1) {
+               injectStyles.push({code:
+                  '#posts .post .post_controls a[id^="ask_answer_link"], ' +
+                  '#posts .post .post_controls a[href^="/edit"], ' +
+                  '#dashboard_inbox .post .post_controls a[id^="post_delete_"], ' +
+                  '#posts .post .post_controls a[onclick*="delete_post_"], ' +
+                  '#posts .post .post_controls a[onclick*="queue_post"], ' +
+                  '#posts .post .post_controls a[onclick*="approve_post"], ' +
+                  '#posts .post .post_controls a[onclick*="publish_post"] { ' +
+                     'background-image:url("' +
+                        data.url("core/dashboardTweaks/postControls.png") +
+                     '"); ' +
+                  '}'});
+               injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
+            }
+            if (getSetting("extensions.MissingE.dashboardTweaks.textControls",0) == 1) {
+               injectStyles.push({file: "core/dashboardTweaks/textControls.css"});
+            }
+            if (getSetting("extensions.MissingE.dashboardTweaks.reblogQuoteFit",1) == 1)
+               injectStyles.push({file: "core/dashboardTweaks/reblogQuoteFit.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.wrapTags",1) == 1)
+               injectStyles.push({file: "core/dashboardTweaks/wrapTags.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.postLinks",1) == 1)
+               injectStyles.push({file: "core/dashboardTweaks/postLinks.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.massDelete",1) == 1 ||
+                getSetting("extensions.MissingE.dashboardTweaks.randomQueue",1) == 1)
+               injectStyles.push({file: "core/dashboardTweaks/draftQueueTools.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.sortableNotes",1) == 1)
+               injectStyles.push({file: "core/dashboardTweaks/notesSorter.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.widescreen",0) == 1 &&
+                !MissingE.isTumblrURL(message.url, ["settings"]))
+               injectStyles.push({file: "core/dashboardTweaks/widescreen.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.queueArrows",1) == 1 &&
+                MissingE.isTumblrURL(message.url, ["queue"]))
+               injectStyles.push({file: "core/dashboardTweaks/queueArrows.css"});
+            if (getSetting("extensions.MissingE.dashboardTweaks.simpleHighlight",0) == 1)
+               injectStyles.push({file: "core/dashboardTweaks/simpleHighlight.css"});
+         }
+
+         if (getSetting("extensions.MissingE.safeDash.enabled",1) == 1) {
+            injectStyles.push({file: "core/safeDash/safeDash.css"});
+            if (getSetting("extensions.MissingE.safeDash.photosetAll",0) == 1) {
+               injectStyles.push({file: "core/safeDash/photosetAll.css"});
+            }
+            injectStyles.push({code:
+               '#right_column #MissingE_safeDash li a {' +
+                  'background-image:url("' +
+                  data.url("core/safeDash/lockicon.png") +
+                  '") !important; ' +
+               '} ' +
+               'body.MissingE_safeDash #posts li.post.photo .post_content > div:first-child, ' +
+               'body.MissingE_safeDash #posts li.post.photo .flipcard img, ' +
+               'body.MissingE_safeDash #posts li.post.photo .photoset_photo, ' +
+               'body.MissingE_safeDash #posts li.post.photo img.image_thumbnail, ' +
+               'body.MissingE_safeDash #posts li.post.video .video_thumbnail, ' +
+               'body.MissingE_safeDash #posts li.post.video .video_embed, ' +
+               'body.MissingE_safeDash #posts li.post.video span[id^="video_player"], ' +
+               'body.MissingE_safeDash #posts li.notification blockquote[style], ' +
+               'body.MissingE_safeDash #posts li.post ol.notes blockquote.photo_container, ' +
+               'body.MissingE_safeDash #posts li.post .post_content p .nsfw_span, ' +
+               'body.MissingE_safeDash #posts li.post .post_content img.album_art, ' +
+               'body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"]  { ' +
+                  'background-image:url("' +
+                  data.url("core/safeDash/lock.png") +
+                  '");' +
+               '}'});
+         }
+
+         if (false &&getSetting("extensions.MissingE.bookmarker.enabled",1) == 1) {
+            injectStyles.push({file: "core/bookmarker/bookmarker.css"});
+         }
+
+         if (false&&getSetting("extensions.MissingE.sidebarTweaks.enabled",1) == 1) {
+            injectStyles.push({file: "core/sidebarTweaks/sidebarTweaks.css"});
+            if (getSetting("extensions.MissingE.sidebarTweaks.slimSidebar",0) == 1) {
+               injectSlimSidebar = true;
+            }
+         }
+
+         if (false&&getSetting("extensions.MissingE.magnifier.enabled",1) == 1) {
+            injectStyles.push({file: "core/magnifier/magnifier.css"});
+         }
+
+         if (false&&getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
+            injectStyles.push({file: "core/askTweaks/askTweaks.css"});
+         }
+      }
+
+      if (MissingE.isTumblrURL(request.url, ["massEditor"])) {
+        if (getSetting("MissingE_massEditor_enabled",1) == 1) {
+           injectStyles.push({file: "core/massEditor/massEditor.css"});
+        }
+      }
+
+      if (false &&MissingE.isTumblrURL(message.url,
+                      ["post",
+                       "reblog",
+                       "messages",
+                       "drafts"])) {
+         if (getSetting("extensions.MissingE.postingTweaks.enabled",1) == 1) {
+            injectStyles.push({file: "core/postingTweaks/postingTweaks.css"});
+         }
+      }
+
+      if (false &&MissingE.isTumblrURL(message.url,
+                      ["dashboard",
+                       "blog"])) {
+         if (getSetting("extensions.MissingE.replyReplies.enabled",1) == 1) {
+            injectStyles.push({code: "#posts .notification .notification_type_icon { background-image:url('" + data.url('core/replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + data.url('core/replyReplies/notes_icons.png') + "') !important; }"});
+            injectStyles.push({file: "core/replyReplies/replyReplies.css"});
+         }
+      }
+
+      if (false &&MissingE.isTumblrURL(message.url, ["following"])) {
+         if (getSetting("extensions.MissingE.magnifier.enabled",1) == 1) {
+            injectStyles.push({file: "core/magnifier/magnifier.css"});
+         }
+      }
+
+      if (false &&MissingE.isTumblrURL(message.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged"])) {
+         if (getSetting("extensions.MissingE.betterReblogs.enabled",1) == 1) {
+            injectStyles.push({file: "core/betterReblogs/quickReblog.css"});
+         }
+      }
+
+      if (false &&injectSlimSidebar) {
+         injectStyles.push({file: "core/sidebarTweaks/slimSidebar.css"});
+      }
+
+      if (injectStyles.length > 0) {
+         var styleFiles = [];
+         for (i=0; i<injectStyles.length; i++) {
+            if (injectStyles[i].hasOwnProperty("file")) {
+               styleFiles.push(injectStyles[i].file);
+            }
+         }
+         var injectFiles = {
+            "css": styleFiles,
+            "js": []
+         };
+         getFiles(injectFiles, function(result) {
+            var i, cssCode = {};
+            for (i=0; i<result.css.length; i++) {
+               cssCode[styleFiles[i]] = result.css[i];
+            }
+            e.source.postMessage({greeting: "sendFiles",
+                                  files: cssCode});
+            e.source.postMessage({greeting: "earlyStyles",
+                                  styles: injectStyles});
+         });
+      }
+   }
    else if (request.greeting === "start") {
+      var activeScripts = {
+         greeting: "startup",
+         isFrame: request.isFrame,
+         url: request.url
+      };
+      var zindexFix = false;
+      var needUI = false, needUIresizable = false, needUIsortable = false,
+          needUIdraggable = false;
+      var injectScripts = ["extension.js", "core/localizations.js",
+                           "core/utils.js"];
+      var injectStyles = [];
+      activeScripts.version = currVersion;
+      if (!request.isFrame &&
+          MissingE.isTumblrURL(request.url, ["massEditor"])) {
+        getImages(["core/massEditor/border.png"], function(result) {
+            e.source.postMessage({greeting: "sendImages", imgs: result});
+        });
+         if (getSetting("MissingE_massEditor_enabled",1) == 1) {
+            injectScripts.push("core/massEditor/massEditor.js");
+            activeScripts.massEditor = true;
+         }
+         else {
+            activeScripts.massEditor = false;
+         }
+      }
+
+      injectScripts.unshift("lib/evalFix.js");
+      injectScripts.unshift("lib/jquery-1.7.2.min.js");
+      if (zindexFix) {
+         injectScripts.push("core/common/zindexFix.js");
+      }
+      var injectFiles = {
+         "css": injectStyles,
+         "js": injectScripts
+      };
+      getFiles(injectFiles, function(result) {
+         activeScripts.files = result;
+         activeScripts.files.js.push("jQuery.noConflict();");
+         e.source.postMessage(activeScripts);
+      });
    }
 }
-function loc(){return location.href;}
+
 opera.extension.onmessage = function(e) {
    if (e.data.greeting === "initialize" &&
        /http:\/\/www\.tumblr\.com/.test(e.data.url)) {
@@ -300,6 +584,7 @@ opera.extension.onmessage = function(e) {
                  "core/localizations.js",
                  "core/utils.js",
                  "core/common/menuButton.js",
+                 "core/common/earlyCSS.js",
                  "whoami.js"]
       };
       getFiles(files, function(result) {

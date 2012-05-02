@@ -48,6 +48,9 @@ if ((window.top === window &&
             }
          }
       }
+      if (response.files) {
+         extension.injectFiles(response.files);
+      }
       MissingE.log(info);
    });
 
@@ -63,7 +66,7 @@ if ((window.top === window &&
             post = 'post/' + response.link;
          }
          up.onclick = function() {
-            window.open('http://missing-e.com/update/opera');
+            window.open('http://missing-e.com/update');
          };
          up.style.display = 'block';
       }

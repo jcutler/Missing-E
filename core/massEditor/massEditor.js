@@ -204,7 +204,8 @@ MissingE.packages.massEditor = {
 };
 
 if (extension.isChrome ||
-    extension.isFirefox) {
+    extension.isFirefox ||
+    extension.isOpera) {
    MissingE.packages.massEditor.init();
 }
 

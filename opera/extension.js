@@ -137,6 +137,33 @@ extension = {
       return true;
    },
 
+   injectFiles: function(files) {
+      var head = document.getElementsByTagName("head")[0];
+      var headChild = head.firstChild;
+      for (i=0; i<files.css.length; i++) {
+      var x = document.createElement("style");
+         x.textContent = files.css[i];
+         head.insertBefore(x, headChild);
+      }
+      for (i=0; i<files.js.length; i++) {
+         var y = document.createElement("script");
+         y.textContent = files.js[i];
+         head.appendChild(y);
+      }
+   },
+
+   insertStyle: function(code) {
+      var ss = document.createElement("style");
+      ss.setAttribute("type","text/css");
+      ss.textContent = code;
+      if (document.getElementsByTagName("head").length > 0) {
+         document.getElementsByTagName("head")[0].appendChild(ss);
+      }
+      else {
+         document.documentElement.appendChild(ss);
+      }
+   },
+
    insertStyleSheet: function(url) {
       var ss = document.createElement("style");
       ss.setAttribute("type","text/css");
@@ -186,7 +213,6 @@ extension = {
             msg += "\n   " + i + " = " + e.data[i];
          }
       }
-      console.log(msg);
    },
 
    sendRequest: function(name, request, callback) {
