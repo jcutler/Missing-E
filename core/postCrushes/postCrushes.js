@@ -39,28 +39,14 @@ MissingE.packages.postCrushes = {
       var newdiv = document.createElement('div');
       newdiv.style.position="relative";
       newdiv.style.verticalAlign="middle";
-      newdiv.style.marginTop="10px";
+      newdiv.style.marginTop="15px";
       newdiv.id = "tcp_outerdiv";
-      var innerdiv = document.createElement('div');
-      innerdiv.style.cursor="pointer";
-      innerdiv.style.verticalAlign="middle";
-      var heart = document.createElement("img");
-      heart.src = extension.getURL('core/postCrushes/heart.png');
-      heart.style.opacity = "0.6";
-      heart.style.height = "28px";
-      heart.style.width = "29px";
-      innerdiv.appendChild(heart);
-      var textDiv = document.createElement("div");
-      textDiv.textContent = MissingE.getLocale(lang).postCrushes;
-      textDiv.style.position = "absolute";
-      textDiv.style.top = "15%";
-      textDiv.style.width = "100%";
-      textDiv.style.color = "#2D4159";
-      textDiv.style.font = "italic normal bold 12px/1.4 Arial,Helvetica," +
-                           "ans-serif";
-      innerdiv.appendChild(textDiv);
+      var btn = document.createElement('button');
+      btn.className = "chrome blue big";
+      btn.innerHTML = "&#x2764; " +
+         MissingE.escapeHTML(MissingE.getLocale(lang).postCrushes);
 
-      innerdiv.addEventListener('click', function() {
+      btn.addEventListener('click', function() {
          var i,j;
          var from = [/:/g, /\//g, /\?/g, /\=/g, / /g,
                      /</g, />/g, /\=/g, /"/g];
@@ -129,7 +115,7 @@ MissingE.packages.postCrushes = {
                                        .missingeServer + '/?' + get,
                                 tags:crushname});
       }, true);
-      newdiv.appendChild(innerdiv);
+      newdiv.appendChild(btn);
       infodiv.appendChild(newdiv);
    },
 
