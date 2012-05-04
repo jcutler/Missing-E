@@ -329,6 +329,8 @@ MissingE.packages.postingTweaks = {
       }
       if (settings.blogSelect === 1 &&
           $('select#channel_id').length > 0) {
+         var pcl = $('#post_controls_loading');
+         pcl.parent().append(pcl.remove());
          var extrachan = $('<select id="extra_channel"></select>')
                            .insertAfter('#preview_button');
          extrachan.append($('#channel_id').html());
