@@ -147,12 +147,12 @@ clearQueues = setInterval(function() {
 }, tenSeconds);
 
 function closeTab(url, currentId) {
-   chrome.windows.getAll({populate: true},
-                         function (windows) {
+   chrome.windows.getAll({populate: true}, function (windows) {
       var i,j;
       for (i=0; i<windows.length; i++) {
          for (j=0; j<windows[i].tabs.length; j++) {
-            if (windows[i].tabs[j].url == url &&
+            var thisURL = windows[i].tabs[j].url.replace(/#.*$/,'');
+            if (thisURL == url &&
                 windows[i].tabs[j].id != currentId) {
                chrome.tabs.remove(windows[i].tabs[j].id);
             }
@@ -1309,7 +1309,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                     info:{ version: getSetting("MissingE_version",'0') }});
    }
    else if (request.greeting == "exportOptions") {
-      sendResponse({greeting: "exportOptions", url: "http://tools.missing-e.com/settings?" + $.param(createOptionParams())});
+      sendResponse({greeting: "exportOptions",
+                    url: "http://tools.missing-e.com/settings?" +
+                         $.param(createOptionParams())});
    }
    else if (request.greeting == "importOptions") {
       receiveOptions(request, sendResponse);

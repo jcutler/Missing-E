@@ -345,7 +345,8 @@ function boolSettingToInt(pref) {
 
 function closeTab(url) {
    for each (var tab in tabs) {
-      if (tab.url === url) {
+      var thisURL = tab.url.replace(/#.*$/,'');
+      if (thisURL === url) {
          tab.close();
       }
    }
@@ -353,26 +354,7 @@ function closeTab(url) {
 
 function openSettings() {
    closeTab(data.url("core/options.html"));
-
-   tabs.open({
-      url: data.url("core/options.html"),
-      onReady: function(tab) {
-         tab.attach({
-            contentScriptFile: [data.url("lib/jquery-1.7.2.min.js"),
-                                data.url("lib/evalFix.js"),
-                                data.url("extension.js"),
-                                data.url("core/localizations.js"),
-                                data.url("core/utils.js"),
-                                data.url("lib/checkbox/jquery.checkbox.min.js"),
-                                data.url("lib/facebox/facebox.js"),
-                                data.url("lib/jquery-spin/jquery-spin.js"),
-                                data.url("core/options.js")],
-            onMessage: function(data) {
-               handleMessage(data, this);
-            }
-         });
-      }
-   });
+   tabs.open({url: data.url("core/options.html")});
 }
 
 function toggleWidget() {
@@ -2499,6 +2481,25 @@ pageMod.PageMod({
          if (getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
             handleMessage(data, this);
          }
+      });
+   }
+});
+
+pageMod.PageMod({
+   include: [data.url("core/options.html") + "*"],
+   contentScriptWhen: 'ready',
+   contentScriptFile: [data.url("lib/jquery-1.7.2.min.js"),
+                        data.url("lib/evalFix.js"),
+                        data.url("extension.js"),
+                        data.url("core/localizations.js"),
+                        data.url("core/utils.js"),
+                        data.url("lib/checkbox/jquery.checkbox.min.js"),
+                        data.url("lib/facebox/facebox.js"),
+                        data.url("lib/jquery-spin/jquery-spin.js"),
+                        data.url("core/options.js")],
+   onAttach: function (worker) {
+      worker.on('message', function(data) {
+         handleMessage(data, this);
       });
    }
 });
