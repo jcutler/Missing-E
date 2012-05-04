@@ -42,10 +42,11 @@ MissingE.packages.postCrushes = {
       newdiv.style.marginTop="15px";
       newdiv.id = "tcp_outerdiv";
       var btn = document.createElement('button');
-      btn.className = "chrome blue big";
+      btn.className = "chrome blue";
       btn.innerHTML = "&#x2764; " +
          MissingE.escapeHTML(MissingE.getLocale(lang).postCrushes);
-
+      btn.style.minHeight = "25px";
+      btn.style.cssHeight = "auto";
       btn.addEventListener('click', function() {
          var i,j;
          var from = [/:/g, /\//g, /\?/g, /\=/g, / /g,
