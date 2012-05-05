@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.15** (not yet released)
+**_!_** Fix clickability of magnifier button on Tumblr crush avatars
+
 ##**2.9.14** (2012-05-03)
 **_!_** Correctly close extra settings tabs
 
