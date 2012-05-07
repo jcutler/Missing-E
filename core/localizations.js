@@ -1350,7 +1350,7 @@ var locale = {
    "Domingo",
    "Segunda-feira",
    "Terça-feira",
-   "Querta-feira",
+   "Quarta-feira",
    "Quinta-feira",
    "Sexta-feira",
    "Sábado"
@@ -1393,7 +1393,7 @@ var locale = {
    "Dez"
   ],
   "update": "Atualização Missing e",
-  "postCrushes": "Publicar o seu esmaga",
+  "postCrushes": "Publicar o seu fraquinhos",
   "sidebar": {
    "posts": "Postagens",
    "followers": "Seguidores",
@@ -1406,7 +1406,7 @@ var locale = {
   "reblog": "reblogar",
   "reblogging": "reblogando...",
   "reblogFailed": "Reblog falhou!",
-  "rebloggedText": "reblogei",
+  "rebloggedText": "rebloguei",
   "reblogOptions": [
    {
     "item": "draft",
@@ -1470,7 +1470,7 @@ var locale = {
     "publish": "Criar publicação",
     "queue": "Colocar no fila",
     "draft": "Salvar como rascunho",
-    "private": "Salvar privada"
+    "private": "Salvar como privada"
    },
    "clearTagsText": "Marcas claras"
   },
@@ -1480,7 +1480,7 @@ var locale = {
    "failText": ["Falha ao carregar timestamp.", "Tentar novamente"],
    "retryIndex": 1
   },
-  "loading": "Carregamento...",
+  "loading": "Carregando...",
   "error": "Ocorreu um erro. Clique para recarregar.",
   "posts": {
    "text": ["sua", "postagem"],
@@ -1502,13 +1502,13 @@ var locale = {
   },
   "postNnotificationChanges": {
    "like": {
-    "da sue": "do sue"
+    "da seu": "do seu"
    },
    "answer": {
-    "a sue": "ao sue"
+    "a seu": "ao seu"
    },
    "reply": {
-    "a sue": "ao sue"
+    "a seu": "ao seu"
    }
   },
   "replyType": {
@@ -1524,15 +1524,15 @@ var locale = {
    "selectAll": "Selecionar Todos",
    "deselectAll": "Desselecionar Todos",
    "deleteSelected": "Excluir Selecionados",
-   "messagesConfirm": "Tem certeza que deseja excluir os # mensagens selecionadas?",
-   "messagesError": "Algumas mensagens não puderam ser removidos. Por favor, tente novamente mais tarde.",
-   "postsConfirm": "Tem certeza de que deseja excluir os # publicações selecionadas?",
-   "postsError": "Algumas publicações não pôde ser removido. Por favor, tente novamente mais tarde.",
+   "messagesConfirm": "Tem certeza que deseja excluir as # mensagens selecionadas?",
+   "messagesError": "Algumas mensagens não puderam ser removidas. Por favor, tente novamente mais tarde.",
+   "postsConfirm": "Tem certeza de que deseja excluir as # publicações selecionadas?",
+   "postsError": "Algumas publicações não poderam ser removidas. Por favor, tente novamente mais tarde.",
    "confirmReplace": {
     "operation": ["-", 1],
     "0": {
-     "os 1 mensagens selecionadas": "a mensagem selecionada",
-     "os 1 publicações selecionadas": "da publicação selecionada"
+     "as 1 mensagens selecionadas": "a mensagem selecionada",
+     "as 1 publicações selecionadas": "da publicação selecionada"
     }
    }
   },
