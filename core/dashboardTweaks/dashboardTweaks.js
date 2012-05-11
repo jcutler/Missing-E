@@ -455,6 +455,9 @@ MissingE.packages.dashboardTweaks = {
          var nextCtrl = nextPost.find('.post_controls').css('z-index','auto');
       }
       var overlay = $('#overlay_for_active_menu');
+      if (overlay.length === 0) {
+         overlay = $('#glass_overlay');
+      }
       if (overlay.length > 0) {
          var z = parseInt(overlay.css('z-index'),10);
          if (isNaN(z)) { z = 0; }
