@@ -41,7 +41,7 @@ function openHash(hash) {
    item = item.closest('.faq_entry');
    if (item.length > 0) {
       if (!item.hasClass('open_faq')) {
-         item.addClass('open_faq');
+         item.addClass('open_faq').removeClass('closed_faq');
       }
       var top = item.offset().top;
       top -= 46;
