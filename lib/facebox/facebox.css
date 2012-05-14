@@ -41,10 +41,13 @@ top:5px;
 right:5px;
 padding:2px;
 background:#fff;
+width:8px;
+height:8px;
 }
 
 #facebox .close img{
 opacity:0.3;
+vertical-align:top;
 }
 
 #facebox .close:hover img{
