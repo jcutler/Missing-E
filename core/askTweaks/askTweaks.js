@@ -687,7 +687,8 @@ MissingE.packages.askTweaks = {
 };
 
 if (extension.isChrome ||
-    extension.isFirefox) {
+    extension.isFirefox ||
+    extension.isOpera) {
    if (window.top === window ||
        MissingE.isTumblrURL(location.href, ["askForm", "fanMail"])) {
       MissingE.packages.askTweaks.init();

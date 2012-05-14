@@ -37,6 +37,7 @@ function setSetting(key, val) {
 function getImages(imgs, callback) {
    var i;
    var result = {};
+   var canvasSet = {}, imgSet = {};
    var imgCount = 0;
    function onComplete(){
       if (imgCount >= imgs.length) {
@@ -44,12 +45,14 @@ function getImages(imgs, callback) {
       }
    }
    for (i=0; i<imgs.length; i++) {
-      if (typeof imageCache[imgs[i]] === "undefined") {
-         var canvas = document.createElement("canvas");
-         var img = document.createElement("img");
-         img.setAttribute("relSrc", imgs[i]);
-         img.onload = function(){
-            var source = img.getAttribute("relSrc");
+      if (!imageCache.hasOwnProperty(imgs[i])) {
+         canvasSet[imgs[i]] = document.createElement("canvas");
+         imgSet[imgs[i]] = document.createElement("img");
+         imgSet[imgs[i]].setAttribute("relSrc", imgs[i]);
+         imgSet[imgs[i]].onload = function(){
+            var source = this.getAttribute("relSrc");
+            var img = this;
+            var canvas = canvasSet[source];
             canvas.height = img.height;
             canvas.width = img.width;
             var context = canvas.getContext("2d");
@@ -59,7 +62,7 @@ function getImages(imgs, callback) {
             imgCount++;
             onComplete();
          };
-         img.src = imgs[i];
+         imgSet[imgs[i]].src = imgs[i];
       }
       else {
          result[imgs[i]] = imageCache[imgs[i]];
@@ -174,11 +177,12 @@ function handleRequest(e) {
          msg += "\n   " + i + " = " + e.data[i];
       }
    }
-   console.log(msg);
    
    if (request.greeting == "settings") {
       var settings = {};
+      settings.greeting = "settings";
       settings.component = request.component;
+      settings.subcomponent = request.subcomponent;
       switch(request.component) {
          case "askTweaks":
             settings.scroll = getSetting("MissingE_askTweaks_scroll",1);
@@ -190,7 +194,7 @@ function handleRequest(e) {
             }
             settings.askDash = getSetting("MissingE_askTweaks_askDash",0);
             settings.massDelete = getSetting("MissingE_askTweaks_massDelete",1);
-            settings.adjustDomain = MissingE.isTumblrURL(sender.tab.url, ["messages"]);
+            settings.adjustDomain = MissingE.isTumblrURL(e.origin, ["messages"]);
             settings.photoReplies = getSetting("MissingE_postingTweaks_enabled",1) == 1 ?
                getSetting("MissingE_postingTweaks_photoReplies",1) : 0;
             break;
@@ -277,7 +281,7 @@ function handleRequest(e) {
             settings.keyboardShortcut = getSetting("MissingE_betterReblogs_keyboardShortcut",1);
             break;
       }
-      sendResponse(settings);
+      e.source.postMessage(settings);
    }
    else if (request.greeting == "update") {
       e.source.postMessage({greeting: "update",
@@ -287,6 +291,7 @@ function handleRequest(e) {
    else if (request.greeting == "earlyStyles") {
       var injectSlimSidebar = false;
       var injectStyles = [];
+      var sendImages = [];
 
       if (false && e.origin !== request.url &&
           MissingE.isTumblrURL(request.url, ["upload"]) &&
@@ -305,18 +310,18 @@ function handleRequest(e) {
          return;
       }
 
-      if (false && getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
-         if (getSetting("extensions.MissingE.askTweaks.smallFanMail",0) == 1 &&
-             MissingE.isTumblrURL(message.url, ["fanMail", "messages"])) {
+      if (getSetting("MissingE_askTweaks_enabled",1) == 1) {
+         if (getSetting("MissingE_askTweaks_smallFanMail",0) == 1 &&
+             MissingE.isTumblrURL(request.url, ["fanMail", "messages"])) {
             injectStyles.push({file: "core/askTweaks/smallFanMail.css"});
          }
-         if (getSetting("extensions.MissingE.askTweaks.allFanMail",0) == 1 &&
-             MissingE.isTumblrURL(message.url, ["messages"])) {
+         if (getSetting("MissingE_askTweaks_allFanMail",0) == 1 &&
+             MissingE.isTumblrURL(request.url, ["messages"])) {
             injectStyles.push({file: "core/askTweaks/allFanMail.css"});
          }
       }
 
-      if (false && MissingE.isTumblrURL(message.url,
+      if (MissingE.isTumblrURL(request.url,
                       ["dashboard",
                        "blog",
                        "blogData",
@@ -325,7 +330,7 @@ function handleRequest(e) {
                        "messages",
                        "likes",
                        "tagged"])) {
-
+/*
          injectStyles.push({code:
                '#posts .post .post_controls .MissingE_experimental_reply, ' +
                '#posts .post .post_controls .MissingE_experimental_reply_wait, ' +
@@ -347,8 +352,8 @@ function handleRequest(e) {
                      data.url("core/betterReblogs/reblogSuccess.png") +
                   '") !important; ' +
                '}'});
-
-         if (getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
+*/
+         if (false && getSetting("extensions.MissingE.dashboardTweaks.enabled",1) == 1) {
             injectStyles.push({file: "core/dashboardTweaks/dashboardTweaks.css"});
             if (getSetting("extensions.MissingE.dashboardTweaks.smallIcons",0) == 1) {
                injectStyles.push({file: "core/dashboardTweaks/smallIcons.css"});
@@ -387,6 +392,7 @@ function handleRequest(e) {
                   '}'});
                injectStyles.push({file: "core/dashboardTweaks/replaceIcons.css"});
             }
+
             if (getSetting("extensions.MissingE.dashboardTweaks.textControls",0) == 1) {
                injectStyles.push({file: "core/dashboardTweaks/textControls.css"});
             }
@@ -410,7 +416,7 @@ function handleRequest(e) {
             if (getSetting("extensions.MissingE.dashboardTweaks.simpleHighlight",0) == 1)
                injectStyles.push({file: "core/dashboardTweaks/simpleHighlight.css"});
          }
-
+/*
          if (getSetting("extensions.MissingE.safeDash.enabled",1) == 1) {
             injectStyles.push({file: "core/safeDash/safeDash.css"});
             if (getSetting("extensions.MissingE.safeDash.photosetAll",0) == 1) {
@@ -439,7 +445,7 @@ function handleRequest(e) {
                   '");' +
                '}'});
          }
-
+*/
          if (false &&getSetting("extensions.MissingE.bookmarker.enabled",1) == 1) {
             injectStyles.push({file: "core/bookmarker/bookmarker.css"});
          }
@@ -455,7 +461,7 @@ function handleRequest(e) {
             injectStyles.push({file: "core/magnifier/magnifier.css"});
          }
 
-         if (false&&getSetting("extensions.MissingE.askTweaks.enabled",1) == 1) {
+         if (getSetting("MissingE_askTweaks_enabled",1) == 1) {
             injectStyles.push({file: "core/askTweaks/askTweaks.css"});
          }
       }
@@ -554,7 +560,63 @@ function handleRequest(e) {
             activeScripts.massEditor = false;
          }
       }
+      if (!request.isFrame &&
+          MissingE.isTumblrURL(request.url,
+                               ["dashboard",
+                                "blog",
+                                "blogData",
+                                "drafts",
+                                "queue",
+                                "messages",
+                                "likes",
+                                "tagged"])) {
+         if (getSetting("MissingE_askTweaks_enabled",1) == 1) {
+            if (getSetting("MissingE_askTweaks_massDelete",1) == 1) {
+               getImages(["core/askTweaks/massDelete.png"], function(result) {
+                  e.source.postMessage({greeting: "sendImages", imgs: result});
+               });
+            }
+            needUI = true;
+            needUIdraggable = true;
+            injectScripts.push("core/askTweaks/askTweaks.js");
+            activeScripts.askTweaks = true;
+         }
+         else {
+            activeScripts.askTweaks = false;
+         }
+      }
 
+      if (activeScripts.magnifier ||
+          (activeScripts.askTweaks &&
+           getSetting("MissingE_askTweaks_askDash",0) == 1)) {
+         zindexFix = true;
+         getImages(["lib/facebox/closelabel.png",
+                    "lib/facebox/loading.gif"], function(result) {
+            for (i in result) {
+               console.log(i);
+            }
+            e.source.postMessage({greeting: "sendImages", imgs: result});
+         });
+         injectStyles.push("lib/facebox/facebox.css");
+         var pos = injectScripts.indexOf("core/utils.js");
+         injectScripts.splice(pos+1, 0, "lib/facebox/facebox.js");
+      }
+
+      // In reverse order of requirements
+      if (needUI) {
+         if (needUIresizable) {
+            injectScripts.unshift("lib/jquery.ui.resizable.min.js");
+         }
+         if (needUIsortable) {
+            injectScripts.unshift("lib/jquery.ui.sortable.min.js");
+         }
+         if (needUIdraggable) {
+            injectScripts.unshift("lib/jquery.ui.draggable.min.js");
+         }
+         injectScripts.unshift("lib/jquery.ui.mouse.min.js");
+         injectScripts.unshift("lib/jquery.ui.widget.min.js");
+         injectScripts.unshift("lib/jquery.ui.core.min.js");
+      }
       injectScripts.unshift("lib/evalFix.js");
       injectScripts.unshift("lib/jquery-1.7.2.min.js");
       if (zindexFix) {
