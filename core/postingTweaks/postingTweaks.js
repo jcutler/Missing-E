@@ -197,7 +197,11 @@ MissingE.packages.postingTweaks = {
                toWhere = "blog";
             }
 
-            var blog = $('#channel_id').val();
+            var chan = $('#channel_id');
+            var blog = 0;
+            if (chan.length > 0) {
+               blog = chan.val();
+            }
             if (blog === "0" && (toBlog || toWhere !== "dash")) {
                var list = $('#user_channels li');
                if (list.length > 0) {
