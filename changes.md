@@ -78,7 +78,11 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.9.15** (not yet released)
+##**2.9.16** (not yet released)
+**_!_** Add slimming to dashboard blog menu for slim sidebar  
+**_!_** Fix popup box close button alignment
+
+##**2.9.15** (2012-05-14)
 **_!_** Fix clickability of magnifier button on Tumblr crush avatars  
 **_!_** Fix Smart Redirect for single-blog Tumblr accounts
 
