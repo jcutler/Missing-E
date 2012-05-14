@@ -569,9 +569,19 @@ text-indent:1em;
 
 #ad_title {
 width:100%;
-font-size:12px;
+font-size:11px;
 text-align:center;
 font-style:italic;
+}
+
+#ad_sidetitle {
+opacity:0.9;
+height:90px;
+width:40px;
+background-color:rgba(0,0,0,0.5);
+background-image:url('images/ads_title.png');
+background-position:center center;
+display:inline-block;
 }
 
 #ad {
