@@ -227,3 +227,25 @@ padding:3px 13px 4px 13px !important;
 #aah_spider {
 background-position:9px 5px !important;
 }
+
+.menu li a .overflow_gradient {
+height:25px !important;
+top:4px !important;
+}
+
+.menu .item a {
+line-height:normal !important;
+padding:4px 15px 0 10px !important;
+height:25px !important;
+}
+
+.menu .last_item a {
+padding: 4px 15px !important;
+height: auto !important;
+}
+
+#all_blogs_menu li a .drag_handle {
+padding:9px 11px 10px 11px !important;
+background-position:9px -390px !important;
+top:0 !important;
+}
