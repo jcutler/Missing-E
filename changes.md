@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.9.16** (not yet released)
+##**2.9.16** (2012-05-18)
 **_!_** Add slimming to dashboard blog menu for slim sidebar  
 **_!_** Fix slim sidebar for new Find Blogs button  
 **_!_** Fix popup box close button alignment
