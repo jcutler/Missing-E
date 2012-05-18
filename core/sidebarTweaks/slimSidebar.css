@@ -88,7 +88,7 @@ top:4px !important;
 }
 
 .controls_section li .following {
-background-position:4px -845px !important;
+background-position:7px -1495px !important;
 }
 
 .controls_section li .add_and_remove {
@@ -145,6 +145,10 @@ background-position:12px -1293px !important;
 
 .controls_section li .processing {
 background-position:6px -395px !important;
+}
+
+.controls_section li .spotlight {
+background-position:7px -1545px !important;
 }
 
 #MissingEmassDeleter li .select_all, #MissingEdraftQueueTools li .select_all {
