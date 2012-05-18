@@ -80,6 +80,7 @@ color:#4183c4;
 
 ##**2.9.16** (not yet released)
 **_!_** Add slimming to dashboard blog menu for slim sidebar  
+**_!_** Fix slim sidebar for new Find Blogs button  
 **_!_** Fix popup box close button alignment
 
 ##**2.9.15** (2012-05-14)
