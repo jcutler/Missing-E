@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.17** (not yet released)
+**_!_** Fix Reply Replies behaviour when replying to a post with no title beginning with a "Read More" break
+
 ##**2.9.16** (2012-05-18)
 **_!_** Add slimming to dashboard blog menu for slim sidebar  
 **_!_** Fix slim sidebar for new Find Blogs button  
