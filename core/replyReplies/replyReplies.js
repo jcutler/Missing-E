@@ -87,12 +87,22 @@ MissingE.packages.replyReplies = {
       var lang = $('html').attr('lang');
       for (i=arr.length-1; i>=0; i--) {
          var st, en, nm, add;
+         var doShowAvatar = true;
          $(arr[i]).toggleClass("MissingE_rt",false);
          $(arr[i]).parent().removeClass('MissingE_rt_box');
          var oldcode = $(arr[i]).parent().html();
          var link = $(arr[i]).parent().find('img.avatar');
          var newcode = "";
-         img = "<a href=\"" + link.parent().attr("href") + "\">" +
+         var blogLink = $(arr[i]).parent().find('span.action a');
+         if (blogLink.length === 0 && link.length > 0) {
+            blogLink = link.parent();
+         }
+         if (link.length === 0) {
+            link = blogLink.closest('ol')
+               .find('a[href="' + blogLink.attr('href') + '"] img.avatar');
+         }
+         if (link.length > 0) {
+            img = "<a href=\"" + blogLink.attr('href') + "\">" +
                      "<img style=\"width:" + size + "px;height:" + size +
                      "px;border-width:0;margin-right:3px;\" src=\"" +
                      link.attr("src")
@@ -101,7 +111,10 @@ MissingE.packages.replyReplies = {
                         .replace(/16(\.[a-zA-Z]*)$/,
                                  size + "$1") +
                      "\" /></a>";
-
+         }
+         else {
+            img = "<a href=\"" + blogLink.attr('href') + "\"></a>";
+         }
          newcode = oldcode.substr(oldcode.indexOf("</a>")+4);
          newcode = newcode.substr(newcode.indexOf("</script>")+9)
                   .replace(/^\s*/,"")
@@ -126,7 +139,6 @@ MissingE.packages.replyReplies = {
          if (settings.showAvatars === 1) {
             newcode = img + newcode;
          }
-
          st = newcode.search(/<div class="[^"]*(notification_type_icon|MissingE_notification_type)/);
          if (st >= 0) {
             en = newcode.indexOf("</div>",st)+6;
@@ -143,7 +155,6 @@ MissingE.packages.replyReplies = {
             newcode = newcode.substring(0,st) + newcode.substr(en);
          }
          newcode = newcode.replace(/\s*$/,'');
-
          if ($(arr[i]).parent().hasClass('note')) {
             var a,b,z,user,qt,reblnk,x;
             var main = $(arr[i]).closest('li.post');
@@ -370,7 +381,8 @@ MissingE.packages.replyReplies = {
                           .replace(/white-space:nowrap;/g,'')
                           .replace(/margin-right:5px;/g,'')
                           .replace(/style="\s*"\s*/g,'')
-                          .replace(/^\s*/,'').replace(/\s*$/,'');
+                          .replace(/^\s*/,'').replace(/\s*$/,'')
+                          .replace(/<a[^>]*><\/a>/,'');
          thecode.push('<p>' + newcode + '</p>');
       }
 
