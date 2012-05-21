@@ -165,6 +165,7 @@ MissingE.packages.replyReplies = {
             else {
                var copy = main.find('div.post_content').clone();
                copy.find('script').remove();
+               copy.find('p.read_more_container').remove();
                posttxt = copy.text();
             }
             posttxt = posttxt.replace(/\s+/g,' ')
