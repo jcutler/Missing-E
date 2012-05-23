@@ -1213,7 +1213,7 @@ var locale = {
   },
   "myBlog": "mijn blog",
   "reblog": "rebloggen",
-  "reblogging": "rebloggend...",
+  "reblogging": "Bezig met rebloggen...",
   "reblogFailed": "Reblog is mislukt!",
   "rebloggedText": "gereblogd",
   "reblogOptions": [
@@ -1234,7 +1234,7 @@ var locale = {
     "text": "Reblog handmatig"
    }
   ],
-  "private": "Privaat",
+  "private": "Privé",
   "captionText": "Bijschrift",
   "tagsText": "Tags",
   "twitterText": "Verstuur naar Twitter",
@@ -1242,7 +1242,7 @@ var locale = {
   "askPost": "Vragen",
   "askPerson": ["Vraag", "U"],
   "asked": ["U", "vroeg"],
-  "reblogAsk": "Reblog Vragen Bericht",
+  "reblogAsk": "Reblog vraagbericht",
   "select": "Selecteren",
   "first100": "Eerste 100",
   "next100": "Volgende 100",
@@ -1256,7 +1256,7 @@ var locale = {
    "video": "Video"
   },
   "reply": "Reageren",
-  "replying": "Reageert...",
+  "replying": "Bezig met reageren...",
   "dashTweaksText": {
    "answer": "antwoorden",
    "edit": "bewerken",
@@ -1279,14 +1279,14 @@ var locale = {
     "publish": "Publiceren",
     "queue": "Wachtrij",
     "draft": "Concept opslaan",
-    "private": "Opslaan prive"
+    "private": "Privé opslaan"
    },
-   "clearTagsText": "Wissen Tags"
+   "clearTagsText": "Tags wissen"
   },
   "reblogTags": "Reblog Tags",
   "removeTag": "Tag verwijderen",
   "timestamps": {
-   "failText": ["Timestamp laden mislukt.", "Opnieuw proberen"],
+   "failText": ["Tijdsaanduiding laden mislukt.", "Opnieuw proberen"],
    "retryIndex": 1
   },
   "loading": "Het laden...",
@@ -1316,20 +1316,20 @@ var locale = {
    "text": ["as ", "tekst", ""],
    "textTitle": "Tekst Antwoord"
   },
-  "shuffle": "Meng Wachtrij",
+  "shuffle": "Shuffle Wachtrij",
   "deleteConfirm": "Weet je zeker dat je dit bericht wilt verwijderen?",
   "massDelete": {
    "selectAll": "Selecteer Alle",
    "deselectAll": "Deselecteren Alle",
    "deleteSelected": "Verwijder Geselecteerde",
-   "messagesConfirm": "Weet je zeker dat je verwijderen de # geselecteerde berichten?",
+   "messagesConfirm": "Weet je zeker dat je de # geselecteerde berichten wilt verwijderen?",
    "messagesError": "Sommige berichten kunnen niet worden verwijderd. Probeer het later opnieuw.",
-   "postsConfirm": "Weet je zeker dat je verwijderen de # geselecteerde berichten?",
+   "postsConfirm": "Weet je zeker dat je de # geselecteerde berichten wilt verwijderen?",
    "postsError": "Sommige berichten kunnen niet worden verwijderd. Probeer het later opnieuw.",
    "confirmReplace": {
     "operation": ["-", 1],
     "0": {
-     "verwijderen de 1 geselecteerde berichten": "verwijdert het geselecteerde bericht"
+     "de 1 geselecteerde berichten": "het geselecteerde bericht"
     }
    }
   },
@@ -1337,7 +1337,7 @@ var locale = {
    "sort": "Sorteren",
    "type": "Type",
    "user": "Gebruiker",
-   "reset": "Opnieuw zetten"
+   "reset": "Reset"
   }
  },
  "pl": {
