@@ -1150,6 +1150,196 @@ var locale = {
    "reset": "リセット"
   }
  },
+ "nl": {
+  "warningLink": {
+   "link": "Lees Missing-E verklaring met betrekking tot privacy en veiligheid.",
+   "subtext": "Deze link toegevoegd door Missing e."
+  },
+  "daysLong": [
+   "Zondag",
+   "Maandag",
+   "Dinsdag",
+   "Woensdag",
+   "Donderdag",
+   "Vrijdag",
+   "Zaterdag"
+  ],
+  "daysShort": [
+   "Zo",
+   "Ma",
+   "Di",
+   "Wo",
+   "Do",
+   "Vr",
+   "Za"
+  ],
+  "monthsLong": [
+   "Januari",
+   "Februari",
+   "Maart",
+   "April",
+   "Mei",
+   "Juni",
+   "Juli",
+   "Augustus",
+   "September",
+   "Oktober",
+   "November",
+   "December"
+  ],
+  "monthsShort": [
+   "Jan",
+   "Feb",
+   "Mrt",
+   "Apr",
+   "Mei",
+   "Jun",
+   "Jul",
+   "Aug",
+   "Sep",
+   "Okt",
+   "Nov",
+   "Dec"
+  ],
+  "update": "Update Missing e",
+  "postCrushes": "Plaats uw Crushes",
+  "sidebar": {
+   "posts": "Berichten",
+   "followers": "Volgers",
+   "messages": "Blogberichten",
+   "drafts": "Concepten",
+   "queue": "Wachtrij",
+   "massEditor": "Mass Post Editor"
+  },
+  "myBlog": "mijn blog",
+  "reblog": "rebloggen",
+  "reblogging": "rebloggend...",
+  "reblogFailed": "Reblog is mislukt!",
+  "rebloggedText": "gereblogd",
+  "reblogOptions": [
+   {
+    "item": "draft",
+    "text": "Concept opslaan"
+   },
+   {
+    "item": "queue",
+    "text": "Wachtrij"
+   },
+   {
+    "item": "private",
+    "text": "Opslaan prive"
+   },
+   {
+    "item": "manual",
+    "text": "Reblog handmatig"
+   }
+  ],
+  "private": "Privaat",
+  "captionText": "Bijschrift",
+  "tagsText": "Tags",
+  "twitterText": "Verstuur naar Twitter",
+  "facebookText": "Verstuur naar Facebook",
+  "askPost": "Vragen",
+  "askPerson": ["Vraag", "U"],
+  "asked": ["U", "vroeg"],
+  "reblogAsk": "Reblog Vragen Bericht",
+  "select": "Selecteren",
+  "first100": "Eerste 100",
+  "next100": "Volgende 100",
+  "postTypeNames": {
+   "text": "Tekst",
+   "photo": "Foto",
+   "quote": "Citaat",
+   "link": "Link",
+   "chat": "Chat",
+   "audio": "Audio",
+   "video": "Video"
+  },
+  "reply": "Reageren",
+  "replying": "Reageert...",
+  "dashTweaksText": {
+   "answer": "antwoorden",
+   "edit": "bewerken",
+   "del": "verwijderen",
+   "reblog": "rebloggen",
+   "reply": "reageren",
+   "notes": "notities",
+   "queue": "in de wachtrij zetten",
+   "publish": "publiceren",
+   "experimental": "EXPERIMENTEEL",
+   "exp": "X"
+  },
+  "bookmarkVerb": "markeren",
+  "bookmarkNoun": "Bladwijzer",
+  "bookmarksTitle": "Bladwijzers",
+  "postUnavailable": "Post niet beschikbaar",
+  "magnify": "vergroten",
+  "postingTweaks": {
+   "submitText": {
+    "publish": "Publiceren",
+    "queue": "Wachtrij",
+    "draft": "Concept opslaan",
+    "private": "Opslaan prive"
+   },
+   "clearTagsText": "Wissen Tags"
+  },
+  "reblogTags": "Reblog Tags",
+  "removeTag": "Tag verwijderen",
+  "timestamps": {
+   "failText": ["Timestamp laden mislukt.", "Opnieuw proberen"],
+   "retryIndex": 1
+  },
+  "loading": "Het laden...",
+  "error": "Er is een fout opgetreden. Klik om te herladen.",
+  "posts": {
+   "text": ["je", "bericht"],
+   "photo": ["je", "foto"],
+   "photoset": ["je", "fotoset"],
+   "quote": ["je", "citaat"],
+   "link": ["je", "link"],
+   "conversation": ["je", "chat"],
+   "audio": ["je", "audiobericht"],
+   "video": ["je", "video"],
+   "question": ["je", "vraag"]
+  },
+  "notifications": {
+   "like": ["U", "vindt", "P", "leuk"],
+   "reblog": ["U", "heeft", "P", "gereblogd"],
+   "reblogIndex": 3,
+   "answer": ["U", "heeft", "P", "beantwoord"],
+   "reply": ["U", "heeft gereageerd op", "P"]
+  },
+  "replyType": {
+   "as": "als ...",
+   "photo": ["as ", "foto", ""],
+   "photoTitle": "Foto Antwoord",
+   "text": ["as ", "tekst", ""],
+   "textTitle": "Tekst Antwoord"
+  },
+  "shuffle": "Meng Wachtrij",
+  "deleteConfirm": "Weet je zeker dat je dit bericht wilt verwijderen?",
+  "massDelete": {
+   "selectAll": "Selecteer Alle",
+   "deselectAll": "Deselecteren Alle",
+   "deleteSelected": "Verwijder Geselecteerde",
+   "messagesConfirm": "Weet je zeker dat je verwijderen de # geselecteerde berichten?",
+   "messagesError": "Sommige berichten kunnen niet worden verwijderd. Probeer het later opnieuw.",
+   "postsConfirm": "Weet je zeker dat je verwijderen de # geselecteerde berichten?",
+   "postsError": "Sommige berichten kunnen niet worden verwijderd. Probeer het later opnieuw.",
+   "confirmReplace": {
+    "operation": ["-", 1],
+    "0": {
+     "verwijderen de 1 geselecteerde berichten": "verwijdert het geselecteerde bericht"
+    }
+   }
+  },
+  "sorting": {
+   "sort": "Sorteren",
+   "type": "Type",
+   "user": "Gebruiker",
+   "reset": "Opnieuw zetten"
+  }
+ },
  "pl": {
   "warningLink": {
    "link": "Przeczytaj oświadczenie Missing-E dotyczące prywatności i bezpieczeństwa",
