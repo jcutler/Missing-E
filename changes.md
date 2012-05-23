@@ -78,6 +78,8 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.18** (in development)
+
 ##**2.9.17** (2012-05-23)
 **_+_** Dutch localization  
 **_!_** Fix Reply Replies behaviour when replying to a post with no title beginning with a "Read More" break  
