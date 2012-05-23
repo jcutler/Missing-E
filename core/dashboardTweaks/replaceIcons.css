@@ -57,7 +57,7 @@ font-size:0 !important;
 #posts .post .post_controls a[onclick*="queue_post"]:hover,
 #posts .post .post_controls a[onclick*="approve_post"]:hover,
 #posts .post .post_controls a[onclick*="publish_post"]:hover {
-opacity:1;
+opacity:0.9 !important;
 }
 
 #posts .post .post_controls a[href^="/edit"] {
