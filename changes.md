@@ -82,7 +82,8 @@ color:#4183c4;
 **_+_** Dutch localization  
 **_!_** Fix Reply Replies behaviour when replying to a post with no title beginning with a "Read More" break  
 **_!_** Fix toggling of new "Send to Facebook" icon when creating new posts  
-**_!_** Allow multiple quick reblogs of a single post without reloading
+**_!_** Allow multiple quick reblogs of a single post without reloading  
+**_!_** Fix note count display for dashboard notifications of video posts
 
 ##**2.9.16** (2012-05-18)
 **_!_** Add slimming to dashboard blog menu for slim sidebar  
