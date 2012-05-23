@@ -460,9 +460,13 @@ MissingE.packages.postingTweaks = {
       if (settings.facebookOff === 1) {
          var fbcb = document.getElementById("send_to_fbog");
          if (fbcb) { fbcb.checked = false; }
+         var fclabel = document.getElementById("set_facebook");
+         if (fclabel) { $(fclabel).removeClass("active"); }
          $('#channel_id').bind('change', function() {
             var fbcb = document.getElementById("send_to_fbog");
             if (fbcb) { fbcb.checked = false; }
+            var fclabel = document.getElementById("set_facebook");
+            if (fclabel) { $(fclabel).removeClass("active"); }
          });
       }
 
