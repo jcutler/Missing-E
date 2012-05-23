@@ -33,6 +33,7 @@ margin-top:2px;
 border-radius:6px;
 box-shadow:rgb(0,0,0) 0 0 10px;
 z-index:1338;
+line-height:0;
 }
 
 #MissingE_preview img {
