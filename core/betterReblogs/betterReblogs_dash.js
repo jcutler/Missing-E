@@ -254,7 +254,8 @@ MissingE.packages.betterReblogs = {
       var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
       a.attr('oldtxt',a.attr('title'));
       $('#MissingE_quick_reblog').css('display','none');
-      a.addClass('MissingE_quick_reblogging');
+      a.removeClass('MissingE_quick_reblogging_success')
+         .addClass('MissingE_quick_reblogging');
       a.attr('title',MissingE.getLocale(lang).reblogging);
    },
 
@@ -270,7 +271,7 @@ MissingE.packages.betterReblogs = {
    finishReblog: function(id) {
       var lang = $('html').attr('lang');
       var a = $('#post_'+id).find('div.post_controls a[href^="/reblog/"]');
-      a.addClass('MissingE_quick_reblogging_success')
+      a.removeClass('MissingE_quick_reblogging')
          .addClass('MissingE_quick_reblogging_success');
       a.attr('title',MissingE.getLocale(lang).rebloggedText);
       a.removeAttr('oldtxt');
@@ -795,8 +796,7 @@ MissingE.packages.betterReblogs = {
                .live('mouseover',function(e) {
             var reblog = $(this);
             reblog.addClass('MissingE_quick_reblog_main');
-            if (reblog.hasClass('MissingE_quick_reblogging') ||
-                reblog.hasClass('MissingE_quick_reblogging_success')) {
+            if (reblog.hasClass('MissingE_quick_reblogging')) {
                return;
             }
             clearTimeout(MissingE.packages.betterReblogs.resetTumblr);
@@ -889,8 +889,7 @@ MissingE.packages.betterReblogs = {
             }
          }).live('click',function(e) {
             var me = $(this);
-            if (me.hasClass('MissingE_quick_reblogging') ||
-                me.hasClass('MissingE_quick_reblogging_success')) {
+            if (me.hasClass('MissingE_quick_reblogging')) {
                return false;
             }
             var selector = $('#MissingE_quick_reblog_selector select');
@@ -955,8 +954,7 @@ MissingE.packages.betterReblogs = {
                                             0, 0, 0, 0, false, false, false,
                                             false, 0, null);
                      rebBtn.dispatchEvent(overEvt);
-                     if (!$(rebBtn).hasClass('MissingE_quick_reblogging ' +
-                                         'MissingE_quick_reblogging_success')) {
+                     if (!$(rebBtn).hasClass('MissingE_quick_reblogging')) {
                         var itm, inpBox;
                         if (e.keyCode === 68) {
                            itm = document.getElementById('MissingE_quick_reblog_draft');
@@ -1061,8 +1059,7 @@ MissingE.packages.betterReblogs = {
                                             0, 0, 0, 0, false, false, false,
                                             false, 0, null);
                      rebBtn.dispatchEvent(overEvt);
-                     if (!$(rebBtn).hasClass('MissingE_quick_reblogging ' +
-                                         'MissingE_quick_reblogging_success')) {
+                     if (!$(rebBtn).hasClass('MissingE_quick_reblogging')) {
                         itm = document.getElementById('MissingE_quick_reblog_manual');
                         var downEvt = document.createEvent("MouseEvent");
                         downEvt.initMouseEvent("mousedown", true, true, window, 0,
