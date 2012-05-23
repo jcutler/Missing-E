@@ -409,6 +409,19 @@ MissingE.packages.dashboardTweaks = {
                   window.setInterval(MissingE.packages.dashboardTweaks
                                        .videoThumbnailCycle, 600);
                limit = response.data.length;
+               if (response.data.length > 0) {
+                  var bgImg = document.createElement('img');
+                  bgImg.setAttribute('post', response.pid);
+                  bgImg.className = "MissingE_videoPlaceholder";
+                  bgImg.style.visibility = "hidden";
+                  preWin.append(bgImg);
+                  bgImg.onload = function() {
+                     if (preWin.attr('post') !== this.getAttribute('post')) {
+                        return;
+                     }
+                  };
+                  bgImg.src = response.data[0];
+               }
             }
             for (i=0; doImages && i<limit && i<response.data.length; i++) {
                var prevImg = document.createElement('img');
