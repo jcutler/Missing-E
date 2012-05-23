@@ -1,1 +1,1 @@
-var currentVersion="2.9.17";
+var currentVersion="2.9.18";
