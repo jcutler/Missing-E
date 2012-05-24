@@ -1320,7 +1320,7 @@ var locale = {
   "deleteConfirm": "Weet je zeker dat je dit bericht wilt verwijderen?",
   "massDelete": {
    "selectAll": "Selecteer Alle",
-   "deselectAll": "Deselecteren Alle",
+   "deselectAll": "Deselecterr Alle",
    "deleteSelected": "Verwijder Geselecteerde",
    "messagesConfirm": "Weet je zeker dat je de # geselecteerde berichten wilt verwijderen?",
    "messagesError": "Sommige berichten kunnen niet worden verwijderd. Probeer het later opnieuw.",
