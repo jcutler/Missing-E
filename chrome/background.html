@@ -1808,7 +1808,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
       if (MissingE.isTumblrURL(request.url,
                       ["dashboard",
-                       "blog"])) {
+                       "blog",
+                       "tagged"])) {
          if (getSetting("MissingE_replyReplies_enabled",1) == 1) {
             chrome.tabs.insertCSS(sender.tab.id, {code: "#posts .notification .notification_type_icon { background-image:url('" + chrome.extension.getURL('core/replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + chrome.extension.getURL('core/replyReplies/notes_icons.png') + "') !important; }"});
             chrome.tabs.insertCSS(sender.tab.id, {file: "core/replyReplies/replyReplies.css"});
@@ -2055,7 +2056,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url,
                       ["dashboard",
-                       "blog"])) {
+                       "blog",
+                       "tagged"])) {
          if (getSetting("MissingE_replyReplies_enabled",1) == 1) {
             activeScripts.replyReplies = true;
             chrome.tabs.executeScript(sender.tab.id, {file: "core/replyReplies/replyReplies.js"});

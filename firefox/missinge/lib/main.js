@@ -2080,7 +2080,8 @@ function handleMessage(message, myWorker) {
 
       if (MissingE.isTumblrURL(message.url,
                       ["dashboard",
-                       "blog"])) {
+                       "blog",
+                       "tagged"])) {
          if (getSetting("extensions.MissingE.replyReplies.enabled",1) == 1) {
             injectStyles.push({code: "#posts .notification .notification_type_icon { background-image:url('" + data.url('core/replyReplies/notification_icons.png') + "') !important; } #posts ol.notes .notification_type_icon { background-image:url('" + data.url('core/replyReplies/notes_icons.png') + "') !important; }"});
             injectStyles.push({file: "core/replyReplies/replyReplies.css"});
@@ -2285,7 +2286,8 @@ function handleMessage(message, myWorker) {
       if (!message.isFrame &&
           MissingE.isTumblrURL(message.url,
                                ["dashboard",
-                                "blog"])) {
+                                "blog",
+                                "tagged"])) {
          if (getSetting("extensions.MissingE.replyReplies.enabled",1) == 1) {
             injectScripts.push(data.url("core/replyReplies/replyReplies.js"));
             activeScripts.replyReplies = true;
