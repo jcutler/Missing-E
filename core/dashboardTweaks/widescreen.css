@@ -79,7 +79,7 @@ width:auto !important;
 max-width:none !important;
 }
 
-li.new_post, #rescued_post, #facebook_notice {
+li.new_post, #rescued_post, #facebook_notice, #find_friends_psa {
 width:540px;
 }
 
