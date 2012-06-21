@@ -94,6 +94,9 @@ MissingE.packages.replyReplies = {
          var link = $(arr[i]).parent().find('img.avatar');
          var newcode = "";
          var blogLink = $(arr[i]).parent().find('span.action a');
+         if (blogLink.length > 1) {
+	         blogLink = $(arr[i]).parent().find('span.action a.tumblelog');
+         }
          if (blogLink.length === 0 && link.length > 0) {
             blogLink = link.parent();
          }
