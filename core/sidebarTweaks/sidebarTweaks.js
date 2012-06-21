@@ -132,7 +132,7 @@ MissingE.packages.sidebarTweaks = {
          if (sidebar) {
             $.ajax({
                type: "GET",
-               url: "http://www.tumblr.com/blog/" + tumblrAcct,
+               url: "http://www.tumblr.com/blog/" + tumblrAcct + "/drafts",
                tumblrAcctNum: tumblrAcctNum,
                tumblrAcct: tumblrAcct,
                dataType: "html",
@@ -159,7 +159,7 @@ MissingE.packages.sidebarTweaks = {
                   if (msb.attr('account') != this.tumblrAcctNum) {
                      return;
                   }
-                  if (!(/id="dashboard_index"/.test(data))) {
+                  if (!(/id="dashboard_drafts"/.test(data))) {
                      this.tryCount++;
                      if (this.tryCount <= this.retryLimit) {
                         $.ajax(this);
