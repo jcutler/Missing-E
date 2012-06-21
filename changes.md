@@ -79,7 +79,8 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.9.18** (in development)
-**_!_** Dutch localization corrections
+**_!_** Dutch localization corrections  
+**_!_** Fix counts in added sidebar  
 
 ##**2.9.17** (2012-05-23)
 **_+_** Dutch localization  
