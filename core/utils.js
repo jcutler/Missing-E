@@ -52,7 +52,7 @@ var utils = {
       "drafts":       /^blog\/[^\/]+\/drafts[\/]?.*$/,
       "fanMail":      /^send(\/|_confirmation)?/,
       "followers":    /^blog\/[^\/]+\/followers[\/]?.*$/,
-      "following":    /^following(\/page\/\d+)?[\/]?$/,
+      "following":    /^following((\/page)?\/\d+|)?[\/]?$/,
       "iframe":       /^dashboard\/iframe/,
       "likes":        /^like(s(\/.*)?|d\/by\/[^\/]+(\/.*)?)$/,
       "massEditor":   /^mega-editor\/[^\/]+(\/[0-9]+\/[0-9]+)?[\/]?$/,
