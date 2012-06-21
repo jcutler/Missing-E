@@ -78,7 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.9.18** (in development)
+##**2.9.19** (2012-06-21)
+**_!_** Fix issue with features not running on secondary following pages
+
+##**2.9.18** (2012-06-21)
 **_!_** Dutch localization corrections  
 **_!_** Fix counts in added sidebar  
 **_!_** Fix for Reply Replies in post notes
