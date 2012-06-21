@@ -81,6 +81,7 @@ color:#4183c4;
 ##**2.9.18** (in development)
 **_!_** Dutch localization corrections  
 **_!_** Fix counts in added sidebar  
+**_!_** Fix for Reply Replies in post notes
 
 ##**2.9.17** (2012-05-23)
 **_+_** Dutch localization  
