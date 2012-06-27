@@ -52,7 +52,7 @@ font-size:0 !important;
 
 #posts .post .post_controls a[id^="ask_answer_link"]:hover,
 #posts .post .post_controls a[href^="/edit"]:hover,
-#dashboard_inbox .post .post_controls a[id^="post_delete_"],
+#dashboard_inbox .post .post_controls a[id^="post_delete_"]:hover,
 #posts .post .post_controls a[onclick*="delete_post_"]:hover,
 #posts .post .post_controls a[onclick*="queue_post"]:hover,
 #posts .post .post_controls a[onclick*="approve_post"]:hover,
