@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.9.20** (2012-06-28)
+**_!_** Fix problem with many users being unable to use Quick Reblog or Ask Tweaks advanced answering options
+
 ##**2.9.19** (2012-06-21)
 **_!_** Fix issue with features not running on secondary following pages
 
