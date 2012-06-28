@@ -524,7 +524,10 @@ MissingE.packages.bookmarker = {
             });
             $('#MissingE_marklist li').disableSelection();
          });
-         var pos = $("#right_column .radar");
+         var pos = $("#right_column #tumblr_radar");
+         if (pos.length === 0) {
+            pos = $("#right_column .radar");
+         }
          if (pos.length === 0) {
             pos = $("#right_column .promo");
          }
