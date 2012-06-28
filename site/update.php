@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+include 'firefoxURL.php';
+?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" dir="ltr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,7 +15,6 @@
 <link rel="icon" href="/favicon.png" type="image/x-icon" />
 <script type="text/javascript" src="browser.js"></script>
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="firefoxURL.js"></script>
 <script type="text/javascript" src="currentVersion.js"></script>
 <link rel="stylesheet" type="text/css" href="reset.css" />
 <link rel="stylesheet" type="text/css" href="sitestyles.css" />
@@ -136,7 +138,7 @@ function checkUpdate(count) {
 }
 
 jQuery(document).ready(function($) {
-   if (firefoxURL) {
+   if (typeof firefoxURL !== "undefined") {
       $('#firefox_download').attr('href',firefoxURL);
    }
    $('a.recognize_other').click(function() {
@@ -170,7 +172,7 @@ jQuery(document).ready(function($) {
  <div id="uptodate"></div>
  <div id="notuptodate"></div>
 </div>
-<div version="2.9.21" id="versioncheck" style="display:none"></div>
+<div version="2.9.20" id="versioncheck" style="display:none"></div>
 <header>
  <nav>
   <div id="nav_bar">
@@ -303,7 +305,7 @@ jQuery(document).ready(function($) {
       <div class="step_icon step1"></div>
       <hgroup><h1>Get the new version</h1></hgroup>
       <p>Click the button below to download <strong>Missing e</strong>.</p>
-      <a id="firefox_download" href="https://addons.mozilla.org/en-US/firefox/addon/missing-e/versions/" class="button greenbutton">Download Now</a>
+      <a id="firefox_download" href="<?=$firefoxURL?>" class="button greenbutton">Download Now</a>
      </div>
      <div class="postit_box paper_box2 install_box">
       <div class="step_icon step2"></div>
