@@ -214,6 +214,7 @@ MissingE.packages.askTweaks = {
             params["post[state]"] = this.mode;
             params["post[date]"] = "now";
             delete params["preview_post"];
+            delete params["post[promotion_type]"];
             if (!this.twitter) {
                delete params["send_to_twitter"];
             }

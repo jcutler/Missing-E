@@ -440,6 +440,7 @@ MissingE.packages.betterReblogs = {
                params["send_to_fbog"] = "on";
             }
             delete params["preview_post"];
+            delete params["post[promotion_type]"];
             $.ajax({
                type: 'POST',
                url: this.url,
