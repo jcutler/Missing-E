@@ -581,9 +581,9 @@ MissingE.packages.betterReblogs = {
       }
       if (settings.quickReblog === 1) {
          var idx;
-         var txt = '<div class="user_menu" id="MissingE_quick_reblog">' +
-                    '<div class="user_menu_nipple"></div>' +
-                    '<div class="user_menu_list">';
+         var txt = '<div id="MissingE_quick_reblog">' +
+                    '<div id="MissingE_qr_nipple"></div>' +
+                    '<div class="MissingE_qr_list">';
          for (idx=0; idx<MissingE.getLocale(lang).reblogOptions.length; idx++) {
             var doonclick = 'onclick="return false;"';
             if (MissingE.getLocale(lang).reblogOptions[idx].item === 'manual') {
@@ -594,7 +594,7 @@ MissingE.packages.betterReblogs = {
                     MissingE.escapeHTML(MissingE.getLocale(lang)
                                           .reblogOptions[idx].item) +
                     '" href="#" ' + doonclick + '>' +
-                    '<div class="user_menu_list_item">' +
+                    '<div class="MissingE_qr_list_item">' +
                     MissingE.escapeHTML(MissingE.getLocale(lang)
                                           .reblogOptions[idx].text) +
                     '</div></a>';
@@ -606,14 +606,14 @@ MissingE.packages.betterReblogs = {
                       'class="MissingE_quick_reblog_field">',
                 '</a>'];
          txt += node[0] +
-                  '<div class="user_menu_list_item has_tag_input ' +
+                  '<div class="MissingE_qr_list_item has_tag_input ' +
                      'MissingE_quick_reblog_twitter_box">' +
                   '<div id="MissingE_quick_reblog_twitter">' +
                   '<input type="checkbox" /> ' +
                   MissingE.escapeHTML(MissingE.getLocale(lang).twitterText) +
                   '</div></div>' + node[1];
          txt += node[0] +
-                  '<div class="user_menu_list_item has_tag_input ' +
+                  '<div class="MissingE_qr_list_item has_tag_input ' +
                      'MissingE_quick_reblog_facebook_box">' +
                   '<div id="MissingE_quick_reblog_facebook">' +
                   '<input type="checkbox" /> ' +
@@ -622,7 +622,7 @@ MissingE.packages.betterReblogs = {
          var list = $('#user_channels li');
          if (list.length > 0) {
             txt +=  node[0] +
-                     '<div class="user_menu_list_item has_tag_input">' +
+                     '<div class="MissingE_qr_list_item has_tag_input">' +
                      '<div id="MissingE_quick_reblog_selector">' +
                      '<select>';
             list.each(function(i) {
@@ -641,12 +641,12 @@ MissingE.packages.betterReblogs = {
             });
             txt +=  '</select><br />Tumblr</div></div>' + node[1];
          }
-         txt += node[0] + '<div class="user_menu_list_item has_tag_input">' +
+         txt += node[0] + '<div class="MissingE_qr_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_caption">' +
                   '<textarea rows="2" /><br />' +
                   MissingE.escapeHTML(MissingE.getLocale(lang).captionText) +
                   '</div></div>' + node[1];
-         txt += node[0] + '<div class="user_menu_list_item has_tag_input">' +
+         txt += node[0] + '<div class="MissingE_qr_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_tags">' +
                   '<textarea rows="2" /><br />' +
                   MissingE.escapeHTML(MissingE.getLocale(lang).tagsText) +
@@ -658,7 +658,7 @@ MissingE.packages.betterReblogs = {
             .attr('placeholder', MissingE.getLocale(lang).tagsText);
          if (settings.quickReblogCaption === 0) {
             qr.find('#MissingE_quick_reblog_caption')
-               .closest('.user_menu_list_item').css('display','none');
+               .closest('.MissingE_qr_list_item').css('display','none');
          }
          var qrSel = qr.find('#MissingE_quick_reblog_selector select');
          if (settings.accountName === 0 ||
@@ -717,7 +717,7 @@ MissingE.packages.betterReblogs = {
          });
          qr.find('textarea').focus(function() {
             if (qr.hasClass('MissingE_quick_reblog_keys')) {
-               $(this).closest('.user_menu_list_item')
+               $(this).closest('.MissingE_qr_list_item')
                   .addClass('MissingE_qr_keyActive');
             }
             qr.addClass('MissingE_quick_reblog_tags_inputting');
@@ -732,7 +732,7 @@ MissingE.packages.betterReblogs = {
             }
          }).blur(function() {
             if (qr.hasClass('MissingE_quick_reblog_keys')) {
-               $(this).closest('.user_menu_list_item')
+               $(this).closest('.MissingE_qr_list_item')
                   .removeClass('MissingE_qr_keyActive');
             }
             if (extension.isSafari || extension.isFirefox) {
@@ -836,13 +836,13 @@ MissingE.packages.betterReblogs = {
                });
             }
             var postId = reblog.closest('li.post').attr('id').match(/\d*$/)[0];
-            if (qr.find('div.user_menu_list').attr('id') !==
+            if (qr.find('div.MissingE_qr_list').attr('id') !==
                   'list_for_' + postId) {
                qr.find('#MissingE_quick_reblog_tags textarea')
                   .val(tagarr.join(', '));
                qr.find('#MissingE_quick_reblog_caption textarea')
                   .css('height','24px').val('');
-               qr.find('div.user_menu_list').attr('id','list_for_' + postId);
+               qr.find('div.MissingE_qr_list').attr('id','list_for_' + postId);
             }
             var arg = '';
             if (settings.accountName !== '0') {
@@ -974,7 +974,7 @@ MissingE.packages.betterReblogs = {
                            qr.addClass('MissingE_quick_reblog_keys');
                            qr.find('.MissingE_qr_keyActive').removeClass('MissingE_qr_keyActive');
                            inpBox = $('#MissingE_quick_reblog_tags textarea');
-                           inpBox.closest('.user_menu_list_item').addClass('MissingE_qr_keyActive');
+                           inpBox.closest('.MissingE_qr_list_item').addClass('MissingE_qr_keyActive');
                            inpBox.get(0).focus();
                            e.preventDefault();
                            return false;

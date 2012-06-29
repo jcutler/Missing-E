@@ -2100,7 +2100,8 @@ function handleMessage(message, myWorker) {
                        "likes",
                        "tagged"])) {
          if (getSetting("extensions.MissingE.betterReblogs.enabled",1) == 1) {
-            injectStyles.push({file: "core/betterReblogs/quickReblog.css"});
+            injectStyles.push({code: "#MissingE_quick_reblog #MissingE_qr_nipple { background-image:url('" + data.url('core/betterReblogs/qrnipple.png') + "') !important; }"});
+            injectStyles.push({file: "core/betterReblogs/quickReblogMenu.css"});
          }
       }
 

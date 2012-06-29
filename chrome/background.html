@@ -1828,7 +1828,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                        "likes",
                        "tagged"])) {
          if (getSetting("MissingE_betterReblogs_enabled",1) == 1) {
-            chrome.tabs.insertCSS(sender.tab.id, {file: "core/betterReblogs/quickReblog.css"});
+            chrome.tabs.insertCSS(sender.tab.id, {code: "#MissingE_quick_reblog #MissingE_qr_nipple { background-image:url('" + chrome.extension.getURL('core/betterReblogs/qrnipple.png') + "') !important; }"});
+            chrome.tabs.insertCSS(sender.tab.id, {file: "core/betterReblogs/quickReblogMenu.css"});
          }
       }
 

@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.9.21</string>
+	<string>2.10.0</string>
 	<key>CFBundleVersion</key>
-	<string>29021</string>
+	<string>210000</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Database Quota</key>
@@ -99,7 +99,7 @@
 		<array>
 			<string>lib/facebox/facebox.css</string>
 			<string>core/askTweaks/askTweaks.css</string>
-			<string>core/betterReblogs/quickReblog.css</string>
+			<string>core/betterReblogs/quickReblogMenu.css</string>
 			<string>core/betterReblogs/betterReblogs.css</string>
 			<string>core/reblogYourself/reblogYourself.css</string>
 			<string>core/bookmarker/bookmarker.css</string>
