@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.9.21** (2012-06-29)
+##**2.10.0** (2012-06-29)
 **_!_** Fix badly-formatted Quick Reblog drop-down menu
 
 ##**2.9.20** (2012-06-28)
