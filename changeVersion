@@ -7,7 +7,7 @@ CH=$WDIR/chrome/manifest.json
 SF=$WDIR/missinge.safariextension/Info.plist
 SFst=$WDIR/missinge.safariextension/Settings.plist
 INDEX=$WDIR/site/index.html
-UPDATE=$WDIR/site/update.html
+UPDATE=$WDIR/site/update.php
 CURRVER=$WDIR/site/currentVersion.js
 
 sed -e 's/"version": "[^"]*"/"version": "'$1'"/' $FF > $FF.new
