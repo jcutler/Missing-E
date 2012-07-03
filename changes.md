@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.10.1** (not yet released)
+**_!_** Fix tag-only posts option
+
 ##**2.10.0** (2012-06-29)
 **_!_** Fix badly-formatted Quick Reblog drop-down menu
 
