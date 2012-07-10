@@ -82,7 +82,7 @@ MissingE.packages.betterReblogsFill = {
          if (document.referrer.indexOf("src="+src) >= 0 ||
              (document.referrer === "" &&
               location.href.indexOf("redirect_to="+src) >= 0)) {
-            location.href = $('#the_as_links a[href*="/text"]').attr("href");
+            location.href = $('#the_as_links a[href*="/text"]').get(0).href;
             return;
          }
       }
