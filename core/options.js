@@ -227,9 +227,12 @@ MissingE.utilities.options = {
          }
       }
       if (obj.name === 'MissingE_bookmarker_format') {
+      	 var val = MissingE.utilities.options.trim(obj.value);
+      	 val = val.replace(/[;,]/g,'.');
+      	 obj.value = val;
          $('#MissingE_bookmarker_format_sample')
             .text(MissingE.getBookmarkerFormat(new Date(),
-                                               'missing-e', obj.value));
+                                               'missing-e', val));
       }
       else if (obj.name === 'MissingE_timestamps_format') {
          $('#MissingE_timestamps_format_sample')

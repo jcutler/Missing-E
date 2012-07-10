@@ -323,6 +323,16 @@ function invertSetting(oldpref,newpref) {
    }
 }
 
+function settingChange(pref, from, to) {
+   var re = new RegExp("[" + from + "]", "g");
+   if (ps.isSet(pref)) {
+	  var val = ps.get(pref);
+      var newval = val.replace(re, to);
+	  MissingE.log('"' + pref + '" changed from \'' + val + '\' to \'' + newval + '\'');
+	  ps.set(pref,newval);
+   }
+}
+
 function setIntegerPrefType(pref,defVal) {
    if (ps.isSet(pref) &&
        typeof ps.get(pref,defVal) === "string") {
@@ -2595,6 +2605,7 @@ function fixupSettings() {
    clearSetting('extensions.MissingE.postingTweaks.uploaderToggle');
    clearSetting('extensions.MissingE.experimentalFeatures.enabled');
    clearSetting('extensions.MissingE.sidebarTweaks.followingLink');
+   settingChange('extensions.MissingE.bookmarker.format',',;','.');
    invertSetting('extensions.MissingE.dashboardTweaks.expandAll','extensions.MissingE.dashboardTweaks.noExpandAll');
    moveSetting('extensions.MissingE.dashboardTweaks.slimSidebar','extensions.MissingE.sidebarTweaks.slimSidebar');
    collapseSettings('extensions.MissingE.askTweaks.betterAnswers','extensions.MissingE.askTweaks.buttons','extensions.MissingE.askTweaks.tags');
