@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.10.3** (2012-07-10)
+**_!_** Fix post reblog button position for single-blog Tumblr accounts
+
 ##**2.10.2** (2012-07-10)
 **_!_** Fix positioning of post control icons
 
