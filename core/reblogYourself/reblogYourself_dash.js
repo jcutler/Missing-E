@@ -74,7 +74,7 @@ MissingE.packages.reblogYourself = {
                      .replace(/&/g,'%26');
 
          var nr = $('<a />',
-                    {title: reblog_text, "class": "reblog_button",
+                    {title: reblog_text, "class": "post_control reblog_button",
                      href: "/reblog/" + response.pid + "/" + response.data +
                            "?redirect_to=" + redir});
          if (before.length === 0) {
