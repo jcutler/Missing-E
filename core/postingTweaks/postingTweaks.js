@@ -247,7 +247,11 @@ MissingE.packages.postingTweaks = {
            MissingE.escapeHTML(MissingE.getLocale(lang).postingTweaks
                                  .clearTagsText) + '</a></div>');
 
-      $('#photo_src').keyup(function(){
+      var dupProtocolFields = '#photo_src,#post_source_url';
+      if (MissingE.isTumblrURL(location.href, ["photoPost"])) {
+	     dupProtocolFields += ',#post_three';
+      }
+      $(dupProtocolFields).keyup(function(){
          if (/^http:\/\/https?:\/\//.test(this.value)) {
             this.value = this.value.replace(/^http:\/\//,'');
          }

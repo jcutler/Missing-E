@@ -57,13 +57,14 @@ var utils = {
       "likes":        /^like(s(\/.*)?|d\/by\/[^\/]+(\/.*)?)$/,
       "massEditor":   /^mega-editor\/[^\/]+(\/[0-9]+\/[0-9]+)?[\/]?$/,
       "messages":     /^(blog\/[^\/]+\/)?(messages|submissions|inbox)[\/]?.*$/,
+      "photoPost":    /^(blog\/[^\/]+\/)?new\/photo/,
       "post":         /^((blog\/[^\/]+\/)?new\/[^\/]+|edit\/\d+|share(\/\w+)?)[\/]?$/,
-      "textPost":     /^(blog\/[^\/]+\/)?new\/text/,
       "queue":        /^blog\/[^\/]+\/queue[\/]?.*$/,
       "reblog":       /^reblog\/\d+\/\w+(\/\w+)?[\/]?$/,
       "reply":        /^(blog\/[^\/]+\/)?new\/(text|photo)[\/]?$/,
       "settings":     /^blog\/[^\/]+\/settings[\/]?$/,
       "tagged":       /^tagged\/[^\/]+[\/]?.*$/,
+      "textPost":     /^(blog\/[^\/]+\/)?new\/text/,
       "upload":       /^upload(\/image)?/
    },
 
