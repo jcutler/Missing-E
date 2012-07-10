@@ -29,6 +29,8 @@ display:inline-block;
 background-repeat:no-repeat;
 background-attachment:scroll;
 background-position:0 0;
+margin-left:20px;
+margin-top:3px;
 }
 
 a.MissingE_magnify_hide {

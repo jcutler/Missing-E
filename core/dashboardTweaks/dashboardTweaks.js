@@ -116,7 +116,7 @@ MissingE.packages.dashboardTweaks = {
       key = MissingE.escapeHTML(key[1]);
       id = MissingE.escapeHTML(id);
       var expRep = $('<span />',
-                     {"class": "MissingE_experimental_reply popover_button reply_button",
+                     {"class": "post_control MissingE_experimental_reply popover_button reply_button",
                       id: "post_control_reply_" + id,
                       title: MissingE.getLocale(lang).dashTweaksText.reply +
                          " [" + MissingE.getLocale(lang).dashTweaksText.experimental + "]"});

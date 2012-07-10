@@ -167,7 +167,7 @@ MissingE.packages.magnifier = {
          if (str) {
             var mi = $('<a />',
                        {title: MissingE.getLocale(lang).loading,
-                        "class": "MissingE_magnify MissingE_magnify_hide",
+                        "class": "post_control MissingE_magnify MissingE_magnify_hide",
                         id: "magnify_" + tid, href: "#",
                         click: function() { return false; }});
             mi.click(MissingE.packages.magnifier.magClick);

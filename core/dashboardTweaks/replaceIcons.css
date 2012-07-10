@@ -69,6 +69,13 @@ background-position:-119px 0;
 #posts .post .post_controls a[onclick*="delete_post_"] {
 width:16px;
 background-position:-138px 0;
+
+}
+
+#dashboard_inbox .post .post_controls a[id^="post_delete_"] {
+vertical-align:middle !important;
+margin-top:3px;
+margin-left:20px;
 }
 
 #posts .post .post_controls a[id^="ask_answer_link"] {

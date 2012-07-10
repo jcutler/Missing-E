@@ -114,7 +114,7 @@ MissingE.packages.betterReblogs = {
          rblnk = $('<a />',
                    {title: reblog_err,
                     href: "#",
-                    "class": "MissingE_betterReblogs_retryAsk",
+                    "class": "post_control MissingE_betterReblogs_retryAsk",
                     click: function() { return false; }});
          if (before.length === 0) {
             rblnk.prependTo(item.find('div.post_controls')).after(' ');

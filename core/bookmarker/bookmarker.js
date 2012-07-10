@@ -313,7 +313,7 @@ MissingE.packages.bookmarker = {
             .parseMarks(MissingE.getStorage("MissingE_bookmarker_marks",""));
          var heart = ctrl.find('a.like_button');
          var mag = ctrl.find('a.MissingE_magnify');
-         var klass = 'MissingE_mark';
+         var klass = 'post_control MissingE_mark';
          var from = this.dashboardPagePost ? this.dashboardPagePost : 0;
          for (j=0; j < marks.length; j++) {
             if (post === marks[j][1]) {

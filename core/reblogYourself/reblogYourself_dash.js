@@ -95,7 +95,7 @@ MissingE.packages.reblogYourself = {
             .find('div.post_controls a[href^="/edit"]');
          var nre = $('<a />',
                      {title: reblog_err, href: "#",
-                      "class": "MissingE_reblogYourself_retry",
+                      "class": "post_control MissingE_reblogYourself_retry",
                       click: function() { return false; }});
          if (before.length === 0) {
             nre.prependTo(item.find('div.post_controls')).after(' ');

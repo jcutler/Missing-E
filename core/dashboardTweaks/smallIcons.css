@@ -35,6 +35,13 @@ transform:scale(0.8,0.8);
 -moz-transform-origin:right top;
 -moz-transform:scale(0.8,0.8);
 font-size:16px !important;
+margin-left:15px;
+}
+
+#dashboard_inbox .post .post_controls a[id^="post_delete_"],
+#posts .post .post_controls .post_control, 
+#posts li.post .MissingEmassDeleteSpan {
+margin-left:15px !important;
 }
 
 #upload_image_form #controls {
@@ -50,6 +57,7 @@ transform:scale(0.8,0.8);
 vertical-align:middle !important;
 height:16px !important;
 width:18px !important;
+padding-top:2px;
 }
 
 #posts .post .post_controls iframe[src^="/upload/image"],
