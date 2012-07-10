@@ -375,7 +375,7 @@ function toggleWidget() {
             label: "Missing e",
             id: "missinge",
             tooltip: "Missing e Settings",
-            contentURL: data.url("identity/missinge32.png"),
+            contentURL: data.url("widget.html"),
             onClick: function() {
                openSettings();
             }
