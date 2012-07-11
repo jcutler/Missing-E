@@ -1131,13 +1131,14 @@ function doNotesAjax(baseURL, pid, count, myWorker, retries) {
             }
          }
          else {
-            var noteCount = postInfo[0].match(/<\s*div\s+class="notes"\s*>[^<\d]*([\d\.,]+)[^<\d]*/);
+            var noteCount = postInfo[0].match(/<\s*div\s+class="notes"\s*>[^<\d]*([\d\., ]+)[^<\d]*/);
             if (!noteCount || noteCount.length < 2) {
                noteCount = "";
             }
             else {
                noteCount = noteCount[1];
             }
+            noteCount = noteCount.replace(/^\s+/,'').replace(/\s+$/,'').replace(/\s/g,',');
             dequeueAjax(this.headers.targetId);
             if (!closed) {
                doNotes(noteCount, this.headers.targetId, myWorker);
