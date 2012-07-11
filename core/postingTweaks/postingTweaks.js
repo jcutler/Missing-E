@@ -198,7 +198,7 @@ MissingE.packages.postingTweaks = {
             }
 
             var chan = $('#channel_id');
-            var blog = 0;
+            var blog = "0";
             if (chan.length > 0) {
                blog = chan.val();
             }
