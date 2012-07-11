@@ -2269,8 +2269,10 @@ function settingChange(pref, from, to) {
    var re = new RegExp("[" + from + "]", "g");
    if ((val = safari.extension.settings.getItem(pref))) {
       var newval = val.replace(re, to);
-	  MissingE.log('"' + pref + '" changed from \'' + val + '\' to \'' + newval + '\'');
-	  safari.extension.settings[pref] = newval;
+      if (newval !== val) {
+         MissingE.log('"' + pref + '" changed from \'' + val + '\' to \'' + newval + '\'');
+         safari.extension.settings[pref] = newval;
+      }
    }
 }
 

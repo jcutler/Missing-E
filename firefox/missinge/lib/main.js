@@ -328,10 +328,12 @@ function invertSetting(oldpref,newpref) {
 function settingChange(pref, from, to) {
    var re = new RegExp("[" + from + "]", "g");
    if (ps.isSet(pref)) {
-	  var val = ps.get(pref);
+      var val = ps.get(pref);
       var newval = val.replace(re, to);
-	  MissingE.log('"' + pref + '" changed from \'' + val + '\' to \'' + newval + '\'');
-	  ps.set(pref,newval);
+      if (newval !== val) {
+         MissingE.log('"' + pref + '" changed from \'' + val + '\' to \'' + newval + '\'');
+        ps.set(pref,newval);
+      }
    }
 }
 
