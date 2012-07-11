@@ -78,8 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.10.5** (not yet released)
-**_!_** Restore move to top of queue arrow display
+##**2.10.5** (2012-07-11)
+**_!_** Restore move to top of queue arrow display  
+**_!_** Fix Smart Redirect issues for single-blog Tumblr accounts
 
 ##**2.10.4** (2012-07-10)
 **_!_** Additional icon fixes
