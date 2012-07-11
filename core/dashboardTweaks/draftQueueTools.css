@@ -53,6 +53,10 @@ opacity:0.5;
 line-height:18px !important;
 }
 
+#posts li.post.queued .MissingEmassDeleteSpan {
+margin-left:15px;
+}
+
 #posts li.post .MissingEmassDeleteSpan:hover {
 opacity:1;
 }

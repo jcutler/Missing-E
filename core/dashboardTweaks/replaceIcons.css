@@ -94,3 +94,8 @@ background-position:-75px 0;
 width:20px;
 background-position:-154px 0;
 }
+
+#posts li.queued div.post_controls img[src^="http://assets.tumblr.com/images/sort_"],
+#posts li.queued div.post_controls img[src^="http://assets.tumblr.com/images/move_to_top_"] {
+margin-left:15px !important;
+}

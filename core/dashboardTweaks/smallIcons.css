@@ -50,7 +50,8 @@ transform:scale(1.2,1.2);
 
 #dashboard_inbox .post .post_controls a[id^="post_delete_"],
 #posts .post .post_controls .post_control, 
-#posts li.post .MissingEmassDeleteSpan {
+#posts li.post .MissingEmassDeleteSpan,
+#posts li.queued .MissingEmassDeleteSpan {
 margin-left:15px !important;
 }
 
