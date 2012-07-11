@@ -78,8 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.10.7** (not yet released)
-**_!_** Add X keyboard shortcut to enable/disable Safe Dash
+##**2.11.0** (not yet released)
+**_+_** Add X keyboard shortcut to enable/disable Safe Dash  
+**_+_** Add option to display note count when hovering over posts in the Mass Editor  
+**_!_** Fix incorrect note counts in dashboard notification previews for other languages
 
 ##**2.10.6** (2012-07-11)
 **_!_** Fix spacing of queue post arrow controls
