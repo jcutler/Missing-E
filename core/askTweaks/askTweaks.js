@@ -40,11 +40,11 @@ MissingE.packages.askTweaks = {
       if (controls.find('a[onclick*="queue_post"], ' +
                         'a[onclick*="approve_post"]').length === 0) {
          var addPub = $('<a href="#" onclick="return approve_post(' + id +
-                        ');" />');
+                        ');" class="post_control" />');
          addPub.attr('title', publishText);
          addPub.text(publishText);
          var addQueue = $('<a href="#" onclick="return queue_post(' + id +
-                          ');" />');
+                          ');" class="post_control" />');
          addQueue.attr('title', queueText);
          addQueue.text(queueText);
          var block = controls.find('a[id^="post_block_"]');
