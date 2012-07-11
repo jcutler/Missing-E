@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.10.6** (2012-07-11)
+**_!_** Fix spacing of queue post arrow controls
+
 ##**2.10.5** (2012-07-11)
 **_!_** Restore move to top of queue arrow display  
 **_!_** Fix Smart Redirect issues for single-blog Tumblr accounts
