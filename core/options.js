@@ -392,6 +392,7 @@ MissingE.utilities.options = {
          }
          else if (v == "safeDash") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_safeDash_photosetAll',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_safeDash_keyboardShortcut',1);
          }
          else if (v == "betterReblogs") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_passTags',1);

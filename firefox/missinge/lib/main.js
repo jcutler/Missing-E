@@ -145,6 +145,7 @@ function getAllSettings(getStale) {
          getSetting("extensions.MissingE." + componentList[i] + ".enabled", 1);
    }
    settings.MissingE_safeDash_photosetAll = getSetting("extensions.MissingE.safeDash.photosetAll",0);
+   settings.MissingE_safeDash_keyboardShortcut = getSetting("extensions.MissingE.safeDash.keyboardShortcut",1);
    settings.MissingE_askTweaks_scroll = getSetting("extensions.MissingE.askTweaks.scroll",1);
    settings.MissingE_askTweaks_betterAnswers = getSetting("extensions.MissingE.askTweaks.betterAnswers",0);
    settings.MissingE_askTweaks_photoReplies = getSetting("extensions.MissingE.askTweaks.photoReplies",1);
@@ -1866,6 +1867,9 @@ function handleMessage(message, myWorker) {
             break;
          case "magnifier":
             settings.magnifyAvatars = getSetting("extensions.MissingE.magnifier.magnifyAvatars",0);
+            break;
+         case "safeDash":
+            settings.keyboardShortcut = getSetting("extensions.MissingE.safeDash.keyboardShortcut",1);
             break;
          case "betterReblogs":
             settings.passTags = getSetting("extensions.MissingE.betterReblogs.passTags",1);

@@ -1562,6 +1562,7 @@ function handleRequest(request) {
          settings["MissingE_" + componentList[i] + "_enabled"] = getSetting("MissingE_" + componentList[i] + "_enabled", 1);
       }
       settings.MissingE_safeDash_photosetAll = getSetting("MissingE_safeDash_photosetAll",0);
+      settings.MissingE_safeDash_keyboardShortcut = getSetting("MissingE_safeDash_keyboardShortcut",1);
       settings.MissingE_askTweaks_scroll = getSetting("MissingE_askTweaks_scroll",1);
       settings.MissingE_askTweaks_betterAnswers = getSetting("MissingE_askTweaks_betterAnswers",0);
       settings.MissingE_askTweaks_tagAsker = getSetting("MissingE_askTweaks_tagAsker",1);
@@ -1746,6 +1747,9 @@ function handleRequest(request) {
             break;
          case "magnifier":
             settings.magnifyAvatars = getSetting("MissingE_magnifier_magnifyAvatars",0);
+            break;
+         case "safeDash":
+            settings.keyboardShortcut = getSetting("MissingE_safeDash_keyboardShortcut",1);
             break;
          case "betterReblogs":
             settings.passTags = getSetting("MissingE_betterReblogs_passTags",1);

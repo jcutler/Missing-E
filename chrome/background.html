@@ -1593,6 +1593,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          case "magnifier":
             settings.magnifyAvatars = getSetting("MissingE_magnifier_magnifyAvatars",0);
             break;
+         case "safeDash":
+            settings.keyboardShortcut = getSetting("MissingE_safeDash_keyboardShortcut",1);
+            break;
          case "betterReblogs":
             settings.passTags = getSetting("MissingE_betterReblogs_passTags",1);
             settings.autoFillTags = getSetting("MissingE_betterReblogs_autoFillTags",1);

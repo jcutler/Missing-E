@@ -172,7 +172,7 @@ jQuery(document).ready(function($) {
  <div id="uptodate"></div>
  <div id="notuptodate"></div>
 </div>
-<div version="2.10.6" id="versioncheck" style="display:none"></div>
+<div version="2.10.7" id="versioncheck" style="display:none"></div>
 <header>
  <nav>
   <div id="nav_bar">

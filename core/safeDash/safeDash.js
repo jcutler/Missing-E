@@ -49,11 +49,20 @@ MissingE.packages.safeDash = {
       }
    },
 
-   run: function() {
-      this.lock = extension.getURL("core/safeDash/lock.png");
-      if (MissingE.getStorage('MissingE_safeDash_state', 0) === 1) {
-         $('body').addClass('MissingE_safeDash');
+   toggleSafeDash: function() {
+      var state = 1-MissingE.getStorage('MissingE_safeDash_state',0);
+      MissingE.setStorage('MissingE_safeDash_state',state);
+      if (state === 0) {
+         MissingE.packages.safeDash.undoNSFW();
       }
+      else {
+         MissingE.packages.safeDash.doNSFW();
+      }
+   },
+
+   run: function() {
+      var settings = this.settings;
+      this.lock = extension.getURL("core/safeDash/lock.png");
 
       $('#posts li.post').each(function() {
          MissingE.packages.safeDash.doHide(this);
@@ -89,16 +98,15 @@ MissingE.packages.safeDash = {
          $('#right_column').append(sdlnk);
       }
 
-      $('#nsfwctrl').click(function() {
-         var state = 1-MissingE.getStorage('MissingE_safeDash_state',0);
-         MissingE.setStorage('MissingE_safeDash_state',state);
-         if (state === 0) {
-            MissingE.packages.safeDash.undoNSFW();
-         }
-         else {
-            MissingE.packages.safeDash.doNSFW();
-         }
-      });
+      $('#nsfwctrl').click(MissingE.packages.safeDash.toggleSafeDash);
+      if (settings.keyboardShortcut === 1) {
+         $(window).keyup(function(e) {
+            if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey &&
+                !$(e.target).is('input,textarea') && e.which === 88) {
+               MissingE.packages.safeDash.toggleSafeDash();
+            }
+         });
+      }
 
       window.addEventListener('storage', function(e) {
          if (e.key !== 'MissingE_safeDash_state') { return false; }
@@ -113,17 +121,23 @@ MissingE.packages.safeDash = {
    },
 
    init: function() {
-      if (extension.isFirefox) {
-         extension.sendRequest("settings",
-                               {component: "safeDash"}, function(response) {
-            if (response.component === "safeDash") {
-               MissingE.packages.safeDash.run();
+      if (MissingE.getStorage('MissingE_safeDash_state', 0) === 1) {
+         $('body').addClass('MissingE_safeDash');
+      }
+      extension.sendRequest("settings", {component: "safeDash"},
+                            function(response) {
+         if (response.component === "safeDash") {
+            var i;
+            MissingE.packages.safeDash.settings = {};
+            for (i in response) {
+               if (response.hasOwnProperty(i) &&
+                   i !== "component") {
+                  MissingE.packages.safeDash.settings[i] = response[i];
+               }
             }
-         });
-      }
-      else {
-         MissingE.packages.safeDash.run();
-      }
+            MissingE.packages.safeDash.run();
+         }
+      });
    }
 };
 
