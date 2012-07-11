@@ -144,6 +144,7 @@ function getAllSettings(getStale) {
       settings["MissingE_" + componentList[i] + "_enabled"] =
          getSetting("extensions.MissingE." + componentList[i] + ".enabled", 1);
    }
+   settings.MissingE_massEditor_showNotes = getSetting("extensions.MissingE.massEditor.showNotes",1);
    settings.MissingE_safeDash_photosetAll = getSetting("extensions.MissingE.safeDash.photosetAll",0);
    settings.MissingE_safeDash_keyboardShortcut = getSetting("extensions.MissingE.safeDash.keyboardShortcut",1);
    settings.MissingE_askTweaks_scroll = getSetting("extensions.MissingE.askTweaks.scroll",1);
@@ -2079,6 +2080,9 @@ function handleMessage(message, myWorker) {
       if (MissingE.isTumblrURL(message.url, ["massEditor"])) {
         if (getSetting("extensions.MissingE.massEditor.enabled",1) == 1) {
            injectStyles.push({file: "core/massEditor/massEditor.css"});
+           if (getSetting("extensions.MissingE.massEditor.showNotes",1) == 1) {
+              injectStyles.push({file: "core/massEditor/showNotes.css"});
+           }
         }
       }
 

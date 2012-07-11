@@ -1796,6 +1796,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       if (MissingE.isTumblrURL(sender.tab.url, ["massEditor"])) {
         if (getSetting("MissingE_massEditor_enabled",1) == 1) {
            chrome.tabs.insertCSS(sender.tab.id, {file: "core/massEditor/massEditor.css"});
+           if (getSetting("MissingE_massEditor_showNotes",1) == 1) {
+              chrome.tabs.insertCSS(sender.tab.id, {file: "core/massEditor/showNotes.css"});
+           }
         }
       }
 

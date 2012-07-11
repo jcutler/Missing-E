@@ -1561,6 +1561,7 @@ function handleRequest(request) {
       for (i=0; i<componentList.length; i++) {
          settings["MissingE_" + componentList[i] + "_enabled"] = getSetting("MissingE_" + componentList[i] + "_enabled", 1);
       }
+      settings.MissingE_massEditor_showNotes = getSetting("MissingE_massEditor_showNotes",1);
       settings.MissingE_safeDash_photosetAll = getSetting("MissingE_safeDash_photosetAll",0);
       settings.MissingE_safeDash_keyboardShortcut = getSetting("MissingE_safeDash_keyboardShortcut",1);
       settings.MissingE_askTweaks_scroll = getSetting("MissingE_askTweaks_scroll",1);
@@ -1932,6 +1933,14 @@ function handleRequest(request) {
          if (getSetting("MissingE_askTweaks_enabled",1) == 1) {
             injectStyles.push({file: "core/askTweaks/askTweaks.css"});
          }
+      }
+
+      if (MissingE.isTumblrURL(request.message.url, ["massEditor"])) {
+        if (getSetting("MissingE_massEditor_enabled",1) == 1) {
+           if (getSetting("MissingE_massEditor_showNotes",1) == 1) {
+              injectStyles.push({file: "core/massEditor/showNotes.css"});
+           }
+        }
       }
 
       if (MissingE.isTumblrURL(request.message.url,

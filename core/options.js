@@ -338,6 +338,9 @@ MissingE.utilities.options = {
             frm.MissingE_bookmarker_format.value = bmFormat;
             $('#MissingE_bookmarker_format_sample').text(MissingE.getBookmarkerFormat(new Date(), 'missing-e', bmFormat));
          }
+         else if (v == "massEditor") {
+            MissingE.utilities.options.loadCheck(frm,'MissingE_massEditor_showNotes',1);
+         }
          else if (v == "timestamps") {
             frm.MissingE_timestamps_retries.value = MissingE.utilities.options.getStorage('MissingE_timestamps_retries',MissingE.defaultRetries);
             var tsFormat = MissingE.utilities.options.getStorage('MissingE_timestamps_format',MissingE.defaultFormat);
