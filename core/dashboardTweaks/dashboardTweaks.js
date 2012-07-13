@@ -149,7 +149,8 @@ MissingE.packages.dashboardTweaks = {
       expRep.append(popover);
       notes.after(expRep);
       var failer = $('<span />',
-                     {"class": "MissingE_post_control " +
+                     {"class": "post_control " +
+                               "MissingE_post_control " +
                                "MissingE_experimental_reply_wait",
                       id: "reply_fail_" + id});
       failer.append($('<span />', {"class": "MissingE_successText"})
