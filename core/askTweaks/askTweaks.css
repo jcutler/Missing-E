@@ -140,6 +140,11 @@ opacity:0.5;
 line-height:18px !important;
 }
 
+#dashboard_submissions #posts li.post .MissingEmassDeleteSpan,
+#dashboard_inbox #posts li.post .MissingEmassDeleteSpan {
+vertical-align:bottom !important;
+}
+
 #posts li.post .MissingEmassDeleteSpan:hover {
 opacity:1;
 }
