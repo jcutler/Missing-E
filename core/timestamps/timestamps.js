@@ -90,7 +90,11 @@ MissingE.packages.timestamps = {
          else {
             var spn = div.find('span.MissingE_timestamp');
             if (spn.length === 0) {
-               div.append('<br><span class="MissingE_timestamp" ' +
+               console.log();
+               if (/[^\s]/.test(div.html())) {
+                  div.append('<br />');
+               }
+               div.append('<span class="MissingE_timestamp" ' +
                           'style="font-weight:normal;line-height:normal;">' +
                           MissingE.escapeHTML(MissingE.getLocale(lang).loading)+
                           '</span>');
