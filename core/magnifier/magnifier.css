@@ -89,3 +89,8 @@ display:block;
 #crushes a .MissingE_magnify_avatar:hover {
 opacity:0.9 !important;
 }
+
+#dashboard_inbox a[href="#"] + .MissingE_magnify_avatar,
+#dashboard_submissions a[href="#"] + .MissingE_magnify_avatar {
+display:none !important;
+}
