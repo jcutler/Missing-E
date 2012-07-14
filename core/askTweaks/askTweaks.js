@@ -327,10 +327,22 @@ MissingE.packages.askTweaks = {
          });
 
          var x;
-         var startTags = $(item).find('div.post_info').text()
-            .match(/[0-9A-Za-z\-\_]+/);
-         if (tagAsker === 1) {
-            startTags = [startTags[0]];
+         var asker = $(item).find('div.post_info').html();
+         asker = asker.replace(/<br[^>]*>/g,'')
+               .replace(/<span[^>]*MissingE_timestamp[^>]*>[^<]*<[^>]*>/g,'');
+         asker = asker.replace(/<[^>]*>/g,'');
+         asker = asker.match(/[0-9A-Za-z\-\_]+/);
+         if (!asker || asker.length === 0) {
+            asker = null;
+         }
+         else {
+            asker = MissingE.escapeHTML(asker[0]);
+         }
+         if (/anonymous_avatar/.test($(item).find('div.avatar_and_i').html())) {
+            asker = MissingE.escapeHTML(MissingE.getLocale(lang).anonymous);
+         }
+         if (tagAsker === 1 && asker && asker !== "") {
+            startTags = [asker];
          }
          else {
             startTags = [];
