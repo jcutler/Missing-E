@@ -88,6 +88,7 @@ border-radius:5px;
 border:1px solid #DDD !important;
 border-top:1px solid #CCC !important;
 border-bottom:1px solid #CCC !important;
+float:left;
 }
 
 html[lang="ru"] #post_controls #extra_channel {
