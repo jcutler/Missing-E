@@ -338,7 +338,8 @@ MissingE.packages.askTweaks = {
          else {
             asker = MissingE.escapeHTML(asker[0]);
          }
-         if (/anonymous_avatar/.test($(item).find('div.avatar_and_i').html())) {
+         if ((!asker || asker === "") &&
+             /anonymous_avatar/.test($(item).find('div.avatar_and_i').html())) {
             asker = MissingE.escapeHTML(MissingE.getLocale(lang).anonymous);
          }
          if (tagAsker === 1 && asker && asker !== "") {
