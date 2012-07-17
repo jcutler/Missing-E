@@ -611,7 +611,7 @@ MissingE.packages.dashboardTweaks = {
                'var fail;' +
                'if (request.url === "/reply") {' +
                   'if ((fail = document.getElementById(\'reply_fail_\' + request.parameters.post_id))) {' +
-                     'fail.className="MissingE_post_control MissingE_experimental_reply_wait";' +
+                     'fail.className="post_control MissingE_post_control MissingE_experimental_reply_wait";' +
                   '}' +
                '}' +
             '},' +
@@ -623,10 +623,10 @@ MissingE.packages.dashboardTweaks = {
                         'btn.style.display="none";' +
                      '}' +
                      'if (response.transport.status == 200) {' +
-                        'fail.className="MissingE_post_control MissingE_experimental_reply_success";' +
+                        'fail.className="post_control MissingE_post_control MissingE_experimental_reply_success";' +
                      '}' +
                      'else {' +
-                        'fail.className="MissingE_post_control MissingE_experimental_reply_fail";' +
+                        'fail.className="post_control MissingE_post_control MissingE_experimental_reply_fail";' +
                      '}' +
                   '}' +
                '}' +
