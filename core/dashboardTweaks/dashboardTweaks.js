@@ -1117,8 +1117,8 @@ MissingE.packages.dashboardTweaks = {
                if (exPost.length > 0) {
                   var notes = $('#note_link_current_' + tid);
                   if (notes.length > 0) {
-                     noteCount = notes.text().match(/[\d\.,]+/);
-                     if (noteCount && noteCount.length === 1) {
+                     noteCount = notes.text().match(/\d+([,\. ]\d+)*/);
+                     if (noteCount && noteCount.length >= 1) {
                         noteCount = noteCount[0];
                      }
                      else {
@@ -1132,7 +1132,8 @@ MissingE.packages.dashboardTweaks = {
                if (type === "photoset") { type = "photo"; }
                if (type !== "photo" && type !== "video") {
                   MissingE.packages.dashboardTweaks
-                     .receivePreview({success: true, pid: tid, type: type});
+                     .receivePreview({success: true, pid: tid, type: type,
+                                      noteCount: noteCount});
                }
                else if (exPhotoset.length > 0) {
                   var exImgs = [];
@@ -1141,7 +1142,7 @@ MissingE.packages.dashboardTweaks = {
                   });
                   MissingE.packages.dashboardTweaks
                      .receivePreview({success: true, pid: tid, data: exImgs,
-                                      type: "photo"});
+                                      type: "photo", noteCount: noteCount});
                }
                else if (exPost.length > 0 &&
                         type === 'photo') {
@@ -1150,7 +1151,7 @@ MissingE.packages.dashboardTweaks = {
                   exImg = exImg.replace(/http:\/\/\d+\./,'http://');
                   MissingE.packages.dashboardTweaks
                      .receivePreview({success: true, pid: tid, data: [exImg],
-                                      type: "photo"});
+                                      type: "photo", noteCount: noteCount});
                }
                else if (exPost.length > 0 &&
                         type === 'video') {
@@ -1188,7 +1189,8 @@ MissingE.packages.dashboardTweaks = {
                   else {
                      MissingE.packages.dashboardTweaks
                         .receivePreview({success: true, pid: tid,
-                                         data: screenshots, type: type});
+                                         data: screenshots, type: type,
+                                         noteCount: noteCount});
                   }
                }
                else {
