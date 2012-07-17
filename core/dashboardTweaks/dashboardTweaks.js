@@ -1129,6 +1129,9 @@ MissingE.packages.dashboardTweaks = {
                      noteCount = "";
                   }
                }
+               else {
+                  noteCount = "";
+               }
                if (type === "photoset") { type = "photo"; }
                if (type !== "photo" && type !== "video") {
                   MissingE.packages.dashboardTweaks
