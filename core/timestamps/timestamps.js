@@ -90,7 +90,6 @@ MissingE.packages.timestamps = {
          else {
             var spn = div.find('span.MissingE_timestamp');
             if (spn.length === 0) {
-               console.log();
                if (/[^\s]/.test(div.html())) {
                   div.append('<br />');
                }
