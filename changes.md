@@ -78,6 +78,10 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.12.0** (not yet released)
+**_!_** Fix for non-functioning Magnifier feature  
+**_!_** Reduce white space when wrapping tags
+
 ##**2.11.0** (2012-07-14)
 **_+_** Add X keyboard shortcut to enable/disable Safe Dash  
 **_+_** Add option to display note count when hovering over posts in the Mass Editor  
