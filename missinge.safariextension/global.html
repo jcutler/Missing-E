@@ -1264,26 +1264,30 @@ function requestMagnifier(request) {
       return;
    }
    else {
-      MissingE.debug("Building magnifier request (" + request.message.pid + ")");
-      var i,url;
-      if (request.message.num > 1) {
-         url = [];
-         for (i=0; i<request.message.num; i++) {
-            url.push("http://www.tumblr.com/photo/1280/" +
-                     request.message.pid + "/" +
-                     request.message.revs[i] + "/" +
-                     request.message.code);
-            url.push(request.message.captions[i]);
-         }
-         url = JSON.stringify(url);
+      if (!request.message.hasOwnProperty('src')) {
+         request.target.page.dispatchMessage("magnifier", {pid: request.message.pid,
+                                                           success: false});
       }
       else {
-         url = "http://www.tumblr.com/photo/1280/" + request.message.pid +
-            "/" + request.message.revs[0] + "/" + request.message.code;
+         var ft = request.message.src.match(/\.[a-z]{2,4}$/i);
+         var fullsrc = request.message.src.replace(/_\d+\.[a-z]{2,4}$/i,'_1280'+ft);
+
+         var ajax = new XMLHttpRequest();
+         ajax.open("HEAD", fullsrc, true);
+         ajax.onreadystatechange = function() {
+            if (this.readyState == 4) {
+               if (this.status == 200) {
+                  request.target.page.dispatchMessage("magnifier",
+                     {pid: request.message.pid, success:true, data: fullsrc});
+               }
+               else {
+                  request.target.page.dispatchMessage("magnifier",
+                     {pid: request.message.pid, success:true, data: request.message.src});
+               }
+            }
+         };
+         ajax.send();
       }
-      request.target.page.dispatchMessage("magnifier", {pid: request.message.pid,
-                                                        success: true,
-                                                        data: url});
    }
 }
 

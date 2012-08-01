@@ -1256,22 +1256,27 @@ function requestMagnifier(request, sender, sendResponse, hash) {
       return;
    }
    else {
-      MissingE.debug("Building magnifier request (" + request.pid + ")");
-      var i,url;
-      if (request.num > 1) {
-         url = [];
-         for (i=0; i<request.num; i++) {
-            url.push("http://www.tumblr.com/photo/1280/" + request.pid + "/" +
-                     request.revs[i] + "/" + request.code);
-            url.push(request.captions[i]);
-         }
-         url = JSON.stringify(url);
+      if (!request.hasOwnProperty('src')) {
+         sendResponse({pid: request.pid, success: false});
       }
       else {
-         url = "http://www.tumblr.com/photo/1280/" + request.pid + "/" +
-            request.revs[0] + "/" + request.code;
+         var ft = request.src.match(/\.[a-z]{2,4}$/i);
+         var fullsrc = request.src.replace(/_\d+\.[a-z]{2,4}$/i,'_1280'+ft);
+
+         var ajax = new XMLHttpRequest();
+         ajax.open("HEAD", fullsrc, true);
+         ajax.onreadystatechange = function() {
+            if (this.readyState == 4) {
+               if (this.status == 200) {
+                  sendResponse({pid: request.pid, success:true, data: fullsrc});
+               }
+               else {
+                  sendResponse({pid: request.pid, success:true, data: request.src});
+               }
+            }
+         };
+         ajax.send();
       }
-      sendResponse({pid: request.pid, success: true, data: url});
    }
 }
 

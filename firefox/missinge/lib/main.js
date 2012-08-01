@@ -1373,23 +1373,35 @@ function startMagnifier(message, myWorker) {
       MissingE.debug("Stop magnifier request: Tab closed or changed.");
       return;
    }
-   MissingE.debug("Buidling magnifier request (" + message.pid + ")");
-   var i,url;
-   if (message.num > 1) {
-      url = [];
-      for (i=0; i<message.num; i++) {
-         url.push("http://www.tumblr.com/photo/1280/" + message.pid + "/" +
-                  message.revs[i] + "/" + message.code);
-         url.push(message.captions[i]);
-      }
-      url = JSON.stringify(url);
+   if (!message.hasOwnProperty('src')) {
+      myWorker.postMessage({greeting: "magnifier", pid: message.pid,
+                            success: false});
    }
    else {
-      url = "http://www.tumblr.com/photo/1280/" + message.pid + "/" +
-         message.revs[0] + "/" + message.code;
+      var ft = message.src.match(/\.[a-z]{2,4}$/i);
+      var fullsrc = message.src.replace(/_\d+\.[a-z]{2,4}$/i,'_1280'+ft);
+
+      Request({
+         url: fullsrc,
+         onComplete: function(response) {
+            var closed = false;
+            try {
+               var tab = myWorker.tab;
+            }
+            catch (err) {
+               closed = true;
+            }
+            if (response.status == 200) {
+               myWorker.postMessage({greeting: "magnifier", pid: message.pid,
+                                     success:true, data: fullsrc});
+            }
+            else {
+               myWorker.postMessage({greeting: "magnifier", pid: message.pid,
+                                     success:true, data: message.src});
+            }
+         }
+      }).get();
    }
-   myWorker.postMessage({greeting: "magnifier", pid: message.pid, success: true,
-                         data: url});
 }
 
 function startTimestamp(message, myWorker) {

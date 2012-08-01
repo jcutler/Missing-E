@@ -110,12 +110,12 @@ MissingE.packages.magnifier = {
          var bm = ctrl.find('a.MissingE_mark');
          var heart = ctrl.find('a.like_button');
          var publish;
-         var count = 1;
-         var caps;
          var tid = $(item).attr("id").match(/\d*$/)[0];
-         var str, img, imgnum;
+         var img;
          var set = $('#photoset_' + tid);
-         var revisions = [];
+         var msg = null;
+         var override = false;
+         var url;
 
          if (MissingE.isTumblrURL(location.href, ["drafts", "queue"])) {
             publish = ctrl.find('a').filter(function() {
@@ -125,46 +125,29 @@ MissingE.packages.magnifier = {
 
          if (set.length > 0) {
             var imgs = set.find('img');
-            count = imgs.length;
-            caps = [];
+            msg = [];
             imgs.each(function(i) {
+               msg.push($(this).closest('a.photoset_photo').attr('href'));
                var thecap = $(this).attr('alt');
-               imgnum = this.src.match(/(\d+)_(?:r\d+_)?\d+.[a-z]{2,4}$/i);
-               if (imgnum && imgnum.length > 1) {
-                  revisions.push(imgnum[1]);
-               }
-               else {
-                  revisions.push(i+1);
-               }
-               if (!thecap) { thecap = ""; }
-               caps.push(thecap);
+               msg.push(thecap ? thecap : "");
+               override = true;
             });
-            img = imgs.first();
+            msg = JSON.stringify(msg);
          }
          else {
             img = $(item).find('div.post_content img:first');
-            imgnum = img.attr('src').match(/(\d+)_(?:r\d+_)?\d+.[a-z]{2,4}$/i);
-            if (imgnum && imgnum.length > 1) {
-               revisions.push(imgnum[1]);
+            var anch = img.parent('a');
+            if (anch.length > 0 &&
+                anch.attr('href').replace(/_\d+.[a-z]{2,4}$/i) ===
+                 img.attr('src').replace(/_\d+.[a-z]{2,4}$/i)) {
+               msg = anch.attr('href');
+               override = true;
             }
             else {
-               revisions.push(i+1);
+               url = img.attr('src');
             }
          }
-         if (img.length > 0) {
-            str = img.attr("src").match(/\/(tumblr_[^_]*)/);
-            if (!str || str.length < 1) {
-               str = img.attr("src").match(/media\.tumblr\.com\/([^_]*)/);
-            }
-            if (str && str.length > 1) {
-               str = str[1].substr(0,str[1].length-2);
-            }
-            else {
-               str = null;
-            }
-         }
-
-         if (str) {
+         if (override || url) {
             var mi = $('<a />',
                        {title: MissingE.getLocale(lang).loading,
                         "class": "post_control MissingE_magnify MissingE_magnify_hide",
@@ -184,10 +167,14 @@ MissingE.packages.magnifier = {
                ctrl.append(mi);
             }
          }
-         extension.sendRequest("magnifier",
-                               {pid: tid, code: str, num: count,
-                                captions: caps, revs: revisions},
-                               MissingE.packages.magnifier.receiveMagnifier);
+         if (msg) {
+            MissingE.packages.magnifier.receiveMagnifier({pid: tid, success: true, data: msg});
+         }
+         else {
+            extension.sendRequest("magnifier",
+                                  {pid: tid, src: url},
+                                  MissingE.packages.magnifier.receiveMagnifier);
+         }
       }
    },
 
