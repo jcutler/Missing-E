@@ -43,3 +43,7 @@ span.with_blingy_tag a.blingy {
 height:auto !important;
 display:inline-block !important;
 }
+
+#posts .post .footer_links .tags {
+line-height:18px !important;
+}
