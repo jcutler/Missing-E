@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.12.0** (not yet released)
+##**2.12.0** (2012-07-31)
 **_!_** Fix for non-functioning Magnifier feature  
 **_!_** Reduce white space when wrapping tags
 
