@@ -165,6 +165,7 @@ jQuery(document).ready(function($) {
       }
       else {
          loadChromeDownload();
+         return false;
       }
    });
    window.extResponded = false;
