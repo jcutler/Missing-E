@@ -138,6 +138,10 @@ function checkUpdate(count) {
    updateCheck = setTimeout(function(){ checkUpdate(count); }, 500);
 }
 
+function loadChromeDownload() {
+   location.href = $('#chrome_install').attr('href');
+}
+
 jQuery(document).ready(function($) {
    if (typeof firefoxURL !== "undefined") {
       $('#firefox_download').attr('href',firefoxURL);
@@ -152,6 +156,16 @@ jQuery(document).ready(function($) {
       var browser = $(this).attr('class');
       toggleBrowser(browser);
       return false;
+   });
+   $('#chrome_install').click(function() {
+      if (chrome.webstore.install) {
+         chrome.webstore.install('https://chrome.google.com/webstore/detail/bcjbagclppcgdbpobcpoojdjdmcjhpid',
+            function(){return;}, loadChromeDownload);
+         return false;
+      }
+      else {
+         loadChromeDownload();
+      }
    });
    window.extResponded = false;
    window.addEventListener("message", function(e) {
@@ -254,12 +268,12 @@ jQuery(document).ready(function($) {
       <div class="step_icon step1"></div>
       <hgroup><h1>Get the new version</h1></hgroup>
       <p>Click the button below to download <strong>Missing e</strong>.</p>
-      <a href="#" onclick="chrome.webstore.install('https://chrome.google.com/webstore/detail/bcjbagclppcgdbpobcpoojdjdmcjhpid');return false;" class="button greenbutton">Download Now</a>
+      <a id="chrome_install" href="https://clients2.google.com/service/update2/crx?response=redirect&amp;x=id%3Dbcjbagclppcgdbpobcpoojdjdmcjhpid%26uc%26lang%3Den-US" class="button greenbutton">Download Now</a>
      </div>
      <div class="postit_box paper_box2 install_box">
       <div class="step_icon step2"></div>
       <hgroup><h1>Confirm installation</h1></hgroup>
-      <p>Click the <strong>Continue</strong> button in the confirmation that appears at the bottom of your browser window.</p>
+      <p>Click the <strong>Continue</strong> button in the confirmation that may appear at the bottom of your browser window.</p>
       <p>When asked if you want to <em>Add "Missing e"</em>, click the <strong>Add</strong> button.</p>
      </div>
      <div class="paper_box paper_box3 install_box">
