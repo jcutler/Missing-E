@@ -193,14 +193,34 @@ jQuery(document).ready(function($) {
   <h1>Troubleshooting Missing e</h1>
   <p>Here, you'll be able to figure out what problem you're having and fix it or send a bug report, if necessary.</p>
   <p><strong>What is the problem?</strong></p>
-  <a href="#ts_something" class="fullbutton button greenbutton">A feature is not working right!</a>
+  <a href="#ts_something" class="fullbutton button greenbutton">A feature is not working correctly!</a>
   <a href="#ts_tumblrchange" class="fullbutton button greenbutton">Tumblr changed something and broke Missing e!</a>
   <a href="#ts_performance" class="fullbutton button greenbutton">Missing e features are loading slower than usual!</a>
   <a href="#ts_disappeared" class="fullbutton button greenbutton">Missing e disappeared!</a>
   <a href="#ts_missing" class="fullbutton button greenbutton">A feature I used to have is missing!</a>
   <a href="#ts_safedash" class="fullbutton button greenbutton">Photos on my dashboard show up as grey boxes!</a>
+  <a href="#ts_quickreblog" class="fullbutton button greenbutton">I can't reblog or queue with one click!</a>
   <a href="#ts_removedcheckers" class="fullbutton button greenbutton">I can't find <em>Unfollower</em> or <em>Follow Checker</em>!</a>
   <a href="submitbug?reason=not+listed" class="fullbutton button silverbutton">None of the above</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_quickreblog">
+  <h1>Have you activated the <em>Quick Reblog</em> feature?</h1>
+  <img class="ts_image" src="images/examples/ts_quickreblog.png" alt="Quick Reblog in the Missing e settings" />
+  <p>Quick (1-click) reblogging (part of the <em>Better Reblogs</em> feature) is <strong>disabled by default</strong> when you first install or reinstall <strong>Missing e</strong>.</p>
+  <p><strong>To enable it, go to the settings page (<a href="faq#settings">find out how</a>) and enable it under the <em>Post Features</em> tab, in the <em>Better Reblogs</em> section.</strong></p>
+  <a href="#ts_done" class="fullbutton button greenbutton">This fixed my problem.</a>
+  <a href="#ts_reblogfail" class="fullbutton button greenbutton">Quick reblogging always fails!</a>
+  <a href="submitbug?reason=no+quick+reblog" class="fullbutton button greenbutton">This setting is activated, but I still cannot reblog with one click.</a>
+  <a href="#ts_goback" class="fullbutton button silverbutton">Go back</a>
+ </div>
+ <div class="troubleshoot_box" id="ts_reblogfail">
+  <h1>Are you able to reblog manually?</h1>
+  <p>Quick (1-click) reblogging uses the same reblog for as you do (only in the background, inside your browser). Are you still able to reblog using the normal manual reblogging page?</p>
+  <p><strong>If you cannot manually reblog (the Tumblr server is returning error pages or you have hit your daily post limit), then this will also prevent quick (1-click) reblogging.</strong></p>
+  <a href="#ts_done" class="fullbutton button greenbutton">I understand. Tumblr is having problems or I have hit my post limit.</a>
+  <a href="submitbug?reason=quick+reblog+fail" class="fullbutton button greenbutton">I can reblog manually.</a>
+  <a href="submitbug?reason=quick+reblog+sorta+fail" class="fullbutton button greenbutton">I can't reblog manually, but I want help anyway.</a>
+  <a href="#ts_goback" class="fullbutton button silverbutton">Go back</a>
  </div>
  <div class="troubleshoot_box" id="ts_safedash">
   <h1>Do images on your dashboard show up as grey boxes with lock icons?</h1>
