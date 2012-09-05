@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.12.1** (not yet released)
+**_!_** Fix Tumblr issue where go to top button prevents clicking of Tumblr logout button
+
 ##**2.12.0** (2012-07-31)
 **_!_** Fix for non-functioning Magnifier feature  
 **_!_** Reduce white space when wrapping tags
