@@ -21,6 +21,11 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#user_tools {
+position:relative;
+z-index:20;
+}
+
 #posts big big {
 font-size:16px;
 }
