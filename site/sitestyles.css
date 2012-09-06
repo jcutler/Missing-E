@@ -280,7 +280,7 @@ color:white;
 display:inline-block;
 background-color:transparent;
 line-height:18px;
-padding:18px 20px 22px;
+padding:20px;
 text-decoration:none;
 text-align:center;
 font-size:18px;
@@ -314,7 +314,7 @@ color:black;
 }
 
 #nav_bar #nav_links a:hover {
-padding-bottom:34px;
+padding-bottom:32px;
 }
 
 #nav_bar #nav_links a:hover .subtext {
@@ -567,14 +567,14 @@ text-align:justify;
 text-indent:1em;
 }
 
-#ad_title {
+#ad_title, .ad_title {
 width:100%;
 font-size:11px;
 text-align:center;
 font-style:italic;
 }
 
-#ad_sidetitle {
+#ad_sidetitle, .ad_sidetitle {
 opacity:0.9;
 height:90px;
 width:40px;
@@ -584,7 +584,11 @@ background-position:center center;
 display:inline-block;
 }
 
-#ad {
+#faq #main_content .ad_sidetitle {
+float:left;
+}
+
+#ad, .ad {
 width:100%;
 min-width:880px;
 background-color:rgba(0,0,0,0.1);
@@ -595,6 +599,10 @@ text-align:center;
 
 #home #ad_title {
 margin-top:26px;
+}
+
+#faq #main_content .ad_title {
+padding-top:10px;
 }
 
 #download_button {
