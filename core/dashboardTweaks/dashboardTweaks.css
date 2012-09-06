@@ -21,7 +21,7 @@
  * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#user_tools {
+#user_tools #logout_button {
 position:relative;
 z-index:20;
 }
