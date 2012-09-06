@@ -6,16 +6,10 @@ Change all features that pass info to new tabs to no longer use localStorage
 Audio controls for currently-playing audio post [tagthesun]
    - good idea, how to do it?
 
-Set nicknames [aidiera]
-   - don't think it is possible. Run into the issue of no permanent id for users
-
 Bookmark in tracked tags [bananacomnena]
    - http://www.tumblr.com/tagged/cutlerish?before=1334600670
    - before has timestamp argument (in seconds)
    - post RSS has enough info, but inline time in post corner does not
-   
-Implement filter feature (saviour) block notifications too
-   - talk to Bjorn first
 
 Fancybox for magnifier
    - for next major version (Opera?)
@@ -38,3 +32,7 @@ Ask Tweaks
    - Send to Facebook option
 
 Retries on queue tags
+
+Website
+   - Load images, style, js from subdomains
+   - make icons into a sprite
