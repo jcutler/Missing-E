@@ -146,7 +146,7 @@ opacity:1;
 }
 
 body.MissingE_safeDash #posts li.post .post_content {
-overflow:hidden;
+overflow-x:hidden;
 }
 
 body.MissingE_safeDash #posts li.post.video .post_content,
