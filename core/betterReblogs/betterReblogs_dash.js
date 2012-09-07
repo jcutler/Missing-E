@@ -619,14 +619,14 @@ MissingE.packages.betterReblogs = {
                   '<input type="checkbox" /> ' +
                   MissingE.escapeHTML(MissingE.getLocale(lang).facebookText) +
                   '</div></div>' + node[1];
-         var list = $('#user_channels li');
+         var list = $('#popover_blogs div');
          if (list.length > 0) {
             txt +=  node[0] +
                      '<div class="MissingE_qr_list_item has_tag_input">' +
                      '<div id="MissingE_quick_reblog_selector">' +
                      '<select>';
             list.each(function(i) {
-               var acct = this.id.match(/tab-(.*)/);
+               var acct = this.id.match(/menuitem-(.*)/);
                if (!acct) { return; }
                acct = acct[1];
                var sel = false;
