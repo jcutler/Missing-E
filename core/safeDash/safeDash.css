@@ -146,7 +146,9 @@ opacity:1;
 }
 
 body.MissingE_safeDash #posts li.post .post_content {
-overflow-x:hidden;
+overflow:hidden;
+padding-bottom:5px;
+margin-bottom:-5px;
 }
 
 body.MissingE_safeDash #posts li.post.video .post_content,
