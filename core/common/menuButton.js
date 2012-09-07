@@ -75,6 +75,9 @@ MissingE.packages.menuButton = {
                }
             }, false);
          }
+         var tooltip = document.createElement('span');
+         tooltip.className = "tooltip_label";
+         tooltip.textContent = "Missing e";
          var upnote = document.createElement('div');
          upnote.id = "missinge_updatenotice";
          upnote.className = "tab_notice";
@@ -86,6 +89,7 @@ MissingE.packages.menuButton = {
          noticeNip.className = "tab_notice_nipple";
          upnote.appendChild(noticeNip);
          tab.appendChild(elnk);
+         tab.appendChild(tooltip);
          tab.appendChild(upnote);
          bar.insertBefore(tab, logout);
          if (extension.isOpera) {
