@@ -532,7 +532,7 @@ MissingE.packages.askTweaks = {
             });
          }
          if (settings.massDelete === 1) {
-            var afterguy = $('#right_column a.settings');
+            var afterguy = $('#right_column a.delete_all_messages').closest('ul');
             var beforeguy;
             if (afterguy.length > 0) {
                beforeguy = afterguy.closest('ul').next();

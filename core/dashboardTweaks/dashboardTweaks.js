@@ -812,7 +812,7 @@ MissingE.packages.dashboardTweaks = {
             MissingE.isTumblrURL(location.href, ["drafts", "queue", "blog"]);
          var doRandomQueue = settings.randomQueue === 1 &&
             MissingE.isTumblrURL(location.href, ["queue"]);
-         var afterguy = $('#right_column a.settings');
+         var afterguy = $('#dashboard_controls_open_blog');
          var beforeguy;
          if (afterguy.length > 0) {
             beforeguy = afterguy.closest('ul').next();
