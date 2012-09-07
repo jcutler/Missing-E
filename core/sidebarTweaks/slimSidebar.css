@@ -43,6 +43,14 @@ padding:4px 13px 4px 34px !important;
 line-height:18px !important;
 }
 
+#popover_button_blogs .open_blog {
+padding:4px 10px !important;
+}
+
+#popover_button_blogs a {
+padding:0 !important;
+}
+
 #MissingE_marklist li a {
 line-height:14px !important;
 }
@@ -52,6 +60,13 @@ padding:0 !important;
 line-height:18px !important;
 top:4px !important;
 right:10px !important;
+overflow:visible;
+}
+
+#dashboard_controls_open_blog .sub_control {
+width:15px !important;
+height:15px !important;
+top:10px !important;
 }
 
 .controls_section li .with_subtitle {
