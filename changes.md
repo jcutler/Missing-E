@@ -78,8 +78,11 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.12.1** (not yet released)
-**_!_** Fix Tumblr issue where go to top button prevents clicking of Tumblr logout button
+##**2.13.0** (2012-09-07)
+**_!_** Fix styling issues arising from new Tumblr dashboard layout  
+**_!_** Fix placement of Mass Delete buttons  
+**_!_** Fix Quick (1-click) Reblog menu not showing blog selector drop-down  
+**_!_** Fix ability to reblog from one blog to that same blog
 
 ##**2.12.0** (2012-07-31)
 **_!_** Fix for non-functioning Magnifier feature  
