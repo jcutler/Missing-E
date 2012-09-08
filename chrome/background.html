@@ -1467,6 +1467,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "backupVal") {
       setSetting(request.key, request.val);
    }
+   else if (request.greeting == "getBackupVal") {
+      sendResponse({key: request.key, val: getSetting(request.key)});
+   }
    else if (request.greeting == "tumblrPermission") {
       checkPermission(request, sender, sendResponse, tabs[sender.tab.id],
                       getSetting("MissingE_postingTweaks_subEditRetries",MissingE.defaultRetries));
@@ -2145,7 +2148,16 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
          }
          else
             activeScripts.betterReblogs = false;
-
+      }
+      if (sender.tab.url == request.url &&
+          MissingE.isTumblrURL(sender.tab.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged",
+                       "drafts",
+                       "queue",
+                       "messages"])) {
          if (getSetting("MissingE_reblogYourself_enabled",1) == 1 &&
              getSetting("MissingE_reblogYourself_dashboard",1) == 1) {
             activeScripts.reblogYourself = true;

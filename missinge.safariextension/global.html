@@ -1561,6 +1561,9 @@ function handleRequest(request) {
    else if (request.name == "backupVal") {
       setSetting(request.message.key, request.message.val);
    }
+   else if (request.name == "getBackupVal") {
+      request.target.page.dispatchMessage("getBackupVal", {key: request.message.key, val: getSetting(request.message.key)});
+   }
    else if (request.name == "all-settings") {
       var settings = {};
       for (i=0; i<componentList.length; i++) {
@@ -2190,7 +2193,16 @@ function handleRequest(request) {
          }
          else
             activeScripts.betterReblogs = false;
-
+      }
+      if (!request.message.isFrame &&
+          MissingE.isTumblrURL(request.message.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged",
+                       "drafts",
+                       "queue",
+                       "messages"])) {
          if (getSetting("MissingE_reblogYourself_enabled",1) == 1 &&
              getSetting("MissingE_reblogYourself_dashboard",1) == 1) {
             activeScripts.reblogYourself = true;

@@ -1714,6 +1714,10 @@ function handleMessage(message, myWorker) {
          toggleWidget();
       }
    }
+   else if (message.greeting == "getBackupVal") {
+      var key = 'extensions.' + message.key.replace(/_/g,'.');
+      myWorker.postMessage({greeting: "getBackupVal", key: message.key, val: getSetting(key)});
+   }
    else if (message.greeting == "all-settings") {
       if (myWorker.tab.url === data.url("core/options.html")) {
          var settings = getAllSettings();
@@ -2398,7 +2402,16 @@ function handleMessage(message, myWorker) {
          }
          else
             activeScripts.betterReblogs = false;
-
+      }
+      if (!message.isFrame &&
+          MissingE.isTumblrURL(message.url,
+                      ["dashboard",
+                       "blog",
+                       "likes",
+                       "tagged",
+                       "drafts",
+                       "queue",
+                       "messages"])) {
          if (getSetting("extensions.MissingE.reblogYourself.enabled",1) == 1 &&
              getSetting("extensions.MissingE.reblogYourself.dashboard",1) == 1) {
             injectStyles.push({file: data.url("core/reblogYourself/reblogYourself.css")});

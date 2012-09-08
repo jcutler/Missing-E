@@ -36,7 +36,8 @@ MissingE.packages.reblogYourselfFill = {
             $('#autopost_options,#set_twitter').show();
          }
       });
-      var list = $('#user_channels').children('li');
+      var list = MissingE.packages.reblogYourselfFill.accounts
+
       if (list.length === blogMenu.find('option').length + 1 &&
           blogMenu.find('option[value="0"]').length === 0) {
          isMine = true;
@@ -44,12 +45,10 @@ MissingE.packages.reblogYourselfFill = {
       if (list.length > 0) {
          var pos = blogMenu.find('option[value="0"]');
          if (pos.length === 0) { pos = null; }
-         list.each(function() {
+         for (i = 0; i<list.length; i++) {
             var newOpt;
-            var acct = this.id.match(/tab-(.*)/);
-            if (!acct) { return; }
-            acct = acct[1];
-            var acctTxt = $(this).find('a[href="/blog/' + acct + '"]').text();
+            var acct = MissingE.escapeHTML(list[i].account);
+            var acctTxt = MissingE.escapeHTML(list[i].name);
             var newPos = $('#channel_id option[value="' + acct + '"]');
             if (newPos.length > 0) {
                pos = newPos;
@@ -66,7 +65,7 @@ MissingE.packages.reblogYourselfFill = {
                newOpt.data("MissingE_created",true);
                pos = newOpt;
             }
-         });
+         }
          if ($('#extra_channel').length > 0) {
             $('#channel_id option').clone().appendTo($('#extra_channel').empty());
          }
@@ -86,7 +85,27 @@ MissingE.packages.reblogYourselfFill = {
    },
 
    init: function() {
-      MissingE.packages.reblogYourselfFill.run();
+      extension.sendRequest("getBackupVal", {key: "MissingE_tumblrs"},
+                            function(response) {
+         if (response.key === "MissingE_tumblrs") {
+            MissingE.packages.reblogYourselfFill.accounts = [];
+            if (response.val !== "") {
+               var txt = response.val;
+               while (txt.length > 0) {
+                  var len = txt.indexOf(":");
+                  var acct = txt.substring(0,len);
+                  txt = txt.substring(len+1);
+                  len = txt.indexOf(",");
+                  if (len < 0) { len = txt.length; }
+                  var acctTxt = txt.substring(0,len);
+                  txt = txt.substring(len+1);
+                  MissingE.packages.reblogYourselfFill.accounts.push({account:acct,name:acctTxt});
+               }
+            }
+            console.log(MissingE.packages.reblogYourselfFill.accounts);
+            MissingE.packages.reblogYourselfFill.run();
+         }
+      });
    }
 };
 
