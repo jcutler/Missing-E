@@ -257,7 +257,8 @@ MissingE.packages.postingTweaks = {
          }
       });
 
-      if (settings.showAnswers === 1) {
+      if (settings.showAnswers === 1 &&
+          !MissingE.isTumblrURL(location.href, ["reblog"])) {
          $('head').append('<style type="text/css">' +
                           '#enable_answers_container { ' +
                           'display:block !important; ' +
