@@ -1,3 +1,13 @@
+NEW DASHBOARD STILL NEEDS FIXING:
+
+smart redirect
+their added sidebar sucks
+ - extra buttons (queue, messages)
+ - in the inbox
+notification avatar magnify opens new tab
+
+==========
+
 Cache settings check for Quick Reblogging
 
 Change all features that pass info to new tabs to no longer use localStorage
