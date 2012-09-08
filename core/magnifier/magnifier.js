@@ -250,6 +250,14 @@ MissingE.packages.magnifier = {
            '#following .MissingE_magnify_avatar, ' +
            '#crushes .MissingE_magnify_avatar')
                .live('click', MissingE.packages.magnifier.magAvatarClick);
+         document.getElementById("posts").addEventListener('click', function(e) {
+            if (e.target.className === "MissingE_magnify_avatar") {
+               e.stopPropagation();
+               e.preventDefault();
+               MissingE.packages.magnifier.magAvatarClick.call(e.target, e);
+               return false;
+            }
+         }, true);
          $('#posts li, #left_column .follower, ' +
            '#following .follower, #crushes a').each(function() {
             MissingE.packages.magnifier.insertAvatarMagnifier(this);
