@@ -55,7 +55,7 @@ var utils = {
       "following":    /^following((\/page)?\/\d+|)?[\/]?$/,
       "iframe":       /^dashboard\/iframe/,
       "likes":        /^like(s(\/.*)?|d\/by\/[^\/]+(\/.*)?)$/,
-      "massEditor":   /^mega-editor\/[^\/]+(\/[0-9]+\/[0-9]+)?[\/]?$/,
+      "massEditor":   /^mega-editor(\/[^\/]+(\/[0-9]+\/[0-9]+)?[\/]?|\/)?$/,
       "messages":     /^(blog\/[^\/]+\/)?(messages|submissions|inbox)[\/]?.*$/,
       "photoPost":    /^(blog\/[^\/]+\/)?new\/photo/,
       "post":         /^((blog\/[^\/]+\/)?new\/[^\/]+|edit\/\d+|share(\/\w+)?)[\/]?$/,
