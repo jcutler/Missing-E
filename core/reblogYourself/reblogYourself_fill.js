@@ -52,7 +52,7 @@ MissingE.packages.reblogYourselfFill = {
             var newPos = $('#channel_id option[value="' + acct + '"]');
             if (newPos.length > 0) {
                pos = newPos;
-               return;
+               continue;
             }
             var newOpt = $('<option />', (isMine ? {val: "0", text: myBlog} :
                                           {val: acct, text: acctTxt}));
@@ -102,7 +102,6 @@ MissingE.packages.reblogYourselfFill = {
                   MissingE.packages.reblogYourselfFill.accounts.push({account:acct,name:acctTxt});
                }
             }
-            console.log(MissingE.packages.reblogYourselfFill.accounts);
             MissingE.packages.reblogYourselfFill.run();
          }
       });
