@@ -816,12 +816,12 @@ MissingE.packages.dashboardTweaks = {
          var beforeguy;
          if (afterguy.length > 0) {
             beforeguy = afterguy.closest('ul').next();
+            if (beforeguy.has('a[href^="/mega-editor"]').length > 0) {
+               beforeguy = beforeguy.next();
+            }
          }
          else {
             beforeguy = $('#right_column a.posts').closest('ul');
-            if (beforeguy.length === 0) {
-               beforeguy = $('#search_form');
-            }
          }
          $('head').append('<style type="text/css">' +
                  '#right_column #MissingEdraftQueueTools a { ' +
