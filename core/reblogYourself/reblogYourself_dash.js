@@ -137,6 +137,7 @@ MissingE.packages.reblogYourself = {
             var acct = this.id.match(/menuitem-(.*)/);
             if (!acct) { return; }
             var name = $(this).find('a span').text();
+            name = name.replace(/%/g,"%%").replace(/,/g,"%2C");
             accounts.push(acct[1] + ":" + name);
          });
          extension.backupVal("MissingE_tumblrs",accounts.join(","));

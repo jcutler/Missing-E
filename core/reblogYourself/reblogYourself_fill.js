@@ -99,6 +99,7 @@ MissingE.packages.reblogYourselfFill = {
                   if (len < 0) { len = txt.length; }
                   var acctTxt = txt.substring(0,len);
                   txt = txt.substring(len+1);
+                  acctTxt = acctTxt.replace(/%%/g,"%").replace(/%2C/g,",");
                   MissingE.packages.reblogYourselfFill.accounts.push({account:acct,name:acctTxt});
                }
             }
