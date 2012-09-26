@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.13.2** (not yet released)
+**_!_** Fix issue with Reblog Yourself adding empty/unusable blogs to posting drop-down with blogs using commas in blog title
+
 ##**2.13.1** (2012-09-07)
 **_!_** Fix extra blog menu to show all blogs when reblogging from your own Tumblr  
 **_!_** Clicking magnifier on avatars in dashboard notifications no longer opens new tab
