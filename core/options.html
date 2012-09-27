@@ -491,13 +491,15 @@ function loadScripts() {
       </tr>
       <tr class="alt subopt">
        <td>Default Tumblr blog to use with quick reblogging<br />
-        <small>You must have posting privileges on the account you select.</small>
+        <small>You must have posting privileges on the account you select.</small><br />
+        <small><em>Enter only your Tumblr username, not the whole URL.</em></small><br />
+        <small><em>For example, instead of</em> http://missing-e.tumblr.com <em>enter only</em> missing-e<em>.</em></small>
        </td>
        <td class="input_left">
         <input id="MissingE_betterReblogs_quickReblogAcctType_Primary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="0" /> Main Blog<br />
         <input id="MissingE_betterReblogs_quickReblogAcctType_Secondary" type="radio" name="MissingE_betterReblogs_quickReblogAcctType" value="1" /> Specify Blog:
         <div style="text-align:right;padding-top:4px;">
-         <input type="text" name="MissingE_betterReblogs_quickReblogAcctName" style="width:90%;margin-bottom:0;" maxlength="128" class="setting_text simple" /><br />
+         <input type="text" name="MissingE_betterReblogs_quickReblogAcctName" style="width:90%;margin-bottom:0;" maxlength="128" class="setting_text simple lowercase" /><br />
          <small><em>Account Name</em></small>
         </div>
        </td>

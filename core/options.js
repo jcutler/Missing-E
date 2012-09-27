@@ -222,6 +222,9 @@ MissingE.utilities.options = {
             obj.value = val;
             MissingE.utilities.options.setStorage(obj.name, obj.value);
          }
+         else if (/\blowercase\b/.test(obj.className)) {
+            MissingE.utilities.options.setStorage(obj.name, (obj.value.toLowerCase()));
+         }
          else {
             MissingE.utilities.options.setStorage(obj.name, (obj.value));
          }
