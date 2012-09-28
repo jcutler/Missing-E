@@ -26,6 +26,9 @@
 MissingE.packages.dashboardTweaks = {
 
    setupMassDeletePost: function(item) {
+      if ($('#' + item.id + '_select').length > 0) {
+         return;
+      }
       var controls = $(item).find('div.post_controls');
       controls.append(' ');
       $('<span />', {"class": "MissingEmassDeleteSpan"})

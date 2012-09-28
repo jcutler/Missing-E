@@ -60,6 +60,9 @@ MissingE.packages.askTweaks = {
    },
 
    setupMassDeleteAsk: function(item) {
+      if ($('#' + item.id + '_select').length > 0) {
+         return;
+      }
       var mds = $('<span />', {"class": "MissingEmassDeleteSpan"})
                   .append($('<input />',{type: "checkbox", val: "0",
                                          id: item.id + "_select",
