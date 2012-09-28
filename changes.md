@@ -78,7 +78,7 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
-##**2.13.3** (not yet released)
+##**2.13.3** (2012-09-28)
 **_!_** Fix Safe Dash hiding for new Tumblr videos  
 **_!_** Fix issue with multiple checkboxes showing up for inbox/post mass delete feature  
 **_!_** Fix Reply Replies issue with some users unable to create reply posts for notes inside posts on the dashboard
