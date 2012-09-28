@@ -122,7 +122,8 @@ MissingE.packages.replyReplies = {
          newcode = newcode.substr(newcode.indexOf("</script>")+9)
                   .replace(/^\s*/,"")
                   .replace(/\s*$/,"")
-                  .replace(/\n/g, " ");
+                  .replace(/\n/g, " ")
+                  .replace(/ rel="nofollow"/g,"");
 
          if (settings.addTags === 1) {
             en = newcode.indexOf("</a>");
