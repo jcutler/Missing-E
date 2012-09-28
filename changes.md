@@ -79,7 +79,8 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.13.3** (not yet released)
-**_!_** Fix Safe Dash hiding for new Tumblr videos
+**_!_** Fix Safe Dash hiding for new Tumblr videos  
+**_!_** Fix issue with multiple checkboxes showing up for inbox/post mass delete feature
 
 ##**2.13.2** (2012-09-26)
 **_!_** Fix issue with Reblog Yourself adding empty/unusable blogs to posting drop-down with blogs using commas in blog title
