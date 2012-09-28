@@ -2069,7 +2069,8 @@ function handleMessage(message, myWorker) {
                'body.MissingE_safeDash #posts li.post ol.notes blockquote.photo_container, ' +
                'body.MissingE_safeDash #posts li.post .post_content p .nsfw_span, ' +
                'body.MissingE_safeDash #posts li.post .post_content img.album_art, ' +
-               'body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"]  { ' +
+               'body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"], ' +
+               'body.MissingE_safeDash #posts li.post.video .tumblr_video_container { ' +
                   'background-image:url("' +
                   data.url("core/safeDash/lock.png") +
                   '");' +

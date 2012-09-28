@@ -55,7 +55,8 @@ body.MissingE_safeDash #posts li.post ol.notes blockquote.photo_container,
 body.MissingE_safeDash #posts li.post.photo .flipcard img,
 body.MissingE_safeDash #posts li.post .post_content p .nsfw_span,
 body.MissingE_safeDash #posts li.post .post_content img.album_art,
-body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"] {
+body.MissingE_safeDash #posts li.post .post_content img[onclick*="album_art"],
+body.MissingE_safeDash #posts li.post.video .tumblr_video_container {
 display:inline-block;
 background-color:#BFBFBF !important;
 background-repeat:no-repeat !important;
@@ -131,7 +132,8 @@ body.MissingE_safeDash #posts li.post.video .video_thumbnail img,
 body.MissingE_safeDash #posts li.post.video .video_thumbnail div,
 body.MissingE_safeDash #posts li.post.video .video_embed iframe,
 body.MissingE_safeDash #posts li.post.video span[id^="video_player"] embed,
-body.MissingE_safeDash #posts li.post .post_content p .nsfw_span img {
+body.MissingE_safeDash #posts li.post .post_content p .nsfw_span img,
+body.MissingE_safeDash #posts li.post.video .tumblr_video_container iframe {
 opacity:0;
 }
 
@@ -141,7 +143,8 @@ body.MissingE_safeDash #posts li.post.video .video_embed:hover iframe,
 body.MissingE_safeDash #posts li.post.video span[id^="video_player"]:hover embed,
 body.MissingE_safeDash #posts li.notification blockquote[style] img:hover,
 body.MissingE_safeDash #posts li.post ol.notes blockquote.photo_container img:hover,
-body.MissingE_safeDash #posts li.post .post_content p .nsfw_span:hover img {
+body.MissingE_safeDash #posts li.post .post_content p .nsfw_span:hover img,
+body.MissingE_safeDash #posts li.post.video .tumblr_video_container:hover iframe {
 opacity:1;
 }
 
