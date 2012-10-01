@@ -581,11 +581,9 @@ MissingE.packages.betterReblogs = {
       }
       if (settings.quickReblog === 1) {
          var idx;
-         $('#posts .post_controls a').live('click', function() {
+         $('#posts .post_controls a[href^="/edit"]').live('click', function() {
             if (/%3Flite/.test(this.href)) {
-               console.log("hi");
                this.href = this.href.replace(/%3Flite/,"");
-               console.log(this.href);
             }
          });
          var txt = '<div id="MissingE_quick_reblog">' +
@@ -858,7 +856,8 @@ MissingE.packages.betterReblogs = {
                   arg = arg.replace(/&/,'?');
                }
             }
-            var newurl = reblog.attr('href').replace(/channel_id=[^&]*/,'')
+            var newurl = reblog.attr('href').replace(/%3Flite/,"")
+                              .replace(/channel_id=[^&]*/,'')
                               .replace(/\?&/,'?').replace(/&&/,'&')
                               .replace(/[\?&]$/,'') + arg;
             qr.find('#MissingE_quick_reblog_manual').attr('href', newurl);
