@@ -581,6 +581,13 @@ MissingE.packages.betterReblogs = {
       }
       if (settings.quickReblog === 1) {
          var idx;
+         $('#posts .post_controls a').live('click', function() {
+            if (/%3Flite/.test(this.href)) {
+               console.log("hi");
+               this.href = this.href.replace(/%3Flite/,"");
+               console.log(this.href);
+            }
+         });
          var txt = '<div id="MissingE_quick_reblog">' +
                     '<div id="MissingE_qr_nipple"></div>' +
                     '<div class="MissingE_qr_list">';
