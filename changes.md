@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.13.5** (2012-10-01)
+**_!_** Fix issue with some Quick Reblog users experiencing failures
+
 ##**2.13.4** (2012-10-01)
 **_!_** Fix issue with Quick Reblog menu not showing all blogs on secondary dash pages ending in "?lite"
 
