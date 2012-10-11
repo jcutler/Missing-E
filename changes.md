@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.13.8** (2012-10-11)
+**_!_** Correctly position Safe Dash sidebar button before sponsored radar posts
+
 ##**2.13.7** (2012-10-11)
 **_!_** Fix tag reblogging from post permalink pages  
 **_!_** Show blog selection in Quick Reblog drop-down on tag search result pages
