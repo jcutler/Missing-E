@@ -26,7 +26,6 @@
 MissingE.packages.getAccounts = {
 
    run: function() {
-      console.log("RUNNING");
       var list = $('#popover_blogs div');
       if (list.length > 0) {
          var accounts = [];
