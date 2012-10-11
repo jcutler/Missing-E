@@ -86,7 +86,7 @@ MissingE.packages.safeDash = {
          afterer = $('#MissingE_marklist');
       }
       if (afterer.length === 0) {
-         afterer = $('#right_column .radar');
+         afterer = $('#right_column #tumblr_radar');
       }
       if (afterer.length === 0) {
          afterer = $('#right_column .promo');
