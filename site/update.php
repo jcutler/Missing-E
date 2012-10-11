@@ -188,7 +188,7 @@ jQuery(document).ready(function($) {
  <div id="uptodate"></div>
  <div id="notuptodate"></div>
 </div>
-<div version="2.13.7" id="versioncheck" style="display:none"></div>
+<div version="2.13.8" id="versioncheck" style="display:none"></div>
 <header>
  <nav>
   <div id="nav_bar">
