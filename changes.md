@@ -79,7 +79,8 @@ color:#4183c4;
     ! indicates fixes to bugs and issues
 
 ##**2.13.7** (not yet released)
-**_!_** Fix tag reblogging from post permalink pages
+**_!_** Fix tag reblogging from post permalink pages  
+**_!_** Show blog selection in Quick Reblog drop-down on tag search result pages
 
 ##**2.13.6** (2012-10-11)
 **_!_** Fix Goto Dash button on permalink pages
