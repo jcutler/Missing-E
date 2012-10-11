@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.13.7** (not yet released)
+**_!_** Fix tag reblogging from post permalink pages
+
 ##**2.13.6** (2012-10-11)
 **_!_** Fix Goto Dash button on permalink pages
 
