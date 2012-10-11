@@ -49,63 +49,44 @@ MissingE.packages.betterReblogsPost = {
          }
       }
 
-      var img = link.getElementsByTagName('img')[0];
-      var theimg = new Image();
-      theimg.onload = function() {
-         var w = this.width;
-         var h = this.height;
+      extension.insertStyle("#MissingE_reblog_note { " +
+         "display:inline-block; margin-left:-2px; " +
+         "min-width:7px; text-align:center; }");
+      var span = document.createElement("span");
+      span.id = "MissingE_reblog_note";
+      link.insertBefore(span, link.firstChild);
+      var host, pid;
+      var loc = location.href;
+      loc = loc.substring(loc.indexOf("src=")+4);
+      loc = loc.replace(/%3A/gi,":").replace(/%2F/gi,"/");
+      host = loc.match(/http:\/\/[^\/]*/)[0];
+      pid = loc.match(/&pid=(\d*)/)[1];
+      extension.sendRequest("tags", {pid: pid, url: host},
+                            MissingE.packages.betterReblogsPost.receiveTags);
 
-         var block = document.createElement('div');
-         var halfblock = document.createElement('div');
-         var remhalf = document.createElement('div')
-         block.className = 'MissingE_reblog';
-         block.style.height = h + 'px';
-         block.style.width = (w+1) + 'px';
-         halfblock.className = "half";
-         halfblock.style.height = h + "px";
-         remhalf.className = "remhalf";
-         remhalf.style.width = (w-24) + "px";
-         remhalf.style.height = h + "px";
-         remhalf.style.background = "transparent url('" + img.src +
-                                    "') -24px 0 no-repeat";
-         remhalf.style.cssFloat = "right";
-         block.appendChild(halfblock);
-         block.appendChild(remhalf);
-         link.replaceChild(block, img);
-         var host, pid;
-         var loc = location.href;
-         loc = loc.substring(loc.indexOf("src=")+4);
-         loc = loc.replace(/%3A/gi,":").replace(/%2F/gi,"/");
-         host = loc.match(/http:\/\/[^\/]*/)[0];
-         pid = loc.match(/&pid=(\d*)/)[1];
-         extension.sendRequest("tags", {pid: pid, url: host},
-                               MissingE.packages.betterReblogsPost.receiveTags);
-
-         link.addEventListener('mousedown',function(){
-            var tags = this.getAttribute('tags');
-            if (tags !== undefined && tags !== null) {
-               MissingE.packages.betterReblogsPost
-                  .setReblogTags(this.getAttribute('tags').split(','));
-            }
-         }, false);
-      };
-      theimg.src = img.src;
-      return true;
+      link.addEventListener('mousedown',function(){
+         var tags = this.getAttribute('tags');
+         if (tags !== undefined && tags !== null) {
+            MissingE.packages.betterReblogsPost
+               .setReblogTags(this.getAttribute('tags').split(','));
+         }
+      }, false);
    },
 
    receiveTags: function(response) {
-      var i,link;
+      var i,link,note;
       var div = document.getElementsByTagName("div")[0];
       var controls = div.getElementsByTagName("a");
       for (i=0; i<controls.length; i++) {
          if (/\/reblog/.test(controls[i].href)) {
             link = controls[i];
+            note = document.getElementById("MissingE_reblog_note");
             break;
          }
       }
-      if (link !== undefined && link !== null) {
+      if (link !== undefined && link !== null && note !== null) {
          if (response.success) {
-            link.firstChild.className += " MissingE_reblog_success";
+            note.textContent = "#";
             link.setAttribute('tags',response.data.join(','));
             if (response.fullText) {
                link.setAttribute('href',
@@ -113,7 +94,7 @@ MissingE.packages.betterReblogsPost = {
             }
          }
          else {
-            link.firstChild.className += " MissingE_reblog_fail";
+            note.textContent = "!";
          }
       }
    },
