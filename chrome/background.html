@@ -1516,6 +1516,19 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
    else if (request.greeting == "settings") {
       var settings = {};
       settings.component = request.component;
+      var tumblrs = getSetting("MissingE_tumblrs",'');
+      settings.tumblrAccounts = [];
+      while (tumblrs.length > 0) {
+         var len = tumblrs.indexOf(":");
+         var acct = tumblrs.substring(0,len);
+         tumblrs = tumblrs.substring(len+1);
+         len = tumblrs.indexOf(",");
+         if (len < 0) { len = tumblrs.length; }
+         var acctTxt = tumblrs.substring(0,len);
+         tumblrs = tumblrs.substring(len+1);
+         acctTxt = acctTxt.replace(/%%/g,"%").replace(/%2C/g,",");
+         settings.tumblrAccounts.push({account:acct,name:acctTxt});
+      }
       switch(request.component) {
          case "konami":
             settings.active = getSetting("MissingE_konami_active",0);
@@ -1868,6 +1881,10 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       var loadedUI = false, loadedUIresizable = false, loadedUIsortable = false,
           loadedUIdraggable = false;
       var widenIframe = false;
+      if (sender.tab.url == request.url &&
+          MissingE.isTumblrURL(sender.tab.url, ["dashboard", "messages"])) {
+         chrome.tabs.executeScript(sender.tab.id, {file: "core/common/getAccounts.js"});
+      }
       if (sender.tab.url == request.url &&
           MissingE.isTumblrURL(sender.tab.url, ["dashboardOnly"])) {
          chrome.tabs.executeScript(sender.tab.id, {file: "core/common/warningInfo.js"});

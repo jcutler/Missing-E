@@ -94,6 +94,9 @@ function doStartup(response) {
       if (response.message.konami) {
          MissingE.utilities.konami.init();
       }
+      if (response.message.getAccounts) {
+         MissingE.packages.getAccounts.init();
+      }
       if (response.message.massEditor) {
          MissingE.packages.massEditor.init();
       }

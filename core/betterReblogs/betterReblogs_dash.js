@@ -646,6 +646,26 @@ MissingE.packages.betterReblogs = {
             });
             txt +=  '</select><br />Tumblr</div></div>' + node[1];
          }
+         else if (settings.tumblrAccounts.length > 0) {
+            txt +=  node[0] +
+                     '<div class="MissingE_qr_list_item has_tag_input">' +
+                     '<div id="MissingE_quick_reblog_selector">' +
+                     '<select>';
+            for (i=0; i<settings.tumblrAccounts.length; i++) {
+               var sel = false;
+               if ((settings.accountName === 0 &&
+                    i === 0) ||
+                   settings.accountName === settings.tumblrAccounts[i].account) {
+                  sel = true;
+               }
+               txt += '<option value="' +
+                        MissingE.escapeHTML(settings.tumblrAccounts[i].account) +
+                        '"' + (sel ? ' selected="selected"' : '') + '>' +
+                        MissingE.escapeHTML(settings.tumblrAccounts[i].account) +
+                        '</option>';
+            }
+            txt += '</select><br />Tumblr</div></div>' + node[1];
+         }
          txt += node[0] + '<div class="MissingE_qr_list_item has_tag_input">' +
                   '<div id="MissingE_quick_reblog_caption">' +
                   '<textarea rows="2" /><br />' +

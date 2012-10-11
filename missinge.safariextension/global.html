@@ -1669,6 +1669,19 @@ function handleRequest(request) {
    else if (request.name == "settings") {
       var settings = {};
       settings.component = request.message.component;
+      var tumblrs = getSetting("MissingE_tumblrs",'');
+      settings.tumblrAccounts = [];
+      while (tumblrs.length > 0) {
+         var len = tumblrs.indexOf(":");
+         var acct = tumblrs.substring(0,len);
+         tumblrs = tumblrs.substring(len+1);
+         len = tumblrs.indexOf(",");
+         if (len < 0) { len = tumblrs.length; }
+         var acctTxt = tumblrs.substring(0,len);
+         tumblrs = tumblrs.substring(len+1);
+         acctTxt = acctTxt.replace(/%%/g,"%").replace(/%2C/g,",");
+         settings.tumblrAccounts.push({account:acct,name:acctTxt});
+      }
       switch(request.message.component) {
          case "konami":
             settings.active = getSetting("MissingE_konami_active",0);
@@ -1962,7 +1975,7 @@ function handleRequest(request) {
          }
       }
 
-      if (MissingE.isTumblrURL(request.url,
+      if (MissingE.isTumblrURL(request.message.url,
                       ["dashboard",
                        "blog",
                        "likes",
@@ -1977,6 +1990,10 @@ function handleRequest(request) {
    else if (request.name == "start") {
       var activeScripts = {url: request.message.url};
       activeScripts.version = currVersion;
+      if (!request.message.isFrame &&
+          MissingE.isTumblrURL(request.message.url, ["dashboard", "messages"])) {
+         activeScripts.getAccounts = true;
+      }
       if (!request.message.isFrame &&
           MissingE.isTumblrURL(request.message.url, ["dashboardOnly"])) {
          activeScripts.warningInfo = true;

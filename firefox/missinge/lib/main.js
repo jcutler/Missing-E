@@ -1799,6 +1799,19 @@ function handleMessage(message, myWorker) {
       settings.component = message.component;
       settings.subcomponent = message.subcomponent;
       settings.extensionURL = data.url("");
+      var tumblrs = getSetting("extensions.MissingE.tumblrs",'');
+      settings.tumblrAccounts = [];
+      while (tumblrs.length > 0) {
+         var len = tumblrs.indexOf(":");
+         var acct = tumblrs.substring(0,len);
+         tumblrs = tumblrs.substring(len+1);
+         len = tumblrs.indexOf(",");
+         if (len < 0) { len = tumblrs.length; }
+         var acctTxt = tumblrs.substring(0,len);
+         tumblrs = tumblrs.substring(len+1);
+         acctTxt = acctTxt.replace(/%%/g,"%").replace(/%2C/g,",");
+         settings.tumblrAccounts.push({account:acct,name:acctTxt});
+      }
       switch(message.component) {
          case "konami":
             settings.active = getSetting("extensions.MissingE.konami.active",0);
@@ -2169,6 +2182,10 @@ function handleMessage(message, myWorker) {
       });
       activeScripts.extensionURL = data.url("");
       activeScripts.version = currVersion;
+      if (!message.isFrame &&
+          MissingE.isTumblrURL(message.url, ["dashboard", "messages"])) {
+         injectScripts.push(data.url("core/common/getAccounts.js"));
+      }
       if (!message.isFrame &&
           MissingE.isTumblrURL(message.url, ["dashboardOnly"])) {
          injectScripts.push(data.url("core/common/warningInfo.js"));

@@ -130,31 +130,6 @@ MissingE.packages.reblogYourself = {
    },
 
    init: function() {
-      var list = $('#popover_blogs div');
-      if (list.length > 0) {
-         var accounts = [];
-         list.each(function(i) {
-            var acct = this.id.match(/menuitem-(.*)/);
-            if (!acct) { return; }
-            var name = $(this).find('a span').text();
-            name = name.replace(/%/g,"%%").replace(/,/g,"%2C");
-            accounts.push(acct[1] + ":" + name);
-         });
-         extension.backupVal("MissingE_tumblrs",accounts.join(","));
-      }
-      else if (MissingE.isTumblrURL(location.href, ["messages"])) {
-         var list = $('#right_column a.messages');
-         if (list.length > 0) {
-            var accounts = [];
-            list.each(function(i) {
-               var acct = this.href.match(/\/blog\/(.*)\/messages/);
-               if (!acct) { return; }
-               var name = $(this).children('div:first').text();
-               accounts.push(acct[1] + ":" + name);
-            });
-            extension.backupVal("MissingE_tumblrs",accounts.join(","));
-         }
-      }
       MissingE.packages.reblogYourself.run();
    }
 };
