@@ -34,18 +34,14 @@ MissingE.packages.gotoDashPost = {
       var div = document.getElementsByTagName("div")[0];
       var controls = div.getElementsByTagName("a");
 
-      for (i=0; noGoto && i<controls.length; i++) {
-         var imgs = controls[i].getElementsByTagName('img');
-         for (j=0; j<imgs.length; j++) {
-            if (imgs[j].src ===
-                extension.getURL('core/gotoDashPost/goto.png')) {
-               noGoto = false;
-               break;
-            }
-         }
-      }
+      noGoto = document.getElementById("MissingE_gotoDashPost_link") == null;
 
       if (noGoto) {
+         extension.insertStyle("#MissingE_gotoDashPost_link { " +
+            "padding-left:18px; } #MissingE_gotoDashPost_link::before { " +
+            "background: url('" +
+            extension.getURL('core/gotoDashPost/gotoIcon.png') +
+            "') 4px 3px no-repeat; }");
          var last = controls[controls.length-1];
          var following = false;
          var you = true;
@@ -72,17 +68,8 @@ MissingE.packages.gotoDashPost = {
                                     pid);
             dashlnk.setAttribute('target', '_top');
             dashlnk.id = "MissingE_gotoDashPost_link";
-            var icn = document.createElement('img');
-            icn.style.width = '50px';
-            icn.style.height='20px';
-            icn.style.borderWidth='0';
-            icn.style.display='block';
-            icn.style.cssFloat='left';
-            icn.style.cursor='pointer';
-            icn.alt='To Dash';
-            icn.setAttribute('src',
-                             extension.getURL('core/gotoDashPost/goto.png'));
-            dashlnk.appendChild(icn);
+            dashlnk.className = "btn icon";
+            dashlnk.textContent = "Dash";
             div.insertBefore(dashlnk,last);
          }
       }
