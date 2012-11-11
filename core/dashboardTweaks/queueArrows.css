@@ -42,11 +42,11 @@ background-position:0 0;
 background-position:-9px 0;
 }
 
-#posts li.queued div.post_controls img[src^="http://assets.tumblr.com/images/sort_"],
-#posts li.queued div.post_controls img[src^="http://assets.tumblr.com/images/move_to_top_"] {
+#posts li.queued div.post_controls img.sort_handlebar,
+#posts li.queued div.post_controls img.move_to_top {
 display:block !important;
 }
 
-#posts li.new_post + li.queued div.post_controls img[src^="http://assets.tumblr.com/images/move_to_top_"] {
+#posts li.new_post + li.queued div.post_controls img.move_to_top {
 display:none !important;
 }
