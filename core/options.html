@@ -27,41 +27,13 @@
 <title>Missing e - Settings</title>
 <link type="image/x-icon" href="../identity/missinge32.png" rel="shortcut icon" />
 <link type="image/x-icon" href="../identity/missinge32.png" rel="icon" />
-<script type="text/javascript">
-var runScripts = ["../extension.js",
-                  "../lib/jquery-1.7.2.min.js",
-                  "../lib/evalFix.js",
-                  "localizations.js",
-                  "utils.js",
-                  "../lib/facebox/facebox.js",
-                  "../lib/jquery-spin/jquery-spin.js",
-                  "../lib/checkbox/jquery.checkbox.min.js",
-                  "options.js"];
-
-function loadScripts() {
-   if (typeof chrome !== "undefined" ||
-       typeof safari !== "undefined" ||
-       typeof opera  !== "undefined") {
-
-      if (runScripts.length === 0) {
-         return;
-      }
-
-      var head = document.getElementsByTagName('head')[0];
-      var script = document.createElement('script');
-      script.onload = loadScripts;
-      script.setAttribute("type", "text/javascript");
-      script.src = runScripts.shift();
-      head.appendChild(script);
-   }
-}
-</script>
+<script type="text/javascript" src="loadOptions.js"></script>
 <link rel="stylesheet" type="text/css" href="options.css" />
 <link rel="stylesheet" media="screen" type="text/css" href="../lib/facebox/facebox.css" />
 <link rel="stylesheet" type="text/css" href="../lib/checkbox/jquery.checkbox.css" />
 <link rel="stylesheet" type="text/css" href="dashboardTweaks/replaceIcons.css" />
 </head>
-<body id="MissingE_settings" onload="loadScripts();">
+<body id="MissingE_settings">
 <iframe id="settingsframe" name="settingsframe" src=""></iframe>
 <div id="header">
  <div id="update">

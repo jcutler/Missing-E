@@ -1,36 +1,26 @@
-<!--
- - 'Missing e' Extension
- -
- - Copyright 2012, Jeremy Cutler
- - Released under the GPL version 3 licence.
- - SEE: license/GPL-LICENSE.txt
- -
- - This file is part of 'Missing e'.
- -
- - 'Missing e' is free software: you can redistribute it and/or modify
- - it under the terms of the GNU General Public License as published by
- - the Free Software Foundation, either version 3 of the License, or
- - (at your option) any later version.
- -
- - 'Missing e' is distributed in the hope that it will be useful,
- - but WITHOUT ANY WARRANTY; without even the implied warranty of
- - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- - GNU General Public License for more details.
- -
- - You should have received a copy of the GNU General Public License
- - along with 'Missing e'.  If not, see [http://www.gnu.org/licenses/].
--->
-<html>
-<head>
-<script type="text/javascript">
-var MissingE = {};
-var extension = {isChrome: true};
-</script>
-<script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="lib/evalFix.js"></script>
-<script type="text/javascript" src="core/utils.js"></script>
-<script type="text/javascript" src="core/localizations.js"></script>
-<script>
+/*
+ * 'Missing e' Extension
+ *
+ * Copyright 2012, Jeremy Cutler
+ * Released under the GPL version 3 licence.
+ * SEE: license/GPL-LICENSE.txt
+ *
+ * This file is part of 'Missing e'.
+ *
+ * 'Missing e' is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * 'Missing e' is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with 'Missing e'. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 var currVersion;
 var maxActiveAjax = 15;
 var activeAjax = 0;
@@ -1552,7 +1542,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             settings.accountNum = getSetting("MissingE_sidebarTweaks_accountNum",0);
             settings.slimSidebar = getSetting("MissingE_sidebarTweaks_slimSidebar",0);
             settings.addSidebar = getSetting("MissingE_sidebarTweaks_addSidebar",0);
-            settings.showOverflowTags = getSetting("MissingE_sidebarTweaks_showOverflowTags",0);
+            settings.showTags = getSetting("MissingE_sidebarTweaks_showTags",0);
             break;
          case "bookmarker":
             settings.backupMarks = getSetting("MissingE_bookmarker_marks","");
@@ -2304,6 +2294,7 @@ function fixupSettings() {
    settingChange('MissingE_bookmarker_format',',;','.');
    invertSetting('MissingE_dashboardTweaks_expandAll','MissingE_dashboardTweaks_noExpandAll');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
+   moveSetting('MissingE_sidebarTweaks_showOverflowTags','MissingE_sidebarTweaks_showTags');
    collapseSettings('MissingE_askTweaks_betterAnswers','MissingE_askTweaks_buttons','MissingE_askTweaks_tags');
    invertSetting('MissingE_betterReblogs_noPassTags','MissingE_betterReblogs_passTags');
 }
@@ -2313,6 +2304,11 @@ function onStart(currVersion, prevVersion) {
       MissingE.log("Updated Missing e (" + prevVersion + " => " + currVersion + ")");
       setSetting('MissingE_compatCheck',0);
       setSetting('MissingE_previousVersion',prevVersion);
+      chrome.browsingData.removeCache({
+         "originTypes": {
+            "extension": true
+         }, "since": 0
+      });
    }
    else if (!prevVersion) {
       MissingE.log("Installed Missing e " + currVersion);
@@ -2325,6 +2321,11 @@ function onStart(currVersion, prevVersion) {
    }
    setSetting('MissingE_version',currVersion);
    clearSetting('MissingE_konami_active');
+   chrome.browsingData.removeCache({
+      "originTypes": {
+         "extension": true
+      }, "since": 0
+   });
 }
 
 onStart(currVersion, getSetting('MissingE_version',null));
@@ -2382,6 +2383,3 @@ if (now >= parseInt(getSetting("MissingE_compatCheck",0)) + fivedays) {
       }
    });
 }
-</script>
-</head>
-</html>
