@@ -107,3 +107,14 @@ background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#84ac54),c
 #MissingE_sidebar_title a {
 font-size:12px !important;
 }
+
+#right_column #MissingE_tagslist li.MissingE_tagslist_title {
+border-bottom-right-radius:0 !important;
+border-bottom-left-radius:0 !important;
+}
+
+#right_column #MissingE_tagslist li.MissingE_tagslist_title a {
+padding-left:8px !important;
+background:transparent !important;
+cursor:default;
+}

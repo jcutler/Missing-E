@@ -279,6 +279,7 @@ MissingE.packages.sidebarTweaks = {
    },
 
    run: function() {
+      var lang = $('html').attr('lang');
       var settings = this.settings;
       $('head').append('<style type="text/css">' +
                        '#MissingE_sidebar_title a { background-image:url("' +
@@ -289,14 +290,65 @@ MissingE.packages.sidebarTweaks = {
                        extension.getURL('core/sidebarTweaks/to_blog.png') +
                        '") !important; }</style>');
 
-      if (settings.showOverflowTags) {
-         $('#overflow_tags').children('*').remove().appendTo('#tracked_tags');
-         $('#right_column div.small_links a[onclick*="overflow_tags"]').hide();
+      if (settings.showTags) {
+         var list = $('<ul />', {id: "MissingE_tagslist",
+                                 "class": "controls_section"});
+         var title = $('<li />', {"class": "MissingE_tagslist_title recessed"});
+         title.append($('<a />', {href: "#",
+                                  click: function(){ return false; },
+                                  text: MissingE.getLocale(lang).tagsText}));
+         list.append(title);
+         $('#popover_tracked_tags a[href^="/tagged/"]').each(function(){
+            var url = this.href;
+            var label = $(this).find('.hide_overflow').text();
+            var cnt = $(this).find('.count');
+            if (cnt.length > 0) {
+               cnt = cnt.text();
+            }
+            else {
+               cnt = "";
+            }
+            cnt = cnt.match(/[\d\.,]+/);
+            if (cnt == null || cnt.length === 0) {
+               cnt = "";
+            }
+            else {
+               cnt = cnt[0].replace(/\./g,"").replace(/,/g,"");
+               cnt = parseInt(cnt, 10);
+               cnt = cnt > 10 ? "10+" : cnt.toString();
+            }
+            var item = $('<li />');
+            var link = $('<a />', {href: url,
+                                   "class": "tag"});
+            link.append($('<div />', {"class": "hide_overflow",
+                                      text: label}));
+            if (cnt !== "") {
+               link.append($('<span />', {"class": "count",
+                                          text:cnt}));
+            }
+            item.append(link);
+            list.append(item);
+         });
+         var pos = $('#right_column #tumblr_radar');
+         if (pos.length === 0) {
+            pos = $("#right_column .radar");
+         }
+         if (pos.length === 0) {
+            pos = $("#right_column .promo");
+         }
+         if (pos.length > 0) {
+            pos.before(list);
+         }
+         else {
+            $("#right_column").append(list);
+         }
       }
+      /*
       if (settings.addSidebar === 1) {
          MissingE.packages.sidebarTweaks.makeSidebar(settings.accountNum,
                                                      settings.retries);
       }
+      */
    },
 
    init: function() {

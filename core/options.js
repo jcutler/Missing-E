@@ -320,10 +320,12 @@ MissingE.utilities.options = {
             MissingE.utilities.options.loadCheck(frm,'MissingE_askTweaks_allFanMail',0);
          }
          else if (v == "sidebarTweaks") {
+            /*
             MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_addSidebar',0);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_slimSidebar',0);
             frm.MissingE_sidebarTweaks_retries.value = MissingE.utilities.options.getStorage('MissingE_sidebarTweaks_retries',MissingE.defaultRetries);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_showOverflowTags',0);
+            */
+            MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_slimSidebar',0);
+            MissingE.utilities.options.loadCheck(frm,'MissingE_sidebarTweaks_showTags',0);
          }
          else if (v == "dashLinksToTabs") {
             MissingE.utilities.options.loadCheck(frm,'MissingE_dashLinksToTabs_newPostTabs',1);
