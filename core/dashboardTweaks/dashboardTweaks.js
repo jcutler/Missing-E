@@ -716,7 +716,7 @@ MissingE.packages.dashboardTweaks = {
                   $(window).scrollTop();
             }
          }, true);
-         window.addEventListener('keydown', function(e) {
+         window.addEventListener('keyup', function(e) {
             if (e.metaKey || e.shiftKey || e.altKey || e.ctrlKey ||
                 $(e.target).is('input,textarea')) {
                return;
@@ -739,9 +739,13 @@ MissingE.packages.dashboardTweaks = {
                      }
                   }
                   $.globalEval(
-                     'if (!key_commands_are_suspended) {' +
+                     'if (!Tumblr.KeyCommands.suspended) {' +
                         'location.href="' + toLink + '";' +
                      '}');
+               }
+               else {
+                  MissingE.packages.dashboardTweaks.lastPosition =
+                     $(window).scrollTop();
                }
             }
          }, false);
