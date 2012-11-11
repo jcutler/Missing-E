@@ -402,7 +402,7 @@ MissingE.packages.askTweaks = {
       if (settings.askDash === 1) {
          var i;
          $(document).bind('afterClose.facebox', function() {
-            $.globalEval('key_commands_are_suspended=false;');
+            $.globalEval('Tumblr.KeyCommands.suspended=false;');
          });
          var askLabel = '<a class="MissingE_askPerson_avatar" href="#"></a>';
          for (i=0; i<MissingE.getLocale(lang).askPerson.length; i++) {
