@@ -543,7 +543,7 @@ MissingE.packages.askTweaks = {
             else {
                beforeguy = $('#MissingE_sidebar');
                if (beforeguy.length === 0) {
-                  beforeguy = $('#search_form');
+                  beforeguy = $('#right_column a.messages').closest('ul').next();
                }
             }
             $('head').append('<style type="text/css">' +

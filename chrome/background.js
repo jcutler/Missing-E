@@ -1719,6 +1719,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             if (getSetting("MissingE_dashboardTweaks_replaceIcons",1) == 1) {
                chrome.tabs.insertCSS(sender.tab.id, {code:
                   '#posts .post .post_controls a[id^="ask_answer_link"], ' +
+                  '#posts .post.fan_mail .controls a.reply_link, ' +
                   '#posts .post .post_controls a[href^="/edit"], ' +
                   '#dashboard_inbox .post .post_controls a[id^="post_delete_"], ' +
                   '#posts .post .post_controls a[onclick*="delete_post_"], ' +
