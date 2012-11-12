@@ -125,6 +125,95 @@ MissingE.packages.askTweaks = {
       }
    },
 
+   doPostAnswer: function(data, url, postId, tags, mode, buttonType, answer, twitter) {
+      var i;
+      var frm = data.indexOf('<form');
+      if (frm === -1) {
+         MissingE.packages.askTweaks.failAnswer(postId);
+         return;
+      }
+      var html = data.substr(frm);
+      while (!(/^<form [^>]*id="edit_post"/.test(html))) {
+         html = html.substr(1);
+         frm = html.indexOf('<form');
+         if (frm === -1) {
+            MissingE.packages.askTweaks.failAnswer(postId);
+            return;
+         }
+         html = html.substr(frm);
+      }
+      html = html.substr(0,html.indexOf('</form>'));
+      var inputs = html.match(/<input[^>]*>/g);
+      var textareas = html.match(/<textarea[^>]*>[^<]*<\/textarea>/g);
+      var params = {};
+      var name;
+      for (i=0; i<inputs.length; i++) {
+         var theInput = $(inputs[i]);
+         if (theInput.length === 0) { continue; }
+         name = theInput.attr("name");
+         if (!name) { continue; }
+         if (theInput.attr("type") !== "checkbox" ||
+               theInput.checked === true) {
+            params[name] = theInput.val();
+         }
+         else if (MissingE.packages.askTweaks.allowPhotoReplies &&
+                  name === "allow_photo_replies") {
+            params[name] = theInput.val();
+         }
+      }
+      for (i=0; i<textareas.length; i++) {
+         var ta = $(textareas[i]);
+         name = ta.attr('name');
+         if (name) {
+            params[name] = ta.text();
+         }
+      }
+      params["post[tags]"] = tags;
+      params["post[state]"] = mode;
+      params["post[date]"] = "now";
+      delete params["preview_post"];
+      delete params["post[promotion_type]"];
+      if (!twitter) {
+         delete params["send_to_twitter"];
+      }
+      else {
+         params["send_to_twitter"] = "on";
+      }
+      if (buttonType !== '3') {
+         params["post[two]"] = answer;
+      }
+      
+      if (extension.isFirefox) {
+         console.log("SENDFULLASK");
+         extension.sendRequest("sendFullAsk", {pid: postId, data: params},
+                               function(response) {
+            if (response.success) {
+               MissingE.packages.askTweaks.finishAnswer(postId, buttonType);
+            }
+            else {
+               MissingE.packages.askTweaks.failAnswer(postId);
+            }
+         });
+      }
+      else {
+         $.ajax({
+            type: 'POST',
+            url: url,
+            dataType: 'html',
+            postId: postId,
+            buttonType: buttonType,
+            data: params,
+            error: function() {
+               MissingE.packages.askTweaks.failAnswer(this.postId);
+            },
+            success: function() {
+               MissingE.packages.askTweaks
+                  .finishAnswer(this.postId,this.buttonType);
+            }
+         });
+      }
+   },
+
    doManualAnswering: function(id,type) {
       var mode = '3';
       if (type === 'draft') { mode = '1'; }
@@ -156,95 +245,39 @@ MissingE.packages.askTweaks = {
       var twitter = $('#ask_answer_form_' + id +
                       ' input.MissingE_askTweaks_twitter').is(':checked');
       var answer = $($('#ask_answer_form_' + id).get(0).answer).val();
-
-      $.ajax({
-         type: "GET",
-         url: "http://www.tumblr.com/edit/" + id,
-         dataType: "html",
-         postId: id,
-         tags: tags,
-         mode: mode,
-         buttonType: type,
-         answer: answer,
-         twitter: twitter,
-         error: function() {
-            MissingE.packages.askTweaks.failAnswer(this.postId);
-         },
-         success: function(data) {
-            var i;
-            var frm = data.indexOf('<form');
-            if (frm === -1) {
-               MissingE.packages.askTweaks.failAnswer(this.postId);
-               return;
-            }
-            var html = data.substr(frm);
-            while (!(/^<form [^>]*id="edit_post"/.test(html))) {
-               html = html.substr(1);
-               frm = html.indexOf('<form');
-               if (frm === -1) {
-                  MissingE.packages.askTweaks.failAnswer(this.postId);
-                  return;
-               }
-               html = html.substr(frm);
-            }
-            html = html.substr(0,html.indexOf('</form>'));
-            var inputs = html.match(/<input[^>]*>/g);
-            var textareas = html.match(/<textarea[^>]*>[^<]*<\/textarea>/g);
-            var params = {};
-            var name;
-            for (i=0; i<inputs.length; i++) {
-               var theInput = $(inputs[i]);
-               if (theInput.length === 0) { continue; }
-               name = theInput.attr("name");
-               if (!name) { continue; }
-               if (theInput.attr("type") !== "checkbox" ||
-                   theInput.checked === true) {
-                  params[name] = theInput.val();
-               }
-               else if (MissingE.packages.askTweaks.allowPhotoReplies &&
-                        name === "allow_photo_replies") {
-                  params[name] = theInput.val();
-               }
-            }
-            for (i=0; i<textareas.length; i++) {
-               var ta = $(textareas[i]);
-               name = ta.attr('name');
-               if (name) {
-                  params[name] = ta.text();
-               }
-            }
-            params["post[tags]"] = this.tags;
-            params["post[state]"] = this.mode;
-            params["post[date]"] = "now";
-            delete params["preview_post"];
-            delete params["post[promotion_type]"];
-            if (!this.twitter) {
-               delete params["send_to_twitter"];
+      var url = "http://www.tumblr.com/edit/" + id;
+      if (extension.isFirefox) {
+         extension.sendRequest("getFullAsk", {pid: id}, function(response) {
+            if (response.success) {
+               MissingE.packages.askTweaks.doPostAnswer(response.data, url,
+                  id, tags, mode, type, answer, twitter);
             }
             else {
-               params["send_to_twitter"] = "on";
+               MissingE.packages.askTweaks.failAnswer(id);
             }
-            if (this.buttonType !== '3') {
-               params["post[two]"] = this.answer;
+         });
+      }
+      else {
+         $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "html",
+            postId: id,
+            tags: tags,
+            mode: mode,
+            buttonType: type,
+            answer: answer,
+            twitter: twitter,
+            error: function(a) {
+               MissingE.packages.askTweaks.failAnswer(this.postId);
+            },
+            success: function(data) {
+               MissingE.packages.askTweaks.doPostAnswer(data, this.url,
+                  this.postId, this.tags, this.mode, this.buttonType, this.answer,
+                  this.twitter);
             }
-            $.ajax({
-               type: 'POST',
-               url: this.url,
-               async: !extension.isChrome,
-               dataType: 'html',
-               postId: this.postId,
-               buttonType: this.buttonType,
-               data: params,
-               error: function() {
-                  MissingE.packages.askTweaks.failAnswer(this.postId);
-               },
-               success: function() {
-                  MissingE.packages.askTweaks
-                     .finishAnswer(this.postId,this.buttonType);
-               }
-            });
-         }
-      });
+         });
+      }
 
       return false;
    },

@@ -776,6 +776,52 @@ function startAjax(id) {
    }
 }
 
+function sendEditPage(message, myWorker) {
+   var type = message.greeting;
+   var pid = message.pid;
+   var params = message.data;
+   var failMsg = {greeting:type, success:false, pid:pid};
+   for (i in params) {
+      console.log(i + ": " + params[i]);
+   }
+   Request({
+      url: "http://www.tumblr.com/edit/" + pid,
+      headers: { targetId: pid },
+      content: params,
+      onComplete: function(response) {
+         console.log(response.status);
+         if (response.status != 200) {
+            MissingE.debug(type + " request (" + this.headers.targetId + ") error");
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         else {
+            myWorker.postMessage({greeting:type, success:true});
+         }
+      }
+   }).post();
+}
+
+function getEditPage(message, myWorker) {
+   var type = message.greeting;
+   var pid = message.pid;
+   var failMsg = {greeting:type, success:false, pid:pid};
+   Request({
+      url: "http://www.tumblr.com/edit/" + pid,
+      headers: { targetId: pid },
+      onComplete: function(response) {
+         if (response.status != 200) {
+            MissingE.debug(type + " request (" + this.headers.targetId + ") error");
+            myWorker.postMessage(failMsg);
+            return;
+         }
+         else {
+            myWorker.postMessage({greeting:type, success:true, data:response.text});
+         }
+      }
+   }).get();
+}
+
 function doAskAjax(url, pid, count, myWorker, retries, type, doFunc) {
    var failMsg = {greeting:type, success:false, pid:pid};
    Request({
@@ -1657,6 +1703,12 @@ function handleMessage(message, myWorker) {
                                   url: myWorker.tab.url, isSure: msg.isSure});
          }
       });
+   }
+   else if (message.greeting == "getFullAsk") {
+      getEditPage(message, myWorker);
+   }
+   else if (message.greeting == "sendFullAsk") {
+      sendEditPage(message, myWorker);
    }
    else if (message.greeting == "uploader") {
       doUploader(message, 0, 4, myWorker);
