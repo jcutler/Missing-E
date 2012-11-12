@@ -1,7 +1,7 @@
 {
    "manifest_version": 2,
    "name":        "Missing e",
-   "version":     "2.14.0",
+   "version":     "2.14.1",
    "description": "Useful features and customizations for Tumblr.",
    "icons":       { "16": "identity/missinge16.png",
                     "48": "identity/missinge48.png",
@@ -24,6 +24,7 @@
          "background.js"
       ]
    },
+   "minimum_chrome_version": "18.0",
    "homepage_url": "http://missing-e.com",
    "content_scripts": [
       {
