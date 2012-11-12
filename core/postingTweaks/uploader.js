@@ -24,8 +24,27 @@
 (function(){
 
 MissingE.utilities.uploader = {
+   
+   setupSubmitImage: function() {
+      document.getElementById("image").addEventListener('change', function(){
+         document.getElementById('upload_image_form').submit();
+         document.getElementById('controls').style.display = 'none';
+         document.getElementById('loader').style.display = 'inline';
+      }, false);
+   },
 
    run: function() {
+      image1 = new Image();
+      image1.src = 'http://assets.tumblr.com/images/bookmarklet_loader.gif';
+
+      var field = document.getElementById("image");
+      if (field) {
+         setupSubmitImage();
+      }
+      else {
+         window.addEventListener('load',MissingE.utilities.uploader.setupSubmitImage);
+      }
+
       extension.sendRequest("uploader", function(response) {
          if (response.success) {
             document.getElementById('form_key').value = response.data;

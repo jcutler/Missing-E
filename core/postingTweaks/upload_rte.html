@@ -8,7 +8,7 @@
       <script type="text/javascript" src="uploader.js"></script>
       <style type="text/css">#upload_image_form { display: none; }</style>
    </head>
-   <body style="background-color:transparent; margin:0px; padding:0px; overflow:hidden;" onload="image1 = new Image();image1.src = 'http://assets.tumblr.com/images/bookmarklet_loader.gif';">
+   <body style="background-color:transparent; margin:0px; padding:0px; overflow:hidden;">
       <form method="post" enctype="multipart/form-data" id="upload_image_form" action="http://www.tumblr.com/upload/image?from_assets">
          <input type="hidden" id="form_key" name="form_key" value="FORMKEY"/>
          <div id="controls">
@@ -19,10 +19,7 @@
          </div>
          <div style="position:absolute; right:0px; top:0px; width:100px; height:24px;
                      filter:alpha(opacity=0); -moz-opacity:0; opacity:0; overflow:hidden;">
-            <input type="file" id="image" name="image" style="cursor:pointer; height:24px; position:absolute;right:0px; top:0px;"
-                     onchange="document.getElementById('upload_image_form').submit();
-                               document.getElementById('controls').style.display = 'none';
-                               document.getElementById('loader').style.display = 'inline';"/>
+            <input type="file" id="image" name="image" style="cursor:pointer; height:24px; position:absolute;right:0px; top:0px;" />
          </div>
          <img src="http://assets.tumblr.com/images/bookmarklet_loader.gif" id="loader" style="display:none; width:16px;
                    height:16px; position:absolute; top:0px; right:0px;"/>
