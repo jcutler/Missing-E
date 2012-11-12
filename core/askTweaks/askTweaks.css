@@ -68,6 +68,12 @@ line-height:12px !important;
 height:auto !important;
 width:100% !important;
 margin-left:2px !important;
+margin-top:2px !important;
+margin-bottom:2px !important;
+}
+
+.MissingE_askTweaks_buttons .MissingE_postMenu :first-child {
+margin-top:0 !important;
 }
 
 .MissingE_askTweaks_buttons .MissingE_postMenu .chrome_button {
