@@ -76,9 +76,9 @@ rm missinge.zip
 #rm -f harness-options.new.*
 
 sed -E -e 's/<em:maxVersion>[^<]*/<em:maxVersion>19.0a1/' install.rdf > install.new.0
-#sed -E -e 's/<em:minVersion>[^<]*/<em:minVersion>7.0/' install.new.0 > install.new.1
+sed -E -e 's/<em:minVersion>[^<]*/<em:minVersion>10.0/' install.new.0 > install.new.1
 
-mv install.new.0 install.rdf
+mv install.new.1 install.rdf
 rm -f install.new.*
 
 if [[ -n "$ZIP" ]]; then
