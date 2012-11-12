@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.14.1** (2012-11-12)
+**_!_** Add minimum Chrome version warning
+
 ##**2.14.0** (2012-11-12)
 **_!_** Move to new Chrome extension format  
 **_!_** Fix Ask Tweaks better answering functionality on Firefox  
