@@ -419,9 +419,10 @@ MissingE.utilities.options = {
             $(frm.MissingE_betterReblogs_quickReblogForceTwitter).val(MissingE.utilities.options.getStorage('MissingE_betterReblogs_quickReblogForceTwitter','default'));
             $(frm.MissingE_betterReblogs_quickReblogForceFacebook).val(MissingE.utilities.options.getStorage('MissingE_betterReblogs_quickReblogForceFacebook','default'));
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_fullText',0);
+            /*
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_reblogAsks',0);
             frm.MissingE_betterReblogs_askRetries.value = MissingE.utilities.options.getStorage('MissingE_betterReblogs_askRetries',MissingE.defaultRetries);
-            MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_keyboardShortcut',1);
+            */
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_quickKeyboardShortcut',1);
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_tagReblogs',0);
             MissingE.utilities.options.loadCheck(frm,'MissingE_betterReblogs_quickReblogCaption',1);

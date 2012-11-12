@@ -455,15 +455,11 @@
        <td>Number of retries on failure to get tags from an individual post's page (default <span class="defRetries">4</span>)</td>
        <td><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_retries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
       </tr>
-      <tr class="alt v2_6_7">
-       <td>Press <code>R</code> to reblog current post (manually)</td>
-       <td><input type="checkbox" name="MissingE_betterReblogs_keyboardShortcut" /></td>
-      </tr>
-      <tr>
+      <tr class="alt">
        <td>Enable quick (1-click) reblogging</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_quickReblog" /></td>
       </tr>
-      <tr class="alt subopt">
+      <tr class="subopt">
        <td>Default Tumblr blog to use with quick reblogging<br />
         <small>You must have posting privileges on the account you select.</small><br />
         <small><em>Enter only your Tumblr username, not the whole URL.</em></small><br />
@@ -478,7 +474,7 @@
         </div>
        </td>
       </tr>
-      <tr class="subopt">
+      <tr class="alt subopt">
        <td>Force quick (1-click) reblogging to send/not send posts to Twitter<br />
         <small><em>By default, quick reblogging will enable the </em>"Send to Twitter"<em> based on your Tumblr settings.<br />
         You can manually check/uncheck the </em>"Send to Twitter"<em> box for any quick reblog post</em></small>
@@ -491,7 +487,7 @@
         </select>
        </td>
       </tr>
-      <tr class="subopt alt v2_9_3">
+      <tr class="subopt v2_9_3">
        <td>Force quick (1-click) reblogging to send/not send posts to Facebook<br />
         <small><em>By default, quick reblogging will enable the </em>"Send to Facebook"<em> based on your Tumblr settings.<br />
         You can manually check/uncheck the </em>"Send to Facebook"<em> box for any quick reblog post</em></small>
@@ -504,11 +500,11 @@
         </select>
        </td>
       </tr>
-      <tr class="subopt v2_9_8">
+      <tr class="alt subopt v2_9_8">
        <td>Allow captions to be added when quick (1-click) reblogging</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_quickReblogCaption" /></td>
       </tr>
-      <tr class="subopt alt v2_7_8">
+      <tr class="subopt v2_7_8">
        <td>Enable quick (1-click) reblogging keyboard shortcuts:<br />
         <table class="subnotes">
          <tr>
@@ -527,25 +523,27 @@
        </td>
        <td><input type="checkbox" name="MissingE_betterReblogs_quickKeyboardShortcut" /></td>
       </tr>
-      <tr>
+      <tr class="alt">
        <td>Always reblog long text posts as text</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_fullText" /></td>
       </tr>
-      <tr class="alt v2_2_11">
+<!--
+      <tr class="v2_2_11">
        <td>Allow reblogging of <em>Ask</em> posts as text<br />
         <small><em>This feature does not always work correctly from permalink pages</em></small>
        </td>
        <td><input type="checkbox" name="MissingE_betterReblogs_reblogAsks" /></td>
       </tr>
-      <tr class="subopt">
+      <tr class="alt subopt">
        <td>Number of retries on failure to add reblog link to ask posts (default <span class="defRetries">4</span>)</td>
        <td><input type="text" class="setting_retry numinput" size="1" name="MissingE_betterReblogs_askRetries" value="4" />&nbsp;<span class="resetter retry_resetter">Reset</span></td>
       </tr>
-      <tr class="alt v2_7_8">
+-->
+      <tr class="v2_7_8">
        <td>Automatically add tags to reblogged posts</td>
        <td><input type="checkbox" name="MissingE_betterReblogs_tagReblogs" /></td>
       </tr>
-      <tr class="subopt">
+      <tr class="alt subopt">
        <td>Tags to add to reblogged posts (separated by commas)</td>
        <td><input type="text" name="MissingE_betterReblogs_reblogTags" style="width:250px;" value="" class="simple blurable_setting" /></td>
       </tr>

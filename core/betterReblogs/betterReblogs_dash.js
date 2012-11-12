@@ -953,6 +953,13 @@ MissingE.packages.betterReblogs = {
                   }
                }
             });
+            window.addEventListener('keydown', function(e) {
+               if (e.metaKey || e.altKey || e.ctrlKey ||
+                   e.keyCode !== 82) {
+                  return;
+               }
+               $.globalEval('Tumblr.KeyCommands.suspend();');
+            }, true);
             $(window).keydown(function(e) {
                // 27 = Esc, 68 = D, 81 = Q, 82 = R, 84 = T
                if (e.metaKey || e.altKey || e.ctrlKey ||
@@ -1066,50 +1073,7 @@ MissingE.packages.betterReblogs = {
                      return false;
                   }
                });
-            });
-         }
-         else if (settings.keyboardShortcut) {
-            $(window).keydown(function(e) {
-               // 82 = R (allow shift key use to be consistent with quick reblog
-               if ($(e.target).is('input,textarea') ||
-                   e.metaKey || e.altKey || e.ctrlKey || e.keyCode !== 82) {
-                  return;
-               }
-               var currPos = $(window).scrollTop()+7;
-               $('#posts li.post').each(function() {
-                  var postPos = this.offsetTop;
-                  if (postPos === currPos) {
-                     var rebBtn = $(this).find('div.post_controls ' +
-                                               'a[href^="/reblog/"]').get(0);
-                     var overEvt = document.createEvent("MouseEvent");
-                     overEvt.initMouseEvent("mouseover", true, true, window, 0,
-                                            0, 0, 0, 0, false, false, false,
-                                            false, 0, null);
-                     rebBtn.dispatchEvent(overEvt);
-                     if (!$(rebBtn).hasClass('MissingE_quick_reblogging')) {
-                        itm = document.getElementById('MissingE_quick_reblog_manual');
-                        var downEvt = document.createEvent("MouseEvent");
-                        downEvt.initMouseEvent("mousedown", true, true, window, 0,
-                                               0, 0, 0, 0, false, false, false,
-                                               false, 0, null);
-                        itm.dispatchEvent(downEvt);
-                        var clickEvt = document.createEvent("MouseEvent");
-                        clickEvt.initMouseEvent("click", true, true, window, 0, 0,
-                                                0, 0, 0, false, false, false,
-                                                false, 0, null);
-                        itm.dispatchEvent(clickEvt);
-                     }
-                     var outEvt = document.createEvent("MouseEvent");
-                     outEvt.initMouseEvent("mouseout", true, true, window, 0,
-                                           0, 0, 0, 0, false, false, false,
-                                           false, 0, null);
-                     rebBtn.dispatchEvent(outEvt);
-                     return false;
-                  }
-                  if (postPos >= currPos) {
-                     return false;
-                  }
-               });
+               $.globalEval('Tumblr.KeyCommands.resume();');
             });
          }
 
@@ -1147,40 +1111,6 @@ MissingE.packages.betterReblogs = {
 
          MissingE.packages.betterReblogs.getTwitterDefaults();
          MissingE.packages.betterReblogs.getFacebookDefaults();
-      }
-      else {
-         // Quick reblog not active
-         if (settings.keyboardShortcut) {
-            $(window).keydown(function(e) {
-               // 82 = R (allow shift key use to be consistent with quick reblog
-               if ($(e.target).is('input,textarea') ||
-                   e.metaKey || e.altKey || e.ctrlKey || e.keyCode !== 82) {
-                  return;
-               }
-               var currPos = $(window).scrollTop()+7;
-               $('#posts li.post').each(function() {
-                  var postPos = this.offsetTop;
-                  if (postPos === currPos) {
-                     var rebBtn = $(this).find('div.post_controls ' +
-                                               'a[href^="/reblog/"]').get(0);
-                     var downEvt = document.createEvent("MouseEvent");
-                     downEvt.initMouseEvent("mousedown", true, true, window, 0,
-                                            0, 0, 0, 0, false, false, false,
-                                            false, 0, null);
-                     rebBtn.dispatchEvent(downEvt);
-                     var clickEvt = document.createEvent("MouseEvent");
-                     clickEvt.initMouseEvent("click", true, true, window, 0, 0,
-                                             0, 0, 0, false, false, false,
-                                             false, 0, null);
-                     rebBtn.dispatchEvent(clickEvt);
-                     return false;
-                  }
-                  if (postPos >= currPos) {
-                     return false;
-                  }
-               });
-            });
-         }
       }
    },
 

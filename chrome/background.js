@@ -1631,7 +1631,6 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
                settings.reblogTags = settings.reblogTags.replace(/, /g,',').split(',');
             }
             settings.reblogAsks = 0;//getSetting("MissingE_betterReblogs_reblogAsks",0);
-            settings.keyboardShortcut = getSetting("MissingE_betterReblogs_keyboardShortcut",1);
             settings.quickKeyboardShortcut = getSetting("MissingE_betterReblogs_quickKeyboardShortcut",1);
             break;
       }
@@ -2291,6 +2290,7 @@ function fixupSettings() {
    clearSetting('MissingE_postingTweaks_uploaderToggle');
    clearSetting('MissingE_experimentalFeatures_enabled');
    clearSetting('MissingE_sidebarTweaks_followingLink');
+   clearSetting('MissingE_betterReblogs_keyboardShortcut');
    settingChange('MissingE_bookmarker_format',',;','.');
    invertSetting('MissingE_dashboardTweaks_expandAll','MissingE_dashboardTweaks_noExpandAll');
    moveSetting('MissingE_dashboardTweaks_slimSidebar','MissingE_sidebarTweaks_slimSidebar');
