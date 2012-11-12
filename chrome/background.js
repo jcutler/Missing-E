@@ -2322,11 +2322,6 @@ function onStart(currVersion, prevVersion) {
    }
    setSetting('MissingE_version',currVersion);
    clearSetting('MissingE_konami_active');
-   chrome.browsingData.removeCache({
-      "originTypes": {
-         "extension": true
-      }, "since": 0
-   });
 }
 
 onStart(currVersion, getSetting('MissingE_version',null));
