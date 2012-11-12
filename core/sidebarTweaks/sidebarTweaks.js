@@ -302,7 +302,10 @@ MissingE.packages.sidebarTweaks = {
             var url = this.href;
             var label = $(this).find('.hide_overflow').text();
             var cnt = $(this).find('.count');
-            if (cnt.length > 0) {
+            if (cnt.css('display') === "none") {
+               cnt = "";
+            }
+            else if (cnt.length > 0) {
                cnt = cnt.text();
             }
             else {
