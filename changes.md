@@ -78,6 +78,14 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.14.0** (2012-11-12)
+**_!_** Move to new Chrome extension format  
+**_!_** Fix Ask Tweaks better answering functionality on Firefox  
+**_!_** Minor functionality fixes  
+**_!_** Fix avatar magnifier feature for follower/following pages  
+**_!_** Prevent 'R' shortcut key from opening manual reblog page when using Quick Reblog  
+**_+_** Add option to show tracked tags in sidebar
+
 ##**2.13.8** (2012-10-11)
 **_!_** Correctly position Safe Dash sidebar button before sponsored radar posts
 
