@@ -1495,6 +1495,10 @@ function doUploader(message, count, retries, myWorker) {
             page = page.replace(/FORMKEY/, key[1])
                        .replace(/<script[^>]*>[^<]*<\/script>/g,'')
                        .replace(/<style[^>]*>[^<]*<\/style>/g,'');
+            page = page.replace(/id="image"/,'id="image" ' +
+               'onchange="document.getElementById(\'upload_image_form\').submit();' +
+               'document.getElementById(\'controls\').style.display = \'none\';' +
+               'document.getElementById(\'loader\').style.display = \'inline\';"');
             myWorker.postMessage({greeting: "uploader", success: true, data: page});
          }
       }
