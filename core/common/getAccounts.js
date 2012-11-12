@@ -26,7 +26,20 @@
 MissingE.packages.getAccounts = {
 
    run: function() {
-      var list = $('#popover_blogs div');
+      var list = $('#tab_switching .tab_blog');
+      if (list.length > 0) {
+         var accounts = [];
+         list.each(function(i) {
+            var acct = this.id ? this.id.match(/tab_blog_(.*)/) : null;
+            if (!acct) { return; }
+            var name = $(this).find('.blog_name_span').text();
+            name = name.replace(/%/g,"%%").replace(/,/g,"%2C");
+            accounts.push(acct[1] + ":" + name);
+         });
+         extension.backupVal("MissingE_tumblrs",accounts.join(","));
+         return;
+      }
+      list = $('#popover_blogs div');
       if (list.length > 0) {
          var accounts = [];
          list.each(function(i) {

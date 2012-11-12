@@ -85,27 +85,39 @@ MissingE.packages.reblogYourselfFill = {
    },
 
    init: function() {
-      extension.sendRequest("getBackupVal", {key: "MissingE_tumblrs"},
-                            function(response) {
-         if (response.key === "MissingE_tumblrs") {
-            MissingE.packages.reblogYourselfFill.accounts = [];
-            if (response.val !== "") {
-               var txt = response.val;
-               while (txt.length > 0) {
-                  var len = txt.indexOf(":");
-                  var acct = txt.substring(0,len);
-                  txt = txt.substring(len+1);
-                  len = txt.indexOf(",");
-                  if (len < 0) { len = txt.length; }
-                  var acctTxt = txt.substring(0,len);
-                  txt = txt.substring(len+1);
-                  acctTxt = acctTxt.replace(/%%/g,"%").replace(/%2C/g,",");
-                  MissingE.packages.reblogYourselfFill.accounts.push({account:acct,name:acctTxt});
+      MissingE.packages.reblogYourselfFill.accounts = [];
+      var list = $('#tab_switching .tab_blog');
+      if (list.length > 0) {
+         list.each(function(i) {
+            var acct = this.id ? this.id.match(/tab_blog_(.*)/) : null;
+            if (!acct) { return; }
+            var acctTxt = $(this).find('.blog_name_span').text();
+            MissingE.packages.reblogYourselfFill.accounts.push({account:acct[1],name:acctTxt});
+         });
+         MissingE.packages.reblogYourselfFill.run();
+      }
+      else {
+         extension.sendRequest("getBackupVal", {key: "MissingE_tumblrs"},
+                               function(response) {
+            if (response.key === "MissingE_tumblrs") {
+               if (response.val !== "") {
+                  var txt = response.val;
+                  while (txt.length > 0) {
+                     var len = txt.indexOf(":");
+                     var acct = txt.substring(0,len);
+                     txt = txt.substring(len+1);
+                     len = txt.indexOf(",");
+                     if (len < 0) { len = txt.length; }
+                     var acctTxt = txt.substring(0,len);
+                     txt = txt.substring(len+1);
+                     acctTxt = acctTxt.replace(/%%/g,"%").replace(/%2C/g,",");
+                     MissingE.packages.reblogYourselfFill.accounts.push({account:acct,name:acctTxt});
+                  }
                }
+               MissingE.packages.reblogYourselfFill.run();
             }
-            MissingE.packages.reblogYourselfFill.run();
-         }
-      });
+         });
+      }
    }
 };
 
