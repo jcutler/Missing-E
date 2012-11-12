@@ -608,30 +608,28 @@ MissingE.packages.dashboardTweaks = {
           document.body.id !== "tinymce" &&
           document.body.id !== "dashboard_edit_post") {
 
+         $('#posts .MissingE_experimental_reply form button').live('click', function() {
+            var btn = $(this).closest('.MissingE_experimental_reply');
+            btn.removeClass('MissingE_experimental_reply')
+               .addClass('MissingE_experimental_reply_wait');
+         });
          $('head').append('<script type="text/javascript">' +
-         'Ajax.Responders.register({' +
-            'onCreate: function(request) {' +
-               'var fail;' +
-               'if (request.url === "/reply") {' +
-                  'if ((fail = document.getElementById(\'reply_fail_\' + request.parameters.post_id))) {' +
-                     'fail.className="post_control MissingE_post_control MissingE_experimental_reply_wait";' +
+         'jQuery(document).ajaxComplete(function(e,xhr, opts){' +
+            'var fail, btn;' +
+            'var pid=opts.data.replace(/^.*post_id=/,"")' +
+                              '.replace(/\&.*$/,"");' +
+            'if (opts.url === "/reply") {' +
+               'if ((fail = document.getElementById(\'reply_fail_\' + pid))) {' +
+                  'if ((btn = document.getElementById(\'post_control_reply_\' + pid))) {' +
+                     'btn.style.display="none";' +
                   '}' +
-               '}' +
-            '},' +
-            'onComplete: function(response) {' +
-               'var fail;' +
-               'if (response.url === "/reply") {' +
-                  'if ((fail = document.getElementById(\'reply_fail_\' + response.parameters.post_id))) {' +
-                     'if ((btn = document.getElementById(\'post_control_reply_\' + response.parameters.post_id))) {' +
-                        'btn.style.display="none";' +
-                     '}' +
-                     'if (response.transport.status == 200) {' +
-                        'fail.className="post_control MissingE_post_control MissingE_experimental_reply_success";' +
-                     '}' +
-                     'else {' +
-                        'fail.className="post_control MissingE_post_control MissingE_experimental_reply_fail";' +
-                     '}' +
+                  'if (xhr.status == 200) {' +
+                     'klass="MissingE_experimental_reply_success";' +
                   '}' +
+                  'else {' +
+                     'klass="MissingE_experimental_reply_fail";' +
+                  '}' +
+                  'fail.className=fail.className.replace(/MissingE_experimental_reply[^\s]*/,klass);' +
                '}' +
             '}' +
          '});' +
