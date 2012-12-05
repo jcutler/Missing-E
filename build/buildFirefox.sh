@@ -75,7 +75,7 @@ rm missinge.zip
 #mv harness-options.new.6 harness-options.json
 #rm -f harness-options.new.*
 
-sed -E -e 's/<em:maxVersion>[^<]*/<em:maxVersion>19.0a1/' install.rdf > install.new.0
+sed -E -e 's/<em:maxVersion>[^<]*/<em:maxVersion>20.0a1/' install.rdf > install.new.0
 sed -E -e 's/<em:minVersion>[^<]*/<em:minVersion>13.0/' install.new.0 > install.new.1
 
 mv install.new.1 install.rdf
