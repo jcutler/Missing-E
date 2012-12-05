@@ -34,13 +34,13 @@ MissingE.utilities.konami = {
       var oldSrc, newSrc;
       if (logo.attr('oldsrc')) {
          var newSrc = logo.attr('oldsrc');
-         var oldSrc = logo.attr('src');
+         var oldSrc = logo.css('background-image');
       }
       else {
-         var oldSrc = logo.attr('src');
-         var newSrc = extension.getURL('identity/tumblr-with-e.png');
+         var oldSrc = logo.css('background-image');
+         var newSrc = "url(" + extension.getURL('identity/tumblr-with-e.png') + ")";
       }
-      if (newSrc === extension.getURL('identity/tumblr-with-e.png')) {
+      if (newSrc === "url(" + extension.getURL('identity/tumblr-with-e.png') + ")") {
          newState = 1;
          window.scrollTo(0,0);
       }
@@ -53,28 +53,28 @@ MissingE.utilities.konami = {
       var newImg = new Image();
       newImg.onload = function() {
          if (noAnimate) {
-            logo.attr('src',newSrc);
+            logo.css('width',newImg.width + 'px');
+            logo.css('background-image',newSrc);
          }
          else {
             logo.fadeOut(800, function() {
-               logo.attr('src',newSrc);
+               logo.css('width',newImg.width + 'px');
+               logo.css('background-image',newSrc);
                logo.fadeIn(800);
             });
          }
       };
-      newImg.src = newSrc;
+      newImg.src = newSrc.replace(/^url\(/,'').replace(/\)$/,'');
    },
 
    run: function() {
       document.addEventListener('keydown', function(e) {
          var key = e.keyCode;
-         if (!e.shiftKey ||
-             key !== MissingE.utilities.konami
+         if (key !== MissingE.utilities.konami
                         .code[MissingE.utilities.konami.state]) {
             MissingE.utilities.konami.state = 0;
          }
-         if (!e.shiftKey ||
-             key !== MissingE.utilities.konami
+         if (key !== MissingE.utilities.konami
                         .code[MissingE.utilities.konami.state]) {
             return;
          }
@@ -82,6 +82,7 @@ MissingE.utilities.konami = {
          if (MissingE.utilities.konami.state ===
                MissingE.utilities.konami.code.length) {
             MissingE.utilities.konami.toggleLogo();
+            MissingE.utilities.konami.state = 0;
          }
       }, false);
    },
