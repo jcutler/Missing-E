@@ -25,6 +25,14 @@
 opacity:0.7;
 }
 
+#right_column #MissingEdraftQueueTools li a {
+background-repeat:no-repeat !important;
+}
+
+#MissingEdraftQueueTools li > a::after {
+background:none !important;
+}
+
 #MissingEdraftQueueTools li .select_all {
 background-position:12px 11px !important;
 }

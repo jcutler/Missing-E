@@ -73,11 +73,11 @@ top:10px !important;
 padding:3px 13px 3px 34px !important;
 }
 
-.controls_section li .tag {
+.controls_section li .tag::after {
 background-position:6px -644px !important;
 }
 
-.controls_section li .explore_tumblr {
+.controls_section li .explore_tumblr::after {
 background-position:6px -1195px !important;
 }
 
@@ -102,67 +102,67 @@ top:3px !important;
 top:4px !important;
 }
 
-.controls_section li .following {
+.controls_section li .following::after {
 background-position:7px -1495px !important;
 }
 
-.controls_section li .add_and_remove {
+.controls_section li .add_and_remove::after {
 background-position:7px -947px !important;
 }
 
-.controls_section li .likes {
+.controls_section li .likes::after {
 background-position:7px -743px !important;
 }
 
-.controls_section li .posts {
+.controls_section li .posts::after {
 background-position:9px -147px !important;
 }
 
-.controls_section li .followers {
+.controls_section li .followers::after {
 background-position:7px -195px !important;
 }
 
-.controls_section li .messages {
+.controls_section li .messages::after {
 background-position:7px -293px !important;
 }
 
-.controls_section li .drafts {
+.controls_section li .drafts::after {
 background-position:9px -346px !important;
 }
 
-.controls_section li .queue {
+.controls_section li .queue::after {
 background-position:7px -445px !important;
 }
 
-.controls_section li .open_blog {
+.controls_section li .open_blog::after {
 background-position:9px 13px !important;
 }
 
-.controls_section li .customize {
+.controls_section li .customize::after {
 background-position:9px -44px !important;
 }
 
-.controls_section li .mass_editor {
+.controls_section li .mass_editor::after {
 background-position:10px -494px !important;
 }
 
-.controls_section li .settings {
+.controls_section li .settings::after {
 background-position:7px -96px !important;
 }
 
-.controls_section li .members {
+.controls_section li .members::after {
 background-position:6px -244px !important;
 }
 
-.controls_section li .delete_all_messages {
+.controls_section li .delete_all_messages::after {
 background-position:12px -1293px !important;
 }
 
-.controls_section li .processing {
+.controls_section li .processing::after {
 background-position:6px -395px !important;
 }
 
-.controls_section li .spotlight {
+.controls_section li .spotlight::after {
 background-position:7px -1545px !important;
 }
 

@@ -117,6 +117,14 @@ margin:0 0 10px 0 !important;
 opacity:0.7;
 }
 
+#right_column #MissingEmassDeleter li a {
+background-repeat:no-repeat !important;
+}
+
+#MissingEmassDeleter li > a::after {
+background:none !important;
+}
+
 #MissingEmassDeleter li .select_all {
 background-position:12px 11px !important;
 }

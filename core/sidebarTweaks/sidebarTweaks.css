@@ -118,3 +118,7 @@ padding-left:8px !important;
 background:transparent !important;
 cursor:default;
 }
+
+#right_column #MissingE_tagslist li.MissingE_tagslist_title a::after {
+background:none !important;
+}

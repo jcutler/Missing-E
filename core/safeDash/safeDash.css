@@ -25,6 +25,14 @@
 margin-top:0 !important;
 }
 
+#right_column #MissingE_safeDash li a {
+background-repeat:no-repeat !important;
+}
+
+#MissingE_safeDash li > a::after {
+background:none !important;
+}
+
 #MissingE_safeDash li {
 border-radius:6px !important;
 }
