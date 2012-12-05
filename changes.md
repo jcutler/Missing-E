@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.14.3** (2012-12-04)
+**_!_** Fix wonky icons for Bookmarker sidebar buttons
+
 ##**2.14.2** (2012-12-04)
 **_!_** Fix wonky icons for added sidebar buttons
 
