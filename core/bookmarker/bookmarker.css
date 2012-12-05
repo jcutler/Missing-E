@@ -31,6 +31,14 @@ border-bottom-left-radius:0 !important;
 position:relative;
 }
 
+#right_column #MissingE_marklist li a {
+background-repeat:no-repeat !important;
+}
+
+#MissingE_marklist li > a::after {
+background:none !important;
+}
+
 #right_column #MissingE_marklist .MissingE_bookmarker_marklink {
 padding:3px 13px 3px 26px !important;
 font-size:10px !important;
