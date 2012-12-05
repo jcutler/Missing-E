@@ -1,7 +1,7 @@
 {
    "manifest_version": 2,
    "name":        "Missing e",
-   "version":     "2.14.1",
+   "version":     "2.15.0",
    "description": "Useful features and customizations for Tumblr.",
    "icons":       { "16": "identity/missinge16.png",
                     "48": "identity/missinge48.png",
