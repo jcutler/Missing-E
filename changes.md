@@ -78,6 +78,9 @@ color:#4183c4;
     - indicates features or functionality removed  
     ! indicates fixes to bugs and issues
 
+##**2.14.2** (2012-12-04)
+**_!_** Fix wonky icons for added sidebar buttons
+
 ##**2.14.1** (2012-11-12)
 **_!_** Add minimum Chrome version warning
 
