@@ -1,3 +1,24 @@
+Fix reply replies
+MissingE_reply_overlay (can't re-click comment buttons)
+Reblog reply icon, is it working?
+Widescreen inline notes
+Widescreen notification bars
+Tumblr have their own icons now? Not all of them.
+tag wrapping
+
+Check all inline uploaders
+Check blank post allow
+Check move to top of queue
+Check reblog keyboard shortcuts (R especially)
+Better handling of page prev/next shortcuts (they are acting before the flag is defined)
+Check redirects
+Chrome 24+
+New uninstall FAQ for Chrome (no more wrench icon)
+Icons: http://www.smashingmagazine.com/2012/11/03/free-glyph-set-entypo-eps-pdf-psd-web-font/
+Confirmation for reply to reblogs?
+
+==========
+
 NEW DASHBOARD STILL NEEDS FIXING:
 
 smart redirect
