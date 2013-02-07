@@ -117,6 +117,12 @@ padding:0 !important;
 vertical-align:-2px;
 }
 
+#posts .post .post_controls .MissingE_quick_reblog_main{
+	background-position: -498px -270px;
+	width: 24px !important; 
+	height: 20px !important;
+}
+
 #posts .post .post_controls .MissingE_quick_reblogging,
 #posts .post .post_controls .MissingE_quick_reblogging_success {
 background-position:0 0 !important;
